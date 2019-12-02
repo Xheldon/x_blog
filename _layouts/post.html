@@ -1,0 +1,120 @@
+---
+layout: default
+---
+<header class="post-header">
+  <h1 class="post-title">{{ page.title }}</h1>
+</header>
+<div>
+  <span class="time">{{ page.date | date: "%Y年%m月%d日" }}</span>
+{% if page.categories %} 
+  <span class="categories">
+    &raquo; {% for category in page.categories %}<a href="/category/{{ category }}">{{ category }}</a>{% if forloop.last == false %}, {% endif %}{% endfor %}
+  </span>
+{% endif %}
+</div>
+{% include time_tips.html %}
+<div class="content">
+  <div class="post">{{ content }}</div>
+  转载请<a href="{{ page.url }}">注明出处</a>&nbsp;&nbsp;打赏请<a href="/donate/" target="_blank">移步这里</a>
+  <br><br>
+  <span class="EOF">- EOF -</span>
+  <br><br>
+<!--  欢迎给我<a href="https://github.com/Xheldon/xheldon.com/issues" target="_blank">&nbsp;提issue&nbsp;</a> -->
+</div>
+
+{% assign hasSimilar = '' %}
+  {% for post in site.posts  %}
+    {% assign postHasSimilar = false %}
+      {% for tag in post.categories %}
+        {% for thisTag in page.categories %}
+          {% if postHasSimilar == false and hasSimilar.size < 6 and post != page and tag == thisTag %}
+            {% if hasSimilar.size == 0 %}
+            <div class="panel-body">
+              <h4>相同分类:</h4>
+              <ul>
+            {% endif %}
+                <li class="relatedPost">
+                  <a href="{{ post.url }}">{{ post.title }}</a>
+                  {% if post.categories %}
+                    (分类: {% for category in post.categories %}<a href="/category/{{ category }}">{{ category }}</a>{% if forloop.last == false %}, {% endif %}{% endfor %})
+                  {% endif %}
+                </li>
+          {% capture hasSimilar %}{{ hasSimilar }}*{% endcapture %}
+          {% assign postHasSimilar = true %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  {% endfor %}
+  {% if hasSimilar.size > 0 %}
+  </ul>
+</div>
+{% endif %}
+
+<div class="page-navigation">
+  {% if page.next.url %}
+    <a class="prev" href="{{ page.next.url }}">&laquo; {{ page.next.title }}</a>
+    {% if page.previous.url %}
+    {% else %}
+      <span class="next">没有更多了 </span>
+    {% endif %}
+  {% endif %}
+
+  {% if page.previous.url %}
+    {% if page.next.url %}
+    {% else %}
+      <span class="prev">没有更多了 </span>
+    {% endif %}
+    <a class="next" href="{{ page.previous.url }}">{{ page.previous.title }} &raquo;</a>
+  {% endif %}
+</div>
+<div id="gitalk-container"></div>
+<!-- Markdown 流程图按需加载 -->
+{% if page.mermaid %}
+<script src='/static/js/mermaid.8.3.1.js'></script>
+<script>
+window.addEventListener('load', function(){
+  var config = {
+        startOnLoad:true,
+        flowchart:{
+            useMaxWidth:false,
+            htmlLabels:true
+        }
+    };
+  mermaid.initialize(config);
+  var elements = document.getElementsByClassName("language-mermaid");
+  for (var i = elements.length; i--;) {
+      element = elements[i];
+      var graphDefinition = element.innerText;
+      if (graphDefinition) {
+          var svg = mermaid.render('ha_mermaid_' + i, graphDefinition, function(svg){});
+          if (svg) {
+              var svgElement = document.createElement('div');
+              preNode = element.parentNode;
+              svgElement.innerHTML = svg;
+              svgElement.setAttribute('class', 'mermaid');
+              svgElement.setAttribute('data-processed', 'true');
+              preNode.parentNode.replaceChild(svgElement, preNode);
+          }
+      }
+  }  
+});
+</script>
+{% endif %}
+<!-- Gitalk 评论 start  -->
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script async src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script>
+
+<script type="text/javascript">
+  window.addEventListener('load', function(){
+    var gitalk = new Gitalk({
+      clientID: 'd2b353a60fa1233163fc',
+      clientSecret: '8091d57674976bcd60fc05261bf93c00da7e5ff4',
+      repo: 'x_blog',
+      owner: 'Xheldon',
+      admin: ['Xheldon'],
+      id: "{{page.url | remove: '/' | remove: '.html'}}"
+    });
+    gitalk.render('gitalk-container');
+});
+</script>  
+<!-- Gitalk end -->

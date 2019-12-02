@@ -1,0 +1,278 @@
+---
+layout: compress
+---
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% if page.url == "/404.html" %}
+  <meta http-equiv="refresh" content="7; url=/">
+  {% endif %}
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <title>{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.author }}{% endif %}</title>
+  <meta name="author" content="{{ site.author }}" />
+  <meta name="description" content="{% if page.title %}{{ page.title }}{% else %}{{ site.description }}{% endif %}" />
+  <meta name="keywords"
+    content="{% if page.title %}{{ page.title }}, {{ site.title }}, {% for categ in page.categories %}{{ categ }}{% if forloop.last == false %}, {% endif %}{% endfor %}{% else %}{{ site.title }}, {% for category in site.categories %}{% capture categories_slug %}{{ category | first }}{% endcapture %}{% for categ in categories_slug %}{{ categ }}{% endfor %}{% if forloop.last == false %}, {% endif %}{% endfor %}{% endif %}" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+  <meta content="{{ site.share.fb_appid }}" property="fb:app_id">
+  <meta content="{{ site.title }}" property="og:site_name">
+
+  {% if page.noindex %}
+  <meta name="robots" content="noindex">
+  {% endif %}
+
+  {% if page.title %}
+  <meta content="{{ page.title }}" property="og:title">
+  <meta content="article" property="og:type">
+  {% else %}
+  <meta content="{{ site.title }}" property="og:title">
+  <meta content="website" property="og:type">
+  {% endif %}
+
+  {% if page.description %}
+  <meta content="{{ page.description }}" property="og:description">
+  {% else %}
+  <meta content="{{ site.description }}" property="og:description">
+  {% endif %}
+
+  {% if page.url %}
+  <meta content="{{ site.url }}{{ page.url }}" property="og:url">
+  {% endif %}
+
+  {% if page.date %}
+  <meta content="{{ page.date | date_to_xmlschema }}" property="article:published_time">
+  <meta content="{{ site.url }}/about/" property="article:author">
+  {% endif %}
+
+  {% if page.image %}
+  <meta content="{{ site.url }}/static/img/posts/{{ page.image }}" property="og:image">
+  {% else %}
+  <meta content="{{ site.url }}{{ site.avatar_url }}" property="og:image">
+  {% endif %}
+
+  {% if page.categories %}
+  {% for category in page.categories limit:1 %}
+  <meta content="{{ category }}" property="article:section">
+  {% endfor %}
+  {% endif %}
+
+  {% if page.tags %}
+  {% for tag in page.tags %}
+  <meta content="{{ tag }}" property="article:tag">
+  {% endfor %}
+  {% endif %}
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@{{ site.share.twitter_username }}">
+  <meta name="twitter:creator" content="@{{ site.share.twitter_username }}">
+
+  {% if page.title %}
+  <meta name="twitter:title" content="{{ page.title }}">
+  {% else %}
+  <meta name="twitter:title" content="{{ site.title }}">
+  {% endif %}
+
+  {% if page.url %}
+  <meta name="twitter:url" content="{{ site.url }}{{ page.url }}">
+  {% endif %}
+
+  {% if page.description %}
+  <meta name="twitter:description" content="{{ page.description }}">
+  {% else %}
+  <meta name="twitter:description" content="{{ site.description }}">
+  {% endif %}
+
+  {% if page.header-img %}
+  <meta name="twitter:image:src" content="{{ site.url }}/{{ page.header-img }}">
+  {% endif %}
+  <!-- syntax highlighting CSS -->
+  <!-- project.css -->
+  <style type="text/css">
+    /* Project Elements */
+    .project-outer {
+      display: inline-block;
+      width: 30%;
+      vertical-align: top;
+      margin: 0 1.6%;
+      overflow: hidden;
+    }
+
+    .project-img img {
+      width: 100%;
+    }
+
+    h3.project-headlines {
+      margin: 5px 0;
+      font-size: 20px;
+    }
+
+    span.tags {
+      font-size: 10px;
+      border-bottom: 1px #888 dotted;
+      margin: 0 5px;
+    }
+
+    span.tags:first-child {
+      margin-left: 0;
+    }
+
+    span.tags:last-child {
+      margin-right: 0;
+    }
+
+    .project-footer {
+      clear: both;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .project-footer .project-link {
+      display: inline-block;
+      position: relative;
+      float: left;
+      text-decoration: none;
+    }
+
+    .project-footer .project-timeline {
+      display: inline-block;
+      position: relative;
+      float: right;
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    .project-inner>a {
+      display: block;
+    }
+
+    .project-img {
+      width: 230px;
+      height: 200px;
+      display: block;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+
+    /** Project Tag Filters **/
+    .tag-group {
+      margin: 0 0 25px 0;
+    }
+
+    span.tag-cloud {
+      margin: 0 2px;
+      cursor: pointer;
+      font-size: 75%;
+      padding: .2em .6em .3em;
+      font-weight: 700;
+      display: inline;
+    }
+
+    .tag-cloud.active {
+      background: #ccc;
+    }
+
+    .project-item.not-show {
+      display: none;
+    }
+
+    a.project-detail:hover {
+      text-decoration: none;
+    }
+
+    a.project-detail:hover h3 {
+      color: #62A253;
+    }
+  </style>
+  <link rel="stylesheet" href="/static/css/main.css?t=20190911161844">
+</head>
+
+<body>
+  <div class="container">
+    <nav>
+      <a href="/"><img class="profile-avatar" src="{{ site.avatar_url }}" height="75px" width="75px" /></a>
+      <!-- {% if site.about %}
+          <div class="profile-about">
+            {{ site.about }}
+          </div>
+        {% endif %} -->
+      <ul class="sidebar-nav">
+        {% for i in site.urls %}
+        <li><a class="about" href="{{ i.url }}">{{ i.text }}</a></li>
+        {% endfor %}
+      </ul>
+      <div class="search" id="js-search">
+        <input type="text" placeholder="搜索一下~" class="search__input form-control" id="js-search__input">
+        <ul class="search__results" id="js-search__results"></ul>
+      </div>
+    </nav>
+    <div class="main-layout" id="page-{{page.layout}}">
+      {{ content }}
+      <footer>
+        &copy; {{"now" | date: "%Y"}} - {{ site.author }} - Theme Powered By Xheldon
+        <span class="footer-social">
+          {% for link in site.social %}
+          <a href="{{ link.link }}" target="_blank"><i class="fa {{ link.icon }}"></i></a>
+          {% endfor %}
+          <a href="https://www.zhihu.com/people/xheldon/pins" target="_blank"><i class="fa" style="font-size: 16px;line-height:2;">知乎</i></a>
+        </span>
+      </footer>
+    </div>
+    <!-- end /.col-sm-8 -->
+  </div>
+  <!-- end /.container -->
+  <script type="text/javascript">
+    !function () { function e(t) { var n = {}; if (1 == t.nodeType) { if (t.attributes.length > 0) { n["@attributes"] = {}; for (var i = 0; i < t.attributes.length; i++) { var s = t.attributes.item(i); n["@attributes"][s.nodeName] = s.nodeValue } } } else 3 == t.nodeType && (n = t.nodeValue); var a = [].slice.call(t.childNodes).filter(function (e) { return 3 === e.nodeType }); if (t.hasChildNodes() && t.childNodes.length === a.length) n = [].slice.call(t.childNodes).reduce(function (e, t) { return e + t.nodeValue }, ""); else if (t.hasChildNodes()) for (var r = 0; r < t.childNodes.length; r++) { var o = t.childNodes.item(r), d = o.nodeName; if ("undefined" == typeof n[d]) n[d] = e(o); else { if ("undefined" == typeof n[d].push) { var c = n[d]; n[d] = [], n[d].push(c) } n[d].push(e(o)) } } return n } function t(t) { var n = e(t); return n.channel.item } var n, i = document.querySelector("#js-search"), s = document.querySelector("#js-search__input"), a = document.querySelector("#js-search__results"), r = "", o = [], d = new XMLHttpRequest; d.open("GET", "/sitemap.xml"), d.onreadystatechange = function () { if (4 == d.readyState && (200 == d.status || 304 == d.status)) { var e = (new DOMParser).parseFromString(d.responseText, "text/xml"); e = e.children[0], o = t(e) } }, d.send(), window.toggleSearch = function () { _gaq.push(["_trackEvent", "supersearch", i.classList.contains("is-active")]), i.classList.toggle("is-active"), i.classList.contains("is-active") ? s.value = "" : a.classList.add("is-hidden"), setTimeout(function () { s.focus() }, 210) }, window.addEventListener("keyup", function (e) { 27 === e.which && toggleSearch() }), window.addEventListener("keypress", function (e) { 47 !== e.which || i.classList.contains("is-active") || toggleSearch() }), s.addEventListener("input", function () { var e, t; if (r = (s.value + "").toLowerCase(), !r || r.length < 3) return n = "", void a.classList.add("is-hidden"); a.style.offsetWidth; var i; i = void 0 === o.title ? o.filter(function (e) { return -1 !== (e.title + "").toLowerCase().indexOf(r) || -1 !== (e.description + "").toLowerCase().indexOf(r) ? !0 : void 0 }) : [o], i.length || a.classList.add("is-hidden"), e = i.reduce(function (e, t) { return t.title + e }, ""), i.length && e !== n && (a.classList.remove("is-hidden"), a.innerHTML = i.map(function (e) { return t = new Date(e.pubDate), '<li><a href="' + e.link + '">' + e.title + "</a></li>" }).join("")), n = e }) }();
+  </script>
+  <!--    <script src="/static/js/main.js" defer="defer"></script>-->
+  <!-- Font awesome icons -->
+  <link href="/static/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
+  <script>
+    (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-79359216-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded',function(){
+      try {
+        Array.prototype.slice.call(document.querySelectorAll('a')).forEach(function(a){
+          if (!a.getAttribute('target')) {
+            let href = a.getAttribute('href');
+            let attrs = Object.keys(a.dataset);
+            if (href && href.indexOf('/')) {
+              a.setAttribute('target', '_blank');
+            } else {
+              a.setAttribute('target', '_self');
+            }
+            /* 默认情况下外链在新窗口打开, 本地链接在当前窗口打开
+              kramdown 可以对 url 设置特殊属性 data-open, 因此用此特性来排除需要在新窗口打开的本地链接 */
+            if (attrs.length) {
+              attrs.forEach(function(attr){
+                switch (attr) {
+                  case 'open':
+                    a.setAttribute('target', '_blank');
+                    break;
+                  default:
+                    break;
+                }
+              });
+            }
+          }  
+        });
+      } catch (e) {
+        console.log('新窗口打开链接失败:', e);
+      }
+    });
+  </script>
+</body>
+
+</html>

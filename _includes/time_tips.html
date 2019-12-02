@@ -1,0 +1,10 @@
+{% if page.date %}
+{% assign now = "now" | date: "%s" %}
+{% assign from = page.date | date: "%s" %}
+{% assign time = now | minus: from | divided_by: 86400 %}
+{% if time > 30 %}
+<blockquote class="time-tips">
+    注意! 离本文创建时间已经过去了 <code>{{time}}</code> 天, 请注意时效性
+  </blockquote>
+{% endif %}
+{% endif %}
