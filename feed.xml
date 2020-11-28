@@ -1,0 +1,1921 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Xheldon</title>
+    <description>会点前端，在学 Node、Electron、ProseMirror</description>
+    <link>https://xheldon.com/</link>
+    <atom:link href="https://xheldon.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 28 Nov 2020 03:19:53 +0000</pubDate>
+    <lastBuildDate>Sat, 28 Nov 2020 03:19:53 +0000</lastBuildDate>
+    <generator>Jekyll v3.9.0</generator>
+    
+      <item>
+        <title>新博客地址说明</title>
+        <description>&lt;h2 id=&quot;一个悲伤的事实&quot;&gt;一个悲伤的事实…&lt;/h2&gt;
+
+&lt;p&gt;博客迁移至此，丢了很多之前写的东西，xml转json不好用，只能手动复制粘贴恢复了。&lt;/p&gt;
+
+&lt;p&gt;目前只恢复了几篇，从搜索引擎过来的朋友，请见谅。&lt;/p&gt;
+</description>
+        <pubDate>Thu, 01 Jan 2099 04:00:00 +0000</pubDate>
+        <link>https://xheldon.com/tech/blog-reference.html</link>
+        <guid isPermaLink="true">https://xheldon.com/tech/blog-reference.html</guid>
+        
+        
+        <category>Others</category>
+        
+      </item>
+    
+      <item>
+        <title>免费使用私有仓库发布 GitHub Pages</title>
+        <description>&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;最近研究了下 Github Pages 配合 Github Actions，觉得很适合自己的个人博客的场景，遂有此文。&lt;/p&gt;
+
+&lt;p&gt;我的博客之前是直接在源码放在 repo 中，使用 Github Pages 提供的默认的 Jekyll，然后设置自定义域名。但是这样有以下几个问题：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;无法隐藏源码。你的 _post 目录下的文章可以随意的复制然后放到别的地方当作他们自己的内容。&lt;/li&gt;
+  &lt;li&gt;无法隐藏修改记录。如果你有一些内容突然不想放到博客上了，于是你把部分内容给删了，但是别人仍然可以通过访问仓库源码的历史记录查看到该文件的历史，你的修改一览无余。&lt;/li&gt;
+  &lt;li&gt;无法使用 Gitalk。以上两个问题可以使用 Github Pro 及以上方式解决，该种付费账户的功能之一就是允许私有仓库使用 Github Pages。但是这样就无法使用 Gitalk 这种需要第三方写入 issue 的留言工具了。&lt;/li&gt;
+  &lt;li&gt;本地与线上打包结果不一致或报错无法排查。因为 Github Pages 提供的 Jekyll 对我们来说是黑盒，因此无法排查。&lt;/li&gt;
+  &lt;li&gt;无法使用一些自定义/三方插件。因为 Github Pages 只支持 &lt;a href=&quot;https://pages.github.com/versions/&quot;&gt;部分插件&lt;/a&gt;，因此诸如可以对分类文章进行分页而不仅限于首页分页的 jekyll-paginate v2 版就无法使用。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;鉴于以上原因，因此我决定将编译后的源码作为 Github Pages 的内容，而不是源码。由于博客仓库已经有了一些 Gitalk 生成的 issue 留言，因此我又新开了一个仓库，将新仓库作为源码的存放地并设置为私有，然后将旧仓库仍然作为 Github Pages 发布的仓库，只是发布的是编译后的源码。如此以来，既可以保留原始的留言数据，又可以避免以上的几个问题。因为我每次编译源码后发布到 Github Pages 都是使用 force 推送，因此无法查看文件修改记录，在一定程度上保护了隐私，增加了复制的成本。下面是这个过程的介绍。&lt;/p&gt;
+
+&lt;h2 id=&quot;总体流程&quot;&gt;总体流程&lt;/h2&gt;
+
+&lt;p&gt;基本流程是，假设旧的仓库叫做 A，新的放源码的私有仓库叫做 B。则当又新的 push 发生的时候，会触发 B 仓库的 Github Actions，然后该 Actions 会将编译后的源码，即 _site 文件夹中的内容 push 到 A 仓库，而 A 仓库原本就是 Github Pages，已经自定义好了域名，因此不用做任何处理即可。&lt;/p&gt;
+
+&lt;h2 id=&quot;详细过程&quot;&gt;详细过程&lt;/h2&gt;
+
+&lt;p&gt;在 Github Actions 需要明确几个概念，分别是：&lt;/p&gt;
+
+&lt;h3 id=&quot;层级关系&quot;&gt;层级关系&lt;/h3&gt;
+
+&lt;p&gt;从大到小依次为：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;脚本本身：就是这个会被 actions 执行的 ci.yml 的文件本身。&lt;/li&gt;
+  &lt;li&gt;任务：即配置的 jobs，jobs 默认是并行运行，可以通过 needs 关键字来设置依赖的其他 jobs。&lt;/li&gt;
+  &lt;li&gt;步骤：即 steps，jobs 中执行的每一步，顺序执行。每个 stps 都在自己的环境上下文中运行。一个 jobs 中可以有无限个步骤。&lt;/li&gt;
+  &lt;li&gt;操作：并非所有步骤都会运行操作，但是操作都是在步骤中运行的。操作是具体的命令，如打印当前目录、安装依赖等。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;使用别人的-step&quot;&gt;使用别人的 step&lt;/h3&gt;
+
+&lt;p&gt;Action 允许你使用别人写好的 step，这样你就不用自己写了，比如如果你需要 checkout 分支，则只需要：&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/checkout@v2&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;persist-credentials&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;fasle&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# false 是用 personal token，true 是使用 GitHub token&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;fetch-depth&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;即可。with 是相关的参数，具体可以查看该 step 的说明。&lt;/p&gt;
+
+&lt;h3 id=&quot;加密数据&quot;&gt;加密数据&lt;/h3&gt;
+
+&lt;p&gt;你肯定不希望在 ci 文件中暴露自己的 &lt;a href=&quot;https://docs.github.com/cn/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token&quot;&gt;Personal Token&lt;/a&gt; 或者其他隐私数据被所有人看到，因此你需要另一种方式来使用之，即加密后再通过名称引用，这里需要注意的问题是加密数据之间的不同：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.github.com/cn/free-pro-team@latest/actions/reference/authentication-in-a-workflow&quot;&gt;GITHUB_TOKEN&lt;/a&gt;。如果你只对自己的仓库进行一些 build 或者 actions，那么你不需要在仓库设置中做任何事，在 actions 运行的时候，Github 会自动在上下文生成一个叫做 GITHUB_TOKEN 的环境变量，它可以用在需要鉴权的地方，如 push 代码到当前仓库等。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.github.com/cn/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token&quot;&gt;Personal Token&lt;/a&gt;。如果你当前的 ci 在 A 仓库，但是需要往 B 仓库做一些事情，那么你就需要 B 仓库的管理员生成的 Personal Token，然后分配一些权限即可。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.github.com/cn/free-pro-team@latest/actions/reference/encrypted-secrets&quot;&gt;自定义加密&lt;/a&gt;。在第二步已经在 B 仓库生成了 Personal Token，然后如何在 A 仓库中使用呢？这个时候就需要用到 secret 了，即自定义加密。你需要在 A 仓库的设置中，自定义一个变量名，如 B_REPO_TOKEN 然后将刚刚拿到的 Personal Token 复制进去，然后就可以用 secret.B_REPO_TOKEN 的方式来引用了。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;具体步骤&quot;&gt;具体步骤&lt;/h2&gt;
+
+&lt;p&gt;上面已经说的很详细了，下面直接列出文件，挨个分析。需要用到的时候直接复制该内容稍加修改即可：&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# 该 ci 的名字，可以在仓库的 Github Actions tab 看到&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Blog Generator&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# 触发时机&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# 代码 push 到 master 分支的时候运行该 workflow&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# TODO：不运行 commit 信息中包含特定关键词的 push&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;branches&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;master&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;jobs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# build-and-push 是 jobs 名字，随便取，可以有多个 jobs 默认并行&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;build-and-push&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;runs-on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ubuntu-latest&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 该 jobs 运行的环境&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;# 首先一般都是 checkout 当前的仓库代码，用官方的 actions/checkout@v2&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/checkout@v2&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# with 表示所需要的参数&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;persist-credentials&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;fasle&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# false 是用 personal token，true 是使用 GitHub token&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;fetch-depth&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 保证能够 push 成功&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;# 设置 ruby 环境，这里用的也是官方的 actions&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Set up Ruby&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ruby/setup-ruby@v1&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;ruby-version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2.6&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;# 安装依赖&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Install dependencies&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 操作名字，会显示在 Github Actions 的任务输出界面，方便你 debug&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bundle install&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 运行的命令&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;# 打包静态资源&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Build Pages&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bundle exec jekyll build&lt;/span&gt; 
+
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Add Message&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;working-directory&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;./_site&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# jekyll 默认 build 到 _site 目录，因此设置命令执行的目录为 ./_site&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# run 后面加个 ‘|’ 然后换行可以同时执行多个命令，每行一个&lt;/span&gt;
+           &lt;span class=&quot;s&quot;&gt;echo &quot;www.xheldon.com&quot; &amp;gt; CNAME&lt;/span&gt;
+           &lt;span class=&quot;s&quot;&gt;echo -e &quot;# [Xheldon's Tech blog](https://www.xheldon.com)&quot; &amp;gt; README.md&lt;/span&gt;
+     
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Commit and Push&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 将打包后的位于 _site 目录的文件 push 到 A 仓库即可&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;working-directory&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;./_site&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;git init&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;git checkout -b master&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;git add -A&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;git -c user.name='github actions by $' -c user.email='NO' commit -m 'update' &lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;git push &quot;https://${{github.actor}}:${{secrets.X_BLOG_SITE}}@github.com/Xheldon/x_blog.git&quot; HEAD:master -f -q&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这里最后一步需要说明下，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;X_BLOG_SITE&lt;/code&gt; 即为我自定义的加密数据，值是配置的 Personal Token。另外 push 到远端的话，如果该 CI 只操作当前仓库，则不用将仓库名写死，可以用环境变量写做如下形式：&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;s&quot;&gt;git push &quot;https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git&quot; HEAD:master -f -q&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;即使用 github.XXX 来指代相关信息，可以 &lt;a href=&quot;https://docs.github.com/cn/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions#github-context&quot;&gt;在这里&lt;/a&gt; 查看更多上下文参数说明。&lt;/p&gt;
+
+&lt;h2 id=&quot;与-travis-的区别&quot;&gt;与 travis 的区别&lt;/h2&gt;
+
+&lt;p&gt;之前我用过 Travis，两者概念基本大差不差，最显著的区别就是 Github Actions 允许引用别人写好的 actions，就好比是允许你 ‘require’ 别人的包一样，你无需维护这个包，直接使用即可，玩法更多，配置也更少，复用性更强。&lt;/p&gt;
+</description>
+        <pubDate>Sat, 31 Oct 2020 14:44:30 +0000</pubDate>
+        <link>https://xheldon.com/tech/the-using-of-github-pages.html</link>
+        <guid isPermaLink="true">https://xheldon.com/tech/the-using-of-github-pages.html</guid>
+        
+        
+        <category>Web</category>
+        
+      </item>
+    
+      <item>
+        <title>博客优化技巧</title>
+        <description>&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;早些时候写过一篇 &lt;a href=&quot;/github-pages-config.html&quot;&gt;关于本博客域名优化配置的几点说明&lt;/a&gt; ，其中的有些方法手段已经不用了，同时又新增了其他一些方法并将其应用到本 Jekyll 的博客，
+其中有些细节需要注意，遂有此文。&lt;/p&gt;
+
+&lt;h2 id=&quot;cdn-服务&quot;&gt;CDN 服务&lt;/h2&gt;
+
+&lt;p&gt;之前关于 CDN 的服务是 &lt;a href=&quot;https://xheldon.com/github-pages-config.html#使用百度-cdn-服务和七牛静态资源托管&quot;&gt;使用百度 cdn 服务和七牛静态资源托管&lt;/a&gt; ，
+将 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;img.xheldon.com&lt;/code&gt; 解析到七牛云上，然后再在七牛云上增加相关静态资源。但是由于一些众所周知的原因，七牛云的的这个个人免费 cdn 加的服务需要备案，而且也需要位于国内的物理机服务器，遂放弃此方案。&lt;/p&gt;
+
+&lt;p&gt;很长一段时间我都是直接将图片和静态资源直接放到项目中，因为 GitHub 的免费仓库有 1 GB 总内容大小的限制，所以是尽量是能用文字描述的就不放图片，很受限制。前不久无意间访问了一个同样是 基于 GitHub Pages 的博客，
+发现它大量使用了图片，而且图片的链接是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jsdelivr.net&lt;/code&gt; 相关的，所以我就猜测是不是某个国外免费的 cdn 服务，搜索了一番以后发现果然是，而且在国内有服务器，免费加速。只需要在 GitHub 仓库中的资源前面加上固定的路径
+即可，它会在首次请求的时候将资源存储到 S3 上，后续即使 GitHub 挂了，也能访问到正确的链接。如果 S3 上没有资源，则会直接溯源，请求 GitHub 中的内容，也即是 CDN 的基本操作。&lt;/p&gt;
+
+&lt;p&gt;我一拍大腿，&lt;del&gt;直呼内行&lt;/del&gt;，免费的 cdn 加速，而且看起来不复杂，而且 jsdelivr 的卖点之一就是在中国拥有合法 ICP 执照的的国外公共 CDN 服务提供商，其在中国有数百个服务器。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/img/2020/jsdelivr.png&quot; alt=&quot;赣江&quot; title=&quot;jsdelivr china&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;说搞就搞，于是有了下面几步操作：&lt;/p&gt;
+
+&lt;h3 id=&quot;增加专用静态资源仓库&quot;&gt;增加专用静态资源仓库&lt;/h3&gt;
+
+&lt;p&gt;这一步是为了让 jsdelivr cdn 服务能够正确解析。如我本地某个图片的引用路径是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/static/img/logo.png&lt;/code&gt; ，因此它的唯一路径是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/img/logo.png&lt;/code&gt; ，将内容托送到 GitHub 仓库后，
+访问路径就是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://github.com/Xheldon/x_blog-static/tree/master/img/logo.png&lt;/code&gt; ，我的的用户名为 xheldon，仓库是 x_blog-static，因此使用 jsdelivr cdn 服务访问后的地址就
+应该是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/img/logo.png&lt;/code&gt; ，不用注册 jsdelivr 服务，不用配置任何东西即可使用，很赞！&lt;/p&gt;
+
+&lt;h3 id=&quot;博客仓库修改&quot;&gt;博客仓库修改&lt;/h3&gt;
+
+&lt;p&gt;主要有以下几步：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;删除 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;static&lt;/code&gt; 文件夹，将该文件夹推送到新建的 GitHub 资源仓库 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x_blog-static&lt;/code&gt; 后就可以删除了。&lt;/li&gt;
+  &lt;li&gt;添加资源仓库 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x_blog-static&lt;/code&gt; 为博客仓库的子模块：&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git submodule add https://github.com/Xheldon/x_blog-static.git ./static&lt;/code&gt; ，并静态资源仓库（刚刚的 static 文件夹下的内容又）放到 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;static&lt;/code&gt; 文件夹下。&lt;/li&gt;
+  &lt;li&gt;修改 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; 文件，添加配置对象 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;static_url: https://cdn.jsdelivr.net/gh/xheldon/x_blog-static&lt;/code&gt; ，方便下一步修改静态资源的绝对路径。&lt;/li&gt;
+  &lt;li&gt;增加本地开发配置文件 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.dev.yml&lt;/code&gt; 文件，添加配置对象 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;static_url: /static&lt;/code&gt; ，方便下一步修改静态资源的绝对路径。&lt;/li&gt;
+  &lt;li&gt;全局替换修改本地绝对路径引用的静态资源，如 img 的 src 是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/static/img/logo.png&lt;/code&gt; 或者 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/static/css/main.css&lt;/code&gt; 等路径，替换为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{{site.static_url}}/img/logo.png&lt;/code&gt;等，这里需要注意的是，Liquid 语法的标签 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{{}}&lt;/code&gt;即使是在 markdown 文件中，也是可以用的，很棒。&lt;/li&gt;
+  &lt;li&gt;将一些常修改的文件如 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main.scss&lt;/code&gt; 文件仍然放在本地比较好，原因下面有说到。&lt;/li&gt;
+  &lt;li&gt;将修改 push 到远端即可。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;已知问题&quot;&gt;已知问题&lt;/h3&gt;
+
+&lt;p&gt;解决了一些痛点后，又带来了另一些痛点。因为 Jekyll 是支持 scss 的，因此，你在本地可以在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;resoruce/css/main.scss&lt;/code&gt; 中写 sass 语法，然后直接在 html 中引用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;resoruce/css/main.css&lt;/code&gt; （注意文件后缀），Jekyll 会自动将 scss 转换成 css。但是这样一来，该样式文件就必须保存在本地，而不能放置到远端。&lt;/p&gt;
+
+&lt;p&gt;因此针对这两点，我将经常修改的文件如 css、js 等，直接放置到博客仓库中，不再放置到静态资源仓库。&lt;/p&gt;
+
+&lt;p&gt;另外需要说明的是，我本来想的是在本地开发的时候在默认 default layout 布局模板中自定义一个 Liquid 的全局变量如 static_url，然后直接在文章的 markdown 文件中使用如： &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{{static_url}}/img/logo.png&lt;/code&gt;，但是实验之后并不可行，搜索了一圈后发现，无论是 Liquid 还是 Jekyll 亦或者
+是 Github Pages 都不支持定义类似于 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;site&lt;/code&gt; 或者 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pages&lt;/code&gt; 亦或者 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;paginator&lt;/code&gt; 这种级别的变量。&lt;/p&gt;
+
+&lt;p&gt;于是我想直接在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;default&lt;/code&gt; 布局文件中 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;assign&lt;/code&gt; 一个变量，然后尝试在使用了 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;default&lt;/code&gt; 布局的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;post&lt;/code&gt; 布局中的 markdown 文件中访问，依然不行。又尝试使用 Jekyll 支持的环境变量 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JEKYLL_ENV=dev&lt;/code&gt; 来实现，但是跟前面一样，由于 layout 之间（无论是谁嵌套谁）不能共享变量因此作罢。研究了一下，原因是 Jekyll 是先渲染文章，再渲染 layout 文件的，
+因此 markdown 文件获取不到外部 layout 的变量。&lt;/p&gt;
+
+&lt;p&gt;其实可以在每个 markdown 之前加入一个模板代码，判断 jekykll.environment 的值，然后 assign 一个变量如 static_url，之后再在 markdown 中使用该变量也是可以的，但是我实在不想去修改所有的 markdown 在头部添加这么一段莫名其妙的逻辑来实现而作罢，同理，也可以在所有使用 static_url 变量的地方
+分别判断 environment，比如想要引入一个图片，就得这么写（伪代码）： &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{{if environment=dev 'static' else 'https://jsdelivr.net/xxx/'}}/img/logo.png&lt;/code&gt;  更加的恶心，于是作罢。&lt;/p&gt;
+
+&lt;p&gt;因此，最终方案是，我写两个 Jekyll 的 yml 配置文件，一个是默认的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; 供 Github Pages 在线生成页面使用，一个是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.dev.yml&lt;/code&gt; 本地开发使用，二者唯一的区别是其有个配置值叫 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;static_url&lt;/code&gt;，在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.dev.yml&lt;/code&gt; 中的值是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/static&lt;/code&gt;，在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; 中的值是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static&lt;/code&gt; 。&lt;/p&gt;
+
+&lt;h2 id=&quot;添加-gitalk&quot;&gt;添加 Gitalk&lt;/h2&gt;
+
+&lt;p&gt;Gitalk 是一款专门用于 Github Pages 的留言工具，只需要引入 css 和 js，然后申请 token 配置即可使用，每次有新文章需要作者先打开页面一次，这样会自动往相应的 GitHub Pages 的仓库的 issue 中新增一个以当前文章名命名的 issue，之后有人在文章下留言，或者在 issue 中留言的话，
+就会显示在文章下面，非常方便，这里的 css 和 js 我同样使用了 jsdelivr 的 cdn 服务，这也是官方支持的。&lt;/p&gt;
+
+&lt;h2 id=&quot;修改页面布局&quot;&gt;修改页面布局&lt;/h2&gt;
+
+&lt;p&gt;首先我是觉得在浏览文章的时候，左侧一大片空白一直显示头像和导航有点浪费空间，但是在首页、项目页、项目分类页的时候，又需要显示出头像、导航和搜索功能。因此我决定在首页、项目页、项目分类页等页面在浏览器宽度大于 1080px 的时候，将导航显示在左侧，同时显示出搜索框。而在其他情况下，将导航条显示在顶部。&lt;/p&gt;
+
+&lt;p&gt;另外，浏览文章页时，当屏幕宽度大于 1080px 时候，会显示 table of content，即内容标题栏，以方便用户快速定位到某个感兴趣的地方及方便外站用户直接链接到页面的某个锚点，同时也有利于 SEO。&lt;/p&gt;
+
+&lt;h2 id=&quot;修改文章段落标题&quot;&gt;修改文章段落标题&lt;/h2&gt;
+
+&lt;p&gt;因为一些 SEO 方面的原因，一个页面只有一个 h1 标签，而有多个 h2 或更大标签，以方便搜索引擎识别。&lt;/p&gt;
+
+&lt;h2 id=&quot;添加项目页面&quot;&gt;添加项目页面&lt;/h2&gt;
+
+&lt;p&gt;增加了单独的个人项目页面，我的全部参与项目均可在其内找到，有些是跳到外链的，有些是个人说明项目。&lt;/p&gt;
+
+&lt;h2 id=&quot;后记&quot;&gt;后记&lt;/h2&gt;
+
+&lt;p&gt;优化持续不断…等媳妇儿帮我做好个人博客的设计稿之后，我可能会做成 NodeJS 渲染的博客，敬请期待~&lt;/p&gt;
+</description>
+        <pubDate>Sat, 31 Oct 2020 14:44:30 +0000</pubDate>
+        <link>https://xheldon.com/tech/optimize-of-this-site.html</link>
+        <guid isPermaLink="true">https://xheldon.com/tech/optimize-of-this-site.html</guid>
+        
+        
+        <category>Web</category>
+        
+      </item>
+    
+      <item>
+        <title>[译]ProseMirror 中的协同编辑实现</title>
+        <description>&lt;p&gt;本博文描述了被使用在 &lt;a href=&quot;https://prosemirror.xheldon.com&quot;&gt;ProseMirror&lt;/a&gt; 中的协同编辑技术。而对于 ProseMirror 的介绍，你可以&lt;a href=&quot;https://marijnhaverbeke.nl/blog/prosemirror.html&quot;&gt;查看这里&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;协同编辑的问题&quot;&gt;协同编辑的问题&lt;/h2&gt;
+
+&lt;p&gt;一个实时协同编辑系统表示可能有多人在同时对相同的文档进行编辑。该系统保证文档保持同步–某个用户的对文档的更改会被发送给其他用户，并将这些更改显示在他们的文档中。&lt;/p&gt;
+
+&lt;p&gt;由于通过任何类型的网络中传输这些更改都是需要时间的，因此此类系统的复杂性在于它们处理并发更新的方式。一个解决方案是允许用户锁定当前文档（或者文档的一部分）从而阻止其他人在同一时刻对文档的更改。但是这个机制会让强迫用户考虑关于锁的问题，并且当他们没有锁的时候（即当其他用户在编辑的时候）必须一直等待。我们不想这么做。&lt;/p&gt;
+
+&lt;p&gt;如果我们允许并发的更新，我们就会遇到这样一个情况：用户 A 和用户 B 同时更改了文档，并且他们并没有意识到对方对文档的更改，于是他们就必须以协商的方式来解决最终如何更新文档。A 和 B 的行为可能并不相互影响–比如他们同时编辑文档的不同部分–或者他们的行为相互影响–当他们尝试去更改同一个单词的时候。&lt;/p&gt;
+
+&lt;h2 id=&quot;operational-transformationot操作转换&quot;&gt;Operational Transformation（OT，操作转换）&lt;/h2&gt;
+
+&lt;p&gt;有关上述问题的研究很多。而且我必须承认，虽然我阅读了很多论文，但是我对这项研究一点也不了解，并且如果你发现误解了某些事情或者某些内容少了一些有趣的参考文献，那么我非常开心你能给我发一封邮件告诉我。&lt;/p&gt;
+
+&lt;p&gt;大量的关于这个问题的研究事实上是关于分布式系统的，一组节点相互交换消息，而没有一个中心控制节点。解决此问题的经典方法称为 「&lt;a href=&quot;https://en.wikipedia.org/wiki/Operational_transformation&quot;&gt;Operational Transformation&lt;/a&gt;」，即一种分布式算法。它定义了一种描述更改的方法，该方法有两个属性：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;你可以相对于其他的更改来转换更改。因此，如果用户 A 插入了一个字母「O」在相对父级偏移量为 1 的位置，同时用户 B 也插入了一个字母「T」在偏移量为 10 的位置，那么用户 A 可以相对于自己的更改来转换 B 的更改，即插入「T」在 11 的位置，因为在 B 的更改偏移量的位置之前，一个额外的字符被插入了。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;不管并发的更改应用到文档的顺序如何，大家都是最终拥有一个相同的文档。这允许 A 相对于自己的更改来转换 B 的更改，并且 B 也可以类似的转换 A 的更改，以让两个用户不会得到不同的文档。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;一个 Operational Transformation（OT）系统将本地更改立即应用于本地文档，然后将更改广播给其他用户。这些用户将会在获取到广播的更改进行转换和应用。为了准确的知道远程的更改应该通过哪些本地更改进行转换，该系统还应该在广播更改的时候附带发送一些文档状态的表示。&lt;/p&gt;
+
+&lt;p&gt;这个过程听起来相当简单。但是它却是实现的噩梦。一旦你支持了多种琐碎的更改（比如「插入」和「删除」），保证以任何顺序执行更改后产生相同文档变得异常困难。&lt;/p&gt;
+
+&lt;p&gt;Joseph Gentle，一位曾经在 Google Wave 工作过的工程师，&lt;a href=&quot;http://sharejs.org/#body&quot;&gt;说过&lt;/a&gt;…&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;不幸的是，实现一个 OT 非常恶心。有成千上百万中算法需要做权衡取舍，而且这些算法大多数都只存在于学术论文中。要正确实现这些算法其实非常困难而且耗时。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;中心化&quot;&gt;中心化&lt;/h2&gt;
+
+&lt;p&gt;使 OT 机制复杂的设计决策很大程度上源于对其如何对更改进行分发的需求。分布式系统无论在实践上还是在策略上，都有一些很棒的特性，并且在开发中往往很有意思。&lt;/p&gt;
+
+&lt;p&gt;不过，你可以通过引入一个「处理更改的中心」来减少很大的复杂性。老实说，我对 Google 将 OT 用在 Google Docs（一种中心化的系统）中表示非常不解。&lt;/p&gt;
+
+&lt;p&gt;ProseMirror 的算法是集中式的，因为它只有一个更改处理中心（所有的用户都连接到该中心）来决定应用更改的顺序。这使得实现协同编辑系统变得相对容易并且容易理解。&lt;/p&gt;
+
+&lt;p&gt;实际上我并不认为这个「中心化」的特性就是以分布式的方式运行 OT 算法的一个非常大的障碍（即 OT 的分布式算法的难点和障碍不在中心化–译者注）。你还可以用像 &lt;a href=&quot;https://en.wikipedia.org/wiki/Raft_(computer_science)&quot;&gt;Raft&lt;/a&gt; 这样的共识算法来选择仲裁器，而不是靠一个中心化的服务来做主。（但是请注意，我实际上并没有尝试过该方式）&lt;/p&gt;
+
+&lt;h2 id=&quot;prosemirror-的协同算法&quot;&gt;ProseMirror 的协同算法&lt;/h2&gt;
+
+&lt;p&gt;与 OT 一样，ProseMirror 使用基于更改的词汇表（意即它也用 delete、insert 这类表示「更改」意思的词–译者注）并相互转换更改。不过与 OT 不同的是，它不试着去保证以不同顺序应用更改将产生相同的文档。&lt;/p&gt;
+
+&lt;p&gt;通过使用一个中心化的服务，甚至可以很容易地让所有客户端以相同的顺序应用更改。你可以使用一种类似于代码版本控制系统中使用的机制。当客户端有一个更改后，他们试着将更改 &lt;em&gt;push&lt;/em&gt; 到服务端。如果服务端认为这个更改是基于当前最新的版本的，那么更改就会被接受。如果不是，那么客户端必须首先 &lt;em&gt;pull&lt;/em&gt; 其他客户端的更改，然后在重试推送到服务器之前将自己的更改 &lt;em&gt;rebase&lt;/em&gt;。&lt;/p&gt;
+
+&lt;p&gt;不像 git，文档的历史记录在这个模型中是线性的，并且文档的给定版本可以用简单的使用一个整数来表示。&lt;/p&gt;
+
+&lt;p&gt;与 git 还不同的是，所有的客户端都在不断的拉取（或者，推送并监听）对文档的新更改，并在网络允许的范围内尽可能快的跟踪服务器的状态。&lt;/p&gt;
+
+&lt;p&gt;唯一困难的部分是 rebasing 其他人的更改到自己的更改。这与 OT 所做的转换非常相似。但是这是通过客户端 &lt;em&gt;自己&lt;/em&gt; 的更改而不是远服务端更改来完成的。&lt;/p&gt;
+
+&lt;h2 id=&quot;位置映射&quot;&gt;位置映射&lt;/h2&gt;
+
+&lt;p&gt;不过，OT 会相对于 &lt;em&gt;别人的更改&lt;/em&gt; 来转换更改，而 ProseMirror 则使用一种称为 &lt;em&gt;position map&lt;/em&gt;（位置映射）的派生数据结构对其进行转换。无论何时你对文档应用了一个更改，你就会得到一个新的文档和上述的一个映射，该映射可以用于将旧文档中的位置转换到新文档中相应的位置。映射的最显著的使用场景是，可以用来调整光标的位置，以让其停留在相同的「概念性」位置（conceptual 不知道怎么意译–译者注）–如果一个字符被在光标之前插入，那么光标应该向前（向右）随着周围的文本移动一个位置。&lt;/p&gt;
+
+&lt;p&gt;转换更改完全基于位置映射完成。这其实挺好的，这意味着我们不需要写特定更改类型的转换代码。每个更改有一到三个位置信息与它相关，分别表示为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt;，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;to&lt;/code&gt; 以及 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;at&lt;/code&gt;。当转换一个相对于给定的其他更改的更改时，这些位置将会通过其他更改的位置映射进行映射。&lt;/p&gt;
+
+&lt;p&gt;例如，如果一个字符被插入到位置 5，那么相对于该插入进行转换时，「删除从 10 到 14 的位置」的更改将会变成「删除从 11 到 15的位置」。&lt;/p&gt;
+
+&lt;p&gt;每个更改的位置只有在最初应用的文档版本是相同的时候才有意义。一个位置映射定义了更改前后两个文档版本中位置之间的映射关系。为了能够应用更改到不同的版本，必须通过其自身版本和目标版本之间的更改来一步步的映射它。&lt;/p&gt;
+
+&lt;p&gt;（为了简单起见，示例将会使用整数作为位置的表示。ProseMirror 中的实际位置由段落中的整数偏移量加上该段落在文档树中的路径组成）&lt;/p&gt;
+
+&lt;h2 id=&quot;rebasing-positions&quot;&gt;Rebasing Positions&lt;/h2&gt;
+
+&lt;p&gt;当一个端有多个未推送到远端的本地更改时，那么有意思的就来了（朱一旦口吻）。如果此时有其他人的更改进入，那么所有的本地未提交的更改需要基于这些更改进行转换。假设我们有本地修改 &lt;em&gt;L1&lt;/em&gt; 和 &lt;em&gt;L2&lt;/em&gt;，并将它们 rebasing 到远程修改 &lt;em&gt;R1&lt;/em&gt; 和 &lt;em&gt;R2&lt;/em&gt;，其中 &lt;em&gt;L1&lt;/em&gt; 和 &lt;em&gt;R1&lt;/em&gt; 更改自相同的文档版本。&lt;/p&gt;
+
+&lt;p&gt;首先，我们应用 R1 和 R2 到我们原始版本的文档中（客户端必须跟踪它们当前正在显示的文档版本–包括未推送的更改–和尚未包含这些更改的原始版本）。这个操作将创建两个映射 &lt;em&gt;mR1&lt;/em&gt; 和 &lt;em&gt;mR2&lt;/em&gt;。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;译者注：下面这段较难理解，需要读者画图可能更直观。简单来说就是，L2 是基于 L1 对文档的修改进行位置映射（位置调整）后对文档的修改，想正确 rebasing L2，必须先将 L1 及 L1 之前（即 R1 和 R2）的对文档的修改对被影响的位置都映射（调整）一遍，这样 L2 才能获得正确的位置映射，然后在正确的位置开始修改文档。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;我们可以简单的向前映射 &lt;em&gt;L1&lt;/em&gt; 到 &lt;em&gt;L1*&lt;/em&gt;，&lt;em&gt;L1*&lt;/em&gt; 是 &lt;em&gt;L1&lt;/em&gt; 通过 &lt;em&gt;mR1&lt;/em&gt; 和 &lt;em&gt;mR2&lt;/em&gt; 映射的版本。但是 &lt;em&gt;L2&lt;/em&gt; 是基于 &lt;em&gt;L1&lt;/em&gt; 在初始文档版本修改之后的文档进行修改的，因此我们对于 &lt;em&gt;L2&lt;/em&gt; （注：即此处对于 &lt;em&gt;L1&lt;/em&gt; 用前面所说的简单映射即可，但是对于 &lt;em&gt;L2&lt;/em&gt; 的处理需要接下来的步骤–译者注）必须首先将 &lt;em&gt;L2&lt;/em&gt; 通过 &lt;em&gt;mL1&lt;/em&gt; （它是应用 &lt;em&gt;L1&lt;/em&gt; 创建的映射） &lt;em&gt;向后映射&lt;/em&gt;（即回滚历史，&lt;em&gt;mL1&lt;/em&gt; 的逆操作–译者注）。此时文档与 &lt;em&gt;R1&lt;/em&gt; 开始时的文档相同，于是我们可以通过 &lt;em&gt;mR1&lt;/em&gt; 和 &lt;em&gt;mR2&lt;/em&gt; 来映射 &lt;em&gt;L2&lt;/em&gt; ，最后再通过 &lt;em&gt;mL1*&lt;/em&gt; –前面简单应用 &lt;em&gt;L1*&lt;/em&gt; 产生的映射–来进行映射。现在我们有了 &lt;em&gt;L2*&lt;/em&gt;，可以将其应用于应用过 &lt;em&gt;L1*&lt;/em&gt; 后的文档，瞧，我们已经将两个更改 rebasing 到另外两个更改了。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;译者注：下面这段中，「在位置 5 插入两个字符」相当于上面的 L1，「在两个字符间（位置 6 ）再插入」相当于上面的 L2。因此 rebasing L2 的时候需要对 L2 先通过 mL1 回滚 L2 的插入位置到最开始的文档，但是此时文档并没有 L2 可映射的位置，因为此时位置还不存在。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;映射删除操作和和向后映射（历史回滚–译者注）插入操作会丢失信息。如果你在位置 5 的地方插入两个字符，然后另一个人在位置 6（介于之前插入的字符之间），向后映射（历史回滚，如前所述的 L2–译者注）然后再通过最开始的插入操作向前映射将会使你（在插入这两个字符后光标）位于插入的这两个字符之前或者之后的位置，因为在插入这两个字符之间的位置不能被还没有它们的文档所表示（如何表示一个即将插入但是还未插入的字符的准确位置？–译者注）。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;译者注：下面这段是本文的核心，即通过在 map 的时候提供额外的相反的 map 信息，来在当需要向后映射（历史回滚）的时候遇到需要映射到不存在位置的话先恢复该位置内容（使用该映射的镜像）然后进行映射，待其之前的映射完成之后，直接跳过这个映射（因为已经在恢复内容的时候映射完毕了），注意必须保证映射的镜像与映射的内容保持相同的大小（废话，不然位置肯定会算错）。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;为了修复这个问题，ProseMirror 协同系统使用映射管道（mapping pipelines），它们不仅是一系列的映射，同时还保存了有关哪些映射是彼此的镜像这种信息。当一个位置在经过这些管道遇到一个删除了该位置周围内容的映射的时候，系统会向前（即向在之前未遇到该位置的时之前的映射–译者注）扫描管道，以查找该映射的镜像。如果找到了这样的映射我们将向前映射跳（就是正常的位置调整–译者注）到它这个位置，并使用该位置在已删除内容中的相对偏移量来恢复该映射插入的内容中的位置。删除操作的映射镜像必须和插入操作的映射镜像保持相同的内容大小。&lt;/p&gt;
+
+&lt;h2 id=&quot;映射的方向&quot;&gt;映射的方向&lt;/h2&gt;
+
+&lt;p&gt;无论何时插入内容，都可以将这个明确的插入点映射到两个不同的位置（这两个点都是有意义的）：插入内容之前，或者之后。有时候前者是合适的，有时候后者是合适的。ProseMirror 的位置映射系统允许开发者选择他喜欢的方向。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;译者注：下面这段话讲的是，假设文档为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;abc&lt;/code&gt; ，在 a 之后，b 之前的位置插入字母 x，那么更改的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt; 和 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;to&lt;/code&gt; 都为 1；插入内容之后，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt; 向前（向左）映射仍为 1 不变，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;to&lt;/code&gt; 向后（向右）映射也变成了 2。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;这也是为什么和一个更改相关的位置含有几个不同的位置信息的原因。如果一个更改具有 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt; 和 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;to&lt;/code&gt; 的位置信息，比如删除或者设置文档某个内容的样式，若在该位置之前或者之后都有内容，那么这些内容不应该被包含到这个更改之内（这些内容只需要在更改发生后映射位置即可–译者注）。因此，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt; 位置应该向前（向左）映射，而 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;to&lt;/code&gt; 位置应该向后（向右）映射）。&lt;/p&gt;
+
+&lt;p&gt;当一个更改通过一个完全包含它的映射进行映射的时候，例如在位置 5 插入一个字符，然后该位置通过删除 2 到 10 创建的更改进行映射，那么在位置 5 插入字符这整个操作将会被简单的丢弃，因为它的上下文不复存在了。&lt;/p&gt;
+
+&lt;h2 id=&quot;更改类型&quot;&gt;更改类型&lt;/h2&gt;
+
+&lt;p&gt;ProseMirror 中一个原子的改动被叫做 &lt;em&gt;step&lt;/em&gt;（步骤）。一些从用户角度看是单个更改的更改实际上会被分解为几个步骤。例如，如果你选择文本然后按下 enter 键，编辑器将会生成 &lt;em&gt;delete&lt;/em&gt; 步骤以删除选择文本然后接着一个 &lt;em&gt;split&lt;/em&gt; 步骤以分割当前段落。&lt;/p&gt;
+
+&lt;p&gt;下面是存在于 ProseMirror 中的步骤类型：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addStyle&lt;/code&gt; 和 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;removeStyle&lt;/code&gt; 增加行内样式到文档中或移除行内的样式。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;split&lt;/code&gt; 将一个节点一分为二。例如，它可以被用来当用户按下 enter 键的时候分割段落。它只需要一个单独的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;at&lt;/code&gt; 位置信息。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;join&lt;/code&gt; 将挨着的两个节点连接起来。该步骤仅对包含相同类型内容的节点有效。它需要 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt; 和 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;to&lt;/code&gt; 的位置信息分别用来指向将要被连接的两个节点的尾部和起始位置（这是为了确保正确将预期的节点连接在一起。若与此同时这两个节点被插入了内容，那么这个连接步骤会被直接忽略）。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ancestor&lt;/code&gt; 被用来修改节点的类型以及增加或者删除它的祖先。可以用来包裹一个 list，或者将段落转换成标题。它需要 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt; 和 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;to&lt;/code&gt; 的位置指向节点的起始和结束位置。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;replace&lt;/code&gt; 用零个或者多个节点替换给定文档的一部分，并可以选择在剪切的边缘位置缝合兼容的节点。它的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt; 和 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;to&lt;/code&gt; 位置定义了应被删除的范围，它的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;at&lt;/code&gt; 位置给定了新节点应该插入的位置。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;上面所述的类型中，最后一个是最复杂的，我最初的冲动是将其拆分成移除和插入两种步骤类型。但是因为替换步骤创建的位置映射需要将步骤视为原子类型（位置必须从 &lt;em&gt;所有&lt;/em&gt; 的替换内容中推出去），于是我通过将其视为单个步骤而取得了更好的结果。&lt;/p&gt;
+
+&lt;h2 id=&quot;操作的意图&quot;&gt;操作的意图&lt;/h2&gt;
+
+&lt;p&gt;一个实时协同编辑系统必要的属性是它们必须尝试保留更改的 &lt;em&gt;意图&lt;/em&gt;。因为更改的「合并」是自动发生的，没有经过用户的交互，这就造成当你对文档的更改通过 rebasing 被重新修改变成了不是你想要的结果的时候会非常恼人。&lt;/p&gt;
+
+&lt;p&gt;我尝试定义这些修改步骤以及它们 rebasing 的方式，以让它们 rebasing 的时候不那么奇怪。大多数的时候更改不会相互覆盖，因此也不需要交互。但是当更改有重叠部分的时候，我们必须确保它们合并后的结果是正常的。&lt;/p&gt;
+
+&lt;p&gt;有些时候修改必须被简单的丢弃掉。当你在一个段落中输入，但是另一个用户在你的更改被服务端采纳之前删除了这个段落，那么你输入的有意义的上下文就没了，插入到该段落的位置将创建一个毫无意义的文档片段。&lt;/p&gt;
+
+&lt;p&gt;如果你尝试将两个 list 拼接在一起，但是其他人在两个 list 之间插入了一个段落，那么你想进行的操作就不可能被执行（你不能将两个不挨着的节点拼接在一起），因此你的操作会被丢弃。&lt;/p&gt;
+
+&lt;p&gt;在其他场景中，更改即使被修改过也仍然是有意义的。如果你将位置 5 到 10 的字符加粗，同时另一个用户在位置 7 插入了一个字符，那么最终你得到的结果是位置 5 到 11 都被加粗。&lt;/p&gt;
+
+&lt;p&gt;最后，一些更改可以重叠而不会相互影响。比如你将一个单词设置为超链接，同时另一个用户将其加粗，那么最终你们二者对这个单词的更改都会被应用到原始文档上去。&lt;/p&gt;
+
+&lt;h2 id=&quot;离线&quot;&gt;离线&lt;/h2&gt;
+
+&lt;p&gt;对实时协同编辑来说，静默的修改更改或者丢掉一些更改并没有什么问题，在这种情况下反馈或多或少是即时的-—你看到你正在编辑的段落消失了，于是你就知道有人把它删除了，于是你的更改也没了。&lt;/p&gt;
+
+&lt;p&gt;而对于离线编辑来说（即你一直在编辑但是并没有连接到中心服务器）或者说对于一个工作流的分支来说，当你做了大量的编辑工作，&lt;em&gt;之后&lt;/em&gt; 将其合并到其他人在此期间编辑过的文档中的时候（无论其他人如何编辑，删除，插入大量的内容，然后再删除最开始的内容等—译者注），我在此描述的这个模型是没用的（OT 也是）。因为这种场景下，（我描述的模型和 OT 都同样-—译者注）可能会默默的删除很多的编辑工作（如果编辑的上下文已经被删除的话），或者当两个用户以不同的方式编辑同一个句子的时候创建一个奇怪的文本组合。&lt;/p&gt;
+
+&lt;p&gt;在这种场景下，一个基于 diff 的实现可能更合适。你可能不能做自动合并—-你需要识别出冲突，然后将他们交给用户解决。比如，git 让用户做的那样。&lt;/p&gt;
+
+&lt;h2 id=&quot;撤销历史&quot;&gt;撤销历史&lt;/h2&gt;
+
+&lt;p&gt;在协同编辑系统中，撤销历史应该如何实现？该问题的广泛接受的答案是，它绝 &lt;em&gt;不应该&lt;/em&gt; 使用一个单一的、共享的历史。如果你撤销编辑，那么撤销的应该是 &lt;em&gt;你&lt;/em&gt; 做的最后一个编辑操作，而不是撤销文档最后的编辑操作。&lt;/p&gt;
+
+&lt;p&gt;这意味着简单的回滚到先前状态来实现文档历史的方法行不通。通过撤销你的更改的状态（如果此时其他人也进行了更改）是一种之前未见过的新的状态（即不是文档历史中的任一以中状态–译者注）。&lt;/p&gt;
+
+&lt;p&gt;为了能够实现这一点，我必须定义一种能够被反转的更改（多个步骤），该反转会产生一个新的步骤，该步骤代表了可以抵消原始步骤的更改。&lt;/p&gt;
+
+&lt;p&gt;ProseMirror 的撤销历史记录累积了相反的步骤，并且还跟踪了他们与当前文档版本之间的所有的位置映射。为了能反向映射到当前文档版本，这是必须的。&lt;/p&gt;
+
+&lt;p&gt;不过不利的一面是，如果用户进行了更改然后空闲了下来，在此期间其他人对文档进行了更改，那么将此用户的更改变成当前版本的文档的位置映射将无限制的堆积起来。为了解决这个问题，历史记录会定期进行 &lt;em&gt;压缩&lt;/em&gt;，将反转的更改向前映射，以使他们再次从当前文档开始编辑。这会丢弃中间过程的位置映射。&lt;/p&gt;
+</description>
+        <pubDate>Sun, 02 Aug 2020 08:05:56 +0000</pubDate>
+        <link>https://xheldon.com/tech/Collaborative-Editing-in-ProseMirror.html</link>
+        <guid isPermaLink="true">https://xheldon.com/tech/Collaborative-Editing-in-ProseMirror.html</guid>
+        
+        
+        <category>Framework</category>
+        
+        <category>ProseMirror</category>
+        
+      </item>
+    
+      <item>
+        <title>使用 Sinon 测试 ES6 模块</title>
+        <description>&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;最近一周在修补前人的测试, 使用到了 Sinon, 遇到了一些问题, 因此记录一下.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;下面说的虽然只有 Sinon 的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;spy&lt;/code&gt; 接口, 但是对于 stub 等接口也同样适用&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;测试用到了 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Mocha&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sinon&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Chai&lt;/code&gt; 库/框架, 这里不做介绍&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;spy-一个单独导出的模块&quot;&gt;spy 一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;单独&lt;/code&gt;导出的模块&lt;/h2&gt;
+
+&lt;p&gt;有如下模块 foo.js, 导出一个 foo 函数&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;有如下一个模块 bar.js, 导入这个 foo 函数&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./foo&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt;  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;有如下测试用例 bar.test.js&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;ES6 导出模块测试-单独导出&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;应该能够 spy bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sinon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        
+        &lt;span class=&quot;nx&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;called&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;equal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 失败&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这里失败的原因是因为, bar.test.js 中导入的 bar 是一个包含一个函数的变量, 而 Sinon 只是在 spy 这个变量 bar, 并没有 spy bar 对应的函数, 下面的测试用例跟这个的情况一样:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;baz&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;ES6 导出模块测试-单独导出&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;应该能够 spy bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sinon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;baz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;baz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        
+        &lt;span class=&quot;nx&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;called&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;equal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 失败&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这种情况可以通过下面这一节的内容解决:&lt;/p&gt;
+
+&lt;h2 id=&quot;spy-一个全部导出的模块&quot;&gt;spy 一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;全部&lt;/code&gt;导出的模块&lt;/h2&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;allBar&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;ES6 导出模块测试-全部导出&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;应该能够 spy bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sinon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;allBar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;allBar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        
+        &lt;span class=&quot;nx&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;called&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;equal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 成功&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;那如何测试未导出的函数呢? 比如上面第一个测试用例中, 如何测试 foo 是否调用了?&lt;/p&gt;
+
+&lt;p&gt;这里有两种方法, 第一个, 纯 ES6 的方式, 只能是将导入的 foo 函数在 bar 中再次导出(这样就违反了&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;测试未导出函数&lt;/code&gt;的前提条件).&lt;/p&gt;
+
+&lt;p&gt;第二种方法, 即使用 babel plugin. 这个方法的实质是将 ES6 转换成 ES5 后进行测试. 插件名字叫做: babel-plugin-rewire 是一个 preset 类型的插件.&lt;/p&gt;
+
+&lt;p&gt;rewire 顾名思义就是重新缠绕一下, 也就是说, 该插件&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;可以将某个模块中导入的但是并未导出却在该模块中调用的函数进行重新导出以方便测试&lt;/code&gt; 说起来有点绕口, 示例看一下(完整版):&lt;/p&gt;
+
+&lt;p&gt;有一个 foo.js:&lt;/p&gt;
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;有一个 bar.js, 导入了 foo.js, 但是并未将 foo 导出:&lt;/p&gt;
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./foo&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 注意此处 默认导出 export default 很重要, 原因下面说&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;测试文件 bar.test.js&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 这里叫 bar , 其实叫任何名字都可以, 因为是默认导出&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;ES6 导出模块测试-默认导出&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;应该能够 spy bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sinon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;__Rewire__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 注意这里的用法和 __Rewire__ 方法&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        
+        &lt;span class=&quot;nx&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;called&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;equal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 成功&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;如注释中所说, 默认导出很重要, 因为只能通过默认导出上的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__Rewire__&lt;/code&gt; 属性进行重新 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rewire&lt;/code&gt;, 即无法像下面这样进行测试:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 假设 bar.js 中 bar 函数不是默认导出&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;ES6 导出模块测试-默认导出&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;应该能够 spy bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sinon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;__Rewire__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 这里会报 __Rewire__ 不是函数&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        
+        &lt;span class=&quot;nx&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;called&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;equal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 失败&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;即使是像前面所说的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;全部导出&lt;/code&gt; 也无法实现:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;allBar&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 假设 bar.js 中 bar 函数不是默认导出&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;ES6 导出模块测试-默认导出&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;应该能够 spy bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sinon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;allBar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;__Rewire__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 这里不会报错, 但是测试不通过, 因为 allBar 上并没有 foo 方法(因为是在 bar 函数中调用的) &lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 或者下面也不行会报 __Rewire__ 不是函数错误, 因为 __Rewire__ 并不重新 rewire 全部导出对象上的属性&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// allBar.bar.__Rewire__('foo', spy); &lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        
+        &lt;span class=&quot;nx&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;called&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;equal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 失败&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;如果想用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;全部导出&lt;/code&gt; 的话来测试未导出函数的话, 被测试文件需要满足该函数在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;根作用域&lt;/code&gt; 这个条件, 如:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./foo&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;则测试文件可以这么写:&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;allBar&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./bar&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// 省略无关部分&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sinon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;allBar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;__Rewire__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;spy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 这么做就对了, foo 函数位于 allBar 的根作用域中&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;结束语&quot;&gt;结束语&lt;/h2&gt;
+
+&lt;p&gt;注意, 这里不光是函数测试, 也适用于默认导出为函数/类的 React 组件, 因为它们导出的本质相同, 都是函数或者对象. 测试 React 组件你可能会用到 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;enzyme&lt;/code&gt; 库.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 10 Nov 2019 01:29:35 +0000</pubDate>
+        <link>https://xheldon.com/tech/sinon-es6-module-test.html</link>
+        <guid isPermaLink="true">https://xheldon.com/tech/sinon-es6-module-test.html</guid>
+        
+        
+        <category>Javascript</category>
+        
+      </item>
+    
+      <item>
+        <title>从 Evernote 转移到苹果自带备忘录</title>
+        <description>&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;我对笔记类应用有洁癖, 同类应用只允许存在一个, 而且需要满足我以下要求, 如果恰好跟你的需求不一样, 那不用往下看了:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;大公司出品&lt;/li&gt;
+  &lt;li&gt;苹果平台上稳定同步速度快(不用 PC 不考虑)&lt;/li&gt;
+  &lt;li&gt;笔记可迁移, 通用性好&lt;/li&gt;
+  &lt;li&gt;美观大方排版棒&lt;/li&gt;
+  &lt;li&gt;1/2 优先级最高, 如果非常能满足 1/2 的要求, 3/4 可以忽略&lt;/li&gt;
+  &lt;li&gt;家庭共享协作&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Evernote 不是不好, 而是在”苹果倒闭”和”Evernote倒闭”之间, 我觉得还是前者更难. 但是苹果自带备忘录有个不好的地方是, 它的导出只支持 PDF 导出, 固然可以使用软件导出 txt 文件的格式, 但是导出没有图片是个极大的问题. 不过话说回来, 我相信苹果不会轻易倒闭, 因此我准备将苹果自带的备忘录作为我笔记数据的中转站.&lt;/p&gt;
+
+&lt;p&gt;之所以叫中转站而不是容器是因为, 这些笔记最终是要删除的, 笔记的终点是在我的脑子里. 另外我媳妇儿始终是个懒人, 她不想为了一些功能再下一些软件, 能用原生就用原生, 因此苹果自带备忘录能很好的家庭共享也符合要求.&lt;/p&gt;
+
+&lt;p&gt;OK, 废话不多说, 看下如何从 Evernote 迁移到 备忘录吧.&lt;/p&gt;
+
+&lt;h2 id=&quot;方案一-applescript-脚本迁移&quot;&gt;方案一: AppleScript 脚本迁移&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;优点: 方便易操作&lt;/li&gt;
+  &lt;li&gt;缺点: 迁移后
+    &lt;ol&gt;
+      &lt;li&gt;标题被放到正文中, 跟正文一样的字体大小&lt;/li&gt;
+      &lt;li&gt;正文字体的很小, 目测只有 10 像素甚至更小&lt;/li&gt;
+      &lt;li&gt;列表中间有多余空行&lt;/li&gt;
+      &lt;li&gt;图片丢失(无法显示图片但是图片还在是被备忘录统计到了&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;每条备忘录附件不超过100条&lt;/code&gt;限制里面的, 很奇怪)&lt;/li&gt;
+      &lt;li&gt;Evernote 的剪藏笔记在备忘录中以表格形式存在, 很诡异, 应该是由于备忘录支持的格式太少导致的&lt;/li&gt;
+      &lt;li&gt;每个笔记结尾都会有个 EvernoteData: {xxx} 之类的东西, 很恶心&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.appinn.com/evernote-to-apple-notes/&quot;&gt;点击此处查看具体操作步骤&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;注: 我只用 Evernote 客户端测试过, 国内的印象笔记客户端是否支持未做测试, 该脚本是一个外国人写的&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;方案二-python-脚本迁移-evernote-export&quot;&gt;方案二: Python 脚本迁移 evernote-export&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;优点: 相比于方案一:
+    &lt;ol&gt;
+      &lt;li&gt;图片完整带上&lt;/li&gt;
+      &lt;li&gt;列表正常&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;缺点:
+    &lt;ol&gt;
+      &lt;li&gt;需要 Python2.7 和 pip, Python3 不支持&lt;/li&gt;
+      &lt;li&gt;迁移操作难度较大, 出错小白不会处理&lt;/li&gt;
+      &lt;li&gt;迁移前对笔记本/笔记本组/笔记名要求较高, 不能有特殊字符, 如不能有 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/&lt;/code&gt; 否则会被当成是路径分隔符处理导致报错&lt;/li&gt;
+      &lt;li&gt;迁移后:
+        &lt;ol&gt;
+          &lt;li&gt;正文字体也变小了(不是备忘录设置的默认字体), 但是比方案一的字体要更正常一点&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://pypi.org/project/evernote-export/&quot;&gt;点击此处查看具体操作步骤&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;注: 二者都在导入备忘录的时候都能正确带上&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;笔记本组-笔记本-笔记&lt;/code&gt;这样的目录结构, 只是方案二会先将笔记都放到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;导入的备忘录&lt;/code&gt;文件夹下, 需要手动移动到顶级目录&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;后记&quot;&gt;后记&lt;/h2&gt;
+
+&lt;p&gt;因为备忘录导入的网页都是一个链接形式的, 想要看的话还是得点击链接打开网页查看, 因此现在我需要需要剪藏的笔记我都是在 Safari 打开然后加入阅读列表, 同时将所有设备设置中的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;自动离线存储&lt;/code&gt;阅读列表打开, 这样就变相取代了 Evernote 的剪藏功能, 等看完阅读列表有所沉淀后, 再手动记录到备忘录中—亦或者沉淀到脑中(虽然我相信好记性不如烂笔记)&lt;/p&gt;
+
+&lt;p&gt;最后附上一张图(图压缩了):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/img/2019/notes.png&quot; alt=&quot;备忘录笔记本&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 23 Oct 2019 00:25:33 +0000</pubDate>
+        <link>https://xheldon.com/tech/from-evernote-to-apple-notes.html</link>
+        <guid isPermaLink="true">https://xheldon.com/tech/from-evernote-to-apple-notes.html</guid>
+        
+        
+        <category>Software</category>
+        
+      </item>
+    
+      <item>
+        <title>JavaScript 中的数据结构和算法</title>
+        <description>&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;虽然知道自己很努力, 也进入过大公司. 但是一直以来自己在计算机科学的基础方面都很薄弱, 因为自己并不是科班出身, 因此很希望能够通过后天弥补拉近与科班出身同学的差距, 因此作为程序员的三大梦(语言/算法/图形)之一, 数据结构和算法一直是我心头的一个心病, 总是在空闲的时间逛一些技术社区的时候被一些标题党的数据和算法相关标题吸引进去, 点进去看后又空洞无物. 因此终于下定决心要好好学习一下算法(基础).&lt;/p&gt;
+
+&lt;p&gt;这篇文章即是我学习后记录的产物, 是在看 &amp;lt;学习 JavaScript 数据结构与算法(第2版)&amp;gt; 时候的总结和备忘, 先从数据结构入手, 然后是数据结构的各种算法. 大部分使用 ES5 方法, 少部分使用 ES6 方法. 只实现效果, 不考虑一些诸如执行开销等不相关问题(如使用在每个实例上添加方法而不是使用原型链等)&lt;/p&gt;
+
+&lt;h2 id=&quot;栈&quot;&gt;栈&lt;/h2&gt;
+
+&lt;h3 id=&quot;栈的基本概念和方法&quot;&gt;栈的基本概念和方法&lt;/h3&gt;
+
+&lt;p&gt;栈是一种遵从后进先出(LIFO)原则的有序集合. 新添加或待删除的元素保存在栈的一端, 称作栈顶, 另一端称作栈底. 在栈里, 新元素都靠近栈顶, 旧元素都靠近栈底. 形象的例子就是一摞书. 栈数据结构有以下方法:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;push(element)&lt;/code&gt; 添加一个或几个元素&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pop()&lt;/code&gt; 移除栈顶的元素, 返回被移除的元素&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;peek()&lt;/code&gt; 返回栈顶的元素, 不修改原始栈&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;isEmpty()&lt;/code&gt; 判断栈是否为空&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;clear()&lt;/code&gt; 清空栈&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;size()&lt;/code&gt; 返回栈里的元素个数&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;栈的-javascript-实现&quot;&gt;栈的 JavaScript 实现&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/Stack.js&quot;&gt;栈&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;栈的应用&quot;&gt;栈的应用&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/DecimalToBinary.js&quot;&gt;十进制转二进制&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/TowerOfHanoi.js&quot;&gt;汉诺塔&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;队列&quot;&gt;队列&lt;/h2&gt;
+
+&lt;h3 id=&quot;队列的基本概念和方法&quot;&gt;队列的基本概念和方法&lt;/h3&gt;
+
+&lt;p&gt;队列是遵循FIFO(First In First Out 先进先出)原则的一组有序项. 队列在尾部添加新元素, 并从顶部移除元素. 最新添加的元素必须排在队列的末尾. 队列数据结构有以下方法:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;enqueue(element)&lt;/code&gt; 向队列尾部添加一个(或多个)新的项&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dequeue()&lt;/code&gt; 移除队列的第一项(最先添加的元素), 并返回被移除的元素&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;front()&lt;/code&gt; 返回队列中第一个元素(最先添加的元素), 队列不变&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;isEmpty()&lt;/code&gt; 返回队列是否为空&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;size()&lt;/code&gt; 队列元素个数&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;队列的-javascript-实现&quot;&gt;队列的 JavaScript 实现&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/Queue.js&quot;&gt;队列&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/PriorityQueue.js&quot;&gt;加权队列&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;链表&quot;&gt;链表&lt;/h2&gt;
+
+&lt;h3 id=&quot;链表的基本概念和方法&quot;&gt;链表的基本概念和方法&lt;/h3&gt;
+
+&lt;p&gt;链表的每项不仅存有自身的值, 还存有一个指针, 该指针指向下一个项的位置, 此谓之单向链表; 如果每项不但存有指向下一个项的位置指针, 还有一个指向上一个项的指针(除了开头/结尾项, 它们指向上一个/下一个的指针为 null), 则此谓之双向链表; 如果双向链表的首尾相连, 则谓之双向循环链表. 像下面这样(箭头就是指针, 是箭头尾部项的一部分):&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;单向链表
+    &lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;graph RL
+A(Tail) --&amp;gt; B(第三项) --&amp;gt; C(第二项) --&amp;gt; D(Head)
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;双向链表
+    &lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;graph LR
+A(Head) --&amp;gt; B(第二项) --&amp;gt; A
+B --&amp;gt; C(第三项) --&amp;gt; B
+C --&amp;gt; D(Tail) --&amp;gt; C
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;循环链表
+    &lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;graph LR
+A(Head) --&amp;gt; B(第二项) --&amp;gt; A
+B --&amp;gt; C(第三项) --&amp;gt; B
+C --&amp;gt; D(Tail) --&amp;gt; C
+A --&amp;gt; D --&amp;gt; A
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;链表有以下方法:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;append(element)&lt;/code&gt; 向链表尾部添加一个新的项&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;insert(position, element)&lt;/code&gt; 向链表的特定谓之插入一个新的项&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remove(element)&lt;/code&gt; 从链表移除一个项&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;indexOf(element)&lt;/code&gt; 返回元素在链表中的索引, 如果没有则返回 -1;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;removeAt(position)&lt;/code&gt; 移除链表指定位置的项&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;isEmpty()&lt;/code&gt; 链表是否为空&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;size()&lt;/code&gt; 链表项个数&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;链表的-javascript-实现&quot;&gt;链表的 JavaScript 实现&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/LinkedList.js&quot; data-open=&quot;&quot;&gt;单向链表&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/DoublyLinkedList.js&quot; data-open=&quot;&quot;&gt;双向链表&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/CircularLinkedList.js&quot; data-open=&quot;&quot;&gt;循环链表&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;集合&quot;&gt;集合&lt;/h2&gt;
+
+&lt;h3 id=&quot;集合的基本概念和方法&quot;&gt;集合的基本概念和方法&lt;/h3&gt;
+
+&lt;p&gt;集合是由一组无序且唯一(即不能重复)的项组成的, 集合有以下方法:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add(value)&lt;/code&gt; 向集合添加一个新的项&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remove(value)&lt;/code&gt; 从集合移除一个项&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;has(value)&lt;/code&gt; 判断项是否在集合中&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;clear()&lt;/code&gt; 清空集合&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;size()&lt;/code&gt; 集合的大小&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;values()&lt;/code&gt; 包含集合所有值的数组&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;union(set)&lt;/code&gt; 与另一个集合的并集&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;intersection(set)&lt;/code&gt; 与另一个集合的交集&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;difference(set)&lt;/code&gt; 与另一个集合的差集(当前集合减去指定集合)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;subset(set)&lt;/code&gt; 判断一个集合是否为另一个集合的子集&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;集合的-javascript-实现&quot;&gt;集合的 JavaScript 实现&lt;/h3&gt;
+
+&lt;p&gt;一般使用对象或者 ES6 的 Set 实现, 细节略&lt;/p&gt;
+
+&lt;h2 id=&quot;字典&quot;&gt;字典&lt;/h2&gt;
+
+&lt;h3 id=&quot;字典的基本概念&quot;&gt;字典的基本概念&lt;/h3&gt;
+
+&lt;p&gt;集合表示一组互不相同的元素, 在集合中, 使用对象存储, 形式是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{值: 值}&lt;/code&gt; 的形式. 而在字典中, 使用的是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{键: 值}&lt;/code&gt; 的形式, 字段也被称作&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;映射&lt;/code&gt;, 字典通常有以下方法:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;set(key, value)&lt;/code&gt; 向字典中添加项&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;delete(key)&lt;/code&gt; 删除拥有指定键的项&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;has(key)&lt;/code&gt; 判断含有 key 的某项是否存在于字字典中&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get(key)&lt;/code&gt; 查找特定键的项, 并返回该项&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;clear()&lt;/code&gt; 清空字典&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;size()&lt;/code&gt; 返回字典的大小&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;keys()&lt;/code&gt; 将字典中所有包含项的键以数组形式返回&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;values()&lt;/code&gt; 将字典中所有包含项的值以数组形式返回&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;字典的-javascript-实现&quot;&gt;字典的 JavaScript 实现&lt;/h3&gt;
+
+&lt;p&gt;略&lt;/p&gt;
+
+&lt;h2 id=&quot;散列表&quot;&gt;散列表&lt;/h2&gt;
+
+&lt;p&gt;散列表, 即 HashTable(数组实现), 也叫 HashMap(对象实现), 它是字典数据结构的一种散列表实现方式. 如果字典需要找到一个项, 则最坏的情况需要遍历整个数据结构. 如果使用散列表, 以及使用附带的散列算法, 就知道值的具体位置, 因此就能够款速检索到该值. 散列函数的作用是给定一个键值, 返回值在散列表中的地址.&lt;/p&gt;
+
+&lt;h3 id=&quot;散列表的用途&quot;&gt;散列表的用途&lt;/h3&gt;
+
+&lt;p&gt;你可能会问, 为什么需要散列表呢? 在 JavaScript 中, 直接使用对象来获取键值映射, 就是 O(1) 的速度了呀. 这话没错, 但是试想如果有重复的键, 该怎么办呢? 比如, 想要构建一个花名册, 来记录不同同学的信息. 那么同名的同学怎么办呢? 这时候就需要一种算法来使每个同学的名字作为输入, 而输出都是独一无二的, 这样才能做到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;一一对应&lt;/code&gt;, 从而实现 O(1) 的算法, 此谓之完美散列, 数学中这叫做完全单射函数. 但是这样如果存储上百万个数据, 会使得该 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Object&lt;/code&gt; 对象非常之庞大, 导致性能问题. 因此需要散列算法, 来使得时间和空间做一个平衡.&lt;/p&gt;
+
+&lt;p&gt;还拿上述花名册做例子, 如果有同名的同学, 则依然以这个名字作为键, 只是值不再单单的是一个同学的信息, 而是一个同学信息的数组(或链表), 给定同学名后, 如果发现对应的值是数组, 则遍历该数组直到找到准确的同学信息. 这样就平衡了时间(比之前的时间O(1)要长❌)和空间(比之前的 Object 对象占用的空间要小✅). 一个好的散列算法, 应该能保证每个键上的数组都是相差不大的.&lt;/p&gt;
+
+&lt;h3 id=&quot;散列表的基本方法&quot;&gt;散列表的基本方法&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;put(key, value)&lt;/code&gt; 向散列表新增一项&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remove(key)&lt;/code&gt; 根据键从散列表移除项&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get(key)&lt;/code&gt; 根据键查找项&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;一个最简单的散列函数&quot;&gt;一个最简单的散列函数&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;以输入是字符串为例, 暂时不考虑相同字符串, 数据结构使用数组, 这样可以将 key 作为键&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;loseloseHashCode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;hash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;charCodeAt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;37&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;解决散列表中的冲突&quot;&gt;解决散列表中的冲突&lt;/h3&gt;
+
+&lt;p&gt;通过上述散列算法可以看到, 算出来的键是可能冲突的, 也就是说数组中相同 key 可能有不同的值, 这样就会被覆盖, 因此需要解决冲突. 有三种方案:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;分离链接&lt;/code&gt; 即如果散列算法生成的键相同的时候, 键不再直接指向值, 而是指向一个数组/链表, 将问题转化为数组/链表插入/查找&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;线性探查&lt;/code&gt; 即如果散列算法生成的键相同的时候, 键自动+1再次尝试存储, 如果仍然键冲突, 则继续+1, 知道找到为空的位置(适用于键是数字的散列表形式, 如数组), 还有些更棒的针对数字键的散列实现在 &lt;a href=&quot;http://web.archive.org/web/20071223173210/http://www.concentric.net/~Ttwang/tech/inthash.htm&quot;&gt;这个地方&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;双散列法&lt;/code&gt; 即如果散列算法生成的键相同的时候, 再次对冲突使用另一个或者相同散列函数进行键的生成.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;散列表的-javascript-实现&quot;&gt;散列表的 JavaScript 实现&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;[普通散列表实现(https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/HashTable.js)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/HashCollisionSeparateChaining.js&quot;&gt;分离链接&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/HashCollisionLinearProbing.js&quot;&gt;线性探查&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;树&quot;&gt;树&lt;/h2&gt;
+
+&lt;h3 id=&quot;树的相关术语&quot;&gt;树的相关术语&lt;/h3&gt;
+
+&lt;p&gt;先看结构示意图:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;graph TD;
+    11---7;
+    11---15;
+    7---5;
+    7---9;
+    5---3;
+    5---6;
+    9---8;
+    9---10;
+    15---13;
+    15---20;
+    13---12;
+    13---14;
+    20---18;
+    20---25;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其中:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;11 是第 0 层, 7/15 是第 1 层, 5/9/13/20 是第 2 层, 其他是第 3 层&lt;/li&gt;
+  &lt;li&gt;11 叫根节点, 其他叫子节点. 至少有一个子节点的节点称为内部节点, 没有子元素的节点成为外部节点&lt;/li&gt;
+  &lt;li&gt;节点有深度属性, 如节点 3 有三个祖先元素, 因此深度为 3&lt;/li&gt;
+  &lt;li&gt;树的高度取决于所有节点深度的最大值&lt;/li&gt;
+  &lt;li&gt;这是一颗完全二叉树, 因为它们除了最下面一层节点没有自己点外, 其他节点都有两个节点&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;注意: 相同的数据可能会有好几种树结构, 并不一定是唯一的表现形式, 因此才会有下下节的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AVL树&lt;/code&gt;—它为尽量用数据构建成为一颗完全树&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;二叉树和二叉搜索树&quot;&gt;二叉树和二叉搜索树&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;二叉树&lt;/code&gt;的节点最多只能有两个子节点, 一个是左侧子节点, 另一个是右侧子节点. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;二叉搜索树&lt;/code&gt;(BST)是二叉树的一种, 但是它只允许你在任意节点的左侧存储比该节点小的值, 在任意节点的右侧存储比该节点大或等于的值. 示意图中就是一颗二叉搜索树, 有以下方法:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;insert(key)&lt;/code&gt; 插入新的节点&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sertch(key)&lt;/code&gt; 查找一个节点或返回 null&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;inOrderTraverse&lt;/code&gt; 中序遍历所有节点&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;preOrderTraverse&lt;/code&gt; 先序遍历所有节点&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;postOrderTraverse&lt;/code&gt; 后序遍历所有节点&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;min&lt;/code&gt; 返回树中的最小的值&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;max&lt;/code&gt; 返回树种最大的值&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remove(key)&lt;/code&gt; 移除树中某项&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;树的遍历图示&quot;&gt;树的遍历图示:&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;中序遍历—常用来对树进行排序操作&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt; graph TD;
+     11---7;
+     11---15;
+     7---5;
+     7---9;
+     5---3;
+     5---6;
+     9---8;
+     9---10;
+     15---13;
+     15---20;
+     13---12;
+     13---14;
+     20---18;
+     20---25;
+     3-.-&amp;gt;5
+     5-.-&amp;gt;6;
+     6-.-&amp;gt;7;
+     7-.-&amp;gt;8;
+     8-.-&amp;gt;9;
+     9-.-&amp;gt;10;
+     10-.-&amp;gt;11;
+     11-.-&amp;gt;12;
+     12-.-&amp;gt;13;
+     13-.-&amp;gt;14;
+     14-.-&amp;gt;15;
+     15-.-&amp;gt;18;
+     18-.-&amp;gt;20;
+     20-.-&amp;gt;25;
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;遍历顺序是:3 5 6 7 8 9 10 11 12 13 14 15 18 20 25&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;先序遍历—常用来打印一个结构化的文档, 示例图中的遍历顺序是: 11 7 5 3 6 9 8 10 15 13 12 14 20 18 25&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;后序遍历—应用于计算一个目录和它的子目录中所有文件所占空间的大小, 示例图中的遍历顺序是: 3 6 5 8 10 9 7 12 14 13 18 25 20 15 11&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;adelson-velskii-landi-树avl树&quot;&gt;Adelson-Velskii-Landi 树(AVL树)&lt;/h3&gt;
+
+&lt;p&gt;VAL 树是一种自平衡树. 二叉树在某些情况下可能会导致有个子树过深, 而某些子树过浅, 如下图:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;graph TD;
+    11---7;
+    11---15;
+    7---5;
+    7---9;
+    5---3;
+    5---6;
+    9---8;
+    9---10;
+    15---13;
+    15---20;
+    13---12;
+    13---14;
+    20---18;
+    20---25;
+    25---27
+    27---30
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这个树的右侧过深, 在搜索添加删除某个节点的时候可能会引起一些性能问题, 因此需要 AVL 自平衡树. AVL 是一种自平衡二叉搜索树, 意思是任何一个节点左右两侧子树的高度之差最多为 1. 也就是说这种树会在添加或者移除节点的时候尽量试着成为一颗完全树.&lt;/p&gt;
+
+&lt;h4 id=&quot;avl-树的平衡因子及计算&quot;&gt;AVL 树的平衡因子及计算&lt;/h4&gt;
+
+&lt;p&gt;在 AVL 树种插入和删除节点和 BST 完全相同, AVL 的不同之处在于需要在插入/删除的时候检查它的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;平衡因子&lt;/code&gt;, 如果有需要则将其应用于树的自平衡. 在 AVL 树中需要对每个节点计算右子树高度(hr)和左子树高度(hl)的差值, 如果该值(hr-hl)不是 0/1/-1 的其中一个值, 则需要平衡该 VAL 树. 这就是平衡因子的概念.下面三颗树都是平衡的:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;graph TD;
+    subgraph 第三种
+        A((+1))---B(( -1))
+        A---C(( -1))
+        B---E((0))
+        C---D((+1))
+        C---F((0))
+        D---H((0))
+    end
+    subgraph 第二种
+        I((+1))---G((0))
+        I---K(( -1))
+        K---L((0))
+    end
+    subgraph 第一种
+        M(( -1))---N((0))
+    end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&quot;avl-树的旋转&quot;&gt;AVL 树的旋转&lt;/h4&gt;
+
+&lt;p&gt;在向 AVL 树插入节点的时候, 可以执行单旋转或双旋转两种平衡操作, 分别对应四种场景:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;右---右(RR)&lt;/code&gt; 向左的单旋转&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;左---左(LL)&lt;/code&gt; 向右的单旋转&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;左---右(LR)&lt;/code&gt; 向右的双旋转&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;右---左(RL)&lt;/code&gt; 向左的双旋转&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;右—右(RR): 向左的单旋转示意图(mermaid绘图这个地方无法绘制成二叉树导致80在左边50在右边):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;graph TD;
+    subgraph 之后
+        G((70))---H((50))
+        G---I((80))
+        I---J((90))
+        H---K((30))
+        H---L((60))
+    end
+    subgraph 之前
+        A((50))---B((30))
+        A---C((70))
+        C---D((60))
+        C---E((80))
+        E---F((90))
+    end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;左—左(LL)): 向右的单旋转示意图(mermaid绘图这个地方无法绘制成二叉树导致50在左边10在右边):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;graph TD;
+    subgraph 之后
+        G((30))---H((10))
+        G---I((50))
+        I---J((40))
+        I---K((70))
+        H---L((5))
+    end
+    subgraph 之前
+        A((50))---C((30))
+        A---B((70))
+        C---D((10))
+        C---E((40))
+        D---F((5))
+    end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;左—右(LR): 向右的双旋转示意图(基本上就是做一次RR旋转后再做一次LL旋转):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;graph TD;
+    subgraph 之后
+        G((40))---H((30))
+        G---I((50))
+        H---J((10))
+        H---K((35))
+        J---L((70))
+    end
+    subgraph 之前
+        A((50))---C((30))
+        A---B((70))
+        C---D((10))
+        C---E((40))
+        E---F((35))
+    end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;右—左(RL): 向左的双旋转示意图(基本上就是做一次LL旋转后再做一次RR旋转, mermaid绘图这个地方无法绘制成二叉树导致80在左边70在右边):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;graph TD;
+    subgraph 之后
+        G((72))---I((70))
+        G---H((80))
+        H---J((75))
+        H---K((90))
+        I---L((50))
+    end
+    subgraph 之前
+        A((70))---B((50))
+        A---C((80))
+        C---D((72))
+        C---E((90))
+        D---F((75))
+    end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;尽管 AVL 树是自平衡的, 但是其插入或移除节点的性能并不总是最好的. 更好的选择是红黑树, &lt;a href=&quot;http://goo.gl/OxED8K&quot;&gt;红黑树&lt;/a&gt; 可以高效有序地遍历其节点.&lt;/p&gt;
+
+&lt;h3 id=&quot;树的基本方法的-javascript-实现&quot;&gt;树的基本方法的 JavaScript 实现&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/BinarySearchTree.js&quot;&gt;二叉树&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/AVLTree.js&quot;&gt;AVL 树&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/RedBlackTree.js&quot;&gt;红黑树&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://goo.gl/SFlhW6&quot;&gt;堆积树&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;图&quot;&gt;图&lt;/h2&gt;
+
+&lt;h3 id=&quot;图的基本概念&quot;&gt;图的基本概念&lt;/h3&gt;
+
+&lt;p&gt;图是网络结构的抽象模型. 图示一组由边连接的节点(或定点). 任何二元关系都可以用图来表示. 可以使用图来解决两点间最短路径等问题.&lt;/p&gt;
+
+&lt;h3 id=&quot;图在数学上的概念&quot;&gt;图在数学上的概念&lt;/h3&gt;
+
+&lt;p&gt;一个图 G=(V, E) 由以下元素组成&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;V 一组定点&lt;/li&gt;
+  &lt;li&gt;E 一组边, 连接 V 中的顶点&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;下面表示一个图:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;graph TD;
+    A---B
+    B---E
+    B---F
+    E---I
+    A---C
+    A---D
+    C---D
+    C---G
+    D---G
+    D---H
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;图的相关术语&quot;&gt;图的相关术语&lt;/h3&gt;
+
+&lt;p&gt;上述图中:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;由一条边连接在一起的顶点称为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;相邻顶点&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;一个顶点的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;度&lt;/code&gt;是其相邻顶点的数量, 上图中 A 和其他三个顶点相邻, 因此 A 的度为 3; E 的度为 2;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;路径&lt;/code&gt;是顶点 v1, v2,…vk 的一个连续序列, 其中 vi 和 v(i+1) 是相邻的. 上图中包含路径 ABEI 和 ACDG&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;简单路径&lt;/code&gt;要求不包括重复的顶点, 如 ADG 是一条简单路径. 除去最后一个顶点(因为它和第一个顶点是相同顶点), &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;环&lt;/code&gt;也是一个简单路径, 如 ADCA(最后一个顶点重新回到A))&lt;/li&gt;
+  &lt;li&gt;如果图中不存在环, 则称该图是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;无环&lt;/code&gt;的. 如果图中每两个顶点间都存在路径, 则该图是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;连通的&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;图可以使&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;有向的&lt;/code&gt;(边有方向)也可以是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;无向的&lt;/code&gt;(边没有方向), 上图是一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;无向图&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;如果图中每两个顶点间在双向上都存在路径, 则该图是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;强连通&lt;/code&gt;的&lt;/li&gt;
+  &lt;li&gt;图还可以是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;未加权的&lt;/code&gt;, 或是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;加权的&lt;/code&gt;, 加权图的边被赋予了权值&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;图的表示&quot;&gt;图的表示&lt;/h3&gt;
+
+&lt;h4 id=&quot;邻接矩阵&quot;&gt;邻接矩阵&lt;/h4&gt;
+
+&lt;p&gt;图最常见的实现是邻接矩阵, 每个节点都和一个整数相关联, 该证书将作为数组的索引. 用一个二维数组来表示顶点之间的连接. 如果索引为 i 的节点和索引为 j 的节点相邻, 则 array[i][j] === 1 否则 array[i][j] === 0. 上述的图用邻接矩阵表示为:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt; &lt;/th&gt;
+      &lt;th&gt;A&lt;/th&gt;
+      &lt;th&gt;B&lt;/th&gt;
+      &lt;th&gt;C&lt;/th&gt;
+      &lt;th&gt;D&lt;/th&gt;
+      &lt;th&gt;E&lt;/th&gt;
+      &lt;th&gt;F&lt;/th&gt;
+      &lt;th&gt;G&lt;/th&gt;
+      &lt;th&gt;H&lt;/th&gt;
+      &lt;th&gt;I&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;A&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;B&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;C&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;D&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;E&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;F&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;G&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;H&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;I&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;不是强连通的图称为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;稀疏图&lt;/code&gt;, 如果用邻接矩阵来表示, 矩阵中将会有很多 0, 这意味着我们浪费了计算机中的存储空间来表示根本不存在的边.&lt;/p&gt;
+
+&lt;h4 id=&quot;邻接表&quot;&gt;邻接表&lt;/h4&gt;
+
+&lt;p&gt;邻接表由图中每个顶点的相邻顶点列表所组成. 存在好几种方式来表示这种数据结构. 可以用列表(数组)/链表/甚至是散列表或者字典来表示相邻顶点列表. 上述图可以用下面的邻接表表示:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;A&lt;/th&gt;
+      &lt;th&gt;B&lt;/th&gt;
+      &lt;th&gt;C&lt;/th&gt;
+      &lt;th&gt;D&lt;/th&gt;
+      &lt;th&gt; &lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;B&lt;/td&gt;
+      &lt;td&gt;A&lt;/td&gt;
+      &lt;td&gt;E&lt;/td&gt;
+      &lt;td&gt;F&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;C&lt;/td&gt;
+      &lt;td&gt;A&lt;/td&gt;
+      &lt;td&gt;D&lt;/td&gt;
+      &lt;td&gt;G&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;D&lt;/td&gt;
+      &lt;td&gt;A&lt;/td&gt;
+      &lt;td&gt;C&lt;/td&gt;
+      &lt;td&gt;G&lt;/td&gt;
+      &lt;td&gt;H&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;E&lt;/td&gt;
+      &lt;td&gt;B&lt;/td&gt;
+      &lt;td&gt;I&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;F&lt;/td&gt;
+      &lt;td&gt;B&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;G&lt;/td&gt;
+      &lt;td&gt;C&lt;/td&gt;
+      &lt;td&gt;D&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;H&lt;/td&gt;
+      &lt;td&gt;D&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;I&lt;/td&gt;
+      &lt;td&gt;E&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;关联矩阵略&quot;&gt;关联矩阵(略)&lt;/h4&gt;
+
+&lt;h4 id=&quot;图的相关方法&quot;&gt;图的相关方法&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addVertex(v)&lt;/code&gt; 增加新的顶点&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addEdge(v, w)&lt;/code&gt; 增加新的边&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;图的遍历&quot;&gt;图的遍历&lt;/h3&gt;
+
+&lt;p&gt;图的遍历可以用来寻找特定的顶点或者寻找两个顶点之间的路径, 检查图是否连通, 检查图是否含有环等. 图的遍历算法的基本思想是, 必须追踪每个第一次访问的节点, 并且追踪有哪些节点还没有被完全探索(即它还有子节点未被探索完全). 对于下面两种搜索(遍历)模式, 都需要明确指出第一个被访问的顶点. 完全探索一个顶点要求我们查看该顶点的每一条边, 对一每一条边所连接的没有被访问过的顶点, 将其标注为被发现的, 并将其加进待访问顶点列表中. 为了保证算法的效率, 务必访问每个顶点至多两次. 连通图中每条边和顶点都会被访问到. 可以用三个状态表示顶点的访问状态: 未被访问/被访问, 但未被探索完全/完全被探索过&lt;/p&gt;
+
+&lt;h4 id=&quot;图的广度优先搜索breadth-first-search-bfs&quot;&gt;图的广度优先搜索(Breadth-First Search, BFS)&lt;/h4&gt;
+
+&lt;p&gt;待访问顶点列表的数据结构是队列, 将顶点存入队列中, 最先入队列的顶点先被探索.&lt;/p&gt;
+
+&lt;p&gt;广度优先搜索被用来寻找最短路径(下面有实现). &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Dijkstra 算法&lt;/code&gt;解决了单源最短路径问题(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;贪心算法&lt;/code&gt;). &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Bellman-Ford 算法&lt;/code&gt;解决了边权值为负的单源最短路径问题. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A*搜索算法&lt;/code&gt;解决了求仅一对顶点间的最短路径问题, 它用经验法则来加速搜索过程. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Floyd-Warshall 算法&lt;/code&gt;解决了求所有顶点对键的最短路径这一问题(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;动态规划算法&lt;/code&gt;)&lt;/p&gt;
+
+&lt;h4 id=&quot;图的深度优先搜索depth-first-search-dfs&quot;&gt;图的深度优先搜索(Depth-First Search, DFS)&lt;/h4&gt;
+
+&lt;p&gt;待访问顶点列表的数据结构是栈, 将顶点存入栈中, 顶点是沿着路径被探索的, 存在新的相邻顶点就去访问. 当我们需要编排一些任务或步骤的执行顺序时, 这称为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;拓扑排序(topsort/toposort))&lt;/code&gt;, 我们可以使用深度优先搜索来进行拓扑排序. 拓扑排序只能用于&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;有向无环图(DAG)&lt;/code&gt;, 下方有具体实现.&lt;/p&gt;
+
+&lt;h3 id=&quot;最小生成树mst&quot;&gt;最小生成树(MST)&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;最小生成树&lt;/code&gt;是网络设计中常见的问题. 如你的公司有几间办公室, 要以最低的成本实现办公室电话线路相互连通, 以节省资金, 最好的办法是什么? 这也可以应用于岛桥问题. 设想你要在 n 个岛屿之间建造桥梁, 想用最低的成本实现所有岛屿的相互连通. 这两个问题都可以用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MST算法&lt;/code&gt;来解决:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Prim 算法&lt;/p&gt;
+
+    &lt;p&gt;用来求解加权无向连通图的MST问题的贪心算法, 它能找出一个边的子集, 使得其构成的树包含图中所有顶点, 且边的权值之和最小.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Kruskal 算法&lt;/p&gt;
+
+    &lt;p&gt;和上面一样也是求加权无向连通图MST问题的贪心算法.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;图的-javascript-实现&quot;&gt;图的 JavaScript 实现&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/Graph.js&quot;&gt;图&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/ShortestPath.js&quot;&gt;最短路径算法&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/MinimumSpanningTree.js&quot;&gt;最小生成树&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;排序和搜索算法&quot;&gt;排序和搜索算法&lt;/h2&gt;
+
+&lt;h3 id=&quot;排序算法&quot;&gt;排序算法&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;冒泡排序&lt;/code&gt; 复杂度 O(n&lt;sup&gt;2&lt;/sup&gt;) 两层循环, 满足条件则交换内层循环的两个值&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;选择排序&lt;/code&gt; 复杂度 O(n&lt;sup&gt;2&lt;/sup&gt;) 两层循环, 内层循环找到最小值, 并将其放到第一位, 然后接着找到第二小的值放到第二位&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;插入排序&lt;/code&gt; 复杂度 O(n&lt;sup&gt;2&lt;/sup&gt;) 从头开始, 每次假定前面的都已经排过序, 然后判断当前值确定该值是在前面排过序数组的哪个位置, 插入之, 然后继续判断下一个值&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;归并排序&lt;/code&gt; 复杂度 O(nlog&lt;sup&gt;n&lt;/sup&gt;) 递归思想, 先将数组分成较小的数组, 然后将每个较小数组两个两个排序(像两副已经各自排好序的扑克牌排序一样), 直到排序完成&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;快速排序&lt;/code&gt; 复杂度 O(nlog&lt;sup&gt;n&lt;/sup&gt;) 选一个主元(pivot)然后将数据划分两半, 大于它的放右边, 小于它的放左边, 直到左指针超过右指针&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;堆排序&lt;/code&gt; 把数组当做二叉树来排序, 规则是:
+    &lt;ol&gt;
+      &lt;li&gt;索引 0 是树的根节点&lt;/li&gt;
+      &lt;li&gt;除根节点以外. 任意节点 N 的父节点是 N/2&lt;/li&gt;
+      &lt;li&gt;节点 L 的左子节点是 2 * L&lt;/li&gt;
+      &lt;li&gt;节点 R 的右子节点是 2 * R + 1&lt;/li&gt;
+      &lt;li&gt;如数组 [3, 5, 1, 6, 4, 7, 2] 可以看做下面的树:
+        &lt;pre&gt;&lt;code class=&quot;language-mermaid&quot;&gt;graph TD;
+A((3))---B((5))
+A---C((1))
+B---D((6))
+B---E((4))
+C---F((7))
+C---G((2))
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;计数排序&lt;/li&gt;
+  &lt;li&gt;桶排序&lt;/li&gt;
+  &lt;li&gt;基数排序(分布式排序)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;搜索算法&quot;&gt;搜索算法&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;顺序搜索&lt;/li&gt;
+  &lt;li&gt;二分搜索&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;排序搜索算法的-javascript-实现&quot;&gt;排序/搜索算法的 JavaScript 实现&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/SortingSearchingAlgorithms.js&quot;&gt;各种排序/搜索算法汇总&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;算法模式&quot;&gt;算法模式&lt;/h2&gt;
+
+&lt;h3 id=&quot;动态规划&quot;&gt;动态规划&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;背包问题&lt;/code&gt; 给出一组项目, 各自有值和容量, 目标是找出总值最大的项目的集合. 限制是总容量必须小于等于背包的容量.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;最长公共子序列&lt;/code&gt; 找出一组序列的最长公共子序列(可由另一序列删除元素但不改变余下元素的顺序得到)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;矩阵链相乘&lt;/code&gt; 给出一系列矩阵, 目标是找到这些矩阵相乘的最高效办法(计算次数尽可能少). 相乘操作不会进行, 解决方案是找到这些矩阵各自相乘的顺序,&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;硬币找零&lt;/code&gt; 给出面额为 d1, d2…dn 的一定数量的硬币和要找零的钱数, 找出有多少种找零的方法&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;图的全源最短路径&lt;/code&gt; 对所有顶点对(u, v), 找出从顶点 u 到顶点 v 的最短路径(之前有 Floyd-Warshall 算法可以解决)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;算法模式的-javascript-实现&quot;&gt;算法模式的 JavaScript 实现&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/Recursion.js&quot;&gt;递归&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/MinCoinChangeDP.js&quot;&gt;最少硬币找零DP算法&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/MinCoinChangeGreedy.js&quot;&gt;最少硬币找零贪心算法&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/KnapsackProblemDP.js&quot;&gt;背包问题DP算法&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/KnapSackProblemRecursive.js&quot;&gt;背包问题递归算法&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/KnapSackProblemGreedy.js&quot;&gt;背包问题贪心算法&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/LongestCommonSubsequenceDP.js&quot;&gt;最长公共子序列DP算法&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/LongestCommonSubsequenceRecursive.js&quot;&gt;最长公共子序列递归算法&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/MatrixChainMultiplicationDP.js&quot;&gt;矩阵链相乘DP算法&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/example-code/2019/MatrixChainMultiplicationRecursive.js&quot;&gt;矩阵链相乘递归算法&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;np完全理论概述&quot;&gt;NP完全理论概述&lt;/h2&gt;
+
+&lt;p&gt;一般来说, 如果一个算法的复杂度为 O(n&lt;sup&gt;k&lt;/sup&gt;), 其中 k 是常数, 我们就认为这个算法是高效的, 这就是多项式算法. 对于给定的问题, 如果存在多项式算法, 则计为 P(polynomial, 多项式)&lt;/p&gt;
+
+&lt;p&gt;还有一类 NP(nondeterministic polynomial, 非确定性多项式)算法. 如果一个问题可以在多项式时间内验证解是否正确, 则计为 NP.&lt;/p&gt;
+
+&lt;p&gt;如果一个问题存在多项式算法, 自然可以再多项式时间内验证其解, 因此所有的 P 都是 NP. 然而, P=NP 是否成立, 仍然不得而知.&lt;/p&gt;
+
+&lt;p&gt;NP 问题最难的是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NP完全&lt;/code&gt; 问题, 它满足以下两个条件:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;是 NP 问题, 也就是说, 可以在多项式时间内验证解, 但还没找到多项式算法&lt;/li&gt;
+  &lt;li&gt;所有的 NP 问题都能在多项式时间内归约为它&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;还有一类问题, 只需满足 NP 完全问题的第二个条件, 成为 NP 困难问题. 因此, NP 完全问题是 NP 困难问题的子集.&lt;/p&gt;
+
+&lt;p&gt;非 NP 完全问题的 NP 困难问题的例子有&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;停机问题&lt;/code&gt;和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;布尔可满足性问题(SAT)&lt;/code&gt;, NP 完全问题的例子有&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;子集和问题&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;旅行商问题&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;顶点覆盖问题&lt;/code&gt; 等等&lt;/p&gt;
+
+&lt;p&gt;最后, 刚才有些问题是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;不可解&lt;/code&gt;的, 然后仍然有办法在符合要求的时间内找到一个近似解. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;启发式算法&lt;/code&gt; 就是其中之一. 启发式算法得到的未必是最优解, 单足够解决问题了.&lt;/p&gt;
+
+&lt;p&gt;启发式算法的例子有&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;局部搜索&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;遗传算法&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;启发式导航&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;机器学习&lt;/code&gt;等. 更多可以&lt;a href=&quot;http://goo.gl/gxIu9w&quot;&gt;查看这里&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 07 Oct 2019 16:17:33 +0000</pubDate>
+        <link>https://xheldon.com/tech/Data-Structures-and-Algorithms-in-Javascript.html</link>
+        <guid isPermaLink="true">https://xheldon.com/tech/Data-Structures-and-Algorithms-in-Javascript.html</guid>
+        
+        
+        <category>ComputerScience</category>
+        
+      </item>
+    
+      <item>
+        <title>Linux 下的文件权限备忘</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;本文是当初在学习 Linux 基础的时候写的一篇博客, 从旧的 WordPress 博客迁移而来&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;经常使用命令行的同学会看到一些文件之前有这样一些字符 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-rw-r--r--&lt;/code&gt; 共十位, 这代表了不同用户组对当前文件/文件夹操作权限. 如:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell-session highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;drwxr-xr-x   9 x  staff   288  9 25 23:37 .
+drwxr-xr-x  15 x  staff   480  9 24 23:48 ..
+drwxr-xr-x  16 x  staff   512  9 26 08:18 .git
+-rw-r--r--@  1 x  staff    68  9 13 00:34 README.md
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;下面从左往右依次解释.&lt;/p&gt;
+
+&lt;h2 id=&quot;位置及字符含义&quot;&gt;位置及字符含义&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;第 1 位表示当前文件是文件夹还是文件 文件则为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-&lt;/code&gt;, 文件夹则为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;d&lt;/code&gt;, 软链接则为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;l&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;第 2 到第 4 位表示文件所属用户权限, 即文件创建者的权限&lt;/li&gt;
+  &lt;li&gt;第 5 到第7 位表示文件所属用户组中用户的权限&lt;/li&gt;
+  &lt;li&gt;第 8 到第 10 位表示除了当前用户组外, 其他用户的权限&lt;/li&gt;
+  &lt;li&gt;第 2 ~ 4, 第 5 ~ 7, 第 8 ~ 10位中, 每 3 个表示一组权限信息:
+    &lt;ol&gt;
+      &lt;li&gt;第 1 位用 r 表示, 代表 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read&lt;/code&gt;, 即 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;读&lt;/code&gt; 的权限, 十数字表示为 4, 二进制表示为 100, 没有该权限使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-&lt;/code&gt; 表示&lt;/li&gt;
+      &lt;li&gt;第 2 位用 w 表示, 代表 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;write&lt;/code&gt;, 即 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;写&lt;/code&gt; 的权限, 十进制表示为 2, 二进制表示为 010, 没有该权限使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-&lt;/code&gt; 表示&lt;/li&gt;
+      &lt;li&gt;第 3 位用 x 表示, 代表 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;execute&lt;/code&gt;, 即 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;执行&lt;/code&gt; 的权限, 十进制表示为 1, 二进制表示为 001, 没有该权限使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-&lt;/code&gt; 表示&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;root 用户总是拥有所有的权限, 即 rwx, 十进制表示为 777(即每个位相加 4 + 2 + 1), 二进制表示为 111&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;示例&quot;&gt;示例&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-r-xrwxr--&lt;/code&gt; 表示当前是文件, 当前文件所有者有读取和执行的权限, 但是不能修改; 文件所有者用户组的其他用户可以读取修改和执行, 其他用户可以阅读但是不能修改和执行&lt;/p&gt;
+
+&lt;h2 id=&quot;基本使用&quot;&gt;基本使用&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chmod&lt;/code&gt; 修改文件 hello.js 为可读写可执行: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chmod 777 hello.js&lt;/code&gt; 或者 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chmod rwx hello.js&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;其他&quot;&gt;其他&lt;/h2&gt;
+
+&lt;p&gt;以数字表示权限的(数字表示的权限不含有字母/字符表示权限的最高位 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-&lt;/code&gt;/&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;d&lt;/code&gt;/&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;l&lt;/code&gt;信息)还可以用四位数字表示, 即在权限前面添加一位IE, 如 0777, 其最高位的 0 表示 suid 和 guid 的概念:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;suid 表示执行相应脚本的用户(前提是有执行权限)具有文件所属用户的权限 7&lt;/li&gt;
+  &lt;li&gt;guid 表示执行相应脚本的用户具有文件所述用户组的权限 5&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;设置 suid 需要将 0 变成 4, 设置 guid 需要将 0 变成 2: 4777 和 2777, 或者 都有则 6777.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 28 Sep 2019 06:40:40 +0000</pubDate>
+        <link>https://xheldon.com/tech/linux-file-permission.html</link>
+        <guid isPermaLink="true">https://xheldon.com/tech/linux-file-permission.html</guid>
+        
+        
+        <category>ComputerScience</category>
+        
+      </item>
+    
+      <item>
+        <title>正确理解 C 语言中的指针</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;本文是当初学习 C 语言时写过的一篇博客, 从老的 WordPress 博客中恢复过来的.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;新手在学习 C 语言的时候常常对指针有些困惑, 下面就说说我对指针的理解.&lt;/p&gt;
+
+&lt;h2 id=&quot;先弄清楚几个问题&quot;&gt;先弄清楚几个问题&lt;/h2&gt;
+
+&lt;h3 id=&quot;变量的本质&quot;&gt;变量的本质&lt;/h3&gt;
+
+&lt;p&gt;变量的本质是一个指向某个内存地址的名称表示. 编译后的目标代码中并没有变量名字, 编译器在编译阶段会将变量名字和和其表示的内存地址建立一个映射表, 记录变量类型/名称/地址.&lt;/p&gt;
+
+&lt;p&gt;当声明一个变量的时候,实际上就是在向操作系统申请一段内存地址; 赋值的时候, 就是在向这个地址填入相应的数据.&lt;/p&gt;
+
+&lt;h3 id=&quot;变量赋值的本质&quot;&gt;变量赋值的本质&lt;/h3&gt;
+
+&lt;p&gt;声明一个变量 x, 地址是 0x0001, 该地址存储着 1. 将 2 赋值给 x, 则执行以下步骤:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;根据映射表, 查找变量 x 的地址, 得到 0x0001&lt;/li&gt;
+  &lt;li&gt;将值 2 存入该地址, 赋值完成&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;指针赋值同理.&lt;/p&gt;
+
+&lt;h3 id=&quot;-的三种含义&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*&lt;/code&gt; 的三种含义&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;声明一个函数原型的时候, 如:
+    &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;其中的 *a 表示 fn 函数接受一个指针变量(即内存地址)作为参数, 该参数是 a.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;在函数体中, *a 出现在等号左边的时候, 表示往指针 a 所表示的内存地址存入等号右边的值, 如:
+    &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+     &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;在函数体中, *a 出现在等号右边的时候, 表示取出指针 a 所表示的内存地址中的值
+    &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+     &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tmp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;举例-一个交换两个变量值的函数&quot;&gt;举例: 一个交换两个变量值的函数&lt;/h2&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;swap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;swap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;swap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tmp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 也可以写作 int * tmp = *a; 只是说明 tmp 是一个指针变量, 即存储着指针的变量;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tmp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;示例解释:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;main 中声明了两个变量 x, y. 地址是 &amp;amp;x 和 &amp;amp;y, 该地址分别存存储着值 1 和 2.&lt;/li&gt;
+  &lt;li&gt;遇到 swap 函数, 该函数:
+    &lt;ol&gt;
+      &lt;li&gt;声明两个指针作为参数, int *a 或 int *b 作为形参, 表示可以被定位到值为 int 类型的指针, 即该函数期望两个指向 int 类型值的地址作为参数. 此时, * 表示接受指针变量.&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;执行 swap 函数, 则:
+    &lt;ol&gt;
+      &lt;li&gt;形参 a 被赋值为 &amp;amp;x, 即 x 的内存地址; 则本地变量 a 的内存地址证存储着的值是 x 的内存地址. 同理, 形参 b 被赋值为 &amp;amp;y, 即 y 的内存地址.(形参加上 * 号只是表明该参数是指针类型的)&lt;/li&gt;
+      &lt;li&gt;声明一个本地整型变量 tmp, 则 *a 表示:
+        &lt;ol&gt;
+          &lt;li&gt;第一步: 找到 a 在内存中的地址.&lt;/li&gt;
+          &lt;li&gt;第二步: 读取 a 在内存中的地址所表示的值, 该值也是一个内存地址, 即变量 x 的内存地址.&lt;/li&gt;
+          &lt;li&gt;第三步: 返回 a 的值的值, 即 a 的值是个内存地址, 获取该内存地址上的值, 也就是 x 的值, 即 1.&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;*b 表示将变量 b 的值(一个内存地址)的值(该内存地址存储的值)通过 * 号取出来, 即内存地址 &amp;amp;y 的对应的值, 即 2, 之后赋值给 *a 即内存地址 &amp;amp;x 所存储的值(因为 a = &amp;amp;x), 即 x 的值, 为 1. 注意, 在 swap 函数中修改了 main 函数中变量 x 的内存地址所存储的值,&lt;/li&gt;
+      &lt;li&gt;最后一句中, tmp 即为值 1, 将其赋值给 *b, 也即是赋值给 b 的内存地址所存储的值, 也就是 2, 将该值覆盖成 1. 这里 swap 函数亦通过指针修改了 main 函数中 y 的内存地址上所存储的值.&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;上个图加深理解:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/img/2019/c-pointer-1.jpeg&quot; alt=&quot;交换值函数&quot; title=&quot;交换值函数&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/img/2019/c-pointer-2.jpeg&quot; alt=&quot;交换值函数&quot; title=&quot;交换值函数&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 16 Sep 2019 23:44:00 +0000</pubDate>
+        <link>https://xheldon.com/tech/understanding-the-pointer-in-c.html</link>
+        <guid isPermaLink="true">https://xheldon.com/tech/understanding-the-pointer-in-c.html</guid>
+        
+        
+        <category>ComputerScience</category>
+        
+      </item>
+    
+      <item>
+        <title>2018 寒冬面试经历</title>
+        <description>&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;我的面试经历不多, 工作以来的三家公司除了最近 2018 年的面试经历, 前两家都是一次面试拿到 offer 就直接去了, 没有再试其他家的. 这导致我面试经验极其的匮乏, 现在想来从美团离职之后, 由于面试准备的不充分, 很多坑原本是可以避免的. 加上准备的不充分, 而且我强烈怀疑面试的一些公司完全是 HR 刷绩效来的, 压根没想要人, 所以 offer 拿的并不理想.&lt;/p&gt;
+
+&lt;p&gt;现在已经 2019 年 9 月过半了, 招聘市场也有所回暖, 但是想起去年 2018 年年末的那段面试经历, 依然觉得可以写下来给各位参考, 不过因为已经过去大半年了, 有些细节就不提了, 主要写的是面试的过程, 题目记的已经很模糊了.&lt;/p&gt;
+
+&lt;p&gt;另外说一点主观感受: 那个时候我猜大家应该都在等年终奖, 所以除非是项目刚新建扩张阶段缺人, 或者是项目实在是坑, 宁可不拿年终奖也要走的人留下的坑位, 所以 18 年底的面试非常难, 大家都是想要高级再高级, 资深再资深一点的前端工程师, 属于完全资方市场.&lt;/p&gt;
+
+&lt;p&gt;下面是我的面试安排, 跨过了 2018 年冬和 2019 年初的时间段:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/img/2019/interview-2018.jpeg&quot; alt=&quot;面试安排&quot; title=&quot;面试安排&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;可以看到安排的非常满, 有时候一天面 6 场(含电话面试). 好了废话不多说, 下面按时间顺序开始正文.&lt;/p&gt;
+
+&lt;h3 id=&quot;腾讯面试&quot;&gt;腾讯面试&lt;/h3&gt;
+
+&lt;p&gt;第一家联系的是腾讯(腾讯的 HR 都在深圳?), 简单说了下情况后就约了去面试. 位置在中关村科学城那边, 离后来去面的头条很近, 大概五分钟的距离(头条的办公地方很多).&lt;/p&gt;
+
+&lt;p&gt;简单自我介绍之后, 发现, 他们是腾讯旗下的外包部门, toG 的, 就是承接政府部门的各种小程序业务然后制定一些开发的规范和方式, 转交给其他外包部门进行开发, 之后再交给他们. 问的问题 &lt;strong&gt;&lt;em&gt;比较实际&lt;/em&gt;&lt;/strong&gt; 这点要点赞, 下面摘要几个对话:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;一面负责人: 我们会对接多个小程序外包进行开发, 如何保证他们提交代码的质量? &lt;br /&gt;
+我: 1. 制定开发规范进行约束; 2. 开发小程序组件库, 写明组件库文档和使用说明. 3. 开发小程序插件, 强制使用某种开发规范, 否则编译不通过; 4. (开玩笑) 不合规范的扣绩效工资. 这 4 步从软到硬.&lt;br /&gt;
+我: 我入职了会负责贵司的那块业务?&lt;br /&gt;
+一面负责人: 你来我这儿我需要你转变思维, 之前你是按照别人的规范和使用别人的组件进行开发, 现在需要你来制定开发规范, 决定最优解, 写组件库, 写编译库等.&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;后面是二面负责人的对话:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;二面负责人: 前面面试的还不错, 我们对你印象比较深刻, 你对我们这边有什么不满意的吗?&lt;br /&gt;
+我: 做的工作方面没什么不满意的, 只是团队人数上太少了, 开发算上我只有两个人.&lt;br /&gt;
+二面负责人: 好了今天的面试就到这儿吧.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;今日头条面试&quot;&gt;今日头条面试&lt;/h3&gt;
+
+&lt;p&gt;出了腾讯不远就是今日头条, 于是中午吃了个饭就去了, 头条的办公地点似乎是个酒吧? 或者是个公共办公空间? 进去居然有卖咖啡的在前台附近, 还有很长的一个桌子以及会客沙发, 空间很大, 装修不错. 进去签到后, 先做了个题, 题目如下(记不清了):&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;居中对齐的几种方式?&lt;/li&gt;
+  &lt;li&gt;如何实现一个透明遮罩效果?&lt;/li&gt;
+  &lt;li&gt;(宏任务微任务相关的题目, 记不清了)&lt;/li&gt;
+  &lt;li&gt;其他 JS 相关的问题&lt;/li&gt;
+  &lt;li&gt;最后一题: A 和 B 两个人抛硬币, 抛到正面为胜利, A 先抛, B 再抛. 问 A 第一次抛完后, B 胜利的概率.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;之后一面面试官就来了, 先看了我做的面试题, 然后问了一些问题如缓存/Flex布局/Http相关的东西就结束了, 进入二面.&lt;/p&gt;
+
+&lt;p&gt;二面问了一些业务方面的问题, 我做的事情, 我在业务中的价值等, 然后让我等一会儿.&lt;/p&gt;
+
+&lt;p&gt;之后 HR (是个大学来实习的妹子, 我是她的候选人, 她特别热情搞得我都不好意思)过来说我进入终面了, 但是终面的老大在头条总部, 就是那个抖音里面拍的那个中航的总部, 坐班车去就行了. 于是我做了头条的班车去了(说是班车, 其实就是个7人座的私家车…)&lt;/p&gt;
+
+&lt;p&gt;到了总部后, 等了会儿, 就有一个年纪跟我爸差不多, 气质也跟我爸差不多的大叔过来, 带我去了地下食堂, 说是食堂, 但是里面有很多显示器可以演示 PPT, 因为不在饭点, 很多人都在这里开会. 所以我的面试地点就在这个地方开始了.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;终面面试官: 你前两面都很不错, 面试评价很高, 我不是你的直接领导, 过来帮忙交叉面的. 就是跟你随便谈谈, 别紧张.&lt;br /&gt;
+我: 好的&lt;br /&gt;
+终面面试官: 介绍下你自己&lt;br /&gt;
+我: blabla&lt;br /&gt;
+终面面试官: 画一下之前你负责的业务架构图吧&lt;br /&gt;
+我: 好的&lt;br /&gt;
+终面面试官: 美团刚上市, 为什么要离职呢?&lt;br /&gt;
+我: blabla&lt;br /&gt;
+终面面试官: 你觉得前端未来的发展方向在哪儿?&lt;br /&gt;
+我: blabla&lt;br /&gt;
+终面面试官: 我看你有写博客的习惯, 你最近在关注哪些技术方面的东西?&lt;br /&gt;
+我: blabla&lt;br /&gt;
+终面面试官: 哈哈, 你说的这些都是比较老的技术了, 都出来一两年了.&lt;br /&gt;
+我: 我关心的业务方面比较多, 新技术比较前沿, 学习了很难有发挥的地方, 很快也就遗忘了, 没有正向激励很容易就失去动力了.&lt;br /&gt;
+终面面试官: 确实是这样的&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;后来又聊了一些就回去让等通知了, 那天下了很大的雪. 后来头条那边又打电话来说是组织调整, 之前面我的那个终面面试官调整到其他业务部门了, 我面的那个业务部门来了新的领导, 需要再加试一轮, 所以我又去面了一轮. 然后去了之后问了一些简单的问题, 问了我的职业规划让我回去了.&lt;/p&gt;
+
+&lt;p&gt;后来通知我说, 我没过面试, 因为算法不太好. 我的内心: ??? 一面就问了算法相关, 二面三面四面都没有问算法相关的东西, 然后跟我说我算法不太好, 如果我算法不太好, 可以在一面面完直接跟我说. 比较奇怪.&lt;/p&gt;
+
+&lt;h3 id=&quot;转转面试&quot;&gt;转转面试&lt;/h3&gt;
+
+&lt;p&gt;转转在东升科技园里面, 进去后大厅放着迪丽热巴做的广告. 然后一面面试官就来了, 自我介绍后问了几个基础问题, 然后告诉我说一面没过, 于是就走了, 比较莫名其妙.&lt;/p&gt;
+
+&lt;h3 id=&quot;印象笔记电话面试&quot;&gt;印象笔记电话面试&lt;/h3&gt;
+
+&lt;p&gt;最受好评的就是印象笔记的面试体验了, 首先是打电话问一下近况, 然后问了几个工作相关的问题, 觉得都有意向还能继续聊就先电话面试, 这样也能节约彼此的时间. 一面简单问了几个基础问题之后发现还不错, 就约了现场面试.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;面试官: 我们是平等交流, 不用紧张, 我问的问题也比较普通, 如果问了一些疑难刁钻的问题你可以随时打断告诉我.&lt;br /&gt;
+我: 好的&lt;br /&gt;
+面试官: 有一个 JS 文件, 含有全局变量, 全局变量, 全局函数, 局部函数, 它们的执行步骤说一下&lt;br /&gt;
+我: blabla&lt;br /&gt;
+面试官: 我们都知道 JS 是单线程的对吧? 那异步时候的  setTimeout 是怎么回事儿? &lt;br /&gt;
+我: JS 是单线程, 但是浏览器是多线程的, 类似 setTimeout 和 ajax 这种的异步操作, 浏览器都会新开一个线程进行处理, 处理完毕后会通知 JS 线程, 相似的还有渲染线程等. 当然 CPU 是不分单线程多线程的, 因为只有一颗 CPU, 它只能以尽可能快方式排队调用. 当然现在浏览器对 CPU 这种任务调度机制有优化措施, 大量重复的任务会被优化到能够快速调用的存储空间中. 或者使用多核进行任务交叉分配执行调度&lt;br /&gt;
+面试官: CPU 的运行机制…是你自己想的?&lt;br /&gt;
+我: 我看书上说的, 哈哈&lt;br /&gt;
+面试官: JS 的宏任务微任务知道吧? 它们是工作的?&lt;br /&gt;
+我: 这个跟第一个问题的那个类似, 有一个调用栈, 分析代码阶段, 先将同步代码塞到调用栈中, 然后遇到一个宏任务, 塞到宏任务执行堆栈后放到调用栈, 遇到微任务塞到微任务堆栈. 然后按顺序执行调用栈, 期间宏任务中又有微任务或者微任务中又有宏任务等的, 按上述步骤一次类推, blabla.&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;后来说去他们公司不需要很深入的懂 Vue/React 这种 View 框架, 因为他们不怎么深入使用框架, 我一拍大腿, 正合我意! 我对框架本身是有些厌倦的, 翻来覆去的就是那些东西: 双向绑定/单向数据流/diff 算法等等. 我其实更想以计算机科学的背景去深入理解/使用 JS 一些.&lt;/p&gt;
+
+&lt;p&gt;之后由于是快过年了, 终面技术总监休假了, 于是电话面的, 问了去了印象笔记想做的事情, 我说贵司好像一些东西不完善, 比如 前端的 DevOps 以及编辑器体验不太好, 所以想往这方面发展一下. 回答还比较符合他的意见, 加上公司福利很不错, 所以双方比较满意, 基本就是通过了.&lt;/p&gt;
+
+&lt;h3 id=&quot;玩吧面试&quot;&gt;玩吧面试&lt;/h3&gt;
+
+&lt;p&gt;玩吧在东直门外大街那边, 去了之后一个面色冷峻的男人过来, 问了我一些比较正常的问题, 自我感觉也比较不错, 不过他问我是否考虑带团队, 我说暂时还没这个打算, 还是想往技术方面专研一下. 我觉得是这个原因让我挂了.&lt;/p&gt;
+
+&lt;h3 id=&quot;锤子科技面试&quot;&gt;锤子科技面试&lt;/h3&gt;
+
+&lt;p&gt;跟美团一起在数码港四楼, 面试的部门其实是锤子旗下的一个子部门, 做在线办公文档的. 去了之后两个人一起面的我, 问了一些东西, 和一些计算机相关的东西, 在知道我也关注科技圈的时候, 就跟我开起了老罗的玩笑, 气氛非常好. 不过因为强制早10晚10以及公积金按 6k 缴纳, 虽然报销晚餐和晚上回家打车费用, 但是还是不太能接受. 后来发了 offer, 薪资符合预期, 但是还是没去.&lt;/p&gt;
+
+&lt;h3 id=&quot;滴滴面试&quot;&gt;滴滴面试&lt;/h3&gt;
+
+&lt;p&gt;滴滴在中关村科技园. 记得有四面, 问了一些基础问题如 git rever reset rebase 用法; 一些业务问题如之前做什么的, 有什么技术难度; 一些疑难问题的细节, 应该是想考察解决问题的思路. 后来终面的时候问了我的职业规划, 问了我眼中的前端发展的方向/看法, 最后让回去等消息, 也没过. 后来才知道, 滴滴那个时候发生了不亚于美团的裁员潮, 不过赔偿比美团强多了. 在脉脉专门吐槽了这个事情, 终面的负责人特意私信我解释我没过的原因.&lt;/p&gt;
+
+&lt;h3 id=&quot;小米面试&quot;&gt;小米面试&lt;/h3&gt;
+
+&lt;p&gt;小米的面试在科力源大厦, 是属于小米有品的, 不太想去电商性质的公司, 因为加班太严重了, 就没去面.&lt;/p&gt;
+
+&lt;h3 id=&quot;拉勾网面试&quot;&gt;拉勾网面试&lt;/h3&gt;
+
+&lt;p&gt;拉钩网在创业大街, 离头条和腾讯都近, 去了之后先问了一些基础问题, 回答的都不错. 不过我说我没怎么写过 React, 就结束了这次面试.&lt;/p&gt;
+
+&lt;h3 id=&quot;猿辅导面试&quot;&gt;猿辅导面试&lt;/h3&gt;
+
+&lt;p&gt;猿辅导据说比较有钱, 福利比较好, 因此他们应该想招一个技术背景比较深厚的人. 有两个人一起面试, 一个负责问, 一个负责记. 负责记的那个人一言不发, 负责问的的那个人在我没有按照他的意思回答出问题的时候会嗤之以鼻, 似乎是想压力面试, 比较让人讨厌. 现在能想起来的问的问题有:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Webpack 你肯定比较熟了, 就不问这些用法了, 你说说看 Webpack 的打包机制?&lt;br /&gt;
+ES6 RequireJS CommonJS AMDJS CMDJS SeaJS 的区别?&lt;br /&gt;
+设计一个链表(链表有一些方法跟数组不同)&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;后来一面没过.&lt;/p&gt;
+
+&lt;h3 id=&quot;每日优鲜面试&quot;&gt;每日优鲜面试&lt;/h3&gt;
+
+&lt;p&gt;每日优鲜的面试比较奇怪, 问了一些基础问题, 似乎是对我很满意, 我也问了一些问题, 如我在公司能做什么, 有什么资源可以为我调动的, 我也比较满意. 不过后来就没下文了, 比较奇怪, 可能是又找到更合适的人了吧.&lt;/p&gt;
+
+&lt;h3 id=&quot;阿里面试&quot;&gt;阿里面试&lt;/h3&gt;
+
+&lt;p&gt;阿里面试的是阿里文娱旗下的阿里影业, 做 toB 的一个业务部门, 有三面, 问的问题基本都能答上来, 不过终面的时候面试官坦言我技术能力可以, 但是经验不够, 踩过的坑比较少, 走的时候说了一句: 你经常会自我驱动的学习挺好的, 有些人是被动进步, 有些人是主动进步, 只要想进步, 总会变得牛逼的. 我想这就是福报厂之所以这么牛逼的原因吧. 点赞.&lt;/p&gt;
+
+&lt;h3 id=&quot;360-面试&quot;&gt;360 面试&lt;/h3&gt;
+
+&lt;p&gt;360 面试是朋友内推的, 负责的 HR 搞错了, 因此不小心去了另一个部门面试了, 是做 loT 的, 我不太感兴趣而且团队又是除了面试官就没人了, 是个新组建的部门. 面完了之后才知道, 我面错部门了…朋友推荐的是另一个部门, 于是我又联系 HR 去了另一个部门. 另一个部门是做数据可视化的, 依然不是我的方向, 所以问了一些数据如何展示到界面的问题和一些图形算法问题后就走了, 没过.&lt;/p&gt;
+
+&lt;h3 id=&quot;作业帮面试&quot;&gt;作业帮面试&lt;/h3&gt;
+
+&lt;p&gt;作业帮在一个三层楼里, 有食堂. 面试问了一些问题, 都答的比较不错. 但是负责人使用的是 Windows 的电脑, 感觉不太能接受, 所以之后的面试就没去了.&lt;/p&gt;
+
+&lt;h3 id=&quot;爱奇艺面试&quot;&gt;爱奇艺面试&lt;/h3&gt;
+
+&lt;p&gt;爱奇艺是朋友内推的. 但是是面试体验是最差的一个, 上午十点去了之后并没有人接待我, 然后让我等了有半个小时, 来了一个负责人, 问我有没有带简历, 我说没有, 于是他就又去让 HR 打印了一份儿简历, 但是打印的简历排版错误, 而且少了一些内容, 完全不能看. 所以面试的时候我说要不看我手机里面的简历吧.&lt;/p&gt;
+
+&lt;p&gt;首先让我做了自我介绍, 然后问了一些基础的不能再基础的问题. 最后让回去等通知, 全程不超过 10 分钟. 差评.&lt;/p&gt;
+
+&lt;h3 id=&quot;和风畅想面试&quot;&gt;和风畅想面试&lt;/h3&gt;
+
+&lt;p&gt;该公司是朋友推荐的, 是个据说是背后有海量母公司资金支持的做区块链的公司. 去了之后感觉很不错, 比较符合我的口味, 因为我性格比较散漫, 喜欢没有拘束的工作. 这家公司可以上午 12 点来(我这个朋友也确实是天天这个点去公司的), 只要能把活儿干完就 OK. 后来因为在跟老板谈的时候过于放飞自我, 吐槽了一些工作上的事情, 卒.&lt;/p&gt;
+
+&lt;h3 id=&quot;阅文集团面试&quot;&gt;阅文集团面试&lt;/h3&gt;
+
+&lt;p&gt;阅文集团是做 QQ 阅读的, 大佬张鑫旭就是他们公司的, 他们需要一个 CSS 和 HTML 比较厉害的人, 显然我不是, 卒.&lt;/p&gt;
+
+&lt;h3 id=&quot;高德面试&quot;&gt;高德面试&lt;/h3&gt;
+
+&lt;p&gt;高德更奇怪. 我去了一面, 问了一些 JS HTTP 等的问题, 我答的还不错, 然后问了我一些 CSS 的问题, 我不太会, 答的不太好, 然后我说: CSS 方面我不是很擅长. 不知道是面试官没听清楚, 还是我说的不清楚, 还是他故意的, 他说: 那我就多问点 CSS 的问题. 我: ??? 后面全程戴着微笑 MMP 的表情在回答问题. 加上他们是要做小程序的, 偏表现层, 所以后面的面试我也没去.&lt;/p&gt;
+
+&lt;h3 id=&quot;贝壳面试&quot;&gt;贝壳面试&lt;/h3&gt;
+
+&lt;p&gt;贝壳面试的题目忘了, 回答的还不错, 不过他们想要更高级和更资深的 5-7 年的前端工程师, 所以不符合要求.&lt;/p&gt;
+
+&lt;h3 id=&quot;百度面试&quot;&gt;百度面试&lt;/h3&gt;
+
+&lt;p&gt;百度面试在一面的时候印象比较深刻:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;面试官: 看你简历, 有 Node 相关的经验, Node 服务器如果发现 Blabla 了, 怎么处理?&lt;br /&gt;
+我: 我 Node 更多的是使用, 原理层没有接触过&lt;br /&gt;
+面试官: 看了你的简历, 我就发现没什么亮点, 你能跟我说说你的优点, 让我有选你的想法吗?&lt;br /&gt;
+我: 我是个各个方面都很平庸的人, 没有特别突出的, 也没有特别擅长的, 给我一个业务在前端方面我不能保证它做的非常优秀, 但是能保证 Code Review 和运行的时候是正常没毛病的水平. 总结一句话就是: 我没什么优点, 不好意思.&lt;br /&gt;
+面试官: (很无奈)我给你画几个页面(画了个页面), 已经有 UI 库了, 直接使用组件, 你用 Vue 多久能完成?&lt;br /&gt;
+我: 这个页面比较简单, 纯展示的不涉及双向数据绑定等一些交互细节, 加上有现成的组件库, 基本就是组件拼接的工作量, 一天就搞定了&lt;br /&gt;
+面试官: 你确定一天就能搞定? 之前有个面试者, 面试的时候表现很不错, 但进来后干活很慢, 一个很简单的东西, 半天搞不定&lt;br /&gt;
+我: 这我理解, 我也做过面试官. 面试者分两种: 造火箭的和切页面的. 我是介于两者之间的, 你让我造火箭写框架, 说实话我写不出来, 但是你让我写页面我是没问题的. 刚才你说的那位应该是造火箭的吧? 理论/核心思想一套一套的, 就是出活慢, 可能他也觉得在贵司得不到发展, 但是毕竟是百度的 title, 混个两年出去就是翻倍的工资.&lt;br /&gt;
+面试官: 我可提前告诉你, 我们是有试用期的, 如果试用期表现不满意是会被辞退的.&lt;br /&gt;
+我: 很正常啊, 面试和试用期都是双向选择的过程. 试用期我对工作内容不满意还能随时离职呢.&lt;br /&gt;
+面试官: (点点头)嗯, 行, 你这面我这通过了, 我找下我领导, 她那边是终面&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;过了一会儿, 领导来了, 是个女领导.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;面试官: 先介绍下你自己吧&lt;br /&gt;
+我: blabla&lt;br /&gt;
+面试官: 你对自己有什么规划吗?&lt;br /&gt;
+我: 我觉得自己干活没问题, 但是技术敏感度不够, 说到底还是缺乏计算机科学的背景, 所以我最近的计划是想学基本静态类型的语言, 比如 Java&lt;br /&gt;
+面试官: 我在你这么大的时候也这么想过, 我开始也做前端, 后来发现前端没什么技术深度, 于是开始学习 PHP 做了后端. 根据我个人的看法, 什么语言其实不重要, 重要的是你能在某个领域深入下去.&lt;br /&gt;
+我: 有道理, 所以我还想在前端技术这块深入挖掘一下, 并没有转 Java 的打算, 学习 Java 只是辅助理解前端工作的意义.&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;之后面试就过了, 可能因为比较放松, 感觉很不错.&lt;/p&gt;
+
+&lt;h2 id=&quot;解释环节&quot;&gt;解释环节:&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;你的面试经历每次都说 “答的还不错”, 是不是自我感觉?&lt;br /&gt;
+答: 不是的, 我说答的还不错的地方都是这些问题我之前由浅入深的了解过, 而且回答的时候也由浅入深的回答了.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;后记&quot;&gt;后记&lt;/h2&gt;
+
+&lt;p&gt;本文只是回忆当时的面试经历和主观感受, 不针对任何公司, 如果觉得冒犯, 可以联系我删除. 谢谢!&lt;/p&gt;
+</description>
+        <pubDate>Fri, 13 Sep 2019 00:44:00 +0000</pubDate>
+        <link>https://xheldon.com/tech/interview-in-2018-winter.html</link>
+        <guid isPermaLink="true">https://xheldon.com/tech/interview-in-2018-winter.html</guid>
+        
+        
+        <category>Life</category>
+        
+      </item>
+    
+  </channel>
+</rss>
