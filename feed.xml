@@ -5,8 +5,8 @@
     <description>The Answer to Life, the Universe and Everything is...</description>
     <link>https://www.xheldon.com/</link>
     <atom:link href="https://www.xheldon.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 28 Feb 2022 11:25:37 +0800</pubDate>
-    <lastBuildDate>Mon, 28 Feb 2022 11:25:37 +0800</lastBuildDate>
+    <pubDate>Mon, 28 Feb 2022 14:18:16 +0800</pubDate>
+    <lastBuildDate>Mon, 28 Feb 2022 14:18:16 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
     
       <item>
@@ -1118,7 +1118,11 @@ jobs:
     
       <item>
         <title>本文通过 Craft Extension 发送</title>
-        <description>&lt;p&gt;花了两天时间，简单搞定了在 Craft 写内容，然后通过自己写的插件将内容同步到 Github 仓库，然后 Github 仓库自动 build 出 Github Pages 的过程。&lt;/p&gt;
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;本文所述的一些流程方案已经废弃，新的流程逻辑在这里：&lt;a href=&quot;https://www.xheldon.com/tech/my-blog-ci-in-2022.html&quot;&gt;https://www.xheldon.com/tech/my-blog-ci-in-2022.html&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;花了两天时间，简单搞定了在 Craft 写内容，然后通过自己写的插件将内容同步到 Github 仓库，然后 Github 仓库自动 build 出 Github Pages 的过程。&lt;/p&gt;
 
 &lt;p&gt;仓库地址： &lt;a href=&quot;https://github.com/craft-extension/craft-github-extension&quot;&gt;https://github.com/craft-extension/craft-github-extension&lt;/a&gt;&lt;/p&gt;
 
@@ -1204,13 +1208,13 @@ jobs:
 
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;无论是 Web 还是端，上传到 Craft 的图片，在 Web 端显示的时候，检查元素查看，一定是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.jpg&lt;/code&gt; 格式的，但是使用 Craft 的 Markdown API 生成后，变成了 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.png&lt;/code&gt; 格式的。&lt;/p&gt;
+    &lt;p&gt;无论是 Web 还是端，上传到 Craft 的图片，在 Web 端显示的时候，检查元素查看，一定是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.jpg&lt;/code&gt; 格式的，但是使用 Craft 的 Markdown API 生成后，&lt;del&gt;变成了 ~~~~&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.png&lt;/code&gt;&lt;/del&gt;~~ 格式的~~，此处有误解，图片的后缀名还是跟上传时候的格式有关系，Craft 不会给你转换格式。&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;虽然文档中检查元素时显示的图片地址域名是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;res.craft.do&lt;/code&gt; 且在 Github 仓库中查看源文件时，显示的也是这个地址，但是！在 Github 中预览图片，也即直接点击仓库 md 文件打开的时候，却是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://camo.githubusercontent.com &lt;/code&gt;  这个地址，本来还以为 Github 会好心的把你的 md 图片转存到它的服务器上，看来是我想多了…&lt;/p&gt;
+    &lt;p&gt;虽然文档中检查元素时显示的图片地址域名是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;res.craft.do&lt;/code&gt; 且在 Github 仓库中查看源文件时，显示的也是这个地址，但是，在 Github 中预览图片，也即直接点击仓库 md 文件打开的时候，却是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://camo.githubusercontent.com &lt;/code&gt;  这个地址，本来还以为 Github 会好心的把你的 md 图片转存到它的服务器上，其实只是 Github 为了安全起见，在渲染第三方图片的时候，给你临时转存了一下而已。&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;如果不依赖服务端，你在 Craft 中上传的图片，在通过 Craft API 获取的时候，是无法通过前端的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fetch&lt;/code&gt; 等方法获取的，会提示你 CORS 错误，因此你如果想在文章上传到 Github 的时候，将文章里面的图片摘出来上传到自己的图床/COS/Github 仓库，纯前端是做不到的，你需要使用服务端拉取该图片。 同时，Craft  imageBlock 图片地址位于 AWS 的 S3，国内服务器如腾讯云拉取可能会超时或者比较慢，但是国外的服务器往国内推的时候好像速度还 OK，所以建议使用 AWS 的服务转存图片。另外不确定 Craft 是否会像 Notion API 中获取的图片地址一样，图片地址是有时效性的，所以拉取 Craft 图片的时候建议尽快获取，由于 Craft 的 Extension 功能仍然处于 beta 状态，因此建议使用此插件最好先不要内容放图片。&lt;/p&gt;
+    &lt;p&gt;如果不依赖服务端，你在 Craft 中上传的图片，在通过 Craft API 获取的时候，是无法通过前端的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fetch&lt;/code&gt; 等方法获取的，会提示你 CORS 错误，因此你如果想在文章上传到 Github 的时候，将文章里面的图片摘出来上传到自己的图床/COS/Github 仓库，纯前端是做不到的，你需要使用服务端拉取该图片后转存。 同时，Craft  imageBlock 图片地址位于 AWS 的 S3，国内服务器如腾讯云拉取可能会超时或者比较慢，但是国外的服务器往国内推的时候好像速度还 OK，所以建议使用 AWS 的服务转存图片（更新：目前我用了 Vercel，具体看 &lt;a href=&quot;https://www.xheldon.com/tech/my-blog-ci-in-2022.html&quot;&gt;这篇文章&lt;/a&gt;）。&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
@@ -1233,6 +1237,28 @@ jobs:
     &lt;p&gt;更多插件敬请期待…&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;h2 id=&quot;20220124-更新&quot;&gt;2022.01.24 更新&lt;/h2&gt;
+
+&lt;p&gt;关于图片的问题，有个想法是不将图片在 Github 备份了（毕竟在 Craft 中的图片就相当于备份了），直接传到腾讯云 COS。但是，因为腾讯云 COS 需要发送请求，而其使用的请求方法是 request 库，且对其做了一层封装，以添加相应的签名等信息。查看了下 COS 的源码，发现其可以对请求工具进行配置，于是我目前有两种途径实现目的：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;重写 COS 用到的 request 库的方法。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;重写 COS 中的请求代码。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;自己按照文档中告诉的示例，构造签名以进行请求。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;显而易见，最终使用了第三种办法，因为简单。&lt;/p&gt;
+
+&lt;h2 id=&quot;20220228-更新&quot;&gt;2022.02.28 更新&lt;/h2&gt;
+
+&lt;p&gt;01.24 的方案废弃，成本太高。最终方案是不将图片传到 Github 了，直接通过 Vercel 的服务转存在腾讯云，至此解决了图片的问题，可以愉快的使用 Craft 写文章了。&lt;/p&gt;
 </description>
         <pubDate>Thu, 09 Dec 2021 00:28:30 +0800</pubDate>
         <link>https://www.xheldon.com/tech/use-craft-extension-to-write-blog.html</link>
