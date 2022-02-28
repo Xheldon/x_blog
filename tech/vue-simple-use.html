@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue + Webpack 组件式开发(练习环境)初体验 - Xheldon Blog</title>
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    
+        <meta name="description" content="">
+    
+    <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+    <meta name="theme-color" content="#000000">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Vue + Webpack 组件式开发(练习环境)初体验 - Xheldon Blog">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="article:published_time" content="2016-04-30T05:12:12Z">
+    
+    
+    
+    <meta property="article:tag" content="技术">
+    
+    <meta property="article:tag" content="Vue">
+    
+    
+    
+        <meta name="og:description" content="">
+    
+    
+    <meta property="og:image" content="https://www.xheldon.com/resources/img/logo.png">
+    
+    <meta property="og:url" content="https://www.xheldon.com/tech/vue-simple-use.html">
+    <meta property="og:site_name" content="Xheldon Blog">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/resources/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.xheldon.com/tech/vue-simple-use.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://static.xheldon.cn/css/xheldon-life-blog.min.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <link href="https://static.xheldon.cn/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    Xheldon Blog
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div id="xheldonblog_navbar">
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/">Home</a></li>
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        <li>
+                            <a href="/donate/">Donate</a>
+                        </li>
+                        <li>
+                            <a href="/archive/">Archive</a>
+                        </li>
+                        <li>
+                            <a href="/feed.xml">Rss</a>
+                        </li>
+                        <li class="search-icon">
+                            <a href="javascript:void(0)">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <script>
+        // Drop Bootstarp low-performance Navbar
+        // Use customize navbar with high-quality material design animation
+        // in high-perf jank-free CSS3 implementation
+        var $body = document.body;
+        var $toggle = document.querySelector('.navbar-toggle');
+        var $navbar = document.querySelector('#xheldonblog_navbar');
+        var $collapse = document.querySelector('.navbar-collapse');
+
+        var __XheldonNav__ = {
+            close: function () {
+                $navbar.className = " ";
+                // wait until animation end.
+                setTimeout(function () {
+                    // prevent frequently toggle
+                    if ($navbar.className.indexOf('in') < 0) {
+                        $collapse.style.height = "0px"
+                    }
+                }, 400)
+            },
+            open: function () {
+                $collapse.style.height = "auto"
+                $navbar.className += " in";
+            }
+        }
+
+        // Bind Event
+        $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+                __XheldonNav__.close()
+            } else {
+                __XheldonNav__.open()
+            }
+        })
+
+        /**
+         * Since Fastclick is used to delegate 'touchstart' globally
+         * to hack 300ms delay in iOS by performing a fake 'click',
+         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * $toggle/$collapse will break global delegation.
+         * 
+         * Instead, we use a 'e.target' filter to prevent handler
+         * added to document close XheldonNav.  
+         *
+         * Also, we use 'click' instead of 'touchstart' as compromise
+         */
+        document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
+            __XheldonNav__.close();
+        })
+    </script>
+    <!-- Search -->
+<div class="search-page">
+  <div class="search-icon-close-container">
+    <span class="search-icon-close">
+      <i class="fa fa-chevron-down"></i>
+    </span>
+  </div>
+  <div class="search-main container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <form></form>
+        <input type="text" id="search-input" placeholder="$ grep...">
+        </form>
+        <div id="search-results" class="mini-post-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/resources/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<!-- Post Header -->
+
+
+
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('https://static.xheldon.cn/img/index-bg.png');
+        
+    }
+
+    
+</style>
+
+<header class="intro-header style-text" >
+
+    <div class="header-mask"></div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+                        
+                        <a class="tag" href="/archive/?tag=Vue" title="Vue">Vue</a>
+                        
+                    </div>
+                    <h1>Vue + Webpack 组件式开发(练习环境)初体验</h1>
+                    
+                    <h2 class="subheading"></h2>
+                    <span class="meta">✍🏼 写于 2016年04月30日</span>&nbsp;&nbsp;&nbsp;  
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <!-- Multi-Lingual -->
+                
+                
+                    
+                        
+                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
+                        <script>
+                            var timeDom = document.getElementById('from_time');
+                            var pageTime = 1461964332; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
+                            var currentTime = Date.now();
+                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
+                            if (Number(fromNow) <= 0) {
+                                fromNow = 1; // Note: 至少显示一天
+                            }
+                            timeDom.innerText = fromNow
+                        </script>
+                    
+                    
+                
+                
+                
+				<h2 id="前言">前言</h2>
+
+<p>研究了下别人的 <code class="language-plaintext highlighter-rouge">vue</code> 多页面框架, 都是直接复制 <code class="language-plaintext highlighter-rouge">package.json</code> 文件,然后在本地 <code class="language-plaintext highlighter-rouge">npm install</code> 一下即可, 或者使用官网 <code class="language-plaintext highlighter-rouge">vue-cli</code> 工具生成一个项目, 觉得这样虽然看的懂, 但是记不住, 因此有必要从零开始搭建一个使用 <code class="language-plaintext highlighter-rouge">.vue</code> 作为组件的项目练习一下, 因此有了这个项目.</p>
+
+<p>既然使用了 <code class="language-plaintext highlighter-rouge">.vue</code> 组件, 就不能像之前使用 <code class="language-plaintext highlighter-rouge">jQuery</code> 一样把 <code class="language-plaintext highlighter-rouge">vue.js</code> 引入页面中, 而是使用配套的 <code class="language-plaintext highlighter-rouge">webpack</code> + <code class="language-plaintext highlighter-rouge">babel</code> + 各种 <code class="language-plaintext highlighter-rouge">loader</code> 工具编译 <code class="language-plaintext highlighter-rouge">.vue</code> 文件, 再打包生成 <code class="language-plaintext highlighter-rouge">html</code>.</p>
+
+<h2 id="fbi-warning">FBI warning</h2>
+
+<p><em><code class="language-plaintext highlighter-rouge">切记</code></em> : 因为是最基本的初体验, 所以一些正式开发中必装的 <code class="language-plaintext highlighter-rouge">loader</code> 和 <code class="language-plaintext highlighter-rouge">plugin</code> 就没有装, 因为只是想按照官方教程手动敲出来加深印象, 特别是进阶教程中比较麻烦的父子组件传参, 作用域插槽, 递归组件以及 <code class="language-plaintext highlighter-rouge">slot</code> 等. 因此这个配置不可能作为正式开发的参照配置, 只可作为了解 <code class="language-plaintext highlighter-rouge">vue</code> 组件工作原理的练手项目.</p>
+
+<h2 id="配置说明">配置说明</h2>
+
+<p>以下配置的详细说明在后面可以找到, 不想看的话直接复制下面的 <code class="language-plaintext highlighter-rouge">package.json</code> 即可, 但是为了加深印象还是建议手动敲一遍.</p>
+
+<p>废话不多说, 开始.</p>
+
+<p>首先, 既然是 <code class="language-plaintext highlighter-rouge">webpack+vue</code>, 那相应的安装包少不了, 这里我们使用 <code class="language-plaintext highlighter-rouge">vue@2.2.4</code> 和 <code class="language-plaintext highlighter-rouge">webpack@1.12.2</code>:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">webpack</span><span class="p">@</span><span class="nd">1</span><span class="p">.</span><span class="mf">12.2</span> <span class="nx">vue</span><span class="p">@</span><span class="nd">2</span><span class="p">.</span><span class="mf">2.4</span> <span class="o">--</span><span class="nx">save</span><span class="o">-</span><span class="nx">dev</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>然后是 <code class="language-plaintext highlighter-rouge">babel</code> 和相应的 <code class="language-plaintext highlighter-rouge">loader</code>, 这里我们使用 <code class="language-plaintext highlighter-rouge">es2015</code> 这个配置, 用最新的就好:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">babel</span> <span class="nx">bebel</span><span class="o">-</span><span class="nx">core</span> <span class="nx">babel</span><span class="o">-</span><span class="nx">loader</span> <span class="nx">babel</span><span class="o">-</span><span class="nx">preset</span><span class="o">-</span><span class="nx">es2015</span> <span class="o">--</span><span class="nx">save</span><span class="o">-</span><span class="nx">dev</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>然后是 <code class="language-plaintext highlighter-rouge">webpack</code> 的必装 <code class="language-plaintext highlighter-rouge">loader</code>, <code class="language-plaintext highlighter-rouge">css-loader</code> 用来处理 <code class="language-plaintext highlighter-rouge">css</code> 中 <code class="language-plaintext highlighter-rouge">url()</code> 的资源, <code class="language-plaintext highlighter-rouge">style-loader</code> 用来将 <code class="language-plaintext highlighter-rouge">require</code> 的 <code class="language-plaintext highlighter-rouge">css</code> 抽出放到 <code class="language-plaintext highlighter-rouge">style</code> 标签中, 然后加到页面 <code class="language-plaintext highlighter-rouge">head</code> 部分. <code class="language-plaintext highlighter-rouge">html-webpack-plugin</code> 用来将入口文件 <code class="language-plaintext highlighter-rouge">js</code> 变成 <code class="language-plaintext highlighter-rouge">html</code>, 入口文件中的各种资源由各种 <code class="language-plaintext highlighter-rouge">loader</code> 处理后插入到它生成的 <code class="language-plaintext highlighter-rouge">html</code> 中, <code class="language-plaintext highlighter-rouge">extract-text-webpack-plugin</code> 用来将被 <code class="language-plaintext highlighter-rouge">js</code> 通过 <code class="language-plaintext highlighter-rouge">style</code> 标签 <code class="language-plaintext highlighter-rouge">append</code> 到 <code class="language-plaintext highlighter-rouge">head</code> 中的样式抽出到单独的 <code class="language-plaintext highlighter-rouge">.css</code> 文件中:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">css</span><span class="o">-</span><span class="nx">loader</span> <span class="nx">style</span><span class="o">-</span><span class="nx">loader</span> <span class="nx">html</span><span class="o">-</span><span class="nx">webpack</span><span class="o">-</span><span class="nx">plugin</span> <span class="nx">extract</span><span class="o">-</span><span class="nx">text</span><span class="o">-</span><span class="nx">webpack</span><span class="o">-</span><span class="nx">plugin</span><span class="p">@</span><span class="nd">1</span><span class="p">.</span><span class="mf">0.1</span> <span class="o">--</span><span class="nx">save</span><span class="o">-</span><span class="nx">dev</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>然后是 <code class="language-plaintext highlighter-rouge">vue</code> 相关的东西, 因为一个 <code class="language-plaintext highlighter-rouge">.vue</code> 里面有至少有三个标签 <code class="language-plaintext highlighter-rouge">template/style/script</code>, 因此需要三个 <code class="language-plaintext highlighter-rouge">loader</code> 来处理, 再加上一个总的 <code class="language-plaintext highlighter-rouge">vue-loader</code>, 就是四个 <code class="language-plaintext highlighter-rouge">loader</code> ,这里:</p>
+
+<p><code class="language-plaintext highlighter-rouge">vue-html-loader</code> 是 <code class="language-plaintext highlighter-rouge">webpack</code> 的官方 <code class="language-plaintext highlighter-rouge">html-loader</code> 的 <code class="language-plaintext highlighter-rouge">fork</code>, 作者放到这里只是为了能在 <code class="language-plaintext highlighter-rouge">webpack.config.js</code> 中的 <code class="language-plaintext highlighter-rouge">module.export.vue</code> 对象上使用 <code class="language-plaintext highlighter-rouge">html</code> 选项来单独配置 <code class="language-plaintext highlighter-rouge">vue</code> 的 相关 <code class="language-plaintext highlighter-rouge">html</code>(本项目安装 <code class="language-plaintext highlighter-rouge">vue-loader</code> 即可, 这里只是顺带安装说明一下);</p>
+
+<p><code class="language-plaintext highlighter-rouge">vue-style-loader</code> 用来处理 <code class="language-plaintext highlighter-rouge">.vue</code> 文件中 <code class="language-plaintext highlighter-rouge">style</code> 中的内容, 是 <code class="language-plaintext highlighter-rouge">webpack</code> 的官方 <code class="language-plaintext highlighter-rouge">style-loader</code> 的 <code class="language-plaintext highlighter-rouge">fork</code>(本项目安装 <code class="language-plaintext highlighter-rouge">vue-loader</code> 即可, 这里只是顺带安装说明一下);</p>
+
+<p><code class="language-plaintext highlighter-rouge">vue-template-compiler</code> 用来处理 <code class="language-plaintext highlighter-rouge">.vue</code> 文件中 <code class="language-plaintext highlighter-rouge">template</code> 中的内容, 除非是用它编译后的文件做其他事情才需要单独配置(即写 <code class="language-plaintext highlighter-rouge">build tools</code>, 否则这个不是必须的, 因为 <code class="language-plaintext highlighter-rouge">vue-loader</code> 已经默认使用它了)(本项目安装 vue-loader 即可, 这里只是顺带安装说明一下);</p>
+
+<p><code class="language-plaintext highlighter-rouge">vue-loader</code> 用来处理 <code class="language-plaintext highlighter-rouge">.vue</code> 后缀的内容, 在遇到相关的内容时, 会调用上述三个相关的 <code class="language-plaintext highlighter-rouge">loader</code> 来处理.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">vue</span><span class="o">-</span><span class="nx">html</span><span class="o">-</span><span class="nx">loader</span> <span class="nx">vue</span><span class="o">-</span><span class="nx">loader</span> <span class="nx">vue</span><span class="o">-</span><span class="nx">style</span><span class="o">-</span><span class="nx">loader</span> <span class="nx">vue</span><span class="o">-</span><span class="nx">template</span><span class="o">-</span><span class="nx">compiler</span> <span class="o">--</span><span class="nx">save</span><span class="o">-</span><span class="nx">dev</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>最后就是开发用的 <code class="language-plaintext highlighter-rouge">webpack-dev-server</code>, 这里我们安装 <code class="language-plaintext highlighter-rouge">1.12.1</code> 版本:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">webpack</span><span class="o">-</span><span class="nx">dev</span><span class="o">-</span><span class="nx">server</span> <span class="o">--</span><span class="nx">save</span><span class="o">-</span><span class="nx">dev</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>下面是总的 <code class="language-plaintext highlighter-rouge">package.json</code> 配置文件, 而具体的每个 <code class="language-plaintext highlighter-rouge">package.json</code> 字段的含义, 可以查看 <a href="http://json.is/">这个网站</a>.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+</pre></td><td class="rouge-code"><pre><span class="p">{</span>
+  <span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">vue-components</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">version</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.0.1</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">description</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">vue components test</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">main</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">app/app.js</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">scripts</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">dev</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">webpack-dev-server --hot</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">build</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">webpack</span><span class="dl">"</span>
+  <span class="p">},</span>
+  <span class="dl">"</span><span class="s2">keywords</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="dl">"</span><span class="s2">vue</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">components</span><span class="dl">"</span>
+  <span class="p">],</span>
+  <span class="dl">"</span><span class="s2">author</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">xheldon</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">license</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">MIT</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">dependencies</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">vue</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^2.2.4</span><span class="dl">"</span>
+  <span class="p">},</span>
+  <span class="dl">"</span><span class="s2">devDependencies</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">babel</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^6.23.0</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">babel-core</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^6.24.0</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">babel-loader</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^6.4.1</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">babel-preset-es2015</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^6.24.0</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">css-loader</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^0.27.3</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">extract-text-webpack-plugin</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^1.0.1</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">html-webpack-plugin</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^2.28.0</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">style-loader</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^0.16.0</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">vue-html-loader</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^1.2.4</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">vue-loader</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^11.3.1</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">vue-style-loader</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^2.0.4</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">vue-template-compiler</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^2.2.4</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">webpack</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^1.12.2</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">webpack-dev-server</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">^1.12.1</span><span class="dl">"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="项目说明">项目说明</h2>
+
+<p>Ok, 依赖安装完了, 接下来看下 <code class="language-plaintext highlighter-rouge">webpack</code> 配置, 因为是想尽快测试 <code class="language-plaintext highlighter-rouge">vue</code> 官方文档的组件部分, 所以一切从简了:</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+</pre></td><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">webpack</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">webpack</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">HtmlwebpackPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">html-webpack-plugin</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="c1">// 常用配置,项目较小不抽出了</span>
+<span class="kd">var</span> <span class="nx">ROOT_PATH</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">);</span><span class="c1">//根路径</span>
+<span class="kd">var</span> <span class="nx">APP_PATH</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">ROOT_PATH</span><span class="p">,</span> <span class="dl">'</span><span class="s1">app</span><span class="dl">'</span><span class="p">);</span><span class="c1">//开发路径</span>
+<span class="kd">var</span> <span class="nx">BUILD_PATH</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">ROOT_PATH</span><span class="p">,</span> <span class="dl">'</span><span class="s1">build</span><span class="dl">'</span><span class="p">);</span><span class="c1">//输出路径</span>
+<span class="kd">var</span>  <span class="nx">ExtractTextPlugin</span><span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">extract-text-webpack-plugin</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">entry</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">app</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">APP_PATH</span><span class="p">,</span> <span class="dl">'</span><span class="s1">app.js</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="na">output</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">path</span><span class="p">:</span> <span class="nx">BUILD_PATH</span><span class="p">,</span>
+    <span class="na">filename</span><span class="p">:</span> <span class="dl">'</span><span class="s1">bundle.js</span><span class="dl">'</span><span class="c1">//因为只有一个入口文件, 因此直接写死了</span>
+  <span class="p">},</span>
+  <span class="na">resolve</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">alias</span><span class="p">:</span> <span class="p">{</span>
+      <span class="c1">//注意, 这里导入的是/node_module/vue/dist/vue.js, 跟 vue-router.js 的不同</span>
+      <span class="na">vue</span><span class="p">:</span> <span class="dl">'</span><span class="s1">vue/dist/vue.js</span><span class="dl">'</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="c1">//开启 dev source map</span>
+  <span class="na">devtool</span><span class="p">:</span> <span class="dl">'</span><span class="s1">eval-source-map</span><span class="dl">'</span><span class="p">,</span>
+  <span class="c1">//开启 dev server</span>
+  <span class="na">devServer</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">historyApiFallback</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">hot</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span><span class="c1">//HMR</span>
+    <span class="na">inline</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">progress</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">},</span>
+  <span class="na">module</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">loaders</span><span class="p">:[</span>
+      <span class="p">{</span>
+        <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">vue$/</span><span class="p">,</span>
+        <span class="na">loader</span><span class="p">:</span> <span class="dl">'</span><span class="s1">vue</span><span class="dl">'</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">css$/</span><span class="p">,</span>
+        <span class="na">loader</span><span class="p">:</span> <span class="nx">ExtractTextPlugin</span><span class="p">.</span><span class="nx">extract</span><span class="p">(</span><span class="dl">'</span><span class="s1">css-loader</span><span class="dl">'</span><span class="p">)</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">js$/</span><span class="p">,</span>
+        <span class="na">loader</span><span class="p">:</span> <span class="dl">'</span><span class="s1">babel</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">include</span><span class="p">:</span> <span class="nx">ROOT_PATH</span><span class="p">,</span>
+        <span class="na">exclude</span><span class="p">:</span> <span class="sr">/node_modules/</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">html$/</span><span class="p">,</span>
+        <span class="na">loader</span><span class="p">:</span> <span class="dl">'</span><span class="s1">vue-html</span><span class="dl">'</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="na">vue</span><span class="p">:{</span>
+    <span class="na">loaders</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">css</span><span class="p">:</span> <span class="nx">ExtractTextPlugin</span><span class="p">.</span><span class="nx">extract</span><span class="p">(</span><span class="dl">'</span><span class="s1">css-loader</span><span class="dl">'</span><span class="p">)</span>    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="na">plugins</span><span class="p">:[</span>
+    <span class="k">new</span> <span class="nx">HtmlwebpackPlugin</span><span class="p">({</span>
+      <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Vue component test</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">filename</span><span class="p">:</span> <span class="dl">'</span><span class="s1">this_is_final_filename_address_you_visit_in_browser.html</span><span class="dl">'</span><span class="p">,</span><span class="c1">//生成的最终文件名</span>
+      <span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">app/this_is_main_page_which_you_put_components_into.html</span><span class="dl">'</span><span class="p">,</span><span class="c1">//放置组件的地方, 一般是一个 body 下一个孤零零的 app 标签即可.</span>
+      <span class="na">inject</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">})</span>
+  <span class="p">]</span>
+<span class="p">};</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>关于这个配置, 有点东西需要说一下.</p>
+
+<p>从上往下, 首先是 <code class="language-plaintext highlighter-rouge">alias</code> , 使用过 <a href="https://github.com/vuejs/vue-router/"><code class="language-plaintext highlighter-rouge">vue-router</code></a> 的人可能不需要这个配置, 但是使用 <code class="language-plaintext highlighter-rouge">.vue</code> 组件的项目必须这个配置,因为需要指定使用的 <code class="language-plaintext highlighter-rouge">vue</code> 的 <code class="language-plaintext highlighter-rouge">js</code> 类型, 看下本项目下 <code class="language-plaintext highlighter-rouge">node_module/vue/dist/</code> 文件夹下的文件, 有 <code class="language-plaintext highlighter-rouge">vue.js</code> 和 <code class="language-plaintext highlighter-rouge">vue.common.js</code> 两种, 其中 <code class="language-plaintext highlighter-rouge">vue</code> 编译 <code class="language-plaintext highlighter-rouge">template</code> 组件的时候是需要一个 <code class="language-plaintext highlighter-rouge">compiler.js</code> 的, 目的是把 <code class="language-plaintext highlighter-rouge">template</code> 中的 <code class="language-plaintext highlighter-rouge">html</code> 内容编译成 <code class="language-plaintext highlighter-rouge">render</code> 函数:</p>
+
+<p>编译前:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+  Hello 
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+    <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">data</span><span class="p">:</span> <span class="p">{</span><span class="na">who</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Vue</span><span class="dl">'</span><span class="p">}</span>
+  <span class="p">})</span>
+<span class="nt">&lt;/script&gt;</span>```
+
+编译后:
+
+```js
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+    <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">render</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">with</span> <span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">__h__</span><span class="p">(</span><span class="dl">'</span><span class="s1">div</span><span class="dl">'</span><span class="p">,</span>
+          <span class="p">{</span><span class="na">staticAttrs</span><span class="p">:{</span><span class="dl">"</span><span class="s2">id</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">app</span><span class="dl">"</span><span class="p">}},</span>
+          <span class="p">[(</span><span class="dl">"</span><span class="se">\n</span><span class="s2">  Hello </span><span class="dl">"</span><span class="o">+</span><span class="nx">__toString__</span><span class="p">(</span><span class="nx">who</span><span class="p">)</span><span class="o">+</span><span class="dl">"</span><span class="se">\n</span><span class="dl">"</span><span class="p">)],</span>
+          <span class="dl">''</span>
+        <span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">data</span><span class="p">:</span> <span class="p">{</span><span class="na">who</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Vue</span><span class="dl">'</span><span class="p">}</span>
+  <span class="p">})</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>而 <code class="language-plaintext highlighter-rouge">vue</code> 使用 <code class="language-plaintext highlighter-rouge">compiler</code> 编译 <code class="language-plaintext highlighter-rouge">template</code> 后的 <code class="language-plaintext highlighter-rouge">js</code> 在运行的时候发现有 <code class="language-plaintext highlighter-rouge">render</code> 函数的话就直接执行 <code class="language-plaintext highlighter-rouge">render</code>, <code class="language-plaintext highlighter-rouge">template</code> 字段下的内容会被忽略. 而执行编译后的 <code class="language-plaintext highlighter-rouge">render</code> 的任务,是由 <code class="language-plaintext highlighter-rouge">vue.common.js</code> 完成的.因此:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nx">vue</span><span class="p">.</span><span class="nx">js</span> <span class="o">=</span> <span class="nx">vue</span><span class="p">.</span><span class="nx">common</span><span class="p">.</span><span class="nx">js</span> <span class="o">+</span> <span class="nx">compiler</span><span class="p">.</span><span class="nx">js</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>所以, 如果你使用的是 <code class="language-plaintext highlighter-rouge">vue-router</code>, 它的 <code class="language-plaintext highlighter-rouge">package.json</code> 中的 <code class="language-plaintext highlighter-rouge">main</code> 字段是指向 <code class="language-plaintext highlighter-rouge">node_module/dist/vue.common.js</code> 的, 如果你直接复制这个到你的项目下, 运行的时候会提示你类似于 <code class="language-plaintext highlighter-rouge">vue.common.js</code> 的 <code class="language-plaintext highlighter-rouge">runtime</code> 错误之类的信息.</p>
+
+<p>其次需要说的是这个 <code class="language-plaintext highlighter-rouge">css-loader</code> 和 <code class="language-plaintext highlighter-rouge">style-loader</code> 以及 <code class="language-plaintext highlighter-rouge">vue-style-loader</code>, 有了 <code class="language-plaintext highlighter-rouge">style-loader</code> 为何还要个 <code class="language-plaintext highlighter-rouge">vue-style-loader</code> 呢? 看了下 <code class="language-plaintext highlighter-rouge">vue-style-loader</code> 的说明, 明白了其仅仅是一个 <code class="language-plaintext highlighter-rouge">style-loader</code> 的 <code class="language-plaintext highlighter-rouge">fork</code>, 但是为了单独处理 <code class="language-plaintext highlighter-rouge">.vue</code> 文件, 同时为了让用户配置 <code class="language-plaintext highlighter-rouge">vue</code> 更清晰, 将其加到了 <code class="language-plaintext highlighter-rouge">webpack@1.x</code> 的配置文件中的 <code class="language-plaintext highlighter-rouge">vue</code> 字段中. 可以通过将 <code class="language-plaintext highlighter-rouge">extract-text-webpack-plugin</code> 插件的配置从:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="nx">vue</span><span class="p">:{</span>
+  <span class="nl">loaders</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">css</span><span class="p">:</span> <span class="nx">ExtractTextPlugin</span><span class="p">.</span><span class="nx">extract</span><span class="p">(</span><span class="dl">'</span><span class="s1">vue-style-loader</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">css-loader</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>改成:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="nx">vue</span><span class="p">:{</span>
+  <span class="nl">loaders</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">css</span><span class="p">:</span> <span class="nx">ExtractTextPlugin</span><span class="p">.</span><span class="nx">extract</span><span class="p">(</span><span class="dl">'</span><span class="s1">style-loader</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">css-loader</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>发现编译后的结果一样证实.</p>
+
+<p>而默认情况下, <code class="language-plaintext highlighter-rouge">vue-loader</code> 是自动使用 <code class="language-plaintext highlighter-rouge">vue-style-loader</code> 的, 所以如果你不在 <code class="language-plaintext highlighter-rouge">.vue</code> 文件中 <code class="language-plaintext highlighter-rouge">@import</code> 任何 <code class="language-plaintext highlighter-rouge">css</code> , 那么你不需要手动把 <code class="language-plaintext highlighter-rouge">vue-loader-style</code> 放到 <code class="language-plaintext highlighter-rouge">vue.loaders</code> 字段中. <code class="language-plaintext highlighter-rouge">vue-loader</code> 会自动处理 <code class="language-plaintext highlighter-rouge">.vue</code> 文件中的 <code class="language-plaintext highlighter-rouge">style</code> 标签中的内容, 并将其放到 <code class="language-plaintext highlighter-rouge">style</code> 标签中插入页面. 而如果你需要在 <code class="language-plaintext highlighter-rouge">.vue</code> 文件中的 <code class="language-plaintext highlighter-rouge">style</code> 标签内 <code class="language-plaintext highlighter-rouge">@import css</code> 文件, 那么你就需要在 <code class="language-plaintext highlighter-rouge">module.exports.vue</code> 单独配置.可以通过把 <code class="language-plaintext highlighter-rouge">vue</code> 字段的 <code class="language-plaintext highlighter-rouge">vue-style-loader</code> 去掉来测试:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="rouge-code"><pre><span class="nx">module</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nl">loaders</span><span class="p">:[</span>
+    <span class="p">{</span>
+      <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">vue$/</span><span class="p">,</span>
+      <span class="na">loader</span><span class="p">:</span> <span class="dl">'</span><span class="s1">vue</span><span class="dl">'</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">},</span>
+<span class="nx">vue</span><span class="p">:{</span>
+  <span class="c1">// loaders: {</span>
+  <span class="c1">//   css: 'vue-style-loader!css-loader'</span>
+  <span class="c1">// }</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>此外, 入口文件 <code class="language-plaintext highlighter-rouge">js</code> 中的 <code class="language-plaintext highlighter-rouge">require('xxx.css')</code> 是默认的 <code class="language-plaintext highlighter-rouge">module.exports.module.loader</code> 处理的, 这点可以通过在默认 <code class="language-plaintext highlighter-rouge">loader</code> 中使用 <code class="language-plaintext highlighter-rouge">extract</code> 插件, 而在 <code class="language-plaintext highlighter-rouge">module.exports.vue</code> 中不使用 <code class="language-plaintext highlighter-rouge">extract</code> 插件证实, 因为从结果可以发现, 入口文件中的 <code class="language-plaintext highlighter-rouge">css</code> 被提取了, 但是 <code class="language-plaintext highlighter-rouge">.vue</code> 中的 <code class="language-plaintext highlighter-rouge">@import</code> 来的 <code class="language-plaintext highlighter-rouge">css</code> 没有被提取.</p>
+
+<p>而如果你需要 将入口文件中 <code class="language-plaintext highlighter-rouge">require</code> 来的 <code class="language-plaintext highlighter-rouge">css</code> 文件单独提取出来, 那么你就需要在 <code class="language-plaintext highlighter-rouge">module.exports.module.loader</code> 设置 <code class="language-plaintext highlighter-rouge">extract-text-webpack-plugin</code> 了.</p>
+
+<p>注意: <code class="language-plaintext highlighter-rouge">vue-style-loader</code> 放在 <code class="language-plaintext highlighter-rouge">module.exports.vue.loaders</code> 字段中是为了能提取出 <code class="language-plaintext highlighter-rouge">.vue</code> 文件中的 <code class="language-plaintext highlighter-rouge">style</code> 标签内容到一个单独的 <code class="language-plaintext highlighter-rouge">.css</code> 文件 <code class="language-plaintext highlighter-rouge">link</code> 在页面中, 把 <code class="language-plaintext highlighter-rouge">style-loader</code> 和 <code class="language-plaintext highlighter-rouge">css-loader</code> 放在默认的 <code class="language-plaintext highlighter-rouge">module.exports.module.loaders</code> 中, 对处理 <code class="language-plaintext highlighter-rouge">vue</code> 中的 <code class="language-plaintext highlighter-rouge">style</code> 标签内容无效————起码在 <code class="language-plaintext highlighter-rouge">Vue 1.x</code> 版本和 <code class="language-plaintext highlighter-rouge">webpack 1.x</code> 版本无效, <code class="language-plaintext highlighter-rouge">webpack 2.x</code> 版本移除了第三方的字段, 限制在 <code class="language-plaintext highlighter-rouge">module.export</code> 中随意添加字段.</p>
+
+<p>最后, <code class="language-plaintext highlighter-rouge">css-loader</code> 和 <code class="language-plaintext highlighter-rouge">style-loader</code> 总是写在一起的, 因为 <code class="language-plaintext highlighter-rouge">css-loader</code> 的作用是 <code class="language-plaintext highlighter-rouge">resolve css</code> 文件中的 <code class="language-plaintext highlighter-rouge">@import</code> 和 属性值 <code class="language-plaintext highlighter-rouge">url()</code> 中的依赖关系, 单独写其实是没什么用的. <code class="language-plaintext highlighter-rouge">style-loader</code> 才是处理 <code class="language-plaintext highlighter-rouge">css</code>, 并将其打包到 <code class="language-plaintext highlighter-rouge">js</code> 中, 最后以 <code class="language-plaintext highlighter-rouge">&lt;style&gt;</code> 标签的形式插入到 <code class="language-plaintext highlighter-rouge">head</code> (插入位置可配置)中的 <code class="language-plaintext highlighter-rouge">loader</code>.</p>
+
+<p>最后讲讲 <code class="language-plaintext highlighter-rouge">extract-text-webpack-plugin</code>, 其接受三个参数:</p>
+
+<p>第一个参数是可选参数, 传入一个 <code class="language-plaintext highlighter-rouge">loader</code>, 当 <code class="language-plaintext highlighter-rouge">css</code> 样式没有被抽取的时候可以使用该 <code class="language-plaintext highlighter-rouge">loader</code>.
+第二个参数则是用于编译解析的 <code class="language-plaintext highlighter-rouge">css</code> 文件 <code class="language-plaintext highlighter-rouge">loader</code>, 很明显这个是必须传入的, 就像上述例子的 <code class="language-plaintext highlighter-rouge">css-loader</code>.
+第三个参数是一些额外的备选项, 貌似目前只有传入 <code class="language-plaintext highlighter-rouge">publicPath</code>, 用于当前 <code class="language-plaintext highlighter-rouge">loader</code> 的路径.</p>
+
+<p>那什么时候需要传入第一个参数呢,那就得明白什么时候样式不会被抽取出来.
+了解过 <code class="language-plaintext highlighter-rouge">code splitting</code> 的同学便会知道,我们有些代码在加载页面的时候不会被使用时, 使用 <code class="language-plaintext highlighter-rouge">code splitting</code>, 可以实现将这部分不会使用的代码分离出去, 独立成一个单独的文件,实现按需加载.</p>
+
+<p>那么如果在这些分离出去的代码中如果有使用 <code class="language-plaintext highlighter-rouge">require</code> 引入样式文件, 那么使用 <code class="language-plaintext highlighter-rouge">ExtractTextPlugin</code> 这部分样式代码是不会被抽取出来的.
+这部分不会抽取出来的代码, 可以使用 <code class="language-plaintext highlighter-rouge">loader</code> 做一些处理, 这就是 <code class="language-plaintext highlighter-rouge">ExtractTextPlugin.extract</code> 第一个参数的作用.</p>
+
+<p>OK, 聊完了配置文件, 再说说这个项目是怎么工作的.</p>
+
+<p>一图胜千言, 上图, 首先是代码界面:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/vue-test.png" alt="项目结构" title="项目结构" /></p>
+
+<p>(若图片显示较小请在右键在新标签页单独查看)</p>
+
+<p>看箭头所示就明白啦, 首先一个页面是至少有一个组件的, 这个我直接就一个页面一个组件来写了, 没有 <code class="language-plaintext highlighter-rouge">import</code> 其他的组件.</p>
+
+<p>因此, 一个页面下是至少三个文件的, <code class="language-plaintext highlighter-rouge">.vue</code> 文件, <code class="language-plaintext highlighter-rouge">.js</code> 入口文件, 和 <code class="language-plaintext highlighter-rouge">.html</code>, 组件插入的文件.</p>
+
+<p><code class="language-plaintext highlighter-rouge">html</code> 中写一个组件 <code class="language-plaintext highlighter-rouge">app</code> 的名字, 入口文件实例化一个 <code class="language-plaintext highlighter-rouge">vue</code>, 然后使用 <code class="language-plaintext highlighter-rouge">app</code> 这个组件, 同时这个叫做 <code class="language-plaintext highlighter-rouge">app</code> 组件的模板来自 <code class="language-plaintext highlighter-rouge">index.vue</code>, 组件对应的 <code class="language-plaintext highlighter-rouge">css</code> 和 <code class="language-plaintext highlighter-rouge">js</code> 以及 <code class="language-plaintext highlighter-rouge">mvvm</code> 的特色:数据绑定也写在 <code class="language-plaintext highlighter-rouge">index.vue</code> 里面.</p>
+
+<p>有同学会疑惑, 入口文件 <code class="language-plaintext highlighter-rouge">js</code> 是怎么找到同目录的 <code class="language-plaintext highlighter-rouge">html</code> 文件的呢? 其实这个在 <code class="language-plaintext highlighter-rouge">webpack.config.js</code> 配置文件就已经写好了:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="nx">plugins</span><span class="p">:[</span>
+  <span class="k">new</span> <span class="nx">HtmlwebpackPlugin</span><span class="p">({</span>
+    <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Vue component test</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">filename</span><span class="p">:</span> <span class="dl">'</span><span class="s1">this_is_final_filename_address_you_visit_in_browser.html</span><span class="dl">'</span><span class="p">,</span><span class="c1">//生成的最终文件名</span>
+    <span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">app/this_is_main_page_which_you_put_components_into.html</span><span class="dl">'</span><span class="p">,</span><span class="c1">//放置组件的地方, 一般是一个 body 下一个孤零零的 app 标签即可.</span>
+    <span class="na">inject</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">})</span>
+<span class="p">]</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>这个 <code class="language-plaintext highlighter-rouge">html</code> 生成的插件告诉 <code class="language-plaintext highlighter-rouge">js</code> 入口文件, 所需要的模板来自 <code class="language-plaintext highlighter-rouge">app</code> 下的 <code class="language-plaintext highlighter-rouge">xxx.html</code>, 而最后打包的 <code class="language-plaintext highlighter-rouge">bundle.js</code> 也是 <code class="language-plaintext highlighter-rouge">inject</code> 这个里面, 再生成最终的页面.</p>
+
+<p>还有同学会问, 在入口 <code class="language-plaintext highlighter-rouge">js</code> 文件中, <code class="language-plaintext highlighter-rouge">vue</code> 实例化的时候用到的 <code class="language-plaintext highlighter-rouge">components.App</code> 到底是在编译过程就找到了 <code class="language-plaintext highlighter-rouge">this_is_main_page_which_you_put_components_into.html</code> 文件中的 <code class="language-plaintext highlighter-rouge">&lt;app&gt;</code> 组件引用, 还是在 <code class="language-plaintext highlighter-rouge">runtime</code> 的时候, 从最终打包的 <code class="language-plaintext highlighter-rouge">bundle.js</code> 中运行, 然后寻找 <code class="language-plaintext highlighter-rouge">this_is_final_filename_address_you_visit_in_browser.html</code> 页面中的 <code class="language-plaintext highlighter-rouge">&lt;app&gt;</code> 标签呢? 答案是后者, 因为刚才说的 <code class="language-plaintext highlighter-rouge">HtmlwebpackPlugin</code> 插件只负责生成 <code class="language-plaintext highlighter-rouge">html</code> 和注入打包后的 <code class="language-plaintext highlighter-rouge">bundle.js</code>, 而 <code class="language-plaintext highlighter-rouge">vue</code> 被打包进了 <code class="language-plaintext highlighter-rouge">bundle.js</code> 之后实例化 <code class="language-plaintext highlighter-rouge">vue</code> 时候才会寻找 <code class="language-plaintext highlighter-rouge">&lt;app&gt;</code> 标签.</p>
+
+<p>这么一看, 和直接在 <code class="language-plaintext highlighter-rouge">script</code> 标签中引用 <code class="language-plaintext highlighter-rouge">vue.js</code> 文件再渲染的效果是一样的, 只是 <code class="language-plaintext highlighter-rouge">webpack</code> 这种开发方式帮我们分离了组件, 使开发过程的代码/组件结构更清晰, 而且直接引用 <code class="language-plaintext highlighter-rouge">vue.js</code> 是前端 <code class="language-plaintext highlighter-rouge">runtime render</code>, 一个是 <code class="language-plaintext highlighter-rouge">compiler render</code> 之后直接执行, 后者效率更高.</p>
+
+<p>之后是效果页面:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/page-detail.png" alt="页面效果图" title="页面效果图" />
+(若图片显示较小请在右键在新标签页单独查看)</p>
+
+<p>看图就明白什么意思啦.</p>
+
+<p>还有不明白的请看文档.</p>
+
+<p>暂时聊这么多, 关于 <code class="language-plaintext highlighter-rouge">vue</code> 和 <code class="language-plaintext highlighter-rouge">webpack</code> 的 <code class="language-plaintext highlighter-rouge">注意事项/细节/设计思想</code> 还有很多要说的, 回聊~</p>
+
+
+                <div class="text-danger">- EOF -</div>
+                <hr style="visibility: hidden;">
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/tech/git-command.html" data-toggle="tooltip" data-placement="top" title="git 常用命令总结">
+                        上一篇<br>
+                        <span>git 常用命令总结</span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/tech/webpack-details-one.html" data-toggle="tooltip" data-placement="top" title="Webpack 异步按需加载">
+                        下一篇<br>
+                        <span>Webpack 异步按需加载</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <hr style="visibility: hidden;">
+                <div id="gitalk-container"></div>
+                <hr>
+            </div>  
+
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">目录</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+
+<section>
+    <h5><a href="/archive/">热门标签</a></h5>
+    <div class="tags">
+        
+        
+        
+        
+        
+        
+                <a data-sort="0014" 
+                    href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                    title="技术"
+                    rel="31">技术</a>
+        
+                <a data-sort="0034" 
+                    href="/archive/?tag=%E7%94%9F%E6%B4%BB"
+                    title="生活"
+                    rel="11">生活</a>
+        
+                <a data-sort="0039" 
+                    href="/archive/?tag=%E7%BF%BB%E8%AF%91"
+                    title="翻译"
+                    rel="6">翻译</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                    title="美食"
+                    rel="4">美食</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=%E9%9A%8F%E7%AC%94"
+                    title="随笔"
+                    rel="4">随笔</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=ProseMirror"
+                    title="ProseMirror"
+                    rel="4">ProseMirror</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=Vue"
+                    title="Vue"
+                    rel="4">Vue</a>
+        
+                <a data-sort="0042" 
+                    href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                    title="服务器"
+                    rel="3">服务器</a>
+        
+                <a data-sort="0042" 
+                    href="/archive/?tag=%E9%9B%86%E6%88%90"
+                    title="集成"
+                    rel="3">集成</a>
+        
+                <a data-sort="0042" 
+                    href="/archive/?tag=Git"
+                    title="Git"
+                    rel="3">Git</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=%E6%8F%92%E4%BB%B6"
+                    title="插件"
+                    rel="2">插件</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=%E6%B5%8B%E8%AF%95"
+                    title="测试"
+                    rel="2">测试</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=%E8%BF%81%E7%A7%BB"
+                    title="迁移"
+                    rel="2">迁移</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=Craft"
+                    title="Craft"
+                    rel="2">Craft</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=GitHub"
+                    title="GitHub"
+                    rel="2">GitHub</a>
+    </div>
+    <hr>
+    <h5>专栏</h5>
+    <div class="tags">
+        <a href="/projects">开源项目</a>
+        <a href="/book-list">技术书单</a>
+        <a href="/subscribe">订阅&付费软件</a>
+    </div>
+</section>
+
+
+                <!-- Friends Blog -->
+                
+<hr>
+<h5>朋友们</h5>
+<ul class="list-inline">
+  
+  <li><a href="https://prosemirror.xheldon.com" target="_blank">ProseMirror 中文</a></li>
+  
+  <li><a href="https://slate.xheldon.com" target="_blank">Slate 中文</a></li>
+  
+</ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- add support for mathjax by voleking-->
+
+
+<!-- Markdown 流程图按需加载 -->
+
+
+<!-- Gitalk 评论 start  -->
+<link rel="stylesheet" href="//static.xheldon.cn/css/gitalk.css">
+<script src="//static.xheldon.cn/js/gitalk.min.js"></script>
+<script type="text/javascript">
+  window.addEventListener('load', function(){
+    var gitalk = new Gitalk({
+      clientID: 'd2b353a60fa1233163fc',
+      clientSecret: '8091d57674976bcd60fc05261bf93c00da7e5ff4',
+      repo: 'x_blog',
+      owner: 'Xheldon',
+      admin: ['Xheldon'],id: "vue-simple-use",labels: [],
+      title: "Vue + Webpack 组件式开发(练习环境)初体验",
+      language: "zh-CN",
+      pagerDirection: 'first',
+    });
+    gitalk.render('gitalk-container');
+});
+</script>
+<!-- Gitalk end -->
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://static.xheldon.cn/js/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'right',
+          // icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- SNS Link -->
+                
+
+
+<ul class="list-inline text-center">
+
+
+  
+  <li>
+    <a target="_blank" href="/feed.xml">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="https://twitter.com/_xheldon">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://github.com/xheldon">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://t.me/xheldon_tech">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+</ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; <a href="https://github.com/Xheldon" target="_blank">Xheldon</a> 2022
+                    <br>
+                    Don't Panic | Theme fork from <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+                    <br>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://static.xheldon.cn/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+<script src="https://static.xheldon.cn/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="https://static.xheldon.cn/js/xheldon-life-blog.min.js?202110012319 "></script>
+
+<!-- Simple Jekyll Search -->
+<script src="https://static.xheldon.cn/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker -->
+
+<script src="https://static.xheldon.cn/js/snackbar.js "></script>
+<script src="https://static.xheldon.cn/js/sw-registration.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("https://static.xheldon.cn/js/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-79359216-1');
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        // interop with multilangual 
+        if ('' == 'true') {
+            _containerSelector = 'div.post-container.active'
+        } else {
+            _containerSelector = 'div.post-container'
+        }
+
+        // init
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        // clean
+        $(selector).html('')
+
+        // appending
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("https://static.xheldon.cn/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+<!-- Multi-Lingual -->
+
+
+<!-- Simple Jekyll Search -->
+<script>
+    // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+    function htmlDecode(input) {
+        var e = document.createElement('textarea');
+        e.innerHTML = input;
+        // handle case of empty input
+        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+    }
+
+    SimpleJekyllSearch({
+        searchInput: document.getElementById('search-input'),
+        resultsContainer: document.getElementById('search-results'),
+        json: '/search.json',
+        searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+        noResultsText: 'No results',
+        limit: 50,
+        fuzzy: false,
+        // a hack to get escaped subtitle unescaped. for some reason, 
+        // post.subtitle w/o escape filter nuke entire search.
+        templateMiddleware: function (prop, value, template) {
+            if (prop === 'subtitle' || prop === 'title') {
+                if (value.indexOf("code")) {
+                    return htmlDecode(value);
+                } else {
+                    return value;
+                }
+            }
+        }
+    });
+
+    $(document).ready(function () {
+        var $searchPage = $('.search-page');
+        var $searchOpen = $('.search-icon');
+        var $searchClose = $('.search-icon-close');
+        var $searchInput = $('#search-input');
+        var $body = $('body');
+
+        $searchOpen.on('click', function (e) {
+            e.preventDefault();
+            $searchPage.toggleClass('search-active');
+            var prevClasses = $body.attr('class') || '';
+            setTimeout(function () {
+                $body.addClass('no-scroll');
+            }, 400)
+
+            if ($searchPage.hasClass('search-active')) {
+                $searchClose.on('click', function (e) {
+                    e.preventDefault();
+                    $searchPage.removeClass('search-active');
+                    $body.attr('class', prevClasses);  // from closure 
+                });
+                $searchInput.focus();
+            }
+        });
+    });
+</script>
+
+
+<!-- Image to hack wechat -->
+<img src="/resources/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

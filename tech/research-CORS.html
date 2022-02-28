@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>我对 CORS 的探究 - Xheldon Blog</title>
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    
+        <meta name="description" content="">
+    
+    <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+    <meta name="theme-color" content="#000000">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="我对 CORS 的探究 - Xheldon Blog">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="article:published_time" content="2016-07-07T20:56:45Z">
+    
+    
+    
+    <meta property="article:tag" content="技术">
+    
+    <meta property="article:tag" content="CORS">
+    
+    
+    
+        <meta name="og:description" content="">
+    
+    
+    <meta property="og:image" content="https://www.xheldon.com/resources/img/logo.png">
+    
+    <meta property="og:url" content="https://www.xheldon.com/tech/research-CORS.html">
+    <meta property="og:site_name" content="Xheldon Blog">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/resources/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.xheldon.com/tech/research-CORS.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://static.xheldon.cn/css/xheldon-life-blog.min.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <link href="https://static.xheldon.cn/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    Xheldon Blog
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div id="xheldonblog_navbar">
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/">Home</a></li>
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        <li>
+                            <a href="/donate/">Donate</a>
+                        </li>
+                        <li>
+                            <a href="/archive/">Archive</a>
+                        </li>
+                        <li>
+                            <a href="/feed.xml">Rss</a>
+                        </li>
+                        <li class="search-icon">
+                            <a href="javascript:void(0)">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <script>
+        // Drop Bootstarp low-performance Navbar
+        // Use customize navbar with high-quality material design animation
+        // in high-perf jank-free CSS3 implementation
+        var $body = document.body;
+        var $toggle = document.querySelector('.navbar-toggle');
+        var $navbar = document.querySelector('#xheldonblog_navbar');
+        var $collapse = document.querySelector('.navbar-collapse');
+
+        var __XheldonNav__ = {
+            close: function () {
+                $navbar.className = " ";
+                // wait until animation end.
+                setTimeout(function () {
+                    // prevent frequently toggle
+                    if ($navbar.className.indexOf('in') < 0) {
+                        $collapse.style.height = "0px"
+                    }
+                }, 400)
+            },
+            open: function () {
+                $collapse.style.height = "auto"
+                $navbar.className += " in";
+            }
+        }
+
+        // Bind Event
+        $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+                __XheldonNav__.close()
+            } else {
+                __XheldonNav__.open()
+            }
+        })
+
+        /**
+         * Since Fastclick is used to delegate 'touchstart' globally
+         * to hack 300ms delay in iOS by performing a fake 'click',
+         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * $toggle/$collapse will break global delegation.
+         * 
+         * Instead, we use a 'e.target' filter to prevent handler
+         * added to document close XheldonNav.  
+         *
+         * Also, we use 'click' instead of 'touchstart' as compromise
+         */
+        document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
+            __XheldonNav__.close();
+        })
+    </script>
+    <!-- Search -->
+<div class="search-page">
+  <div class="search-icon-close-container">
+    <span class="search-icon-close">
+      <i class="fa fa-chevron-down"></i>
+    </span>
+  </div>
+  <div class="search-main container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <form></form>
+        <input type="text" id="search-input" placeholder="$ grep...">
+        </form>
+        <div id="search-results" class="mini-post-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/resources/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<!-- Post Header -->
+
+
+
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('https://static.xheldon.cn/img/index-bg.png');
+        
+    }
+
+    
+</style>
+
+<header class="intro-header style-text" >
+
+    <div class="header-mask"></div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+                        
+                        <a class="tag" href="/archive/?tag=CORS" title="CORS">CORS</a>
+                        
+                    </div>
+                    <h1>我对 CORS 的探究</h1>
+                    
+                    <h2 class="subheading"></h2>
+                    <span class="meta">✍🏼 写于 2016年07月07日</span>&nbsp;&nbsp;&nbsp;  
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <!-- Multi-Lingual -->
+                
+                
+                    
+                        
+                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
+                        <script>
+                            var timeDom = document.getElementById('from_time');
+                            var pageTime = 1467896205; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
+                            var currentTime = Date.now();
+                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
+                            if (Number(fromNow) <= 0) {
+                                fromNow = 1; // Note: 至少显示一天
+                            }
+                            timeDom.innerText = fromNow
+                        </script>
+                    
+                    
+                
+                
+                
+				<h2 id="本文由来">本文由来</h2>
+
+<p>看网上某篇 <code class="language-plaintext highlighter-rouge">CORS</code> 资料的时候, 被一句话迷惑了: ‘注意, 设置了 <code class="language-plaintext highlighter-rouge">withCredentials = true</code> 之后, 携带的 <code class="language-plaintext highlighter-rouge">cookie</code> 是目标域的 <code class="language-plaintext highlighter-rouge">cookie</code>’, 我十分不解: 当前域假设为 <code class="language-plaintext highlighter-rouge">a.com</code> 发送 <code class="language-plaintext highlighter-rouge">xhr</code> 到 <code class="language-plaintext highlighter-rouge">b.com</code>, 当然是把源域 <code class="language-plaintext highlighter-rouge">a.com</code> 的 <code class="language-plaintext highlighter-rouge">cookie</code>, 发送给 <code class="language-plaintext highlighter-rouge">b.com</code> 来处理啊, 怎么会携带的是目标域(这里我理解为 <code class="language-plaintext highlighter-rouge">b.com</code>)的 <code class="language-plaintext highlighter-rouge">cookie</code> 呢? 因此我开始了探究(先说结论: 我查看的资料的说法确实是正确的, 携带的确实是目标域 <code class="language-plaintext highlighter-rouge">b.com</code> 的 <code class="language-plaintext highlighter-rouge">cookie</code>).</p>
+
+<h2 id="小目标-1-简单请求下让-acom-发送-ajax-到-bcom">小目标-1: 简单请求下让 <code class="language-plaintext highlighter-rouge">a.com</code> 发送 <code class="language-plaintext highlighter-rouge">ajax</code> 到 <code class="language-plaintext highlighter-rouge">b.com</code></h2>
+
+<p>什么是简单请求请自行谷歌/SO. 这里注意一个基本事实, <code class="language-plaintext highlighter-rouge">cookie</code> 是跟随着 <code class="language-plaintext highlighter-rouge">域名</code> 的, 而不是跟随着 <code class="language-plaintext highlighter-rouge">IP地址</code>, 我在本地起了一个简单的能处理 <code class="language-plaintext highlighter-rouge">cookie</code> 的 <code class="language-plaintext highlighter-rouge">express</code> 服务, 同时在我的 <code class="language-plaintext highlighter-rouge">VPS</code> 上也起了一个相同的服务, 然后通过修改 <code class="language-plaintext highlighter-rouge">hosts</code> 来实现不同的域名:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="c1">// 修改 hosts 如下</span>
+<span class="c1">// 本机 ip</span>
+<span class="mf">172.16</span><span class="p">.</span><span class="mf">26.57</span> <span class="nx">www</span><span class="p">.</span><span class="nx">a</span><span class="p">.</span><span class="nx">com</span>
+<span class="c1">// VPS ip</span>
+<span class="mf">45.78</span><span class="p">.</span><span class="mf">41.32</span> <span class="nx">www</span><span class="p">.</span><span class="nx">b</span><span class="p">.</span><span class="nx">com</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>首先是在 <code class="language-plaintext highlighter-rouge">VPS</code> 服务器上启动一个 <code class="language-plaintext highlighter-rouge">express</code> 服务, 不设置任何东西, 只是简单的返回 <code class="language-plaintext highlighter-rouge">header</code>, 端口起在 <code class="language-plaintext highlighter-rouge">9091</code>:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">express</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">9091</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">a.com</code> 的 <code class="language-plaintext highlighter-rouge">Server</code> 端基本一样, 只是加了个静态页为了发送 <code class="language-plaintext highlighter-rouge">ajax</code>, 端口起在 <code class="language-plaintext highlighter-rouge">9090</code>:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">express</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">sendFile</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">index.html</span><span class="dl">'</span><span class="p">));</span>
+<span class="p">});</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">9090</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">index.html</code> 内容:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="rouge-code"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;title&gt;</span>a.com<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"button"</span><span class="nt">&gt;</span>点我发请求, 打开控制台查看信息<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="kd">var</span> <span class="nx">button</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">button</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">xhrSend</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+  <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">http://www.b.com:9091</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">button</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="nx">xhrSend</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>因为服务端没有设置 <code class="language-plaintext highlighter-rouge">Access-Control-Allow-Origin</code>, 因此报错:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError.png" alt="VPSServerError" title="VPSServerError" /></p>
+
+<p>接下来在 <code class="language-plaintext highlighter-rouge">b.com</code> 的服务端加上允许来自 <code class="language-plaintext highlighter-rouge">a.com</code> 的 <code class="language-plaintext highlighter-rouge">ajax</code>(需要精确到端口):</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
+  <span class="nx">res</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span>
+    <span class="dl">'</span><span class="s1">Access-Control-Allow-Origin</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">http://www.a.com:9090</span><span class="dl">'</span>
+  <span class="p">});</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>再次发起请求:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError1.png" alt="VPSServerError1" title="VPSServerError1" /></p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError1.1.png" alt="VPSServerError1.1" title="VPSServerError1.1" /></p>
+
+<p>控制台没有报错, 而且状态码为 <code class="language-plaintext highlighter-rouge">200</code> 说明 <code class="language-plaintext highlighter-rouge">b.com</code> 已经允许来自 <code class="language-plaintext highlighter-rouge">a.com:9090</code> 的请求.</p>
+
+<h2 id="小目标-2-本地服务接收前端的-cookie">小目标-2: 本地服务接收前端的 <code class="language-plaintext highlighter-rouge">cookie</code></h2>
+
+<p>接下来我们先在本地测试下 <code class="language-plaintext highlighter-rouge">a.com</code> 后端能否获取到来自前端的 <code class="language-plaintext highlighter-rouge">cookie</code>:</p>
+
+<p>测试方法很简单, 随便加点 <code class="language-plaintext highlighter-rouge">cookie</code> 在 <code class="language-plaintext highlighter-rouge">js</code> 中即可:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">domain=a.com;</span><span class="dl">'</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">name=xheldon</span><span class="dl">'</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">lover=xiaodan</span><span class="dl">'</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer1.png" alt="LocalServer1" title="LocalServer1" /></p>
+
+<p>在本地控制台的 <code class="language-plaintext highlighter-rouge">Application</code> 选项卡可以看到已经有了 <code class="language-plaintext highlighter-rouge">cookie</code>, 再看看后端输出:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer2.png" alt="LocalServer2" title="LocalServer2" /></p>
+
+<p>OK 没毛病, 访问 <code class="language-plaintext highlighter-rouge">www.a.com:9090</code> 的时候确实带上了 <code class="language-plaintext highlighter-rouge">cookie</code>, 意料之中.</p>
+
+<h2 id="小目标-3-把-acom-的-cookie-发送到-bcom">小目标-3: 把 <code class="language-plaintext highlighter-rouge">a.com</code> 的 <code class="language-plaintext highlighter-rouge">cookie</code> 发送到 <code class="language-plaintext highlighter-rouge">b.com</code></h2>
+
+<p>这个时候 <code class="language-plaintext highlighter-rouge">a.com</code> 的页面是有 <code class="language-plaintext highlighter-rouge">cookie</code> 的, 因此我们再次点击按钮, 看 <code class="language-plaintext highlighter-rouge">ajax</code> 请求能否把 <code class="language-plaintext highlighter-rouge">cookie</code> 传递给 <code class="language-plaintext highlighter-rouge">b.com</code>:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError1.2.png" alt="VPSServerError1.2" title="VPSServerError1.2" /></p>
+
+<p>和没有加 <code class="language-plaintext highlighter-rouge">cookie</code> 一样, 并没有获取到来自 <code class="language-plaintext highlighter-rouge">a.com</code> 的 <code class="language-plaintext highlighter-rouge">cookie</code>, 这当然是因为安全限制, 也是意料之中.</p>
+
+<h2 id="额外定一个小目标-非简单请求">额外定一个小目标: 非简单请求</h2>
+
+<p>此处插播一个关于简单请求的测试, 在 <code class="language-plaintext highlighter-rouge">xhr</code> 中新增一个 <code class="language-plaintext highlighter-rouge">header</code>, 之后再发请求:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">xhrSend</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+  <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">http://www.b.com:9091</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="dl">'</span><span class="s1">xiaodan</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">xheldon</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+  <span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>因为这次是在加了 <code class="language-plaintext highlighter-rouge">Access-Control-Allow-Origin</code> 之后的操作, 因此这次浏览器报了个不一样的错误:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.1.png" alt="VPSServerError2.1" title="VPSServerError2.1" /></p>
+
+<p>注意到还是因为 <code class="language-plaintext highlighter-rouge">Access-Control-Allow-Origin</code> 的错误, 但是这次是因为前端设置了一个自定义的 <code class="language-plaintext highlighter-rouge">header</code>, 因此是一个非简单请求, 对于非简单请求会先发一个预检请求(<code class="language-plaintext highlighter-rouge">prelight</code>), 请求类型是 <code class="language-plaintext highlighter-rouge">OPTIONS</code>, 可以查看 <a href="http://harttle.com/2016/12/30/cors-preflight.html">这篇文章</a> 了解更多. 预检请求目的是嘘寒问暖 <code class="language-plaintext highlighter-rouge">b.com</code> 的服务器, 是否接受这个 <code class="language-plaintext highlighter-rouge">xiaodan</code> 的 <code class="language-plaintext highlighter-rouge">header</code>, 后端在返回的 <code class="language-plaintext highlighter-rouge">header</code> <code class="language-plaintext highlighter-rouge">Access-Control-Alow-Headers</code> 中, 没有这个叫做 <code class="language-plaintext highlighter-rouge">xiaodan</code> 的值, 因此报错.</p>
+
+<p>那接下来我们把 <code class="language-plaintext highlighter-rouge">b.com</code> 返回的内容加上 相应的 <code class="language-plaintext highlighter-rouge">header</code>:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">);</span>
+  <span class="nx">res</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span>
+    <span class="dl">'</span><span class="s1">Access-Control-Allow-Origin</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">http://www.a.com:9090</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">Access-Control-Allow-Headers</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">xiaodan</span><span class="dl">'</span>
+  <span class="p">});</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>再次发起请求看看:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.1.png" alt="VPSServerError2.1" title="VPSServerError2.1" /></p>
+
+<p>居然是一样的报错结果, 虽然响应了 <code class="language-plaintext highlighter-rouge">200</code>, 但是服务端没有返回相应的 <code class="language-plaintext highlighter-rouge">Access-Control-Allow-Headers</code>, 返回结果被浏览器拒绝了(注意不是被服务器拒绝, 服务器是返回了 <code class="language-plaintext highlighter-rouge">200</code> 的).</p>
+
+<p>排查了一下发现, 问题出在这个非简单请求上面, 我把 <code class="language-plaintext highlighter-rouge">b.com</code> 函数稍微修改下:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
+  <span class="nx">res</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span>
+    <span class="dl">'</span><span class="s1">Access-Control-Allow-Origin</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">http://www.a.com:9090</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">Access-Control-Allow-Headers</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">xiaodan</span><span class="dl">'</span>
+  <span class="p">});</span>
+  <span class="nx">next</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">);</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>服务端:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.2.png" alt="VPSServerError2.2" title="VPSServerError2.2" /></p>
+
+<p>客户端:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.3.png" alt="VPSServerError2.3" title="VPSServerError2.3" /></p>
+
+<p>分析原因在于(待求证, 回头翻翻 <code class="language-plaintext highlighter-rouge">HTTP</code> 权威指南再说), 非简单请求的 <code class="language-plaintext highlighter-rouge">prelight</code> 请求, 不会发起实际请求, 而是先发送一个预检请求, 来测试服务器是否支持某个非简单 <code class="language-plaintext highlighter-rouge">header</code> 字段, 也就是说, 带有非简单头部的请求不会走到 <code class="language-plaintext highlighter-rouge">app.get('/')</code> 里面. 同时可以在 <code class="language-plaintext highlighter-rouge">b.com</code> 的服务器看到, 因为 <code class="language-plaintext highlighter-rouge">console.log(req.headers)</code> 是写在 <code class="language-plaintext highlighter-rouge">app.get('/')</code> 里面的, 刚刚的请求 <code class="language-plaintext highlighter-rouge">b.com</code> 服务器并没有输出任何东西, 因此也印证了这一点. <code class="language-plaintext highlighter-rouge">这一设计旨在确保服务器对 CORS 标准知情，以保护不支持 CORS 的旧服务器</code>.</p>
+
+<h2 id="小目标-4-把-acom-域下的-cookie-发送到-bcom">小目标-4: 把 <code class="language-plaintext highlighter-rouge">a.com</code> 域下的 <code class="language-plaintext highlighter-rouge">cookie</code> 发送到 <code class="language-plaintext highlighter-rouge">b.com</code></h2>
+
+<p>OK, 插播结束, 我们来测试下在客户端, 也即 <code class="language-plaintext highlighter-rouge">a.com</code> 下发起的 <code class="language-plaintext highlighter-rouge">xhr</code> 请求的页面设置 <code class="language-plaintext highlighter-rouge">withCredentials = true</code> (只列出 <code class="language-plaintext highlighter-rouge">xhrSend</code> 部分)能否将 <code class="language-plaintext highlighter-rouge">a.com</code> 的 <code class="language-plaintext highlighter-rouge">cookie</code> 发送到 <code class="language-plaintext highlighter-rouge">b.com</code>(这里简单请求和非简单请求是一样的结果, 为了方便查看差异我把 <code class="language-plaintext highlighter-rouge">xhr</code> 设置的 <code class="language-plaintext highlighter-rouge">header</code> 去掉了):</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="c1">// 设置允许 cookie</span>
+<span class="kd">function</span> <span class="nx">xhrSend</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+  <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">http://www.b.com/</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">withCredentials</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.4.png" alt="VPSServerError2.4" title="VPSServerError2.4" /></p>
+
+<p>这次错误提醒变化, 变成服务端没有设置 <code class="language-plaintext highlighter-rouge">Access-Control-Allow-Credentials</code> 为 <code class="language-plaintext highlighter-rouge">true</code> 了, 这个 <code class="language-plaintext highlighter-rouge">header</code> 是来设置允许请求携带 <code class="language-plaintext highlighter-rouge">cookie</code> 的, 因此设置一下:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="rouge-code"><pre><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
+  <span class="nx">res</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span>
+    <span class="dl">'</span><span class="s1">Access-Control-Allow-Origin</span><span class="dl">'</span><span class="p">:</span><span class="dl">'</span><span class="s1">http://www.a.com:9090</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">Access-Control-Allow-Headers</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">xiaodan</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">Access-Control-Allow-Credentials</span><span class="dl">'</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">});</span>
+  <span class="nx">next</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">);</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.5.png" alt="VPSServerError2.5" title="VPSServerError2.5" /></p>
+
+<p>仍然没有, 看下 <code class="language-plaintext highlighter-rouge">Chrome</code> 的 <code class="language-plaintext highlighter-rouge">cookie</code>:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.6.png" alt="VPSServerError2.6" title="VPSServerError2.6" /></p>
+
+<p>确实是设置了 <code class="language-plaintext highlighter-rouge">cookie</code> 啊, 什么情况? 不服, 想着 <code class="language-plaintext highlighter-rouge">req.headers</code> 是 <code class="language-plaintext highlighter-rouge">express</code> 格式化之后的, 看看原始 <code class="language-plaintext highlighter-rouge">headers</code> <code class="language-plaintext highlighter-rouge">rawHeaders</code>:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.7.png" alt="VPSServerError2.7" title="VPSServerError2.7" /></p>
+
+<p>还是没看到, <code class="language-plaintext highlighter-rouge">cookie</code> 被狗吃了吗?</p>
+
+<blockquote>
+  <p>都没有, 她说将来会找到, 时间,时间会给我答案 ——我的滑板鞋</p>
+</blockquote>
+
+<p>OK, 找不到问题的时候就吃个冰淇淋吧. 下楼买了个香菜味的雀巢冰激凌(吃不起哈根达斯), 然后在上楼的时候灵光一闪, 好像我们这个属于是第三方 <code class="language-plaintext highlighter-rouge">cookie</code>, 会不会是我禁止浏览器追踪导致的呢? 于是吃完冰激凌我在 <code class="language-plaintext highlighter-rouge">chrome</code> 的设置中, 把 <code class="language-plaintext highlighter-rouge">随浏览流量一起发送"不跟踪"请求</code> 的钩钩给去掉了:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.8.png" alt="VPSServerError2.8" title="VPSServerError2.8" /></p>
+
+<p>对了, 这次我把 <code class="language-plaintext highlighter-rouge">req.headers</code> 放到了 <code class="language-plaintext highlighter-rouge">app.use</code> 里面以防万一(其实不会有什么万一)：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="rouge-code"><pre><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">);</span>
+  <span class="nx">res</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span>
+    <span class="dl">'</span><span class="s1">Access-Control-Allow-Origin</span><span class="dl">'</span><span class="p">:</span><span class="dl">'</span><span class="s1">http://www.a.com:9090</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">Access-Control-Allow-Headers</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">xiaodan</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">Access-Control-Allow-Credentials</span><span class="dl">'</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">});</span>
+  <span class="nx">next</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>再次点击按钮发送请求, 然后查看 <code class="language-plaintext highlighter-rouge">chrome</code> 控制台和 <code class="language-plaintext highlighter-rouge">b.com</code> 的服务器输出:</p>
+
+<p>因为有非简单头部, 因此和之前一样, 显示的是两个请求:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.9.png" alt="VPSServerError2.9" title="VPSServerError2.9" /></p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.9.1.png" alt="VPSServerError2.9.1" title="VPSServerError2.9.1" /></p>
+
+<p>服务器也没有接收到, 说明和这个 <code class="language-plaintext highlighter-rouge">Chrome</code> 设置无关, 因此为了控制变量 <code class="language-plaintext highlighter-rouge">不跟踪</code> 和之前一样, 我把它又钩上了, 服务器端(只放了 <code class="language-plaintext highlighter-rouge">GET</code> 请求):</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.9.2.png" alt="VPSServerError2.9.2" title="VPSServerError2.9.2" /></p>
+
+<p>还是没有 <code class="language-plaintext highlighter-rouge">Cookie</code> 字段, 为什么呢?</p>
+
+<p>我又想起了文章开头的那句话: ‘注意, 设置了 <code class="language-plaintext highlighter-rouge">withCredentials = true</code> 之后, 携带的 <code class="language-plaintext highlighter-rouge">cookie</code> 是目标域的 <code class="language-plaintext highlighter-rouge">cookie</code>’. 难道我在 <code class="language-plaintext highlighter-rouge">a.com</code> 点击按钮发送请求到 <code class="language-plaintext highlighter-rouge">b.com</code>, 发送的是 <code class="language-plaintext highlighter-rouge">b.com</code> 设置的 <code class="language-plaintext highlighter-rouge">cookie</code> 吗?</p>
+
+<p>于是我先把 <code class="language-plaintext highlighter-rouge">b.com</code> 服务器上也新建一个 <code class="language-plaintext highlighter-rouge">index.html</code>, 里面随便加点 <code class="language-plaintext highlighter-rouge">cookie</code>:</p>
+
+<p><code class="language-plaintext highlighter-rouge">b.com</code> 的服务器代码:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">express</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">);</span>
+<span class="nx">res</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span>
+  <span class="dl">'</span><span class="s1">Access-Control-Allow-Origin</span><span class="dl">'</span><span class="p">:</span><span class="dl">'</span><span class="s1">http://www.a.com:9090</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">Access-Control-Allow-Headers</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">xiaodan</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">Access-Control-Allow-Credentials</span><span class="dl">'</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">});</span>
+<span class="nx">next</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">sendFile</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">index.html</span><span class="dl">'</span><span class="p">));</span>
+<span class="p">});</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">9091</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>b.com 的 index.html 代码:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="rouge-code"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;title&gt;</span>a.com<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;div&gt;</span>open Application inspector to check whether the cookie is be setting<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">yes=you_cant_believe_i_from_b.com</span><span class="dl">'</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">from=this_is_from_b.com</span><span class="dl">'</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>OK, 我们首先访问 <code class="language-plaintext highlighter-rouge">b.com</code>:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError4.png" alt="VPSServerError4" title="VPSServerError4" /></p>
+
+<p>没毛病, 正常返回网页, 正常设置 <code class="language-plaintext highlighter-rouge">cookie</code>, 接下来我们在 <code class="language-plaintext highlighter-rouge">a.com</code> 下, 点击按钮发送请求:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError4.1.png" alt="VPSServerError4.1" title="VPSServerError4.1" /></p>
+
+<p>可以看到在 <code class="language-plaintext highlighter-rouge">a.com</code> 发起的 <code class="language-plaintext highlighter-rouge">ajax</code> 请求, 带上了 <code class="language-plaintext highlighter-rouge">b.com</code> 的 <code class="language-plaintext highlighter-rouge">cookie</code>.</p>
+
+<p>文章开始的那句话得到了证实.</p>
+
+<h2 id="小目标-5-acom-的-javascript-获取-bcom-的-cookie">小目标-5: <code class="language-plaintext highlighter-rouge">a.com</code> 的 <code class="language-plaintext highlighter-rouge">JavaScript</code> 获取 <code class="language-plaintext highlighter-rouge">b.com</code> 的 <code class="language-plaintext highlighter-rouge">cookie</code>:</h2>
+
+<p>既然能在 <code class="language-plaintext highlighter-rouge">a.com</code> 发送 <code class="language-plaintext highlighter-rouge">b.com</code> 的 <code class="language-plaintext highlighter-rouge">cookie</code>, 那么前端能不能获取到 <code class="language-plaintext highlighter-rouge">b.com</code> 的 <code class="language-plaintext highlighter-rouge">cookie</code> 呢?</p>
+
+<p>看了下文档, <code class="language-plaintext highlighter-rouge">ajax</code> 有 <code class="language-plaintext highlighter-rouge">getAllResponseHeaders()</code> 和 <code class="language-plaintext highlighter-rouge">getResponseHeader()</code>两个接口, 服务端有 <code class="language-plaintext highlighter-rouge">Access-Control-Expose-Header</code>, 于是我测试了下(我就是要分开输出, 怎样?).</p>
+
+<p>先从简单的来, 首先是调用 <code class="language-plaintext highlighter-rouge">xhr</code> 的 <code class="language-plaintext highlighter-rouge">getAllResponseHeaders()</code> 接口:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="rouge-code"><pre><span class="c1">// 设置允许 cookie</span>
+<span class="kd">function</span> <span class="nx">xhrSend</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+  <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">http://www.b.com/</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">withCredentials</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">200</span><span class="p">){</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">AllRes:</span><span class="dl">'</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">getAllResponseHeaders</span><span class="p">())</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer3.png" alt="LocalServer3" title="LocalServer3" /></p>
+
+<p>发现并没有出现 <code class="language-plaintext highlighter-rouge">header</code> 的 <code class="language-plaintext highlighter-rouge">Cookie</code> 字段, 意料之中, 想着万一 <code class="language-plaintext highlighter-rouge">getAllResponseHeaders()</code> 遍历 <code class="language-plaintext highlighter-rouge">header</code> 的没有 <code class="language-plaintext highlighter-rouge">Cookie</code> 是因为其被设置成 <code class="language-plaintext highlighter-rouge">enumerable: false</code> 了呢? 于是我又尝试了 <code class="language-plaintext highlighter-rouge">getResponseHeader()</code>:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="rouge-code"><pre><span class="c1">// 设置允许 cookie</span>
+<span class="kd">function</span> <span class="nx">xhrSend</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+  <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">http://www.b.com/</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">withCredentials</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">200</span><span class="p">){</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Res:</span><span class="dl">'</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">getResponseHeader</span><span class="p">(</span><span class="dl">'</span><span class="s1">Cookie</span><span class="dl">'</span><span class="p">))</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+  <span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer3.1.png" alt="LocalServer3.1" title="LocalServer3.1" /></p>
+
+<p>还是意料之中, 因为服务端没有设置暴露出来的 <code class="language-plaintext highlighter-rouge">header</code> 内容, 于是我在 <code class="language-plaintext highlighter-rouge">b.com</code> 设置了 <code class="language-plaintext highlighter-rouge">Access-Control-Expose-Header</code>:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="nx">res</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span>
+  <span class="dl">'</span><span class="s1">Access-Control-Allow-Origin</span><span class="dl">'</span><span class="p">:</span><span class="dl">'</span><span class="s1">http://www.a.com:9090</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">Access-Control-Allow-Headers</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">xiaodan</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">Access-Control-Allow-Credentials</span><span class="dl">'</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">Access-Control-Expose-Headers</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Cookie</span><span class="dl">'</span>
+<span class="p">});</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>然后重新执行 <code class="language-plaintext highlighter-rouge">getResponseHeader('Cookie')</code> 和 <code class="language-plaintext highlighter-rouge">getAllResponseHeaders()</code></p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer3.2.png" alt="LocalServer3.2" title="LocalServer3.2" /></p>
+
+<p>没有错误了, 但是还是无法获取到 <code class="language-plaintext highlighter-rouge">b.com</code> 的 <code class="language-plaintext highlighter-rouge">cookie</code>, 即使 <code class="language-plaintext highlighter-rouge">b.com</code> 服务端都同意了也不行.</p>
+
+<p>查找资料得知, 这个 <code class="language-plaintext highlighter-rouge">Access-Control-Expose-Header</code> 只能设置为自定义的 <code class="language-plaintext highlighter-rouge">header</code> 来被前端获得. 但是这个没什么意义啊, 因为这个自定义的 <code class="language-plaintext highlighter-rouge">header</code> 就是我前端设置的, 唯一的作用就是 后端修改/新建自定义的 <code class="language-plaintext highlighter-rouge">header</code> 之后, 前端来获取. 下面我在后端设置一个 <code class="language-plaintext highlighter-rouge">header</code>, 让前端来获取:</p>
+
+<p><code class="language-plaintext highlighter-rouge">b.com</code> 的 <code class="language-plaintext highlighter-rouge">server</code>:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="nx">res</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span>
+  <span class="dl">'</span><span class="s1">Access-Control-Allow-Origin</span><span class="dl">'</span><span class="p">:</span><span class="dl">'</span><span class="s1">http://www.a.com:9090</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">Access-Control-Allow-Headers</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">xiaodan</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">Access-Control-Allow-Credentials</span><span class="dl">'</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">Access-Control-Expose-Headers</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Xheldon</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">Xheldon</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">MyNameIsXheldon</span><span class="dl">'</span>
+<span class="p">});</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">a.com</code> 的 <code class="language-plaintext highlighter-rouge">index.html</code>:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="nx">xhr</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+  <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">200</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Res:</span><span class="dl">'</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">getResponseHeader</span><span class="p">(</span><span class="dl">'</span><span class="s1">Xheldon</span><span class="dl">'</span><span class="p">));</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">AllRes:</span><span class="dl">'</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">getAllResponseHeaders</span><span class="p">());</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer3.3.png" alt="LocalServer3.3" title="LocalServer3.3" /></p>
+
+<p>就是这样.</p>
+
+<p>所以这个小目标是实现不了了, 但是 <code class="language-plaintext highlighter-rouge">SO</code> 社区给出了一些解决办法, 比如 使用第三方服务/后端做转发 等, 毕竟规定是死的, 人是活的, 就像 <code class="language-plaintext highlighter-rouge">jsonp</code> 一样, 是吧.</p>
+
+<h2 id="联想">联想</h2>
+
+<p>有人说培训几个月零基础就可以精通某种语言, 我觉得是天方夜谭. 因为在没有计算机基础知识的情况下, 在搞不清二进制/编译原理/计算机原理/操作系统原理/网络基础/通讯协议的是什么概念的情况下能写出代码, 只能说明你照葫芦画瓢的学习能力强, 你知道这么写是这么个效, 但是你不知道为什么这么写就会出现这么个效果.</p>
+
+<p>因此在跟计算机打交道的时候, 知识面是越广越好, 知识深度是越深越好. 这不, 我在了解 CORS 的时候, 想起了之前接触过的 AUTH.</p>
+
+<p>有个叫 <code class="language-plaintext highlighter-rouge">AUTH2.0</code> 的东西, 那它跟 <code class="language-plaintext highlighter-rouge">CORS</code> 有什么关系呢? 没啥关系, 不过下面是我的对比:</p>
+
+<p><code class="language-plaintext highlighter-rouge">CORS</code>, 可以让访问过 <code class="language-plaintext highlighter-rouge">B</code> 站的用户, 从 <code class="language-plaintext highlighter-rouge">A</code> 站发起请求的时候, 携带 <code class="language-plaintext highlighter-rouge">B</code> 站的 <code class="language-plaintext highlighter-rouge">cookie</code>. 步骤是:</p>
+
+<ol>
+  <li>用户访问过 <code class="language-plaintext highlighter-rouge">B</code> 站.</li>
+  <li>用户访问 <code class="language-plaintext highlighter-rouge">A</code> 站, 在 <code class="language-plaintext highlighter-rouge">A</code> 站发起请求到 <code class="language-plaintext highlighter-rouge">B</code> 站.</li>
+  <li><code class="language-plaintext highlighter-rouge">B</code> 站验证来自 <code class="language-plaintext highlighter-rouge">A</code> 站的请求中的来自 <code class="language-plaintext highlighter-rouge">B</code> 站的 <code class="language-plaintext highlighter-rouge">cookie</code>, 没毛病, 返回 <code class="language-plaintext highlighter-rouge">B</code> 站的数据.</li>
+</ol>
+
+<p><code class="language-plaintext highlighter-rouge">AUTH</code>, 可以让用户在 <code class="language-plaintext highlighter-rouge">A</code> 网站访问 <code class="language-plaintext highlighter-rouge">B</code> 网站的资源. 前提是需要用户授权, 步骤是:</p>
+
+<ol>
+  <li>在 <code class="language-plaintext highlighter-rouge">A</code> 网站发起请求.</li>
+  <li>步骤1跳转到 <code class="language-plaintext highlighter-rouge">B</code> 站, 确认授权, 再跳转回 <code class="language-plaintext highlighter-rouge">A</code> 网站.</li>
+  <li>此时 <code class="language-plaintext highlighter-rouge">A</code> 网站拿到 <code class="language-plaintext highlighter-rouge">tooken(令牌)</code> 就能访问用户在 <code class="language-plaintext highlighter-rouge">B</code> 网站的资源了.</li>
+</ol>
+
+<p>有木有很像?</p>
+
+<p><code class="language-plaintext highlighter-rouge">CORS</code> 的第一步对应 <code class="language-plaintext highlighter-rouge">AUTH</code> 的第二步. <code class="language-plaintext highlighter-rouge">AUTH</code> 的第二步相当于 <code class="language-plaintext highlighter-rouge">CORS</code> 的第一步的可以认为是在 <code class="language-plaintext highlighter-rouge">B</code> 网站的服务端加上了 <code class="language-plaintext highlighter-rouge">Access-Control-Allow-Credentials</code>, 这样就代表完成授权.</p>
+
+<p>可以认为 <code class="language-plaintext highlighter-rouge">CORS</code> 携带 <code class="language-plaintext highlighter-rouge">cookie</code> 是简化版的 <code class="language-plaintext highlighter-rouge">AUTH</code>.</p>
+
+<p>以下摘自 <code class="language-plaintext highlighter-rouge">RFC 6749</code></p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/AUTH.png" alt="AUTH" title="AUTH" /></p>
+
+<h2 id="后记">后记</h2>
+
+<p>为什么说, 第三方广告 <code class="language-plaintext highlighter-rouge">cookie</code> 会泄露隐私呢? 这是因为广告放在一个 <code class="language-plaintext highlighter-rouge">A</code> 网站上, 广告主就知道这个广告投放到了 <code class="language-plaintext highlighter-rouge">A</code> 网站(通过广告投放的 <code class="language-plaintext highlighter-rouge">id/key</code> 之类的 <code class="language-plaintext highlighter-rouge">identity</code> 来标识 和付费), 于是广告主在这个广告上设置一个 <code class="language-plaintext highlighter-rouge">cookie</code>, 这个广告来自广告 <code class="language-plaintext highlighter-rouge">B</code> 的域名, 因此设置的 <code class="language-plaintext highlighter-rouge">cookie</code> 当然是来自 <code class="language-plaintext highlighter-rouge">B</code> 的 <code class="language-plaintext highlighter-rouge">cookie</code>, 每次 <code class="language-plaintext highlighter-rouge">A</code> 网站加载这个广告的时候, 肯定是要执行一段 <code class="language-plaintext highlighter-rouge">js</code> 的, 在这个 <code class="language-plaintext highlighter-rouge">js</code> 中, 设置了允许 <code class="language-plaintext highlighter-rouge">A</code> 站发送 <code class="language-plaintext highlighter-rouge">cookie</code>, 而同时 <code class="language-plaintext highlighter-rouge">B</code> 站也允许来自 <code class="language-plaintext highlighter-rouge">A</code> 站的 <code class="language-plaintext highlighter-rouge">cookie</code> 携带 <code class="language-plaintext highlighter-rouge">B</code> 站的 <code class="language-plaintext highlighter-rouge">cookie</code> 发送过来, 因此就什么都知道了.</p>
+
+<p>`Google AD Impl:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/googleWithCredentials.png" alt="googleWithCredientials" title="googleWithCredientials" /></p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/googleWithCredentials2.png" alt="googleWithCredientials2" title="googleWithCredientials2" /></p>
+
+<h2 id="注意">注意</h2>
+
+<ol>
+  <li>
+    <p>上述修改涉及到服务端的修改, 均需要重启服务. 因为在 <code class="language-plaintext highlighter-rouge">VPS</code> 上重启服务不太方便, 而且时间久了连接会断开, 因此最好的办法是在 <code class="language-plaintext highlighter-rouge">VPS</code> 上放置文章中的 <code class="language-plaintext highlighter-rouge">a.com</code> (主要用来修改 <code class="language-plaintext highlighter-rouge">index.html</code> 的), 而在本地放置文章中的 <code class="language-plaintext highlighter-rouge">b.com</code> 的内容(主要用来修改 <code class="language-plaintext highlighter-rouge">index.js</code> 的).</p>
+  </li>
+  <li>
+    <p>远程链接保持不断开, 最简单的办法是将其后台(前提是保持链接, 不然断开链接之后, 请求过来进行 <code class="language-plaintext highlighter-rouge">I/O</code> 操作, 仍然会被断开). 可以运行 <code class="language-plaintext highlighter-rouge">node index.js &amp;</code>, 或者在已经运行 <code class="language-plaintext highlighter-rouge">node index.js</code> 的时候按 <code class="language-plaintext highlighter-rouge">ctrl+z</code>, 将其冻结在后台, 然后执行 <code class="language-plaintext highlighter-rouge">bg</code> 命令将最近一个后台的任务激活. <code class="language-plaintext highlighter-rouge">jobs</code> 命令可以查看在当前任务列表. 如果退出了当前 <code class="language-plaintext highlighter-rouge">session</code>, 之后重新连接的话, 任务仍然在运行, 但是 <code class="language-plaintext highlighter-rouge">jobs</code> 已经看不到该任务了, 因此需要 <code class="language-plaintext highlighter-rouge">ps -A</code> 列出所有进程, 然后 <code class="language-plaintext highlighter-rouge">kill ID</code> 终止 <code class="language-plaintext highlighter-rouge">node</code> 所在的那个进程, 重新运行即可.</p>
+  </li>
+  <li>
+    <p>完成小目标期间出错的时候我怀疑是没有把自定义字段设置为以 <code class="language-plaintext highlighter-rouge">X-</code> 开头才报错的, 看了下标准发现并没有以 <code class="language-plaintext highlighter-rouge">X-</code> 的规定, 维基和SO 上只是推荐自定义 <code class="language-plaintext highlighter-rouge">Header</code> 以 <code class="language-plaintext highlighter-rouge">X-</code> 开头而已.</p>
+  </li>
+  <li>
+    <p>设置了 <code class="language-plaintext highlighter-rouge">withCredentials = true</code> 之后, 服务端的 <code class="language-plaintext highlighter-rouge">Access-Control-Allow-Origin</code> 就不能再设置为 <code class="language-plaintext highlighter-rouge">wildcard</code> <code class="language-plaintext highlighter-rouge">*</code> 了</p>
+  </li>
+</ol>
+
+
+                <div class="text-danger">- EOF -</div>
+                <hr style="visibility: hidden;">
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/tech/some-complain.html" data-toggle="tooltip" data-placement="top" title="一些牢骚">
+                        上一篇<br>
+                        <span>一些牢骚</span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/tech/softerware-i-use-usually.html" data-toggle="tooltip" data-placement="top" title="环境配置/常用软件汇总">
+                        下一篇<br>
+                        <span>环境配置/常用软件汇总</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <hr style="visibility: hidden;">
+                <div id="gitalk-container"></div>
+                <hr>
+            </div>  
+
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">目录</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+
+<section>
+    <h5><a href="/archive/">热门标签</a></h5>
+    <div class="tags">
+        
+        
+        
+        
+        
+        
+                <a data-sort="0014" 
+                    href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                    title="技术"
+                    rel="31">技术</a>
+        
+                <a data-sort="0034" 
+                    href="/archive/?tag=%E7%94%9F%E6%B4%BB"
+                    title="生活"
+                    rel="11">生活</a>
+        
+                <a data-sort="0039" 
+                    href="/archive/?tag=%E7%BF%BB%E8%AF%91"
+                    title="翻译"
+                    rel="6">翻译</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                    title="美食"
+                    rel="4">美食</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=%E9%9A%8F%E7%AC%94"
+                    title="随笔"
+                    rel="4">随笔</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=ProseMirror"
+                    title="ProseMirror"
+                    rel="4">ProseMirror</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=Vue"
+                    title="Vue"
+                    rel="4">Vue</a>
+        
+                <a data-sort="0042" 
+                    href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                    title="服务器"
+                    rel="3">服务器</a>
+        
+                <a data-sort="0042" 
+                    href="/archive/?tag=%E9%9B%86%E6%88%90"
+                    title="集成"
+                    rel="3">集成</a>
+        
+                <a data-sort="0042" 
+                    href="/archive/?tag=Git"
+                    title="Git"
+                    rel="3">Git</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=%E6%8F%92%E4%BB%B6"
+                    title="插件"
+                    rel="2">插件</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=%E6%B5%8B%E8%AF%95"
+                    title="测试"
+                    rel="2">测试</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=%E8%BF%81%E7%A7%BB"
+                    title="迁移"
+                    rel="2">迁移</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=Craft"
+                    title="Craft"
+                    rel="2">Craft</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=GitHub"
+                    title="GitHub"
+                    rel="2">GitHub</a>
+    </div>
+    <hr>
+    <h5>专栏</h5>
+    <div class="tags">
+        <a href="/projects">开源项目</a>
+        <a href="/book-list">技术书单</a>
+        <a href="/subscribe">订阅&付费软件</a>
+    </div>
+</section>
+
+
+                <!-- Friends Blog -->
+                
+<hr>
+<h5>朋友们</h5>
+<ul class="list-inline">
+  
+  <li><a href="https://prosemirror.xheldon.com" target="_blank">ProseMirror 中文</a></li>
+  
+  <li><a href="https://slate.xheldon.com" target="_blank">Slate 中文</a></li>
+  
+</ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- add support for mathjax by voleking-->
+
+
+<!-- Markdown 流程图按需加载 -->
+
+
+<!-- Gitalk 评论 start  -->
+<link rel="stylesheet" href="//static.xheldon.cn/css/gitalk.css">
+<script src="//static.xheldon.cn/js/gitalk.min.js"></script>
+<script type="text/javascript">
+  window.addEventListener('load', function(){
+    var gitalk = new Gitalk({
+      clientID: 'd2b353a60fa1233163fc',
+      clientSecret: '8091d57674976bcd60fc05261bf93c00da7e5ff4',
+      repo: 'x_blog',
+      owner: 'Xheldon',
+      admin: ['Xheldon'],id: "research-CORS",labels: [],
+      title: "我对 CORS 的探究",
+      language: "zh-CN",
+      pagerDirection: 'first',
+    });
+    gitalk.render('gitalk-container');
+});
+</script>
+<!-- Gitalk end -->
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://static.xheldon.cn/js/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'right',
+          // icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- SNS Link -->
+                
+
+
+<ul class="list-inline text-center">
+
+
+  
+  <li>
+    <a target="_blank" href="/feed.xml">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="https://twitter.com/_xheldon">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://github.com/xheldon">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://t.me/xheldon_tech">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+</ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; <a href="https://github.com/Xheldon" target="_blank">Xheldon</a> 2022
+                    <br>
+                    Don't Panic | Theme fork from <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+                    <br>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://static.xheldon.cn/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+<script src="https://static.xheldon.cn/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="https://static.xheldon.cn/js/xheldon-life-blog.min.js?202110012319 "></script>
+
+<!-- Simple Jekyll Search -->
+<script src="https://static.xheldon.cn/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker -->
+
+<script src="https://static.xheldon.cn/js/snackbar.js "></script>
+<script src="https://static.xheldon.cn/js/sw-registration.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("https://static.xheldon.cn/js/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-79359216-1');
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        // interop with multilangual 
+        if ('' == 'true') {
+            _containerSelector = 'div.post-container.active'
+        } else {
+            _containerSelector = 'div.post-container'
+        }
+
+        // init
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        // clean
+        $(selector).html('')
+
+        // appending
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("https://static.xheldon.cn/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+<!-- Multi-Lingual -->
+
+
+<!-- Simple Jekyll Search -->
+<script>
+    // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+    function htmlDecode(input) {
+        var e = document.createElement('textarea');
+        e.innerHTML = input;
+        // handle case of empty input
+        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+    }
+
+    SimpleJekyllSearch({
+        searchInput: document.getElementById('search-input'),
+        resultsContainer: document.getElementById('search-results'),
+        json: '/search.json',
+        searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+        noResultsText: 'No results',
+        limit: 50,
+        fuzzy: false,
+        // a hack to get escaped subtitle unescaped. for some reason, 
+        // post.subtitle w/o escape filter nuke entire search.
+        templateMiddleware: function (prop, value, template) {
+            if (prop === 'subtitle' || prop === 'title') {
+                if (value.indexOf("code")) {
+                    return htmlDecode(value);
+                } else {
+                    return value;
+                }
+            }
+        }
+    });
+
+    $(document).ready(function () {
+        var $searchPage = $('.search-page');
+        var $searchOpen = $('.search-icon');
+        var $searchClose = $('.search-icon-close');
+        var $searchInput = $('#search-input');
+        var $body = $('body');
+
+        $searchOpen.on('click', function (e) {
+            e.preventDefault();
+            $searchPage.toggleClass('search-active');
+            var prevClasses = $body.attr('class') || '';
+            setTimeout(function () {
+                $body.addClass('no-scroll');
+            }, 400)
+
+            if ($searchPage.hasClass('search-active')) {
+                $searchClose.on('click', function (e) {
+                    e.preventDefault();
+                    $searchPage.removeClass('search-active');
+                    $body.attr('class', prevClasses);  // from closure 
+                });
+                $searchInput.focus();
+            }
+        });
+    });
+</script>
+
+
+<!-- Image to hack wechat -->
+<img src="/resources/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

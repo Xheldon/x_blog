@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Webpack 异步按需加载 - Xheldon Blog</title>
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    
+        <meta name="description" content="">
+    
+    <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+    <meta name="theme-color" content="#000000">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Webpack 异步按需加载 - Xheldon Blog">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="article:published_time" content="2016-05-02T23:23:12Z">
+    
+    
+    
+    <meta property="article:tag" content="技术">
+    
+    <meta property="article:tag" content="Webpack">
+    
+    
+    
+        <meta name="og:description" content="">
+    
+    
+    <meta property="og:image" content="https://www.xheldon.com/resources/img/logo.png">
+    
+    <meta property="og:url" content="https://www.xheldon.com/tech/webpack-details-one.html">
+    <meta property="og:site_name" content="Xheldon Blog">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/resources/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.xheldon.com/tech/webpack-details-one.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://static.xheldon.cn/css/xheldon-life-blog.min.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <link href="https://static.xheldon.cn/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    Xheldon Blog
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div id="xheldonblog_navbar">
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/">Home</a></li>
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        <li>
+                            <a href="/donate/">Donate</a>
+                        </li>
+                        <li>
+                            <a href="/archive/">Archive</a>
+                        </li>
+                        <li>
+                            <a href="/feed.xml">Rss</a>
+                        </li>
+                        <li class="search-icon">
+                            <a href="javascript:void(0)">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <script>
+        // Drop Bootstarp low-performance Navbar
+        // Use customize navbar with high-quality material design animation
+        // in high-perf jank-free CSS3 implementation
+        var $body = document.body;
+        var $toggle = document.querySelector('.navbar-toggle');
+        var $navbar = document.querySelector('#xheldonblog_navbar');
+        var $collapse = document.querySelector('.navbar-collapse');
+
+        var __XheldonNav__ = {
+            close: function () {
+                $navbar.className = " ";
+                // wait until animation end.
+                setTimeout(function () {
+                    // prevent frequently toggle
+                    if ($navbar.className.indexOf('in') < 0) {
+                        $collapse.style.height = "0px"
+                    }
+                }, 400)
+            },
+            open: function () {
+                $collapse.style.height = "auto"
+                $navbar.className += " in";
+            }
+        }
+
+        // Bind Event
+        $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+                __XheldonNav__.close()
+            } else {
+                __XheldonNav__.open()
+            }
+        })
+
+        /**
+         * Since Fastclick is used to delegate 'touchstart' globally
+         * to hack 300ms delay in iOS by performing a fake 'click',
+         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * $toggle/$collapse will break global delegation.
+         * 
+         * Instead, we use a 'e.target' filter to prevent handler
+         * added to document close XheldonNav.  
+         *
+         * Also, we use 'click' instead of 'touchstart' as compromise
+         */
+        document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
+            __XheldonNav__.close();
+        })
+    </script>
+    <!-- Search -->
+<div class="search-page">
+  <div class="search-icon-close-container">
+    <span class="search-icon-close">
+      <i class="fa fa-chevron-down"></i>
+    </span>
+  </div>
+  <div class="search-main container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <form></form>
+        <input type="text" id="search-input" placeholder="$ grep...">
+        </form>
+        <div id="search-results" class="mini-post-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/resources/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<!-- Post Header -->
+
+
+
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('https://static.xheldon.cn/img/index-bg.png');
+        
+    }
+
+    
+</style>
+
+<header class="intro-header style-text" >
+
+    <div class="header-mask"></div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+                        
+                        <a class="tag" href="/archive/?tag=Webpack" title="Webpack">Webpack</a>
+                        
+                    </div>
+                    <h1>Webpack 异步按需加载</h1>
+                    
+                    <h2 class="subheading"></h2>
+                    <span class="meta">✍🏼 写于 2016年05月02日</span>&nbsp;&nbsp;&nbsp;  
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <!-- Multi-Lingual -->
+                
+                
+                    
+                        
+                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
+                        <script>
+                            var timeDom = document.getElementById('from_time');
+                            var pageTime = 1462202592; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
+                            var currentTime = Date.now();
+                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
+                            if (Number(fromNow) <= 0) {
+                                fromNow = 1; // Note: 至少显示一天
+                            }
+                            timeDom.innerText = fromNow
+                        </script>
+                    
+                    
+                
+                
+                
+				<h2 id="前言">前言</h2>
+
+<p>webpack 想要实现异步加载, 即先加载主要模块, 用到某个模块或者多个模块(也即打包后的 chunk )的时候再发送请求加载.</p>
+
+<p>这样做的目的当然是加快页面的初次加载速度, 但不可避免的会发送额外的请求, 这两个本身就是个鱼与熊掌不可兼得的事情, 这里说一下异步加载的细节.</p>
+
+<h2 id="正文">正文</h2>
+
+<p>实现主要是靠 <code class="language-plaintext highlighter-rouge">require.ensure([], callback)</code> 这个东西, 老实说我会注意到这个东西是因为在 <code class="language-plaintext highlighter-rouge">webpack.config.js</code> 的 <code class="language-plaintext highlighter-rouge">output</code> 字段有一个字段叫做 <code class="language-plaintext highlighter-rouge">chunkFilename</code>, 我这个打破沙锅的毛病就不得不想看看这个和 <code class="language-plaintext highlighter-rouge">filename</code> 字段有什么区别, 搜索了一下发现 <code class="language-plaintext highlighter-rouge">filename</code> (假设是 <code class="language-plaintext highlighter-rouge">bundle.js</code>) 是把页面需要的所有 <code class="language-plaintext highlighter-rouge">js</code> 打包, 最终生成的总的 <code class="language-plaintext highlighter-rouge">js</code> (当然多页面的时候可以提取公共模块, 这个不是本次的重点). 而 <code class="language-plaintext highlighter-rouge">chunkFilename</code> 是那些非入口点(<code class="language-plaintext highlighter-rouge">entry</code> 中列举的字段)的 <code class="language-plaintext highlighter-rouge">chunk</code> 文件打包生成的文件, 主要使用在按需异步加载模块的时候.</p>
+
+<p>这些文件没有打包在 <code class="language-plaintext highlighter-rouge">bundle.js</code> 中, 而且只被部分(非全部的)模块依赖, 同时又需要异步加载, 因此就会通过使用 <code class="language-plaintext highlighter-rouge">require.ensure</code> 被打包到额外的 <code class="language-plaintext highlighter-rouge">js</code> 中, 而这些 <code class="language-plaintext highlighter-rouge">js</code>, 仍然是通过最终的 <code class="language-plaintext highlighter-rouge">bundle.js</code> 创建 <code class="language-plaintext highlighter-rouge">script</code> 标签, 然后被 <code class="language-plaintext highlighter-rouge">append</code> 到页面中的:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="rouge-code"><pre><span class="c1">// This file contains only the entry chunk.</span>
+<span class="c1">// The chunk loading function for additional chunks</span>
+<span class="nx">__webpack_require__</span><span class="p">.</span><span class="nx">e</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">requireEnsure</span><span class="p">(</span><span class="nx">chunkId</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// "0" is the signal for "already loaded"</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">installedChunks</span><span class="p">[</span><span class="nx">chunkId</span><span class="p">]</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">callback</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">__webpack_require__</span><span class="p">);</span>
+
+  <span class="c1">// an array means "currently loading".</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">installedChunks</span><span class="p">[</span><span class="nx">chunkId</span><span class="p">]</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">installedChunks</span><span class="p">[</span><span class="nx">chunkId</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">callback</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// start chunk loading</span>
+    <span class="nx">installedChunks</span><span class="p">[</span><span class="nx">chunkId</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nx">callback</span><span class="p">];</span>
+    <span class="kd">var</span> <span class="nx">head</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="dl">'</span><span class="s1">head</span><span class="dl">'</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="kd">var</span> <span class="nx">script</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">script</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">script</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">text/javascript</span><span class="dl">'</span><span class="p">;</span>
+    <span class="nx">script</span><span class="p">.</span><span class="nx">charset</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">utf-8</span><span class="dl">'</span><span class="p">;</span>
+    <span class="nx">script</span><span class="p">.</span><span class="k">async</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+    <span class="nx">script</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">__webpack_require__</span><span class="p">.</span><span class="nx">p</span> <span class="o">+</span> <span class="dl">""</span> <span class="o">+</span> <span class="p">({}[</span><span class="nx">chunkId</span><span class="p">]</span><span class="o">||</span><span class="nx">chunkId</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">.js</span><span class="dl">"</span><span class="p">;</span>
+    <span class="nx">head</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>OK, 这些理解起来都很容易, 但是查看 <a href="http://webpack.github.io/docs/code-splitting.html#defining-a-split-point">官方文档</a> 的时候, 发现了几个需要注意的细节.</p>
+
+<h2 id="commonjs-和-amd-require-时候的区别"><em><code class="language-plaintext highlighter-rouge">CommonJS</code></em> 和 <em><code class="language-plaintext highlighter-rouge">AMD</code></em> <code class="language-plaintext highlighter-rouge">require</code> 时候的区别</h2>
+
+<p><code class="language-plaintext highlighter-rouge">CommonJS</code> 是使用 <code class="language-plaintext highlighter-rouge">require.ensure([''], callback)</code> 来处理异步加载模块的, <code class="language-plaintext highlighter-rouge">AMD</code> 是和一般的 <code class="language-plaintext highlighter-rouge">AMD</code> 模块一样, 使用 <code class="language-plaintext highlighter-rouge">require</code> 一个数组依赖的形式处理的 <code class="language-plaintext highlighter-rouge">require([''], callback)</code></p>
+
+<p>但是 <code class="language-plaintext highlighter-rouge">CommonJS</code> 加载数组中模块的时候, 是只加载不执行, 除非是在 <code class="language-plaintext highlighter-rouge">callback</code> 中, 又 <code class="language-plaintext highlighter-rouge">require</code> 了一遍才执行:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="nx">require</span><span class="p">([</span><span class="dl">'</span><span class="s1">./other/ensure.js</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">./other/ensure2.js</span><span class="dl">'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(){</span>
+  <span class="kd">var</span> <span class="nx">ensure</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./other/ensure.js</span><span class="dl">'</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">ensure2</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./other/ensure2.js</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="nx">module1</span><span class="p">();</span>
+  <span class="nx">module2</span><span class="p">();</span>
+<span class="p">},</span> <span class="nx">chunkFilename</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<blockquote>
+  <p>The require.ensure method ensures that every dependency in dependencies can be synchronously required when calling the callback. An implementation of the require function is sent as a parameter to the callback.</p>
+</blockquote>
+
+<p>而且这个 <code class="language-plaintext highlighter-rouge">callback</code> 的参数, 是一个实现了 <code class="language-plaintext highlighter-rouge">require</code> 接口的函数(没错的话应该只是一个 <code class="language-plaintext highlighter-rouge">require</code> 函数的引用);</p>
+
+<p>这个 <code class="language-plaintext highlighter-rouge">chunkFilename</code> 会被 <code class="language-plaintext highlighter-rouge">output</code> 中的 <code class="language-plaintext highlighter-rouge">chunkFilename</code> 设置覆盖.</p>
+
+<p>而 <code class="language-plaintext highlighter-rouge">AMD</code> 因为是正常一贯的依赖前置, 所以其会在 <code class="language-plaintext highlighter-rouge">require</code> 的时候就执行模块:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="nx">require</span><span class="p">([</span><span class="dl">'</span><span class="s1">./other/ensure.js</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">./other/ensure2.js</span><span class="dl">'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ensure</span><span class="p">,</span> <span class="nx">ensure2</span><span class="p">){</span>
+  <span class="nx">ensure</span><span class="p">();</span>
+  <span class="nx">ensure2</span><span class="p">();</span>
+<span class="p">});</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>OK, <code class="language-plaintext highlighter-rouge">AMD</code> 的例子不熟, 下面以 <code class="language-plaintext highlighter-rouge">CommonJS</code> 为例说明一些细节.</p>
+
+<p>首先, 如果给 <code class="language-plaintext highlighter-rouge">require.ensure</code> 传递一个 <code class="language-plaintext highlighter-rouge">callback</code> , 则在回调函数中 <code class="language-plaintext highlighter-rouge">require</code> 来的模块也会被全部打包到最终异步加载的文件中.</p>
+
+<h2 id="chunk-打包优化策略"><code class="language-plaintext highlighter-rouge">chunk</code> 打包优化策略</h2>
+
+<ol>
+  <li>如果两个 <code class="language-plaintext highlighter-rouge">chunk</code> 包含相同的模块, 那么他们将合并成一个.</li>
+  <li>如果一个模块在一个 <code class="language-plaintext highlighter-rouge">chunk</code> 的所有父级 <code class="language-plaintext highlighter-rouge">chunk</code> 都可用, 那么该模块将会在该 <code class="language-plaintext highlighter-rouge">chunk</code> 中被移除.</li>
+  <li>如果一个 <code class="language-plaintext highlighter-rouge">chunk</code> 包含了另一个 <code class="language-plaintext highlighter-rouge">chunk</code> 的所有模块, 那么最终将打包包含更多 <code class="language-plaintext highlighter-rouge">module</code> 的这个 <code class="language-plaintext highlighter-rouge">chunk</code>, 这个规则对一个 <code class="language-plaintext highlighter-rouge">chunk</code> 包含其他 多个 <code class="language-plaintext highlighter-rouge">chunk</code> 的所有 <code class="language-plaintext highlighter-rouge">module</code> 同样适用.</li>
+</ol>
+
+<p>其中第二条不好理解, 其实它所说的情况是, 在一个入口文件 <code class="language-plaintext highlighter-rouge">A.js</code> 中包含 <code class="language-plaintext highlighter-rouge">b</code> 模块, 而使用 <code class="language-plaintext highlighter-rouge">require.ensure</code> 打包生成了一个 <code class="language-plaintext highlighter-rouge">chunk.js</code> 文件中也包含这个 <code class="language-plaintext highlighter-rouge">b</code> 模块, 因为 <code class="language-plaintext highlighter-rouge">require.ensure</code> 是在 <code class="language-plaintext highlighter-rouge">A.js</code> 文件中调用的, 因此 <code class="language-plaintext highlighter-rouge">A.js</code> 算是这个 <code class="language-plaintext highlighter-rouge">chunk.js</code> 的父级 <code class="language-plaintext highlighter-rouge">chunk</code>, 那么最终打包生成的 <code class="language-plaintext highlighter-rouge">chunk.js</code> 中包含的 <code class="language-plaintext highlighter-rouge">b</code> 模块 内容将被移除. 而 <code class="language-plaintext highlighter-rouge">在所有父级 chunk 都可用</code> 指的是第一条所说的情况: 几个 <code class="language-plaintext highlighter-rouge">chunk</code> 包含相同的 <code class="language-plaintext highlighter-rouge">module</code>, 那么只会生成一个最终的 <code class="language-plaintext highlighter-rouge">bundle.js</code>, 但导致的可能是这个 <code class="language-plaintext highlighter-rouge">chunk</code> 存在多个父级 <code class="language-plaintext highlighter-rouge">chunk</code> (即 <code class="language-plaintext highlighter-rouge">entry</code> 对应的 <code class="language-plaintext highlighter-rouge">chunk</code> 文件).</p>
+
+<p>验证一下:</p>
+
+<p>入口文件 <code class="language-plaintext highlighter-rouge">app.js</code> 的代码:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>
+<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../other/if_be_remove.js</span><span class="dl">'</span><span class="p">)();</span>
+<span class="nx">require</span><span class="p">.</span><span class="nx">ensure</span><span class="p">([</span><span class="dl">'</span><span class="s1">../other/ensure.js</span><span class="dl">'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(){</span>
+	<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../other/ensure.js</span><span class="dl">'</span><span class="p">)();</span>
+<span class="p">},</span> <span class="dl">'</span><span class="s1">love</span><span class="dl">'</span><span class="p">);</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>另一个入口文件 <code class="language-plaintext highlighter-rouge">app2.js</code> 的代码:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>
+<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../other/if_be_remove.js</span><span class="dl">'</span><span class="p">)();</span>
+<span class="nx">require</span><span class="p">.</span><span class="nx">ensure</span><span class="p">([</span><span class="dl">'</span><span class="s1">../other/ensure2.js</span><span class="dl">'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(){</span>
+	<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../other/ensure2.js</span><span class="dl">'</span><span class="p">)();</span>
+<span class="p">},</span> <span class="dl">'</span><span class="s1">hate</span><span class="dl">'</span><span class="p">);</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">ensure.js</code> 的代码:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>
+<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./if_be_remove.js</span><span class="dl">'</span><span class="p">)();</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">i</span><span class="se">\'</span><span class="s1">m be ensure!</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">ensure2.js</code> 的代码:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>
+<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./if_be_remove.js</span><span class="dl">'</span><span class="p">)();</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">i</span><span class="se">\'</span><span class="s1">m be ensure2!</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>最后, 在子 <code class="language-plaintext highlighter-rouge">chunk</code> 和父级 <code class="language-plaintext highlighter-rouge">chunk</code> 都存在的 <code class="language-plaintext highlighter-rouge">if_be_remove.js</code> 的代码:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">im be removed!</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>看下 <code class="language-plaintext highlighter-rouge">Chrome</code> 浏览器控制台中 <code class="language-plaintext highlighter-rouge">Network</code> 中加载的 <code class="language-plaintext highlighter-rouge">js</code> 的内容(这里使用 <code class="language-plaintext highlighter-rouge">[id].[name].js</code> 的命名方式)</p>
+
+<p><code class="language-plaintext highlighter-rouge">app.js</code> 页面:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/webpack-async-1.png" alt="webpack-async" title="webpack-async" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">app2.js</code> 页面</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2016/webpack-async-2.png" alt="webpack-async" title="webpack-async" /></p>
+
+<p>可以看到, 因为 <code class="language-plaintext highlighter-rouge">if_be_remove.js</code> 在两个 <code class="language-plaintext highlighter-rouge">chunk</code> 中, 即 <code class="language-plaintext highlighter-rouge">1-love.js</code> 和 <code class="language-plaintext highlighter-rouge">3.hate.js</code> 被引用, 而同时又被这两个 <code class="language-plaintext highlighter-rouge">chunk</code> 的父级, 也即 <code class="language-plaintext highlighter-rouge">app.js</code> 和 <code class="language-plaintext highlighter-rouge">app2.js</code> 引用, 因此在这两个 <code class="language-plaintext highlighter-rouge">chunk</code> 中, 没有出现 <code class="language-plaintext highlighter-rouge">if_be_remove.js</code> 的代码.</p>
+
+<h2 id="补充-chunk-概念和定义">补充: <code class="language-plaintext highlighter-rouge">chunk</code> 概念和定义</h2>
+
+<p>这里再补充一下, 所谓 <code class="language-plaintext highlighter-rouge">chunk</code>, 指的是一个或者几个 <code class="language-plaintext highlighter-rouge">module</code> 组成的一个独立的 <code class="language-plaintext highlighter-rouge">js</code> 文件, 而 <code class="language-plaintext highlighter-rouge">chunk</code> 分为以下几个类型:</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">Entry Chunks</code>: <code class="language-plaintext highlighter-rouge">Entry Chunks</code>是我们最常见的<code class="language-plaintext highlighter-rouge">Chunks</code>类型, 包含了我们自己写的业务逻辑相关代码(大多数情况下是独有的代码, 即不会被提取到公共 <code class="language-plaintext highlighter-rouge">chunks</code> 中的代码), 一般会等到 <code class="language-plaintext highlighter-rouge">Initial Chunks</code> 加载完成才会执行(或者是遇到 <code class="language-plaintext highlighter-rouge">module</code> 编号为 <code class="language-plaintext highlighter-rouge">0</code> 的 module).</li>
+  <li><code class="language-plaintext highlighter-rouge">Normal Chunks</code>: <code class="language-plaintext highlighter-rouge">Normal Chunks</code> 主要指代那些应用运行时动态加载的模块,<code class="language-plaintext highlighter-rouge">Webpack</code>会为我们创建类似于 <code class="language-plaintext highlighter-rouge">JSONP</code> 这样合适的加载器来进行动态加载.</li>
+  <li><code class="language-plaintext highlighter-rouge">Initial Chunks</code>: <code class="language-plaintext highlighter-rouge">Initial Chunks</code> 本质上还是 <code class="language-plaintext highlighter-rouge">Normal Chunks</code>, 不过其会在应用初始化时完成加载, 往往这个类型的<code class="language-plaintext highlighter-rouge">Chunks</code>由<code class="language-plaintext highlighter-rouge">CommonsChunkPlugin</code>生成, 这个这个里面包含了全局的模块位置信息, <code class="language-plaintext highlighter-rouge">Entry chunks</code> 中的代码执行依赖这个 <code class="language-plaintext highlighter-rouge">chunk</code>, 因此应该优先加载这个 <code class="language-plaintext highlighter-rouge">js</code>.</li>
+</ol>
+
+<p>在之前的举例中, 被打包成公共 <code class="language-plaintext highlighter-rouge">js</code> 供全部或者部分页面使用的的 <code class="language-plaintext highlighter-rouge">bundule.js</code> 是 <code class="language-plaintext highlighter-rouge">Initial Chunks</code>, 只在当前页面才会用到的<code class="language-plaintext highlighter-rouge"> chunk</code> 如 <code class="language-plaintext highlighter-rouge">app.xxxxxx.js</code> 是 <code class="language-plaintext highlighter-rouge">Entry Chunks</code>, 通过 <code class="language-plaintext highlighter-rouge">require.ensure</code> 异步加载的 <code class="language-plaintext highlighter-rouge">chunk</code> 如 <code class="language-plaintext highlighter-rouge">3-hate</code> <code class="language-plaintext highlighter-rouge">1-love</code> 是 <code class="language-plaintext highlighter-rouge">Normal Chunks</code>.</p>
+
+
+                <div class="text-danger">- EOF -</div>
+                <hr style="visibility: hidden;">
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/tech/vue-simple-use.html" data-toggle="tooltip" data-placement="top" title="Vue + Webpack 组件式开发(练习环境)初体验">
+                        上一篇<br>
+                        <span>Vue + Webpack 组件式开发(练习环境)初体验</span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/tech/github-pages-config.html" data-toggle="tooltip" data-placement="top" title="关于本博客域名优化配置的几点说明">
+                        下一篇<br>
+                        <span>关于本博客域名优化配置的几点说明</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <hr style="visibility: hidden;">
+                <div id="gitalk-container"></div>
+                <hr>
+            </div>  
+
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">目录</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+
+<section>
+    <h5><a href="/archive/">热门标签</a></h5>
+    <div class="tags">
+        
+        
+        
+        
+        
+        
+                <a data-sort="0014" 
+                    href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                    title="技术"
+                    rel="31">技术</a>
+        
+                <a data-sort="0034" 
+                    href="/archive/?tag=%E7%94%9F%E6%B4%BB"
+                    title="生活"
+                    rel="11">生活</a>
+        
+                <a data-sort="0039" 
+                    href="/archive/?tag=%E7%BF%BB%E8%AF%91"
+                    title="翻译"
+                    rel="6">翻译</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                    title="美食"
+                    rel="4">美食</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=%E9%9A%8F%E7%AC%94"
+                    title="随笔"
+                    rel="4">随笔</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=ProseMirror"
+                    title="ProseMirror"
+                    rel="4">ProseMirror</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=Vue"
+                    title="Vue"
+                    rel="4">Vue</a>
+        
+                <a data-sort="0042" 
+                    href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                    title="服务器"
+                    rel="3">服务器</a>
+        
+                <a data-sort="0042" 
+                    href="/archive/?tag=%E9%9B%86%E6%88%90"
+                    title="集成"
+                    rel="3">集成</a>
+        
+                <a data-sort="0042" 
+                    href="/archive/?tag=Git"
+                    title="Git"
+                    rel="3">Git</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=%E6%8F%92%E4%BB%B6"
+                    title="插件"
+                    rel="2">插件</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=%E6%B5%8B%E8%AF%95"
+                    title="测试"
+                    rel="2">测试</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=%E8%BF%81%E7%A7%BB"
+                    title="迁移"
+                    rel="2">迁移</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=Craft"
+                    title="Craft"
+                    rel="2">Craft</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=GitHub"
+                    title="GitHub"
+                    rel="2">GitHub</a>
+    </div>
+    <hr>
+    <h5>专栏</h5>
+    <div class="tags">
+        <a href="/projects">开源项目</a>
+        <a href="/book-list">技术书单</a>
+        <a href="/subscribe">订阅&付费软件</a>
+    </div>
+</section>
+
+
+                <!-- Friends Blog -->
+                
+<hr>
+<h5>朋友们</h5>
+<ul class="list-inline">
+  
+  <li><a href="https://prosemirror.xheldon.com" target="_blank">ProseMirror 中文</a></li>
+  
+  <li><a href="https://slate.xheldon.com" target="_blank">Slate 中文</a></li>
+  
+</ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- add support for mathjax by voleking-->
+
+
+<!-- Markdown 流程图按需加载 -->
+
+
+<!-- Gitalk 评论 start  -->
+<link rel="stylesheet" href="//static.xheldon.cn/css/gitalk.css">
+<script src="//static.xheldon.cn/js/gitalk.min.js"></script>
+<script type="text/javascript">
+  window.addEventListener('load', function(){
+    var gitalk = new Gitalk({
+      clientID: 'd2b353a60fa1233163fc',
+      clientSecret: '8091d57674976bcd60fc05261bf93c00da7e5ff4',
+      repo: 'x_blog',
+      owner: 'Xheldon',
+      admin: ['Xheldon'],id: "webpack-details-one",labels: [],
+      title: "Webpack 异步按需加载",
+      language: "zh-CN",
+      pagerDirection: 'first',
+    });
+    gitalk.render('gitalk-container');
+});
+</script>
+<!-- Gitalk end -->
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://static.xheldon.cn/js/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'right',
+          // icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- SNS Link -->
+                
+
+
+<ul class="list-inline text-center">
+
+
+  
+  <li>
+    <a target="_blank" href="/feed.xml">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="https://twitter.com/_xheldon">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://github.com/xheldon">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://t.me/xheldon_tech">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+</ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; <a href="https://github.com/Xheldon" target="_blank">Xheldon</a> 2022
+                    <br>
+                    Don't Panic | Theme fork from <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+                    <br>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://static.xheldon.cn/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+<script src="https://static.xheldon.cn/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="https://static.xheldon.cn/js/xheldon-life-blog.min.js?202110012319 "></script>
+
+<!-- Simple Jekyll Search -->
+<script src="https://static.xheldon.cn/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker -->
+
+<script src="https://static.xheldon.cn/js/snackbar.js "></script>
+<script src="https://static.xheldon.cn/js/sw-registration.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("https://static.xheldon.cn/js/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-79359216-1');
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        // interop with multilangual 
+        if ('' == 'true') {
+            _containerSelector = 'div.post-container.active'
+        } else {
+            _containerSelector = 'div.post-container'
+        }
+
+        // init
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        // clean
+        $(selector).html('')
+
+        // appending
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("https://static.xheldon.cn/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+<!-- Multi-Lingual -->
+
+
+<!-- Simple Jekyll Search -->
+<script>
+    // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+    function htmlDecode(input) {
+        var e = document.createElement('textarea');
+        e.innerHTML = input;
+        // handle case of empty input
+        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+    }
+
+    SimpleJekyllSearch({
+        searchInput: document.getElementById('search-input'),
+        resultsContainer: document.getElementById('search-results'),
+        json: '/search.json',
+        searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+        noResultsText: 'No results',
+        limit: 50,
+        fuzzy: false,
+        // a hack to get escaped subtitle unescaped. for some reason, 
+        // post.subtitle w/o escape filter nuke entire search.
+        templateMiddleware: function (prop, value, template) {
+            if (prop === 'subtitle' || prop === 'title') {
+                if (value.indexOf("code")) {
+                    return htmlDecode(value);
+                } else {
+                    return value;
+                }
+            }
+        }
+    });
+
+    $(document).ready(function () {
+        var $searchPage = $('.search-page');
+        var $searchOpen = $('.search-icon');
+        var $searchClose = $('.search-icon-close');
+        var $searchInput = $('#search-input');
+        var $body = $('body');
+
+        $searchOpen.on('click', function (e) {
+            e.preventDefault();
+            $searchPage.toggleClass('search-active');
+            var prevClasses = $body.attr('class') || '';
+            setTimeout(function () {
+                $body.addClass('no-scroll');
+            }, 400)
+
+            if ($searchPage.hasClass('search-active')) {
+                $searchClose.on('click', function (e) {
+                    e.preventDefault();
+                    $searchPage.removeClass('search-active');
+                    $body.attr('class', prevClasses);  // from closure 
+                });
+                $searchInput.focus();
+            }
+        });
+    });
+</script>
+
+
+<!-- Image to hack wechat -->
+<img src="/resources/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

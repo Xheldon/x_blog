@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Xheldon Blog</title>
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    
+        <meta name="description" content="The Answer to Life, the Universe and Everything is...">
+    
+    <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+    <meta name="theme-color" content="#000000">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Xheldon Blog">
+    
+    <meta property="og:type" content="website">
+    
+    
+        <meta name="og:description" content="The Answer to Life, the Universe and Everything is...">
+    
+    
+    <meta property="og:image" content="https://www.xheldon.com/resources/img/logo.png">
+    
+    <meta property="og:url" content="https://www.xheldon.com/">
+    <meta property="og:site_name" content="Xheldon Blog">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/resources/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.xheldon.com/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://static.xheldon.cn/css/xheldon-life-blog.min.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <link href="https://static.xheldon.cn/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    Xheldon Blog
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div id="xheldonblog_navbar">
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/">Home</a></li>
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        <li>
+                            <a href="/donate/">Donate</a>
+                        </li>
+                        <li>
+                            <a href="/archive/">Archive</a>
+                        </li>
+                        <li>
+                            <a href="/feed.xml">Rss</a>
+                        </li>
+                        <li class="search-icon">
+                            <a href="javascript:void(0)">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <script>
+        // Drop Bootstarp low-performance Navbar
+        // Use customize navbar with high-quality material design animation
+        // in high-perf jank-free CSS3 implementation
+        var $body = document.body;
+        var $toggle = document.querySelector('.navbar-toggle');
+        var $navbar = document.querySelector('#xheldonblog_navbar');
+        var $collapse = document.querySelector('.navbar-collapse');
+
+        var __XheldonNav__ = {
+            close: function () {
+                $navbar.className = " ";
+                // wait until animation end.
+                setTimeout(function () {
+                    // prevent frequently toggle
+                    if ($navbar.className.indexOf('in') < 0) {
+                        $collapse.style.height = "0px"
+                    }
+                }, 400)
+            },
+            open: function () {
+                $collapse.style.height = "auto"
+                $navbar.className += " in";
+            }
+        }
+
+        // Bind Event
+        $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+                __XheldonNav__.close()
+            } else {
+                __XheldonNav__.open()
+            }
+        })
+
+        /**
+         * Since Fastclick is used to delegate 'touchstart' globally
+         * to hack 300ms delay in iOS by performing a fake 'click',
+         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * $toggle/$collapse will break global delegation.
+         * 
+         * Instead, we use a 'e.target' filter to prevent handler
+         * added to document close XheldonNav.  
+         *
+         * Also, we use 'click' instead of 'touchstart' as compromise
+         */
+        document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
+            __XheldonNav__.close();
+        })
+    </script>
+    <!-- Search -->
+<div class="search-page">
+  <div class="search-icon-close-container">
+    <span class="search-icon-close">
+      <i class="fa fa-chevron-down"></i>
+    </span>
+  </div>
+  <div class="search-main container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <form></form>
+        <input type="text" id="search-input" placeholder="$ grep...">
+        </form>
+        <div id="search-results" class="mini-post-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Page Header -->
+
+
+
+
+
+
+
+
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('https://static.xheldon.cn/img/index-bg.png');
+        
+    }
+
+    
+    header.intro-header .header-mask{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0,0,0, 0.4);
+    }
+    
+</style>
+
+    <header class="intro-header" >
+
+    <div class="header-mask"></div>
+    <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+        <div class="site-heading">
+        
+          <h1>Xheldon Blog</h1>
+          <span class="subheading">The Answer to Life, the Universe and Everything is...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<!-- Main Content -->
+<div class="container">
+	<div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- PostList Container -->
+    
+    
+    		<div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                postlist-container
+            ">
+    			
+<div class="post-preview">
+    <a href="/life/time-to-talk-episode-1.html">
+        <h2 class="post-title">
+            【泡脚时间】第一期：为什么主流国产历史剧让人感觉非常假？
+        </h2>
+        
+        <h3 class="post-subtitle">
+            每次会根据五个观点、主题、想法等展开，本系列不定期更新，纯个人观点，请勿上纲上线。
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+            
+  因为工作的原因，爱人每天会比我早出门一个小时，而下班会比我早到家两个小时。因此除了吃早饭的短暂时间外，在工作日的时候，我们两人交流的时间很少。因此，所谓「泡脚时间」即是每天下班回来后，给爱人烧水泡脚的时候，两人交谈的短暂时间，话题无所不包，语言也大部分是口语没有逻辑可言。
+
+
+
+  正所谓，两个苹果交换，双方还是只有两个苹果；而两个思想交换，却不止两种思想产生。因此在这里我将我们交谈的...
+        
+    </div>
+    <p class="post-meta">
+        写于 2022年02月27日
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/tech/my-blog-ci-in-2022.html">
+        <h2 class="post-title">
+            2022年我的博客自动化流程
+        </h2>
+        
+        <h3 class="post-subtitle">
+            技术在进步，我也在折腾。
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+            前言
+
+2021 年的时候，写了一个篇 关于博客自动化 的文章，但是当时没有处理好 Craft 图片的问题，而且逻辑分散到多个仓库，不具有可参考性。在那之后验证了一下直接从 Craft 传图的可行性（答案是不行），于是最近花了一个周末搞定了一下图片转存到腾讯云的问题，加上换到了 Vercel 而不是用 Github Pages，速度变快了不少，遂记录如下。
+
+注：可能后续还会有诸如「202x...
+        
+    </div>
+    <p class="post-meta">
+        写于 2022年02月23日
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/tech/craft-markdown-api-test.html">
+        <h2 class="post-title">
+            The Craft Markdown and The Github Markdown
+        </h2>
+        
+        <h3 class="post-subtitle">
+            This article is used to experiment with some issues with the Craft Markdown API, as I think some of its blocks are not converted correctly.
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+            This article shows the Markdown rendering effect of Github, this address is the rendering effect of Craft Web client, you can see the difference between the two is still quite obvious.
+
+TITLES
+
+Tit...
+        
+    </div>
+    <p class="post-meta">
+        写于 2022年01月19日
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/tech/a-comparison-of-code-editor.html">
+        <h2 class="post-title">
+            「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比
+        </h2>
+        
+        <h3 class="post-subtitle">
+            最近看到这篇外文，觉得不错，注意这里对比的是「代码编辑器」，与富文本编辑器还是有些许不同的。
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+            我已经为 Replit 工作了大约有六年的时间，随着团队的发展，我一直专注于产品的 IDE （我们称之为「工作区」）部分。理所当然的，我就越来越专注于代码编辑器。虽然我们考虑过创建一个满足我们需求的代码编辑器，但是开发代码编辑器的复杂性、可用的开源选项的丰富性以及我们员工的规模使其成为一个充满未知挑战的事情，因此我的时间可能不会花在构建一个我们自己的编辑器这方面。我有幸（和痛苦）在生产环境中...
+        
+    </div>
+    <p class="post-meta">
+        写于 2022年01月16日
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/tech/my-blog-ci.html">
+        <h2 class="post-title">
+            我的博客自动化流程
+        </h2>
+        
+        <h3 class="post-subtitle">
+            
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+            之前有同学问我博客是用的什么，我说就是 Github Pages 的 Jekyll，然后用 Build 后的 HTML 托管，但是这么说好像有点粗糙，而且这个过程有些各个服务集成的工作，因此这里我就详细说一下，同时将代码放出来。
+
+总体流程
+
+Markdown 文件的总体的流程图：
+
+
+
+博客中图片的总体流程图：
+
+
+
+关于图片处理的几点说明：
+
+
+  
+    本地开发的时候，图片的仓库是...
+        
+    </div>
+    <p class="post-meta">
+        写于 2021年12月22日
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/tech/use-craft-extension-to-write-blog.html">
+        <h2 class="post-title">
+            本文通过 Craft Extension 发送
+        </h2>
+        
+        <h3 class="post-subtitle">
+            
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+            花了两天时间，简单搞定了在 Craft 写内容，然后通过自己写的插件将内容同步到 Github 仓库，然后 Github 仓库自动 build 出 Github Pages 的过程。
+
+仓库地址： https://github.com/craft-extension/craft-github-extension
+
+博客更新流程变化
+
+之前的流程
+
+VSCode 写完 → 提交到 x_blog...
+        
+    </div>
+    <p class="post-meta">
+        写于 2021年12月09日
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/tech/ProseMirror-1.0-release.html">
+        <h2 class="post-title">
+            「译」ProseMirror 1.0 发布
+        </h2>
+        
+        <h3 class="post-subtitle">
+            原文作者写于 2017 年 10 月 13 日，回顾了 开发 ProseMirror 1.0 以来的经历，本文偏意译。
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+            
+  文中所有 https://prosemirror.xheldon.com 的链接均可换成 https://prosemirror.net 的链接以查看原文中的原始引用。
+
+
+两年前，我启动了 ProseMirror 项目，因为我想尝试一种更好的所见即所得式的编辑方法。今天，我发布了该库的 1.0 版本。项目的架构和它的内部实现在其生命周期中发生了相当大的变化，但我觉得最初的目标已经实现...
+        
+    </div>
+    <p class="post-meta">
+        写于 2021年11月12日
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/tech/ProseMirror.html">
+        <h2 class="post-title">
+            「译」ProseMirror 的由来
+        </h2>
+        
+        <h3 class="post-subtitle">
+            原文作者写于 2015 年 7 月 7 日，作者决定要写一个富文本框架的时候写的一片文章，两年后 ProseMirror 1.0 发布，本文偏意译。
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+            有的时候我晚上躺在床上，狂热地寻找新的途径，以让自己承担更多只有微薄收入的责任。然后我就想到了，我应该开始另一个开源项目！
+
+好吧，上述情况并不是真的发生了，但结果是一样的：我不断地构建复杂的、高难度的代码，然后放弃它。实际上，这个流程机制通常是，我首先会想到了一些技术概念，然后调查后发现它还没有被做过，最后我为了满足一些好奇心和自我价值的实现，决定要看看我是否 能够 做到。
+
+上述机制产生...
+        
+    </div>
+    <p class="post-meta">
+        写于 2021年11月05日
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/tech/blog-reference.html">
+        <h2 class="post-title">
+            新博客地址说明
+        </h2>
+        
+        <h3 class="post-subtitle">
+            
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+            之前的技术文章放在 www 域名下，而生活类的放在 42 域名下，维护起来比较麻烦。
+
+加上看中了这个博客模板的 Service Worker 的能力，和比较好看的界面（相比较于之前 www 的博客），因此决定将 www 使用该模板，将生活和技术文档都合二为一。
+
+国庆前期还在微调中，Service Worker 用的不熟，Github Pages 配合 SW 的更新机制我理解是有问题的，还...
+        
+    </div>
+    <p class="post-meta">
+        写于 2021年10月01日
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/tech/nginx-forward-and-reverse-proxy.html">
+        <h2 class="post-title">
+            Nginx 中的正向和反向代理
+        </h2>
+        
+        <h3 class="post-subtitle">
+            一切都源于无知
+        </h3>
+        
+    </a>
+    <div class="post-content-preview">
+        
+            本文由来
+
+因为文件夹/文件名字不能带冒号，导致我误会 Chrome 不能用其 Override 功能对那些带有端口号的 URL 进行 override，因此我打算将内网远端测试环境带端口的 URL 修改为本地的 80 默认端口，以让 Chrome 能够 override。后来发现 Chrome 其实是可以 override 带端口号的 URL 的，将其 decode 一下为 %3a 即可。...
+        
+    </div>
+    <p class="post-meta">
+        写于 2021年07月06日
+    </p>
+</div>
+<hr>
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    
+    <li class="next">
+        <a href="/page2">下一页 &rarr;</a>
+    </li>
+    
+</ul>
+
+
+          
+    		</div>
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+                <!-- Featured Tags -->
+                
+
+
+<section>
+    <h5><a href="/archive/">热门标签</a></h5>
+    <div class="tags">
+        
+        
+        
+        
+        
+        
+                <a data-sort="0014" 
+                    href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                    title="技术"
+                    rel="31">技术</a>
+        
+                <a data-sort="0034" 
+                    href="/archive/?tag=%E7%94%9F%E6%B4%BB"
+                    title="生活"
+                    rel="11">生活</a>
+        
+                <a data-sort="0039" 
+                    href="/archive/?tag=%E7%BF%BB%E8%AF%91"
+                    title="翻译"
+                    rel="6">翻译</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                    title="美食"
+                    rel="4">美食</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=%E9%9A%8F%E7%AC%94"
+                    title="随笔"
+                    rel="4">随笔</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=ProseMirror"
+                    title="ProseMirror"
+                    rel="4">ProseMirror</a>
+        
+                <a data-sort="0041" 
+                    href="/archive/?tag=Vue"
+                    title="Vue"
+                    rel="4">Vue</a>
+        
+                <a data-sort="0042" 
+                    href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                    title="服务器"
+                    rel="3">服务器</a>
+        
+                <a data-sort="0042" 
+                    href="/archive/?tag=%E9%9B%86%E6%88%90"
+                    title="集成"
+                    rel="3">集成</a>
+        
+                <a data-sort="0042" 
+                    href="/archive/?tag=Git"
+                    title="Git"
+                    rel="3">Git</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=%E6%8F%92%E4%BB%B6"
+                    title="插件"
+                    rel="2">插件</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=%E6%B5%8B%E8%AF%95"
+                    title="测试"
+                    rel="2">测试</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=%E8%BF%81%E7%A7%BB"
+                    title="迁移"
+                    rel="2">迁移</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=Craft"
+                    title="Craft"
+                    rel="2">Craft</a>
+        
+                <a data-sort="0043" 
+                    href="/archive/?tag=GitHub"
+                    title="GitHub"
+                    rel="2">GitHub</a>
+    </div>
+    <hr>
+    <h5>专栏</h5>
+    <div class="tags">
+        <a href="/projects">开源项目</a>
+        <a href="/book-list">技术书单</a>
+        <a href="/subscribe">订阅&付费软件</a>
+    </div>
+</section>
+
+
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+  <hr>
+  <h5><a href="/about/">关于我</a></h5>
+  <div class="short-about">
+    
+    <img src="/resources/img/logo.png" />
+    
+    
+    <p>The answer to Life, the Universe and Everything is...</p>
+    
+    <!-- SNS Link -->
+    
+
+
+<ul class="list-inline">
+
+
+  
+  <li>
+    <a target="_blank" href="/feed.xml">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="https://twitter.com/_xheldon">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://github.com/xheldon">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://t.me/xheldon_tech">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+</ul>
+  </div>
+</section>
+
+                <!-- Friends Blog -->
+                
+<hr>
+<h5>朋友们</h5>
+<ul class="list-inline">
+  
+  <li><a href="https://prosemirror.xheldon.com" target="_blank">ProseMirror 中文</a></li>
+  
+  <li><a href="https://slate.xheldon.com" target="_blank">Slate 中文</a></li>
+  
+</ul>
+
+    		</div>
+        
+        
+	</div>
+</div>
+
+
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- SNS Link -->
+                
+
+
+<ul class="list-inline text-center">
+
+
+  
+  <li>
+    <a target="_blank" href="/feed.xml">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="https://twitter.com/_xheldon">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://github.com/xheldon">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://t.me/xheldon_tech">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+</ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; <a href="https://github.com/Xheldon" target="_blank">Xheldon</a> 2022
+                    <br>
+                    Don't Panic | Theme fork from <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+                    <br>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://static.xheldon.cn/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+<script src="https://static.xheldon.cn/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="https://static.xheldon.cn/js/xheldon-life-blog.min.js?202110012319 "></script>
+
+<!-- Simple Jekyll Search -->
+<script src="https://static.xheldon.cn/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker -->
+
+<script src="https://static.xheldon.cn/js/snackbar.js "></script>
+<script src="https://static.xheldon.cn/js/sw-registration.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("https://static.xheldon.cn/js/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-79359216-1');
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        // interop with multilangual 
+        if ('' == 'true') {
+            _containerSelector = 'div.post-container.active'
+        } else {
+            _containerSelector = 'div.post-container'
+        }
+
+        // init
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        // clean
+        $(selector).html('')
+
+        // appending
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("https://static.xheldon.cn/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+<!-- Multi-Lingual -->
+
+
+<!-- Simple Jekyll Search -->
+<script>
+    // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+    function htmlDecode(input) {
+        var e = document.createElement('textarea');
+        e.innerHTML = input;
+        // handle case of empty input
+        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+    }
+
+    SimpleJekyllSearch({
+        searchInput: document.getElementById('search-input'),
+        resultsContainer: document.getElementById('search-results'),
+        json: '/search.json',
+        searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+        noResultsText: 'No results',
+        limit: 50,
+        fuzzy: false,
+        // a hack to get escaped subtitle unescaped. for some reason, 
+        // post.subtitle w/o escape filter nuke entire search.
+        templateMiddleware: function (prop, value, template) {
+            if (prop === 'subtitle' || prop === 'title') {
+                if (value.indexOf("code")) {
+                    return htmlDecode(value);
+                } else {
+                    return value;
+                }
+            }
+        }
+    });
+
+    $(document).ready(function () {
+        var $searchPage = $('.search-page');
+        var $searchOpen = $('.search-icon');
+        var $searchClose = $('.search-icon-close');
+        var $searchInput = $('#search-input');
+        var $body = $('body');
+
+        $searchOpen.on('click', function (e) {
+            e.preventDefault();
+            $searchPage.toggleClass('search-active');
+            var prevClasses = $body.attr('class') || '';
+            setTimeout(function () {
+                $body.addClass('no-scroll');
+            }, 400)
+
+            if ($searchPage.hasClass('search-active')) {
+                $searchClose.on('click', function (e) {
+                    e.preventDefault();
+                    $searchPage.removeClass('search-active');
+                    $body.attr('class', prevClasses);  // from closure 
+                });
+                $searchInput.focus();
+            }
+        });
+    });
+</script>
+
+
+<!-- Image to hack wechat -->
+<img src="/resources/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
