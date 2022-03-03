@@ -5,8 +5,8 @@
     <description>The Answer to Life, the Universe and Everything is...</description>
     <link>https://www.xheldon.com/</link>
     <atom:link href="https://www.xheldon.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 02 Mar 2022 22:31:29 +0800</pubDate>
-    <lastBuildDate>Wed, 02 Mar 2022 22:31:29 +0800</lastBuildDate>
+    <pubDate>Thu, 03 Mar 2022 09:08:31 +0800</pubDate>
+    <lastBuildDate>Thu, 03 Mar 2022 09:08:31 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
     
       <item>
@@ -116,7 +116,7 @@
 
 &lt;h3 id=&quot;总体流程&quot;&gt;总体流程&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/my-blog-ci-in-2022/90EA02AD-FA01-4A53-A717-87F5374DA22F_2_Image.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/my-blog-ci-in-2022/90EA02AD-FA01-4A53-A717-87F5374DA22F_2.jpeg&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;详细解释&quot;&gt;详细解释&lt;/h3&gt;
 
@@ -129,7 +129,10 @@
     &lt;p&gt;文档的第一个元素是包含 meta 信息的 table元素。&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;不支持 Drawing 元素（因为它无法生成有效图片后缀名的文件），如果存在的话不会上传到 COS，会无法正常展示（因为它是 Craft 的私有文件类型）&lt;/p&gt;
+    &lt;p&gt;meta 信息中，title 不用写，我直接从文档数据中获取，header-img 和 img 的版权信息（如果是从 unsplash 上传的）也不用写。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;不支持 Drawing 元素（因为它无法生成有效图片后缀名的文件），如果存在的话不会上传到 COS，会无法正常展示（因为它是 Craft 的私有文件类型） 。&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
@@ -141,7 +144,7 @@
 
 &lt;h4 id=&quot;-craft_publish_ci-仓库公开&quot;&gt;⓷ craft_publish_ci 仓库（公开）&lt;/h4&gt;
 
-&lt;p&gt;此仓库主要使用 Github Action 来处理图片，接收到来自插件的内容之后（也即是 content.md 文件更新后），读取该文件的内容，将 Markdown 文件中的图片（以 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![&lt;/code&gt; 开头的块级元素被判定为图片）get 到之后转存在腾讯云 COS 中，然后拿到 CDN 地址后，将文档中对应的图片地址替换成 CDN 图片地址。完成之后再将文件内容发送到真正的博客仓库，也即 x_blog_src&lt;/p&gt;
+&lt;p&gt;此仓库主要使用 Github Action 来处理图片，接收到来自插件的内容之后（也即是 content.md 文件更新后），读取该文件的内容，将 Markdown 文件中的图片（以 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![&lt;/code&gt; 开头的块级元素被判定为图片，以及特殊的 header-img 开头的头图）get 到之后转存在腾讯云 COS 中。其中，为了统一和方便，我拿到图片后会在 action 中统一转成 jpg 格式的，这样也好处理如果没有图片需要上传（仅修改文本）的时候，直接替换文档中图片地址的逻辑，因为有些图片后缀不是常用的图片格式如 png jpg，甚至没有后缀名等。我曾经尝试使用拉取图片的响应 content-type 来给图片添加后缀名，但是发现有些图片是 tiff 格式的，content-type 返回的是 application/octce-stream（没拼错的话），而且这个方案需要先&lt;strong&gt;全部&lt;/strong&gt;拉取文档中的图片，怕被 ban，于是先将需要上传的都转成 jpg。然后拿到 CDN 地址后，将文档中对应的图片地址替换成 CDN 图片地址。完成之后再将文件内容发送到真正的博客仓库，也即 x_blog_src。&lt;/p&gt;
 
 &lt;h4 id=&quot;-x_blog_src-仓库私有&quot;&gt;⓸ x_blog_src 仓库（私有）&lt;/h4&gt;
 
