@@ -286,12 +286,14 @@
                                         return `<td>${val[val.type][0].plain_text}</td>`
                                     }
                                 }
-                                return '<td>未记录</td>';
+                                return '<td></td>';
                             case 'date':
                                 if (val[val.type]) {
-                                    return `<td>始于${val[val.type].start || '未记录'}, 止于${val[val.type].end || '未记录'}</td>`;
+                                    let start = val[val.type].start;
+                                    let ent = val[val.type].end;
+                                    return `<td>${start || '?'}${end ? ' - ' + end : ''}</td>`;
                                 }
-                                return '<td>未记录</td>';
+                                return '<td></td>';
                             case 'number':
                                 if (val[val.type]) {
                                     if (name === '价格' && !Number.isNaN(val[val.type])) {
@@ -299,7 +301,7 @@
                                     }
                                     return `<td>${val[val.type]}</td>`;
                                 }
-                                return '<td>未记录</td>'
+                                return '<td></td>'
                             case 'multi_select':
                                 if (val[val.type].length) {
                                         return '<td>' + 
@@ -308,7 +310,7 @@
                                             }).join('')
                                         + '</td>';
                                 }
-                                return '<td>未记录</td>';
+                                return '<td></td>';
                         }
                     }).join('')
                 +   
