@@ -224,9 +224,53 @@
   </div>
 </header>
 
+<style>
+.data-loading {
+    width: 150px;
+    height: 10px;
+    margin:50px auto;
+    text-align: center;
+}
+.data-loading span {
+    display: inline-block;
+    width: 10px;
+    height: 100%;
+    margin-right: 5px;
+    background: #5bc0de;
+    -webkit-animation: load 1.04s ease infinite;
+}
+.data-loading span:last-child{
+    margin-right: 0px; 
+}
+@-webkit-keyframes load{
+    0%{
+        opacity: 1;
+        -webkit-transform: scale(1.2);
+    }
+    100%{
+        opacity: .2;
+        -webkit-transform: scale(.2);
+    }
+}
+.data-loading span:nth-child(1){
+    -webkit-animation-delay:0.13s;
+}
+.data-loading span:nth-child(2){
+    -webkit-animation-delay:0.26s;
+}
+.data-loading span:nth-child(3){
+    -webkit-animation-delay:0.39s;
+}
+.data-loading span:nth-child(4){
+    -webkit-animation-delay:0.52s;
+}
+.data-loading span:nth-child(5){
+    -webkit-animation-delay:0.65s;
+}
+</style>
 
 <!-- Main Content -->
-<div class="container">
+<div class="container" style="width: 100%;">
 	<div class="row">
         
 
@@ -248,7 +292,7 @@
         说明: 本页数据来自 Notion database，由于 Notion API 的限制每秒最多只能
         有三个请求，因此缓存该数据后，每小时才会刷新一次。
     </blockquote>
-    <div class="loading"><div></div><div></div><div></div><div></div></div>
+    <div class="data-loading"><span></span><span></span><span></span><span></span><span></span></div>
     <table class="data-container"></table>
 </div>
 <script>
@@ -340,7 +384,7 @@
         }).then(_ => {
             // Note: 错误信息也返回给 then，没有异常抛出
             _.json().then(res => {
-                $('.loading').remove();
+                $('.data-loading').remove();
                 if (Array.isArray(res)) {
                     $('.data-container').html(res.map(tmp.bind(res)).join(''));
                 } else {
@@ -463,6 +507,7 @@
         <a href="/projects">开源项目</a>
         <a href="/book-list">技术书单</a>
         <a href="/subscribe">订阅&付费软件</a>
+        <a href="/my-food">美食推荐</a>
     </div>
 </section>
 
