@@ -293,7 +293,7 @@
         height: 100%;
         margin: 0;
         font-family: "微软雅黑";
-        height: 650px;
+        height: 50vh;
     }
 </style>
 <blockquote>
@@ -387,10 +387,10 @@
                     map.addOverlay(marker);
                     var content = `
                     <div>
-                        <div style="display: flex; justify-content: space-between;">
-                            <div style="overflow: hidden; max-width: 250px; margin-bottom: 10px;">
-                                <span title="${item.介绍}" style="text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 5;-webkit-box-orient: vertical;line-height: 1.2; ">
-                                    防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏防止在网速较慢时生成的信息框高度比图片总高度小，导致图片部分被隐藏
+                        <div style="display: flex; justify-content: space-between;overflow: hidden;">
+                            <div style="overflow: hidden; max-width: 200px; margin-bottom: 10px;">
+                                <span title="${item.介绍}" style="text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 5;-webkit-box-orient: vertical;line-height: 1.3; ">
+                                    ${item.介绍}
                                 </span>
                             </div>
                             <img id="img-${item.名称}" style='width: 150px; height: auto; margin: 0 5px 10px 5px;' src='${item.图片}' />
@@ -411,7 +411,6 @@
                     link.innerHTML = `${item.名称} - ${item.菜系}`;
                     link.onclick = function () {
                         map.centerAndZoom(new BMapGL.Point(item.坐标[0], item.坐标[1]), 18);
-                        marker.openInfoWindow(infoWindow);
                     };
                     li.appendChild(link);
                     document.querySelector(`#id-${item.地点}`).appendChild(li);
