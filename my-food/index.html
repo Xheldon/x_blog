@@ -3,24 +3,24 @@
 
 <head>
     <meta charset="utf-8">
-    <title>美食推荐 - Xheldon Blog</title>
+    <title>美食推荐&避坑 - Xheldon Blog</title>
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     
-        <meta name="description" content="推荐系列">
+        <meta name="description" content="推荐和避坑系列">
     
     <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="美食推荐 - Xheldon Blog">
+    <meta property="og:title" content="美食推荐&避坑 - Xheldon Blog">
     
     <meta property="og:type" content="website">
     
     
-        <meta name="og:description" content="推荐系列">
+        <meta name="og:description" content="推荐和避坑系列">
     
     
     <meta property="og:image" content="https://static.xheldon.cn/img/book-list-bg.png">
@@ -216,8 +216,8 @@
         
         <div class="site-heading">
         
-          <h1>美食推荐</h1>
-          <span class="subheading">推荐系列</span>
+          <h1>美食推荐&避坑</h1>
+          <span class="subheading">推荐和避坑系列</span>
         </div>
       </div>
     </div>
@@ -293,14 +293,15 @@
         height: 100%;
         margin: 0;
         font-family: "微软雅黑";
-        height: 50vh;
+        height: 75vh;
     }
 </style>
 <blockquote>
     <ol>
-        <li>本文涵盖了在北京吃过的美食，推荐给大家~~~</li>
-        <li>点击相应的链接可以在地图显示出来，点击地图的 icon 后可以查看详细</li>
+        <li>本文涵盖了在本人吃过的美食，推荐给大家，用<b style="color: #73e261;"> 绿色 </b>标出；也有去网红店吃过后的避坑建议，也在此列出，用<b style="color: #fd9696;"> 红色 </b>标出，供大家避坑。</li>
+        <li>点击下方店名可以直接在地图显示出来，点击地图中店名的定位 icon 后可以查看详细</li>
         <li>Notion 数据源 <a href="https://xheldon.notion.site/80a16c2032ee409087a9b41d688f9e4c?v=80b13d0228a348dbbb00586dca03ce28" target="_blank">点击这里查看</a></li>
+        <li>其他说明: <div>因为每个人的口味不一样，以及吃饭时候的肚子饥饿成程度不一样，因此对一种食物的好吃与否的评价标准也是非常主观的，这里只做推荐，不打包票，酌情尝试。</div><div>又：本人口味偏咸，可以吃微辣和中辣，但吃不了很辣的食物。</div></li>
     </ol>
 </blockquote>
 <div class="data-loading"><span></span><span></span><span></span><span></span><span></span></div>
@@ -310,7 +311,7 @@
 <hr />
 <script src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=m66EjYkRV41StonGBlN3G0TAgP6kMumj"></script>
 <script>
-    const properties = ['名称', '地点', '菜系', '坐标', '介绍', '图片', '2']
+    const properties = ['名称', '地点', '菜系', '坐标', '介绍', '图片', '推荐']
     fetch('https://api.xheldon.com/api/getDatabase', {
         method: 'POST',
         headers: {
@@ -335,10 +336,11 @@
                 const data = [];
                 // Note: Notion 直接以 property 当做 key，它都不怕我怕啥！
                 const posList = [];
-                res.forEach(({名称, 地点, 菜系, 坐标, 介绍, 图片}) => {
+                res.forEach(({名称, 地点, 菜系, 坐标, 介绍, 图片, 推荐}) => {
                     const point = 坐标[坐标.type][0].plain_text.trim().split(',').map(p => Number(p.trim()))
                     const id = 地点[地点.type].name;
-                    if (!posList[id]) {
+                    console.log('id:', id);
+                    if (!posList.includes(id)) {
                         posList.push(id);
                     }
                     data.push({
@@ -348,6 +350,7 @@
                         坐标: point,
                         介绍: 介绍[介绍.type][0].plain_text,
                         图片: 图片[图片.type],
+                        推荐: 推荐[推荐.type].name
                     });
                 });
                 // Note: 新建一个以地点为分类的容器
@@ -355,7 +358,7 @@
                     const li = document.createElement('li');
                     const ul = document.createElement('ul');
                     ul.id = `id-${p}`;
-                    li.innerHTML = `<b>${p}</b>`;
+                    li.innerHTML = `<b style="font-size: 18px;">${p}</b>`;
                     li.appendChild(ul);
                     document.querySelector('.list-container').appendChild(li);
 
@@ -377,7 +380,7 @@
                 var bs = map.getBounds();   //返回地图可视区域
                 cr.addCopyright({
                     id: 1, 
-                    content: "<a href='https://twitter.com/_Xheldon' target='_blank' style='font-size:18px;color:#337ab7;'>@_Xheldon</a>", 
+                    content: "<a href='https://twitter.com/_Xheldon' target='_blank' style='font-size:18px;color:#337ab7;'><b>@_Xheldon</b></a>", 
                     bounds: bs
                 });
                 // Note: 默认位置不设置就是 北京天安门
@@ -385,18 +388,19 @@
                 data.forEach(item => {
                     var marker = new BMapGL.Marker(new BMapGL.Point(item.坐标[0], item.坐标[1]));
                     map.addOverlay(marker);
+                    const isGood = item.推荐 === '是';
                     var content = `
                     <div>
                         <div style="display: flex; justify-content: space-between;overflow: hidden;">
-                            <div style="overflow: hidden; max-width: 200px; margin-bottom: 10px;">
+                            <div style="overflow: hidden; max-width: 200px; max-height: 90px; margin-bottom: 10px;">
                                 <span title="${item.介绍}" style="text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 5;-webkit-box-orient: vertical;line-height: 1.3; ">
                                     ${item.介绍}
                                 </span>
                             </div>
-                            <img id="img-${item.名称}" style='width: 150px; height: auto; margin: 0 5px 10px 5px;' src='${item.图片}' />
+                            <img id="img-${item.名称}" style='max-height: 90px;max-width: 150px; height: auto; margin: 0 5px 10px 5px;' src='${item.图片}' />
                         </div>`;
                     var infoWindow = new BMapGL.InfoWindow(content, {
-                        title: item.名称
+                        title: `<div style="overflow: hidden;text-overflow: ellipsis;"><b ${isGood ? 'style="color: #73e261;">👍🏻 推荐' : 'style="color: #fd9696;">👎🏻 不推荐'}</b> ${item.名称}</b><div>`
                     });
                     marker.addEventListener('click', function () {
                         this.openInfoWindow(infoWindow);
@@ -406,13 +410,19 @@
                         };
                     });
                     const li = document.createElement('li');
+                    const div = document.createElement('div');
                     const link = document.createElement('a');
                     link.href = 'javascript:void(0);';
-                    link.innerHTML = `${item.名称} - ${item.菜系}`;
+                    link.innerHTML = `<b ${isGood ? 'style="color: #73e261;">👍🏻 推荐' : 'style="color: #fd9696;">👎🏻 不推荐'}</b> <b> ${item.名称} - ${item.菜系}</b>`;
+                    div.appendChild(link);
+                    const p = document.createElement('p');
+                    p.style.margin = '0';
+                    p.innerHTML = `<b>评价:</b> ${item.介绍}`;
+                    div.appendChild(p);
                     link.onclick = function () {
                         map.centerAndZoom(new BMapGL.Point(item.坐标[0], item.坐标[1]), 18);
                     };
-                    li.appendChild(link);
+                    li.appendChild(div);
                     document.querySelector(`#id-${item.地点}`).appendChild(li);
                 });
             } else {
@@ -566,7 +576,7 @@
       repo: 'x_blog',
       owner: 'Xheldon',
       admin: ['Xheldon'],id: "/my-food/",labels: [],
-      title: "美食推荐",
+      title: "美食推荐&避坑",
       language: "zh-CN",
       pagerDirection: 'first',
     });
