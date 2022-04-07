@@ -299,9 +299,9 @@
 <blockquote>
     <ol>
         <li>本文涵盖了在本人吃过的美食，推荐给大家，用<b style="color: #73e261;"> 绿色 </b>标出；也有去网红店吃过后的避坑建议，也在此列出，用<b style="color: #fd9696;"> 红色 </b>标出，供大家避坑。</li>
-        <li>点击下方店名可以直接在地图显示出来，点击地图中店名的定位 icon 后可以查看详细</li>
-        <li>Notion 数据源 <a href="https://xheldon.notion.site/80a16c2032ee409087a9b41d688f9e4c?v=80b13d0228a348dbbb00586dca03ce28" target="_blank">点击这里查看</a></li>
-        <li>其他说明: <div>因为每个人的口味不一样，以及吃饭时候的肚子饥饿成程度不一样，因此对一种食物的好吃与否的评价标准也是非常主观的，这里只做推荐，不打包票，酌情尝试。</div><div>又：本人口味偏咸，可以吃微辣和中辣，但吃不了很辣的食物。</div></li>
+        <li>点击下方店名可以直接在地图显示出来，点击地图中店名的定位 icon 后可以查看详细，点击下方的「立即出发」可以调起百度地图（部分地点调起后无法定位，这个是百度地图的锅）。</li>
+        <li>Notion 数据源 <a href="https://xheldon.notion.site/80a16c2032ee409087a9b41d688f9e4c?v=80b13d0228a348dbbb00586dca03ce28" target="_blank">点击这里查看</a>。</li>
+        <li>其他说明: <div>因为每个人的口味不一样，以及吃饭时候的肚子饥饿成程度不一样，因此对一种食物的好吃与否的评价标准也是非常主观的，这里只做推荐，不打包票，酌情尝试。</div><div>又：本人口味偏咸，可以吃微辣和中辣，但吃不了很辣非常辣变态辣的食物。</div></li>
     </ol>
 </blockquote>
 <div class="data-loading"><span></span><span></span><span></span><span></span><span></span></div>
@@ -329,7 +329,6 @@
         })
     }).then(_ => {
         _.json().then(res => {
-            console.log('res:', res);
             // Note: 根据数据，生成 json
             $('.data-loading').remove();
             if (Array.isArray(res)) {
@@ -339,7 +338,6 @@
                 res.forEach(({名称, 地点, 菜系, 坐标, 介绍, 图片, 推荐}) => {
                     const point = 坐标[坐标.type][0].plain_text.trim().split(',').map(p => Number(p.trim()))
                     const id = 地点[地点.type].name;
-                    console.log('id:', id);
                     if (!posList.includes(id)) {
                         posList.push(id);
                     }
@@ -383,9 +381,9 @@
                     content: "<a href='https://twitter.com/_Xheldon' target='_blank' style='font-size:18px;color:#337ab7;'><b>@_Xheldon</b></a>", 
                     bounds: bs
                 });
-                // Note: 默认位置不设置就是 北京天安门
-                map.centerAndZoom(new BMapGL.Point(109.63982, 34.48035), 5);
+                const pointArr = [];
                 data.forEach(item => {
+                    pointArr.push(new BMapGL.Point(item.坐标[0], item.坐标[1]));
                     var marker = new BMapGL.Marker(new BMapGL.Point(item.坐标[0], item.坐标[1]));
                     map.addOverlay(marker);
                     const isGood = item.推荐 === '是';
@@ -400,7 +398,7 @@
                             <img id="img-${item.名称}" style='max-height: 90px;max-width: 150px; height: auto; margin: 0 5px 10px 5px;' src='${item.图片}' />
                         </div>`;
                     var infoWindow = new BMapGL.InfoWindow(content, {
-                        title: `<div style="overflow: hidden;text-overflow: ellipsis;"><b ${isGood ? 'style="color: #73e261;">👍🏻 推荐' : 'style="color: #fd9696;">👎🏻 不推荐'}</b> ${item.名称}</b><div>`
+                        title: `<div style="overflow: hidden;text-overflow: ellipsis;"><b ${isGood ? 'style="color: #73e261;">👍🏻 推荐' : 'style="color: #fd9696;">👎🏻 不推荐'}</b> ${item.名称}@${item.菜系}</b><div>`
                     });
                     marker.addEventListener('click', function () {
                         this.openInfoWindow(infoWindow);
@@ -413,8 +411,15 @@
                     const div = document.createElement('div');
                     const link = document.createElement('a');
                     link.href = 'javascript:void(0);';
-                    link.innerHTML = `<b ${isGood ? 'style="color: #73e261;">👍🏻 推荐' : 'style="color: #fd9696;">👎🏻 不推荐'}</b> <b> ${item.名称} - ${item.菜系}</b>`;
+                    link.innerHTML = `<b ${isGood ? 'style="color: #73e261;">👍🏻 推荐' : 'style="color: #fd9696;">👎🏻 不推荐'}</b> <b> ${item.名称}@${item.菜系}</b>`;
                     div.appendChild(link);
+                    if (isGood) {
+                        const link2 = document.createElement('a');
+                        link2.style.marginLeft = '20px';
+                        link2.href = `http://api.map.baidu.com/marker?location=${item.坐标[1]},${item.坐标[0]}&title=${item.名称}@${item.菜系}&coord_type=bd09ll&content=${item.介绍}&output=html&src=webapp.xheldon.xblog`;
+                        link2.innerHTML = `<b>👉🏻立即出发👈🏻</b>`;
+                        div.appendChild(link2);
+                    }
                     const p = document.createElement('p');
                     p.style.margin = '0';
                     p.innerHTML = `<b>评价:</b> ${item.介绍}`;
@@ -424,6 +429,9 @@
                     };
                     li.appendChild(div);
                     document.querySelector(`#id-${item.地点}`).appendChild(li);
+                });
+                map.setViewport(pointArr, {
+                    margins: [50, 50, 50, 50],
                 });
             } else {
                 $('#container').html('Notion 服务器数据异常:', res.msg);
