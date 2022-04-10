@@ -17,10 +17,12 @@
         "grunt-contrib-watch": "^1.1.0"
     },
     "scripts": {
-        "start": "bundle exec jekyll server --config=_config.dev.yml",
+        "start": "arch -x86_64 bundle exec jekyll server --config=_config.dev.yml --ssl-key local.xheldon.cn.key --ssl-cert local.xheldon.cn.pem",
+        "build": "arch -x86_64 bundle exec jekyll build --config=_config.yml --ssl-key local.xheldon.cn.key --ssl-cert local.xheldon.cn.pem",
+        "start:cn": "arch -x86_64 bundle exec jekyll server --config=_config.dev.cn.yml --ssl-key local.xheldon.cn.key --ssl-cert local.xheldon.cn.pem",
+        "build:cn": "arch -x86_64 bundle exec jekyll build --config=_config.dev.cn.yml -d _site_cn --ssl-key local.xheldon.cn.key --ssl-cert local.xheldon.cn.pem",
         "dev": "grunt watch & npm run start",
-        "boil": "git push boilerplate boilerplate:master",
-        "push": "git push origin master --tag"
+        "dev:cn": "grunt watch & npm run start:cn"
     },
     "dependencies": {
         "cos-nodejs-sdk-v5": "^2.10.6",
