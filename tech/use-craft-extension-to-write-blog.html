@@ -65,9 +65,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
 </head>
 
 <!-- hack iOS CSS :active style -->
@@ -722,10 +719,56 @@
                     
                 </p>
             </div>
+            <div class="switch-mode" id="dark-mode">
+                <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+                    <i class="fa fa-moon-o fa-stack-1x"></i>
+                  </span>
+            </div>
+            <div class="switch-mode" id="light-mode">
+                <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-sun-o fa-stack-1x fa-inverse"></i>
+                  </span>
+            </div>
         </div>
     </div>
 </footer>
-
+<script>
+    if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+        console.log('浏览器不支持主题色');
+    } else {
+        if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+            document.documentElement.classList.remove('light');
+            document.documentElement.classList.add('dark');
+        }
+        if(window.matchMedia('(prefers-color-scheme: light)').matches){
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+        }
+        document.getElementById('dark-mode').addEventListener('click', function() {
+            document.documentElement.classList.remove('light');
+            document.documentElement.classList.add('dark');
+        });
+        document.getElementById('light-mode').addEventListener('click', function() {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
+        });
+        // Note: 自动切换
+        window.matchMedia('(prefers-color-scheme: dark)').addListener(function(mediaQueryList) {
+            if (mediaQueryList.matches) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            }
+        })
+        window.matchMedia('(prefers-color-scheme: light)').addListener(function(mediaQueryList) {
+            if (mediaQueryList.matches) {
+                document.documentElement.classList.add('light');
+                document.documentElement.classList.remove('dark');
+            }
+        })
+    }
+</script>
 <!-- jQuery -->
 <script src="https://static.xheldon.cn/js/jquery.min.js "></script>
 
