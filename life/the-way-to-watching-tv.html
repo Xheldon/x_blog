@@ -248,6 +248,8 @@
                     <h2 class="subheading"></h2>
                     <span class="meta">✍🏼 写于 2022年04月24日</span>&nbsp;&nbsp;&nbsp;  
                     
+                    <span class="meta">💡 更新于 2022年04月24日</span>
+                    
                 </div>
             </div>
         </div>
@@ -283,9 +285,9 @@
 
 <p>看电视是家里必不可少的娱乐活动，但是如何舒服的看自己想看的内容却不是一件简单的事，有时候甚至有钱都买不来舒心，于是此处记录一下有关家庭观影的折腾记录，一来可以给大家一个思路，二来可以帮助大家提高生活质量。</p>
 
-<h2 id="我基本情况">我基本情况</h2>
+<h2 id="我的基本情况">我的基本情况</h2>
 
-<p>这里先介绍一下我的基本情况，如果情况和你相符的话可以继续看下去，如果与你的需求不甚吻合，可以继续看下去做个参考。</p>
+<p>这里先介绍一下我的基本情况，如果情况和你相符的话可以继续看下去；如果与你的需求不甚吻合，也可以继续看下去做个参考。</p>
 
 <h3 id="设备">设备</h3>
 
@@ -442,7 +444,7 @@
 <h4 id="配置-samba-共享">配置 Samba 共享</h4>
 
 <blockquote>
-  <p>此处建议先配置路由器的<a href="https://baike.baidu.com/item/samba/455025"> Samba 共享</a>（也即 SMB 协议），这样的话就不用使用 SSH 终端登陆路由器来通过命令行修改配置文件了，对小白比较友好，因此将这一步放到首位。</p>
+  <p>此处先配置路由器的<a href="https://baike.baidu.com/item/samba/455025"> Samba 共享</a>（也即 SMB 协议）的原因是，这样的话就不用使用 SSH 终端登陆路由器来通过命令行修改配置文件了，对小白比较友好，因此将这一步放到首位。</p>
 </blockquote>
 
 <p>浏览器进入到路由器配置页面，然后进入 <code class="language-plaintext highlighter-rouge">网络存储-网络共享</code> ， 进行如下填写，其中主机名是显示在 Finder 中的名字，描述和工作组默认就可以，可以看到默认状态下 <code class="language-plaintext highlighter-rouge">自动共享</code> 选项是打开的，也就是我上一节说的这一步其实不是很需要。但是如果默认自动共享的话，是共享的根目录，会将 <code class="language-plaintext highlighter-rouge">/mnt/sda1</code> 也显示出来，我这个强迫症一定要改掉，于是配置下方的 <code class="language-plaintext highlighter-rouge">共享目录</code> 即可：</p>
@@ -481,10 +483,10 @@
 
 <p><img src="https://static.xheldon.cn/img/in-post/2022/the-way-to-watching-tv/5C47B593-D0D6-4B0D-BFAE-3B2CF21FAB32_2.jpeg" alt="Image" /></p>
 
-<p>至此就安装完成了，你有什么磁力链接或者 torrent 种子都可以进行下载。</p>
+<p>至此就安装完成了，你有什么网上搜到的磁力链接或者 torrent 种子都可以进行下载。</p>
 
 <blockquote>
-  <p>如果你还是不想到处找种子，问题不大，继续看下面</p>
+  <p>如果你还是不想到处找种子，或者说网上搜到的磁力链接都是死链，无法下载，那么继续看下面。</p>
 </blockquote>
 
 <h4 id="设置-qbittorrent-的-jackett-搜索插件">设置 qBittorrent 的 Jackett 搜索插件</h4>
@@ -539,7 +541,7 @@
   lscr.io/linuxserver/jackett
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p>比如上面的配置，我的本地硬盘路径就是 <code class="language-plaintext highlighter-rouge">~/Code/Docker/config</code> 和 <code class="language-plaintext highlighter-rouge">~/Code/Docker/downloads</code> 。</p>
+<p>比如上面的配置，我的本地硬盘路径就是 <code class="language-plaintext highlighter-rouge">~/Code/Docker/config</code> 和 <code class="language-plaintext highlighter-rouge">~/Code/Docker/downloads</code> 。这个配置简单解释一下就是，映射本机端口 9117 到 Docker 容器的 9117 端口，启用自动更新，禁止重启停止除非已经意外停止。</p>
 
 <p>之后就可以在 Docker 中看到这个服务了（默认直接启动了）：</p>
 
