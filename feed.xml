@@ -5,9 +5,363 @@
     <description>The Answer to Life, the Universe and Everything is...</description>
     <link>https://www.xheldon.com/</link>
     <atom:link href="https://www.xheldon.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 27 Apr 2022 02:14:59 +0800</pubDate>
-    <lastBuildDate>Wed, 27 Apr 2022 02:14:59 +0800</lastBuildDate>
+    <pubDate>Tue, 03 May 2022 15:27:56 +0800</pubDate>
+    <lastBuildDate>Tue, 03 May 2022 15:27:56 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
+    
+      <item>
+        <title>AppleScript 初体验</title>
+        <description>&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;最近新买了 Mac Studio，配备了 M1 Max 芯片和 64G 的内存，性能非常强。与此同时，之前的 &lt;a href=&quot;/tech/my-blog-ci-in-2022.html&quot;&gt;博客处理流程&lt;/a&gt; 中，因为需要使用 Github Action 将从 Craft 拉取的图片（这一步很快，毕竟二者都在国外），往腾讯云 COS传的时候，经常遇到网络过慢的问题&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/FBB4B556-8472-4C92-8EFD-E07015DC5FBB_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;调研了一番发现，Github 貌似 &lt;a href=&quot;https://github.community/t/is-there-a-way-to-specify-virtual-machine-region/120438&quot;&gt;不支持设置 Action 服务器的区域&lt;/a&gt;。鉴于此，所以打算之后将发布流程放到本地，，以加快构建流程，遂有此文。下面的 AppleScript 简称 AS。&lt;/p&gt;
+
+&lt;h2 id=&quot;为什么用-applescript-而不是其他&quot;&gt;为什么用 AppleScript 而不是其他？&lt;/h2&gt;
+
+&lt;p&gt;首先，我当然是想尽可能的缩短操作路径和复杂度，因此先规定了操作步骤：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;点击 Craft 中的发布按钮。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;本地构建，同时显示出构建 log 在终端。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;将构建结果推送到 github。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;由于需要在一个 App 中通过链接调用另一个 App，因此使用 AppleScript 是唯一选择。不过，虽然使用的是 AS，但是其实执行的还是已有的 js 文件，只是将 &lt;a href=&quot;https://github.com/Xheldon/craft_publish_ci/blob/master/.github/workflows/publish.yml&quot;&gt;craft_publish_ci 中的 workflow任务&lt;/a&gt; 挪到了本地执行而已。&lt;/p&gt;
+
+&lt;h2 id=&quot;applescript-简介&quot;&gt;AppleScript 简介&lt;/h2&gt;
+
+&lt;p&gt;概念图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/6C1FA0DD-5875-4C15-BCA8-495B34F5F699_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;applescript-能做什么&quot;&gt;AppleScript 能做什么&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;能与用户交互，如响应用户输入、通知中心发送通知等&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;能控制其他 app ，如果其他 app 提供了相关 AS 接口可以直接控制，如果没有提供相关接口则需要通过 AS 语法来获取界面上的按钮等操作元素进行操作。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;能执行自动化任务如发送邮件、执行定时脚本、打开音乐播放器、锁屏、响应自定义的 URL Scheme 后执行脚本等。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;基本语法&quot;&gt;基本语法&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;每行的前面加上 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;---&lt;/code&gt;（三个短横线）或者 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#&lt;/code&gt; 表示注释本行。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(&lt;/code&gt;&lt;em&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xxx&lt;/code&gt;&lt;/em&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;)&lt;/code&gt; 包裹的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xxx&lt;/code&gt; 表述块注释掉 xxx 的内容。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;其他的基本跟口头预类似，不过如果你对英文语法不自信，比如不清楚 besides against over 等在具体语境中的意思，建议还是老老实实使用基本语法。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;applescript-的形式&quot;&gt;AppleScript 的形式&lt;/h3&gt;
+
+&lt;p&gt;AppleScript 常用的有两种形式，Script（脚本）、Application（应用），这里只介绍前两种，Script bundle 和 Text 我没用这里不展开。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/08F57517-C6AC-49C1-9B5E-9606F2DD2A8E_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;注：这里需要说明一点的是，即使是相同的代码，保存成脚本运行和保存成应用运行，界面是不一样的。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;脚本&quot;&gt;脚本&lt;/h4&gt;
+
+&lt;p&gt;脚本顾名思义就是像 js 一样的可执行文件，不同的是 as 是在 Mac 桌面环境执行，而 js 是在 Chrome 中执行的。双击即可运行。下图是脚本 process 显示进度的界面，通过点击脚本右上角的「运行」按钮运行：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/A8E4D5D2-C4A6-4E6D-80DA-7E3A0EFA7D41_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;应用&quot;&gt;应用&lt;/h4&gt;
+
+&lt;p&gt;保存成 Application 的 AS 的后缀名跟普通的应用如 Safari、Chrome、微信等应用一样，会以 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.app&lt;/code&gt; 结尾，也可以查看包内容。有多种运行方式如 URL Scheme 调用、双击、拖拽内容到 app 图标上，你需要写相关的事件函数来响应相关用户操作。下图是 应用process 显示进度的界面，通过双击 「xxx.app」运行：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/E0B4F2DA-21AA-4EF1-B059-9C500E18B67C_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;其他&quot;&gt;其他&lt;/h4&gt;
+
+&lt;p&gt;除了上述两者，其他的不常用，不过如果你需要将 script 保存成服务以在状态栏或者任意界面的右键的服务中能够调用该脚本，这需要上述两者之外的形式：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/D09A2EEB-72DC-4CA1-8812-59E4BC4206DB_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;你可以选择将脚本保存成系统 Service，此时上述 process 代码运行的时候，进度条会显示在顶部状态栏：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/B936F8C6-DCA3-4B98-B995-7F4F3F013E74_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;常用操作代码&quot;&gt;常用操作代码&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;以下操作基于「应用」类型的 AS，下列的语法在终端中使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;osascript -e '语法内容'&lt;/code&gt; 可以快速验证。需要注意的是，类似于多行的表达如 process 进度条的显示，osascript 是没办法做到的，虽然你可以在很多多行命令如 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tell&lt;/code&gt; 中使用多个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-e&lt;/code&gt; 参数来串联如 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;osascript -e ‘tell application “Finder”’ -e ‘end tell’&lt;/code&gt; ，但是此语法对 process 进度条无效。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;用户交互&quot;&gt;用户交互&lt;/h3&gt;
+
+&lt;h4 id=&quot;在通知中心显示信息&quot;&gt;在通知中心显示信息&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;display notification &quot;通知内容&quot; with title &quot;通知 title&quot; subtitle &quot;通知副标题&quot;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/AC96218F-E238-4695-9220-7933C27BC841_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;弹窗&quot;&gt;弹窗&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;display dialog &quot;这是个通知&quot;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/B945A1B9-4704-4F39-9A68-C0287846A061_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;获取用户输入&quot;&gt;获取用户输入&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;display dialog &quot;What's your name?&quot; default answer &quot;&quot; with icon note buttons {&quot;取消&quot;, &quot;确认&quot;} default button &quot;确认&quot;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/F4002573-AD3C-4D4E-BF98-9B6696788442_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;注：AS 没有办法生成类似表单一样的组件，只能生成上面这种对话框，类似网页中的 prompt&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;播放给定文本&quot;&gt;播放给定文本&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;say &quot;What is your name?&quot; using &quot;Alex&quot; speaking rate 140 pitch 42 modulation 60
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;其他-1&quot;&gt;其他&lt;/h4&gt;
+
+&lt;p&gt;让用户选择文件夹、文件、颜色、从列表中选择一项等，暂时省略。&lt;/p&gt;
+
+&lt;h3 id=&quot;执行命令行&quot;&gt;执行命令行&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;do shell script &quot;echo $PATH&quot;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;注意，命令行中的 PATH 环境变量为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/usr/bin:/bin:/usr/sbin:/sbin&lt;/code&gt; ，因此无法在其中执行诸如 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;node&lt;/code&gt; 、&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nvm&lt;/code&gt; 等后来安装的命令，这些命令执行的时候需要手动指定命令所在位置。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;执行 node 脚本：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;set node to &quot;/Users/x/.nvm/versions/node/v14.19.1/bin/node&quot;
+set appPath to &quot;/Applications/Xhelper.app/Contents/Resources/Scripts/&quot;
+do shell script node &amp;amp; &quot; &quot; &amp;amp; appPath &amp;amp; &quot;index.js&quot;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;获取上一个语句的输出结果&quot;&gt;获取上一个语句的输出结果&lt;/h3&gt;
+
+&lt;p&gt;直接在上一句语句后立即使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;result&lt;/code&gt; 表示结果即可：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;do shell script &quot;echo $PATH&quot;
+display dialog result with title &quot;通知&quot;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/6214E292-E4CB-49BC-B8D2-945C135E5B45_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;显示调试信息&quot;&gt;显示调试信息&lt;/h3&gt;
+
+&lt;p&gt;直接使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;log&lt;/code&gt; 语句即可，然后在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Script Editor&lt;/code&gt; 下方的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Replies&lt;/code&gt; 中获取输出信息，可以在这里看到 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;shell script&lt;/code&gt; 命令执行的过程中，脚本向控制台输出的内容，如执行 js 脚本的时候的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;console.log&lt;/code&gt; 等。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;log do shell script &quot;echo $PATH&quot;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/1089533E-DE38-418F-A20C-592669941C2D_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;显示进度&quot;&gt;显示进度&lt;/h3&gt;
+
+&lt;p&gt;显示进度用到 progress ，语句相对来说比较复杂，因为需要显示不同的状态进度，需要多行：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;set progress total steps to 3
+set progress completed steps to 0
+set progress description to &quot;处理中...&quot;
+delay 1
+set progress completed steps to 1
+delay 1
+set progress completed steps to 2
+delay 1
+set progress completed steps to 3
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;相关的截图可以在上面看到。&lt;/p&gt;
+
+&lt;h3 id=&quot;延迟一段时间后执行&quot;&gt;延迟一段时间后执行&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;delay n
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;n&lt;/code&gt;  表示秒数，支持小数。一般用来模拟用户操作的时候的延迟操作，否则可能因为脚本操作过快页面还未来得及显示等。一些奇怪的问题也可以通过延迟执行来解决，此语句可以类比于 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js&lt;/code&gt; 中的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setTimeout&lt;/code&gt; 大法。&lt;/p&gt;
+
+&lt;h3 id=&quot;调用其他应用&quot;&gt;调用其他应用&lt;/h3&gt;
+
+&lt;p&gt;注意，此处会有系统警告，需要你确认才能执行:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/898D7F67-700E-40F2-AC6C-D999F5543578_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;确认后可以在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;设置-安全与隐私-隐私-自动化&lt;/code&gt;中确认：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/47444D53-68E4-4518-87FD-521AE42B737F_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;可以调用其他应用来执行相应的操作，下面是唤起 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Terminal&lt;/code&gt; 应用后，激活然后执行命令：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;tell application &quot;Terminal&quot;
+	if not (exists window 1) then reopen
+	activate
+	do script &quot;echo $PATH&quot; in window 1
+end tell
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;此语句做了一个判断，如果第一个打开的窗口存在，则激活之，然后在其内执行命令（&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;do script&lt;/code&gt; ）；如果不存在的话则会新建一个窗口然后在其内执行命令。因为每个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;do script&lt;/code&gt; 都会打开一个新的 Terminal 这个判断可以保证复用窗口。不过需要注意的是，如果 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;window 1&lt;/code&gt; 内已经有一个已经存在的进程（如 server 未中断），那么这个命令是不会执行的，还需要额外的判断，此处不展开。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/8701C38B-8CE9-479A-816A-9126692B313D_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;响应-url-scheme&quot;&gt;响应 URL Scheme&lt;/h3&gt;
+
+&lt;p&gt;有些时候你不想先找到 AS 脚本，然后双击运行；或者有时候你需要从另一个应用中调起你写的 AS 应用，这个时候就用到了 URL Scheme，少数派有 &lt;a href=&quot;https://sspai.com/post/31500&quot;&gt;一篇介绍&lt;/a&gt;，可以看看。&lt;/p&gt;
+
+&lt;p&gt;首先你需要修改 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Info.plist&lt;/code&gt; 文件，可以在 Script Editor 的右侧，右键 「显示在 Finder」 中：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/E1F3DFE5-54E3-4615-9A74-1B084686CC37_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;然后向上一级，可以看到该文件：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/DE5F9B08-4F60-4B2A-9645-DF37B420C96B_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;内容是一个类似 XML 的东西编辑之，在其内加入如下字段：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&amp;lt;array&amp;gt;
+	&amp;lt;dict&amp;gt;
+		&amp;lt;key&amp;gt;CFBundleURLName&amp;lt;/key&amp;gt;
+		&amp;lt;string&amp;gt;Open File&amp;lt;/string&amp;gt;
+		&amp;lt;key&amp;gt;CFBundleURLSchemes&amp;lt;/key&amp;gt;
+		&amp;lt;array&amp;gt;
+			&amp;lt;string&amp;gt;xhelper&amp;lt;/string&amp;gt;
+		&amp;lt;/array&amp;gt;
+	&amp;lt;/dict&amp;gt;
+&amp;lt;/array&amp;gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;然后确认一下，用 XCode 打开该文件可以看到类似的条目：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/901047E8-38AA-4B9C-BA60-680EC60864F5_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;表示添加成功。&lt;/p&gt;
+
+&lt;p&gt;这个操作的意思是，将该 AS 应用响应以 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xhelper&lt;/code&gt; （可以任意修改成你想要的开头，不要与已有的重复即可）开头的 URL。&lt;/p&gt;
+
+&lt;p&gt;设置完成后，需要在 Script Editor 中保存一下，或者 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cmd + L&lt;/code&gt; 一下或者运行一次（或者都做一遍），重新编译，然后才能生效。&lt;/p&gt;
+
+&lt;p&gt;然后，为了让 AS 响应该 URL，需要设置一个事件监听：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;on open location this_URL
+	display dialog this_URL
+end open location
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;上述代码中，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;this_URL&lt;/code&gt; 即为以你 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xhelper&lt;/code&gt; 打开的链接。&lt;/p&gt;
+
+&lt;p&gt;此时在浏览器中（截图是 Chrome）测试一个链接：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/01F724A1-041B-4143-80CC-5F4F3D6ECFC8_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;然后 AS 应用就会响应然后弹窗显示 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xhelper://你好！&lt;/code&gt; ，注意这里是不用 encode 编码的。&lt;/p&gt;
+
+&lt;h2 id=&quot;参考链接&quot;&gt;参考链接&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/index.html#//apple_ref/doc/uid/TP40016239-CH56-SW1&quot;&gt;Mac Automation Scription Guide&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://developer.apple.com/library/archive/releasenotes/AppleScript/RN-AppleScript/RN-10_10/RN-10_10.html#//apple_ref/doc/uid/TP40000982-CH110-SW8&quot;&gt;AppleScript 10.10 Changes&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html#//apple_ref/doc/uid/TP40000983-CH208-SW1&quot;&gt;Introduction to AppleScript Language Guide&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/42815166/customize-applescript-app-icon&quot;&gt;Customize AppleScript app icon&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://ohdoylerules.com/snippets/using-node-in-applescript/&quot;&gt;Using Node.js in an AppleScript&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://apple.stackexchange.com/questions/21602/where-can-i-access-official-applescript-documentation&quot;&gt;Where can I access official AppleScript documentation?&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://apple-dev.groups.io/g/jxa/wiki/3202&quot;&gt;关于使用 JavaScript 写 AS 的相关资料&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.notion.so/AppleScript-c07b90f850ea42e990b3ea2333f9b252&quot;&gt;AppleScript 教程&lt;/a&gt; （Write on Notion）&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://sspai.com/post/44425&quot;&gt;在 macOS 中制作自己的 URL Schemes&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;AppleScripe 简明基础教程（iDoraemon Nathan 编著）&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 03 May 2022 13:38:32 +0800</pubDate>
+        <link>https://www.xheldon.com/tech/applescript-simple-use.html</link>
+        <guid isPermaLink="true">https://www.xheldon.com/tech/applescript-simple-use.html</guid>
+        
+        <category>技术</category>
+        
+        
+        <category>tech</category>
+        
+      </item>
     
       <item>
         <title>我的家庭观影之路</title>
@@ -2105,57 +2459,6 @@ jobs:
         <category>集成</category>
         
         <category>插件</category>
-        
-        
-        <category>tech</category>
-        
-      </item>
-    
-      <item>
-        <title>「译」ProseMirror 1.0 发布</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;文中所有 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://prosemirror.xheldon.com&lt;/code&gt; 的链接均可换成 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://prosemirror.net&lt;/code&gt; 的链接以查看原文中的原始引用。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;两年前，我启动了 &lt;a href=&quot;https://prosemirror.xheldon.com&quot;&gt;ProseMirror&lt;/a&gt; 项目，因为我想尝试&lt;a href=&quot;/tech/ProseMirror.html&quot;&gt;一种更好&lt;/a&gt;的所见即所得式的编辑方法。今天，我发布了&lt;a href=&quot;https://github.com/prosemirror/&quot;&gt;该库&lt;/a&gt;的 &lt;a href=&quot;https://discuss.prosemirror.net/t/release-1-0-0/998&quot;&gt;1.0 版本&lt;/a&gt;。项目的架构和它的内部实现在其生命周期中发生了相当大的变化，但我觉得最初的目标已经实现了。&lt;/p&gt;
-
-&lt;p&gt;ProseMirror 是一个 Web UI 库，尽管它所解决的一些挑战是针对 Web 平台的优势和（特别是）弱点的，但不要把它看成是另一个 TinyMCE 的替代品。相反，它是一种更通用的富文本编辑方式，而恰好是在浏览器上用 JavaScript 实现的（意即你可以根据该库的逻辑翻译成其他语言版本的富文本编辑器，如 OC 版本等—译者注）。&lt;/p&gt;
-
-&lt;h2 id=&quot;基于-scheme-约束的编辑&quot;&gt;基于 Scheme 约束的编辑&lt;/h2&gt;
-
-&lt;p&gt;ProseMirror 中最重要的是，其与实际的文档内容无关，这使得在这个库的基础上建立应用程序成为可能，而在过去，这需要一个完全自定义的编辑器实现。&lt;/p&gt;
-
-&lt;p&gt;我所说的与文档内容无关是指 ProseMirror 的 &lt;a href=&quot;https://prosemirror.xheldon.com/docs/guide/#schema&quot;&gt;Scheme 约束&lt;/a&gt;功能。核心编辑器对文档的具体内容不做任何要求，而是看一段可配置的数据（scheme）来确定允许什么样的内容以及它组成什么样的结构。ProseMirror 将&lt;a href=&quot;https://prosemirror.xheldon.com/examples/schema/&quot;&gt;精确地&lt;/a&gt;与您所需要的&lt;a href=&quot;https://prosemirror.xheldon.com/examples/dino/&quot;&gt;自定义&lt;/a&gt;语义文档格式一起工作，同时仍然给您提供用户习惯的所见即所得的编辑风格。&lt;/p&gt;
-
-&lt;p&gt;例如，一个科学写作应用可以使用一个包括章节、脚注和参考文献的 scheme—两个这样的应用，&lt;a href=&quot;https://sciflow.net/en/home&quot;&gt;SciFlow&lt;/a&gt; 和 &lt;a href=&quot;https://www.fiduswriter.org/&quot;&gt;Fidus Writer&lt;/a&gt; 已经建立在 ProseMirror 之上。或者一个新闻机构可以建立一个反映其内容模型的 scheme，为记者提供一个可以写作的编辑器。例如，&lt;a href=&quot;https://www.nytimes.com/&quot;&gt;《纽约时报》&lt;/a&gt;正在其 CMS 中使用 ProseMirror。或者，如果你的公司有一些不同的内容模型的编辑器，使用 ProseMirror 与不同的 scheme 可以使你的编辑器代码更容易统一。&lt;a href=&quot;https://www.atlassian.com/&quot;&gt;Atlassian&lt;/a&gt; 正在他们的产品中推广 ProseMirror，从 wiki 到 bug 追踪器到源码托管。&lt;/p&gt;
-
-&lt;h2 id=&quot;协作&quot;&gt;协作&lt;/h2&gt;
-
-&lt;p&gt;对&lt;a href=&quot;/tech/Collaborative-Editing-in-ProseMirror.html&quot;&gt;协作编辑&lt;/a&gt;的支持从一开始就是 ProseMirror 的一个重点。该系统的几个方面，如文档更新的表现方式，或撤销历史模块的工作方式，都受到了协作编辑需求的强烈影响。我已经确信，这不是一个你可以在现有编辑器上扩展出来的功能。&lt;/p&gt;
-
-&lt;p&gt;幸运的是，这些限制并没有把设计逼到一个不舒服的角落，而是帮助推动它向一个普遍有益的方向发展。其他几个棘手的功能，如变化跟踪和回滚过去的变化的能力，都是由于协作编辑相关的&lt;a href=&quot;https://prosemirror.xheldon.com/docs/guide/#transform.steps&quot;&gt;设计决定&lt;/a&gt;而得以实现的。&lt;/p&gt;
-
-&lt;h2 id=&quot;事务性的状态更新&quot;&gt;事务性的状态更新&lt;/h2&gt;
-
-&lt;p&gt;试图将协作编辑的要求与一个功能性的&lt;a href=&quot;http://redux.js.org/docs/basics/DataFlow.html&quot;&gt;单向数据流&lt;/a&gt;架构结合起来，导致了我们的设计，其中编辑器，而不是单方面更新其状态，而是发出事务。一个事务可以用来计算一个新的状态，用它来更新编辑器。&lt;/p&gt;
-
-&lt;p&gt;这使得如果你想的话，几乎可以在你的应用程序的数据流循环中无缝集成编辑器。此外，将更新作为第一类值使得保持外部状态与编辑器同步变得更加容易，这使得新的、强大的扩展类型成为可能。&lt;/p&gt;
-
-&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
-
-&lt;p&gt;经过多年的疯狂实验和不断变化，从 1.0 版本开始，我们的目标是稳定。核心模块将尽可能长时间地停留在 1.x 上，这意味着新版本不需要你改变你的代码。有一个 &lt;a href=&quot;https://github.com/prosemirror/rfcs/&quot;&gt;RFC 进度&lt;/a&gt;，我们会用它来获取社区对新功能的反馈。&lt;/p&gt;
-
-&lt;p&gt;如果你正在寻找一个简单的插件式富文本编辑器组件，ProseMirror 可能不是你需要的东西。(我们确实希望这样的组件能够用 ProseMirror 构建)。这个库是为要求高的、高度集成的用例而优化的，以简单为代价。但是，如果你的应用程序正在挑战所见即所得编辑器的极限，那么可以考虑&lt;a href=&quot;https://prosemirror.xheldon.com&quot;&gt;使用一下&lt;/a&gt;。&lt;/p&gt;
-</description>
-        <pubDate>Fri, 12 Nov 2021 12:10:23 +0800</pubDate>
-        <link>https://www.xheldon.com/tech/ProseMirror-1.0-release.html</link>
-        <guid isPermaLink="true">https://www.xheldon.com/tech/ProseMirror-1.0-release.html</guid>
-        
-        <category>技术</category>
-        
-        <category>ProseMirror</category>
-        
-        <category>翻译</category>
         
         
         <category>tech</category>

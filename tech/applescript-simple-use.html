@@ -3,38 +3,36 @@
 
 <head>
     <meta charset="utf-8">
-    <title>是的, 三年后我又重新开始更新这个小小的博客了 - Xheldon Blog</title>
+    <title>AppleScript 初体验 - Xheldon Blog</title>
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     
-        <meta name="description" content="">
+        <meta name="description" content="简单体验了一下 AppleScript，感觉像苹果生态下的 Visual Basic 6。">
     
     <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="是的, 三年后我又重新开始更新这个小小的博客了 - Xheldon Blog">
+    <meta property="og:title" content="AppleScript 初体验 - Xheldon Blog">
     
     <meta property="og:type" content="article">
     
-    <meta property="article:published_time" content="2019-08-30T15:28:35Z">
+    <meta property="article:published_time" content="2022-05-03T13:38:32Z">
     
     
     
     <meta property="article:tag" content="技术">
     
-    <meta property="article:tag" content="生活">
     
     
-    
-        <meta name="og:description" content="">
+        <meta name="og:description" content="简单体验了一下 AppleScript，感觉像苹果生态下的 Visual Basic 6。">
     
     
     <meta property="og:image" content="https://www.xheldon.com/resources/img/logo.png">
     
-    <meta property="og:url" content="https://www.xheldon.com/tech/yes-im-back.html">
+    <meta property="og:url" content="https://www.xheldon.com/tech/applescript-simple-use.html">
     <meta property="og:site_name" content="Xheldon Blog">
     
     <!-- Web App Manifest -->
@@ -44,7 +42,7 @@
     <link rel="shortcut icon" href="/resources/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.xheldon.com/tech/yes-im-back.html">
+    <link rel="canonical" href="https://www.xheldon.com/tech/applescript-simple-use.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
@@ -217,13 +215,11 @@
                         
                         <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
                         
-                        <a class="tag" href="/archive/?tag=%E7%94%9F%E6%B4%BB" title="生活">生活</a>
-                        
                     </div>
-                    <h1>是的, 三年后我又重新开始更新这个小小的博客了</h1>
+                    <h1>AppleScript 初体验</h1>
                     
                     <h2 class="subheading"></h2>
-                    <span class="meta">✍🏼 写于 2019年08月30日</span>&nbsp;&nbsp;&nbsp;  
+                    <span class="meta">✍🏼 写于 2022年05月03日</span>&nbsp;&nbsp;&nbsp;  
                     
                 </div>
             </div>
@@ -255,7 +251,7 @@
                         <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
                         <script>
                             var timeDom = document.getElementById('from_time');
-                            var pageTime = 1567150115; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
+                            var pageTime = 1651556312; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
                             var currentTime = Date.now();
                             var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
                             if (Number(fromNow) <= 0) {
@@ -267,68 +263,363 @@
                     
                 
                 
+                    <div class="callout-tips">🖥 &nbsp;说明：简单体验了一下 AppleScript，感觉像苹果生态下的 Visual Basic 6。</div>
                 
-				<p><img src="https://static.xheldon.cn/img/in-post/2019/kruger.png" alt="头图" /></p>
+                
+                    <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/RsgimVt9VBxAmg" target="_blank">https://www.craft.do/s/RsgimVt9VBxAmg</a></div>
+                
+				<h2 id="前言">前言</h2>
 
-<h2 id="前言">前言</h2>
+<p>最近新买了 Mac Studio，配备了 M1 Max 芯片和 64G 的内存，性能非常强。与此同时，之前的 <a href="/tech/my-blog-ci-in-2022.html">博客处理流程</a> 中，因为需要使用 Github Action 将从 Craft 拉取的图片（这一步很快，毕竟二者都在国外），往腾讯云 COS传的时候，经常遇到网络过慢的问题</p>
 
-<p>最开始经营这个博客是在 2015 年的时候, 当时使用的是 Wordpress 建站, 但是由于其主题的良莠不齐, 以及我不会 PHP 语言, 导致定制化困难, 所以我就放弃了它, 转到了 Github Pages 的使用 Liquid 作为模板的 Jekyll, 那大概是 2017 年的事情.
-你可能会问, Jekyll 是用 Ruby 构建的, 不是跟 PHP 一样你也不会吗? 是的, Ruby 这颗宝石我也 hold 不住, 但是它与 Github Pages 简单的结合加上无需购买服务器让我选择了它.</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/FBB4B556-8472-4C92-8EFD-E07015DC5FBB_2.png" alt="Image" /></p>
 
-<h2 id="年轻的时候看山是山">年轻的时候，看山是山</h2>
+<p>调研了一番发现，Github 貌似 <a href="https://github.community/t/is-there-a-way-to-specify-virtual-machine-region/120438">不支持设置 Action 服务器的区域</a>。鉴于此，所以打算之后将发布流程放到本地，，以加快构建流程，遂有此文。下面的 AppleScript 简称 AS。</p>
 
-<p>因为不是计算机专业毕业, 并没有计算机基础, 因此一些在科班同学看来常识性的问题我花了好久才明白过来, 这也有个好处, 我学到的东西都是我摸索出来印象深刻的东西, 可以信手拈来.
-而我见过的有些科班的同学通过老师灌输和考前突击获得的知识并不比我牢固和灵活.
-因此在此期间, 我把一些感觉有用的东西记录下来, 供后来者翻阅, 觉得信心满满.</p>
+<h2 id="为什么用-applescript-而不是其他">为什么用 AppleScript 而不是其他？</h2>
 
-<h2 id="后来长大了看山不是山">后来长大了，看山不是山</h2>
-
-<p>后来我学到了更多的东西, 也经历了更多的事情, 我不再更新博客, 因为我发现我之前学到的都是皮毛, 计算机科学不过如此, 涵盖的东西又细又多又杂, 所以我不知道该从何写起.</p>
-
-<h2 id="而现在看山还是山">而现在，看山还是山</h2>
-
-<p>后来我继续学习到了更多更多的东西, 经历了更多更多的事情, 我决定再次更新这个小小的博客, 先从我最熟悉的地方开始写起, 不管内容的深度和广度, 也不管又没有人看, 写就对了.</p>
-
-<h2 id="后记">后记</h2>
-
-<p>还翻看了之前写的一些博客, 觉得…年轻真好, 不怕犯错 ^_^</p>
-
-<p>之前写的博客有很多错误的内容, 如果有的话可以到社交网站私信给我留言, 在其他一些网站如 Quora/知乎/Reddit 等搜 Xheldon 或者 _Xheldon 都能找到我, 头像是游戏 <传送门>(Portal) 中的 Turret 或者 GlaDOS ;-)</传送门></p>
-
-<p>之后的博客更新还会附加一些时事看法相关的内容, 尽量不触及红线, 守护社会主义核心价值观的前提下表达自己的看法.</p>
-
-<h2 id="更新说明">更新说明</h2>
+<p>首先，我当然是想尽可能的缩短操作路径和复杂度，因此先规定了操作步骤：</p>
 
 <ol>
-  <li>优化了整站的布局，在满足简洁这个大要求下，突出标签分类这个重点，便于查找。</li>
-  <li>突出了搜索的功能，基于 supersearch 实现，充分协调简洁和易于使用这两点。</li>
-  <li>加宽了页面内容的显示，修改了一些文章的标题使其更符合布局要求(之前布局较窄，为了适应就把标题写的很简洁，现在放开了)。</li>
-  <li>在首页和项目页面的导航栏是在左侧，在文章页或者屏幕小于 1080 像素的时候，导航在顶部/</li>
-  <li>文章增加了 TOC，便于导航及从外站定位到某个锚点。</li>
-  <li>首页 hover 的时候增加了 title 属性，内容是文章摘要。</li>
-  <li>每个文章之前如果有的话，添加了时间过期提醒和引用地址（如果是翻译文章）及文章说明。</li>
-  <li>将图片和不容易发生变化的资源如文章图片、库文件、字体文件使用 jsdelivr cdn 以加快访问速度，静态资源的源地址在 github。</li>
+  <li>
+    <p>点击 Craft 中的发布按钮。</p>
+  </li>
+  <li>
+    <p>本地构建，同时显示出构建 log 在终端。</p>
+  </li>
+  <li>
+    <p>将构建结果推送到 github。</p>
+  </li>
 </ol>
 
+<p>由于需要在一个 App 中通过链接调用另一个 App，因此使用 AppleScript 是唯一选择。不过，虽然使用的是 AS，但是其实执行的还是已有的 js 文件，只是将 <a href="https://github.com/Xheldon/craft_publish_ci/blob/master/.github/workflows/publish.yml">craft_publish_ci 中的 workflow任务</a> 挪到了本地执行而已。</p>
+
+<h2 id="applescript-简介">AppleScript 简介</h2>
+
+<p>概念图：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/6C1FA0DD-5875-4C15-BCA8-495B34F5F699_2.png" alt="Image" /></p>
+
+<h3 id="applescript-能做什么">AppleScript 能做什么</h3>
+
+<ol>
+  <li>
+    <p>能与用户交互，如响应用户输入、通知中心发送通知等</p>
+  </li>
+  <li>
+    <p>能控制其他 app ，如果其他 app 提供了相关 AS 接口可以直接控制，如果没有提供相关接口则需要通过 AS 语法来获取界面上的按钮等操作元素进行操作。</p>
+  </li>
+  <li>
+    <p>能执行自动化任务如发送邮件、执行定时脚本、打开音乐播放器、锁屏、响应自定义的 URL Scheme 后执行脚本等。</p>
+  </li>
+</ol>
+
+<h4 id="基本语法">基本语法</h4>
+
+<ul>
+  <li>
+    <p>每行的前面加上 <code class="language-plaintext highlighter-rouge">---</code>（三个短横线）或者 <code class="language-plaintext highlighter-rouge">#</code> 表示注释本行。</p>
+  </li>
+  <li>
+    <p>用 <code class="language-plaintext highlighter-rouge">(</code><em><code class="language-plaintext highlighter-rouge">xxx</code></em><code class="language-plaintext highlighter-rouge">)</code> 包裹的 <code class="language-plaintext highlighter-rouge">xxx</code> 表述块注释掉 xxx 的内容。</p>
+  </li>
+  <li>
+    <p>其他的基本跟口头预类似，不过如果你对英文语法不自信，比如不清楚 besides against over 等在具体语境中的意思，建议还是老老实实使用基本语法。</p>
+  </li>
+</ul>
+
+<h3 id="applescript-的形式">AppleScript 的形式</h3>
+
+<p>AppleScript 常用的有两种形式，Script（脚本）、Application（应用），这里只介绍前两种，Script bundle 和 Text 我没用这里不展开。</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/08F57517-C6AC-49C1-9B5E-9606F2DD2A8E_2.png" alt="Image" /></p>
+
+<blockquote>
+  <p>注：这里需要说明一点的是，即使是相同的代码，保存成脚本运行和保存成应用运行，界面是不一样的。</p>
+</blockquote>
+
+<h4 id="脚本">脚本</h4>
+
+<p>脚本顾名思义就是像 js 一样的可执行文件，不同的是 as 是在 Mac 桌面环境执行，而 js 是在 Chrome 中执行的。双击即可运行。下图是脚本 process 显示进度的界面，通过点击脚本右上角的「运行」按钮运行：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/A8E4D5D2-C4A6-4E6D-80DA-7E3A0EFA7D41_2.png" alt="Image" /></p>
+
+<h4 id="应用">应用</h4>
+
+<p>保存成 Application 的 AS 的后缀名跟普通的应用如 Safari、Chrome、微信等应用一样，会以 <code class="language-plaintext highlighter-rouge">.app</code> 结尾，也可以查看包内容。有多种运行方式如 URL Scheme 调用、双击、拖拽内容到 app 图标上，你需要写相关的事件函数来响应相关用户操作。下图是 应用process 显示进度的界面，通过双击 「xxx.app」运行：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/E0B4F2DA-21AA-4EF1-B059-9C500E18B67C_2.png" alt="Image" /></p>
+
+<h4 id="其他">其他</h4>
+
+<p>除了上述两者，其他的不常用，不过如果你需要将 script 保存成服务以在状态栏或者任意界面的右键的服务中能够调用该脚本，这需要上述两者之外的形式：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/D09A2EEB-72DC-4CA1-8812-59E4BC4206DB_2.png" alt="Image" /></p>
+
+<p>你可以选择将脚本保存成系统 Service，此时上述 process 代码运行的时候，进度条会显示在顶部状态栏：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/B936F8C6-DCA3-4B98-B995-7F4F3F013E74_2.png" alt="Image" /></p>
+
+<h2 id="常用操作代码">常用操作代码</h2>
+
+<blockquote>
+  <p>以下操作基于「应用」类型的 AS，下列的语法在终端中使用 <code class="language-plaintext highlighter-rouge">osascript -e '语法内容'</code> 可以快速验证。需要注意的是，类似于多行的表达如 process 进度条的显示，osascript 是没办法做到的，虽然你可以在很多多行命令如 <code class="language-plaintext highlighter-rouge">tell</code> 中使用多个 <code class="language-plaintext highlighter-rouge">-e</code> 参数来串联如 <code class="language-plaintext highlighter-rouge">osascript -e ‘tell application “Finder”’ -e ‘end tell’</code> ，但是此语法对 process 进度条无效。</p>
+</blockquote>
+
+<h3 id="用户交互">用户交互</h3>
+
+<h4 id="在通知中心显示信息">在通知中心显示信息</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>display notification "通知内容" with title "通知 title" subtitle "通知副标题"
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/AC96218F-E238-4695-9220-7933C27BC841_2.png" alt="Image" /></p>
+
+<h4 id="弹窗">弹窗</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>display dialog "这是个通知"
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/B945A1B9-4704-4F39-9A68-C0287846A061_2.png" alt="Image" /></p>
+
+<h4 id="获取用户输入">获取用户输入</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>display dialog "What's your name?" default answer "" with icon note buttons {"取消", "确认"} default button "确认"
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/F4002573-AD3C-4D4E-BF98-9B6696788442_2.png" alt="Image" /></p>
+
+<blockquote>
+  <p>注：AS 没有办法生成类似表单一样的组件，只能生成上面这种对话框，类似网页中的 prompt</p>
+</blockquote>
+
+<h4 id="播放给定文本">播放给定文本</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>say "What is your name?" using "Alex" speaking rate 140 pitch 42 modulation 60
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h4 id="其他-1">其他</h4>
+
+<p>让用户选择文件夹、文件、颜色、从列表中选择一项等，暂时省略。</p>
+
+<h3 id="执行命令行">执行命令行</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>do shell script "echo $PATH"
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<blockquote>
+  <p>注意，命令行中的 PATH 环境变量为 <code class="language-plaintext highlighter-rouge">/usr/bin:/bin:/usr/sbin:/sbin</code> ，因此无法在其中执行诸如 <code class="language-plaintext highlighter-rouge">node</code> 、<code class="language-plaintext highlighter-rouge">nvm</code> 等后来安装的命令，这些命令执行的时候需要手动指定命令所在位置。</p>
+</blockquote>
+
+<p>执行 node 脚本：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>set node to "/Users/x/.nvm/versions/node/v14.19.1/bin/node"
+set appPath to "/Applications/Xhelper.app/Contents/Resources/Scripts/"
+do shell script node &amp; " " &amp; appPath &amp; "index.js"
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="获取上一个语句的输出结果">获取上一个语句的输出结果</h3>
+
+<p>直接在上一句语句后立即使用 <code class="language-plaintext highlighter-rouge">result</code> 表示结果即可：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>do shell script "echo $PATH"
+display dialog result with title "通知"
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/6214E292-E4CB-49BC-B8D2-945C135E5B45_2.png" alt="Image" /></p>
+
+<h3 id="显示调试信息">显示调试信息</h3>
+
+<p>直接使用 <code class="language-plaintext highlighter-rouge">log</code> 语句即可，然后在 <code class="language-plaintext highlighter-rouge">Script Editor</code> 下方的 <code class="language-plaintext highlighter-rouge">Replies</code> 中获取输出信息，可以在这里看到 <code class="language-plaintext highlighter-rouge">shell script</code> 命令执行的过程中，脚本向控制台输出的内容，如执行 js 脚本的时候的 <code class="language-plaintext highlighter-rouge">console.log</code> 等。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>log do shell script "echo $PATH"
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/1089533E-DE38-418F-A20C-592669941C2D_2.png" alt="Image" /></p>
+
+<h3 id="显示进度">显示进度</h3>
+
+<p>显示进度用到 progress ，语句相对来说比较复杂，因为需要显示不同的状态进度，需要多行：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre>set progress total steps to 3
+set progress completed steps to 0
+set progress description to "处理中..."
+delay 1
+set progress completed steps to 1
+delay 1
+set progress completed steps to 2
+delay 1
+set progress completed steps to 3
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>相关的截图可以在上面看到。</p>
+
+<h3 id="延迟一段时间后执行">延迟一段时间后执行</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>delay n
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">n</code>  表示秒数，支持小数。一般用来模拟用户操作的时候的延迟操作，否则可能因为脚本操作过快页面还未来得及显示等。一些奇怪的问题也可以通过延迟执行来解决，此语句可以类比于 <code class="language-plaintext highlighter-rouge">js</code> 中的 <code class="language-plaintext highlighter-rouge">setTimeout</code> 大法。</p>
+
+<h3 id="调用其他应用">调用其他应用</h3>
+
+<p>注意，此处会有系统警告，需要你确认才能执行:</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/898D7F67-700E-40F2-AC6C-D999F5543578_2.png" alt="Image" /></p>
+
+<p>确认后可以在<code class="language-plaintext highlighter-rouge">设置-安全与隐私-隐私-自动化</code>中确认：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/47444D53-68E4-4518-87FD-521AE42B737F_2.png" alt="Image" /></p>
+
+<p>可以调用其他应用来执行相应的操作，下面是唤起 <code class="language-plaintext highlighter-rouge">Terminal</code> 应用后，激活然后执行命令：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>tell application "Terminal"
+	if not (exists window 1) then reopen
+	activate
+	do script "echo $PATH" in window 1
+end tell
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>此语句做了一个判断，如果第一个打开的窗口存在，则激活之，然后在其内执行命令（<code class="language-plaintext highlighter-rouge">do script</code> ）；如果不存在的话则会新建一个窗口然后在其内执行命令。因为每个 <code class="language-plaintext highlighter-rouge">do script</code> 都会打开一个新的 Terminal 这个判断可以保证复用窗口。不过需要注意的是，如果 <code class="language-plaintext highlighter-rouge">window 1</code> 内已经有一个已经存在的进程（如 server 未中断），那么这个命令是不会执行的，还需要额外的判断，此处不展开。</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/8701C38B-8CE9-479A-816A-9126692B313D_2.png" alt="Image" /></p>
+
+<h3 id="响应-url-scheme">响应 URL Scheme</h3>
+
+<p>有些时候你不想先找到 AS 脚本，然后双击运行；或者有时候你需要从另一个应用中调起你写的 AS 应用，这个时候就用到了 URL Scheme，少数派有 <a href="https://sspai.com/post/31500">一篇介绍</a>，可以看看。</p>
+
+<p>首先你需要修改 <code class="language-plaintext highlighter-rouge">Info.plist</code> 文件，可以在 Script Editor 的右侧，右键 「显示在 Finder」 中：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/E1F3DFE5-54E3-4615-9A74-1B084686CC37_2.png" alt="Image" /></p>
+
+<p>然后向上一级，可以看到该文件：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/DE5F9B08-4F60-4B2A-9645-DF37B420C96B_2.png" alt="Image" /></p>
+
+<p>内容是一个类似 XML 的东西编辑之，在其内加入如下字段：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre>&lt;array&gt;
+	&lt;dict&gt;
+		&lt;key&gt;CFBundleURLName&lt;/key&gt;
+		&lt;string&gt;Open File&lt;/string&gt;
+		&lt;key&gt;CFBundleURLSchemes&lt;/key&gt;
+		&lt;array&gt;
+			&lt;string&gt;xhelper&lt;/string&gt;
+		&lt;/array&gt;
+	&lt;/dict&gt;
+&lt;/array&gt;
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>然后确认一下，用 XCode 打开该文件可以看到类似的条目：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/901047E8-38AA-4B9C-BA60-680EC60864F5_2.png" alt="Image" /></p>
+
+<p>表示添加成功。</p>
+
+<p>这个操作的意思是，将该 AS 应用响应以 <code class="language-plaintext highlighter-rouge">xhelper</code> （可以任意修改成你想要的开头，不要与已有的重复即可）开头的 URL。</p>
+
+<p>设置完成后，需要在 Script Editor 中保存一下，或者 <code class="language-plaintext highlighter-rouge">cmd + L</code> 一下或者运行一次（或者都做一遍），重新编译，然后才能生效。</p>
+
+<p>然后，为了让 AS 响应该 URL，需要设置一个事件监听：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>on open location this_URL
+	display dialog this_URL
+end open location
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>上述代码中，<code class="language-plaintext highlighter-rouge">this_URL</code> 即为以你 <code class="language-plaintext highlighter-rouge">xhelper</code> 打开的链接。</p>
+
+<p>此时在浏览器中（截图是 Chrome）测试一个链接：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/01F724A1-041B-4143-80CC-5F4F3D6ECFC8_2.png" alt="Image" /></p>
+
+<p>然后 AS 应用就会响应然后弹窗显示 <code class="language-plaintext highlighter-rouge">xhelper://你好！</code> ，注意这里是不用 encode 编码的。</p>
+
+<h2 id="参考链接">参考链接</h2>
+
+<ul>
+  <li>
+    <p><a href="https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/index.html#//apple_ref/doc/uid/TP40016239-CH56-SW1">Mac Automation Scription Guide</a></p>
+  </li>
+  <li>
+    <p><a href="https://developer.apple.com/library/archive/releasenotes/AppleScript/RN-AppleScript/RN-10_10/RN-10_10.html#//apple_ref/doc/uid/TP40000982-CH110-SW8">AppleScript 10.10 Changes</a></p>
+  </li>
+  <li>
+    <p><a href="https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html#//apple_ref/doc/uid/TP40000983-CH208-SW1">Introduction to AppleScript Language Guide</a></p>
+  </li>
+  <li>
+    <p><a href="https://stackoverflow.com/questions/42815166/customize-applescript-app-icon">Customize AppleScript app icon</a></p>
+  </li>
+  <li>
+    <p><a href="https://ohdoylerules.com/snippets/using-node-in-applescript/">Using Node.js in an AppleScript</a></p>
+  </li>
+  <li>
+    <p><a href="https://apple.stackexchange.com/questions/21602/where-can-i-access-official-applescript-documentation">Where can I access official AppleScript documentation?</a></p>
+  </li>
+  <li>
+    <p><a href="https://apple-dev.groups.io/g/jxa/wiki/3202">关于使用 JavaScript 写 AS 的相关资料</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.notion.so/AppleScript-c07b90f850ea42e990b3ea2333f9b252">AppleScript 教程</a> （Write on Notion）</p>
+  </li>
+  <li>
+    <p><a href="https://sspai.com/post/44425">在 macOS 中制作自己的 URL Schemes</a></p>
+  </li>
+  <li>
+    <p>AppleScripe 简明基础教程（iDoraemon Nathan 编著）</p>
+  </li>
+</ul>
 
                 <div class="text-danger">- EOF -</div>
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/life/the-analysis-of-dream.html" data-toggle="tooltip" data-placement="top" title="梦的解析之小赵">
+                        <a href="/life/the-way-to-watching-tv.html" data-toggle="tooltip" data-placement="top" title="我的家庭观影之路">
                         上一篇<br>
-                        <span>梦的解析之小赵</span>
+                        <span>我的家庭观影之路</span>
                         </a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/tech/prosemirror-guide-chinese.html" data-toggle="tooltip" data-placement="top" title="「译」 ProseMirror 中文指南">
-                        下一篇<br>
-                        <span>「译」 ProseMirror 中文指南</span>
-                        </a>
-                    </li>
                     
                 </ul>
                 <hr style="visibility: hidden;">
@@ -504,8 +795,8 @@
       clientSecret: '8091d57674976bcd60fc05261bf93c00da7e5ff4',
       repo: 'x_blog',
       owner: 'Xheldon',
-      admin: ['Xheldon'],id: "yes-im-back",labels: [],
-      title: "是的, 三年后我又重新开始更新这个小小的博客了",
+      admin: ['Xheldon'],id: "applescript-simple-use",labels: [],
+      title: "AppleScript 初体验",
       language: "zh-CN",
       pagerDirection: 'first',
     });
