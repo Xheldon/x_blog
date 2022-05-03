@@ -5,8 +5,8 @@
     <description>The Answer to Life, the Universe and Everything is...</description>
     <link>https://www.xheldon.com/</link>
     <atom:link href="https://www.xheldon.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 03 May 2022 15:44:53 +0800</pubDate>
-    <lastBuildDate>Tue, 03 May 2022 15:44:53 +0800</lastBuildDate>
+    <pubDate>Tue, 03 May 2022 19:46:41 +0800</pubDate>
+    <lastBuildDate>Tue, 03 May 2022 19:46:41 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
     
       <item>
@@ -47,7 +47,7 @@
 
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;能与用户交互，如响应用户输入、通知中心发送通知等&lt;/p&gt;
+    &lt;p&gt;能与用户交互，如响应用户输入、通知中心发送通知等。&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;能控制其他 app ，如果其他 app 提供了相关 AS 接口可以直接控制，如果没有提供相关接口则需要通过 AS 语法来获取界面上的按钮等操作元素进行操作。&lt;/p&gt;
@@ -64,7 +64,7 @@
     &lt;p&gt;每行的前面加上 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;---&lt;/code&gt;（三个短横线）或者 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#&lt;/code&gt; 表示注释本行。&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(&lt;/code&gt;&lt;em&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xxx&lt;/code&gt;&lt;/em&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;)&lt;/code&gt; 包裹的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xxx&lt;/code&gt; 表述块注释掉 xxx 的内容。&lt;/p&gt;
+    &lt;p&gt;用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(*&lt;/code&gt;&lt;em&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xxx*&lt;/code&gt;&lt;/em&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;)&lt;/code&gt; （括号+星号）包裹的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xxx&lt;/code&gt; 表述块注释掉 xxx 的内容。&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;其他的基本跟口头预类似，不过如果你对英文语法不自信，比如不清楚 besides against over 等在具体语境中的意思，建议还是老老实实使用基本语法。&lt;/p&gt;
@@ -316,6 +316,94 @@ end open location
 &lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/01F724A1-041B-4143-80CC-5F4F3D6ECFC8_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;然后 AS 应用就会响应然后弹窗显示 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;xhelper://你好！&lt;/code&gt; ，注意这里是不用 encode 编码的。&lt;/p&gt;
+
+&lt;h2 id=&quot;我的使用&quot;&gt;我的使用&lt;/h2&gt;
+
+&lt;p&gt;在这里放出我自己的 Craft build 代码，用的是上述的 URL Scheme，其中的 node 执行的 js 都是从 &lt;a href=&quot;/tech/my-blog-ci-in-2022.html&quot;&gt;之前的工作流&lt;/a&gt; 改造的，没有什么新逻辑。另外 AS 的语法比较口语化，直接看就能看懂每句话是什么意思，这里就不一一解释了。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;on open location this_URL
+	try
+		set startOffset to offset of &quot;://&quot; in this_URL
+		set the content to text from (startOffset + 3) to -1 of this_URL
+		set node to &quot;/Users/x/.nvm/versions/node/v14.19.1/bin/node&quot;
+		set appPath to &quot;/Applications/Xhelper.app/Contents/Resources/Scripts/&quot;
+		--- 如果有两个参数表示需要发布到 wechat，如果只有一个参数则参数即为 base64 编码的内容
+		set AppleScript's text item delimiters to &quot;&amp;amp;&quot;
+		set arguments to every text item of the content
+		set AppleScript's text item delimiters to &quot;&quot;
+		set listLength to the length of arguments
+		if listLength = 2 then
+			set realContent to item 2 of arguments
+			do shell script &quot;echo &quot; &amp;amp; realContent &amp;amp; &quot; &amp;gt; &quot; &amp;amp; appPath &amp;amp; &quot;content.base64.txt&quot;
+			tell application &quot;Terminal&quot;
+				if not (exists window 1) then reopen
+				activate
+				set alive to do script node &amp;amp; &quot; &quot; &amp;amp; appPath &amp;amp; &quot;index.js&quot; in window 1
+				--- 等待上一个脚本执行完毕后再执行下一个脚本
+				repeat
+					delay 0.1
+					if not busy of alive then exit repeat
+				end repeat
+				beep
+				do script node &amp;amp; &quot; &quot; &amp;amp; appPath &amp;amp; &quot;wechat.js&quot; in window 1
+			end tell
+		else
+			do shell script &quot;echo &quot; &amp;amp; content &amp;amp; &quot; &amp;gt; &quot; &amp;amp; appPath &amp;amp; &quot;content.base64.txt&quot;
+			tell application &quot;Terminal&quot;
+				if not (exists window 1) then reopen
+				activate
+				do script node &amp;amp; &quot; &quot; &amp;amp; appPath &amp;amp; &quot;index.js&quot; in window 1
+			end tell
+		end if
+	on error error_message
+		display dialog error_message buttons {&quot;Cancel&quot;} default button 1
+	end try
+	
+end open location
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;效果：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/F7A4DDFF-2698-4E1E-8D72-C8B3D0EC5020_2.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;参考链接&quot;&gt;参考链接&lt;/h2&gt;
 

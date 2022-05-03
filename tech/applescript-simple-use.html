@@ -9,7 +9,7 @@
     <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     
-        <meta name="description" content="简单体验了一下 AppleScript，感觉像苹果生态下的 Visual Basic 6。">
+        <meta name="description" content="简单体验了一下 AppleScript，介绍了下常用的用户交互方式，感觉很强大。">
     
     <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
     <meta name="theme-color" content="#000000">
@@ -31,7 +31,7 @@
     
     
     
-        <meta name="og:description" content="简单体验了一下 AppleScript，感觉像苹果生态下的 Visual Basic 6。">
+        <meta name="og:description" content="简单体验了一下 AppleScript，介绍了下常用的用户交互方式，感觉很强大。">
     
     
     <meta property="og:image" content="https://www.xheldon.com/resources/img/logo.png">
@@ -273,7 +273,7 @@
                     
                 
                 
-                    <div class="callout-tips">🖥 &nbsp;说明：简单体验了一下 AppleScript，感觉像苹果生态下的 Visual Basic 6。</div>
+                    <div class="callout-tips">🖥 &nbsp;说明：简单体验了一下 AppleScript，介绍了下常用的用户交互方式，感觉很强大。</div>
                 
                 
                     <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/RsgimVt9VBxAmg" target="_blank">https://www.craft.do/s/RsgimVt9VBxAmg</a></div>
@@ -314,7 +314,7 @@
 
 <ol>
   <li>
-    <p>能与用户交互，如响应用户输入、通知中心发送通知等</p>
+    <p>能与用户交互，如响应用户输入、通知中心发送通知等。</p>
   </li>
   <li>
     <p>能控制其他 app ，如果其他 app 提供了相关 AS 接口可以直接控制，如果没有提供相关接口则需要通过 AS 语法来获取界面上的按钮等操作元素进行操作。</p>
@@ -331,7 +331,7 @@
     <p>每行的前面加上 <code class="language-plaintext highlighter-rouge">---</code>（三个短横线）或者 <code class="language-plaintext highlighter-rouge">#</code> 表示注释本行。</p>
   </li>
   <li>
-    <p>用 <code class="language-plaintext highlighter-rouge">(</code><em><code class="language-plaintext highlighter-rouge">xxx</code></em><code class="language-plaintext highlighter-rouge">)</code> 包裹的 <code class="language-plaintext highlighter-rouge">xxx</code> 表述块注释掉 xxx 的内容。</p>
+    <p>用 <code class="language-plaintext highlighter-rouge">(*</code><em><code class="language-plaintext highlighter-rouge">xxx*</code></em><code class="language-plaintext highlighter-rouge">)</code> （括号+星号）包裹的 <code class="language-plaintext highlighter-rouge">xxx</code> 表述块注释掉 xxx 的内容。</p>
   </li>
   <li>
     <p>其他的基本跟口头预类似，不过如果你对英文语法不自信，比如不清楚 besides against over 等在具体语境中的意思，建议还是老老实实使用基本语法。</p>
@@ -583,6 +583,94 @@ end open location
 <p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/01F724A1-041B-4143-80CC-5F4F3D6ECFC8_2.png" alt="Image" /></p>
 
 <p>然后 AS 应用就会响应然后弹窗显示 <code class="language-plaintext highlighter-rouge">xhelper://你好！</code> ，注意这里是不用 encode 编码的。</p>
+
+<h2 id="我的使用">我的使用</h2>
+
+<p>在这里放出我自己的 Craft build 代码，用的是上述的 URL Scheme，其中的 node 执行的 js 都是从 <a href="/tech/my-blog-ci-in-2022.html">之前的工作流</a> 改造的，没有什么新逻辑。另外 AS 的语法比较口语化，直接看就能看懂每句话是什么意思，这里就不一一解释了。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+</pre></td><td class="rouge-code"><pre>on open location this_URL
+	try
+		set startOffset to offset of "://" in this_URL
+		set the content to text from (startOffset + 3) to -1 of this_URL
+		set node to "/Users/x/.nvm/versions/node/v14.19.1/bin/node"
+		set appPath to "/Applications/Xhelper.app/Contents/Resources/Scripts/"
+		--- 如果有两个参数表示需要发布到 wechat，如果只有一个参数则参数即为 base64 编码的内容
+		set AppleScript's text item delimiters to "&amp;"
+		set arguments to every text item of the content
+		set AppleScript's text item delimiters to ""
+		set listLength to the length of arguments
+		if listLength = 2 then
+			set realContent to item 2 of arguments
+			do shell script "echo " &amp; realContent &amp; " &gt; " &amp; appPath &amp; "content.base64.txt"
+			tell application "Terminal"
+				if not (exists window 1) then reopen
+				activate
+				set alive to do script node &amp; " " &amp; appPath &amp; "index.js" in window 1
+				--- 等待上一个脚本执行完毕后再执行下一个脚本
+				repeat
+					delay 0.1
+					if not busy of alive then exit repeat
+				end repeat
+				beep
+				do script node &amp; " " &amp; appPath &amp; "wechat.js" in window 1
+			end tell
+		else
+			do shell script "echo " &amp; content &amp; " &gt; " &amp; appPath &amp; "content.base64.txt"
+			tell application "Terminal"
+				if not (exists window 1) then reopen
+				activate
+				do script node &amp; " " &amp; appPath &amp; "index.js" in window 1
+			end tell
+		end if
+	on error error_message
+		display dialog error_message buttons {"Cancel"} default button 1
+	end try
+	
+end open location
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>效果：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/F7A4DDFF-2698-4E1E-8D72-C8B3D0EC5020_2.png" alt="Image" /></p>
 
 <h2 id="参考链接">参考链接</h2>
 
