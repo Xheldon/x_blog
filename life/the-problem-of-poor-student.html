@@ -3,38 +3,36 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Webpack 异步按需加载 - Xheldon Blog</title>
+    <title>差生的学习问题 - Xheldon Blog</title>
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     
-        <meta name="description" content="">
+        <meta name="description" content="老爹的20多年的教学经验分享">
     
     <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Webpack 异步按需加载 - Xheldon Blog">
+    <meta property="og:title" content="差生的学习问题 - Xheldon Blog">
     
     <meta property="og:type" content="article">
     
-    <meta property="article:published_time" content="2016-05-02T23:23:12Z">
+    <meta property="article:published_time" content="2022-05-26T19:10:28Z">
     
     
     
-    <meta property="article:tag" content="技术">
-    
-    <meta property="article:tag" content="Webpack">
+    <meta property="article:tag" content="生活">
     
     
     
-        <meta name="og:description" content="">
+        <meta name="og:description" content="老爹的20多年的教学经验分享">
     
     
-    <meta property="og:image" content="https://www.xheldon.cn/resources/img/logo.png">
+    <meta property="og:image" content="https://static.xheldon.cn/img/in-post/2022/the-problem-of-poor-student/photo-1570616969692-54d6ba3d0397.png">
     
-    <meta property="og:url" content="https://www.xheldon.cn/tech/webpack-details-one.html">
+    <meta property="og:url" content="https://www.xheldon.cn/life/the-problem-of-poor-student.html">
     <meta property="og:site_name" content="Xheldon Blog">
     
     <!-- Web App Manifest -->
@@ -44,7 +42,7 @@
     <link rel="shortcut icon" href="/resources/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.xheldon.cn/tech/webpack-details-one.html">
+    <link rel="canonical" href="https://www.xheldon.cn/life/the-problem-of-poor-student.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
@@ -70,8 +68,8 @@
 
     <!-- Navigation -->
 
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
-    
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -189,7 +187,7 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/resources/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+<!-- <img src="/img/in-post/2022/the-problem-of-poor-student/photo-1570616969692-54d6ba3d0397.png" width="0" height="0"> -->
 
 <!-- Post Header -->
 
@@ -198,16 +196,27 @@
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('https://static.xheldon.cn/img/index-bg.png');
+        background-image: url('https://static.xheldon.cn/img/in-post/2022/the-problem-of-poor-student/photo-1570616969692-54d6ba3d0397.png');
         
     }
 
     
+    header.intro-header .header-mask{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0,0,0, 0.4);
+    }
+    
 </style>
 
-<header class="intro-header style-text" >
+<header class="intro-header" >
 
     <div class="header-mask"></div>
+    
+    <div class="header-img-credit">
+        Image by <a href="https://unsplash.com/@sambalye?utm_source=xheldon_blog&utm_medium=referral" target="_blank">Sam Balye / Unsplash</a>
+    </div>
     
     <div class="container">
         <div class="row">
@@ -215,15 +224,13 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-                        
-                        <a class="tag" href="/archive/?tag=Webpack" title="Webpack">Webpack</a>
+                        <a class="tag" href="/archive/?tag=%E7%94%9F%E6%B4%BB" title="生活">生活</a>
                         
                     </div>
-                    <h1>Webpack 异步按需加载</h1>
+                    <h1>差生的学习问题</h1>
                     
                     <h2 class="subheading"></h2>
-                    <span class="meta">✍🏼 写于 2016年05月02日</span>&nbsp;&nbsp;&nbsp;  
+                    <span class="meta">✍🏼 写于 2022年05月26日</span>&nbsp;&nbsp;&nbsp;  
                     
                 </div>
             </div>
@@ -250,265 +257,111 @@
                 <!-- Multi-Lingual -->
                 
                 
-                    
-                        
-                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
-                        <script>
-                            var timeDom = document.getElementById('from_time');
-                            var pageTime = 1462202592; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
-                            var currentTime = Date.now();
-                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
-                            if (Number(fromNow) <= 0) {
-                                fromNow = 1; // Note: 至少显示一天
-                            }
-                            timeDom.innerText = fromNow
-                        </script>
-                    
-                    
+                
+                    <div class="callout-tips">🖥 &nbsp;说明：老爹的20多年的教学经验分享</div>
                 
                 
+                    <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/KAUQP53YntXrUD" target="_blank">https://www.craft.do/s/KAUQP53YntXrUD</a></div>
                 
-				<h2 id="前言">前言</h2>
-
-<p>webpack 想要实现异步加载, 即先加载主要模块, 用到某个模块或者多个模块(也即打包后的 chunk )的时候再发送请求加载.</p>
-
-<p>这样做的目的当然是加快页面的初次加载速度, 但不可避免的会发送额外的请求, 这两个本身就是个鱼与熊掌不可兼得的事情, 这里说一下异步加载的细节.</p>
-
-<h2 id="正文">正文</h2>
-
-<p>实现主要是靠 <code class="language-plaintext highlighter-rouge">require.ensure([], callback)</code> 这个东西, 老实说我会注意到这个东西是因为在 <code class="language-plaintext highlighter-rouge">webpack.config.js</code> 的 <code class="language-plaintext highlighter-rouge">output</code> 字段有一个字段叫做 <code class="language-plaintext highlighter-rouge">chunkFilename</code>, 我这个打破沙锅的毛病就不得不想看看这个和 <code class="language-plaintext highlighter-rouge">filename</code> 字段有什么区别, 搜索了一下发现 <code class="language-plaintext highlighter-rouge">filename</code> (假设是 <code class="language-plaintext highlighter-rouge">bundle.js</code>) 是把页面需要的所有 <code class="language-plaintext highlighter-rouge">js</code> 打包, 最终生成的总的 <code class="language-plaintext highlighter-rouge">js</code> (当然多页面的时候可以提取公共模块, 这个不是本次的重点). 而 <code class="language-plaintext highlighter-rouge">chunkFilename</code> 是那些非入口点(<code class="language-plaintext highlighter-rouge">entry</code> 中列举的字段)的 <code class="language-plaintext highlighter-rouge">chunk</code> 文件打包生成的文件, 主要使用在按需异步加载模块的时候.</p>
-
-<p>这些文件没有打包在 <code class="language-plaintext highlighter-rouge">bundle.js</code> 中, 而且只被部分(非全部的)模块依赖, 同时又需要异步加载, 因此就会通过使用 <code class="language-plaintext highlighter-rouge">require.ensure</code> 被打包到额外的 <code class="language-plaintext highlighter-rouge">js</code> 中, 而这些 <code class="language-plaintext highlighter-rouge">js</code>, 仍然是通过最终的 <code class="language-plaintext highlighter-rouge">bundle.js</code> 创建 <code class="language-plaintext highlighter-rouge">script</code> 标签, 然后被 <code class="language-plaintext highlighter-rouge">append</code> 到页面中的:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-</pre></td><td class="rouge-code"><pre><span class="c1">// This file contains only the entry chunk.</span>
-<span class="c1">// The chunk loading function for additional chunks</span>
-<span class="nx">__webpack_require__</span><span class="p">.</span><span class="nx">e</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">requireEnsure</span><span class="p">(</span><span class="nx">chunkId</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// "0" is the signal for "already loaded"</span>
-  <span class="k">if</span><span class="p">(</span><span class="nx">installedChunks</span><span class="p">[</span><span class="nx">chunkId</span><span class="p">]</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">callback</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">__webpack_require__</span><span class="p">);</span>
-
-  <span class="c1">// an array means "currently loading".</span>
-  <span class="k">if</span><span class="p">(</span><span class="nx">installedChunks</span><span class="p">[</span><span class="nx">chunkId</span><span class="p">]</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">installedChunks</span><span class="p">[</span><span class="nx">chunkId</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">callback</span><span class="p">);</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="c1">// start chunk loading</span>
-    <span class="nx">installedChunks</span><span class="p">[</span><span class="nx">chunkId</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nx">callback</span><span class="p">];</span>
-    <span class="kd">var</span> <span class="nx">head</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="dl">'</span><span class="s1">head</span><span class="dl">'</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
-    <span class="kd">var</span> <span class="nx">script</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">script</span><span class="dl">'</span><span class="p">);</span>
-    <span class="nx">script</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">text/javascript</span><span class="dl">'</span><span class="p">;</span>
-    <span class="nx">script</span><span class="p">.</span><span class="nx">charset</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">utf-8</span><span class="dl">'</span><span class="p">;</span>
-    <span class="nx">script</span><span class="p">.</span><span class="k">async</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-
-    <span class="nx">script</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">__webpack_require__</span><span class="p">.</span><span class="nx">p</span> <span class="o">+</span> <span class="dl">""</span> <span class="o">+</span> <span class="p">({}[</span><span class="nx">chunkId</span><span class="p">]</span><span class="o">||</span><span class="nx">chunkId</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">.js</span><span class="dl">"</span><span class="p">;</span>
-    <span class="nx">head</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">};</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>OK, 这些理解起来都很容易, 但是查看 <a href="http://webpack.github.io/docs/code-splitting.html#defining-a-split-point">官方文档</a> 的时候, 发现了几个需要注意的细节.</p>
-
-<h2 id="commonjs-和-amd-require-时候的区别"><em><code class="language-plaintext highlighter-rouge">CommonJS</code></em> 和 <em><code class="language-plaintext highlighter-rouge">AMD</code></em> <code class="language-plaintext highlighter-rouge">require</code> 时候的区别</h2>
-
-<p><code class="language-plaintext highlighter-rouge">CommonJS</code> 是使用 <code class="language-plaintext highlighter-rouge">require.ensure([''], callback)</code> 来处理异步加载模块的, <code class="language-plaintext highlighter-rouge">AMD</code> 是和一般的 <code class="language-plaintext highlighter-rouge">AMD</code> 模块一样, 使用 <code class="language-plaintext highlighter-rouge">require</code> 一个数组依赖的形式处理的 <code class="language-plaintext highlighter-rouge">require([''], callback)</code></p>
-
-<p>但是 <code class="language-plaintext highlighter-rouge">CommonJS</code> 加载数组中模块的时候, 是只加载不执行, 除非是在 <code class="language-plaintext highlighter-rouge">callback</code> 中, 又 <code class="language-plaintext highlighter-rouge">require</code> 了一遍才执行:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-</pre></td><td class="rouge-code"><pre><span class="nx">require</span><span class="p">([</span><span class="dl">'</span><span class="s1">./other/ensure.js</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">./other/ensure2.js</span><span class="dl">'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(){</span>
-  <span class="kd">var</span> <span class="nx">ensure</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./other/ensure.js</span><span class="dl">'</span><span class="p">);</span>
-  <span class="kd">var</span> <span class="nx">ensure2</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./other/ensure2.js</span><span class="dl">'</span><span class="p">);</span>
-
-  <span class="nx">module1</span><span class="p">();</span>
-  <span class="nx">module2</span><span class="p">();</span>
-<span class="p">},</span> <span class="nx">chunkFilename</span><span class="p">);</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<blockquote>
-  <p>The require.ensure method ensures that every dependency in dependencies can be synchronously required when calling the callback. An implementation of the require function is sent as a parameter to the callback.</p>
+				<blockquote>
+  <p>本文是作为职业高中的教师老爹写的，虽然不是教语文，但是平常也爱写点教学感悟、生活体会什么的。此类文章也许投稿到某个报纸的教育专栏会更好，但是一方面苦于没有这方面的门路，一方面即使投稿后也想将其放到网上以让更多人看到，因此他让我帮他放到我的博客中。</p>
 </blockquote>
 
-<p>而且这个 <code class="language-plaintext highlighter-rouge">callback</code> 的参数, 是一个实现了 <code class="language-plaintext highlighter-rouge">require</code> 接口的函数(没错的话应该只是一个 <code class="language-plaintext highlighter-rouge">require</code> 函数的引用);</p>
+<h2 id="前言">前言</h2>
 
-<p>这个 <code class="language-plaintext highlighter-rouge">chunkFilename</code> 会被 <code class="language-plaintext highlighter-rouge">output</code> 中的 <code class="language-plaintext highlighter-rouge">chunkFilename</code> 设置覆盖.</p>
+<p>差生是指那些听不懂课，看不懂书，作业不会做，考试成绩差的学生。这样的学生一般学习态度差，给人的感觉是不求上进。其实这只是表面现象，其背后的原因是学习困难。因为听不懂课，看不懂书，做作业太难，所以不愿意做作业。别的学生几分钟就能完成的作业，他需要很长的时间也做不好。由于学习困难，产生了厌学的情绪。这种情况首先找到学习困难的原因，帮助他克服困难，使学习过程变得轻松愉快，克服厌学情绪，他的成绩才能有所提高。</p>
 
-<p>而 <code class="language-plaintext highlighter-rouge">AMD</code> 因为是正常一贯的依赖前置, 所以其会在 <code class="language-plaintext highlighter-rouge">require</code> 的时候就执行模块:</p>
+<h2 id="一听不懂课怎么办">一、听不懂课怎么办?</h2>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre><span class="nx">require</span><span class="p">([</span><span class="dl">'</span><span class="s1">./other/ensure.js</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">./other/ensure2.js</span><span class="dl">'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ensure</span><span class="p">,</span> <span class="nx">ensure2</span><span class="p">){</span>
-  <span class="nx">ensure</span><span class="p">();</span>
-  <span class="nx">ensure2</span><span class="p">();</span>
-<span class="p">});</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+<h3 id="听不懂课是常见的现象">听不懂课是常见的现象</h3>
 
-<p>OK, <code class="language-plaintext highlighter-rouge">AMD</code> 的例子不熟, 下面以 <code class="language-plaintext highlighter-rouge">CommonJS</code> 为例说明一些细节.</p>
+<p>原因是基础知识有欠缺，理解能力差，如果听不懂课，那一定要趁课下时间把课本看懂，遇到不懂的地方，就问老师，或同学。老师会及时发现教学中的一些问题，以改善以后的教学工作。老师讲课，要降低学生理解知识的难度，要从简单的、初步的、直观的知识开始讲起，多补习基础知识。</p>
 
-<p>首先, 如果给 <code class="language-plaintext highlighter-rouge">require.ensure</code> 传递一个 <code class="language-plaintext highlighter-rouge">callback</code> , 则在回调函数中 <code class="language-plaintext highlighter-rouge">require</code> 来的模块也会被全部打包到最终异步加载的文件中.</p>
+<p>教师的教学语言，要贴近学生的生活经验，让学生有真情实感。只有真情实感才能触动学生的内心，才能抓住学生的注意力。</p>
 
-<h2 id="chunk-打包优化策略"><code class="language-plaintext highlighter-rouge">chunk</code> 打包优化策略</h2>
+<h3 id="教学要符合认识的规律">教学要符合认识的规律</h3>
 
-<ol>
-  <li>如果两个 <code class="language-plaintext highlighter-rouge">chunk</code> 包含相同的模块, 那么他们将合并成一个.</li>
-  <li>如果一个模块在一个 <code class="language-plaintext highlighter-rouge">chunk</code> 的所有父级 <code class="language-plaintext highlighter-rouge">chunk</code> 都可用, 那么该模块将会在该 <code class="language-plaintext highlighter-rouge">chunk</code> 中被移除.</li>
-  <li>如果一个 <code class="language-plaintext highlighter-rouge">chunk</code> 包含了另一个 <code class="language-plaintext highlighter-rouge">chunk</code> 的所有模块, 那么最终将打包包含更多 <code class="language-plaintext highlighter-rouge">module</code> 的这个 <code class="language-plaintext highlighter-rouge">chunk</code>, 这个规则对一个 <code class="language-plaintext highlighter-rouge">chunk</code> 包含其他 多个 <code class="language-plaintext highlighter-rouge">chunk</code> 的所有 <code class="language-plaintext highlighter-rouge">module</code> 同样适用.</li>
-</ol>
+<p>理性认识必须以感性认识为基础，教学上要先建立感性认识，没有条件也要积极创造条件，让学生在实践中学习，实地观察，动手操作，通过思考分析原因，对观察到的现象做出准确的描述和科学合理的解释，从而总结出概念和规律。在感性认识的基础上建立理性认识。举例说明问题不能脱离学生的生活经验。</p>
 
-<p>其中第二条不好理解, 其实它所说的情况是, 在一个入口文件 <code class="language-plaintext highlighter-rouge">A.js</code> 中包含 <code class="language-plaintext highlighter-rouge">b</code> 模块, 而使用 <code class="language-plaintext highlighter-rouge">require.ensure</code> 打包生成了一个 <code class="language-plaintext highlighter-rouge">chunk.js</code> 文件中也包含这个 <code class="language-plaintext highlighter-rouge">b</code> 模块, 因为 <code class="language-plaintext highlighter-rouge">require.ensure</code> 是在 <code class="language-plaintext highlighter-rouge">A.js</code> 文件中调用的, 因此 <code class="language-plaintext highlighter-rouge">A.js</code> 算是这个 <code class="language-plaintext highlighter-rouge">chunk.js</code> 的父级 <code class="language-plaintext highlighter-rouge">chunk</code>, 那么最终打包生成的 <code class="language-plaintext highlighter-rouge">chunk.js</code> 中包含的 <code class="language-plaintext highlighter-rouge">b</code> 模块 内容将被移除. 而 <code class="language-plaintext highlighter-rouge">在所有父级 chunk 都可用</code> 指的是第一条所说的情况: 几个 <code class="language-plaintext highlighter-rouge">chunk</code> 包含相同的 <code class="language-plaintext highlighter-rouge">module</code>, 那么只会生成一个最终的 <code class="language-plaintext highlighter-rouge">bundle.js</code>, 但导致的可能是这个 <code class="language-plaintext highlighter-rouge">chunk</code> 存在多个父级 <code class="language-plaintext highlighter-rouge">chunk</code> (即 <code class="language-plaintext highlighter-rouge">entry</code> 对应的 <code class="language-plaintext highlighter-rouge">chunk</code> 文件).</p>
+<p>要经常对教学效果进行检测，及时发现学生的掌握情况不断改进教学方法。</p>
 
-<p>验证一下:</p>
+<p>不能让困难积累，遇到困难要及时解决，一些同学听不懂课，下课也不看书，不会就算了。这样知识欠缺就会越来越多，学习就会越来越困难。</p>
 
-<p>入口文件 <code class="language-plaintext highlighter-rouge">app.js</code> 的代码:</p>
+<p>课能听懂，书能看懂，题通过努力能够做会，学习是件快乐的事情。有个学生在普通高中上学，因为学习成绩差，听不懂课，学校要求又严格，就不愿上学了。他的家长就把他送到职高上学，在职高上一段时间，他家长发现孩子变得快乐了，每天唱歌回家，以前在家从不学习，家长怎么劝都不听，现在居然开始学习了，做作业看书到夜里十点多。他爸说职业高中的老师比普通高中的老师教的好。不是职高的老师教的好，而是他的孩子能学会，职高的教材比普高的教材简单，孩子在普高学不会所以不学，在职高能够学会，所以开始学习了。</p>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-</pre></td><td class="rouge-code"><pre>
-<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../other/if_be_remove.js</span><span class="dl">'</span><span class="p">)();</span>
-<span class="nx">require</span><span class="p">.</span><span class="nx">ensure</span><span class="p">([</span><span class="dl">'</span><span class="s1">../other/ensure.js</span><span class="dl">'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(){</span>
-	<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../other/ensure.js</span><span class="dl">'</span><span class="p">)();</span>
-<span class="p">},</span> <span class="dl">'</span><span class="s1">love</span><span class="dl">'</span><span class="p">);</span>
+<h3 id="学习难度应与学习能力相匹配">学习难度应与学习能力相匹配</h3>
 
-</pre></td></tr></tbody></table></code></pre></div></div>
+<p>学习内容不能太简单，也不能太难，要让学生感觉通过努力可以学会。学习能力强，可以跳级，学习能力差就要留级，人们喜欢做具有一定挑战性的活动，从中能获得快感。如果学习内容难度太大，通过努力也学不会，就会产生厌学的情绪。</p>
 
-<p>另一个入口文件 <code class="language-plaintext highlighter-rouge">app2.js</code> 的代码:</p>
+<h2 id="二正确的学习方法读书与做题">二、正确的学习方法：读书与做题</h2>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-</pre></td><td class="rouge-code"><pre>
-<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../other/if_be_remove.js</span><span class="dl">'</span><span class="p">)();</span>
-<span class="nx">require</span><span class="p">.</span><span class="nx">ensure</span><span class="p">([</span><span class="dl">'</span><span class="s1">../other/ensure2.js</span><span class="dl">'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(){</span>
-	<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../other/ensure2.js</span><span class="dl">'</span><span class="p">)();</span>
-<span class="p">},</span> <span class="dl">'</span><span class="s1">hate</span><span class="dl">'</span><span class="p">);</span>
+<h3 id="书山有路勤为径学海无涯题作舟">书山有路勤为径，学海无涯题作舟</h3>
 
-</pre></td></tr></tbody></table></code></pre></div></div>
+<p>学习方法是多读书多做题。首先把课本读懂，一遍一遍地读，读一遍是不行的，多读几遍才能记住，才能把知识融会贯通。书读懂了就等于学会了。如果书读不懂怎么办？那是因为你的知识有欠缺的地方，就像看电视剧，如果不是一集接着一集连着看的，故事情节看着看着就看不懂了。你需要把欠缺的知识补起来。</p>
 
-<p><code class="language-plaintext highlighter-rouge">ensure.js</code> 的代码:</p>
+<p>其次是做题，看懂书还要多做题，才能灵活运用所学的知识。从简单的题开始做。如果感觉做题比较困难，就先看例题，看有答案的习题，要看那种有详细分析和解题步骤的学习资料。看会了，自己再做一遍，再思考一下有没有其他的解题方法，做到能举一反三。</p>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-</pre></td><td class="rouge-code"><pre>
-<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./if_be_remove.js</span><span class="dl">'</span><span class="p">)();</span>
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">i</span><span class="se">\'</span><span class="s1">m be ensure!</span><span class="dl">'</span><span class="p">);</span>
-<span class="p">}</span>
+<p>要做到每做一道题，要达到真正会做，不要似懂非懂，真正弄明白方法原理，而不是死记硬背。有时候感觉自己学会了，再做一遍还不会做。做数学题的时候经常发生这种现象。数学差的学生特别擅长死记硬背，学习数学也使用死记硬背的方法。数学有数学的思维方法，数学是不需要死记硬背的，而更强调的是思维方法和运算。结果是根据条件用用公式，定理数学方法算出来的。采用死记硬背的方法学习数学就不灵了。</p>
 
-</pre></td></tr></tbody></table></code></pre></div></div>
+<p>小学初中高中的知识是相互连贯的，如果有一部分有欠缺，遇到这方面的问题就无法理解，学习就会遇到困难，就会产生听不懂课，看不懂书，题不会做的情况。哪里有欠缺就从哪里开始补起。</p>
 
-<p><code class="language-plaintext highlighter-rouge">ensure2.js</code> 的代码:</p>
+<p>有位在大学教数学的教授介绍他的学习经验，他上高中时刚刚恢复高考，由于小时候不重视学习，他的基础知识很差，做数学题时感觉困难很大，这也不会那也不会，连乘法口诀都忘了，就从小学开始自学乘法，遇到解方程等不会的问题，就把初中的书找来看，从基础知识开始学起，基础知识掌握牢固之后，做题越来越容易了，学习上遇到的困难也少了。如果你能够自己学习，任何困难都不能阻挡你的进步。</p>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-</pre></td><td class="rouge-code"><pre>
-<span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./if_be_remove.js</span><span class="dl">'</span><span class="p">)();</span>
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">i</span><span class="se">\'</span><span class="s1">m be ensure2!</span><span class="dl">'</span><span class="p">);</span>
-<span class="p">}</span>
+<h3 id="温故而知新学而时习之">温故而知新，学而时习之</h3>
 
-</pre></td></tr></tbody></table></code></pre></div></div>
+<p>「习」的意思就是多复习过去学过的东西，把基础知识打牢。基础知识扎实了，理解新事物的能力就会增强。学习之后要经常练习，练习多了才能记得牢，才能灵活运用。学过知识要经常复习，把新学的知识和过去的知识进行融会贯通，总结出规律，便于理解和记忆。</p>
 
-<p>最后, 在子 <code class="language-plaintext highlighter-rouge">chunk</code> 和父级 <code class="language-plaintext highlighter-rouge">chunk</code> 都存在的 <code class="language-plaintext highlighter-rouge">if_be_remove.js</code> 的代码:</p>
+<h3 id="学而不思则罔思不学则殆">学而不思则罔，思不学则殆</h3>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td><td class="rouge-code"><pre>
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">im be removed!</span><span class="dl">'</span><span class="p">);</span>
-<span class="p">}</span>
+<p>一道题不会所有类型的题都不会，一道题会了所有类型的题都会了。做一道题一定要彻底搞明白做题的方法和步骤，不要似懂非懂，一知半解。做题不一定要多但一定要做到能够消化吸收。</p>
 
-</pre></td></tr></tbody></table></code></pre></div></div>
+<p>读书是学习的过程，做题时思考的过程，把读书和做题结合起来，也就是把学习和思考相结合，自古以来都被当作最有效的学习方法。</p>
 
-<p>看下 <code class="language-plaintext highlighter-rouge">Chrome</code> 浏览器控制台中 <code class="language-plaintext highlighter-rouge">Network</code> 中加载的 <code class="language-plaintext highlighter-rouge">js</code> 的内容(这里使用 <code class="language-plaintext highlighter-rouge">[id].[name].js</code> 的命名方式)</p>
+<h2 id="三背书的方法先记住文字的意思再记怎样叙述">三、背书的方法：先记住文字的意思，再记怎样叙述</h2>
 
-<p><code class="language-plaintext highlighter-rouge">app.js</code> 页面:</p>
+<h3 id="正确理解">正确理解</h3>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2016/webpack-async-1.png" alt="webpack-async" title="webpack-async" /></p>
+<p>如果要背一段文字就先理解文字的意思，记住文字的意思，再记怎样叙述。先用自己的话把意思说出来，再按课本上的叙述把意思说出来。如果说不出来，是因为关键词没有掌握。关键的名称，动作，状态，不知道用什么词语描述。</p>
 
-<p><code class="language-plaintext highlighter-rouge">app2.js</code> 页面</p>
+<p>在背书时，理解文字的意思很重要，如果不理解文字的意思就记不住文字的意思，记不住文字的意思也就不能叙述文字的意思，记忆起来就比较难。经常出现叙述混淆颠倒甚至逻辑错误的情况。叙述的和原来的意思大相迳庭。例如在物理上要叙述电磁继电器的工作原理，书上是这样叙述的，电磁继电器的线圈通电产生磁场，将街铁吸合，带动开关动作。线圈断电，磁场消失，衔铁在拉力弹簧的作用下释放，开关复位。如果理解意思了就知道电磁继电器事实上是电磁力控制的开关，就可以用自己的话来叙述：线圈通电产生电磁吸力，将开关吸合，线圈断电磁吸力消失，开关复位。</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2016/webpack-async-2.png" alt="webpack-async" title="webpack-async" /></p>
+<p>有个同学不理解意思，他叙述说线圈通电开始膨胀，开关闭合，线圈断电收缩，在弹簧的作用下开关断开。还有同学说线圈通电开关闭合，产生磁场，线圈断电，开关断开，磁场消失，把因果关系搞错了。为什么会出现这种现象呢？那是几年以前的事情，学校的仪器设备十分缺乏，该做的实验不能做，上课全靠老师在黑板上写画，教学中用到的东西学生都没有见过，该动手操作的没有动手操作，没有产生对知识的感性认识，上课就是要求学生死记硬背课本上的内容。不求甚解的死记硬背，记起来非常难，好不容易记住了，明天就忘了。现在情况好多了，国家很重视教育，教学上所用的仪器设备学校都有了，教室里还有大屏幕电子白板，通过实物演示和电脑动画学生一看就知道工作原理。</p>
 
-<p>可以看到, 因为 <code class="language-plaintext highlighter-rouge">if_be_remove.js</code> 在两个 <code class="language-plaintext highlighter-rouge">chunk</code> 中, 即 <code class="language-plaintext highlighter-rouge">1-love.js</code> 和 <code class="language-plaintext highlighter-rouge">3.hate.js</code> 被引用, 而同时又被这两个 <code class="language-plaintext highlighter-rouge">chunk</code> 的父级, 也即 <code class="language-plaintext highlighter-rouge">app.js</code> 和 <code class="language-plaintext highlighter-rouge">app2.js</code> 引用, 因此在这两个 <code class="language-plaintext highlighter-rouge">chunk</code> 中, 没有出现 <code class="language-plaintext highlighter-rouge">if_be_remove.js</code> 的代码.</p>
+<h3 id="准确叙述">准确叙述</h3>
 
-<h2 id="补充-chunk-概念和定义">补充: <code class="language-plaintext highlighter-rouge">chunk</code> 概念和定义</h2>
+<p>知道工作原理，下一步就是叙述。但是，知道电磁继电器的工作原理不一定会叙述，就像我们看到的现象不一定能把它很好地叙述出来。因为你还得记住一些事物的名称，不知道哪个部分叫线圈，哪个部分叫衔铁，虽然知道意思，但不知道关键的东西叫什么名字，只能说那个东西通电，那个东西动作，就像看一场篮球比赛，看着很热闹，但一个人也不认识怎么去说呢，只能说那个人，这个人，或者那个高个，那个胖子，那个穿什么衣服的人等等。文学大师能写出好文章，为什么我们写不出来呢？因为虽然是我们天天见到的现象，但是在我们知识库里没有足够的词汇来描述。所以记住关键词很重要，一些东西怎样称呼，一些动作用什么语言描述，一些状态用什么语言形容。意思弄明白了，关键词也记住了，叙述起来就不会出错了。</p>
 
-<p>这里再补充一下, 所谓 <code class="language-plaintext highlighter-rouge">chunk</code>, 指的是一个或者几个 <code class="language-plaintext highlighter-rouge">module</code> 组成的一个独立的 <code class="language-plaintext highlighter-rouge">js</code> 文件, 而 <code class="language-plaintext highlighter-rouge">chunk</code> 分为以下几个类型:</p>
+<p>记忆是对感觉的记忆，感觉越丰富，记忆越牢固。回忆起来就越容易。如果感觉比较单一，就越容易遗忘，因为联想的线索太少了。感觉越丰富，联想的线索就越多，越容易联想，所以就不容易忘记。有时拿在手里的东西，刚放下一小会儿就找不到了，不是因为你得了健忘症，而是联想的线索太少了。记不住的东西就通过一件事去记忆。实地观察，动手操作，和别人讨论，这样会增加联想的线索，回忆起来就容易。</p>
 
-<ol>
-  <li><code class="language-plaintext highlighter-rouge">Entry Chunks</code>: <code class="language-plaintext highlighter-rouge">Entry Chunks</code>是我们最常见的<code class="language-plaintext highlighter-rouge">Chunks</code>类型, 包含了我们自己写的业务逻辑相关代码(大多数情况下是独有的代码, 即不会被提取到公共 <code class="language-plaintext highlighter-rouge">chunks</code> 中的代码), 一般会等到 <code class="language-plaintext highlighter-rouge">Initial Chunks</code> 加载完成才会执行(或者是遇到 <code class="language-plaintext highlighter-rouge">module</code> 编号为 <code class="language-plaintext highlighter-rouge">0</code> 的 module).</li>
-  <li><code class="language-plaintext highlighter-rouge">Normal Chunks</code>: <code class="language-plaintext highlighter-rouge">Normal Chunks</code> 主要指代那些应用运行时动态加载的模块,<code class="language-plaintext highlighter-rouge">Webpack</code>会为我们创建类似于 <code class="language-plaintext highlighter-rouge">JSONP</code> 这样合适的加载器来进行动态加载.</li>
-  <li><code class="language-plaintext highlighter-rouge">Initial Chunks</code>: <code class="language-plaintext highlighter-rouge">Initial Chunks</code> 本质上还是 <code class="language-plaintext highlighter-rouge">Normal Chunks</code>, 不过其会在应用初始化时完成加载, 往往这个类型的<code class="language-plaintext highlighter-rouge">Chunks</code>由<code class="language-plaintext highlighter-rouge">CommonsChunkPlugin</code>生成, 这个这个里面包含了全局的模块位置信息, <code class="language-plaintext highlighter-rouge">Entry chunks</code> 中的代码执行依赖这个 <code class="language-plaintext highlighter-rouge">chunk</code>, 因此应该优先加载这个 <code class="language-plaintext highlighter-rouge">js</code>.</li>
-</ol>
+<p>不求甚解的死记硬背，不仅占用大量的学习时间，而且非常耗费精力，是造成学生厌学的原因。遇到必须要背的东西要弄明白道理，记住一些关键的词语，和事物之间的逻辑关系。这些做到了，记起来就简单了。</p>
 
-<p>在之前的举例中, 被打包成公共 <code class="language-plaintext highlighter-rouge">js</code> 供全部或者部分页面使用的的 <code class="language-plaintext highlighter-rouge">bundule.js</code> 是 <code class="language-plaintext highlighter-rouge">Initial Chunks</code>, 只在当前页面才会用到的<code class="language-plaintext highlighter-rouge"> chunk</code> 如 <code class="language-plaintext highlighter-rouge">app.xxxxxx.js</code> 是 <code class="language-plaintext highlighter-rouge">Entry Chunks</code>, 通过 <code class="language-plaintext highlighter-rouge">require.ensure</code> 异步加载的 <code class="language-plaintext highlighter-rouge">chunk</code> 如 <code class="language-plaintext highlighter-rouge">3-hate</code> <code class="language-plaintext highlighter-rouge">1-love</code> 是 <code class="language-plaintext highlighter-rouge">Normal Chunks</code>.</p>
+<h2 id="四教与学态度决定一切">四、教与学：态度决定一切</h2>
 
+<p>教学过程是教师和学生双向互动的过程。教师教学就是帮学生理解所学的知识，记住所学的知识，达到灵活运用的目的。学生对知识理解了，记住了，会灵活运用了，就学会了。</p>
+
+<h3 id="学生是教学的主体教学以学生为主">学生是教学的主体，教学以学生为主</h3>
+
+<p>只有学生积极主动的学习，教师的教学才能起到作用。就像鸡蛋在外部条件下变成小鸡，教师教学是外因，学生主动学习是内因。外因通过内因起作用。教师讲课一定要让学生能够理解，能够听懂。学生听不懂，不理解，就不能启发学生思考，教学是没有效果的。学生要主动积极的学习，如果学生不愿意学习，对所学的内容不感兴趣，就不会认真听课，老师讲的再多也没有用。无论外界条件怎样，石头不会变成小鸡。学习是学生自己的事，是不可强求的，也是不可代替的。</p>
+
+<h3 id="学生要主动学习态度积极教学才有意义">学生要主动学习，态度积极，教学才有意义</h3>
+
+<p>子曰：不愤不启，不悱不发。举一偶不以三偶反则不复也。翻译过来就是，孔子说：教导学生不到他想弄明白而不得的时候就不去开导他，不到他想说出来而说不出来的时候就不去启发他，交给他一方面的东西他却不能举出其他三方面的东西就不要再教他了。意思是如果学生不主动积极的学习，对学习不感兴趣，就不要去教他。教他他也不学，他不学你教不会，徒劳无功。学习态度非常重要。学习态度积极的学生，有不会的问题会主动向老师问，这样的学生自学能力很强，能主动积极的学习。从来不问问题的学生，遇到不会的问题，不会就算了。也没有打算学会。刚考过的试卷再做一遍还是不会，该考多少分还是考多少分。考试就是查漏补缺的，好不容易发现一个自己不会的问题应该立即解决才对，自己不去解决，该不会的还是不会，永远也进步不了。学习是自己的事，要靠自己努力，就像学习体育的运动员，如果自己不刻苦训练，力量和技术就不会进步。学习也是这样，是不能由别人代替的，老师教的再好也教不会不学习的学生。</p>
+
+<h2 id="后记">后记</h2>
+
+<p>差生成绩差不是一朝一夕形成的。长期的学习困难没有克服，困难日积月累就会越来越多，就会对学习失去信心，从而放弃学习，上课看小说，下课玩手机，作业不做，成绩越来越差。遇到学习困难要及时解决，才不至于积累起来，困难越来越大。</p>
 
                 <div class="text-danger">- EOF -</div>
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/tech/vue-simple-use.html" data-toggle="tooltip" data-placement="top" title="Vue + Webpack 组件式开发(练习环境)初体验">
+                        <a href="/tech/applescript-simple-use.html" data-toggle="tooltip" data-placement="top" title="AppleScript 初体验">
                         上一篇<br>
-                        <span>Vue + Webpack 组件式开发(练习环境)初体验</span>
+                        <span>AppleScript 初体验</span>
                         </a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/tech/github-pages-config.html" data-toggle="tooltip" data-placement="top" title="关于本博客域名优化配置的几点说明">
-                        下一篇<br>
-                        <span>关于本博客域名优化配置的几点说明</span>
-                        </a>
-                    </li>
                     
                 </ul>
                 <hr style="visibility: hidden;">
@@ -684,8 +537,8 @@
       clientSecret: 'd5bd1b65b639d8697054e6e97f6308b28e9348ba',
       repo: 'x_blog',
       owner: 'Xheldon',
-      admin: ['Xheldon'],id: "webpack-details-one",labels: [],
-      title: "Webpack 异步按需加载",
+      admin: ['Xheldon'],id: "the-problem-of-poor-student",labels: [],
+      title: "差生的学习问题",
       language: "zh-CN",
       pagerDirection: 'first',
     });
