@@ -3,29 +3,42 @@
 
 <head>
     <meta charset="utf-8">
-    <title>银河系漫游指南 - Xheldon Blog</title>
+    <title>Chrome 常用调试方法及其他 - Xheldon Blog</title>
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     
-        <meta name="description" content="在面对了许多可怕的困难并且成功地战而胜之以后，他如果仍然还弄得清楚自己的毛巾在哪里，那么这显然是一个值得认真对待的人。">
+        <meta name="description" content="Chrome 的调试功能很强大，这里介绍一下我工作中最常用的几个功能。">
     
     <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="银河系漫游指南 - Xheldon Blog">
+    <meta property="og:title" content="Chrome 常用调试方法及其他 - Xheldon Blog">
     
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="article">
+    
+    <meta property="article:published_time" content="2022-08-07T20:39:47Z">
     
     
-        <meta name="og:description" content="在面对了许多可怕的困难并且成功地战而胜之以后，他如果仍然还弄得清楚自己的毛巾在哪里，那么这显然是一个值得认真对待的人。">
+    
+    <meta property="article:tag" content="技术">
+    
+    <meta property="article:tag" content="Chrome">
+    
+    <meta property="article:tag" content="调试">
+    
+    <meta property="article:tag" content="技巧">
     
     
-    <meta property="og:image" content="https://static.xheldon.cn/img/towel-bg.png">
     
-    <meta property="og:url" content="https://www.xheldon.cn/towel/">
+        <meta name="og:description" content="Chrome 的调试功能很强大，这里介绍一下我工作中最常用的几个功能。">
+    
+    
+    <meta property="og:image" content="https://www.xheldon.cn/resources/img/logo.png">
+    
+    <meta property="og:url" content="https://www.xheldon.cn/tech/the-use-of-chrome-devtools.html">
     <meta property="og:site_name" content="Xheldon Blog">
     
     <!-- Web App Manifest -->
@@ -35,7 +48,7 @@
     <link rel="shortcut icon" href="/resources/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.xheldon.cn/towel/">
+    <link rel="canonical" href="https://www.xheldon.cn/tech/the-use-of-chrome-devtools.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
@@ -61,8 +74,8 @@
 
     <!-- Navigation -->
 
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -178,153 +191,380 @@
   </div>
 </div>
 
-    <!-- Page Header -->
+    <!-- Image to hack wechat -->
+<!-- <img src="/resources/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
 
-
-
-
-
+<!-- Post Header -->
 
 
 
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('https://static.xheldon.cn/img/towel-bg.png');
+        background-image: url('https://static.xheldon.cn/img/index-bg.png');
         
     }
 
     
-    header.intro-header .header-mask{
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        background: rgba(0,0,0, 0.4);
-    }
-    
 </style>
 
-    <header class="intro-header" >
+<header class="intro-header style-text" >
 
     <div class="header-mask"></div>
+    
     <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        
-        <div class="site-heading">
-        
-          <h1>银河系漫游指南</h1>
-          <span class="subheading">在面对了许多可怕的困难并且成功地战而胜之以后，他如果仍然还弄得清楚自己的毛巾在哪里，那么这显然是一个值得认真对待的人。</span>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+                        
+                        <a class="tag" href="/archive/?tag=Chrome" title="Chrome">Chrome</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E8%B0%83%E8%AF%95" title="调试">调试</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E6%8A%80%E5%B7%A7" title="技巧">技巧</a>
+                        
+                    </div>
+                    <h1>Chrome 常用调试方法及其他</h1>
+                    
+                    <h2 class="subheading"></h2>
+                    <span class="meta">✍🏼 写于 2022年08月07日</span>&nbsp;&nbsp;&nbsp;  
+                    
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </header>
 
-<style>
-.data-loading {
-    width: 150px;
-    height: 10px;
-    margin:50px auto;
-    text-align: center;
-}
-.data-loading span {
-    display: inline-block;
-    width: 10px;
-    height: 100%;
-    margin-right: 5px;
-    background: #5bc0de;
-    -webkit-animation: load 1.04s ease infinite;
-}
-.data-loading span:last-child{
-    margin-right: 0px; 
-}
-@-webkit-keyframes load{
-    0%{
-        opacity: 1;
-        -webkit-transform: scale(1.2);
-    }
-    100%{
-        opacity: .2;
-        -webkit-transform: scale(.2);
-    }
-}
-.data-loading span:nth-child(1){
-    -webkit-animation-delay:0.13s;
-}
-.data-loading span:nth-child(2){
-    -webkit-animation-delay:0.26s;
-}
-.data-loading span:nth-child(3){
-    -webkit-animation-delay:0.39s;
-}
-.data-loading span:nth-child(4){
-    -webkit-animation-delay:0.52s;
-}
-.data-loading span:nth-child(5){
-    -webkit-animation-delay:0.65s;
-}
-</style>
 
-<!-- Main Content -->
-<div class="container" >
-	<div class="row">
+
+
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <!-- Multi-Lingual -->
+                
+                
+                    
+                        
+                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
+                        <script>
+                            var timeDom = document.getElementById('from_time');
+                            var pageTime = 1659875987; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
+                            var currentTime = Date.now();
+                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
+                            if (Number(fromNow) <= 0) {
+                                fromNow = 1; // Note: 至少显示一天
+                            }
+                            timeDom.innerText = fromNow
+                        </script>
+                    
+                    
+                
+                
+                    <div class="callout-tips">🖥 &nbsp;说明：Chrome 的调试功能很强大，这里介绍一下我工作中最常用的几个功能。</div>
+                
+                
+                    <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/20CjMjTupEMXFc" target="_blank">https://www.craft.do/s/20CjMjTupEMXFc</a></div>
+                
+				<p>Chrome 是一款浏览器，对前端工程师来说也是一款调试利器，下面的几个功能是我在工作中最常用到的几个，下面逐个介绍。</p>
+
+<h3 id="断点">断点</h3>
+
+<blockquote>
+  <p>这个应该是用的最多的基础功能，但是我面试过的很多外包同学并不知道如何使用 Chrome 的断点调试，或者听说过，但是不知道怎么用，下面简单介绍一下基本操作。</p>
+</blockquote>
+
+<p>添加断点可以直接在代码中硬编码，增增加一行<code class="language-plaintext highlighter-rouge">debugger</code> 表达式即可，代码执行到此处会断到此处：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/B64AFAEF-676F-4AB6-BFD9-163096FFD511_2.png" alt="Image" /></p>
+
+<p>在 VSCode 中，黄色下划线表示警告。一般不会使用此方式，因为此方式跟 <code class="language-plaintext highlighter-rouge">console.log</code>  并没有明显的优势，甚至还不如前者简单，因为你用完之后还得删了，不然代码是不可用的。</p>
+
+<p>还有一种方式是直接在 devtools 中的 source tab 中找到源码，一般是通过 <code class="language-plaintext highlighter-rouge">console.log</code> 输出后，点击控制台右侧的文件名，可以在 <code class="language-plaintext highlighter-rouge">Sources</code> tab 中看到源码，点击左下角格式化之后，在代码左侧行号出点击标记断点，即可调试，如下图：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/C987CDFD-FF9E-45BE-AE3B-BADD657DE1B9_2.png" alt="Image" /></p>
+
+<p>断点后，图中红色部分的按钮，从左向右依次的含义：</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">继续执行</code> ：点击后，断点将直接执行到下一个断点处。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">setp over</code> ：如果当前断点所在位置不是函数，则跟 <code class="language-plaintext highlighter-rouge">step</code> 一样，执行到下一行；如果是函数，则会跳过该函数继续执行到下一行。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">setp into</code> ：如果没有异步代码，则跟 <code class="language-plaintext highlighter-rouge">setp</code> 一样，执行到下一行；如果有异步代码，但它会进入到异步代码的内部第一行。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">step out</code> ：点击后，跳出当前函数。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">setp</code> ：执行下一行同步代码，跟 <code class="language-plaintext highlighter-rouge">step into</code> 不一样， 它会跳过异步代码的执行；如果当前断点在函数处的话，会进入到函数调用内部第一行。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">暂时停用/激活断点</code> ：首次点击后会临时禁止断点功能，就像没有打断点一样代码不会停止执行，下方的 <code class="language-plaintext highlighter-rouge">Breakpoints</code> 中的断点会整体置灰：</p>
+  </li>
+</ul>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/91E6FC8D-D932-4412-9D5D-EBC5E92BD8EA_2.png" alt="Image" /></p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/0AC85FEA-3449-49A8-8BF9-A619CF2D924E_2.png" alt="Image" /></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">将断点停在报错处</code> 点击高亮后启用，代码将会自动停止到任何 throw error 的地方，无论是否是被 catch 住，也无论是 http 错误还是什么错误。注意必须把下面的<code class="language-plaintext highlighter-rouge">Pause on caught exceptions</code> 勾选才行，不勾选等于无效：</li>
+</ul>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/D99CEF49-A530-412E-B632-307C291C75E0_2.png" alt="Image" /></p>
+
+<p>此功能最好是在代码执行一遍完成后，页面载入完成后，开始交互的时候打开，否则可能一进入页面就会报错，包括 React 中的合法报错等，导致无法正常加载页面。</p>
+
+<p>直接放一张官方断点的图：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/17ED1675-13EA-42A3-8B4D-83587390D7EF_2.png" alt="Image" /></p>
+
+<p>上图中上述的按钮下面有一系列的 toggle <code class="language-plaintext highlighter-rouge">‣</code> 三角号可以点击，依次为：</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">Watch</code> 可以监测断点处的任何可访问到的上下文变量以供显示，如果变量不存在或者无法访问，如访问 <code class="language-plaintext highlighter-rouge">a.b.c</code> 的时候，a 不存在，那么会显示不可用。当断点断的时候，该位置输入的变量会自动显示，而不用鼠标悬浮上去（像上面官方图一样）查看变量，很方便。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">Breakpoints</code>  表示已经有的断点。checkbox 打勾的是可用的断点，未打勾的是暂时忽略的断点（可以临时打勾或者取消掉）。</p>
+  </li>
+</ul>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/5F3A5468-63E9-47EF-9E80-461D5988E2C3_2.png" alt="Image" /></p>
+
+<p>当前执行到的断点，背景是黄色的。</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">Threads</code> 表示当前调用的文件线程，当期页面 JavaScript 线程表示为 <code class="language-plaintext highlighter-rouge">Main</code> 中。此部分一般用不到，只是用来调试<code class="language-plaintext highlighter-rouge">Web Worker</code> 比较有用，也可以用来在当前页面调试 Chrome 浏览器插件。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">Scope</code> 显示当前断点处的可访问到的变量值。因为 JavaScript 的闭包和调用栈的特性，会显示很多闭包中的变量：</p>
+  </li>
+</ul>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/54D3E302-A251-4411-B366-D69B4C7B6CEE_2.png" alt="Image" /></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Call Stack</code> 即函数的调用栈，最顶层的是最近的调用。</li>
+</ul>
+
+<h3 id="ui-断点">UI 断点</h3>
+
+<p>有些情况下，你不知道或者无从定位一个 UI 问题为什么会这么变化。比如，你的同事写了一个 hover 到按钮上之后，按钮颜色变化的代码。你需要为这个逻辑添加新的逻辑，但是你并不知道他的代码逻辑写在哪个文件（他没有交接工作就休假了，可恶！）。</p>
+
+<p>你发现 hover 到按钮上的时候，按钮会增加个 class 类名，于是你可以使用 dom 断点进行调试，在 <code class="language-plaintext highlighter-rouge">Elements</code> tab 中，你需要检查的那个元素上右键：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/C9A19CAE-BEC6-4180-B618-73CA95E0CA90_2.png" alt="Image" /></p>
+
+<p>UI 断点可以将代码停到你指定的 UI 事件所执行的代码发生之前的那一刻，UI 事件包括：</p>
+
+<ul>
+  <li>
+    <p>子树修改：如果子树有任何修改，如增加、属性变更等，会将代码断到该逻辑即将执行的地方。</p>
+  </li>
+  <li>
+    <p>属性修改：如果当前右键的元素有任何修改，会将代码断到该逻辑即将执行的地方。</p>
+  </li>
+  <li>
+    <p>节点移除：如果当前右键的元素移除，会将代码断到该逻辑即将执行的地方。</p>
+  </li>
+</ul>
+
+<p>举个例子，飞书文档中，如果 block 聚焦，则会在节点上添加一个 focus 类名：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/3690BB50-7AB1-4798-AEE3-98D1EEC495B3_2.png" alt="Image" /></p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/C7500F06-2A4D-47A5-8DE6-2ED7CB43868B_2.png" alt="Image" /></p>
+
+<p>此时就可以使用 <code class="language-plaintext highlighter-rouge">attribute modifications</code> 进行断点：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/9A783370-A839-4995-A5E3-2C1D4421ED7D_2.png" alt="Image" /></p>
+
+<p>当然，默认情况下线上代码是压缩后的，点击左下角的 <code class="language-plaintext highlighter-rouge">{}</code> 就会格式化：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/A4049060-72F8-476F-A1D2-A21B099EF177_2.png" alt="Image" /></p>
+
+<p>格式化之后，Chrome 会新建一个 tab，在文件后面加上 <code class="language-plaintext highlighter-rouge">:formatted</code> :</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/CD25F7CA-7ABD-4B32-A28D-0E60935DB707_2.png" alt="Image" /></p>
+
+<blockquote>
+  <p>需要注意的是，如果你右键的元素在变更的时候是父节点变更，如父节点整体移除，则 UI 断点不会执行。</p>
+</blockquote>
+
+<h3 id="overwrite">Overwrite</h3>
+
+<blockquote>
+  <p>Charles 有类似的功能叫 Map js（没记错的话），ProxyMan 的类似功能叫 Map Local，都是一个意思。</p>
+</blockquote>
+
+<p>有时候，因为上线/测试链路比较长（尤其是编辑器这种基础工具组件，需要发包），想快速验证一个 case 的时候就会比较麻烦，因此可以使用 Chrome 的 Overwrite 功能。</p>
+
+<p>此功能类似于 Charles 的 Map js 功能，即可以将本地文件作为页面的请求进行响应，你需要先在 <code class="language-plaintext highlighter-rouge">Sources</code> 中启用该功能，当然，如果没有执定本地的文件存储的位置，需要先让你指定位置才行：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/B5ADFA65-51E3-44AD-967F-311A3604D016_2.png" alt="Image" /></p>
+
+<p>此时 Chrome 会提醒你需要本地该路径的完全访问权限，同意即可：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/416C9680-96DF-40AF-861B-6C74EFC6C1DF_2.png" alt="Image" /></p>
+
+<p>选择一个本地文件夹后，（这里我选用的是 <code class="language-plaintext highlighter-rouge">~/Developer/Overwrite</code> 文件夹）就可以启用 <code class="language-plaintext highlighter-rouge">Overwrite</code> 功能：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/362CACE4-9BBD-41B3-80FD-A69C85EF8209_2.png" alt="Image" /></p>
+
+<p>然后转到 <code class="language-plaintext highlighter-rouge">Network</code> tab，选择一个资源，如 css/js，我这里选择的是 js：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/31AB1FF1-4016-4818-AFB3-3B823209319E_2.png" alt="Image" /></p>
+
+<p>注意，如果没有在 <code class="language-plaintext highlighter-rouge">Sources</code> 中启用 <code class="language-plaintext highlighter-rouge">Overwrite</code> 的话，这里是不会显示 <code class="language-plaintext highlighter-rouge">Save for overrides</code> 的。</p>
+
+<p>之后就可以各种修改该文件，然后刷新页面查看修改后的效果了。</p>
+
+<p>需要注意的是，如果 js 文件请求后有时间戳，则 Overwrite 不会生效，因为 Chrome 是使用严格的路径匹配来 map 文件的。</p>
+
+<h3 id="snippet">Snippet</h3>
+
+<p>准确说，这个不算是「调试方法」，但是平常有个代码验证的片段，我也会存到这个里面，相当于一个 Sublime（可以对输入过的变量进行自动补全），挺好用的：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/E231449D-FED8-4E4E-8446-D6A3AAEC87A4_2.png" alt="Image" /></p>
+
+<h3 id="filesystem">Filesystem</h3>
+
+<p>该功能跟上面几个在同一个位置，用来实时同步浏览器中的修改到本地文件系统。该功能适合一个简单的 HTML Web 服务，如 Express 这种服务端返回 js/css/html 等的本地调试时候用。</p>
+
+<p>但是该功能官方明确说了，不适合 React App。因为现在基本项目都是 React、Vue 等的现代框架构建的，因此此功能用的较少，这里仅放个官方截图：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/image.png" alt="Image" /></p>
+
+<h2 id="其他">其他</h2>
+
+<h3 id="macvim">MacVim</h3>
+
+<p>上面的 Overwrite 来的 js 一般都是压缩后的线上代码，有些可能会比较大，所以我一般会用 Vim 打开后格式化一下。Vim 配置起来太费劲，而 MacVim 提供了开箱即用的体验，稍加改造即可为己更好的所用。为什么用 MacVim 是因为它性能非常强，格式化大到几十 Mb 的文件都是几秒钟的事情。我一般都会配置一个 js-beautify 进行格式化，虽然叫 js-beautify，但是它可以格式化 js、css、html。</p>
+
+<p>使用 js-beautify 需要先安装 <code class="language-plaintext highlighter-rouge">vim-plug</code> ，它是一款 vim 插件管理器：<a href="https://github.com/junegunn/vim-plug">https://github.com/junegunn/vim-plug</a>，使用步骤见：<a href="https://github.com/junegunn/vim-plug/wiki/tutorial">https://github.com/junegunn/vim-plug/wiki/tutorial</a>。</p>
+
+<blockquote>
+  <p>注：安装需要魔法。</p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">js-beautify</code> 使用这个：<a href="https://github.com/beautify-web/js-beautify">https://github.com/beautify-web/js-beautify</a>。</p>
+
+<p>这是我的 vim 配置，我使用 <code class="language-plaintext highlighter-rouge">[]</code> 快捷键作为调用 <code class="language-plaintext highlighter-rouge">js-beautify</code> 的方式，这样就不用每次都输入命令了：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="rouge-code"><pre>set number
+set relativenumber
+set smartindent
+set autoindent
+set hlsearch
+set display=lastline
+set scrolloff=3
+set laststatus=2
+set showmatch
+set ruler
+set guifont=Monaco:h12
+syntax on
+autocmd FileType *.js setlocal equalprg=js-beautify\ --stdin
+nmap [] :%!js-beautify&lt;CR&gt;
+colorscheme evening
+call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
+Plug 'jelera/vim-javascript-syntax'
+call plug#end()
+if !has('gui')
+    set term=$TERM
+endif
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="vscode">VSCode</h3>
+
+<p>VSCode 也有断点调试功能（感谢 Chrome 内核），但是只能调试 Node 应用（可以配合浏览器插件调试 Web 应用，但是没必要，因为已经有 Chrome 了），基本使用方法跟 Chrome 类似，这里就不介绍了，放个图：</p>
+
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/D7AD7683-F0C4-46D2-8632-2ADB519B230C_2.png" alt="Image" /></p>
+
+
+                <div class="text-danger">- EOF -</div>
+                <hr style="visibility: hidden;">
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/life/the-problem-of-poor-student.html" data-toggle="tooltip" data-placement="top" title="差生的学习问题">
+                        上一篇<br>
+                        <span>差生的学习问题</span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+                <hr style="visibility: hidden;">
+                <div id="gitalk-container"></div>
+                <hr>
+            </div>  
+
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">目录</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
         
 
-<!-- USE SIDEBAR -->
-    <!-- PostList Container -->
-    
-    
-    		<div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                postlist-container
-            ">
-    			
-
-    
-
-    
-
-    
-        <div style="color: red; font-size: 30px;">本目录内容移动到 archive 下，即将为你跳转：<span id="time">3</span></div>
-        <script>
-            document.title = '跳转中...';
-            var time = 3;
-            var dom = document.getElementById('time');
-            var t = setInterval(() => {
-                if (time) {
-                    dom.innerText = time--;
-                } else {
-                    clearInterval(t);
-                    location.href = '/archive/?tag=%E6%97%85%E8%A1%8C';            
-                }
-            }, 1000);
-        </script>
-    
-
-    
-
-    
-
-
-          
-          <div class="text-danger">- EOF -</div>
-          <hr style="visibility: hidden;">
-          <div id="gitalk-container"></div>
-          <hr>
-          
-    		</div>
     <!-- Sidebar Container -->
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
 
@@ -434,72 +674,6 @@
 </section>
 
 
-                <!-- Short About -->
-                <section class="visible-md visible-lg">
-  <hr>
-  <h5><a href="/about/">关于我</a></h5>
-  <div class="short-about">
-    
-    <img src="/resources/img/logo.png" />
-    
-    
-    <p>The answer to Life, the Universe and Everything is...</p>
-    
-    <!-- SNS Link -->
-    
-
-
-<ul class="list-inline">
-
-
-  
-  <li>
-    <a target="_blank" href="/feed.xml">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  <li>
-    <a target="_blank" href="https://twitter.com/_xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  
-  
-  <li>
-    <a target="_blank" href="https://github.com/xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  <li>
-    <a target="_blank" href="https://t.me/xheldon_tech">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-</ul>
-  </div>
-</section>
-
                 <!-- Friends Blog -->
                 
 <hr>
@@ -515,11 +689,15 @@
   
 </ul>
 
-    		</div>
-        
-        
-	</div>
-</div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- add support for mathjax by voleking-->
+
+
+<!-- Markdown 流程图按需加载 -->
 
 
 <!-- Gitalk 评论 start  -->
@@ -532,8 +710,8 @@
       clientSecret: 'd5bd1b65b639d8697054e6e97f6308b28e9348ba',
       repo: 'x_blog',
       owner: 'Xheldon',
-      admin: ['Xheldon'],id: "/towel/",labels: [],
-      title: "银河系漫游指南",
+      admin: ['Xheldon'],id: "the-use-of-chrome-devtools",labels: [],
+      title: "Chrome 常用调试方法及其他",
       language: "zh-CN",
       pagerDirection: 'first',
     });
@@ -543,6 +721,39 @@
 <!-- Gitalk end -->
 
 
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://static.xheldon.cn/js/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'right',
+          // icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
 
 
 
