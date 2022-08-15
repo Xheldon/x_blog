@@ -5,8 +5,8 @@
     <description>The Answer to Life, the Universe and Everything is...</description>
     <link>https://www.xheldon.cn/</link>
     <atom:link href="https://www.xheldon.cn/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 15 Aug 2022 08:00:24 +0800</pubDate>
-    <lastBuildDate>Mon, 15 Aug 2022 08:00:24 +0800</lastBuildDate>
+    <pubDate>Mon, 15 Aug 2022 08:05:00 +0800</pubDate>
+    <lastBuildDate>Mon, 15 Aug 2022 08:05:00 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
     
       <item>
@@ -66,7 +66,7 @@ GitHub Gist: instantly share code, notes, and snippets.
 
 &lt;p&gt;需要注意的是，该函数因为是自己用来适配 Jekyll 的来进行下一步处理的（见下面的优化三），因此特殊处理了 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;imageBlock&lt;/code&gt;  和 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;urlBlock&lt;/code&gt; 类型的 Block：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/FE4436B8-B16D-4CA7-9041-E2F5F831CC80_2.png&quot; alt=&quot;Image.png&quot; /&gt;&lt;/p&gt;
+&lt;p caption=&quot;Image&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/FE4436B8-B16D-4CA7-9041-E2F5F831CC80_2.png&quot; alt=&quot;Image&quot; title=&quot;Image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;此函数已经被我放到官方插件开发者论坛了，欢迎交流：&lt;/p&gt;
 
@@ -86,11 +86,11 @@ Craft’s markdown api has the following problems: 1. Nested lists are not suppo
 
 &lt;p&gt;而这个特定链接的作用，就是调用 Apple Script 写的 Application，置于如何写一个 Application 应用和如何响应链接调用，可以看我写的 &lt;a href=&quot;/tech/applescript-simple-use.html&quot;&gt;这篇文档&lt;/a&gt;，里面会调用 node，执行的其实也是之前放到 Github CI 执行的代码，这里放一个简单的截图：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/BC93AD26-26C5-4AD1-A8AC-2BB3B2AD2945_2.png&quot; alt=&quot;Xhelper截图👆🏻.png&quot; /&gt;&lt;/p&gt;
+&lt;p caption=&quot;Xhelper截图👆🏻&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/BC93AD26-26C5-4AD1-A8AC-2BB3B2AD2945_2.png&quot; alt=&quot;Xhelper截图👆🏻&quot; title=&quot;Xhelper截图👆🏻&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;效果：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/5E5FDC00-D081-4B50-91FE-61946A453356_2.png&quot; alt=&quot;Image.png&quot; /&gt;&lt;/p&gt;
+&lt;p caption=&quot;Image&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/5E5FDC00-D081-4B50-91FE-61946A453356_2.png&quot; alt=&quot;Image&quot; title=&quot;Image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;之前的流程因为我贪图简单，加上 Craft 上传的图片不一定都有后缀（如通过拖拽、图片上传等方式上传的图片，则有后缀，若通过复制粘贴来的或者 Web 上传的图片，则无后缀），于是我将所有图片都转成了 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;png&lt;/code&gt; 格式，本次我移除了这个逻辑，先判断如果自身带后缀则使用其后缀；如果没有后缀，则再将其强制转为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;png&lt;/code&gt; ，推荐使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sharp&lt;/code&gt;  这个库，非~常~好~用~：&lt;/p&gt;
 
@@ -100,7 +100,7 @@ Craft’s markdown api has the following problems: 1. Nested lists are not suppo
 
 &lt;p&gt;所以…上 Gif！&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/59E358FD-2A7A-4125-8223-1A51FFCCC8A3_2.gif&quot; alt=&quot;支持gif啦.gif&quot; /&gt;&lt;/p&gt;
+&lt;p caption=&quot;支持gif啦&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/59E358FD-2A7A-4125-8223-1A51FFCCC8A3_2.gif&quot; alt=&quot;支持gif啦&quot; title=&quot;支持gif啦&quot; /&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;注：之前贪图方便（不用鉴权、不用固定 ip 的服务器），用了 &lt;a href=&quot;https://cloud.weixin.qq.com/cloudrun&quot;&gt;微信云托管&lt;/a&gt;，还顺便实现了将摘要往微信公众号发送的逻辑。但是坑爹的是，这个服务器仅仅是我为了方便发布公众号而弄的，但是按我性子一般三个月就用一次，每次用的时候还是冷启动（它服务器默认 30 分钟无请求进来自动关闭实例，因为他们是按实例运行时间计费的），会经常性的失败，有这排查的功夫我都自己都复制粘贴文档到微信公众号的编辑器了。所以，我放弃了微信公众号，手动粘贴…也挺好！&lt;/p&gt;
