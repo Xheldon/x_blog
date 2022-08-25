@@ -245,7 +245,7 @@
                     <h2 class="subheading"></h2>
                     <span class="meta">✍🏼 写于 2022年08月15日</span>&nbsp;&nbsp;&nbsp;  
                     
-                    <span class="meta">💡 更新于 2022年08月20日</span>
+                    <span class="meta">💡 更新于 2022年08月25日</span>
                     
                 </div>
             </div>
@@ -470,6 +470,36 @@ Craft’s markdown api has the following problems: 1. Nested lists are not suppo
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>Jekyll 使用插件非常简单，在根目录新建一个 <code class="language-plaintext highlighter-rouge">_plugins</code> 目录，将用<code class="language-plaintext highlighter-rouge">ruby</code> 写的 Jekyll 插件放进去即可在 Jekyll Build 的时候加载该插件。</p>
+
+<h2 id="其他细节">其他细节</h2>
+
+<p>之前的内容算是标准 Markdown 生成的 HTML，因此一些 RSS 阅读器抓取内容后格式良好，但是本次优化加了个 Bookmark 之后，RSS 格式就乱了（截图来自 Reeder 5）：</p>
+
+<p caption="Reeder5中Bookmark格式错乱"><img src="https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/B1E25DC1-17C1-45D8-8721-8160FDCA1676_2.jpeg" alt="Reeder5中Bookmark格式错乱" title="Reeder5中Bookmark格式错乱" /></p>
+
+<p>于是又写了个 ruby 插件，过滤该标签，将其转成普通的 HTML 链接：</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="k">module</span> <span class="nn">Jekyll</span>
+    <span class="k">module</span> <span class="nn">BookmarkFilter</span>
+      <span class="k">def</span> <span class="nf">bookmark_filter</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
+        <span class="n">input</span><span class="p">.</span><span class="nf">gsub</span><span class="p">(</span><span class="sr">/^\&lt;p\&gt;\&lt;a\s+class=\"link-bookmark\"\shref=(.*)\starget=\"_blank\"\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;span\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;span\&gt;\n(.*)\n\&lt;\/span\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;\/span\&gt;\&lt;\/a\&gt;\&lt;\/p\&gt;$/</span><span class="p">,</span> <span class="s1">'&lt;p&gt;&lt;a href=\1 target="_blank"&gt;\4&lt;/a&gt;&lt;/p&gt;'</span><span class="p">);</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+  
+<span class="no">Liquid</span><span class="o">::</span><span class="no">Template</span><span class="p">.</span><span class="nf">register_filter</span><span class="p">(</span><span class="no">Jekyll</span><span class="o">::</span><span class="no">BookmarkFilter</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>然后再在  feed.xml 中使用即可： <code class="language-plaintext highlighter-rouge">post.content | bookmark_filter</code> 。</p>
 
 <p>欢迎交流！</p>
 

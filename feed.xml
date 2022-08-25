@@ -5,8 +5,8 @@
     <description>The Answer to Life, the Universe and Everything is...</description>
     <link>https://www.xheldon.cn/</link>
     <atom:link href="https://www.xheldon.cn/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 25 Aug 2022 23:38:29 +0800</pubDate>
-    <lastBuildDate>Thu, 25 Aug 2022 23:38:29 +0800</lastBuildDate>
+    <pubDate>Thu, 25 Aug 2022 23:45:19 +0800</pubDate>
+    <lastBuildDate>Thu, 25 Aug 2022 23:45:19 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
     
       <item>
@@ -179,6 +179,36 @@
 &lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Jekyll 使用插件非常简单，在根目录新建一个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_plugins&lt;/code&gt; 目录，将用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ruby&lt;/code&gt; 写的 Jekyll 插件放进去即可在 Jekyll Build 的时候加载该插件。&lt;/p&gt;
+
+&lt;h2 id=&quot;其他细节&quot;&gt;其他细节&lt;/h2&gt;
+
+&lt;p&gt;之前的内容算是标准 Markdown 生成的 HTML，因此一些 RSS 阅读器抓取内容后格式良好，但是本次优化加了个 Bookmark 之后，RSS 格式就乱了（截图来自 Reeder 5）：&lt;/p&gt;
+
+&lt;p caption=&quot;Reeder5中Bookmark格式错乱&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/B1E25DC1-17C1-45D8-8721-8160FDCA1676_2.jpeg&quot; alt=&quot;Reeder5中Bookmark格式错乱&quot; title=&quot;Reeder5中Bookmark格式错乱&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;于是又写了个 ruby 插件，过滤该标签，将其转成普通的 HTML 链接：&lt;/p&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Jekyll&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;BookmarkFilter&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bookmark_filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;gsub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^\&amp;lt;p\&amp;gt;\&amp;lt;a\s+class=\&quot;link-bookmark\&quot;\shref=(.*)\starget=\&quot;_blank\&quot;\&amp;gt;\&amp;lt;span\&amp;gt;(.*)\&amp;lt;\/span\&amp;gt;\&amp;lt;span\&amp;gt;\&amp;lt;span\&amp;gt;(.*)\&amp;lt;\/span\&amp;gt;\&amp;lt;span\&amp;gt;\n(.*)\n\&amp;lt;\/span\&amp;gt;\&amp;lt;span\&amp;gt;(.*)\&amp;lt;\/span\&amp;gt;\&amp;lt;\/span\&amp;gt;\&amp;lt;\/a\&amp;gt;\&amp;lt;\/p\&amp;gt;$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&amp;lt;p&amp;gt;&amp;lt;a href=\1 target=&quot;_blank&quot;&amp;gt;\4&amp;lt;/a&amp;gt;&amp;lt;/p&amp;gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  
+&lt;span class=&quot;no&quot;&gt;Liquid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;register_filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Jekyll&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;BookmarkFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;然后再在  feed.xml 中使用即可： &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;post.content | bookmark_filter&lt;/code&gt; 。&lt;/p&gt;
 
 &lt;p&gt;欢迎交流！&lt;/p&gt;
 </description>
