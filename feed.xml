@@ -5,8 +5,8 @@
     <description>The Answer to Life, the Universe and Everything is...</description>
     <link>https://www.xheldon.com/</link>
     <atom:link href="https://www.xheldon.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 25 Aug 2022 23:45:15 +0800</pubDate>
-    <lastBuildDate>Thu, 25 Aug 2022 23:45:15 +0800</lastBuildDate>
+    <pubDate>Thu, 25 Aug 2022 23:54:04 +0800</pubDate>
+    <lastBuildDate>Thu, 25 Aug 2022 23:54:04 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
     
       <item>
@@ -54,11 +54,11 @@
 
 &lt;p&gt;因为给 Craft 反馈了他们的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;craft.markdown.craftBlockToMarkdown&lt;/code&gt; 无法正确转换的问题：&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://forum.developer.craft.do/t/wrong-render-of-markdown-with-decoration-focus-and-image-question/235&quot; target=&quot;_blank&quot;&gt;Decoration block ‘focus’ should be render as ‘blockquote’ but now the markdow API craftBlockToMarkdown(flavor is ‘common’) is ignore this block type and render as plain text. The URI of Image return by markdow API craftBlockToMarkdown is avaliable in every place, which may cause some problem, I hope there will be a site white list setting, only allow those site in the list to use the image in my document. this strategy can make the AWS cost of data traffic down, too.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://forum.developer.craft.do/t/wrong-render-of-markdown-with-decoration-focus-and-image-question/235&quot; target=&quot;_blank&quot;&gt;Wrong render of markdown with Decoration focus and image question&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;但是官方似乎丝毫没有要解决的意思，于是自己写了一个简单的函数用来手动转换：&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://gist.github.com/Xheldon/036d9b187bd83303205001e8af97eda7&quot; target=&quot;_blank&quot;&gt;GitHub Gist: instantly share code, notes, and snippets.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://gist.github.com/Xheldon/036d9b187bd83303205001e8af97eda7&quot; target=&quot;_blank&quot;&gt;craftBlockToMarkdown&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;需要注意的是，该函数因为是自己用来适配 Jekyll 的来进行下一步处理的（见下面的优化三），因此特殊处理了 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;imageBlock&lt;/code&gt;  和 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;urlBlock&lt;/code&gt; 类型的 Block：&lt;/p&gt;
 
@@ -66,7 +66,7 @@
 
 &lt;p&gt;此函数已经被我放到官方插件开发者论坛了，欢迎交流：&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://forum.developer.craft.do/t/a-better-implementation-of-craft-blocks-to-markdown-transformation-methods/554&quot; target=&quot;_blank&quot;&gt;Craft’s markdown api has the following problems: 1. Nested lists are not supported. 2. The order of Nested blockquote and is incorrectly. 3. only the latter will be recognized as a reference block. 4. urlBlock (may called ‘bookmark’?) will be recognized as a link（in this function, you can custom render tag of jekyll, you can modify this as you wish) Note: 1. not support toggle/formula, because markdown not support those too, but you can make it. 2. I use this function for may jekyll blog ...&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://forum.developer.craft.do/t/a-better-implementation-of-craft-blocks-to-markdown-transformation-methods/554&quot; target=&quot;_blank&quot;&gt;A better implementation of craft blocks to Markdown transformation methods&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;优化二将-github-ci-流程挪到本地&quot;&gt;优化二：将 Github CI 流程挪到本地&lt;/h2&gt;
 
@@ -88,7 +88,7 @@
 
 &lt;p&gt;之前的流程因为我贪图简单，加上 Craft 上传的图片不一定都有后缀（如通过拖拽、图片上传等方式上传的图片，则有后缀，若通过复制粘贴来的或者 Web 上传的图片，则无后缀），于是我将所有图片都转成了 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;png&lt;/code&gt; 格式，本次我移除了这个逻辑，先判断如果自身带后缀则使用其后缀；如果没有后缀，则再将其强制转为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;png&lt;/code&gt; ，推荐使用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sharp&lt;/code&gt;  这个库，非~常~好~用~：&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://sharp.pixelplumbing.com/&quot; target=&quot;_blank&quot;&gt;&quot;Resize large images in common formats to smaller, web-friendly JPEG, PNG, WebP, GIF and AVIF images of varying dimensions&quot;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://sharp.pixelplumbing.com/&quot; target=&quot;_blank&quot;&gt;sharp - High performance Node.js image processing&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;所以…上 Gif！&lt;/p&gt;
 
