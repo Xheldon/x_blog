@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>「译」官方指南系列：JavaScript 调试指南（一） - Xheldon Blog</title>
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    
+        <meta name="description" content="官方指南系列之一">
+    
+    <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+    <meta name="theme-color" content="#000000">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="「译」官方指南系列：JavaScript 调试指南（一） - Xheldon Blog">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="article:published_time" content="2022-09-13T09:29:30Z">
+    
+    
+    
+    <meta property="article:tag" content="技术">
+    
+    <meta property="article:tag" content="调试">
+    
+    <meta property="article:tag" content="技巧">
+    
+    <meta property="article:tag" content="JavaScript">
+    
+    
+    
+        <meta name="og:description" content="官方指南系列之一">
+    
+    
+    <meta property="og:image" content="https://www.xheldon.com/resources/img/logo.png">
+    
+    <meta property="og:url" content="https://www.xheldon.com/tech/javascript-debugger-reference-series01.html">
+    <meta property="og:site_name" content="Xheldon Blog">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/resources/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.xheldon.com/tech/javascript-debugger-reference-series01.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://static.xheldon.cn/css/xheldon-life-blog.min.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <link href="https://static.xheldon.cn/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    Xheldon Blog
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div id="xheldonblog_navbar">
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/">Home</a></li>
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        <li>
+                            <a href="/donate/">Donate</a>
+                        </li>
+                        <li>
+                            <a href="/archive/">Archive</a>
+                        </li>
+                        <li>
+                            <a href="/feed.xml">Rss</a>
+                        </li>
+                        <li class="search-icon">
+                            <a href="javascript:void(0)">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <script>
+        // Drop Bootstarp low-performance Navbar
+        // Use customize navbar with high-quality material design animation
+        // in high-perf jank-free CSS3 implementation
+        var $body = document.body;
+        var $toggle = document.querySelector('.navbar-toggle');
+        var $navbar = document.querySelector('#xheldonblog_navbar');
+        var $collapse = document.querySelector('.navbar-collapse');
+
+        var __XheldonNav__ = {
+            close: function () {
+                $navbar.className = " ";
+                // wait until animation end.
+                setTimeout(function () {
+                    // prevent frequently toggle
+                    if ($navbar.className.indexOf('in') < 0) {
+                        $collapse.style.height = "0px"
+                    }
+                }, 400)
+            },
+            open: function () {
+                $collapse.style.height = "auto"
+                $navbar.className += " in";
+            }
+        }
+
+        // Bind Event
+        $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+                __XheldonNav__.close()
+            } else {
+                __XheldonNav__.open()
+            }
+        })
+
+        /**
+         * Since Fastclick is used to delegate 'touchstart' globally
+         * to hack 300ms delay in iOS by performing a fake 'click',
+         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * $toggle/$collapse will break global delegation.
+         * 
+         * Instead, we use a 'e.target' filter to prevent handler
+         * added to document close XheldonNav.  
+         *
+         * Also, we use 'click' instead of 'touchstart' as compromise
+         */
+        document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
+            __XheldonNav__.close();
+        })
+    </script>
+    <!-- Search -->
+<div class="search-page">
+  <div class="search-icon-close-container">
+    <span class="search-icon-close">
+      <i class="fa fa-chevron-down"></i>
+    </span>
+  </div>
+  <div class="search-main container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <form></form>
+        <input type="text" id="search-input" placeholder="$ grep...">
+        </form>
+        <div id="search-results" class="mini-post-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/resources/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<!-- Post Header -->
+
+
+
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('https://static.xheldon.cn/img/index-bg.png');
+        
+    }
+
+    
+</style>
+
+<header class="intro-header style-text" >
+
+    <div class="header-mask"></div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E8%B0%83%E8%AF%95" title="调试">调试</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E6%8A%80%E5%B7%A7" title="技巧">技巧</a>
+                        
+                        <a class="tag" href="/archive/?tag=JavaScript" title="JavaScript">JavaScript</a>
+                        
+                    </div>
+                    <h1>「译」官方指南系列：JavaScript 调试指南（一）</h1>
+                    
+                    <h2 class="subheading"></h2>
+                    <span class="meta">✍🏼 写于 2022年09月13日</span>&nbsp;&nbsp;&nbsp;  
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <!-- Multi-Lingual -->
+                
+                
+                    
+                        
+                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
+                        <script>
+                            var timeDom = document.getElementById('from_time');
+                            var pageTime = 1663032570; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
+                            var currentTime = Date.now();
+                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
+                            if (Number(fromNow) <= 0) {
+                                fromNow = 1; // Note: 至少显示一天
+                            }
+                            timeDom.innerText = fromNow
+                        </script>
+                    
+                    
+                    <div class="reference-tips">🔗 &nbsp;原文：<a href="https://developer.chrome.com/docs/devtools/javascript/reference/" target="_blank">https://developer.chrome.com/docs/devtools/javascript/reference/</a></div>
+                    
+                
+                
+                    <div class="callout-tips">🖥 &nbsp;说明：官方指南系列之一</div>
+                
+                
+                    <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/kyKcQKCEQjAksv" target="_blank">https://www.craft.do/s/kyKcQKCEQjAksv</a></div>
+                
+				<p>希望通过这篇全面的 Chrome DevTools debugging 功能介绍，能让你的 debugging 过程更上一层楼。</p>
+
+<p>首先你可能需要先在 <a href="https://developer.chrome.com/docs/devtools/javascript/">这里</a> （英文，待译）学习基本的 debugging 技巧。</p>
+
+<h2 id="用断点暂停代码">用断点暂停代码</h2>
+
+<p>通过设置一个断点，可以让代码在执行途中暂停。</p>
+
+<p>查看 <a href="https://developer.chrome.com/docs/devtools/javascript/breakpoints/">这里</a> （英文，待译）来学习如何设置一个断点。</p>
+
+<h3 id="在鼠标悬浮的时候查看类函数属性">在鼠标悬浮的时候查看类/函数属性</h3>
+
+<p>当代码执行暂停的时候，将鼠标悬浮在一个类或者函数名上的时候可以预览它的属性。</p>
+
+<p caption="1"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/EA456FA6-9331-41E3-96DC-3FCCFFA82C2E_2.png" alt="1" title="1" /></p>
+
+<h2 id="逐步运行代码">逐步运行代码</h2>
+
+<p>你的代码暂停后，你就可以一次只运行一行代码，以搞清楚代码的调用栈以及相关的属性值。</p>
+
+<h3 id="跳过step-over当前代码行">跳过（Step over）当前代码行</h3>
+
+<p>当你的断点暂停在一个与你当前调查的问题无关的代码行，且该代码行包含一个函数的时候，你可以点击 <code class="language-plaintext highlighter-rouge">Step Over</code> 来不进入该函数以继续执行代码。</p>
+
+<p caption="step_over"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/63AE5442-D0AD-46C5-8DB0-36452E2842D2_2.png" alt="step_over" title="step_over" /></p>
+
+<p>图一👆🏻，上图中蓝色方框中 <code class="language-plaintext highlighter-rouge">Step Over</code> 的含义解释：</p>
+
+<p>举个例子，假设你正在 debugging 下面的代码：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">updateHeader</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">day</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getDay</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">getName</span><span class="p">();</span> <span class="c1">// A</span>
+  <span class="nx">updateName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// D</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">getName</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">app</span><span class="p">.</span><span class="nx">first</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">app</span><span class="p">.</span><span class="nx">last</span><span class="p">;</span> <span class="c1">// B</span>
+  <span class="k">return</span> <span class="nx">name</span><span class="p">;</span> <span class="c1">// C</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>此时你的断点停在了 <code class="language-plaintext highlighter-rouge">A</code> 的位置。通过点击 <strong>Step over</strong> ，Devtools 将会执行你「Step over」的位置中的所有代码，在上述示例中「Step over」的是 A 位置的 getName 函数中的 <code class="language-plaintext highlighter-rouge">B</code> 和 <code class="language-plaintext highlighter-rouge">C</code> 的位置，于是 Devtools 会将代码停在 D 的位置。</p>
+
+<h3 id="进入step-into当前代码行">进入（Step into）当前代码行</h3>
+
+<p>如果断点停在一个跟你要调查的问题有关系的地方，而且这个地方包含一个函数调用的时候，点击 <code class="language-plaintext highlighter-rouge">Step into</code> ，可以更进一步的检查这个函数。</p>
+
+<p caption="step_into"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/0B7F9CB7-7EA3-44A2-8808-8E23F9E0D786_2.png" alt="step_into" title="step_into" /></p>
+
+<p>图二👆🏻，上图中蓝色方框中 <code class="language-plaintext highlighter-rouge">Step into</code> 的含义解释：</p>
+
+<p>举个例子，假设你正在 debugging 下面的代码：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">updateHeader</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">day</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getDay</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">getName</span><span class="p">();</span> <span class="c1">// A</span>
+  <span class="nx">updateName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">getName</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">app</span><span class="p">.</span><span class="nx">first</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">app</span><span class="p">.</span><span class="nx">last</span><span class="p">;</span> <span class="c1">// B</span>
+  <span class="k">return</span> <span class="nx">name</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>你的断点正停在 <code class="language-plaintext highlighter-rouge">A</code> 的位置，此时点击 <strong>Step into</strong> ，Devtools 将会执行这行代码，然后停在 <code class="language-plaintext highlighter-rouge">B</code> 的位置。</p>
+
+<h3 id="跳出step-out当前代码行">跳出（Step out）当前代码行</h3>
+
+<p>当断点停在一个与你正在调查的问题不相关的函数内部的时候，你可以点击 <strong>Step out</strong> 来执行该函数中剩余的代码。</p>
+
+<p caption="step_out"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6E97FB74-E73D-4189-9A21-3771A1DF27AF_2.png" alt="step_out" title="step_out" /></p>
+
+<p>图三👆🏻，上图中蓝色方框中 <code class="language-plaintext highlighter-rouge">Step out</code> 的含义解释：</p>
+
+<p>举个例子，假设你正在 debugging 下面的代码：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">updateHeader</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">day</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getDay</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">getName</span><span class="p">();</span>
+  <span class="nx">updateName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// C</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">getName</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">app</span><span class="p">.</span><span class="nx">first</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">app</span><span class="p">.</span><span class="nx">last</span><span class="p">;</span> <span class="c1">// A</span>
+  <span class="k">return</span> <span class="nx">name</span><span class="p">;</span> <span class="c1">// B</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>你的断点正停在 <code class="language-plaintext highlighter-rouge">A</code> 的位置，此时点击 <strong>Step out</strong> ，DevTools 将会把 <code class="language-plaintext highlighter-rouge">getName()</code> 函数中的剩余代码执行完，也就是 B 位置的代码，然后断点停在 <code class="language-plaintext highlighter-rouge">C</code> 的位置上。</p>
+
+<h3 id="继续运行代码到指定行">继续运行代码到指定行</h3>
+
+<p>当 debugging 一个很长函数的时候，函数中会有很多与你正在调查的问题不相关的代码。</p>
+
+<p>你可以选择一步一步的执行这些无关的行，但是这个过程会很枯燥。你也可以选择在一个想断点的代码行处设置一个断点，然后按下 <code class="language-plaintext highlighter-rouge">Resume Script Execution</code> （恢复脚本执行），不过除此之外，还有一个更快的方式。</p>
+
+<p>你可以在你想要断点的代码行上右键，然后选择 <strong>Continue to here</strong> （继续执行到此处）。Devtools 将会恢复断点执行代码直到此处，然后停在这一行。</p>
+
+<p caption="continue_to_here"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/01C96466-2B8C-4088-9E66-7408708B0401_2.png" alt="continue_to_here" title="continue_to_here" /></p>
+
+<p>图四👆🏻，选择 <strong>Continue to here</strong> 。</p>
+
+<h3 id="恢复脚本执行">恢复脚本执行</h3>
+
+<p>你可以通过点击 <strong>Resume Script Execution</strong> 来继续在你断点暂停的位置执行代码。Devtools 会将代码一直执行下去直到遇到下一个断点（如果有）。</p>
+
+<p caption="resume_script_execution"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/E67463E2-9D01-48BB-A743-28A189DF68CD_2.png" alt="resume_script_execution" title="resume_script_execution" /></p>
+
+<p>图五👆🏻，<strong>Resume Script Execution</strong> ，蓝框处。</p>
+
+<h4 id="强制执行">强制执行</h4>
+
+<p>可以通过长按 <strong>Resume Script Execution</strong> ，然后选择 <strong>Force Script Execution</strong> ，来忽略剩下的所有断点，直接执行全部代码。</p>
+
+<p caption="force_script_execution"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DAB9BD94-70F7-4464-8609-3016E8B40A44_2.png" alt="force_script_execution" title="force_script_execution" /></p>
+
+<p>图六👆🏻，选择 <strong>Force Script Execution</strong> 。</p>
+
+<h3 id="改变当前线程的上下文">改变当前线程的上下文</h3>
+
+<p>当 debugging 设计到 Web Worker 或者 Service Worker 的时候，可以通过点击出现在 <strong>Threads</strong> 栏中的上下文列表项，来转换上下文。蓝色箭头表示当前选择的上下文。</p>
+
+<p caption="change_threads_context"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1474933D-3F44-4D93-9909-FF4245545704_2.png" alt="change_threads_context" title="change_threads_context" /></p>
+
+<p>图七👆🏻，<strong>Threads</strong> （线程）栏，蓝色框的位置。</p>
+
+<p>举个例子，假设有这么个场景，你的断点同时存在于你的主脚本和你的 service worker 脚本中。你想要查看 service worker 中的本地变量和全局变量，但是 <strong>Source</strong> 栏当前正显示的是你的主脚本的上下文。此时你就可以通过点击在 <strong>Threads</strong> 栏中的 service worker 入口来切换上下文以查看你想了解的变量了。</p>
+
+<h2 id="查看和编辑局部闭包以及全局作用域中的变量属性">查看和编辑局部、闭包以及全局作用域中的变量/属性</h2>
+
+<p>当暂停在某一行的时候，使用 Scope 栏来查看和编辑位于局部、闭包和全局变量。</p>
+
+<ul>
+  <li>
+    <p>双击属性值以修改之。</p>
+  </li>
+  <li>
+    <p>非可枚举的属性会以灰色突出显示。</p>
+  </li>
+</ul>
+
+<p caption="查看和修改变量"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/40A93D0F-ACA8-4128-A695-E502565253AD_2.png" alt="查看和修改变量" title="查看和修改变量" /></p>
+
+<p>图八👆🏻，<strong>Scope</strong> （作用域）栏，蓝色框的位置。</p>
+
+<h2 id="查看当前调用栈">查看当前调用栈</h2>
+
+<p>当暂停在某一行的时候，使用 <strong>Call Stack</strong> 栏来查看从代码执行一直到你当前暂停点以来的函数调用栈。</p>
+
+<p>如果你的代码中有异步代码，可以将 <strong>Async</strong> 复选框勾选上，来启用异步函数调用栈。</p>
+
+<p>点击其中的一个条目，来跳转到该条目所表示的函数的调用处。蓝色箭头图标表示当前正在高亮的函数。</p>
+
+<p caption="查看函数调用栈"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1168318B-1CFA-493D-9AE6-2CF79930C58C_2.png" alt="查看函数调用栈" title="查看函数调用栈" /></p>
+
+<p>图九👆🏻，<strong>Call Stack</strong> （调用栈）栏，蓝色框的位置。</p>
+
+<blockquote>
+  <p>注意：如果代码没有暂停在某一行，那 Call Stack 栏是空的。</p>
+</blockquote>
+
+<h3 id="重新执行堆栈中的函数">重新执行堆栈中的函数</h3>
+
+<p>有时候想观察某一个函数的运行情况，但是又不想重新运行整个 debugging 流程，你可以在断点暂停在这个函数内部的时候重新只单独执行这个函数，换句话说，你可以在调用栈中重新放入该函数的调用上下文。</p>
+
+<blockquote>
+  <p>注意：你可以重头执行在 Call Stack （调用栈）中的任何函数，除了 WebAssembly、async、和 generator 函数。</p>
+</blockquote>
+
+<p>为了重新执行一个函数：</p>
+
+<ol>
+  <li>
+    <p>使用断点暂停函数，<strong>Call Stack</strong> 栏会记录函数的调用顺序。</p>
+  </li>
+  <li>
+    <p>在 <strong>Call Stack</strong> 栏，右键一个函数，然后在出现的菜单中选择 Restart frame（重头执行函数）。</p>
+  </li>
+</ol>
+
+<p caption="重新执行断点所在的函数"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DFF3FAC8-B00F-415A-A581-50A299F1884D_2.png" alt="重新执行断点所在的函数" title="重新执行断点所在的函数" /></p>
+
+<p>为了理解 Restart frame 如何执行，我们假设有以下代码：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+    <span class="nx">bar</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="kd">function</span> <span class="nx">bar</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">value</span><span class="o">++</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+    <span class="k">debugger</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">foo</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">foo</code> 函数接受 <code class="language-plaintext highlighter-rouge">0</code> 作为参数，然后通过 log 打印到控制台，然后调用 <code class="language-plaintext highlighter-rouge">bar()</code> 函数。相应的，<code class="language-plaintext highlighter-rouge">bar</code> 函数会将这个值自增1。</p>
+
+<p>尝试以下面的方式重头执行这两个函数：</p>
+
+<ol>
+  <li>
+    <p>复制上面的代码到一个 <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/#createsources">snippet</a> （未翻译）中，然后 <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/#runsources">运行</a> （未翻译）它。断点会停在 <code class="language-plaintext highlighter-rouge">debugger</code> 的所在的 <a href="https://developer.chrome.com/docs/devtools/javascript/breakpoints/#debugger">代码行</a>。</p>
+
+    <blockquote>
+      <p>⚠️ 注意：当代码执行暂停的时候，不要在控制台执行当前调用栈中的函数，因为这可能会引起意外的错误。</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>你会注意到当前的 debugger 会在其所在的函数的函数声明的右侧显示当前值：<code class="language-plaintext highlighter-rouge">value = 1</code> 。</p>
+  </li>
+</ol>
+
+<p caption="注意函数声明处右侧的值"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9111BA1D-AA80-4C2F-B54E-123FC66A5C17_2.png" alt="注意函数声明处右侧的值" title="注意函数声明处右侧的值" /></p>
+
+<ol>
+  <li>重头执行 <code class="language-plaintext highlighter-rouge">bar()</code> 函数。</li>
+</ol>
+
+<p caption="重头执行bar"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/036AAE1B-CA41-4627-A9D6-A4F7E6302C0C_2.png" alt="重头执行bar" title="重头执行bar" /></p>
+
+<ol>
+  <li>
+    <p>按 <code class="language-plaintext highlighter-rouge">F9</code> ，然后代码可以经过值自增的那一行，然后再次断到 debugger 处。</p>
+
+    <p>注意看，值变成了 2： <code class="language-plaintext highlighter-rouge">value = 2</code> 。</p>
+  </li>
+</ol>
+
+<p caption="重头执行debugger"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/09D36505-821B-4392-8DD3-BDE9D05F0210_2.png" alt="重头执行debugger" title="重头执行debugger" /></p>
+
+<ol>
+  <li>除此之外，你还可以在 Scope 栏，双击 <code class="language-plaintext highlighter-rouge">value</code> 值来编辑它将其设置成想要的值。</li>
+</ol>
+
+<p caption="双击编辑值"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9481CF99-8735-43A4-8A57-D2F953C289BC_2.png" alt="双击编辑值" title="双击编辑值" /></p>
+
+<ol>
+  <li>尝试重新执行 <code class="language-plaintext highlighter-rouge">bar()</code> 函数多次，会发现值会一直增加。</li>
+</ol>
+
+<p caption="多次重复执行后值会一直增加"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/AEE7EEA3-2150-431B-980C-6FCF03527DC7_2.png" alt="多次重复执行后值会一直增加" title="多次重复执行后值会一直增加" /></p>
+
+<blockquote>
+  <p>💡 震惊！为什么 <code class="language-plaintext highlighter-rouge">value</code> 不会重置成 <code class="language-plaintext highlighter-rouge">0</code> ？</p>
+</blockquote>
+
+<blockquote>
+  <p>函数重头执行的时候不会重置参数。换句话说，重头执行不会恢复该函数被调用时候的初始状态。因此，它只是简单的在调用栈中移动当前调用的指针到函数的开始位置。</p>
+</blockquote>
+
+<blockquote>
+  <p>因此，当前的参数值 <code class="language-plaintext highlighter-rouge">value</code> 会在内存中一直随着相同函数的重复执行而一直存在。</p>
+</blockquote>
+
+<ol>
+  <li>现在，在 <strong>Call Stack</strong> 中重头执行 <code class="language-plaintext highlighter-rouge">foo()</code> 函数。</li>
+</ol>
+
+<p caption="重头执行foo函数"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/11D4B549-3006-4564-B92D-4D1727913D74_2.png" alt="重头执行foo函数" title="重头执行foo函数" /></p>
+
+<p>注意看，<code class="language-plaintext highlighter-rouge">value</code> 重新变成了<code class="language-plaintext highlighter-rouge">0</code> 。</p>
+
+<p caption="value重新变为0"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9F706F35-0041-41E3-BB4A-70A5BFFEFE06_2.png" alt="value重新变为0" title="value重新变为0" /></p>
+
+<blockquote>
+  <p>💡 再次震惊！为什么 <code class="language-plaintext highlighter-rouge">value</code> 这次被重置为 <code class="language-plaintext highlighter-rouge">0</code> 了？</p>
+</blockquote>
+
+<blockquote>
+  <p>很简单（此处意译了）在 JavaScript 中，参数是按值传递的，因为 <code class="language-plaintext highlighter-rouge">value</code> 是原始值，因此在函数内修改它的值不会影响到函数外它的值。</p>
+</blockquote>
+
+<h3 id="复制调用栈执行路径">复制调用栈执行路径</h3>
+
+<p>在 <strong>Call Stack</strong> 栏的任意位置右键，然后选择 <strong>Copy Stack Trace</strong>（复制栈追踪），你会将当前调用栈复制到粘贴板。</p>
+
+<p caption="复制调用栈"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/7EF33B00-5F90-4D0D-8979-B18ED3CD1527_2.png" alt="复制调用栈" title="复制调用栈" /></p>
+
+<p>图十👆🏻，选择 <strong>Copy Stack Trace</strong>。</p>
+
+<p>复制的内容大致会是这个样子：</p>
+
+<pre><code class="language-other">getNumber1 (get-started.js:35)
+inputsAreEmpty (get-started.js:22)
+onClick (get-started.js:15)
+</code></pre>
+
+<h2 id="忽略某个脚本或者满足某种条件的脚本">忽略某个脚本或者满足某种条件的脚本</h2>
+
+<p>当 debugging 的时候，忽略某个脚本以跳过它。你通常会在当该脚本的函数比较复杂难懂而且跟你当前 debugging 的内容无关的时候选择忽略之。</p>
+
+<p>例如，假设你正在 debugging 如下代码：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">animate</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">prepare</span><span class="p">();</span>
+  <span class="nx">lib</span><span class="p">.</span><span class="nx">doFancyStuff</span><span class="p">();</span> <span class="c1">// A</span>
+  <span class="nx">render</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">A</code> 是一个你信任的第三方库。如果你十分确定你所调查的问题跟这个第三方库没有关系，那忽略它就是一个明智决定。</p>
+
+<h3 id="从-source-编辑器栏中忽略某个脚本">从 Source 编辑器栏中忽略某个脚本</h3>
+
+<ol>
+  <li>
+    <p>打开文件</p>
+  </li>
+  <li>
+    <p>右键任何位置</p>
+  </li>
+  <li>
+    <p>选择 <strong>Add script to ignore list</strong>（将脚本添加到忽略列表）。</p>
+  </li>
+</ol>
+
+<p caption="忽略脚本"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/39DA9D92-C270-4705-8920-7BC248703936_2.png" alt="忽略脚本" title="忽略脚本" /></p>
+
+<p>图十一👆🏻，从编辑器栏中忽略一个脚本。</p>
+
+<h3 id="从-call-stack-调用栈栏忽略某个脚本">从 Call Stack （调用栈）栏忽略某个脚本</h3>
+
+<p>如果想从调用栈中忽略某个脚本，你需要：</p>
+
+<ol>
+  <li>
+    <p>在调用栈中的某个函数中右键。</p>
+  </li>
+  <li>
+    <p>选择 <strong>Add script to ignore list</strong>。</p>
+  </li>
+</ol>
+
+<p caption="从调用栈中忽略脚本"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/73837AF8-CB34-4B72-AE5C-1B266E15B8EB_2.png" alt="从调用栈中忽略脚本" title="从调用栈中忽略脚本" /></p>
+
+<p>图十二👆🏻，从 Call Stack（调用栈）中忽略某个脚本。</p>
+
+<h3 id="从-settings设置中忽略某个脚本">从 Settings（设置）中忽略某个脚本</h3>
+
+<blockquote>
+  <p>译者注：此处的设置为 Devtools 的设置，不是浏览器的设置。</p>
+</blockquote>
+
+<p>如果想从设置中忽略某一个脚本或者满足某种条件的脚本，你需要：</p>
+
+<ol>
+  <li>打开设置：</li>
+</ol>
+
+<p caption="devoools设置界面"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/54F9290D-CE6A-4630-9387-34DE7EA6266F_2.png" alt="devoools设置界面" title="devoools设置界面" /></p>
+
+<ol>
+  <li>
+    <p>点击 <strong>Ignore List</strong> Tab。</p>
+  </li>
+  <li>
+    <p>点击 <strong>Add pattern</strong>。</p>
+  </li>
+  <li>
+    <p>输入脚本名或者正则来匹配需要忽略的脚本名。</p>
+  </li>
+  <li>
+    <p>点击 <strong>Add</strong>。</p>
+  </li>
+</ol>
+
+<p caption="devtools忽略脚本"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/65A0FE7C-D5BB-4329-B978-1C7184F6C1B6_2.png" alt="devtools忽略脚本" title="devtools忽略脚本" /></p>
+
+<p>图十三👆🏻，从 Setting 中忽略脚本。</p>
+
+<h2 id="从任何页面运行-debug-代码-snippets片段">从任何页面运行 debug 代码 Snippets（片段）</h2>
+
+<p>如果你发现你正在 Console 中反复运行一些 deubg 代码，那么可以考虑一下 Snippets。Snippets 是一种你可以存储在 Devtools 中并执行的脚本。</p>
+
+<p>参见 <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/">https://developer.chrome.com/docs/devtools/javascript/snippets/</a> （未翻译）来了解更多。</p>
+
+<blockquote>
+  <p>译者注：Snippets 在执行的时候是携带当前上下文的，比如你在 debug 的时候暂停了，然后执行 Snippets 代码，此时的 Snippets 代码拥有当前上下文的变量访问权限。</p>
+</blockquote>
+
+<h2 id="watch监听自定义的-javascript-表达式的值">Watch（监听）自定义的 JavaScript 表达式的值</h2>
+
+<p>使用 Watch 栏来监听自定义表达式的值。你可以监听任何有效的 JavaScript 表达式。</p>
+
+<p caption="监听JavaScript表达式"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/02D81797-A39F-4837-B402-648AA39E5C21_2.png" alt="监听JavaScript表达式" title="监听JavaScript表达式" /></p>
+
+<p>图十四👆🏻，蓝色圈住的即是 Watch 栏。</p>
+
+<ul>
+  <li>
+    <p>点击 Add Expression（添加表达式）来新建一个监视表达式。</p>
+  </li>
+  <li>
+    <p>点击 Refresh（刷新）来刷新所有已经存在的表达式。当执行代码的时候，值会自动更新。</p>
+  </li>
+  <li>
+    <p>鼠标悬浮在一个表达式上，然后点 Delete Expression（删除表达式），来删除它。</p>
+  </li>
+</ul>
+
+<h2 id="格式化压缩后的代码以可读">格式化压缩后的代码以可读</h2>
+
+<p>点击 <code class="language-plaintext highlighter-rouge">Fromat {}</code>  来让一个压缩后的代码变成人类可读的格式。</p>
+
+<p caption="格式化压缩后的文件"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/572D9BCF-DC18-460E-8B23-62398391ED92_2.png" alt="格式化压缩后的文件" title="格式化压缩后的文件" /></p>
+
+<h2 id="编辑一个脚本">编辑一个脚本</h2>
+
+<p>当修复一个 bug 的时候，你经常会需要测试你的 JavaScript 代码的修改效果。你不要在一个外部的编辑器中编辑 JavaScript 代码后，再回到当前页面刷新后查看效果。你可以直接在 Devtools 中编辑你的 JavaScript 代码。</p>
+
+<p>如果想编辑脚本，你需要：</p>
+
+<ol>
+  <li>
+    <p>在 Source 栏中打开你想要编辑的文件（会出现在 Editor 栏中）。</p>
+  </li>
+  <li>
+    <p>在 Editor 栏中做出修改。</p>
+  </li>
+  <li>
+    <p>按 <code class="language-plaintext highlighter-rouge">Cmmand + S</code> （Mac）或者 <code class="language-plaintext highlighter-rouge">Ctrl + S</code> （Windows，Linux）来保存修噶。Devtools 将会以打补丁的形式将整个 js 文件加入到 Chrome 的 JavaScript 引擎中去。</p>
+  </li>
+</ol>
+
+<p caption="直接编辑js文件"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6DC1E149-D2D2-4005-A2B9-451CF0456112_2.png" alt="直接编辑js文件" title="直接编辑js文件" /></p>
+
+<p>上图中蓝框圈出来的就是编辑器栏。</p>
+
+<h2 id="实时编辑一个暂停的函数">实时编辑一个暂停的函数</h2>
+
+<blockquote>
+  <p>注意：此功能自 Chrome 105 版本往上才可用。</p>
+</blockquote>
+
+<p>当代码暂停的时候，你可以编辑当前函数然后实时应用修改，不过有以下限制：</p>
+
+<ul>
+  <li>
+    <p>你只能编辑在 <strong>Call Stack</strong> 最顶上的函数（也即当前断点所在的函数——译者注）。</p>
+  </li>
+  <li>
+    <p>调用栈中不能有对相同函数的递归调用（否则也相当于是修改了非当前调用栈的函数——译者注）。</p>
+  </li>
+</ul>
+
+<blockquote>
+  <p>💡 实时编辑暂停函数的真相是…
+当你应用一个修改的时候，debugger 工具自动重新执行（和前面的「重新执行堆栈中的函数」一样）。因此，对重新执行函数的限制与实时编辑暂停函数并生效的限制是一样的。你不能重头执行 WebAssembly、async以及generator（迭代器）函数。</p>
+</blockquote>
+
+<p>如果想实时编辑一个函数，你需要：</p>
+
+<ol>
+  <li>
+    <p>用断点暂停。</p>
+  </li>
+  <li>
+    <p>编辑断点所在的正在暂停的函数。</p>
+  </li>
+  <li>
+    <p>按下 <code class="language-plaintext highlighter-rouge">Command/Control+S</code>  来应用更改，debugger 将会自动重新执行该函数。</p>
+  </li>
+  <li>
+    <p>继续执行</p>
+  </li>
+</ol>
+
+<p caption="实时重新执行函数"><video controls="" muted=""><source src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/37CA2680-5D00-477F-A1CF-161AD18F2A5E_2.mp4" type="video/mp4" /></video></p>
+
+<p>在这个示例中，<code class="language-plaintext highlighter-rouge">addend1</code> 和<code class="language-plaintext highlighter-rouge">addend2</code> 变量在起始的时候有一个不正确的 <code class="language-plaintext highlighter-rouge">string</code> 类型。因此，字符串被错误的连接在一起而不是数字相加。为了修复此问题，在实时编辑的时候添加了<code class="language-plaintext highlighter-rouge">parseInt()</code> 函数。</p>
+
+<h2 id="搜索和替换在脚本中的文本">搜索和替换在脚本中的文本</h2>
+
+<p>如果想要在脚本中搜索一段文本，你需要：</p>
+
+<ol>
+  <li>
+    <p>在代码源（Sources）-编辑器（Editor）栏中打开文件。</p>
+  </li>
+  <li>
+    <p>按下 <strong>Command+F</strong>（Mac）或者 <strong>Ctrl+F</strong>（Windows、Linux）来打开内置的搜索栏。</p>
+  </li>
+  <li>
+    <p>在搜索栏中，输入你想要查询的字符串：</p>
+  </li>
+</ol>
+
+<p caption="搜索字符"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6D3D4E4D-22CD-4095-8773-1DFD4F3089A5_2.png" alt="搜索字符" title="搜索字符" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>另外你还可以： 
+
+* 点击 `Aa` 来匹配大小写，来让你的搜索大小写敏感。
+
+* 点击 `.*` 来使用正则匹配。
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<ol>
+  <li>按下 <code class="language-plaintext highlighter-rouge">Enter</code> 键来执行搜索。可以按下 up/down 来跳转到下一个/上一个搜索结果。</li>
+</ol>
+
+<p>如果想替换你搜索到的结果，你需要：</p>
+
+<ol>
+  <li>打开搜索栏，点击 <code class="language-plaintext highlighter-rouge">A→B</code> （手敲的不形象，看下面的图）即替换按钮来替换文本。</li>
+</ol>
+
+<p caption="按下替换按钮"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/4CFF9F79-2118-4DA6-AF12-1440A520C6F8_2.png" alt="按下替换按钮" title="按下替换按钮" /></p>
+
+<ol>
+  <li>输入想要替换的文本，然后点击 <strong>Replce</strong> 或者 <strong>Replace all</strong> 即可。</li>
+</ol>
+
+<h2 id="禁用-javascript">禁用 JavaScript</h2>
+
+<p>具体参见：<a href="https://developer.chrome.com/docs/devtools/javascript/disable/">Disable JavaScript With Chrome DevTools</a>（未翻译）。</p>
+
+
+                <div class="text-danger">- EOF -</div>
+                <hr style="visibility: hidden;">
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/tech/optimize-of-my-blog-2.html" data-toggle="tooltip" data-placement="top" title="博客自动化流程及体验优化——第二弹">
+                        上一篇<br>
+                        <span>博客自动化流程及体验优化——第二弹</span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+                <hr style="visibility: hidden;">
+                <div id="gitalk-container"></div>
+                <hr>
+            </div>  
+
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">目录</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+
+<section>
+    <h5><a href="/archive/">热门标签</a></h5>
+    <div class="tags">
+        
+        
+        
+        
+        
+        
+                <a data-sort="0018" 
+                    href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                    title="技术"
+                    rel="35">技术</a>
+        
+                <a data-sort="0038" 
+                    href="/archive/?tag=%E7%94%9F%E6%B4%BB"
+                    title="生活"
+                    rel="15">生活</a>
+        
+                <a data-sort="0047" 
+                    href="/archive/?tag=%E7%BF%BB%E8%AF%91"
+                    title="翻译"
+                    rel="6">翻译</a>
+        
+                <a data-sort="0048" 
+                    href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                    title="美食"
+                    rel="5">美食</a>
+        
+                <a data-sort="0049" 
+                    href="/archive/?tag=%E9%9A%8F%E7%AC%94"
+                    title="随笔"
+                    rel="4">随笔</a>
+        
+                <a data-sort="0049" 
+                    href="/archive/?tag=ProseMirror"
+                    title="ProseMirror"
+                    rel="4">ProseMirror</a>
+        
+                <a data-sort="0049" 
+                    href="/archive/?tag=Vue"
+                    title="Vue"
+                    rel="4">Vue</a>
+        
+                <a data-sort="0050" 
+                    href="/archive/?tag=%E6%8F%92%E4%BB%B6"
+                    title="插件"
+                    rel="3">插件</a>
+        
+                <a data-sort="0050" 
+                    href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                    title="服务器"
+                    rel="3">服务器</a>
+        
+                <a data-sort="0050" 
+                    href="/archive/?tag=%E9%9B%86%E6%88%90"
+                    title="集成"
+                    rel="3">集成</a>
+        
+                <a data-sort="0050" 
+                    href="/archive/?tag=Craft"
+                    title="Craft"
+                    rel="3">Craft</a>
+        
+                <a data-sort="0050" 
+                    href="/archive/?tag=Git"
+                    title="Git"
+                    rel="3">Git</a>
+        
+                <a data-sort="0051" 
+                    href="/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                    title="主食"
+                    rel="2">主食</a>
+        
+                <a data-sort="0051" 
+                    href="/archive/?tag=%E4%BC%98%E5%8C%96"
+                    title="优化"
+                    rel="2">优化</a>
+        
+                <a data-sort="0051" 
+                    href="/archive/?tag=%E6%8A%80%E5%B7%A7"
+                    title="技巧"
+                    rel="2">技巧</a>
+        
+                <a data-sort="0051" 
+                    href="/archive/?tag=%E6%B5%8B%E8%AF%95"
+                    title="测试"
+                    rel="2">测试</a>
+        
+                <a data-sort="0051" 
+                    href="/archive/?tag=%E8%B0%83%E8%AF%95"
+                    title="调试"
+                    rel="2">调试</a>
+        
+                <a data-sort="0051" 
+                    href="/archive/?tag=%E8%BF%81%E7%A7%BB"
+                    title="迁移"
+                    rel="2">迁移</a>
+        
+                <a data-sort="0051" 
+                    href="/archive/?tag=Apple"
+                    title="Apple"
+                    rel="2">Apple</a>
+        
+                <a data-sort="0051" 
+                    href="/archive/?tag=AppleScript"
+                    title="AppleScript"
+                    rel="2">AppleScript</a>
+        
+                <a data-sort="0051" 
+                    href="/archive/?tag=CI"
+                    title="CI"
+                    rel="2">CI</a>
+        
+                <a data-sort="0051" 
+                    href="/archive/?tag=GitHub"
+                    title="GitHub"
+                    rel="2">GitHub</a>
+        
+                <a data-sort="0051" 
+                    href="/archive/?tag=JavaScript"
+                    title="JavaScript"
+                    rel="2">JavaScript</a>
+    </div>
+    <hr>
+    <h5>专栏</h5>
+    <div class="tags">
+        <a href="/projects">开源项目</a>
+        <a href="/book-list">技术书单</a>
+        <a href="/subscribe">订阅&付费软件</a>
+        <a href="/my-food">美食推荐</a>
+    </div>
+</section>
+
+
+                <!-- Friends Blog -->
+                
+<hr>
+<h5>朋友们</h5>
+<ul class="list-inline">
+  
+  <li><a href="https://prosemirror.xheldon.com" target="_blank">ProseMirror 中文</a></li>
+  
+  <li><a href="https://slate.xheldon.com" target="_blank">Slate 中文</a></li>
+  
+  
+    <li><a href="https://www.xheldon.cn" target="_blank">国内版</a></li>
+  
+</ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- add support for mathjax by voleking-->
+
+
+<!-- Markdown 流程图按需加载 -->
+
+
+<!-- Gitalk 评论 start  -->
+<link rel="stylesheet" href="//static.xheldon.cn/css/gitalk.css">
+<script src="//static.xheldon.cn/js/gitalk.min.js"></script>
+<script type="text/javascript">
+  window.addEventListener('load', function(){
+    var gitalk = new Gitalk({
+      clientID: 'd2b353a60fa1233163fc',
+      clientSecret: '8091d57674976bcd60fc05261bf93c00da7e5ff4',
+      repo: 'x_blog',
+      owner: 'Xheldon',
+      admin: ['Xheldon'],id: "javascript-debugger-reference-series01",labels: [],
+      title: "「译」官方指南系列：JavaScript 调试指南（一）",
+      language: "zh-CN",
+      pagerDirection: 'first',
+    });
+    gitalk.render('gitalk-container');
+});
+</script>
+<!-- Gitalk end -->
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://static.xheldon.cn/js/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'right',
+          // icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- SNS Link -->
+                
+
+
+<ul class="list-inline text-center">
+
+
+  
+  <li>
+    <a target="_blank" href="/feed.xml">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="https://twitter.com/_xheldon">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://github.com/xheldon">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://t.me/xheldon_tech">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+</ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; <a href="https://github.com/Xheldon" target="_blank">Xheldon</a> 2022
+                    <br>
+                    Don't Panic | Theme fork from <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+                    <br>
+                    
+                </p>
+            </div>
+            <div class="switch-mode" id="dark-mode">
+                <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+                    <i class="fa fa-moon-o fa-stack-1x"></i>
+                  </span>
+            </div>
+            <div class="switch-mode" id="light-mode">
+                <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-sun-o fa-stack-1x fa-inverse"></i>
+                  </span>
+            </div>
+        </div>
+    </div>
+</footer>
+<script>
+    if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+        console.log('浏览器不支持主题色');
+    } else {
+        if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+            document.documentElement.classList.remove('light');
+            document.documentElement.classList.add('dark');
+        }
+        if(window.matchMedia('(prefers-color-scheme: light)').matches){
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+        }
+        document.getElementById('dark-mode').addEventListener('click', function() {
+            document.documentElement.classList.remove('light');
+            document.documentElement.classList.add('dark');
+        });
+        document.getElementById('light-mode').addEventListener('click', function() {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
+        });
+        // Note: 自动切换
+        window.matchMedia('(prefers-color-scheme: dark)').addListener(function(mediaQueryList) {
+            if (mediaQueryList.matches) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            }
+        })
+        window.matchMedia('(prefers-color-scheme: light)').addListener(function(mediaQueryList) {
+            if (mediaQueryList.matches) {
+                document.documentElement.classList.add('light');
+                document.documentElement.classList.remove('dark');
+            }
+        })
+    }
+</script>
+<!-- jQuery -->
+<script src="https://static.xheldon.cn/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+<script src="https://static.xheldon.cn/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="https://static.xheldon.cn/js/xheldon-life-blog.min.js?202110012319"></script>
+
+<!-- Simple Jekyll Search -->
+<script src="https://static.xheldon.cn/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker -->
+
+<script src="https://static.xheldon.cn/js/snackbar.js "></script>
+<script src="https://static.xheldon.cn/js/sw-registration.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+        var d = document, t = 'script',
+            o = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+        s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("https://static.xheldon.cn/js/fastclick.min.js", function () {
+        var $nav = document.querySelector("nav");
+        if ($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-79359216-1');
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        // interop with multilangual 
+        if ('' == 'true') {
+            _containerSelector = 'div.post-container.active'
+        } else {
+            _containerSelector = 'div.post-container'
+        }
+
+        // init
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        // clean
+        $(selector).html('')
+
+        // appending
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("https://static.xheldon.cn/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+<!-- Multi-Lingual -->
+
+
+<!-- Simple Jekyll Search -->
+<script>
+    // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+    function htmlDecode(input) {
+        var e = document.createElement('textarea');
+        e.innerHTML = input;
+        // handle case of empty input
+        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+    }
+
+    SimpleJekyllSearch({
+        searchInput: document.getElementById('search-input'),
+        resultsContainer: document.getElementById('search-results'),
+        json: '/search.json',
+        searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+        noResultsText: 'No results',
+        limit: 50,
+        fuzzy: false,
+        // a hack to get escaped subtitle unescaped. for some reason, 
+        // post.subtitle w/o escape filter nuke entire search.
+        templateMiddleware: function (prop, value, template) {
+            if (prop === 'subtitle' || prop === 'title') {
+                if (value.indexOf("code")) {
+                    return htmlDecode(value);
+                } else {
+                    return value;
+                }
+            }
+        }
+    });
+
+    $(document).ready(function () {
+        var $searchPage = $('.search-page');
+        var $searchOpen = $('.search-icon');
+        var $searchClose = $('.search-icon-close');
+        var $searchInput = $('#search-input');
+        var $body = $('body');
+
+        $searchOpen.on('click', function (e) {
+            e.preventDefault();
+            $searchPage.toggleClass('search-active');
+            var prevClasses = $body.attr('class') || '';
+            setTimeout(function () {
+                $body.addClass('no-scroll');
+            }, 400)
+
+            if ($searchPage.hasClass('search-active')) {
+                $searchClose.on('click', function (e) {
+                    e.preventDefault();
+                    $searchPage.removeClass('search-active');
+                    $body.attr('class', prevClasses);  // from closure 
+                });
+                $searchInput.focus();
+            }
+        });
+    });
+</script>
+
+
+<!-- Image to hack wechat -->
+<img src="/resources/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
