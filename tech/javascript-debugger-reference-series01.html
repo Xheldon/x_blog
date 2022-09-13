@@ -3,42 +3,42 @@
 
 <head>
     <meta charset="utf-8">
-    <title>我的数字生活 - Xheldon Blog</title>
+    <title>「译」官方指南系列：JavaScript 调试指南（一） - Xheldon Blog</title>
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     
-        <meta name="description" content="“21 世纪最重要的是不要浪费时间在没有意义的事情上”">
+        <meta name="description" content="官方指南系列之一">
     
     <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="我的数字生活 - Xheldon Blog">
+    <meta property="og:title" content="「译」官方指南系列：JavaScript 调试指南（一） - Xheldon Blog">
     
     <meta property="og:type" content="article">
     
-    <meta property="article:published_time" content="2020-02-14T18:53:50Z">
-    
-    
-    <meta property="article:author" content="Xheldon">
-    
-    
-    <meta property="article:tag" content="日常">
-    
-    <meta property="article:tag" content="生活">
-    
-    <meta property="article:tag" content="随笔">
+    <meta property="article:published_time" content="2022-09-13T09:29:30Z">
     
     
     
-        <meta name="og:description" content="“21 世纪最重要的是不要浪费时间在没有意义的事情上”">
+    <meta property="article:tag" content="技术">
+    
+    <meta property="article:tag" content="调试">
+    
+    <meta property="article:tag" content="技巧">
+    
+    <meta property="article:tag" content="JavaScript">
     
     
-    <meta property="og:image" content="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled18.png">
     
-    <meta property="og:url" content="https://www.xheldon.cn/life/the-digital-life-of-mine.html">
+        <meta name="og:description" content="官方指南系列之一">
+    
+    
+    <meta property="og:image" content="https://www.xheldon.cn/resources/img/logo.png">
+    
+    <meta property="og:url" content="https://www.xheldon.cn/tech/javascript-debugger-reference-series01.html">
     <meta property="og:site_name" content="Xheldon Blog">
     
     <!-- Web App Manifest -->
@@ -48,7 +48,7 @@
     <link rel="shortcut icon" href="/resources/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.xheldon.cn/life/the-digital-life-of-mine.html">
+    <link rel="canonical" href="https://www.xheldon.cn/tech/javascript-debugger-reference-series01.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
@@ -74,8 +74,8 @@
 
     <!-- Navigation -->
 
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -193,7 +193,7 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/resources/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/in-post/the-digital-life-of-mine/Untitled18.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
 
 <!-- Post Header -->
 
@@ -202,14 +202,14 @@
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled18.png');
+        background-image: url('https://static.xheldon.cn/img/index-bg.png');
         
     }
 
     
 </style>
 
-<header class="intro-header" >
+<header class="intro-header style-text" >
 
     <div class="header-mask"></div>
     
@@ -219,17 +219,19 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/archive/?tag=%E6%97%A5%E5%B8%B8" title="日常">日常</a>
+                        <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
                         
-                        <a class="tag" href="/archive/?tag=%E7%94%9F%E6%B4%BB" title="生活">生活</a>
+                        <a class="tag" href="/archive/?tag=%E8%B0%83%E8%AF%95" title="调试">调试</a>
                         
-                        <a class="tag" href="/archive/?tag=%E9%9A%8F%E7%AC%94" title="随笔">随笔</a>
+                        <a class="tag" href="/archive/?tag=%E6%8A%80%E5%B7%A7" title="技巧">技巧</a>
+                        
+                        <a class="tag" href="/archive/?tag=JavaScript" title="JavaScript">JavaScript</a>
                         
                     </div>
-                    <h1>我的数字生活</h1>
+                    <h1>「译」官方指南系列：JavaScript 调试指南（一）</h1>
                     
-                    <h2 class="subheading">“21 世纪最重要的是不要浪费时间在没有意义的事情上”</h2>
-                    <span class="meta">✍🏼 写于 2020年02月14日</span>&nbsp;&nbsp;&nbsp;  
+                    <h2 class="subheading"></h2>
+                    <span class="meta">✍🏼 写于 2022年09月13日</span>&nbsp;&nbsp;&nbsp;  
                     
                 </div>
             </div>
@@ -256,209 +258,609 @@
                 <!-- Multi-Lingual -->
                 
                 
+                    
+                        
+                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
+                        <script>
+                            var timeDom = document.getElementById('from_time');
+                            var pageTime = 1663032570; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
+                            var currentTime = Date.now();
+                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
+                            if (Number(fromNow) <= 0) {
+                                fromNow = 1; // Note: 至少显示一天
+                            }
+                            timeDom.innerText = fromNow
+                        </script>
+                    
+                    
+                    <div class="reference-tips">🔗 &nbsp;原文：<a href="https://developer.chrome.com/docs/devtools/javascript/reference/" target="_blank">https://developer.chrome.com/docs/devtools/javascript/reference/</a></div>
+                    
                 
                 
-				<h3 id="前言">前言</h3>
+                    <div class="callout-tips">🖥 &nbsp;说明：官方指南系列之一</div>
+                
+                
+                    <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/kyKcQKCEQjAksv" target="_blank">https://www.craft.do/s/kyKcQKCEQjAksv</a></div>
+                
+				<p>希望通过这篇全面的 Chrome DevTools debugging 功能介绍，能让你的 debugging 过程更上一层楼。</p>
 
-<p>生活在一个数字时代, 见过太多低效率, 难用的软件/服务, 浪费时间不说, 还浪费精力(比如生气/着急/退款之类的耗费精力的事情), 也因此免不了踩过不少坑. 因此一直想跟大家分享一些我日常生活使用软件方面的一些经验和拙见. 另外人各有爱, 加上是在少数派的处女文, 因此如果有一些跟贵站气质不符的地方还请多指教.</p>
+<p>首先你可能需要先在 <a href="https://developer.chrome.com/docs/devtools/javascript/">这里</a> （英文，待译）学习基本的 debugging 技巧。</p>
 
-<h3 id="笔记-notion">笔记 Notion</h3>
+<h2 id="用断点暂停代码">用断点暂停代码</h2>
+
+<p>通过设置一个断点，可以让代码在执行途中暂停。</p>
+
+<p>查看 <a href="https://developer.chrome.com/docs/devtools/javascript/breakpoints/">这里</a> （英文，待译）来学习如何设置一个断点。</p>
+
+<h3 id="在鼠标悬浮的时候查看类函数属性">在鼠标悬浮的时候查看类/函数属性</h3>
+
+<p>当代码执行暂停的时候，将鼠标悬浮在一个类或者函数名上的时候可以预览它的属性。</p>
+
+<p caption="1"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/EA456FA6-9331-41E3-96DC-3FCCFFA82C2E_2.png" alt="1" title="1" /></p>
+
+<h2 id="逐步运行代码">逐步运行代码</h2>
+
+<p>你的代码暂停后，你就可以一次只运行一行代码，以搞清楚代码的调用栈以及相关的属性值。</p>
+
+<h3 id="跳过step-over当前代码行">跳过（Step over）当前代码行</h3>
+
+<p>当你的断点暂停在一个与你当前调查的问题无关的代码行，且该代码行包含一个函数的时候，你可以点击 <code class="language-plaintext highlighter-rouge">Step Over</code> 来不进入该函数以继续执行代码。</p>
+
+<p caption="step_over"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/63AE5442-D0AD-46C5-8DB0-36452E2842D2_2.png" alt="step_over" title="step_over" /></p>
+
+<p>图一👆🏻，上图中蓝色方框中 <code class="language-plaintext highlighter-rouge">Step Over</code> 的含义解释：</p>
+
+<p>举个例子，假设你正在 debugging 下面的代码：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">updateHeader</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">day</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getDay</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">getName</span><span class="p">();</span> <span class="c1">// A</span>
+  <span class="nx">updateName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// D</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">getName</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">app</span><span class="p">.</span><span class="nx">first</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">app</span><span class="p">.</span><span class="nx">last</span><span class="p">;</span> <span class="c1">// B</span>
+  <span class="k">return</span> <span class="nx">name</span><span class="p">;</span> <span class="c1">// C</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>此时你的断点停在了 <code class="language-plaintext highlighter-rouge">A</code> 的位置。通过点击 <strong>Step over</strong> ，Devtools 将会执行你「Step over」的位置中的所有代码，在上述示例中「Step over」的是 A 位置的 getName 函数中的 <code class="language-plaintext highlighter-rouge">B</code> 和 <code class="language-plaintext highlighter-rouge">C</code> 的位置，于是 Devtools 会将代码停在 D 的位置。</p>
+
+<h3 id="进入step-into当前代码行">进入（Step into）当前代码行</h3>
+
+<p>如果断点停在一个跟你要调查的问题有关系的地方，而且这个地方包含一个函数调用的时候，点击 <code class="language-plaintext highlighter-rouge">Step into</code> ，可以更进一步的检查这个函数。</p>
+
+<p caption="step_into"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/0B7F9CB7-7EA3-44A2-8808-8E23F9E0D786_2.png" alt="step_into" title="step_into" /></p>
+
+<p>图二👆🏻，上图中蓝色方框中 <code class="language-plaintext highlighter-rouge">Step into</code> 的含义解释：</p>
+
+<p>举个例子，假设你正在 debugging 下面的代码：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">updateHeader</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">day</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getDay</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">getName</span><span class="p">();</span> <span class="c1">// A</span>
+  <span class="nx">updateName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">getName</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">app</span><span class="p">.</span><span class="nx">first</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">app</span><span class="p">.</span><span class="nx">last</span><span class="p">;</span> <span class="c1">// B</span>
+  <span class="k">return</span> <span class="nx">name</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>你的断点正停在 <code class="language-plaintext highlighter-rouge">A</code> 的位置，此时点击 <strong>Step into</strong> ，Devtools 将会执行这行代码，然后停在 <code class="language-plaintext highlighter-rouge">B</code> 的位置。</p>
+
+<h3 id="跳出step-out当前代码行">跳出（Step out）当前代码行</h3>
+
+<p>当断点停在一个与你正在调查的问题不相关的函数内部的时候，你可以点击 <strong>Step out</strong> 来执行该函数中剩余的代码。</p>
+
+<p caption="step_out"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6E97FB74-E73D-4189-9A21-3771A1DF27AF_2.png" alt="step_out" title="step_out" /></p>
+
+<p>图三👆🏻，上图中蓝色方框中 <code class="language-plaintext highlighter-rouge">Step out</code> 的含义解释：</p>
+
+<p>举个例子，假设你正在 debugging 下面的代码：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">updateHeader</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">day</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getDay</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">getName</span><span class="p">();</span>
+  <span class="nx">updateName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// C</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">getName</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">app</span><span class="p">.</span><span class="nx">first</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">app</span><span class="p">.</span><span class="nx">last</span><span class="p">;</span> <span class="c1">// A</span>
+  <span class="k">return</span> <span class="nx">name</span><span class="p">;</span> <span class="c1">// B</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>你的断点正停在 <code class="language-plaintext highlighter-rouge">A</code> 的位置，此时点击 <strong>Step out</strong> ，DevTools 将会把 <code class="language-plaintext highlighter-rouge">getName()</code> 函数中的剩余代码执行完，也就是 B 位置的代码，然后断点停在 <code class="language-plaintext highlighter-rouge">C</code> 的位置上。</p>
+
+<h3 id="继续运行代码到指定行">继续运行代码到指定行</h3>
+
+<p>当 debugging 一个很长函数的时候，函数中会有很多与你正在调查的问题不相关的代码。</p>
+
+<p>你可以选择一步一步的执行这些无关的行，但是这个过程会很枯燥。你也可以选择在一个想断点的代码行处设置一个断点，然后按下 <code class="language-plaintext highlighter-rouge">Resume Script Execution</code> （恢复脚本执行），不过除此之外，还有一个更快的方式。</p>
+
+<p>你可以在你想要断点的代码行上右键，然后选择 <strong>Continue to here</strong> （继续执行到此处）。Devtools 将会恢复断点执行代码直到此处，然后停在这一行。</p>
+
+<p caption="continue_to_here"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/01C96466-2B8C-4088-9E66-7408708B0401_2.png" alt="continue_to_here" title="continue_to_here" /></p>
+
+<p>图四👆🏻，选择 <strong>Continue to here</strong> 。</p>
+
+<h3 id="恢复脚本执行">恢复脚本执行</h3>
+
+<p>你可以通过点击 <strong>Resume Script Execution</strong> 来继续在你断点暂停的位置执行代码。Devtools 会将代码一直执行下去直到遇到下一个断点（如果有）。</p>
+
+<p caption="resume_script_execution"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/E67463E2-9D01-48BB-A743-28A189DF68CD_2.png" alt="resume_script_execution" title="resume_script_execution" /></p>
+
+<p>图五👆🏻，<strong>Resume Script Execution</strong> ，蓝框处。</p>
+
+<h4 id="强制执行">强制执行</h4>
+
+<p>可以通过长按 <strong>Resume Script Execution</strong> ，然后选择 <strong>Force Script Execution</strong> ，来忽略剩下的所有断点，直接执行全部代码。</p>
+
+<p caption="force_script_execution"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DAB9BD94-70F7-4464-8609-3016E8B40A44_2.png" alt="force_script_execution" title="force_script_execution" /></p>
+
+<p>图六👆🏻，选择 <strong>Force Script Execution</strong> 。</p>
+
+<h3 id="改变当前线程的上下文">改变当前线程的上下文</h3>
+
+<p>当 debugging 设计到 Web Worker 或者 Service Worker 的时候，可以通过点击出现在 <strong>Threads</strong> 栏中的上下文列表项，来转换上下文。蓝色箭头表示当前选择的上下文。</p>
+
+<p caption="change_threads_context"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1474933D-3F44-4D93-9909-FF4245545704_2.png" alt="change_threads_context" title="change_threads_context" /></p>
+
+<p>图七👆🏻，<strong>Threads</strong> （线程）栏，蓝色框的位置。</p>
+
+<p>举个例子，假设有这么个场景，你的断点同时存在于你的主脚本和你的 service worker 脚本中。你想要查看 service worker 中的本地变量和全局变量，但是 <strong>Source</strong> 栏当前正显示的是你的主脚本的上下文。此时你就可以通过点击在 <strong>Threads</strong> 栏中的 service worker 入口来切换上下文以查看你想了解的变量了。</p>
+
+<h2 id="查看和编辑局部闭包以及全局作用域中的变量属性">查看和编辑局部、闭包以及全局作用域中的变量/属性</h2>
+
+<p>当暂停在某一行的时候，使用 Scope 栏来查看和编辑位于局部、闭包和全局变量。</p>
+
+<ul>
+  <li>
+    <p>双击属性值以修改之。</p>
+  </li>
+  <li>
+    <p>非可枚举的属性会以灰色突出显示。</p>
+  </li>
+</ul>
+
+<p caption="查看和修改变量"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/40A93D0F-ACA8-4128-A695-E502565253AD_2.png" alt="查看和修改变量" title="查看和修改变量" /></p>
+
+<p>图八👆🏻，<strong>Scope</strong> （作用域）栏，蓝色框的位置。</p>
+
+<h2 id="查看当前调用栈">查看当前调用栈</h2>
+
+<p>当暂停在某一行的时候，使用 <strong>Call Stack</strong> 栏来查看从代码执行一直到你当前暂停点以来的函数调用栈。</p>
+
+<p>如果你的代码中有异步代码，可以将 <strong>Async</strong> 复选框勾选上，来启用异步函数调用栈。</p>
+
+<p>点击其中的一个条目，来跳转到该条目所表示的函数的调用处。蓝色箭头图标表示当前正在高亮的函数。</p>
+
+<p caption="查看函数调用栈"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1168318B-1CFA-493D-9AE6-2CF79930C58C_2.png" alt="查看函数调用栈" title="查看函数调用栈" /></p>
+
+<p>图九👆🏻，<strong>Call Stack</strong> （调用栈）栏，蓝色框的位置。</p>
 
 <blockquote>
-  <p>得益于 Notion 强大的导出功能，已经更换为 Craft 作为主力写作应用。</p>
+  <p>注意：如果代码没有暂停在某一行，那 Call Stack 栏是空的。</p>
 </blockquote>
 
-<p>目前我是使用 Notion 作为我的主力笔记应用, 只是因为它好看的界面排版和富媒体支持(颜控). 我使用 Notion 最主要的有三点: 代码块和地图插入以及整个 WorkSpace 导出为 Markdown. 更棒的是导出的 Markdown 的图片是相对路径的, 这为将来有一天出现一款更好的笔记应用时的笔记迁移做了铺垫. 偶尔会使用印象笔记, 因为在没转 Notion 之前有很多笔记在印象笔记, 我常常使用 Notion 写一些突然间的灵感作为草稿, 等有时间了再细细完善, 这是我的 Notion 笔记截图:</p>
+<h3 id="重新执行堆栈中的函数">重新执行堆栈中的函数</h3>
 
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled.png" alt="我的数字生活" /></p>
+<p>有时候想观察某一个函数的运行情况，但是又不想重新运行整个 debugging 流程，你可以在断点暂停在这个函数内部的时候重新只单独执行这个函数，换句话说，你可以在调用栈中重新放入该函数的调用上下文。</p>
 
-<p>我还用 Notion 摘抄代码段, 写技术博客, 规划行程. 下面是做到一半的日本元旦旅游计划:</p>
+<blockquote>
+  <p>注意：你可以重头执行在 Call Stack （调用栈）中的任何函数，除了 WebAssembly、async、和 generator 函数。</p>
+</blockquote>
 
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled1.png" alt="我的数字生活" /></p>
-
-<p>Notion 一年是 $48 美元, 不算太贵, 而且用 Gmail 注册后有邀请注册优惠, 邀请成功被邀请人得 $10, 自己得 $5, 加上一些其他的奖励如安装 Web Clipper, 实际第一年只需要 $2 美元</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled2.png" alt="我的数字生活" /></p>
-
-<p>在 Notion 之前我还曾经尝试过使用苹果自带的备忘录作为主力笔记应用, 后来因为在家里一台 rMBP 上新建笔记后, 死活无法同步到 iPhone 上, 一顿操作后还把笔记给搞丢了. 丢笔记是笔记类应用的大忌, 因此放弃了使用苹果全家桶的强迫症执念(截图中红框无关):</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled2.1.png" alt="我的数字生活" /></p>
-
-<p>在尝试苹果自带备忘录之前我还尝试过 GitHub + Typora 的组合进行笔记的记录, 但是这个组合图片的存储是个大问题, 而且其插入图片/链接的体验并不友好, 因此也放弃了:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled3.png" alt="我的数字生活" /></p>
-
-<h3 id="个人博客">个人博客</h3>
-
-<p>作为一个搞技术的, 写博客是必不可少的. 我选择使用 Github Pages 作为我的博客托管服务. 它相比于 WordPress 以及其他的博客系统有一些优势, 比如 Git 的使用, 简单的调试发布流程, 以及 Geek 范儿——有时候装逼也是必要的, WordPress 听起来已经是上个世纪的事情了:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled4.png" alt="我的数字生活" /></p>
-
-<p>个人博客的图片托管服务我之前使用的是七牛云, 它对个人有1个G(还是10个G, 忘了)的免费存储空间和每月一定限额的流量, 这对个人博客来说已经足够了. 但是后来由于一些众所周知的原因, 我把域名迁到了 Godaddy, 这在国内备案是个麻烦事, 所以七牛云就不给解析了, 因此我就先将图片跟静态博客一起放到了 Github 上, 另外尽量写博客的时候能用代码描述的就不带图片.</p>
-
-<h3 id="apple-music">Apple Music</h3>
-
-<p>音乐服务我使用 Apple Music, 因为写码听中文歌的歌词会分心, 因此比较喜欢听英语歌, 所以选择了英语歌比较多的 Apple Music. 本来跟媳妇儿说开 Apple Music 家庭共享, 但是她要用网易云音乐, 于是作罢. Apple Music 价格是 12块/月, 买一年有优惠, 只要 ¥100 即可:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled5.png" alt="我的数字生活" /></p>
-
-<h3 id="阅读">阅读</h3>
-
-<h4 id="reeder">Reeder</h4>
-
-<p>Reeder 订阅了一些技术博客. Reeder 只是一个 RSS 客户端, 你还需要一个服务端, 我选择的 NewsBlur, 这个 RSS 服务提供商有收费和免费模式, 收费模式会提供一些增值服务, 具体少数派上已经有很多介绍就不说了. 每次当信息爆炸的新闻传出来的时候, 总有一些声音开始回忆上古时代 RSS 的辉煌. 但是有一些反对的声音也说, RSS 会让你看到你想看到的东西, 这会加深你的偏见, 使你越来越狭隘. 其实我觉得, 这就像现在的大数据和所谓的千人千面或者用户画像一样, 对不同的信息输入是要分不同类型的. 比如, 如果你只是订阅一些你感兴趣的社会新闻, 那确实会出现 RSS 反对者担忧的的情况: 总是觉得社会在发生一些不好的事情——示威/暴乱/刑事犯罪案等等, 进而使你变得偏激和暴躁. 但是对我来说, 我用 RSS 只是来看一些技术类的博客, 所以我用的很安全.</p>
-
-<p>Mac 版和 iPhone 版分开售卖, 不是很贵, 因此我都买了:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled6.png" alt="我的数字生活" /></p>
-
-<h4 id="marginnote">Marginnote</h4>
-
-<p>少数派上介绍 MarginNote 的文章也不在少数, 具体我就不多说了. 我只买了 iPad 版本的, 因为做笔记的话用 Apple Pencil 是再合适不过的了, Mac 端就完全没有必要了:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled7.png" alt="我的数字生活" /></p>
-
-<h4 id="safari-阅读列表">Safari 阅读列表</h4>
-
-<p>当我看到一篇文章但是来不及读的时候, 我会将它用 Safari 打开, 然后加入阅读列表, 同时将 Safari 浏览器设置中的 <code class="language-plaintext highlighter-rouge">自动离线存储</code> 打开, 来自动存储来自 iCloud 的所有阅读列表项目以供离线阅读:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled8.png" alt="我的数字生活" /></p>
-
-<h3 id="存储">存储</h3>
-
-<h4 id="谷歌相册">谷歌相册</h4>
-
-<p>最开始上大学那会儿, 因为穷所以买了 HTC Desire S, 也就是 G12, 因为是安卓系统, 因此在折腾了魔法上网后将图片放到了谷歌相册(貌似那会儿还不叫这个名字?), 后来从 iPhone 5 开始就一直没开 iCloud 照片同步, 而是一直使用谷歌相册, 手动同步照片到谷歌相册, 至今我还有 30 多 G 的相册留在谷歌相册中:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled9.png" alt="我的数字生活" /></p>
-
-<h4 id="icloud-drive">iCloud Drive</h4>
-
-<p>不过魔法不会一直生效, 结界总是在一些时候被加强, 在魔法失效的时候我意识到将 iPhone 和谷歌服务结合起来并不是一件明智的事情——虽然我在国外也体验过谷歌服务的完美之处, 说实话以我的经历, 如果谷歌没有退出中国我大概率是谷粉而不是果粉儿——凡事没有万一, 因此我再次强迫自己用了苹果全家桶 iCloud Drive. 我于是将谷歌相册的内容都转到了 iCloud Drive 中. 这里有个曲折的故事就是, 因为相册有 30 多个 G, 我担心魔法持续时间太长会被结界探测到导致永久失效, 于是我临时开了一个月的 OneDrive, 它有 100G 的免费空间(话说在手机上 OneDrive 还没这个付费选项, 只有 30G 和 200G 让你开和 iCloud Drive 类似功能的可以将图片文件等都保存到里面的网盘功能, 在网页版才有——可能是我记错了, 欢迎指正), 于是我先导出谷歌相册到 OneDrive(这个在导出的时候有这个选项), 然后再将 OneDrive 中的相册下载到电脑中, 再将电脑中的照片上传到 iCloud Drive, 也算是曲线救片了. iCloud Drive 免费版 5G, 个人可以升级 50G 一个月 6 块钱, 个人 100 G 一个月12 (没记错?), 家庭共享 200G 只需要每月 21. 因此有了媳妇儿之后——她也是个果粉儿, 就毫不犹豫的开了 200G 的 iCloud Drive 服务. 还好, 苹果的 iCloud Drive 服务并没有像它的笔记类应用一样那么烂, 配合 iPhone/iPad/Mac 使用非常完美(相册和文件都算在 iCloud Drive 空间存储中):</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled10.png" alt="我的数字生活" /></p>
-
-<h3 id="其他">其他</h3>
-
-<h4 id="magnet">Magnet</h4>
-
-<p>我用 Mac 有时候会外接一个屏幕, 然后将笔记本盖合上, 同时外接一个鼠标, 这就导致有时候在将窗口左拖拽右拖拽的时候, 没有 Magic Trackpad 的三指拖移方便, 因此我就使用 Magnet 作为窗口管理工具, 它有一些快捷按钮, 熟练之后可以提高工作效率, 很方便, 同类型的也有其他软件, 我看这个软件是付费榜第一(当时)我就毫不犹豫的入手了:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled11.png" alt="我的数字生活" /></p>
-
-<h4 id="alfred">Alfred</h4>
-
-<p>另一款装机必备就是大名鼎鼎的 Alfred 了, 在少数派上也有不少介绍, 我也就不说了, 用了 Workfolw 之后确实能提高不少工作效率:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled12.png" alt="我的数字生活" /></p>
-
-<h4 id="信息浏览社交">信息浏览/社交</h4>
-
-<p>ins 图片分享, 其滤镜非常好用. 用微信, 不用 QQ, QQ 整的乱七八糟的功能无不在向我表明一个事实: 我已经不是它的目标用户了. 微博/Twitter上看时事热搜, 知乎/Quora/Google上找答案, 哔哩哔哩/YouTube上追番/看博主, 爱奇艺上看电影, 淘宝 88 会员可以免费看优酷(虽然基本没上过优酷了), 腾讯视频…无感, 不参与不评价. 哔哩哔哩买了大会员, 爱奇艺之前跟京东 Plus 付费续到了 2022 年. 微博知乎就当是可以通过看广告了解一下当前流行趋势吧——比如最近我的 feed 流植发, 三国志和剑与远征的广告就特别多[摊手]:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled13.png" alt="我的数字生活" /></p>
-
-<h4 id="电影">电影</h4>
-
-<p>我是比较奇葩的, 使用电报软件, 加入了一个会分享热门美剧/电影的一个组, 从上面下载电影. 如果需要在 iPad 或者手机上看, 就使用 nPlayer 软件. 电脑端则使用的是 SPlayer(我好久没更新了, 更新之后看起来加了在线功能):</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled14.png" alt="我的数字生活" /></p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled14.1.png" alt="我的数字生活" /></p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled15.png" alt="我的数字生活" /></p>
-
-<p>而像一些影音记录的话, 我则使用的是豆瓣的服务, 将自己看过的想看的在看的书/电影标记出来, 也算是对自己人生轨迹的一个记录:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled16.png" alt="我的数字生活" /></p>
-
-<h4 id="电子钱包">电子钱包</h4>
-
-<p>买了点 EOS, 使用 TokenPocket.</p>
-
-<h4 id="游戏">游戏</h4>
-
-<p>手机端除了农药, 没有什么会经常玩儿的游戏. 电脑端则使用 Steam 进行游戏, Mac 使用移动硬盘用 Window To Go 安装 Windows 系统装 Steam(下面是 Mac 截图):</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled17.png" alt="我的数字生活" /></p>
-
-<p>我有两个手柄, 一个 Xbox One 的, 一个 PS4 的, 因此如果想要两个手柄同时连接 PC 的话需要点额外的操作, 大概会花 10 分钟的时间设置. 就是这个时间让媳妇儿受不了, 每次想玩儿游戏还要: 拿出外接移动硬盘 → 启动 Windows → 启动 Steam → 打开手柄连接软件 → 连接手柄 → 打开游戏开始玩儿 这个过程太漫长. 于是买了日版的 Switch + Switch Pro 的手柄, 随时随时想玩开机就玩儿了, 沙发上 TV 模式久了不舒服还可以抱着机器到床上玩儿,  非常方便:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled18.png" alt="我的数字生活" /></p>
-
-<h4 id="查单词">查单词</h4>
-
-<p>因为工作需要, 经常需要阅读英文资料, 因此一个趁手的字典软件必不可少. 我买了欧陆词典的学习账号, 电脑和手机通用. 比有道词典强. 当然一些场景需要快速查单词, 因此使用苹果自带的词典的时候也不少, 不过我会将一些单词有意识的使用欧陆词典查询, 同时开启”查词自动加入生词本”功能, 以便下班通勤路上巩固一下, 这类单词多以计算机科学相关的单词为主:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled19.png" alt="我的数字生活" /></p>
-
-<h4 id="输入法">输入法</h4>
-
-<p>输入法是输入操作的一个最基本的工具, 尝试过很多输入法, 冷门的热门的都试过, 最后还是一直在使用搜狗输入法:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled20.png" alt="我的数字生活" /></p>
-
-<h4 id="邮件">邮件</h4>
-
-<p>邮件使用 Mac 自带的 Mail.app, 开始的时候使用了 Gmail 和 QQ 邮箱. 但是 QQ 邮箱隔一阵就得手动发送 imap 的短信来获取最新的独立于 QQ 密码的密码来登陆邮箱, 非常烦人. 于是只在 Mail 上开启了 Gmail. 自带邮箱的好处是打开快, 坏处是定制化较少, 同时其在电脑上的”智能邮箱”只是在本地过滤不能在手机上使用, 而且其更新邮件的频率较低, 新邮件时常需要手动更新. 另外公司使用的是谷歌的全家桶, 因此也将私人和公司账号的日历导入到自带的日历 app 中了, 很方便:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled21.png" alt="我的数字生活" /></p>
-
-<h4 id="出行吃">出行/吃</h4>
-
-<p>青桔单车买了半年套餐. 其他的都没考虑. 美团收购了摩拜之后自己出了美团单车, 而且不能用微信扫, 只能美团 app 扫. 为了提高 app 打开率真是无所不用其极, 感到恶心, 因此抵制(个人观点). 到一个地方会用大众点评搜索下附近的美食, 不过吐槽下因为我不常用大众点评(常打开, 但是不常在上面下单), 因此在点评里面应该没有我的什么用户画像, 所以我进去看到的都是一些美女大长腿桑拿大保健服务的一些推荐, 反观我媳妇儿的就是一些美食, 健身馆, 游乐场之类的推荐, 因为我们经常使用她的账号在上面买票. 地图则百度高德一起用, 没什么孰优孰劣之分. 因为是搞技术的, 之前一直对谷歌有盲目崇拜, 后来去过一趟日本之后发现谷歌的地图偏移+定位飘的非常严重, 于是幻想破灭, 不过在国外地图软件地图能用的除了谷歌也没什么了. 因此国内我还是老老实实的百度/高德地图好了.</p>
-
-<h4 id="理财">理财</h4>
-
-<p>这里我自己是把钱都存中国银行了, 因此也没什么好说的, 我现在尽量都在使用储蓄卡, 而不是用信用卡. 用我媳妇儿的话说就是: 你要是用信用卡就觉得里面一直有钱, 就会一直花钱, 对钱没什么概念, 这样就会花很多. 不如每个月定期定额将钱存起来, 只拿一部分花, 这样才能攒钱.</p>
-
-<p>我把所有绑定的快捷支付如单车, 滴滴等的都使用支付宝支付, 每笔支出都会使用支付宝的支付助手备注一下用途如晚饭, 午饭等, 这样月底可以知道我到底在哪些方面花钱比较多. 能赚钱固然好, 但是会花钱也很妙. 说实话我不是一个节俭的人, 能用钱办到的事情, 只要不是花太多钱我都不会花时间去办, 好在我媳妇儿跟我想法一样, 所以在这方面我们能达成很好的默契. 比如在正版软件这件事上, 如果找一个破解版的时间很久同时这个软件我又会经常用我就会倾向于买正版——我不会为了偶尔使用一两次的软件付费. 经常用的软件比如 JetBrains 的系列,  Charles 抓包工具, Alfred, 媳妇儿用的 Eagle 等. 但是 BeyondCompare 就不会付费:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled22.png" alt="我的数字生活" /></p>
-
-<h4 id="魔法上网">魔法上网</h4>
-
-<p>这块只说一句: 使用了 BWG 推荐的 JMS(首字母) 服务, 很快也很稳定. 手机上使用 QuantumultX, 电脑上使用 ClashX:</p>
-
-<p><img src="https://static.xheldon.cn/img/in-post/the-digital-life-of-mine/Untitled23.png" alt="我的数字生活" /></p>
-
-<h3 id="写在最后">写在最后</h3>
-
-<p>写着写着好像就变成了一个流水账, 而我也并不是一个暴露狂通过暴露自己的日常来获得快感(???), 只是在这个软件/服务众多的当下分享一下自己日常使用的软件和服务的经验. 还有很多细节没有写出来, 比如邮箱的设置如何更好用, 浏览器的使用抉择, 手机及其他智能设备的选择的个人理解等, 有机会再说吧.</p>
-
-<p>另外还有一些行为准则:</p>
+<p>为了重新执行一个函数：</p>
 
 <ol>
-  <li>所有国外服务一定使用国外邮箱, 而我国外的邮箱只有 Gmail, 因此我的国外的服务一定使用的是 Gmail 来注册的. 如 Twitter, Facebook, ins, Quora, Medium 等.</li>
-  <li>所有国内的服务一定使用国内邮箱, 这个不解释了.</li>
-  <li>所有不小心已经使用了国内的邮箱如 163 或者 qq 邮箱注册的国外服务, 有条件的一定要开启两步验证或者双重验证之类的额外验证手段, 不能仅凭账号+密码, 或者邮箱+邮箱验证码就能登录.</li>
-  <li>人在国内的话, 不要暴露任何自己的信息在国外的社交网络上, 如电报中的手机号, FB 中的个人信息等.</li>
+  <li>
+    <p>使用断点暂停函数，<strong>Call Stack</strong> 栏会记录函数的调用顺序。</p>
+  </li>
+  <li>
+    <p>在 <strong>Call Stack</strong> 栏，右键一个函数，然后在出现的菜单中选择 Restart frame（重头执行函数）。</p>
+  </li>
 </ol>
 
-<p>另外我在使用苹果的服务, 但是并不认为在云上贵州的个人数据会被拿去做一些不好的事情. 我一不害人, 二不害社会, 三不反G, 三不分L国家, 而且不存储 Yellow 视频, 没有任何理由被盯上. 加上国内越来越开放的气氛, 相信将来一定会更好的.</p>
+<p caption="重新执行断点所在的函数"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DFF3FAC8-B00F-415A-A581-50A299F1884D_2.png" alt="重新执行断点所在的函数" title="重新执行断点所在的函数" /></p>
 
-<p>之前跟朋友讨论说, 你整这么多 FQ 的东西, 不怕将来清算吗? 我笑了, 说了个事实跟他听, 也与大家共勉:</p>
+<p>为了理解 Restart frame 如何执行，我们假设有以下代码：</p>
 
-<p><strong>辛亥革命虽然失败了, 但是从此也不可能再出现皇帝来开历史的倒车了, 因为正如高中书上所说: 共和观念日渐深入人心.</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+    <span class="nx">bar</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="kd">function</span> <span class="nx">bar</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">value</span><span class="o">++</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+    <span class="k">debugger</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">foo</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">foo</code> 函数接受 <code class="language-plaintext highlighter-rouge">0</code> 作为参数，然后通过 log 打印到控制台，然后调用 <code class="language-plaintext highlighter-rouge">bar()</code> 函数。相应的，<code class="language-plaintext highlighter-rouge">bar</code> 函数会将这个值自增1。</p>
+
+<p>尝试以下面的方式重头执行这两个函数：</p>
+
+<ol>
+  <li>
+    <p>复制上面的代码到一个 <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/#createsources">snippet</a> （未翻译）中，然后 <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/#runsources">运行</a> （未翻译）它。断点会停在 <code class="language-plaintext highlighter-rouge">debugger</code> 的所在的 <a href="https://developer.chrome.com/docs/devtools/javascript/breakpoints/#debugger">代码行</a>。</p>
+
+    <blockquote>
+      <p>⚠️ 注意：当代码执行暂停的时候，不要在控制台执行当前调用栈中的函数，因为这可能会引起意外的错误。</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>你会注意到当前的 debugger 会在其所在的函数的函数声明的右侧显示当前值：<code class="language-plaintext highlighter-rouge">value = 1</code> 。</p>
+  </li>
+</ol>
+
+<p caption="注意函数声明处右侧的值"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9111BA1D-AA80-4C2F-B54E-123FC66A5C17_2.png" alt="注意函数声明处右侧的值" title="注意函数声明处右侧的值" /></p>
+
+<ol>
+  <li>重头执行 <code class="language-plaintext highlighter-rouge">bar()</code> 函数。</li>
+</ol>
+
+<p caption="重头执行bar"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/036AAE1B-CA41-4627-A9D6-A4F7E6302C0C_2.png" alt="重头执行bar" title="重头执行bar" /></p>
+
+<ol>
+  <li>
+    <p>按 <code class="language-plaintext highlighter-rouge">F9</code> ，然后代码可以经过值自增的那一行，然后再次断到 debugger 处。</p>
+
+    <p>注意看，值变成了 2： <code class="language-plaintext highlighter-rouge">value = 2</code> 。</p>
+  </li>
+</ol>
+
+<p caption="重头执行debugger"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/09D36505-821B-4392-8DD3-BDE9D05F0210_2.png" alt="重头执行debugger" title="重头执行debugger" /></p>
+
+<ol>
+  <li>除此之外，你还可以在 Scope 栏，双击 <code class="language-plaintext highlighter-rouge">value</code> 值来编辑它将其设置成想要的值。</li>
+</ol>
+
+<p caption="双击编辑值"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9481CF99-8735-43A4-8A57-D2F953C289BC_2.png" alt="双击编辑值" title="双击编辑值" /></p>
+
+<ol>
+  <li>尝试重新执行 <code class="language-plaintext highlighter-rouge">bar()</code> 函数多次，会发现值会一直增加。</li>
+</ol>
+
+<p caption="多次重复执行后值会一直增加"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/AEE7EEA3-2150-431B-980C-6FCF03527DC7_2.png" alt="多次重复执行后值会一直增加" title="多次重复执行后值会一直增加" /></p>
+
+<blockquote>
+  <p>💡 震惊！为什么 <code class="language-plaintext highlighter-rouge">value</code> 不会重置成 <code class="language-plaintext highlighter-rouge">0</code> ？</p>
+</blockquote>
+
+<blockquote>
+  <p>函数重头执行的时候不会重置参数。换句话说，重头执行不会恢复该函数被调用时候的初始状态。因此，它只是简单的在调用栈中移动当前调用的指针到函数的开始位置。</p>
+</blockquote>
+
+<blockquote>
+  <p>因此，当前的参数值 <code class="language-plaintext highlighter-rouge">value</code> 会在内存中一直随着相同函数的重复执行而一直存在。</p>
+</blockquote>
+
+<ol>
+  <li>现在，在 <strong>Call Stack</strong> 中重头执行 <code class="language-plaintext highlighter-rouge">foo()</code> 函数。</li>
+</ol>
+
+<p caption="重头执行foo函数"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/11D4B549-3006-4564-B92D-4D1727913D74_2.png" alt="重头执行foo函数" title="重头执行foo函数" /></p>
+
+<p>注意看，<code class="language-plaintext highlighter-rouge">value</code> 重新变成了<code class="language-plaintext highlighter-rouge">0</code> 。</p>
+
+<p caption="value重新变为0"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9F706F35-0041-41E3-BB4A-70A5BFFEFE06_2.png" alt="value重新变为0" title="value重新变为0" /></p>
+
+<blockquote>
+  <p>💡 再次震惊！为什么 <code class="language-plaintext highlighter-rouge">value</code> 这次被重置为 <code class="language-plaintext highlighter-rouge">0</code> 了？</p>
+</blockquote>
+
+<blockquote>
+  <p>很简单（此处意译了）在 JavaScript 中，参数是按值传递的，因为 <code class="language-plaintext highlighter-rouge">value</code> 是原始值，因此在函数内修改它的值不会影响到函数外它的值。</p>
+</blockquote>
+
+<h3 id="复制调用栈执行路径">复制调用栈执行路径</h3>
+
+<p>在 <strong>Call Stack</strong> 栏的任意位置右键，然后选择 <strong>Copy Stack Trace</strong>（复制栈追踪），你会将当前调用栈复制到粘贴板。</p>
+
+<p caption="复制调用栈"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/7EF33B00-5F90-4D0D-8979-B18ED3CD1527_2.png" alt="复制调用栈" title="复制调用栈" /></p>
+
+<p>图十👆🏻，选择 <strong>Copy Stack Trace</strong>。</p>
+
+<p>复制的内容大致会是这个样子：</p>
+
+<pre><code class="language-other">getNumber1 (get-started.js:35)
+inputsAreEmpty (get-started.js:22)
+onClick (get-started.js:15)
+</code></pre>
+
+<h2 id="忽略某个脚本或者满足某种条件的脚本">忽略某个脚本或者满足某种条件的脚本</h2>
+
+<p>当 debugging 的时候，忽略某个脚本以跳过它。你通常会在当该脚本的函数比较复杂难懂而且跟你当前 debugging 的内容无关的时候选择忽略之。</p>
+
+<p>例如，假设你正在 debugging 如下代码：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">animate</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">prepare</span><span class="p">();</span>
+  <span class="nx">lib</span><span class="p">.</span><span class="nx">doFancyStuff</span><span class="p">();</span> <span class="c1">// A</span>
+  <span class="nx">render</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">A</code> 是一个你信任的第三方库。如果你十分确定你所调查的问题跟这个第三方库没有关系，那忽略它就是一个明智决定。</p>
+
+<h3 id="从-source-编辑器栏中忽略某个脚本">从 Source 编辑器栏中忽略某个脚本</h3>
+
+<ol>
+  <li>
+    <p>打开文件</p>
+  </li>
+  <li>
+    <p>右键任何位置</p>
+  </li>
+  <li>
+    <p>选择 <strong>Add script to ignore list</strong>（将脚本添加到忽略列表）。</p>
+  </li>
+</ol>
+
+<p caption="忽略脚本"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/39DA9D92-C270-4705-8920-7BC248703936_2.png" alt="忽略脚本" title="忽略脚本" /></p>
+
+<p>图十一👆🏻，从编辑器栏中忽略一个脚本。</p>
+
+<h3 id="从-call-stack-调用栈栏忽略某个脚本">从 Call Stack （调用栈）栏忽略某个脚本</h3>
+
+<p>如果想从调用栈中忽略某个脚本，你需要：</p>
+
+<ol>
+  <li>
+    <p>在调用栈中的某个函数中右键。</p>
+  </li>
+  <li>
+    <p>选择 <strong>Add script to ignore list</strong>。</p>
+  </li>
+</ol>
+
+<p caption="从调用栈中忽略脚本"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/73837AF8-CB34-4B72-AE5C-1B266E15B8EB_2.png" alt="从调用栈中忽略脚本" title="从调用栈中忽略脚本" /></p>
+
+<p>图十二👆🏻，从 Call Stack（调用栈）中忽略某个脚本。</p>
+
+<h3 id="从-settings设置中忽略某个脚本">从 Settings（设置）中忽略某个脚本</h3>
+
+<blockquote>
+  <p>译者注：此处的设置为 Devtools 的设置，不是浏览器的设置。</p>
+</blockquote>
+
+<p>如果想从设置中忽略某一个脚本或者满足某种条件的脚本，你需要：</p>
+
+<ol>
+  <li>打开设置：</li>
+</ol>
+
+<p caption="devoools设置界面"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/54F9290D-CE6A-4630-9387-34DE7EA6266F_2.png" alt="devoools设置界面" title="devoools设置界面" /></p>
+
+<ol>
+  <li>
+    <p>点击 <strong>Ignore List</strong> Tab。</p>
+  </li>
+  <li>
+    <p>点击 <strong>Add pattern</strong>。</p>
+  </li>
+  <li>
+    <p>输入脚本名或者正则来匹配需要忽略的脚本名。</p>
+  </li>
+  <li>
+    <p>点击 <strong>Add</strong>。</p>
+  </li>
+</ol>
+
+<p caption="devtools忽略脚本"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/65A0FE7C-D5BB-4329-B978-1C7184F6C1B6_2.png" alt="devtools忽略脚本" title="devtools忽略脚本" /></p>
+
+<p>图十三👆🏻，从 Setting 中忽略脚本。</p>
+
+<h2 id="从任何页面运行-debug-代码-snippets片段">从任何页面运行 debug 代码 Snippets（片段）</h2>
+
+<p>如果你发现你正在 Console 中反复运行一些 deubg 代码，那么可以考虑一下 Snippets。Snippets 是一种你可以存储在 Devtools 中并执行的脚本。</p>
+
+<p>参见 <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/">https://developer.chrome.com/docs/devtools/javascript/snippets/</a> （未翻译）来了解更多。</p>
+
+<blockquote>
+  <p>译者注：Snippets 在执行的时候是携带当前上下文的，比如你在 debug 的时候暂停了，然后执行 Snippets 代码，此时的 Snippets 代码拥有当前上下文的变量访问权限。</p>
+</blockquote>
+
+<h2 id="watch监听自定义的-javascript-表达式的值">Watch（监听）自定义的 JavaScript 表达式的值</h2>
+
+<p>使用 Watch 栏来监听自定义表达式的值。你可以监听任何有效的 JavaScript 表达式。</p>
+
+<p caption="监听JavaScript表达式"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/02D81797-A39F-4837-B402-648AA39E5C21_2.png" alt="监听JavaScript表达式" title="监听JavaScript表达式" /></p>
+
+<p>图十四👆🏻，蓝色圈住的即是 Watch 栏。</p>
+
+<ul>
+  <li>
+    <p>点击 Add Expression（添加表达式）来新建一个监视表达式。</p>
+  </li>
+  <li>
+    <p>点击 Refresh（刷新）来刷新所有已经存在的表达式。当执行代码的时候，值会自动更新。</p>
+  </li>
+  <li>
+    <p>鼠标悬浮在一个表达式上，然后点 Delete Expression（删除表达式），来删除它。</p>
+  </li>
+</ul>
+
+<h2 id="格式化压缩后的代码以可读">格式化压缩后的代码以可读</h2>
+
+<p>点击 <code class="language-plaintext highlighter-rouge">Fromat {}</code>  来让一个压缩后的代码变成人类可读的格式。</p>
+
+<p caption="格式化压缩后的文件"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/572D9BCF-DC18-460E-8B23-62398391ED92_2.png" alt="格式化压缩后的文件" title="格式化压缩后的文件" /></p>
+
+<h2 id="编辑一个脚本">编辑一个脚本</h2>
+
+<p>当修复一个 bug 的时候，你经常会需要测试你的 JavaScript 代码的修改效果。你不要在一个外部的编辑器中编辑 JavaScript 代码后，再回到当前页面刷新后查看效果。你可以直接在 Devtools 中编辑你的 JavaScript 代码。</p>
+
+<p>如果想编辑脚本，你需要：</p>
+
+<ol>
+  <li>
+    <p>在 Source 栏中打开你想要编辑的文件（会出现在 Editor 栏中）。</p>
+  </li>
+  <li>
+    <p>在 Editor 栏中做出修改。</p>
+  </li>
+  <li>
+    <p>按 <code class="language-plaintext highlighter-rouge">Cmmand + S</code> （Mac）或者 <code class="language-plaintext highlighter-rouge">Ctrl + S</code> （Windows，Linux）来保存修噶。Devtools 将会以打补丁的形式将整个 js 文件加入到 Chrome 的 JavaScript 引擎中去。</p>
+  </li>
+</ol>
+
+<p caption="直接编辑js文件"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6DC1E149-D2D2-4005-A2B9-451CF0456112_2.png" alt="直接编辑js文件" title="直接编辑js文件" /></p>
+
+<p>上图中蓝框圈出来的就是编辑器栏。</p>
+
+<h2 id="实时编辑一个暂停的函数">实时编辑一个暂停的函数</h2>
+
+<blockquote>
+  <p>注意：此功能自 Chrome 105 版本往上才可用。</p>
+</blockquote>
+
+<p>当代码暂停的时候，你可以编辑当前函数然后实时应用修改，不过有以下限制：</p>
+
+<ul>
+  <li>
+    <p>你只能编辑在 <strong>Call Stack</strong> 最顶上的函数（也即当前断点所在的函数——译者注）。</p>
+  </li>
+  <li>
+    <p>调用栈中不能有对相同函数的递归调用（否则也相当于是修改了非当前调用栈的函数——译者注）。</p>
+  </li>
+</ul>
+
+<blockquote>
+  <p>💡 实时编辑暂停函数的真相是…
+当你应用一个修改的时候，debugger 工具自动重新执行（和前面的「重新执行堆栈中的函数」一样）。因此，对重新执行函数的限制与实时编辑暂停函数并生效的限制是一样的。你不能重头执行 WebAssembly、async以及generator（迭代器）函数。</p>
+</blockquote>
+
+<p>如果想实时编辑一个函数，你需要：</p>
+
+<ol>
+  <li>
+    <p>用断点暂停。</p>
+  </li>
+  <li>
+    <p>编辑断点所在的正在暂停的函数。</p>
+  </li>
+  <li>
+    <p>按下 <code class="language-plaintext highlighter-rouge">Command/Control+S</code>  来应用更改，debugger 将会自动重新执行该函数。</p>
+  </li>
+  <li>
+    <p>继续执行</p>
+  </li>
+</ol>
+
+<p caption="实时重新执行函数"><video controls="" muted=""><source src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/37CA2680-5D00-477F-A1CF-161AD18F2A5E_2.mp4" type="video/mp4" /></video></p>
+
+<p>在这个示例中，<code class="language-plaintext highlighter-rouge">addend1</code> 和<code class="language-plaintext highlighter-rouge">addend2</code> 变量在起始的时候有一个不正确的 <code class="language-plaintext highlighter-rouge">string</code> 类型。因此，字符串被错误的连接在一起而不是数字相加。为了修复此问题，在实时编辑的时候添加了<code class="language-plaintext highlighter-rouge">parseInt()</code> 函数。</p>
+
+<h2 id="搜索和替换在脚本中的文本">搜索和替换在脚本中的文本</h2>
+
+<p>如果想要在脚本中搜索一段文本，你需要：</p>
+
+<ol>
+  <li>
+    <p>在代码源（Sources）-编辑器（Editor）栏中打开文件。</p>
+  </li>
+  <li>
+    <p>按下 <strong>Command+F</strong>（Mac）或者 <strong>Ctrl+F</strong>（Windows、Linux）来打开内置的搜索栏。</p>
+  </li>
+  <li>
+    <p>在搜索栏中，输入你想要查询的字符串：</p>
+  </li>
+</ol>
+
+<p caption="搜索字符"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6D3D4E4D-22CD-4095-8773-1DFD4F3089A5_2.png" alt="搜索字符" title="搜索字符" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>另外你还可以： 
+
+* 点击 `Aa` 来匹配大小写，来让你的搜索大小写敏感。
+
+* 点击 `.*` 来使用正则匹配。
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<ol>
+  <li>按下 <code class="language-plaintext highlighter-rouge">Enter</code> 键来执行搜索。可以按下 up/down 来跳转到下一个/上一个搜索结果。</li>
+</ol>
+
+<p>如果想替换你搜索到的结果，你需要：</p>
+
+<ol>
+  <li>打开搜索栏，点击 <code class="language-plaintext highlighter-rouge">A→B</code> （手敲的不形象，看下面的图）即替换按钮来替换文本。</li>
+</ol>
+
+<p caption="按下替换按钮"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/4CFF9F79-2118-4DA6-AF12-1440A520C6F8_2.png" alt="按下替换按钮" title="按下替换按钮" /></p>
+
+<ol>
+  <li>输入想要替换的文本，然后点击 <strong>Replce</strong> 或者 <strong>Replace all</strong> 即可。</li>
+</ol>
+
+<h2 id="禁用-javascript">禁用 JavaScript</h2>
+
+<p>具体参见：<a href="https://developer.chrome.com/docs/devtools/javascript/disable/">Disable JavaScript With Chrome DevTools</a>（未翻译）。</p>
+
 
                 <div class="text-danger">- EOF -</div>
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/life/japan-travel.html" data-toggle="tooltip" data-placement="top" title="2020元旦日本行">
+                        <a href="/tech/optimize-of-my-blog-2.html" data-toggle="tooltip" data-placement="top" title="博客自动化流程及体验优化——第二弹">
                         上一篇<br>
-                        <span>2020元旦日本行</span>
+                        <span>博客自动化流程及体验优化——第二弹</span>
                         </a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/tech/Collaborative-Editing-in-ProseMirror.html" data-toggle="tooltip" data-placement="top" title="「译」ProseMirror 中的协同编辑实现">
-                        下一篇<br>
-                        <span>「译」ProseMirror 中的协同编辑实现</span>
-                        </a>
-                    </li>
                     
                 </ul>
                 <hr style="visibility: hidden;">
@@ -664,8 +1066,8 @@
       clientSecret: 'd5bd1b65b639d8697054e6e97f6308b28e9348ba',
       repo: 'x_blog',
       owner: 'Xheldon',
-      admin: ['Xheldon'],id: "the-digital-life-of-mine",labels: [],
-      title: "我的数字生活",
+      admin: ['Xheldon'],id: "javascript-debugger-reference-series01",labels: [],
+      title: "「译」官方指南系列：JavaScript 调试指南（一）",
       language: "zh-CN",
       pagerDirection: 'first',
     });
