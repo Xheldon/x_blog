@@ -3,38 +3,36 @@
 
 <head>
     <meta charset="utf-8">
-    <title>在 OS X 下使用 sz/rz 命令进行文件的下载/上传 - Xheldon Blog</title>
+    <title>家庭网络折腾之路由器 - Xheldon Blog</title>
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     
-        <meta name="description" content="无需第三方软件即可实现文件上传下载">
+        <meta name="description" content="家庭网络设备小白科普文">
     
     <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="在 OS X 下使用 sz/rz 命令进行文件的下载/上传 - Xheldon Blog">
+    <meta property="og:title" content="家庭网络折腾之路由器 - Xheldon Blog">
     
     <meta property="og:type" content="article">
     
-    <meta property="article:published_time" content="2015-07-20T16:12:45Z">
+    <meta property="article:published_time" content="2022-11-15T23:38:20Z">
     
     
     
     <meta property="article:tag" content="技术">
     
-    <meta property="article:tag" content="服务器">
     
     
-    
-        <meta name="og:description" content="无需第三方软件即可实现文件上传下载">
+        <meta name="og:description" content="家庭网络设备小白科普文">
     
     
     <meta property="og:image" content="https://www.xheldon.com/resources/img/logo.png">
     
-    <meta property="og:url" content="https://www.xheldon.com/tech/how-to-use-rz-sz-on-mac.html">
+    <meta property="og:url" content="https://www.xheldon.com/tech/home-network-router.html">
     <meta property="og:site_name" content="Xheldon Blog">
     
     <!-- Web App Manifest -->
@@ -44,7 +42,7 @@
     <link rel="shortcut icon" href="/resources/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.xheldon.com/tech/how-to-use-rz-sz-on-mac.html">
+    <link rel="canonical" href="https://www.xheldon.com/tech/home-network-router.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
@@ -203,13 +201,6 @@
     }
 
     
-    header.intro-header .header-mask{
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        background: rgba(0,0,0, 0.4);
-    }
-    
 </style>
 
 <header class="intro-header style-text" >
@@ -224,13 +215,11 @@
                         
                         <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
                         
-                        <a class="tag" href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8" title="服务器">服务器</a>
-                        
                     </div>
-                    <h1>在 OS X 下使用 sz/rz 命令进行文件的下载/上传</h1>
+                    <h1>家庭网络折腾之路由器</h1>
                     
-                    <h2 class="subheading">无需第三方软件即可实现文件上传下载</h2>
-                    <span class="meta">✍🏼 写于 2015年07月20日</span>&nbsp;&nbsp;&nbsp;  
+                    <h2 class="subheading"></h2>
+                    <span class="meta">✍🏼 写于 2022年11月15日</span>&nbsp;&nbsp;&nbsp;  
                     
                 </div>
             </div>
@@ -262,7 +251,7 @@
                         <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
                         <script>
                             var timeDom = document.getElementById('from_time');
-                            var pageTime = 1437379965; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
+                            var pageTime = 1668526700; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
                             var currentTime = Date.now();
                             var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
                             if (Number(fromNow) <= 0) {
@@ -274,73 +263,429 @@
                     
                 
                 
+                    <div class="callout-tips">🖥 &nbsp;说明：家庭网络设备小白科普文</div>
                 
-				<p><code class="language-plaintext highlighter-rouge">OS X</code> 自带的终端可以直接连接 <code class="language-plaintext highlighter-rouge">Linux</code> （相比之下, <code class="language-plaintext highlighter-rouge">Win</code> 的 <code class="language-plaintext highlighter-rouge">cmd</code> 就比较渣了）, 但是有个问题就是, 终端无法直接通过 <code class="language-plaintext highlighter-rouge">Zmodem</code> 来上传和下载文件, 这里就需要一款更强大的远程服务器连接工具: <code class="language-plaintext highlighter-rouge">iTerm</code> 的帮助了.</p>
+                
+                    <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/fqHF0RDZDOMCSS" target="_blank">https://www.craft.do/s/fqHF0RDZDOMCSS</a></div>
+                
+				<h2 id="前言">前言</h2>
 
-<p>网上很多的教程, 但是有的是为了提高访问量随便粘贴的, 完全不负责任, 讲的也不仔细, 我也是连蒙带猜费了半天的劲儿才搞好的, 坑爹. 下面我尽量使用比较浅显的话来给大家讲解.</p>
+<p>花了一周时间研究了一下路由器，浪费的时间如果不记录一下就白白浪费了，遂有此文。</p>
 
-<p>好了废话不多说, 咱们进入正题: 如何在 <code class="language-plaintext highlighter-rouge">Mac OS X</code> 下使用 <code class="language-plaintext highlighter-rouge">Zmodem</code> 中的 <code class="language-plaintext highlighter-rouge">rz/sz</code> 来上传和下载文件.</p>
+<p>之前写过<a href="/tech/my-home-network-2022.html"> 我的家庭网络拓扑结构</a>，当时使用的路由器是联通宽带送的中兴 WiFi6 双频，速度说实话也还可以，有线大概能到 500M，但是无线就比较差了，把路由器放到客厅，卧室信号就不满格，厕所干脆就没信号了，而且媳妇儿经常抱怨说淘宝、抖音，刷着刷着打不开（断流？）。因此想趁着双十一，考虑入手一款路由器。</p>
 
-<h2 id="第一步-下载-iterm2">第一步: 下载 <code class="language-plaintext highlighter-rouge">iTerm2</code></h2>
+<h2 id="我的需求">我的需求</h2>
 
-<p>首先明确, 使用自带的终端是不行的, 我们需要下载一款比终端更强大的 <code class="language-plaintext highlighter-rouge">shell</code> 工具: <a href="http://www.iterm2.cn/download"><code class="language-plaintext highlighter-rouge">iTerm2</code></a>
-  
-下载下来是个 <code class="language-plaintext highlighter-rouge">zip</code> 的压缩包, 直接解压就得到了以 <code class="language-plaintext highlighter-rouge">.app</code> 为后缀名的可执行文件, 双击打开就是 <code class="language-plaintext highlighter-rouge">iTerm2</code> 的窗口了, 过程中有警告窗口的话同意即可（就相当于是 <code class="language-plaintext highlighter-rouge">Win</code> 下的绿色软件一样无需安装）</p>
+<p>有了意向，第一步就是明确需求，我列了一下新路由器必须要满足的地方：</p>
 
-<h2 id="第二步-使用-iterm2-安装-brew">第二步: 使用 <code class="language-plaintext highlighter-rouge">iTerm2</code> 安装 <code class="language-plaintext highlighter-rouge">brew</code></h2>
+<ol>
+  <li>
+    <p>信号强。这也是这次换路由器的原因。</p>
+  </li>
+  <li>
+    <p>5 个网口，且均为千兆+。家里对网速有要求的有 Mac、PS、Swtich，都必须插网线，再加上 R4S 软路由，这就四个网口了，因此路由器必须有第五个网口才能接光猫。</p>
+  </li>
+  <li>
+    <p>稳定性（低可玩性）。因为已经有 R4S 软路由了，因此其他花里胡哨的功能如内置 UU 加速器、可刷 Openwrt 等路由器附加功能就都不是必须的了，甚至，可玩性高意味着价格高，可玩性高还意味着不稳定。</p>
+  </li>
+  <li>
+    <p>WiFi 6。这是趋势，就不多说了。</p>
+  </li>
+  <li>
+    <p>500 以内的预算。</p>
+  </li>
+</ol>
 
-<p><code class="language-plaintext highlighter-rouge">brew</code> 是一个包管理程序, 使用它可以方便的安装各种软件, 而无需输入地址, 作用相当于 <code class="language-plaintext highlighter-rouge">AppStore</code> 一样, 具体介绍请参看官网. 安装 <code class="language-plaintext highlighter-rouge">brew</code> 很简单, 使用刚刚下载后解压打开的 <code class="language-plaintext highlighter-rouge">iTerm2</code>, 输入</p>
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">ruby</span> <span class="o">-</span><span class="nx">e</span><span class="err"> </span><span class="dl">"</span><span class="s2">$(curl -fsSLhttps://raw.githubusercontent.com/Homebrew/install/master/install)</span><span class="dl">"</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-<p>即可.</p>
+<h2 id="技术调研">技术调研</h2>
 
-<p>注意看安装过程中的提示, 我在文字停止显示时就以为是安装好了, 于是开心的 <code class="language-plaintext highlighter-rouge">ls</code> 起来, 结果发现停止时是需要按下 <code class="language-plaintext highlighter-rouge">return</code> 来确认的, 按其他键就会退出安装, 过程需要按下两次 <code class="language-plaintext highlighter-rouge">return</code>, 最后显示:</p>
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">Downloading</span><span class="err"> </span><span class="nx">and</span><span class="err"> </span><span class="nx">installing</span> <span class="nx">Homebrew</span><span class="p">...</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-<p>才开始下载和安装 <code class="language-plaintext highlighter-rouge">brew</code> 这点要记住.</p>
+<p>基于以上需求，开始了路由器的研究。</p>
 
-<p>成功会提示这个:</p>
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">Installation</span> <span class="nx">successful</span><span class="o">!</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+<p>虽然我是做技术的，但是并不懂网络硬件，所想图简单省事儿，看到同事买了个 AX3000， 于是我也想买个小米路由器。看了一圈京东上的各种宣传加上论坛、百科，了解了一些基本概念，下面用大白话解释一下：</p>
 
-<p>注意, 如果通过 <code class="language-plaintext highlighter-rouge">iTerm2</code> 的 <code class="language-plaintext highlighter-rouge">brew</code> 安装不上 <code class="language-plaintext highlighter-rouge">lrzsz</code>（包括各种情况的报错 ）, 请 <a href="https://ohse.de/uwe/releases/lrzsz-0.12.20.tar.gz">手动下载 <code class="language-plaintext highlighter-rouge">lrzsz</code></a>, 这里是 <a href="https://ohse.de/uwe/software/lrzsz.html"><code class="language-plaintext highlighter-rouge">lrzsz</code> 的官网</a></p>
+<ul>
+  <li>AX NNNN，其中「NNNN」表示的就是无线速率，所以如果你在网上搜索AX3000、AX5400、AX6000，会搜出来各种不同的品牌，也就是说这并不是某一款路由器的型号，而是标识着速率、档位，数字越大，价格越贵。另外 AX 表示的是使用了 IEEE 802.11AX 技术的路由器，也叫 WiFi6 路由器。AC 表示的是使用了 IEEE 802.11AC 技术的路由器，也叫 WiFi5 路由器。</li>
+</ul>
 
-<p>需要将下载的 <code class="language-plaintext highlighter-rouge">zip</code> 压缩之后放到 <code class="language-plaintext highlighter-rouge">brew</code> 的缓存目录下: <code class="language-plaintext highlighter-rouge">/Library/Caches/Homebrew/</code></p>
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/DF84BD30-BBB9-4AD0-B78B-1F476F90E478_2.tiff" alt="Image" title="Image" /></p>
 
-<h2 id="第三步-使用-brew-安装-lrzsz">第三步: 使用 <code class="language-plaintext highlighter-rouge">brew</code> 安装 <code class="language-plaintext highlighter-rouge">lrzsz</code></h2>
-<p>在 <code class="language-plaintext highlighter-rouge">iTerm2</code> 中输入:</p>
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">brew</span> <span class="nx">install</span> <span class="nx">lrzsz</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-<p>无需操作, 看到成功提示即可.</p>
+<ul>
+  <li>
+    <p>mesh 组网，基本就是局域网漫游的意思，就是你家比较大，300平（夸张了，100多平的时候也需要），一台路由器覆盖不完全，那就需要多台路由器，但是在不同的路由器之间进行切换的时候就需要先断开再连接，于是 mesh 组网应运而生。原理是多个路由器相互连接，数据共享，信号覆盖全面，因此你一开始连接其中一台路由器，然后走到另一台路由器的时候，网不会断。</p>
+  </li>
+  <li>
+    <p>2.5G/1G 网口，1G 就是 1千兆，表示这个网口能传输的最大带宽。目前家庭带宽普遍都是在500~1000以内的，太大的 10G 的网口仅存在于局域网的 NAS 传输，如果家里没有 NAS 需求等家庭影音需求，就没必要。</p>
+  </li>
+  <li>
+    <p>链路聚合，WLAN 口链路聚合，说是可以同时插入两条网线，比如同时插入两条 500M 带宽的联通宽带，然后网速可以叠加；LAN 口链路聚合同理，我没这个需求，没研究。</p>
+  </li>
+</ul>
 
-<h2 id="第四步-配置-iterm2">第四步: 配置 <code class="language-plaintext highlighter-rouge">iTerm2</code></h2>
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/1F612049-D1F1-4678-B7F3-A57C939B0CF8_2.png" alt="Image" title="Image" /></p>
 
-<p>首先需要下载两个脚本文件, 放到 <code class="language-plaintext highlighter-rouge">/usr/local/bin</code> 目录下, 这里是 <a href="https://github.com/mmastrac/iterm2-zmodem">下载地址</a>, 点击 <code class="language-plaintext highlighter-rouge">Github</code> 页面的右下角的 <code class="language-plaintext highlighter-rouge">Download ZIP</code> 即可.</p>
+<ul>
+  <li>
+    <p>双频，就是 2.4G 和 5G 频段同时存在，5G 这么快为啥还需要 2.4G 呢？是因为有些旧设备和智能家居只支持 2.4G。</p>
+  </li>
+  <li>
+    <p>160MHZ 频宽，WiFi6 才有的这个东西，说是更快，之前都是 80MHZ。我看了下中兴的那款，确实 5G 也才到 80MHZ，越大越好。</p>
+  </li>
+</ul>
 
-<p>下载之后解压文件, <code class="language-plaintext highlighter-rouge">cd</code> 到这个解压的文件夹（名字是 <code class="language-plaintext highlighter-rouge">iterm2-zmodem-master</code>,要用 <code class="language-plaintext highlighter-rouge">root</code> 权限: <code class="language-plaintext highlighter-rouge">sudo -i</code> ）, 通过终端或者 <code class="language-plaintext highlighter-rouge">iTerm2</code> <code class="language-plaintext highlighter-rouge">copy</code> 文件到 <code class="language-plaintext highlighter-rouge">/usr/local/bin</code> 目录即可
-命令为（假设当前已经 <code class="language-plaintext highlighter-rouge">cd</code> 到 <code class="language-plaintext highlighter-rouge">iterm2-zmodem-master</code> 文件夹）:</p>
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="nx">cp</span> <span class="nx">iterm2</span><span class="o">-</span><span class="nx">recv</span><span class="o">-</span><span class="nx">zmodem</span><span class="p">.</span><span class="nx">sh</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">local</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">iterm2</span><span class="o">-</span><span class="nx">send</span><span class="o">-</span><span class="nx">zmodem</span><span class="p">.</span><span class="nx">sh</span><span class="err">（</span><span class="nx">回车</span><span class="err">） </span>
-<span class="nx">cp</span> <span class="nx">iterm2</span><span class="o">-</span><span class="nx">send</span><span class="o">-</span><span class="nx">zmodem</span><span class="p">.</span><span class="nx">sh</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">local</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">iterm2</span><span class="o">-</span><span class="nx">send</span><span class="o">-</span><span class="nx">zmodem</span><span class="p">.</span><span class="nx">sh</span><span class="err">（</span><span class="nx">回车</span><span class="err">）</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-<p>之后在 <code class="language-plaintext highlighter-rouge">iTerm2</code> 的设置界面 <code class="language-plaintext highlighter-rouge">iTerm</code> <code class="language-plaintext highlighter-rouge">偏好设置-&gt; Profiles -&gt; Default -&gt; Advanced -&gt; Triggers</code> 的 <code class="language-plaintext highlighter-rouge">Edit </code>按钮
-点击 <code class="language-plaintext highlighter-rouge">+</code> 号, 加上以下 <code class="language-plaintext highlighter-rouge">trigger</code> 信息(两行):</p>
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/86D19FCB-F1F2-4F41-801A-39376CEA0F8C_2.png" alt="Image" title="Image" /></p>
+
+<ul>
+  <li>4K QAM，没明白什么鬼说是能加快下载速度，但是目前说是只有小米手机有 20% 的提升，其他手机都不支持。</li>
+</ul>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/557A4571-8D26-4562-9EBD-8DA7A2F3E560_2.png" alt="Image" title="Image" /></p>
+
+<ul>
+  <li>OFDMA 和 MU-MIMO，不知道什么东西，说是能降低多设备打游戏的延迟，奇怪的是 TP-Link 的这个选项默认是关闭的。</li>
+</ul>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/E6B29FAB-C3A7-4930-A5C1-A3FDBCE0329D_2.png" alt="Image" title="Image" /></p>
+
+<ul>
+  <li>
+    <p>多核，说是核越多越好（不是废话嘛），提高加解密的速度，咱也不知道，问了大佬的意见，高通的芯片方案就比较成熟，别用什么博通、联发科的方案，都是垃圾。</p>
+  </li>
+  <li>
+    <p>信号放大器，顾名思义，说是能放大信号用的。</p>
+  </li>
+  <li>
+    <p>1G 超大内存，基本上内存大就表示可玩性强，因为内存大了，就可以变着法儿的折腾了，比如刷 Openwrt 机之类的，有些路由器只有 16M 内存，不存在可玩性（说的就是 XDR5480）</p>
+  </li>
+  <li>
+    <p>USB 3.0 接口，路由器要 USB 接口，用来连接外置硬盘的，搞什么家庭文件传输。</p>
+  </li>
+  <li>
+    <p>内置游戏加速器，基本都是跟网易 UU 合作，内置了游戏加速插件，可以在 Switch、PS5 联机的时候加速，不用单独再像我一样用软路由搞加速器了，本质是 VPN。</p>
+  </li>
+  <li>
+    <p>主动散热，就是加了个风扇，被动散热，就是啥也不加，散热靠天意。</p>
+  </li>
+  <li>
+    <p>IPV6，基本没用，路由器有这个功能也建议关闭，没普及的技术等于没有。</p>
+  </li>
+  <li>
+    <p>回程，分有线回程和无线回程，mesh 组网需要的东西，说是用来提高传输效率和稳定性的，不懂。</p>
+  </li>
+</ul>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/07ECFB04-C903-48AA-99D2-8835968488D2_2.png" alt="Image" title="Image" /></p>
+
+<ul>
+  <li>多频合一，就是 2.4G 和 5G 合为一个网络信号，设备连的时候先试试支不支持 5G，不支持就让它连 2.4G，这个看了一圈，都建议不要开，开了的话一些智障家居用不了。</li>
+</ul>
+
+<h2 id="技术选型">技术选型</h2>
+
+<p>OK，以上是路由器购买的时候，商家宣传的一些内容，对于我来说实际是按我的需求来买的，对比了其他的路由器后，我买了TP-Link XDR5480，买它的时候有以下考虑：</p>
+
+<ul>
+  <li>
+    <p>其实一开始是想买小米的，看了一圈它都是所有产品中相同价位用料最足和相同用料价格最便宜的。但是最后没买的原因有：</p>
+
+    <ul>
+      <li>鸡贼，旧的型号是 AX3600，下架了，说是搞了个 AX6000 的升级版，然后被人拆解后发现用料还不如 AX3600。</li>
+    </ul>
+  </li>
+</ul>
+
+<p caption="对比上一代同定位机型硬件"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/6AEAAF56-6280-4259-9379-766209C1DF02_2.png" alt="对比上一代同定位机型硬件" title="对比上一代同定位机型硬件" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-4
-</pre></td><td class="rouge-code"><pre><span class="nx">第一行</span><span class="p">:</span>
-<span class="nx">Regular</span> <span class="nx">expression</span><span class="p">:</span> <span class="err">\</span><span class="o">*</span><span class="err">\</span><span class="o">*</span><span class="nx">B0100</span>    <span class="nx">Action</span><span class="p">:</span> <span class="nx">Run</span> <span class="nx">Silent</span> <span class="nx">Coprocess</span>    <span class="nx">Parameters</span><span class="p">:</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">local</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">iterm2</span><span class="o">-</span><span class="nx">send</span><span class="o">-</span><span class="nx">zmodem</span><span class="p">.</span><span class="nx">sh</span><span class="err"> </span>
-<span class="nx">第二行</span><span class="p">:</span>
-<span class="nx">Regular</span> <span class="nx">expression</span><span class="p">:</span> <span class="err">\</span><span class="o">*</span><span class="err">\</span><span class="o">*</span><span class="nx">B00000000000000</span>    <span class="nx">Action</span><span class="p">:</span> <span class="nx">Run</span> <span class="nx">Silent</span> <span class="nx">Coprocess</span>    <span class="nx">Parameters</span><span class="p">:</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">local</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">iterm2</span><span class="o">-</span><span class="nx">recv</span><span class="o">-</span><span class="nx">zmodem</span><span class="p">.</span><span class="nx">sh</span>
+</pre></td><td class="rouge-code"><pre>* 只有四个 Lan 口，而且它的四个 Lan 口是共享的千兆的，离谱。加上小米的产品的其他尿性，当场放弃。
+
+* 可能是因为销量太大，因此我在各大平台上都看到有人说断流之类的，加上我同事买的 AX3000，也说有这个现象，但是他不确定是他家的网的问题还是路由器的问题，我秉持着宁可不买不可买错的原则，不买了！
 </pre></td></tr></tbody></table></code></pre></div></div>
-<h2 id="第五步-尽情-rzsz-吧">第五步: 尽情 <code class="language-plaintext highlighter-rouge">rz/sz</code> 吧！</h2>
-<p>之后 ssh 连接服务器, 连接成功之后试试输入 rz 就会弹出一个对话框让选择需要上传的文件, 大功告成！</p>
+
+<ul>
+  <li>
+    <p>再然后问了同事，他用的是传说中的华硕 AC86U，在 WiFi5 时代很能打，口碑不错，一个是因为华硕就是专业做路由器的，并不是像某些厂家贴牌代工之类的。另一个是因为华硕一般出品的都是高端路由器，上千的那种，所以给人一种很吊的印象，再加上其路由器可玩性很强，可以刷梅林、刷 Openwrt，因此由专业玩家圈传出来的口碑还是不错的。但是我最终没买的原因有：</p>
+
+    <ul>
+      <li>
+        <p>贵。</p>
+      </li>
+      <li>
+        <p>可玩性太强，我不需要可玩性，因此由于可玩性而带来的附加缺点「贵」，就成了最大的障碍。</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p caption="华硕"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/EE73309D-B6BE-4E40-ACD5-4742D1EAD1A4_2.png" alt="华硕" title="华硕" /></p>
+
+<ul>
+  <li>
+    <p>后来逛各种帖子的时候，如 V2EX、acwifi 等，经常有人在推 xdr5480，而且我研究了一圈，决定下单了，原因如下：</p>
+
+    <ul>
+      <li>
+        <p>我特意搜了一圈，很少有看到说有问题的。</p>
+      </li>
+      <li>
+        <p>TP-Link 老牌子了，之前都说他做低端市场，然后出 5480 是想打个翻身仗，因为该机器的 CPU 一般都是上千元机型上才有的，性能很强，而且 5G 信号非常强。</p>
+      </li>
+      <li>
+        <p>可玩性低，可玩性低就表示稳定，我正需要的就是稳定。</p>
+      </li>
+      <li>
+        <p>除了四个千兆 Lan 口外，额外带 SFP 接口，可以买猫棒直插光纤，或者当 2.5G 网口使用。</p>
+      </li>
+      <li>
+        <p>不到 500 的价格，在预算以内。</p>
+      </li>
+      <li>
+        <p>Lan 口可以作为 IPTV 口用，也就是说可以扔掉光猫了（当然我没这么做）。</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>买！</p>
+
+<p caption="买贵了，后来价格保护了 60块"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/FB076D86-7E45-49B9-83BB-6930571BD834_2.png" alt="买贵了，后来价格保护了 60块" title="买贵了，后来价格保护了 60块" /></p>
+
+<h2 id="继续折腾">继续折腾</h2>
+
+<p>路由器到手之后，打开界面看了下，确实没什么好折腾的。不过这么强的路由器，什么也不做太可惜了，于是又开始了捣鼓。</p>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/210C2B71-DA81-4D73-A064-21F90B814979_2.png" alt="Image" title="Image" /></p>
+
+<p>当前我的网络拓扑结构是，光纤入户插光猫，光猫是一级路由，然后分出来一个二级路由也就是现在买的这个 TP-Link 路由器，家里的设备都接的是 TP-Link 的无线/有线，但是仍然打开了光猫的 WiFi 功能，以便于网络故障的时候，可以连光猫的 WiFi 用来排查是路由器的问题还是光猫的问题。</p>
+
+<p>另外因为我没有路由翻墙的需求，因此将光猫的另一个千兆口（光猫有两个有线口，一个接二级路由了），接了索尼的电视，在上面装了安卓 TV 版的 Clash 看 YouTube，这个操作后来证明是很明智的，因为折腾路由的时候，可以保证电视是一直可用的。</p>
+
+<h2 id="光猫-路由器连接方式">光猫-路由器连接方式</h2>
+
+<h3 id="名词解释">名词解释</h3>
+
+<h4 id="nat-地址转换">NAT 地址转换</h4>
+
+<p>设备直接连接公网不行吗？为什么要NAT 地址转换呢？简单来说它存在的原因是，就是 IPV4 地址有限，因此运营商不会给你每家一个 IPV4 地址，所以你家里的上层网络其实还是个局域网，只不过是运营商的局域网。从你的设备发请求，请求经过路由器到光猫，需要一层 NAT 地址转换，然后从光猫到运营商的服务器又是一层 NAT 地址转换，但其实路由到光猫的这层转换这个过程是不必要的，下面说。</p>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/AB32DBA7-416B-4D17-B135-C603F6879C2D_2.png" alt="Image" title="Image" /></p>
+
+<h4 id="网段">网段</h4>
+
+<p>ipv4 中有四段（所以叫 v4），倒数第二个段不同即为不同网段，如 <code class="language-plaintext highlighter-rouge">192.168.1.1</code> 和 <code class="language-plaintext highlighter-rouge">192.168.0.1</code> 其中倒数第二段一个是1一个是2就是不同网段，不同网段之间不能直接互相访问。</p>
+
+<h4 id="dhcp">DHCP</h4>
+
+<p>就是动态分配 ip 的服务，一个网段只能有一个这个服务，否则会冲突导致上不了网。</p>
+
+<h3 id="光猫路由-路由器路由模式">光猫路由-路由器路由模式</h3>
+
+<p>这个就是普通的默认模式，光纤插光猫，从光猫的 Lan 口出来一根线插路由器的 WLAN 口，形成一二级路由。</p>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/E0465A42-43AC-4158-8D21-FDDD9A007089_2.png" alt="Image" title="Image" /></p>
+
+<p>优点：</p>
+
+<ol>
+  <li>简单，不需要任何设置。</li>
+</ol>
+
+<p>缺点：</p>
+
+<ol>
+  <li>设备需要两级 NAT 地址转换才能到公网，会造成不必要的延迟。</li>
+</ol>
+
+<h3 id="光猫路由-路由器-ap-模式">光猫路由-路由器 AP 模式</h3>
+
+<p>就是将路由器当做光猫的信号放大器，可以将多个网络连接起来，可以两两连接。</p>
+
+<p>优点：</p>
+
+<ol>
+  <li>简单，简单设置一下即可。</li>
+</ol>
+
+<p>缺点：</p>
+
+<ol>
+  <li>光猫负载大，需要承担拨号、DHCP、NAT 等功能，浪费了路由器的性能。</li>
+</ol>
+
+<h3 id="光猫路由-路由器桥接模式">光猫路由-路由器桥接模式</h3>
+
+<p>跟 AP 模式差不多，也是用来放大光猫的信号的，其可以将多个网络连接起来，但是不能两两连接。优缺点同上。</p>
+
+<h3 id="光猫桥接-路由器拨号模式">光猫桥接-路由器拨号模式</h3>
+
+<p>就是光猫只作为光纤入户后，光信号转换成电信号的设备，其他的所有任务都交给性能更强的路由器。这也是我目前使用的方案。</p>
+
+<p>优点：</p>
+
+<ol>
+  <li>
+    <p>性能差的光猫只负责光电转换（就是上面说的 SFP 猫棒的作用），不做其他作用。</p>
+  </li>
+  <li>
+    <p>家庭网络里面只有一个网段，方便管理。</p>
+  </li>
+  <li>
+    <p>通过申请公网 ip，加上路由器的端口映射（一般路由器都有这功能）方便外网管理局域网设备和软路由应用。</p>
+  </li>
+  <li>
+    <p>只有路由器一次的 NAT 地址转换，延迟更低，带宽跑满。</p>
+  </li>
+</ol>
+
+<p>缺点：</p>
+
+<ol>
+  <li>略麻烦，需要找运营商改光猫的配置，自己悄悄改完了，运营商会自动下发配置改回去。</li>
+</ol>
+
+<h3 id="路由器直连光纤模式">路由器直连光纤模式</h3>
+
+<p>这个就需要上面说的 SFP 猫棒了，可以直接插到这个猫棒上，然后猫棒插入路由器的 SFP 口，让路由器既做光电转换，又拨号。但是据说这样做的话，SFP 会很烫，而且把风险都集中到一台设备上不合理，于是我没有这么做，因为：可以，但没必要。另外需要注意的是，据说 XDR 5480 这台设备只能用 TP-Link 自己出的猫棒，网上买的华为的猫棒不能用，不知道真假。猫棒也分 2.5G 和 10G（万兆）的，越大越贵。</p>
+
+<p caption="TP-Link 的万兆猫棒"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/C043F804-0595-4202-8BC1-72B5CE413FE1_2.png" alt="TP-Link 的万兆猫棒" title="TP-Link 的万兆猫棒" /></p>
+
+<h3 id="如何让路由器拨号">如何让路由器拨号？</h3>
+
+<p>坐标北京联通。网上搜了一堆的帖子，都是比较旧的，当时还是可以找联通师傅要光猫的超级密码来修改光猫的配置，让其从路由模式变为桥接模式。</p>
+
+<p>还有的地区，死活不让光猫桥接。</p>
+
+<p>但是现在都 2022 年了，于是我打电话跟联通，以下是对话：</p>
+
+<blockquote>
+  <p>我：你好，我家宽带需要公网 ip。</p>
+</blockquote>
+
+<blockquote>
+  <p>客服回复：好的稍等，我给您转接技术专家坐席。</p>
+</blockquote>
+
+<blockquote>
+  <p>技术专家：你是要公网 ip 吗？</p>
+</blockquote>
+
+<blockquote>
+  <p>我：是的。</p>
+</blockquote>
+
+<blockquote>
+  <p>技术专家：好的，我这边后台给你改一下，十分钟后你重启一下光猫就可以了。</p>
+</blockquote>
+
+<blockquote>
+  <p>我：好的谢谢。</p>
+</blockquote>
+
+<p>完事儿。</p>
+
+<p>改完了公网 ip，还要让光猫改桥接（忘了一起给人说了），于是我又给客服打了个电话：</p>
+
+<blockquote>
+  <p>我：你好，我家的光猫想桥接，我应该怎么做？</p>
+</blockquote>
+
+<blockquote>
+  <p>客服：我给您约了维修师傅上门，明天八点半前联系您。</p>
+</blockquote>
+
+<blockquote>
+  <p>我：你们不能直接后台操作，然后我这边配置一下吗？必须要师傅上门吗？</p>
+</blockquote>
+
+<blockquote>
+  <p>客服：是的。</p>
+</blockquote>
+
+<blockquote>
+  <p>我：好的。</p>
+</blockquote>
+
+<p>第二天，师傅联系我：</p>
+
+<blockquote>
+  <p>师傅：你是想改桥接是吧？</p>
+</blockquote>
+
+<blockquote>
+  <p>我：是的，想外网访问局域网的设备和服务。</p>
+</blockquote>
+
+<blockquote>
+  <p>师傅：行，你等会儿，五分钟后我让后台给你改，我这边配置下发就行。</p>
+</blockquote>
+
+<blockquote>
+  <p>我：您不用上门吗？</p>
+</blockquote>
+
+<blockquote>
+  <p>师傅：不用，有什么需要我上门的吗？你要搞桥接肯定懂这个呀，自己操作就行了。</p>
+</blockquote>
+
+<blockquote>
+  <p>我：我虽然懂，但是光猫上的一些设置不需要你们来操作吗？</p>
+</blockquote>
+
+<blockquote>
+  <p>师傅：不用，后台配置下发就行，光猫都不用重启，你就在路由器填光猫里面的那个宽带账号和密码就行，我这边配置改完了再联系你。</p>
+</blockquote>
+
+<blockquote>
+  <p>我：好的。</p>
+</blockquote>
+
+<p>两分钟后，师傅联系我说，好了，于是我就直接在 TP-Link 的上网方式里面，选拨号上网，然后输入宽带账号密码拨号即可。宽带账号密码不知道的问联通师傅给你查，也可以进光猫查看，虽然里面的密码加密的，但是有 F12，改 input 元素的 type 即可，问题不大。</p>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/ACC3C6BD-1248-48E4-A418-CE9EDAB86924_2.png" alt="Image" title="Image" /></p>
+
+<h2 id="tp-link-的简单玩法">TP-Link 的简单玩法</h2>
+
+<p>DDNS + 端口映射是唯一可以玩的，不过对我来说已经足够了，因为我有 R4S，在外网通过端口映射和 TP-Link 自带的 DDNS 服务，访问 R4S 的界面和其上的各种服务，非常方便。以下是 TP-Link 的设置。</p>
+
+<h3 id="ddns">DDNS</h3>
+
+<p>原理示意图：</p>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/6EF8D96C-F524-4208-9C6D-654ED16C6E5B_2.tiff" alt="Image" title="Image" /></p>
+
+<p>公网 ip 有了，但是运营商给你家宽带的 ip 地址并不固定，每次访问都要查 ip，如何方便的访问呢？答案就是 DDNS。路由器肯定知道你家的公网地址，然后再在路由器内将一个域名跟这个地址绑定一下，每次访问这个域名，就是访问最新的你家宽带的公网地址。</p>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/C0057015-EBE9-4C59-A281-BFDE21E4FB28_2.tiff" alt="Image" title="Image" /></p>
+
+<p>参考：</p>
+
+<p><a class="link-bookmark" href="https://service.tp-link.com.cn/detail_article_2444.html" target="_blank"><span><img src="https://service.tp-link.com.cn/favicon.ico" /></span><span><span>[云路由器] TP-LINK DDNS动态域名的使用方法 - TP-LINK 服务支持</span><span>
+https://service.tp-link.com.cn/detail_article_2444.html
+</span><span>https://service.tp-link.com.cn/detail_article_2444.html</span></span></a></p>
+
+<h3 id="虚拟端口映射">虚拟端口映射</h3>
+
+<p>示意图：</p>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/A55C6EDD-239D-4B07-9B1D-2F1255FB42FF_2.tiff" alt="Image" title="Image" /></p>
+
+<p>运营商为了安全，给你的公网 ip，一般是会封掉 web 服务常用的 80、8080 端口的，而且内网离会有多个服务分布在不同的端口，因此你需要端口映射，即从外网访问的端口，映射到内网中的端口，设置如下：</p>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/F9B87721-ED75-4A54-8BDC-E97D98C27373_2.tiff" alt="Image" title="Image" /></p>
+
+<p>参考：</p>
+
+<p><a class="link-bookmark" href="https://service.tp-link.com.cn/detail_article_2441.html" target="_blank"><span><img src="https://service.tp-link.com.cn/favicon.ico" /></span><span><span>[云路由器] 如何映射服务器到外网 - TP-LINK 服务支持</span><span>
+https://service.tp-link.com.cn/detail_article_2441.html
+</span><span>https://service.tp-link.com.cn/detail_article_2441.html</span></span></a></p>
+
+<p>效果：</p>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/home-network-router/E071C9FF-3F98-4883-9E58-C137BD1A916C_2.png" alt="Image" title="Image" /></p>
+
+<h2 id="结束语">结束语</h2>
+
+<p>网络拓扑的知识真的挺有意思的。在互联网刚诞生的阶段，谁也不会也想不到互联网会发展成如今的样子。而每个系统都是从简单，到复杂；从低等，到高等一步步发展来的，因此你可以在一些简单的设备中，发掘到在互联网设计之初，设计者们是如何思考的，然后遇到了什么问题（比如 ipv4 枯竭和对应的解决方案 NAT 地址转换技术），然后他们是如何解决的，如果是你的话，会如何解决呢？非常有意思。</p>
 
 
                 <div class="text-danger">- EOF -</div>
@@ -348,19 +693,12 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/life/in-the-ganjiang-river.html" data-toggle="tooltip" data-placement="top" title="赣江边上, 滕王阁前">
+                        <a href="/tech/the-using-of-clash-for-windows.html" data-toggle="tooltip" data-placement="top" title="关于 Clash 使用的一点记录">
                         上一篇<br>
-                        <span>赣江边上, 滕王阁前</span>
+                        <span>关于 Clash 使用的一点记录</span>
                         </a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/tech/how-i-think-people-privacy.html" data-toggle="tooltip" data-placement="top" title="关于收集用户隐私的看法">
-                        下一篇<br>
-                        <span>关于收集用户隐私的看法</span>
-                        </a>
-                    </li>
                     
                 </ul>
                 <hr style="visibility: hidden;">
@@ -576,8 +914,8 @@
       clientSecret: '8091d57674976bcd60fc05261bf93c00da7e5ff4',
       repo: 'x_blog',
       owner: 'Xheldon',
-      admin: ['Xheldon'],id: "how-to-use-rz-sz-on-mac",labels: [],
-      title: "在 OS X 下使用 sz/rz 命令进行文件的下载/上传",
+      admin: ['Xheldon'],id: "home-network-router",labels: [],
+      title: "家庭网络折腾之路由器",
       language: "zh-CN",
       pagerDirection: 'first',
     });
