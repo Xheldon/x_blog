@@ -3,41 +3,43 @@
 
 <head>
     <meta charset="utf-8">
-    <title>「译」ProseMirror 的由来 - Xheldon Blog</title>
+    <title>2022 年展望和 2023 年回顾 - Xheldon Blog</title>
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     
-        <meta name="description" content="原文作者写于 2015 年 7 月 7 日，作者决定要写一个富文本框架的时候写的一片文章，两年后 ProseMirror 1.0 发布，本文偏意译。">
+        <meta name="description" content="2022 大事记和 2023 回顾">
     
     <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
     <meta name="theme-color" content="#000000">
     <meta name="twitter:card" content="summary_large_image">
     <!-- Open Graph -->
-    <meta property="og:title" content="「译」ProseMirror 的由来 - Xheldon Blog">
+    <meta property="og:title" content="2022 年展望和 2023 年回顾 - Xheldon Blog">
     
     <meta property="og:type" content="article">
     
-    <meta property="article:published_time" content="2021-11-05T10:53:56Z">
+    <meta property="article:published_time" content="2023-01-05T10:08:35Z">
     
     
     
-    <meta property="article:tag" content="技术">
+    <meta property="article:tag" content="生活">
     
-    <meta property="article:tag" content="ProseMirror">
+    <meta property="article:tag" content="2022">
     
-    <meta property="article:tag" content="翻译">
+    <meta property="article:tag" content="总结">
+    
+    <meta property="article:tag" content="计划">
     
     
     
-        <meta name="og:description" content="原文作者写于 2015 年 7 月 7 日，作者决定要写一个富文本框架的时候写的一片文章，两年后 ProseMirror 1.0 发布，本文偏意译。">
+        <meta name="og:description" content="2022 大事记和 2023 回顾">
     
     
     <meta property="twitter:image" content="https://www.xheldon.cn/resources/img/logo.png">
     <meta property="og:image" content="https://www.xheldon.cn/resources/img/logo.png">
     
-    <meta property="og:url" content="https://www.xheldon.cn/tech/ProseMirror.html">
+    <meta property="og:url" content="https://www.xheldon.cn/life/my-2022.html">
     <meta property="og:site_name" content="Xheldon Blog">
     
     <!-- Web App Manifest -->
@@ -47,7 +49,7 @@
     <link rel="shortcut icon" href="/resources/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.xheldon.cn/tech/ProseMirror.html">
+    <link rel="canonical" href="https://www.xheldon.cn/life/my-2022.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
@@ -73,8 +75,8 @@
 
     <!-- Navigation -->
 
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
-    
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -206,9 +208,16 @@
     }
 
     
+    header.intro-header .header-mask{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0,0,0, 0.4);
+    }
+    
 </style>
 
-<header class="intro-header style-text" >
+<header class="intro-header" >
 
     <div class="header-mask"></div>
     
@@ -218,17 +227,19 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+                        <a class="tag" href="/archive/?tag=%E7%94%9F%E6%B4%BB" title="生活">生活</a>
                         
-                        <a class="tag" href="/archive/?tag=ProseMirror" title="ProseMirror">ProseMirror</a>
+                        <a class="tag" href="/archive/?tag=2022" title="2022">2022</a>
                         
-                        <a class="tag" href="/archive/?tag=%E7%BF%BB%E8%AF%91" title="翻译">翻译</a>
+                        <a class="tag" href="/archive/?tag=%E6%80%BB%E7%BB%93" title="总结">总结</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E8%AE%A1%E5%88%92" title="计划">计划</a>
                         
                     </div>
-                    <h1>「译」ProseMirror 的由来</h1>
+                    <h1>2022 年展望和 2023 年回顾</h1>
                     
                     <h2 class="subheading"></h2>
-                    <span class="meta">✍🏼 写于 2021年11月05日</span>&nbsp;&nbsp;&nbsp;  
+                    <span class="meta">✍🏼 写于 2023年01月05日</span>&nbsp;&nbsp;&nbsp;  
                     
                 </div>
             </div>
@@ -255,121 +266,447 @@
                 <!-- Multi-Lingual -->
                 
                 
-                    
-                        
-                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
-                        <script>
-                            var timeDom = document.getElementById('from_time');
-                            var pageTime = 1636080836; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
-                            var currentTime = Date.now();
-                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
-                            if (Number(fromNow) <= 0) {
-                                fromNow = 1; // Note: 至少显示一天
-                            }
-                            timeDom.innerText = fromNow
-                        </script>
-                    
-                    
-                    <div class="reference-tips">🔗 &nbsp;原文：<a href="https://marijnhaverbeke.nl/blog/prosemirror.html" target="_blank">https://marijnhaverbeke.nl/blog/prosemirror.html</a></div>
-                    
+                
+                    <div class="callout-tips">🖥 &nbsp;说明：2022 大事记和 2023 回顾</div>
                 
                 
-                    <div class="callout-tips">🖥 &nbsp;说明：原文作者写于 2015 年 7 月 7 日，作者决定要写一个富文本框架的时候写的一片文章，两年后 ProseMirror 1.0 发布，本文偏意译。</div>
+                    <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/0xwTpwdoCsX5m1" target="_blank">https://www.craft.do/s/0xwTpwdoCsX5m1</a></div>
                 
-                
-				<p>有的时候我晚上躺在床上，狂热地寻找新的途径，以让自己承担更多只有微薄收入的责任。然后我就想到了，我应该开始另一个开源项目！</p>
+				<p>本来我是并不打算写这些东西的，因为我并不是一个仪式感特别重的人。但是 2022 年是一个从各个方面来说都注定不平凡的一年，因此我想趁着 2023 年元旦来临的时候，回顾一下我的 2022 年，算是对疫情时代的告别。当然有告别就有迎接，所以本文中也会有对 2023 年的规划和展望。</p>
 
-<p>好吧，上述情况并不是真的发生了，但结果是一样的：我不断地构建复杂的、高难度的代码，然后放弃它。实际上，这个流程机制通常是，我首先会想到了一些技术概念，然后调查后发现它还没有被做过，最后我为了满足一些好奇心和自我价值的实现，决定要看看我是否 <em>能够</em> 做到。</p>
+<p>可能有点偏时间线叙事或者流水账式的索然无味，看看就好。</p>
 
-<p>上述机制产生了这个最新的「祸害」（虽然我并不是要放弃它）：<a href="https://prosemirror.xheldon.com">ProseMirror</a>，一个基于浏览器的富文本编辑器。我通过<a href="https://www.indiegogo.com/projects/prosemirror/#/">众筹</a>的方式把它开源，并且<a href="https://marijnhaverbeke.nl/blog/sustainable-maintenance.html">考虑</a>了一下如何让发布后的维护工作持续下去。</p>
+<h2 id="2022-年-q1辞旧迎新">2022 年 Q1：辞旧迎新</h2>
 
-<h2 id="一个编辑器">一个编辑器？</h2>
+<p>2022 年元旦去了自然博物馆，感受了一下「我们是谁，我们从哪里来？」的灵魂拷问：</p>
 
-<p>我不是刚说过要实现那些「还没有人做过」的事情吗？现在不是至少有上百个基于浏览器的富文本编辑器吗？</p>
+<p caption="灵魂拷问"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/60C79845-C0E2-4E75-84A6-E96210CDFD7F_2.png" alt="灵魂拷问" title="灵魂拷问" /></p>
 
-<p>是的，是的，是的。但是，现有的项目中没有一个采取我认为是理想的方法。它们中的许多都牢牢地扎根于旧的模式，即依靠 contentEditable 元素，然后试图理清所产生的混乱。这让我们对用户和浏览器对我们的文档所做的事情几乎没有控制。</p>
+<h3 id="迎新">迎新</h3>
 
-<p>我们需要控制什么呢？首先，一个富文本编辑器应该能够让我们能更容易将文档保持在一个合理的状态。如果文档只被你的代码修改，你可以定义这些修改，使它们保留你想保留的不变性，而且你可以确保在不同的浏览器上发生同样的事情。</p>
+<h4 id="搬新家">搬新家</h4>
 
-<p>但更重要的是，它允许你以一种更抽象的方式来表示这些修改，而不仅仅是状态的变更：「这里发生了一些变化，因此有了一个新的文档」。而抽象的方式来表示修改在协同编辑时是非常有帮助的—-有效地合并来自多个用户的冲突的修改，这有助于准确地表示修改的 <em>意图</em>。</p>
-
-<h2 id="基本实现方案">基本实现方案</h2>
-
-<p>ProseMirror 确实创建了一个 contentEditable 元素，它在其中显示其文档。这让我们可以自由操作所有与焦点和光标运动有关的逻辑，并使其更容易支持屏幕阅读器和双向文本。</p>
-
-<p>对文档所做的任何实际修改都是通过处理合适的浏览器事件来捕获的，并转换为我们自己对这些修改的表述。这对于相对现代一点的浏览器而言，大多数类型的修改抽象描述起来都很容易。我们可以处理按键事件来捕获输入的文本以及诸如退格和回车之类的东西。我们可以处理剪贴板事件，使复制、剪切和粘贴正常运行。拖放也是通过事件来实现的。甚至 IME 输入也可以触发相对可用的<a href="https://developer.mozilla.org/en-US/docs/Web/API/CompositionEvent">组合事件</a>。</p>
-
-<p>不幸的是，在一些情况下，浏览器不会触发描述用户意图的事件，而你得到的只是一个事后的 <code class="language-plaintext highlighter-rouge">输入</code> 事件的结果。例如，当从拼写检查菜单中选择更正时，以及使用组合键输入特殊字符时（例如，在Linux上使用 「Multi + e + =」来输入「€」，都会发生这种情况。幸运的是，到目前为止，我遇到的所有这种情况都只涉及简单的、字符级的输入。我们可以检查 DOM，将其与我们对文档的表述进行比较，并从中得出预期的修改。</p>
-
-<p>当进行修改时，编辑器对文档的表示就会改变，然后显示（屏幕上的 DOM 元素）就会更新以反映新的文档。通过为文档使用一个持久化的数据结构—-使修改创建一个新的文档对象，而不改变旧的对象—-我们可以使用一个非常快速的文档差异算法，只进行实际需要的 DOM 更新。这有点类似于 <a href="https://reactjs.org">React</a> 和它的各种衍生产品所做的，只是 ProseMirror 是用它自己的文档表示，而不是用一个通用的类 DOM 的数据结构。</p>
-
-<h2 id="编辑器文档">编辑器文档</h2>
-
-<p>这个文档表示法当然不会是 HTML。不过它同样也是文档的「语义化」表示：是一个树形的数据结构，以段落、标题、列表、强调、链接等方式描述文本的结构。它可以被渲染成 DOM 树，也可以被呈现为 Markdown 文本，以及其他任何恰好能够表达它所编码的概念的格式。</p>
-
-<p>这个表示法的外层，即处理关于段落、标题、列表等的部分，在结构上特别像 DOM—它由带有子节点的节点组成。段落节点（和其他块级元素，如标题）的内容被表示为内联元素的平面序列，每一个都有一组与之相关的样式。这比全盘使用像 DOM 那样的树状结构要好。它使我们更容易追踪到不变的部分，比如不允许文本被使用强调标签包裹两次，并允许我们将段落中的位置表示为简单的字符偏移，这比在树中的位置更容易推理。</p>
-
-<p>在段落之外，我们不得不使用树状结构。因此，文档中的一个位置由一个路径表示，它是一个整数序列，表示树中每一级的子索引，以及这个路径末端的节点的偏移量。这就是光标位置的表示方法，也是记录发生修改的位置的方法。</p>
-
-<p>ProseMirror 目前的文档模型反映了 Markdown 的模型，完美支持可以用该格式表达的东西。在将来的时候，你将能够扩展和定制你想在某个编辑器实例中使用的文档模型。</p>
-
-<h2 id="用户界面">用户界面</h2>
-
-<p>目前市面上的编辑器有两种风格的用户界面，一种是顶部的经典工具条，另一种是在你的选区上方显示工具提示，以设置行内样式，以及一个在当前选择的段落右侧有一个菜单按钮，用于块级操作。我比较喜欢后者，因为当你不使用它的时候，它不会消失不见（不会丝毫影响你的文档），但我估计很多人更喜欢熟悉的工具栏。</p>
-
-<p>以上这些用户界面都是作为编辑器核心之外的模块实现的，其他的用户界面风格也可以在相同的 API 之上实现。</p>
-
-<p>键的绑定也是可配置的，遵循 <a href="https://codemirror.net/doc/manual.html#keymaps">CodeMirror 的模式</a>。键被绑定的功能可以作为被叫做「命令」的方式使用，也可以通过 <code class="language-plaintext highlighter-rouge">execCommand</code> 方法从脚本中运行。</p>
-
-<p>最后，有一个叫做 <code class="language-plaintext highlighter-rouge">inputrules</code> 的模块，可以用来指定当输入匹配给定模式的文本时应该发生什么。它可以用于像「智能引号」这样的事情，也可以在你输入「1.」并按下空格时创建一个列表。</p>
-
-<h2 id="协同编辑">协同编辑</h2>
-
-<p>我之前提到过协同。这个项目所做的大量工作就是为了使它支持实时协同编辑。我写了另一篇关于技术细节的<a href="https://marijnhaverbeke.nl/blog/collaborative-editing.html">博文</a>（已被翻译成<a href="/tech/Collaborative-Editing-in-ProseMirror.html">中文</a>），其中概念大致是这样的：</p>
-
-<p>当对文档进行修改时，它会创建一个新的文档以及一个位置映射，将旧文档中的位置映射到新文档中的位置。比如，为了响应修改而移动光标的时候。</p>
-
-<p>能够映射位置，就有可能通过映射应该应用的位置，在其他修改的基础上「<a href="https://git-scm.com/docs/git-rebase">rebase</a>」修改。还有其他更多的东西，我因此重写了好几次才把这个系统写好，但我很有信心，我最终得到了一些运行符合预期的代码。</p>
-
-<p>在一个协作的场景中，当一个客户进行修改时，他们会在本地进行缓冲，然后发送到服务器上。如果另一个客户端在我们的修改到达之前提交了它的修改，服务器会回应说「不，先应用我们的这些修改」，然后另一个客户端就会接受这些修改，在它们的基础上重新建立自己的修改，然后再试一次。当修改通过时，它们就会被广播给所有其他客户端，确保每个人都保持同步。</p>
-
-<h2 id="目标用户">目标用户</h2>
-
-<p>谁适合使用 ProseMirror？</p>
+<p>当然，搬入新家是开年的头等大事。经过了 3 个多月的装修以及两个月左右的通风晾味，我们终于搬进了北京的这所属于我们自己的小房子里面。装修期间有很多不愉快，比如：</p>
 
 <ul>
   <li>
-    <p>一方面，那些使用 Markdown 或一些类似格式输入的网站可能希望为他们的技术性不强的用户提供一个更容易学习的界面，然后只需将结果转换为 Markdown。</p>
+    <p>我们发现卫生间暖气顶上「可能」存在漏水隐患，于是想联系楼上我们出钱让暖气公司把管道换一换，但是未果，甚至吵了起来，最终作罢。</p>
   </li>
   <li>
-    <p>另一方面，那些一直提供传统的富文本输入，但又想控制输出内容的网站可能想转到 ProseMirror，因为让编辑体验直接反映和执行你的约束，比清理混乱的HTML并希望得到最好的结果要好得多。</p>
+    <p>定制的橱柜、客厅柜，或多或少总存在一些与我们在店里体验的柜子丝滑度差异较大的问题；</p>
   </li>
   <li>
-    <p>最后，那些希望支持协同编辑同时想让用户在谷歌文档上做的事情转移到在自己的产品上进行文档编辑的公司。</p>
+    <p>泥瓦匠施工的时候有些地方做的不地道，后期带来了一点麻烦。</p>
+  </li>
+  <li>
+    <p>一些细小的地方。</p>
   </li>
 </ul>
 
-<p>听起来很有趣？看看这个开源项目的<a href="https://www.indiegogo.com/projects/prosemirror/#/">众筹活动</a>是如何进行的。</p>
+<p caption="图为瓦工贴瓷砖期间所摄"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/DE1ED80A-1CE9-430E-AF22-A9DC7DFE084D_2.png" alt="图为瓦工贴瓷砖期间所摄" title="图为瓦工贴瓷砖期间所摄" /></p>
 
+<p>装修的事情如定方案、刷小红书、做功课装修注意事项、选建材、买家具，基本都是她一个人在操心，我扮演的角色只是早上去工地跑跑腿检查一下施工师傅有没有偷懒和施工进度以及家庭网络结构设计，在此感谢老婆的耐心、细心、操心和决心。</p>
+
+<p caption="图为摆拍"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/B4CAF19C-9EDF-470B-ABDD-8B9A68AFF452_2.png" alt="图为摆拍" title="图为摆拍" /></p>
+
+<h4 id="购买-ps5">购买 PS5</h4>
+
+<p>因为一些众所不周知的原因，老婆打赌输了，赌注是一台国行 PS5，在朋友的以身试法确定可以登录外区账号之后，果断下单了一台。下单的同时还买了《双人成行》，但是由于一些莫名其妙我难以理解的原因，老婆并不跟我一起玩 PS5，原因不明。之后还开通了 PS 会员，开心的进入了主机玩家的行列。</p>
+
+<p caption="图为 战神4 系列"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/BFC43007-C825-4548-A6EF-D657CA915FE1_2.jpeg" alt="图为 战神4 系列" title="图为 战神4 系列" /></p>
+
+<h3 id="辞旧">辞旧</h3>
+
+<h4 id="送走黏糕">送走黏糕</h4>
+
+<p>因为媳妇儿的鼻炎日益严重，以至于到了要做手术（切除腺样体）的地步，因此我们做了一个艰难的决定：把黏糕送走。</p>
+
+<p caption="图为可可爱爱的年糕"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/25D09F7E-550B-4C65-83D8-702F1A25D4FD_2.jpeg" alt="图为可可爱爱的年糕" title="图为可可爱爱的年糕" /></p>
+
+<p>起先是联系了我的同事，他们家有一只大橘，想找一个伴陪着，两只猫不孤单——其实这也是我的想法，因为只有一只猫自己在家太孤单了——起初是挺好的，两只猫刚认识互相躲得远远的很正常，但是相处了一周之后还是会打架而且大橘这么大体型居然打不过我家猫…于是最终还是被「遣返」回来了。</p>
+
+<p caption="图为年糕和大橘"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/20F64A0B-1EF4-4895-9CEB-8DE98ADA4EE3_2.jpeg" alt="图为年糕和大橘" title="图为年糕和大橘" /></p>
+
+<p>最终，我们把黏糕送给了老婆的朋友家「暂时」养着，将来还是需要找好心人领养，哎，苦命的黏糕。</p>
+
+<p caption="图为黏糕和他的姐妹"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/DC85FB33-6D55-4FC9-9A56-EFA7A271CE20_2.jpeg" alt="图为黏糕和他的姐妹" title="图为黏糕和他的姐妹" /></p>
+
+<h2 id="2022-年-q2万物复苏">2022 年 Q2：万物复苏</h2>
+
+<p>去春游！</p>
+
+<p caption="图为奥森公园里的花骨朵"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/DF75C5D3-EE39-4482-B362-AAE57BCABD00_2.jpeg" alt="图为奥森公园里的花骨朵" title="图为奥森公园里的花骨朵" /></p>
+
+<p>去吃好吃的！</p>
+
+<p caption="图为潮汕牛肉火锅"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/ABC55E8F-8869-4B01-8346-632722F0CEA4_2.png" alt="图为潮汕牛肉火锅" title="图为潮汕牛肉火锅" /></p>
+
+<p>去做手术！ （切除腺样体）</p>
+
+<p caption="图为即将进手术室的小王"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/E4555BEC-8E97-4D62-BE24-28AF55B42FCB_2.png" alt="图为即将进手术室的小王" title="图为即将进手术室的小王" /></p>
+
+<p>去踏青！</p>
+
+<p caption="图为望和公园"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/F40BDD9C-8998-473E-96C5-3634CFF33A92_2.png" alt="图为望和公园" title="图为望和公园" /></p>
+
+<p>去做饭！</p>
+
+<p caption="图为空气炸锅烤地瓜"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/EC9BB4C7-B91A-4ABF-A9B0-181A73A1E200_2.png" alt="图为空气炸锅烤地瓜" title="图为空气炸锅烤地瓜" /></p>
+
+<p caption="图为面包鸡蛋青椒丁早餐"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/BE802FDF-58F6-46ED-AAE6-3B52F2023006_2.png" alt="图为面包鸡蛋青椒丁早餐" title="图为面包鸡蛋青椒丁早餐" /></p>
+
+<p>去测甲醛！</p>
+
+<p caption="图为甲醛检测仪工作中"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/7BAD55C9-033E-4FFA-A67F-8AD60E6AC47E_2.png" alt="图为甲醛检测仪工作中" title="图为甲醛检测仪工作中" /></p>
+
+<p>去加班！</p>
+
+<p caption="图为工地夜景 "><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/88D2CC69-87FC-427D-8FBD-8A2830B4ABF8_2.jpeg" alt="图为工地夜景 " title="图为工地夜景 " /></p>
+
+<p>去逛街！</p>
+
+<p caption="图为蓝港街拍"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/23785079-569B-4724-9F95-4D79E65566A1_2.png" alt="图为蓝港街拍" title="图为蓝港街拍" /></p>
+
+<h2 id="2022-年-q3快乐暑假">2022 年 Q3：快乐暑假</h2>
+
+<h3 id="天文博物馆参观">天文博物馆参观</h3>
+
+<p>侄子暑假过完要升初二了，加上丈母娘赔他去省城做一个口腔积液的小手术，顺道就来北京看看小王，顺便让我辅导一下侄子的物理。空闲之余还会去博物馆参观，打打游戏，我时常想：如果我小时候有一个能带我去天文博物馆的姑父，我不得乐疯了。</p>
+
+<p caption="图为参观天文博物馆期间"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/A81E1B3F-65C0-4183-91ED-91380E2B4AA5_2.png" alt="图为参观天文博物馆期间" title="图为参观天文博物馆期间" /></p>
+
+<p>期间也跟老婆达成共识，侄子将来肯定要学文科的（搞得好像是自家孩子一样），因为他对物理现象和天体规律或者说白了就是世界运行的基本规律并不感兴趣，充其量只是想知道一个答案，并不细想背后的原因。加上对他乐观能说会道的性格的了解，我和老婆一致认为最适合他的工作是：公务员。</p>
+
+<h3 id="通关双人成行">通关双人成行</h3>
+
+<p>上面也提到，因为一些我不知道的原因，老婆不愿意和我一起打双人成行，于是趁着侄子来北京，和他将其通关了。他的评价：这游戏太好玩了！以至于我后续和他一起玩儿的如 Magicka、麻布仔大冒险、忍者神龟：施耐德的复仇、分手厨房、分手搬家、Unravel 等双人游戏，都表示不如双人成行，果然一上来就拔高了预期不行啊，由奢入俭难。</p>
+
+<p caption="图为忍者神龟：施耐德的复仇"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/8D22F1AC-7C63-4899-B22D-3F43E73A879B_2.jpeg" alt="图为忍者神龟：施耐德的复仇" title="图为忍者神龟：施耐德的复仇" /></p>
+
+<h3 id="北大红楼">北大红楼</h3>
+
+<p>基本就是电视书上宣传的那一套，里面的工作人员会不停走动来保证你在他们的视线范围不会消失超过 30s，以防你做出什么不好的举动。</p>
+
+<p>这里我还观察到的一个特色是，工作人员长得都非常帅气和漂亮，不知道是不是特意筛选过的。</p>
+
+<p>我寻思这里的工作人员工作挺棒的，每天来这儿走来走去，说不定还有轮岗调休之类的，还是体制内带编制。于是我上前问了一下其中一位工作人员：</p>
+
+<p>我：你们在这儿上班有编制吗？</p>
+
+<p>答：没有的，我们只是物业。</p>
+
+<p>说着亮了亮胸前的牌子，我这才看到他身上带着的「首开物业」的标志，尴尬。</p>
+
+<p caption="图为北大红楼中所摄"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/85C93492-715F-47B8-866B-4A8D50E564B0_2.png" alt="图为北大红楼中所摄" title="图为北大红楼中所摄" /></p>
+
+<h3 id="北灵山徒步">北灵山徒步</h3>
+
+<p>在城市里呆久了总想想出去走走，于是和朋友一起去山上徒步看风景了。因为需要早上起的比较早，小王就没去。</p>
+
+<p caption="图为徒步期间拍摄 "><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/47C6CB5F-AE96-4A44-BD54-A42549DACDE5_2.png" alt="图为徒步期间拍摄 " title="图为徒步期间拍摄 " /></p>
+
+<h3 id="环球影城">环球影城</h3>
+
+<p>团建去的，用同事的话说就是：坐了一天的过山车。因为基本每个 IP 中，如小黄人、变形金刚、哈利波特、侏罗纪公园等，让你身临其境让你体验的方式都是「5D 过山车」，就是那种人在上面做，座位在轨道上动，带上 3D 眼睛，同时配合轨道两侧的声光特效甚至喷的水，让你体验到「身临其境」的感觉。</p>
+
+<p>说实话这种「5D」体验，玩个两次就开始腻了，期待能有更多的形式展现吧！</p>
+
+<p caption="图为哈利波特中会飞的车"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/93DF15EC-5232-49B1-93BE-3F02B71AA17F_2.png" alt="图为哈利波特中会飞的车" title="图为哈利波特中会飞的车" /></p>
+
+<h3 id="打乒乓球">打乒乓球</h3>
+
+<p>同事间兴起一股打球热，最可气的是还是那种器材党的打球热，于是我也入手了一款 800 块左右的球拍，感觉还不错。</p>
+
+<p caption="图为交流病情中"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/867DAE00-FB2D-434E-B9AC-715E24E230E6_2.png" alt="图为交流病情中" title="图为交流病情中" /></p>
+
+<h3 id="陪父母游北京">陪父母游北京</h3>
+
+<p>国庆的时候小王提出想回家看看，但是不想带我去，因为她觉得我什么都听她的，如果带我去她家，会让我父母觉得她不想去我家（哎我最烦这种亲戚关系猜心思了，但是小王考虑的很全面，这点我很佩服）。于是我又一个大胆的决定：把我父母接到北京旅游。于是当场问了下父母是否有时间，回答是有，于是立即下单购买了往返的高铁票。</p>
+
+<p>我妈说这一趟来主要目的是爬长城，于是在去过恭王府、北海公园、国际惯例的天安门之后，就带着她去爬长城了。</p>
+
+<p caption="图为恭王府的猫"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/DCCD6BD7-A8F5-4FF8-A57A-F6D3A6388A56_2.jpeg" alt="图为恭王府的猫" title="图为恭王府的猫" /></p>
+
+<p caption="图为胡同里的猫"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/9DC6B414-A33E-4F19-B0F5-F19A9DF66438_2.png" alt="图为胡同里的猫" title="图为胡同里的猫" /></p>
+
+<p>这次终于爬上了最高点后又到了北 10 楼，几乎快走完全程了，我甚至没有感觉得很累，之前陪丈母娘爬长城的时候，爬到北四楼就很累了。难道是之前打乒乓球锻炼了脚力的原因？</p>
+
+<p caption="图为爬长城期间拍摄"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/96FC2840-9756-42AA-9AA7-16BFFB494CBD_2.png" alt="图为爬长城期间拍摄" title="图为爬长城期间拍摄" /></p>
+
+<h2 id="2022-年-q4黎明之前的黑暗">2022 年 Q4：黎明之前的黑暗</h2>
+
+<h3 id="复苏的疫情和莫测的政策">复苏的疫情和莫测的政策</h3>
+
+<p>进入到冬天了，疫情又开始复苏，加上政策的多变，每个人做核酸的时候都积攒着怒气，就差一个二段 EQ 闪 + W 红怒爆发了。</p>
+
+<p>要是和平常一样，3 天 72 小时做一次核酸也没什么，毕竟大家都习惯了。但是很奇怪的是政府在年末的时候，开始无规律裁撤核酸点，想做核酸必须去很远的地方排队，而且一天比一天远。因为核酸点比较少，排队的人也非常多。同时核酸点还经常只做一上午，下午不做了，或者今天这个点做，明天就不做了。没有人能说清楚今天到底哪个地方还能做核酸。</p>
+
+<p>据我亲身体验，每次我去做核酸的时候，都会起冲突然后叫来警察。为什么呢？因为比如核酸点规定是 12 点下班，但是并没有人阻止你排队（大白告诉我们一个亭子只有两个人），于是大家都排着 1 公里的队伍，冷风中排了两个多小时，到自己的时候说关门不做了，搁谁不生气？于是就有人开始闹，堵住核酸点的门不让里面的人出来等极端手段，于是政府政策和人民实际需求之间的矛盾在执行岗的末端爆发了。</p>
+
+<p caption="图为堵门老太太被大白推门撞倒后讹人时所摄"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/3C34704C-589E-4782-A5E8-564A7DD426FF_2.png" alt="图为堵门老太太被大白推门撞倒后讹人时所摄" title="图为堵门老太太被大白推门撞倒后讹人时所摄" /></p>
+
+<h3 id="黎明的起点阳了">黎明的起点：阳了</h3>
+
+<p>其实我是个政策敏感的人，平常会浏览一些国际媒体，因此信息摄入量不算少，自认为是一名「理中客」——也即理性、中立、客观。一切的迹象都在表明似乎解封指日可待，比如石家庄等地就开始不再要求核酸了，虽然据传闻该政策的领导后来被批，但是随后美国驻华大使馆发布了一条微博，建议美国公民备足半个月的食物、药品、水等生活必需品，于是我在这个时候意识到，北京可能也要解封了。</p>
+
+<p>虽然这波预判了一下北京解封，但是并没有采取相应的行动，还是那句话，北京不是上海：北京一句话河北就得乖乖的送来物资，快递员就得响应东哥号召进京弥补稀缺的外卖、快递配送员岗位。所以我并没有准备诸如感冒灵、布洛芬等家庭常备药。</p>
+
+<p>但是万万没想到解封来的太快有点猝不及防，也没有料到医院、药企的物品储备竟然再一次的和疫情当初当初的口罩一样，供不应求（这些政策制定者难道都不会吸取教训提前部署动员一下的吗？）。</p>
+
+<p>千言万语汇成一句话：傻逼。</p>
+
+<p caption="图为不可抗力的具体表现"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/9B85B7FC-0F50-49DE-985E-134B14FF6CC8_2.png" alt="图为不可抗力的具体表现" title="图为不可抗力的具体表现" /></p>
+
+<p caption="图为解封后抗原自测"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/05C748FB-E02D-4F52-90E1-C7A350DD9E19_2.png" alt="图为解封后抗原自测" title="图为解封后抗原自测" /></p>
+
+<h2 id="其他总结">其他总结</h2>
+
+<h3 id="2022-年游戏">2022 年游戏</h3>
+
+<p>今年玩儿了：</p>
+
+<ul>
+  <li>
+    <p>战地 1，手柄瞄准好难，没手感。</p>
+  </li>
+  <li>
+    <p>战地 4 ，手感比战地 1 强点，起码开放大镜会自动辅助瞄准了。</p>
+  </li>
+  <li>
+    <p>战地 5 ，手感不错。</p>
+  </li>
+  <li>
+    <p>狙击手 4，虐杀…我喜欢二战题材的射击游戏。</p>
+  </li>
+  <li>
+    <p>忍者神龟：施耐德的复仇，复古怀旧。</p>
+  </li>
+  <li>
+    <p>双人成行，双人欢乐加倍。</p>
+  </li>
+  <li>
+    <p>Stray，可可爱爱的小猫咪搭配赛博风。</p>
+  </li>
+  <li>
+    <p>使命召唤：现代战争，射击游戏，手感不错。</p>
+  </li>
+  <li>
+    <p>底特律：化身成人，交互式游戏，很棒，最终全员和平结局。</p>
+  </li>
+  <li>
+    <p>GTA 5：怀旧了算是，没怎么玩儿。</p>
+  </li>
+  <li>
+    <p>分手搬家，和侄子、老婆一起欢乐。</p>
+  </li>
+  <li>
+    <p>极品飞车：热焰，开车呜呜呜。</p>
+  </li>
+  <li>
+    <p>泰坦陨落 2，买了还没打开，看着不错。</p>
+  </li>
+  <li>
+    <p>荒野大镖客 2，朋友推荐，还不错，就是比较啥时间，现在还在第二章。</p>
+  </li>
+</ul>
+
+<p>尝试并放弃了：</p>
+
+<ul>
+  <li>
+    <p>Biomutan，射击和动作结合，但是射击不用瞄准，很难受。</p>
+  </li>
+  <li>
+    <p>麻布仔大冒险，双人一起玩儿的，侄子走了就没玩儿了。</p>
+  </li>
+  <li>
+    <p>上古卷轴 5，重置版，玩不下去，画质感人。</p>
+  </li>
+  <li>
+    <p>原神，自个儿玩儿不下去，而且 PS5 是港服，无法跟国服互通。</p>
+  </li>
+  <li>
+    <p>怪物猎人：世界，玩儿不下去，太复杂。</p>
+  </li>
+  <li>
+    <p>战神 3，感觉可以算是横版过关游戏了。</p>
+  </li>
+  <li>
+    <p>The last of us 重制版，潜行玩儿法，杀时间，玩不下去。</p>
+  </li>
+  <li>
+    <p>地铁：流亡，本来是打算好好玩儿的，结果看了测评，玩儿不下去了。</p>
+  </li>
+  <li>
+    <p>蜘蛛侠：迈尔斯·莫拉雷斯，有机会好好玩儿一下，因为着急给其他游戏腾地方，就卸载了。</p>
+  </li>
+  <li>
+    <p>刺客信条：起源，刺客信条系列我准备放弃了，太杀时间。</p>
+  </li>
+  <li>
+    <p>空洞骑士，操作单调且难度较高，地图没指示。</p>
+  </li>
+  <li>
+    <p>看门狗 1，潜行玩儿法，玩儿不下去，爽不起来。</p>
+  </li>
+  <li>
+    <p>看门狗 2，潜行玩儿法，玩儿不下去，爽不起来。</p>
+  </li>
+  <li>
+    <p>全境封锁，射击类游戏，没有真实背景，玩儿不下去。</p>
+  </li>
+  <li>
+    <p>火线猎杀：野境，同上。</p>
+  </li>
+  <li>
+    <p>地平线：零之曙光，操作手感没有战神 4 好，玩儿不下去。</p>
+  </li>
+  <li>
+    <p>刺客信条：大革命，刺客信条系列我准备放弃了，太杀时间。</p>
+  </li>
+  <li>
+    <p>城市天际线，PS5 操作难度太高。</p>
+  </li>
+  <li>
+    <p>刺客信条：维京纪元，刺客信条系列我准备放弃了，太杀时间。</p>
+  </li>
+  <li>
+    <p>小小梦魇，有点无聊和压抑。</p>
+  </li>
+  <li>
+    <p>使命召唤：黑色行动 3，射击游戏没有背景，单纯突突突，玩儿不下去。</p>
+  </li>
+</ul>
+
+<h3 id="2022-年旅游">2022 年旅游</h3>
+
+<p>因为疫情，基本没怎么出去玩儿过。</p>
+
+<h3 id="2022-年软件订阅">2022 年软件订阅</h3>
+
+<ul>
+  <li>
+    <p>Youtube Premium 土区</p>
+  </li>
+  <li>
+    <p>Infuse Pro 港区</p>
+  </li>
+  <li>
+    <p>网易 UU 游戏加速器</p>
+  </li>
+  <li>
+    <p>Craft 国区</p>
+  </li>
+  <li>
+    <p>1Password</p>
+  </li>
+  <li>
+    <p>iCloud 国区</p>
+  </li>
+  <li>
+    <p>Playstation Plus 高级 港区</p>
+  </li>
+  <li>
+    <p>Nintendo Switch Online 港区</p>
+  </li>
+  <li>
+    <p>Apple Music 国区</p>
+  </li>
+</ul>
+
+<h3 id="2022-年网络电子硬件">2022 年网络/电子硬件</h3>
+
+<ul>
+  <li>
+    <p>R4S 软路由</p>
+  </li>
+  <li>
+    <p>TP-Link XDR 5480</p>
+  </li>
+  <li>
+    <p>TP-Link TL-SM410U 电口</p>
+  </li>
+  <li>
+    <p>Apple TV 2021 4K</p>
+  </li>
+  <li>
+    <p>Mac Studio</p>
+  </li>
+  <li>
+    <p>小米显示器挂灯 1S</p>
+  </li>
+  <li>
+    <p>罗技有线鼠标 G403、G502</p>
+  </li>
+  <li>
+    <p>NB G40 显示器支架</p>
+  </li>
+  <li>
+    <p>绿联 USB 3.0 转千兆 RJ45 网口转换器</p>
+  </li>
+  <li>
+    <p>bebird Note3 Pro 可视挖耳勺</p>
+  </li>
+</ul>
+
+<h3 id="2022-年家电">2022 年家电</h3>
+
+<ul>
+  <li>
+    <p>Sony XR-65X90J</p>
+  </li>
+  <li>
+    <p>石头 G10 扫地机器人</p>
+  </li>
+  <li>
+    <p>山本 S-2105 空气炸锅</p>
+  </li>
+  <li>
+    <p>索尼 PS5 DualSense 无线游戏手柄充电座</p>
+  </li>
+  <li>
+    <p>优派 27’ VX2780-4K-HDU 显示器</p>
+  </li>
+  <li>
+    <p>米家小米踢脚线石墨烯电暖气</p>
+  </li>
+</ul>
+
+<h3 id="2022-年独立开发者进度">2022 年独立开发者进度</h3>
+
+<p>更新优化了大量博客的内容，如支持了优美的 bookmark、本地化了博客发布工作流，还学习了视频制作，录了个视频讲我的基于 Craft 插件的博客发布工作流。</p>
+
+<p>学习了 SwiftUI、Swift，开发了一个供老婆工作使用的 ZXP 文件安装小工具，原计划在 30岁（2022 年）发布一款 app 的计划未能完成，推迟到明年 （2023年）。</p>
+
+<p caption="图为 2022 年最后的太阳"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/8C6EC641-EC50-4A63-9185-69B31EDE7FBF_2.jpeg" alt="图为 2022 年最后的太阳" title="图为 2022 年最后的太阳" /></p>
+
+<h2 id="2023-年展望">2023 年展望</h2>
+
+<p>2023 年的所有展望，都是基于疫情解封后，生活恢复到 2019 年之前的水平而定的，如果有变数…那就有变数吧。</p>
+
+<p>首先，今年应该会将黏糕接回来，然后再找下家哪位好心人能够收养。</p>
+
+<p caption="图为元旦期间去看望黏糕时所摄"><img src="https://static.xheldon.cn/img/in-post/2023/my-2022/1E71875F-6233-4365-9F23-D19310A6FAEC_2.png" alt="图为元旦期间去看望黏糕时所摄" title="图为元旦期间去看望黏糕时所摄" /></p>
+
+<p>独立开发者方面，今年会写一款本计划去年 30 岁的时候写的 App，相关功能和原型图已经确定，技术和知识储备正在进行中；软件订阅方面争取保持当前订阅量，不再多增加新的订阅（不保证）。</p>
+
+<p>生活方面，计划出国旅游一次，暂定新西兰/欧洲/美帝；读 2 本技术书籍。</p>
+
+<p>然后，给小王定的 KPI 是生孩子，其他的如工作之类的，不重要。</p>
+
+<p>最后，祝愿大家新的一年都能平安顺遂，心想事成！</p>
 
                 <div class="text-danger">- EOF -</div>
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/tech/blog-reference.html" data-toggle="tooltip" data-placement="top" title="新博客地址说明">
+                        <a href="/life/why-i-need-a-hk-sim-card.html" data-toggle="tooltip" data-placement="top" title="为什么我要有一个香港手机号">
                         上一篇<br>
-                        <span>新博客地址说明</span>
+                        <span>为什么我要有一个香港手机号</span>
                         </a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/tech/ProseMirror-1.0-release.html" data-toggle="tooltip" data-placement="top" title="「译」ProseMirror 1.0 发布">
-                        下一篇<br>
-                        <span>「译」ProseMirror 1.0 发布</span>
-                        </a>
-                    </li>
                     
                 </ul>
                 <hr style="visibility: hidden;">
@@ -590,8 +927,8 @@
       clientSecret: 'd5bd1b65b639d8697054e6e97f6308b28e9348ba',
       repo: 'x_blog',
       owner: 'Xheldon',
-      admin: ['Xheldon'],id: "ProseMirror",labels: [],
-      title: "「译」ProseMirror 的由来",
+      admin: ['Xheldon'],id: "my-2022",labels: [],
+      title: "2022 年展望和 2023 年回顾",
       language: "zh-CN",
       pagerDirection: 'first',
     });
