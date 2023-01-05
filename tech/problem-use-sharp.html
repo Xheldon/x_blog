@@ -238,6 +238,8 @@
                     <h2 class="subheading"></h2>
                     <span class="meta">✍🏼 写于 2023年01月05日</span>&nbsp;&nbsp;&nbsp;  
                     
+                    <span class="meta">💡 更新于 2023年01月05日</span>
+                    
                 </div>
             </div>
         </div>
@@ -352,22 +354,37 @@ found 0 vulnerabilities
 
 <p>于是我删除了上面 log 中缓存的文件 <code class="language-plaintext highlighter-rouge">rm -rf /Users/x/.npm/_libvips/</code> 目录，然后再次执行，依然 无法使用系统版本的 libvips：</p>
 
-<pre><code class="language-Bash">&gt; sharp@0.31.3 install /Users/x/Code/test2/node_modules/sharp
-&gt; (node install/libvips &amp;&amp; node install/dll-copy &amp;&amp; prebuild-install) || (node install/can-compile &amp;&amp; node-gyp rebuild &amp;&amp; node install/dll-copy)
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="rouge-code"><pre><span class="o">&gt;</span> sharp@0.31.3 <span class="nb">install</span> /Users/x/Code/test2/node_modules/sharp
+<span class="o">&gt;</span> <span class="o">(</span>node <span class="nb">install</span>/libvips <span class="o">&amp;&amp;</span> node <span class="nb">install</span>/dll-copy <span class="o">&amp;&amp;</span> prebuild-install<span class="o">)</span> <span class="o">||</span> <span class="o">(</span>node <span class="nb">install</span>/can-compile <span class="o">&amp;&amp;</span> node-gyp rebuild <span class="o">&amp;&amp;</span> node <span class="nb">install</span>/dll-copy<span class="o">)</span>
 
 sharp: Downloading https://github.com/lovell/sharp-libvips/releases/download/v8.13.3/libvips-8.13.3-darwin-x64.tar.br
-sharp: Integrity check passed for darwin-x64
+sharp: Integrity check passed <span class="k">for </span>darwin-x64
 npm notice created a lockfile as package-lock.json. You should commit this file.
 npm WARN test2@1.0.0 No description
 npm WARN test2@1.0.0 No repository field.
 
-added 45 packages from 206 contributors and audited 45 packages in 10.727s
+added 45 packages from 206 contributors and audited 45 packages <span class="k">in </span>10.727s
 
-10 packages are looking for funding
-  run `npm fund` for details
+10 packages are looking <span class="k">for </span>funding
+  run <span class="sb">`</span>npm fund<span class="sb">`</span> <span class="k">for </span>details
 
 found 0 vulnerabilities
-</code></pre>
+</pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>于是我决定 debug 这个包。</p>
 
