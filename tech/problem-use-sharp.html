@@ -3,39 +3,45 @@
 
 <head>
     <meta charset="utf-8">
-    <title>新博客地址说明 - Xheldon Blog</title>
+    <title>使用 Sharp 转换 HEIC/HEIF 图片遇到的问题 - Xheldon Blog</title>
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     
-        <meta name="description" content="">
+        <meta name="description" content="记录使用 Sharp 压缩 HEIC 格式图片时遇到的问题和解决的过程">
     
     <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
     <meta name="theme-color" content="#000000">
     <meta name="twitter:card" content="summary_large_image">
     <!-- Open Graph -->
-    <meta property="og:title" content="新博客地址说明 - Xheldon Blog">
+    <meta property="og:title" content="使用 Sharp 转换 HEIC/HEIF 图片遇到的问题 - Xheldon Blog">
     
     <meta property="og:type" content="article">
     
-    <meta property="article:published_time" content="2021-10-01T12:00:00Z">
+    <meta property="article:published_time" content="2023-01-05T12:06:50Z">
     
     
     
     <meta property="article:tag" content="技术">
     
-    <meta property="article:tag" content="迁移">
+    <meta property="article:tag" content="格式">
+    
+    <meta property="article:tag" content="转换">
+    
+    <meta property="article:tag" content="压缩">
+    
+    <meta property="article:tag" content="开源">
     
     
     
-        <meta name="og:description" content="">
+        <meta name="og:description" content="记录使用 Sharp 压缩 HEIC 格式图片时遇到的问题和解决的过程">
     
     
     <meta property="twitter:image" content="https://www.xheldon.cn/resources/img/logo.png">
     <meta property="og:image" content="https://www.xheldon.cn/resources/img/logo.png">
     
-    <meta property="og:url" content="https://www.xheldon.cn/tech/blog-reference.html">
+    <meta property="og:url" content="https://www.xheldon.cn/tech/problem-use-sharp.html">
     <meta property="og:site_name" content="Xheldon Blog">
     
     <!-- Web App Manifest -->
@@ -45,7 +51,7 @@
     <link rel="shortcut icon" href="/resources/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.xheldon.cn/tech/blog-reference.html">
+    <link rel="canonical" href="https://www.xheldon.cn/tech/problem-use-sharp.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
@@ -218,13 +224,19 @@
                         
                         <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
                         
-                        <a class="tag" href="/archive/?tag=%E8%BF%81%E7%A7%BB" title="迁移">迁移</a>
+                        <a class="tag" href="/archive/?tag=%E6%A0%BC%E5%BC%8F" title="格式">格式</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E8%BD%AC%E6%8D%A2" title="转换">转换</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E5%8E%8B%E7%BC%A9" title="压缩">压缩</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E5%BC%80%E6%BA%90" title="开源">开源</a>
                         
                     </div>
-                    <h1>新博客地址说明</h1>
+                    <h1>使用 Sharp 转换 HEIC/HEIF 图片遇到的问题</h1>
                     
                     <h2 class="subheading"></h2>
-                    <span class="meta">✍🏼 写于 2021年10月01日</span>&nbsp;&nbsp;&nbsp;  
+                    <span class="meta">✍🏼 写于 2023年01月05日</span>&nbsp;&nbsp;&nbsp;  
                     
                 </div>
             </div>
@@ -256,7 +268,7 @@
                         <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
                         <script>
                             var timeDom = document.getElementById('from_time');
-                            var pageTime = 1633060800; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
+                            var pageTime = 1672891610; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
                             var currentTime = Date.now();
                             var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
                             if (Number(fromNow) <= 0) {
@@ -268,33 +280,171 @@
                     
                 
                 
+                    <div class="callout-tips">🖥 &nbsp;说明：记录使用 Sharp 压缩 HEIC 格式图片时遇到的问题和解决的过程</div>
                 
-				<p>之前的技术文章放在 www 域名下，而生活类的放在 42 域名下，维护起来比较麻烦。</p>
+                
+                    <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/mHmLa16eR5YWPi" target="_blank">https://www.craft.do/s/mHmLa16eR5YWPi</a></div>
+                
+				<p>苹果相机在 iOS 11 之后，将相机默认的格式设置为了 HEIC，据说可以在不缩减照片质量的前提下，大幅缩减照片体积，你可以在 <code class="language-plaintext highlighter-rouge">设置-相机-格式</code>  来查看，「高效」表示的就是 HEIC 格式，「兼容性最佳」表示的是原始的 JEPG 格式。关于 HEIC 格式更多介绍可以看 <a href="https://www.adobe.com/hk_zh/creativecloud/file-types/image/raster/heic-file.html">这里</a>。</p>
 
-<p>加上看中了这个博客模板的 Service Worker 的能力，和比较好看的界面（相比较于之前 www 的博客），因此决定将 www 使用该模板，将生活和技术文档都合二为一。</p>
+<p>由此带来的问题是，目前所有的 Web 浏览器都不支持显示 HEIC 格式的图片，因此如何转换该格式的图片就成为了一个问题。</p>
 
-<p>国庆前期还在微调中，Service Worker 用的不熟，Github Pages 配合 SW 的更新机制我理解是有问题的，还在试验中，因此更新比较频繁。</p>
+<p>我经常将苹果相册中的图片直接从相册中拖拽或复制粘贴到 Craft 中，因此如果直接将该格式的图片上传到个人博客的话，是无法显示出来的，因此必须转换成通用格式如 PNG 或者 JPEG，这里我选择使用 Sharp 库进行转换，将其转换成了 Webp（因为 HEIC 转 PNG 太大了）。</p>
 
-<p>博客集成了基于 issue 的 gtalk 留言功能，有任何问题欢迎留言~~~</p>
+<p><a class="link-bookmark" href="https://github.com/lovell/sharp" target="_blank"><span><img src="https://repository-images.githubusercontent.com/12226786/cf816100-9a08-11ea-8fc1-7af9d4bcbf9e" /></span><span><span>GitHub - lovell/sharp: High performance Node.js image processing, the fastest module to resize JPEG, PNG, WebP, AVIF and TIFF images. Uses the libvips library.</span><span>
+High performance Node.js image processing, the fastest module to resize JPEG, PNG, WebP, AVIF and TIFF images. Uses the libvips library. - GitHub - lovell/sharp: High performance Node.js image proc...
+</span><span>https://github.com/lovell/sharp</span></span></a></p>
+
+<p>如果仅仅转换普通的格式如 JPEG 到 PNG，那么是没有什么问题的，但是如果是转换 HEIC 到其他格式，那麻烦就来了，因为这个过程 Sharp 依赖一个平台原生的工具库，叫 <code class="language-plaintext highlighter-rouge">libvips</code> ：</p>
+
+<p><a class="link-bookmark" href="https://github.com/libvips/libvips" target="_blank"><span><img src="https://opengraph.githubassets.com/5394d24c340a30dc1be077d37b0ca91234b63a95da32e047fb04ad05dd2ae075/libvips/libvips" /></span><span><span>GitHub - libvips/libvips: A fast image processing library with low memory needs.</span><span>
+A fast image processing library with low memory needs. - GitHub - libvips/libvips: A fast image processing library with low memory needs.
+</span><span>https://github.com/libvips/libvips</span></span></a></p>
+
+<p>来处理 HEIC 格式的文件，因此如果你本地没有全局安装这个工具，那么处理 HEIC 格式的图片的时候就会遇到下面的错误：</p>
+
+<pre><code class="language-Bash">(node:11469) UnhandledPromiseRejectionWarning: Error: source: bad seek to 807962
+heif: Unsupported feature: Unsupported codec (4.3000)
+
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11469) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 1)
+</code></pre>
+
+<p>说是无法处理 HEIC 格式的文件。</p>
+
+<p>遇到问题第一时间当然是去官方仓库的 issue 查找相关解决办法，果然有人遇到类似的问题：</p>
+
+<p><a class="link-bookmark" href="https://github.com/lovell/sharp/issues/2924" target="_blank"><span><img src="https://opengraph.githubassets.com/022362ae50e0768004484655f96c2c5963ddea524e5b6031321cd081658b204a/lovell/sharp/issues/2924" /></span><span><span>heif: unsupported feature · Issue #2924 · lovell/sharp</span><span>
+Are you using the latest version? Is the version currently in use as reported by npm ls sharp the same as the latest version as reported by npm view sharp dist-tags.latest? 2.9.1 What are the steps...
+</span><span>https://github.com/lovell/sharp/issues/2924</span></span></a></p>
+
+<p>于是按照他的说法，我使用 <code class="language-plaintext highlighter-rouge">homebrew</code> 安装了 <code class="language-plaintext highlighter-rouge">libvips</code> :</p>
+
+<p><a class="link-bookmark" href="https://www.libvips.org/install.html" target="_blank"><span><img src="https://www.libvips.org/install.html/favicon.ico" /></span><span><span>libvips</span><span>
+"A fast image processing library with low memory needs."
+</span><span>https://www.libvips.org/install.html</span></span></a></p>
+
+<p>这个过程需要挺久，会一直有 log 出现，耐心等待完成无报错即可。</p>
+
+<p>然后满怀信心的再次安装 Sharp <code class="language-plaintext highlighter-rouge">npm install sharp</code> 期待能看到这条信息：</p>
+
+<pre><code class="language-Bash">sharp: Detected globally-installed libvips v8.13.3
+</code></pre>
+
+<p>出现这条信息表明 Sharp 的安装脚本检测到本地安装了 libvips，但是当我再次安装 Sharp 的时候，它依然用的是已经下好的缓存:</p>
+
+<pre><code class="language-Bash">&gt; sharp@0.31.3 install /Users/x/Code/test2/node_modules/sharp
+&gt; (node install/libvips &amp;&amp; node install/dll-copy &amp;&amp; prebuild-install) || (node install/can-compile &amp;&amp; node-gyp rebuild &amp;&amp; node install/dll-copy)
+
+sharp: Using cached /Users/x/.npm/_libvips/libvips-8.13.3-darwin-x64.tar.br
+sharp: Integrity check passed for darwin-x64
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN test2@1.0.0 No description
+npm WARN test2@1.0.0 No repository field.
+
+added 45 packages from 206 contributors and audited 45 packages in 4.5s
+
+10 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+</code></pre>
+
+<p>于是我删除了上面 log 中缓存的文件 <code class="language-plaintext highlighter-rouge">rm -rf /Users/x/.npm/_libvips/</code> 目录，然后再次执行，依然 无法使用系统版本的 libvips：</p>
+
+<pre><code class="language-Bash">&gt; sharp@0.31.3 install /Users/x/Code/test2/node_modules/sharp
+&gt; (node install/libvips &amp;&amp; node install/dll-copy &amp;&amp; prebuild-install) || (node install/can-compile &amp;&amp; node-gyp rebuild &amp;&amp; node install/dll-copy)
+
+sharp: Downloading https://github.com/lovell/sharp-libvips/releases/download/v8.13.3/libvips-8.13.3-darwin-x64.tar.br
+sharp: Integrity check passed for darwin-x64
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN test2@1.0.0 No description
+npm WARN test2@1.0.0 No repository field.
+
+added 45 packages from 206 contributors and audited 45 packages in 10.727s
+
+10 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+</code></pre>
+
+<p>于是我决定 debug 这个包。</p>
+
+<p>首先从 log 开始，随便找一个看上去像是版本判断的 log，如 <code class="language-plaintext highlighter-rouge">Using cached</code> 作为关键字，在 <code class="language-plaintext highlighter-rouge">node_modules/sharp</code> 包中搜索相关关键字，在 <code class="language-plaintext highlighter-rouge">sharp/install/libvips.js</code> 中发现如下代码：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nx">libvips</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Using cached </span><span class="p">${</span><span class="nx">tarPathCache</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>于是继续寻找，发现这个函数顶上有一个决定是使用系统内置的 libvips 还是它自己编译的不支持 HEIC 格式的二进制包的逻辑：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="kd">const</span> <span class="nx">useGlobalLibvips</span> <span class="o">=</span> <span class="nx">libvips</span><span class="p">.</span><span class="nx">useGlobalLibvips</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>基本就是这里了，debug 了这个函数，发现在判断 <code class="language-plaintext highlighter-rouge">isRosetta</code> 的时候，返回了 true。发现如果是返回 false，就会使用系统内置的 libvips，否则就使用它自己编译的 libvips：</p>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2023/problem-use-sharp/ACF229E4-D77E-46AD-B1D2-98A4AA970669_2.webp" alt="Image" title="Image" /></p>
+
+<p>这里出现了一个奇怪的情况是，在 debug 的时候，process.arch 输出的是 <code class="language-plaintext highlighter-rouge">x64</code> ，且 log 这个代码输出的是 <code class="language-plaintext highlighter-rouge">sysctl.proc_translated: 1</code> ：</p>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2023/problem-use-sharp/A0492569-B12D-45B5-B05B-40B5DB1B7459_2.webp" alt="Image" title="Image" /></p>
+
+<p>但是直接在控制台执行该代码，输出的是 <code class="language-plaintext highlighter-rouge">sysctl.proc_translated: 0</code> ：</p>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2023/problem-use-sharp/4616C1B5-102F-4A3C-AF71-CC0BA49530AB_2.webp" alt="Image" title="Image" /></p>
+
+<p>这里我就得出结论，肯定是 node 的版本问题导致了它使用了自己编译的 libvips。于是我使用 nvm，将默认 node 版本切换到 arm64 版本后，再次执行 <code class="language-plaintext highlighter-rouge">npm i sharp</code> ，问题解决。</p>
+
+<p>下面是这个过程可能用到的代码：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre><span class="c1">// 列出 nvm 版本</span>
+<span class="nx">nvm</span> <span class="nx">list</span>
+<span class="c1">// 输出当前电脑的架构</span>
+<span class="nx">arch</span> <span class="c1">// 如果输出的是 arm64 表示就是 M1 芯片</span>
+<span class="c1">// 使用最新的稳定版</span>
+<span class="nx">nvm</span> <span class="nx">install</span> <span class="nx">stable</span> <span class="c1">// 我的机器给我安装了 19.3.0 的 arm64 版本的 node</span>
+<span class="c1">// 将该 node 作为默认</span>
+<span class="nx">nvm</span> <span class="nx">alias</span> <span class="k">default</span> <span class="nx">v19</span><span class="p">.</span><span class="mf">3.0</span>
+<span class="c1">// 在当前终端使用 19.3.0 版本的 node</span>
+<span class="nx">nvm</span> <span class="nx">use</span> <span class="mf">19.3</span><span class="p">.</span><span class="mi">0</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>随后给作者提了个 PR，来修改 isRosetta 的逻辑：</p>
+
+<p><a class="link-bookmark" href="https://github.com/lovell/sharp/pull/3514" target="_blank"><span><img src="https://opengraph.githubassets.com/d8057fae9db42e14f5f79afe6224e9e4c3db958ec1bcda4b0e60a839094daa74/lovell/sharp/pull/3514" /></span><span><span>Get real architecture of M1 Mac regardless of Rosetta by Xheldon · Pull Request #3514 · lovell/sharp</span><span>
+Get real architecture of M1 Mac regardless of Rosetta or node version, see #3239
+</span><span>https://github.com/lovell/sharp/pull/3514</span></span></a></p>
+
+<p>但是作者解释说这个函数这么做是有原因的，因此我建议他在安装 Sharp 的时候提醒用户并未使用全局安装的 libvips 包的原因，最终作者采纳并接受了我的意见：</p>
+
+<p><a class="link-bookmark" href="https://github.com/lovell/sharp/commit/5be36c2deb735577fc76fa52242836d40df276bd" target="_blank"><span><img src="https://opengraph.githubassets.com/5e0efe7cbe5118b1d549459eefc68e1e3f6cac81430e4702e87cd1f5bb28616c/lovell/sharp/commit/5be36c2deb735577fc76fa52242836d40df276bd" /></span><span><span>Install: log Rosetta detection, improve related docs · lovell/sharp@5be36c2</span><span>
+"High performance Node.js image processing, the fastest module to resize JPEG, PNG, WebP, AVIF and TIFF images. Uses the libvips library. - Install: log Rosetta detection, improve related docs · lovell/sharp@5be36c2"
+</span><span>https://github.com/lovell/sharp/commit/5be36c2deb735577fc76fa52242836d40df276bd</span></span></a></p>
+
 
                 <div class="text-danger">- EOF -</div>
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/tech/nginx-forward-and-reverse-proxy.html" data-toggle="tooltip" data-placement="top" title="Nginx 中的正向和反向代理">
+                        <a href="/life/my-2022.html" data-toggle="tooltip" data-placement="top" title="2023 年展望和 2022 年回顾">
                         上一篇<br>
-                        <span>Nginx 中的正向和反向代理</span>
+                        <span>2023 年展望和 2022 年回顾</span>
                         </a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/tech/ProseMirror.html" data-toggle="tooltip" data-placement="top" title="「译」ProseMirror 的由来">
-                        下一篇<br>
-                        <span>「译」ProseMirror 的由来</span>
-                        </a>
-                    </li>
                     
                 </ul>
                 <hr style="visibility: hidden;">
@@ -501,8 +651,8 @@
       clientSecret: 'd5bd1b65b639d8697054e6e97f6308b28e9348ba',
       repo: 'x_blog',
       owner: 'Xheldon',
-      admin: ['Xheldon'],id: "blog-reference",labels: [],
-      title: "新博客地址说明",
+      admin: ['Xheldon'],id: "problem-use-sharp",labels: [],
+      title: "使用 Sharp 转换 HEIC/HEIF 图片遇到的问题",
       language: "zh-CN",
       pagerDirection: 'first',
     });
