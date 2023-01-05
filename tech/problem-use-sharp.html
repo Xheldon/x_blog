@@ -3,30 +3,45 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Xheldon Blog</title>
+    <title>使用 Sharp 转换 HEIC/HEIF 图片遇到的问题 - Xheldon Blog</title>
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     
-        <meta name="description" content="The Answer to Life, the Universe and Everything is...">
+        <meta name="description" content="记录使用 Sharp 压缩 HEIC 格式图片时遇到的问题和解决的过程">
     
     <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
     <meta name="theme-color" content="#000000">
     <meta name="twitter:card" content="summary_large_image">
     <!-- Open Graph -->
-    <meta property="og:title" content="Xheldon Blog">
+    <meta property="og:title" content="使用 Sharp 转换 HEIC/HEIF 图片遇到的问题 - Xheldon Blog">
     
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="article">
+    
+    <meta property="article:published_time" content="2023-01-05T12:06:50Z">
     
     
-        <meta name="og:description" content="The Answer to Life, the Universe and Everything is...">
+    
+    <meta property="article:tag" content="技术">
+    
+    <meta property="article:tag" content="格式">
+    
+    <meta property="article:tag" content="转换">
+    
+    <meta property="article:tag" content="压缩">
+    
+    <meta property="article:tag" content="开源">
+    
+    
+    
+        <meta name="og:description" content="记录使用 Sharp 压缩 HEIC 格式图片时遇到的问题和解决的过程">
     
     
     <meta property="twitter:image" content="https://www.xheldon.com/resources/img/logo.png">
     <meta property="og:image" content="https://www.xheldon.com/resources/img/logo.png">
     
-    <meta property="og:url" content="https://www.xheldon.com/page6/">
+    <meta property="og:url" content="https://www.xheldon.com/tech/problem-use-sharp.html">
     <meta property="og:site_name" content="Xheldon Blog">
     
     <!-- Web App Manifest -->
@@ -36,7 +51,7 @@
     <link rel="shortcut icon" href="/resources/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.xheldon.com/page6/">
+    <link rel="canonical" href="https://www.xheldon.com/tech/problem-use-sharp.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
@@ -62,8 +77,8 @@
 
     <!-- Navigation -->
 
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -179,12 +194,11 @@
   </div>
 </div>
 
-    <!-- Page Header -->
+    <!-- Image to hack wechat -->
+<!-- <img src="/resources/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
 
-
-
-
-
+<!-- Post Header -->
 
 
 
@@ -196,500 +210,257 @@
     }
 
     
-    header.intro-header .header-mask{
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        background: rgba(0,0,0, 0.4);
-    }
-    
 </style>
 
-    <header class="intro-header" >
+<header class="intro-header style-text" >
 
     <div class="header-mask"></div>
+    
     <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        
-        <div class="site-heading">
-        
-          <h1>Xheldon Blog</h1>
-          <span class="subheading">The Answer to Life, the Universe and Everything is...</span>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E6%A0%BC%E5%BC%8F" title="格式">格式</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E8%BD%AC%E6%8D%A2" title="转换">转换</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E5%8E%8B%E7%BC%A9" title="压缩">压缩</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E5%BC%80%E6%BA%90" title="开源">开源</a>
+                        
+                    </div>
+                    <h1>使用 Sharp 转换 HEIC/HEIF 图片遇到的问题</h1>
+                    
+                    <h2 class="subheading"></h2>
+                    <span class="meta">✍🏼 写于 2023年01月05日</span>&nbsp;&nbsp;&nbsp;  
+                    
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </header>
 
-<style>
-.data-loading {
-    width: 150px;
-    height: 10px;
-    margin:50px auto;
-    text-align: center;
-}
-.data-loading span {
-    display: inline-block;
-    width: 10px;
-    height: 100%;
-    margin-right: 5px;
-    background: #5bc0de;
-    -webkit-animation: load 1.04s ease infinite;
-}
-.data-loading span:last-child{
-    margin-right: 0px; 
-}
-@-webkit-keyframes load{
-    0%{
-        opacity: 1;
-        -webkit-transform: scale(1.2);
-    }
-    100%{
-        opacity: .2;
-        -webkit-transform: scale(.2);
-    }
-}
-.data-loading span:nth-child(1){
-    -webkit-animation-delay:0.13s;
-}
-.data-loading span:nth-child(2){
-    -webkit-animation-delay:0.26s;
-}
-.data-loading span:nth-child(3){
-    -webkit-animation-delay:0.39s;
-}
-.data-loading span:nth-child(4){
-    -webkit-animation-delay:0.52s;
-}
-.data-loading span:nth-child(5){
-    -webkit-animation-delay:0.65s;
-}
-</style>
 
-<!-- Main Content -->
-<div class="container" >
-	<div class="row">
-        
 
-<!-- USE SIDEBAR -->
-    <!-- PostList Container -->
-    
-    
-    		<div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                postlist-container
-            ">
-    			
-<div class="post-preview">
-    <a href="/tech/vue-learning-summary.html">
-        <h2 class="post-title">
-            Vue 学习总结
-        </h2>
-    </a>
-    <div class="post-content-preview">
-        <div class="post-content-desc">
-            <a href="/tech/vue-learning-summary.html">
+
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <!-- Multi-Lingual -->
                 
-                    <h3 class="post-subtitle">
+                
+                    
                         
-                    </h3>
+                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
+                        <script>
+                            var timeDom = document.getElementById('from_time');
+                            var pageTime = 1672891610; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
+                            var currentTime = Date.now();
+                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
+                            if (Number(fromNow) <= 0) {
+                                fromNow = 1; // Note: 至少显示一天
+                            }
+                            timeDom.innerText = fromNow
+                        </script>
+                    
+                    
                 
-            </a>
-            <span>
                 
-                    前言
-
-这篇文章从 Vue 2.0官方文档 的”实例”一节开始, 研究一些 Vue API 的使用方法, 以及 Vue 实现一些功能的原理, 此外还有自己的使用感受, 以及站在自己浅薄的角度分析 Vue 为什么要这么设计的不敬之举, 如有得罪还请海涵, 刚接触 Vue 不久, 不当之处烦请指出, 先行谢过.
-
-
-  注意: 基础知识直接略过, 我只说我认为需要说的点.
-
-
-Vue 实例
-
-每...
+                    <div class="callout-tips">🖥 &nbsp;说明：记录使用 Sharp 压缩 HEIC 格式图片时遇到的问题和解决的过程</div>
                 
-            </span>
-        </div>
-        
-    </div>
-    <p class="post-meta">
-        写于 2016年06月01日
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/tech/github-pages-config.html">
-        <h2 class="post-title">
-            关于本博客域名优化配置的几点说明
-        </h2>
-    </a>
-    <div class="post-content-preview">
-        <div class="post-content-desc">
-            <a href="/tech/github-pages-config.html">
                 
-                    <h3 class="post-subtitle">
-                        
-                    </h3>
+                    <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/mHmLa16eR5YWPi" target="_blank">https://www.craft.do/s/mHmLa16eR5YWPi</a></div>
                 
-            </a>
-            <span>
-                
-                    前言
+				<p>苹果相机在 iOS 11 之后，将相机默认的格式设置为了 HEIC，据说可以在不缩减照片质量的前提下，大幅缩减照片体积，你可以在 <code class="language-plaintext highlighter-rouge">设置-相机-格式</code>  来查看，「高效」表示的就是 HEIC 格式，「兼容性最佳」表示的是原始的 JEPG 格式。关于 HEIC 格式更多介绍可以看 <a href="https://www.adobe.com/hk_zh/creativecloud/file-types/image/raster/heic-file.html">这里</a>。</p>
 
-决定在 GitHub Pages 搞个静态博客的时候, 我就想要尽可能的加快打开速度, 因此使用了一些雕虫小技来加快打开速度, 提高用户体验.
+<p>由此带来的问题是，目前所有的 Web 浏览器都不支持显示 HEIC 格式的图片，因此如何转换该格式的图片就成为了一个问题。</p>
 
-优化
+<p>我经常将苹果相册中的图片直接从相册中拖拽或复制粘贴到 Craft 中，因此如果直接将该格式的图片上传到个人博客的话，是无法显示出来的，因此必须转换成通用格式如 PNG 或者 JPEG，这里我选择使用 Sharp 库进行转换，将其转换成了 Webp（因为 HEIC 转 PNG 太大了）。</p>
 
-使用百度 CDN 服务和七牛静态资源托管
+<p><a class="link-bookmark" href="https://github.com/lovell/sharp" target="_blank"><span><img src="https://repository-images.githubusercontent.com/12226786/cf816100-9a08-11ea-8fc1-7af9d4bcbf9e" /></span><span><span>GitHub - lovell/sharp: High performance Node.js image processing, the fastest module to resize JPEG, PNG, WebP, AVIF and TIFF images. Uses the libvips library.</span><span>
+High performance Node.js image processing, the fastest module to resize JPEG, PNG, WebP, AVIF and TIFF images. Uses the libvips library. - GitHub - lovell/sharp: High performance Node.js image proc...
+</span><span>https://github.com/lovell/sharp</span></span></a></p>
 
-本博客使用了 Bootstrap/jQuery/fontawsome 这三个库/字体文件, 因为 Bootstrap 我根据实际情况, 自己修改了些许内容以更加配合排版, 因此没有使用第三...
-                
-            </span>
-        </div>
-        
-    </div>
-    <p class="post-meta">
-        写于 2016年05月23日
-    </p>
-</div>
-<hr>
+<p>如果仅仅转换普通的格式如 JPEG 到 PNG，那么是没有什么问题的，但是如果是转换 HEIC 到其他格式，那麻烦就来了，因为这个过程 Sharp 依赖一个平台原生的工具库，叫 <code class="language-plaintext highlighter-rouge">libvips</code> ：</p>
 
-<div class="post-preview">
-    <a href="/tech/webpack-details-one.html">
-        <h2 class="post-title">
-            Webpack 异步按需加载
-        </h2>
-    </a>
-    <div class="post-content-preview">
-        <div class="post-content-desc">
-            <a href="/tech/webpack-details-one.html">
-                
-                    <h3 class="post-subtitle">
-                        
-                    </h3>
-                
-            </a>
-            <span>
-                
-                    前言
+<p><a class="link-bookmark" href="https://github.com/libvips/libvips" target="_blank"><span><img src="https://opengraph.githubassets.com/5394d24c340a30dc1be077d37b0ca91234b63a95da32e047fb04ad05dd2ae075/libvips/libvips" /></span><span><span>GitHub - libvips/libvips: A fast image processing library with low memory needs.</span><span>
+A fast image processing library with low memory needs. - GitHub - libvips/libvips: A fast image processing library with low memory needs.
+</span><span>https://github.com/libvips/libvips</span></span></a></p>
 
-webpack 想要实现异步加载, 即先加载主要模块, 用到某个模块或者多个模块(也即打包后的 chunk )的时候再发送请求加载.
+<p>来处理 HEIC 格式的文件，因此如果你本地没有全局安装这个工具，那么处理 HEIC 格式的图片的时候就会遇到下面的错误：</p>
 
-这样做的目的当然是加快页面的初次加载速度, 但不可避免的会发送额外的请求, 这两个本身就是个鱼与熊掌不可兼得的事情, 这里说一下异步加载的细节.
+<pre><code class="language-Bash">(node:11469) UnhandledPromiseRejectionWarning: Error: source: bad seek to 807962
+heif: Unsupported feature: Unsupported codec (4.3000)
 
-正文
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11469) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 1)
+</code></pre>
 
-实现主要是靠 require.ensure([], callback) 这个东西, 老实说我会...
-                
-            </span>
-        </div>
-        
-    </div>
-    <p class="post-meta">
-        写于 2016年05月02日
-    </p>
-</div>
-<hr>
+<p>说是无法处理 HEIC 格式的文件。</p>
 
-<div class="post-preview">
-    <a href="/tech/vue-simple-use.html">
-        <h2 class="post-title">
-            Vue + Webpack 组件式开发(练习环境)初体验
-        </h2>
-    </a>
-    <div class="post-content-preview">
-        <div class="post-content-desc">
-            <a href="/tech/vue-simple-use.html">
-                
-                    <h3 class="post-subtitle">
-                        
-                    </h3>
-                
-            </a>
-            <span>
-                
-                    前言
+<p>遇到问题第一时间当然是去官方仓库的 issue 查找相关解决办法，果然有人遇到类似的问题：</p>
 
-研究了下别人的 vue 多页面框架, 都是直接复制 package.json 文件,然后在本地 npm install 一下即可, 或者使用官网 vue-cli 工具生成一个项目, 觉得这样虽然看的懂, 但是记不住, 因此有必要从零开始搭建一个使用 .vue 作为组件的项目练习一下, 因此有了这个项目.
+<p><a class="link-bookmark" href="https://github.com/lovell/sharp/issues/2924" target="_blank"><span><img src="https://opengraph.githubassets.com/022362ae50e0768004484655f96c2c5963ddea524e5b6031321cd081658b204a/lovell/sharp/issues/2924" /></span><span><span>heif: unsupported feature · Issue #2924 · lovell/sharp</span><span>
+Are you using the latest version? Is the version currently in use as reported by npm ls sharp the same as the latest version as reported by npm view sharp dist-tags.latest? 2.9.1 What are the steps...
+</span><span>https://github.com/lovell/sharp/issues/2924</span></span></a></p>
 
-既然使用了 .vue 组件, 就不能像之前使用 jQuery 一样把 vue....
-                
-            </span>
-        </div>
-        
-    </div>
-    <p class="post-meta">
-        写于 2016年04月30日
-    </p>
-</div>
-<hr>
+<p>于是按照他的说法，我使用 <code class="language-plaintext highlighter-rouge">homebrew</code> 安装了 <code class="language-plaintext highlighter-rouge">libvips</code> :</p>
 
-<div class="post-preview">
-    <a href="/tech/git-command.html">
-        <h2 class="post-title">
-            git 常用命令总结
-        </h2>
-    </a>
-    <div class="post-content-preview">
-        <div class="post-content-desc">
-            <a href="/tech/git-command.html">
-                
-                    <h3 class="post-subtitle">
-                        
-                    </h3>
-                
-            </a>
-            <span>
-                
-                    前言
+<p><a class="link-bookmark" href="https://www.libvips.org/install.html" target="_blank"><span><img src="https://www.libvips.org/install.html/favicon.ico" /></span><span><span>libvips</span><span>
+"A fast image processing library with low memory needs."
+</span><span>https://www.libvips.org/install.html</span></span></a></p>
 
-经常使用git，但是一直没时间写，现在终于有时间了，所以总结一下常用命令。
+<p>这个过程需要挺久，会一直有 log 出现，耐心等待完成无报错即可。</p>
 
-正文
+<p>然后满怀信心的再次安装 Sharp <code class="language-plaintext highlighter-rouge">npm install sharp</code> 期待能看到这条信息：</p>
 
-新建一个分支并切换到这个分支：
+<pre><code class="language-Bash">sharp: Detected globally-installed libvips v8.13.3
+</code></pre>
 
-1
-git checkout -b branch_name
+<p>出现这条信息表明 Sharp 的安装脚本检测到本地安装了 libvips，但是当我再次安装 Sharp 的时候，它依然用的是已经下好的缓存:</p>
 
+<pre><code class="language-Bash">&gt; sharp@0.31.3 install /Users/x/Code/test2/node_modules/sharp
+&gt; (node install/libvips &amp;&amp; node install/dll-copy &amp;&amp; prebuild-install) || (node install/can-compile &amp;&amp; node-gyp rebuild &amp;&amp; node install/dll-copy)
 
-切换分支:
-1
-git checkout branch_name
+sharp: Using cached /Users/x/.npm/_libvips/libvips-8.13.3-darwin-x64.tar.br
+sharp: Integrity check passed for darwin-x64
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN test2@1.0.0 No description
+npm WARN test2@1.0.0 No repository field.
 
+added 45 packages from 206 contributors and audited 45 packages in 4.5s
 
-删除一个分支(需要先checkout到另一个分支):
+10 packages are looking for funding
+  run `npm fund` for details
 
-1
-git branch -d branch_name
+found 0 vulnerabilities
+</code></pre>
 
+<p>于是我删除了上面 log 中缓存的文件 <code class="language-plaintext highlighter-rouge">rm -rf /Users/x/.npm/_libvips/</code> 目录，然后再次执行，依然 无法使用系统版本的 libvips：</p>
 
-注意，如果你在本...
-                
-            </span>
-        </div>
-        
-    </div>
-    <p class="post-meta">
-        写于 2016年04月21日
-    </p>
-</div>
-<hr>
+<pre><code class="language-Bash">&gt; sharp@0.31.3 install /Users/x/Code/test2/node_modules/sharp
+&gt; (node install/libvips &amp;&amp; node install/dll-copy &amp;&amp; prebuild-install) || (node install/can-compile &amp;&amp; node-gyp rebuild &amp;&amp; node install/dll-copy)
 
-<div class="post-preview">
-    <a href="/tech/promise-antipattern.html">
-        <h2 class="post-title">
-            「译」 Promise 反面模式
-        </h2>
-    </a>
-    <div class="post-content-preview">
-        <div class="post-content-desc">
-            <a href="/tech/promise-antipattern.html">
-                
-                    <h3 class="post-subtitle">
-                        
-                    </h3>
-                
-            </a>
-            <span>
-                
-                    最近在看Promise相关的东西，看到了这篇文章，觉得很不错，遂记录下来。
+sharp: Downloading https://github.com/lovell/sharp-libvips/releases/download/v8.13.3/libvips-8.13.3-darwin-x64.tar.br
+sharp: Integrity check passed for darwin-x64
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN test2@1.0.0 No description
+npm WARN test2@1.0.0 No repository field.
 
-Promises本身是很简单的，前提是你得找得到头绪，下面是几个关于Promise的容易困惑的知识点来验证你是否真的掌握了Promise。其中的几个真的曾经让我抓狂过。
+added 45 packages from 206 contributors and audited 45 packages in 10.727s
 
-嵌套Promises
+10 packages are looking for funding
+  run `npm fund` for details
 
-你有一捆的Promises互相嵌套着：
+found 0 vulnerabilities
+</code></pre>
 
-1
+<p>于是我决定 debug 这个包。</p>
+
+<p>首先从 log 开始，随便找一个看上去像是版本判断的 log，如 <code class="language-plaintext highlighter-rouge">Using cached</code> 作为关键字，在 <code class="language-plaintext highlighter-rouge">node_modules/sharp</code> 包中搜索相关关键字，在 <code class="language-plaintext highlighter-rouge">sharp/install/libvips.js</code> 中发现如下代码：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nx">libvips</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Using cached </span><span class="p">${</span><span class="nx">tarPathCache</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>于是继续寻找，发现这个函数顶上有一个决定是使用系统内置的 libvips 还是它自己编译的不支持 HEIC 格式的二进制包的逻辑：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="kd">const</span> <span class="nx">useGlobalLibvips</span> <span class="o">=</span> <span class="nx">libvips</span><span class="p">.</span><span class="nx">useGlobalLibvips</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>基本就是这里了，debug 了这个函数，发现在判断 <code class="language-plaintext highlighter-rouge">isRosetta</code> 的时候，返回了 true。发现如果是返回 false，就会使用系统内置的 libvips，否则就使用它自己编译的 libvips：</p>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2023/problem-use-sharp/ACF229E4-D77E-46AD-B1D2-98A4AA970669_2.webp" alt="Image" title="Image" /></p>
+
+<p>这里出现了一个奇怪的情况是，在 debug 的时候，process.arch 输出的是 <code class="language-plaintext highlighter-rouge">x64</code> ，且 log 这个代码输出的是 <code class="language-plaintext highlighter-rouge">sysctl.proc_translated: 1</code> ：</p>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2023/problem-use-sharp/A0492569-B12D-45B5-B05B-40B5DB1B7459_2.webp" alt="Image" title="Image" /></p>
+
+<p>但是直接在控制台执行该代码，输出的是 <code class="language-plaintext highlighter-rouge">sysctl.proc_translated: 0</code> ：</p>
+
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2023/problem-use-sharp/4616C1B5-102F-4A3C-AF71-CC0BA49530AB_2.webp" alt="Image" title="Image" /></p>
+
+<p>这里我就得出结论，肯定是 node 的版本问题导致了它使用了自己编译的 libvips。于是我使用 nvm，将默认 node 版本切换到 arm64 版本后，再次执行 <code class="language-plaintext highlighter-rouge">npm i sharp</code> ，问题解决。</p>
+
+<p>下面是这个过程可能用到的代码：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
 5
-loadSomething().then(function...
-                
-            </span>
-        </div>
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre><span class="c1">// 列出 nvm 版本</span>
+<span class="nx">nvm</span> <span class="nx">list</span>
+<span class="c1">// 输出当前电脑的架构</span>
+<span class="nx">arch</span> <span class="c1">// 如果输出的是 arm64 表示就是 M1 芯片</span>
+<span class="c1">// 使用最新的稳定版</span>
+<span class="nx">nvm</span> <span class="nx">install</span> <span class="nx">stable</span> <span class="c1">// 我的机器给我安装了 19.3.0 的 arm64 版本的 node</span>
+<span class="c1">// 将该 node 作为默认</span>
+<span class="nx">nvm</span> <span class="nx">alias</span> <span class="k">default</span> <span class="nx">v19</span><span class="p">.</span><span class="mf">3.0</span>
+<span class="c1">// 在当前终端使用 19.3.0 版本的 node</span>
+<span class="nx">nvm</span> <span class="nx">use</span> <span class="mf">19.3</span><span class="p">.</span><span class="mi">0</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>随后给作者提了个 PR，来修改 isRosetta 的逻辑：</p>
+
+<p><a class="link-bookmark" href="https://github.com/lovell/sharp/pull/3514" target="_blank"><span><img src="https://opengraph.githubassets.com/d8057fae9db42e14f5f79afe6224e9e4c3db958ec1bcda4b0e60a839094daa74/lovell/sharp/pull/3514" /></span><span><span>Get real architecture of M1 Mac regardless of Rosetta by Xheldon · Pull Request #3514 · lovell/sharp</span><span>
+Get real architecture of M1 Mac regardless of Rosetta or node version, see #3239
+</span><span>https://github.com/lovell/sharp/pull/3514</span></span></a></p>
+
+<p>但是作者解释说这个函数这么做是有原因的，因此我建议他在安装 Sharp 的时候提醒用户并未使用全局安装的 libvips 包的原因，最终作者采纳并接受了我的意见：</p>
+
+<p><a class="link-bookmark" href="https://github.com/lovell/sharp/commit/5be36c2deb735577fc76fa52242836d40df276bd" target="_blank"><span><img src="https://opengraph.githubassets.com/5e0efe7cbe5118b1d549459eefc68e1e3f6cac81430e4702e87cd1f5bb28616c/lovell/sharp/commit/5be36c2deb735577fc76fa52242836d40df276bd" /></span><span><span>Install: log Rosetta detection, improve related docs · lovell/sharp@5be36c2</span><span>
+"High performance Node.js image processing, the fastest module to resize JPEG, PNG, WebP, AVIF and TIFF images. Uses the libvips library. - Install: log Rosetta detection, improve related docs · lovell/sharp@5be36c2"
+</span><span>https://github.com/lovell/sharp/commit/5be36c2deb735577fc76fa52242836d40df276bd</span></span></a></p>
+
+
+                <div class="text-danger">- EOF -</div>
+                <hr style="visibility: hidden;">
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/life/my-2022.html" data-toggle="tooltip" data-placement="top" title="2023 年展望和 2022 年回顾">
+                        上一篇<br>
+                        <span>2023 年展望和 2022 年回顾</span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+                <hr style="visibility: hidden;">
+                <div id="gitalk-container"></div>
+                <hr>
+            </div>  
+
+    <!-- Side Catalog Container -->
         
-    </div>
-    <p class="post-meta">
-        写于 2016年03月04日
-    </p>
-</div>
-<hr>
 
-<div class="post-preview">
-    <a href="/tech/weibo-jssdk.html">
-        <h2 class="post-title">
-            新浪微博JS SDK API的使用
-        </h2>
-    </a>
-    <div class="post-content-preview">
-        <div class="post-content-desc">
-            <a href="/tech/weibo-jssdk.html">
-                
-                    <h3 class="post-subtitle">
-                        
-                    </h3>
-                
-            </a>
-            <span>
-                
-                    前言
-
-以前整个网站都是老大一个人怼起来的,各种bug和各种细节不完善.所以打算重构一下,侯哥搭好了seajs的开发框架,因此我只需要写前端逻辑即可.
-
-现状
-
-注册和登陆部分是我写的,因此我打算增加个新浪微博和QQ登陆的功能,用户点击之后存储其id到数据库,当然这个需要修改数据库表字段,单独增加一个类似于wb_id的字段名来标示.
-
-现在流行的做法有两种,一个是用新浪微博(或其他登录方式,...
-                
-            </span>
-        </div>
-        
-    </div>
-    <p class="post-meta">
-        写于 2015年12月21日
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/tech/how-to-work.html">
-        <h2 class="post-title">
-            关于代码优化/工作经验重要性的一次切身体会
-        </h2>
-    </a>
-    <div class="post-content-preview">
-        <div class="post-content-desc">
-            <a href="/tech/how-to-work.html">
-                
-                    <h3 class="post-subtitle">
-                        
-                    </h3>
-                
-            </a>
-            <span>
-                
-                    前言
-
-因为没有项目经验，经常在前端和后端之间的职能上面出错。
-
-正文
-
-比如我需要实现一个点击按钮用后台给的接口查询数据再用handlebar显示到前端的功能，但是每次查询的数据（返回数组，每项为map类型）都是比较长的，全部一次性加载显示在页面不合适，于是我就排序设计为「每次点击按钮都从后台查询数据」，然后对每次获得的数据做slice处理，每次都截取相同的长度，即第一次截取0到x，第二次...
-                
-            </span>
-        </div>
-        
-    </div>
-    <p class="post-meta">
-        写于 2015年10月30日
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/tech/how-i-think-people-privacy.html">
-        <h2 class="post-title">
-            关于收集用户隐私的看法
-        </h2>
-    </a>
-    <div class="post-content-preview">
-        <div class="post-content-desc">
-            <a href="/tech/how-i-think-people-privacy.html">
-                
-                    <h3 class="post-subtitle">
-                        
-                    </h3>
-                
-            </a>
-            <span>
-                
-                    由来
-
-今天看新闻，听到主播说著名游戏《愤怒的小鸟》制造商有收集用户隐私，这些隐私包括姓名、性别、邮箱、地理位置、婚姻状况、性取向等，并将信息提供给国外情报机构的行为。
-
-正文
-
-老爸于是趁机教育我——他总是抓住任何一个可以教育我的机会教育我，不过最后总是被我教育，这次也不例外——“你看现在坏人这么多，可别上网写自己的真名字，要写网名”。于是下面是我跟某人说过一遍的话再拿过来给老爸说一遍：
-...
-                
-            </span>
-        </div>
-        
-    </div>
-    <p class="post-meta">
-        写于 2015年10月01日
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/tech/how-to-use-rz-sz-on-mac.html">
-        <h2 class="post-title">
-            在 OS X 下使用 sz/rz 命令进行文件的下载/上传
-        </h2>
-    </a>
-    <div class="post-content-preview">
-        <div class="post-content-desc">
-            <a href="/tech/how-to-use-rz-sz-on-mac.html">
-                
-                    <h3 class="post-subtitle">
-                        无需第三方软件即可实现文件上传下载
-                    </h3>
-                
-            </a>
-            <span>
-                
-                    OS X 自带的终端可以直接连接 Linux （相比之下, Win 的 cmd 就比较渣了）, 但是有个问题就是, 终端无法直接通过 Zmodem 来上传和下载文件, 这里就需要一款更强大的远程服务器连接工具: iTerm 的帮助了.
-
-网上很多的教程, 但是有的是为了提高访问量随便粘贴的, 完全不负责任, 讲的也不仔细, 我也是连蒙带猜费了半天的劲儿才搞好的, 坑爹. 下面我尽量使用比较浅...
-                
-            </span>
-        </div>
-        
-    </div>
-    <p class="post-meta">
-        写于 2015年07月20日
-    </p>
-</div>
-<hr>
-
-
-<!-- Pager -->
-
-<ul class="pager">
-    
-    <li class="previous">
-        <a href="/page5">&larr; 上一页</a>
-    </li>
-    
-    
-    <li class="next">
-        <a href="/page7">下一页 &rarr;</a>
-    </li>
-    
-</ul>
-
-
-          
-    		</div>
     <!-- Sidebar Container -->
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
 
@@ -844,13 +615,6 @@ loadSomething().then(function...
 </section>
 
 
-                <!-- Twitter Timeline -->
-                <hr class="twitter-timeline-hr">
-<a class="twitter-timeline" data-chrome="noheader nofooter noborders noscrollbar" data-height="1700" data-lang="zh-cn" href="https://twitter.com/_Xheldon?ref_src=twsrc%5Etfw">
-    Tweets by @_Xheldon
-</a>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
                 <!-- Friends Blog -->
                 
 <hr>
@@ -866,14 +630,71 @@ loadSomething().then(function...
   
 </ul>
 
-    		</div>
-        
-        
-	</div>
-</div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- add support for mathjax by voleking-->
 
 
+<!-- Markdown 流程图按需加载 -->
 
+
+<!-- Gitalk 评论 start  -->
+<link rel="stylesheet" href="//static.xheldon.cn/css/gitalk.css">
+<script src="//static.xheldon.cn/js/gitalk.min.js"></script>
+<script type="text/javascript">
+  window.addEventListener('load', function(){
+    var gitalk = new Gitalk({
+      clientID: 'd2b353a60fa1233163fc',
+      clientSecret: '8091d57674976bcd60fc05261bf93c00da7e5ff4',
+      repo: 'x_blog',
+      owner: 'Xheldon',
+      admin: ['Xheldon'],id: "problem-use-sharp",labels: [],
+      title: "使用 Sharp 转换 HEIC/HEIF 图片遇到的问题",
+      language: "zh-CN",
+      pagerDirection: 'first',
+    });
+    gitalk.render('gitalk-container');
+});
+</script>
+<!-- Gitalk end -->
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://static.xheldon.cn/js/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'right',
+          // icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
 
 
 
@@ -1060,64 +881,6 @@ loadSomething().then(function...
 
 
 <!-- Side Catalog -->
-
-<script type="text/javascript">
-    function generateCatalog(selector) {
-
-        // interop with multilangual 
-        if ('' == 'true') {
-            _containerSelector = 'div.post-container.active'
-        } else {
-            _containerSelector = 'div.post-container'
-        }
-
-        // init
-        var P = $(_containerSelector), a, n, t, l, i, c;
-        a = P.find('h1,h2,h3,h4,h5,h6');
-
-        // clean
-        $(selector).html('')
-
-        // appending
-        a.each(function () {
-            n = $(this).prop('tagName').toLowerCase();
-            i = "#" + $(this).prop('id');
-            t = $(this).text();
-            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-            l = $('<li class="' + n + '_nav"></li>').append(c);
-            $(selector).append(l);
-        });
-        return true;
-    }
-
-    generateCatalog(".catalog-body");
-
-    // toggle side catalog
-    $(".catalog-toggle").click((function (e) {
-        e.preventDefault();
-        $('.side-catalog').toggleClass("fold")
-    }))
-
-    /*
-     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-     * Fork by Hux to support padding
-     */
-    async("https://static.xheldon.cn/js/jquery.nav.js", function () {
-        $('.catalog-body').onePageNav({
-            currentClass: "active",
-            changeHash: !1,
-            easing: "swing",
-            filter: "",
-            scrollSpeed: 700,
-            scrollOffset: 0,
-            scrollThreshold: .2,
-            begin: null,
-            end: null,
-            scrollChange: null,
-            padding: 80
-        });
-    });
-</script>
 
 
 
