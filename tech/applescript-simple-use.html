@@ -230,7 +230,7 @@
                     <h2 class="subheading"></h2>
                     <span class="meta">✍🏼 写于 2022年05月03日</span>&nbsp;&nbsp;&nbsp;  
                     
-                    <span class="meta">💡 更新于 2022年05月03日</span>
+                    <span class="meta">💡 更新于 2023年01月05日</span>
                     
                 </div>
             </div>
@@ -283,7 +283,7 @@
 
 <p>最近新买了 Mac Studio，配备了 M1 Max 芯片和 64G 的内存，性能非常强。与此同时，之前的 <a href="/tech/my-blog-ci-in-2022.html">博客处理流程</a> 中，因为需要使用 Github Action 将从 Craft 拉取的图片（这一步很快，毕竟二者都在国外），往腾讯云 COS传的时候，经常遇到网络过慢的问题</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/FBB4B556-8472-4C92-8EFD-E07015DC5FBB_2.png" alt="Image" /></p>
+<p caption="SCR-20220502-q47"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/FBB4B556-8472-4C92-8EFD-E07015DC5FBB_2.webp" alt="SCR-20220502-q47" title="SCR-20220502-q47" /></p>
 
 <p>调研了一番发现，Github 貌似 <a href="https://github.community/t/is-there-a-way-to-specify-virtual-machine-region/120438">不支持设置 Action 服务器的区域</a>。鉴于此，所以打算之后将发布流程放到本地，，以加快构建流程，遂有此文。下面的 AppleScript 简称 AS。</p>
 
@@ -309,7 +309,7 @@
 
 <p>概念图：</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/6C1FA0DD-5875-4C15-BCA8-495B34F5F699_2.png" alt="Image" /></p>
+<p caption="execute_script_2x"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/6C1FA0DD-5875-4C15-BCA8-495B34F5F699_2.webp" alt="execute_script_2x" title="execute_script_2x" /></p>
 
 <h3 id="applescript-能做什么">AppleScript 能做什么</h3>
 
@@ -332,7 +332,7 @@
     <p>每行的前面加上 <code class="language-plaintext highlighter-rouge">---</code>（三个短横线）或者 <code class="language-plaintext highlighter-rouge">#</code> 表示注释本行。</p>
   </li>
   <li>
-    <p>用 <code class="language-plaintext highlighter-rouge">(*</code><em><code class="language-plaintext highlighter-rouge">xxx*</code></em><code class="language-plaintext highlighter-rouge">)</code> （括号+星号）包裹的 <code class="language-plaintext highlighter-rouge">xxx</code> 表述块注释掉 xxx 的内容。</p>
+    <p>用 <code class="language-plaintext highlighter-rouge">(*</code><code class="language-plaintext highlighter-rouge">*xxx**</code><code class="language-plaintext highlighter-rouge">)</code> （括号+星号）包裹的 <code class="language-plaintext highlighter-rouge">xxx</code> 表述块注释掉 xxx 的内容。</p>
   </li>
   <li>
     <p>其他的基本跟口头预类似，不过如果你对英文语法不自信，比如不清楚 besides against over 等在具体语境中的意思，建议还是老老实实使用基本语法。</p>
@@ -343,7 +343,7 @@
 
 <p>AppleScript 常用的有两种形式，Script（脚本）、Application（应用），这里只介绍前两种，Script bundle 和 Text 我没用这里不展开。</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/08F57517-C6AC-49C1-9B5E-9606F2DD2A8E_2.png" alt="Image" /></p>
+<p caption="SCR-20220502-qqc"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/08F57517-C6AC-49C1-9B5E-9606F2DD2A8E_2.webp" alt="SCR-20220502-qqc" title="SCR-20220502-qqc" /></p>
 
 <blockquote>
   <p>注：这里需要说明一点的是，即使是相同的代码，保存成脚本运行和保存成应用运行，界面是不一样的。</p>
@@ -353,23 +353,23 @@
 
 <p>脚本顾名思义就是像 js 一样的可执行文件，不同的是 as 是在 Mac 桌面环境执行，而 js 是在 Chrome 中执行的。双击即可运行。下图是脚本 process 显示进度的界面，通过点击脚本右上角的「运行」按钮运行：</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/A8E4D5D2-C4A6-4E6D-80DA-7E3A0EFA7D41_2.png" alt="Image" /></p>
+<p caption="SCR-20220502-r3e"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/A8E4D5D2-C4A6-4E6D-80DA-7E3A0EFA7D41_2.webp" alt="SCR-20220502-r3e" title="SCR-20220502-r3e" /></p>
 
 <h4 id="应用">应用</h4>
 
 <p>保存成 Application 的 AS 的后缀名跟普通的应用如 Safari、Chrome、微信等应用一样，会以 <code class="language-plaintext highlighter-rouge">.app</code> 结尾，也可以查看包内容。有多种运行方式如 URL Scheme 调用、双击、拖拽内容到 app 图标上，你需要写相关的事件函数来响应相关用户操作。下图是 应用process 显示进度的界面，通过双击 「xxx.app」运行：</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/E0B4F2DA-21AA-4EF1-B059-9C500E18B67C_2.png" alt="Image" /></p>
+<p caption="SCR-20220502-r33"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/E0B4F2DA-21AA-4EF1-B059-9C500E18B67C_2.webp" alt="SCR-20220502-r33" title="SCR-20220502-r33" /></p>
 
 <h4 id="其他">其他</h4>
 
 <p>除了上述两者，其他的不常用，不过如果你需要将 script 保存成服务以在状态栏或者任意界面的右键的服务中能够调用该脚本，这需要上述两者之外的形式：</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/D09A2EEB-72DC-4CA1-8812-59E4BC4206DB_2.png" alt="Image" /></p>
+<p caption="SCR-20220502-rcr"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/D09A2EEB-72DC-4CA1-8812-59E4BC4206DB_2.webp" alt="SCR-20220502-rcr" title="SCR-20220502-rcr" /></p>
 
 <p>你可以选择将脚本保存成系统 Service，此时上述 process 代码运行的时候，进度条会显示在顶部状态栏：</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/B936F8C6-DCA3-4B98-B995-7F4F3F013E74_2.png" alt="Image" /></p>
+<p caption="scriptmenu_progress_2x"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/B936F8C6-DCA3-4B98-B995-7F4F3F013E74_2.webp" alt="scriptmenu_progress_2x" title="scriptmenu_progress_2x" /></p>
 
 <h2 id="常用操作代码">常用操作代码</h2>
 
@@ -381,27 +381,27 @@
 
 <h4 id="在通知中心显示信息">在通知中心显示信息</h4>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>display notification "通知内容" with title "通知 title" subtitle "通知副标题"
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nx">display</span> <span class="nx">notification</span> <span class="dl">"</span><span class="s2">通知内容</span><span class="dl">"</span> <span class="kd">with</span> <span class="nx">title</span> <span class="dl">"</span><span class="s2">通知 title</span><span class="dl">"</span> <span class="nx">subtitle</span> <span class="dl">"</span><span class="s2">通知副标题</span><span class="dl">"</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/AC96218F-E238-4695-9220-7933C27BC841_2.png" alt="Image" /></p>
+<p caption="SCR-20220502-sfl"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/AC96218F-E238-4695-9220-7933C27BC841_2.webp" alt="SCR-20220502-sfl" title="SCR-20220502-sfl" /></p>
 
 <h4 id="弹窗">弹窗</h4>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>display dialog "这是个通知"
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nx">display</span> <span class="nx">dialog</span> <span class="dl">"</span><span class="s2">这是个通知</span><span class="dl">"</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/B945A1B9-4704-4F39-9A68-C0287846A061_2.png" alt="Image" /></p>
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/B945A1B9-4704-4F39-9A68-C0287846A061_2.webp" alt="Image" title="Image" /></p>
 
 <h4 id="获取用户输入">获取用户输入</h4>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>display dialog "What's your name?" default answer "" with icon note buttons {"取消", "确认"} default button "确认"
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nx">display</span> <span class="nx">dialog</span> <span class="dl">"</span><span class="s2">What's your name?</span><span class="dl">"</span> <span class="k">default</span> <span class="nx">answer</span> <span class="dl">""</span> <span class="kd">with</span> <span class="nx">icon</span> <span class="nx">note</span> <span class="nx">buttons</span> <span class="p">{</span><span class="dl">"</span><span class="s2">取消</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">确认</span><span class="dl">"</span><span class="p">}</span> <span class="k">default</span> <span class="nx">button</span> <span class="dl">"</span><span class="s2">确认</span><span class="dl">"</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/F4002573-AD3C-4D4E-BF98-9B6696788442_2.png" alt="Image" /></p>
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/F4002573-AD3C-4D4E-BF98-9B6696788442_2.webp" alt="Image" title="Image" /></p>
 
 <blockquote>
   <p>注：AS 没有办法生成类似表单一样的组件，只能生成上面这种对话框，类似网页中的 prompt</p>
@@ -409,8 +409,8 @@
 
 <h4 id="播放给定文本">播放给定文本</h4>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>say "What is your name?" using "Alex" speaking rate 140 pitch 42 modulation 60
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nx">say</span> <span class="dl">"</span><span class="s2">What is your name?</span><span class="dl">"</span> <span class="nx">using</span> <span class="dl">"</span><span class="s2">Alex</span><span class="dl">"</span> <span class="nx">speaking</span> <span class="nx">rate</span> <span class="mi">140</span> <span class="nx">pitch</span> <span class="mi">42</span> <span class="nx">modulation</span> <span class="mi">60</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <h4 id="其他-1">其他</h4>
@@ -419,8 +419,8 @@
 
 <h3 id="执行命令行">执行命令行</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>do shell script "echo $PATH"
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="k">do</span> <span class="nx">shell</span> <span class="nx">script</span> <span class="dl">"</span><span class="s2">echo $PATH</span><span class="dl">"</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <blockquote>
@@ -429,41 +429,41 @@
 
 <p>执行 node 脚本：</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td><td class="rouge-code"><pre>set node to "/Users/x/.nvm/versions/node/v14.19.1/bin/node"
-set appPath to "/Applications/Xhelper.app/Contents/Resources/Scripts/"
-do shell script node &amp; " " &amp; appPath &amp; "index.js"
+</pre></td><td class="rouge-code"><pre><span class="kd">set</span> <span class="nx">node</span> <span class="nx">to</span> <span class="dl">"</span><span class="s2">/Users/x/.nvm/versions/node/v14.19.1/bin/node</span><span class="dl">"</span>
+<span class="kd">set</span> <span class="nx">appPath</span> <span class="nx">to</span> <span class="dl">"</span><span class="s2">/Applications/Xhelper.app/Contents/Resources/Scripts/</span><span class="dl">"</span>
+<span class="k">do</span> <span class="nx">shell</span> <span class="nx">script</span> <span class="nx">node</span> <span class="o">&amp;</span> <span class="dl">"</span><span class="s2"> </span><span class="dl">"</span> <span class="o">&amp;</span> <span class="nx">appPath</span> <span class="o">&amp;</span> <span class="dl">"</span><span class="s2">index.js</span><span class="dl">"</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <h3 id="获取上一个语句的输出结果">获取上一个语句的输出结果</h3>
 
 <p>直接在上一句语句后立即使用 <code class="language-plaintext highlighter-rouge">result</code> 表示结果即可：</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre>do shell script "echo $PATH"
-display dialog result with title "通知"
+</pre></td><td class="rouge-code"><pre><span class="k">do</span> <span class="nx">shell</span> <span class="nx">script</span> <span class="dl">"</span><span class="s2">echo $PATH</span><span class="dl">"</span>
+<span class="nx">display</span> <span class="nx">dialog</span> <span class="nx">result</span> <span class="kd">with</span> <span class="nx">title</span> <span class="dl">"</span><span class="s2">通知</span><span class="dl">"</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/6214E292-E4CB-49BC-B8D2-945C135E5B45_2.png" alt="Image" /></p>
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/6214E292-E4CB-49BC-B8D2-945C135E5B45_2.webp" alt="Image" title="Image" /></p>
 
 <h3 id="显示调试信息">显示调试信息</h3>
 
 <p>直接使用 <code class="language-plaintext highlighter-rouge">log</code> 语句即可，然后在 <code class="language-plaintext highlighter-rouge">Script Editor</code> 下方的 <code class="language-plaintext highlighter-rouge">Replies</code> 中获取输出信息，可以在这里看到 <code class="language-plaintext highlighter-rouge">shell script</code> 命令执行的过程中，脚本向控制台输出的内容，如执行 js 脚本的时候的 <code class="language-plaintext highlighter-rouge">console.log</code> 等。</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>log do shell script "echo $PATH"
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nx">log</span> <span class="k">do</span> <span class="nx">shell</span> <span class="nx">script</span> <span class="dl">"</span><span class="s2">echo $PATH</span><span class="dl">"</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/1089533E-DE38-418F-A20C-592669941C2D_2.png" alt="Image" /></p>
+<p caption="SCR-20220502-sov"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/1089533E-DE38-418F-A20C-592669941C2D_2.webp" alt="SCR-20220502-sov" title="SCR-20220502-sov" /></p>
 
 <h3 id="显示进度">显示进度</h3>
 
 <p>显示进度用到 progress ，语句相对来说比较复杂，因为需要显示不同的状态进度，需要多行：</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -472,23 +472,23 @@ display dialog result with title "通知"
 7
 8
 9
-</pre></td><td class="rouge-code"><pre>set progress total steps to 3
-set progress completed steps to 0
-set progress description to "处理中..."
-delay 1
-set progress completed steps to 1
-delay 1
-set progress completed steps to 2
-delay 1
-set progress completed steps to 3
+</pre></td><td class="rouge-code"><pre><span class="kd">set</span> <span class="nx">progress</span> <span class="nx">total</span> <span class="nx">steps</span> <span class="nx">to</span> <span class="mi">3</span>
+<span class="kd">set</span> <span class="nx">progress</span> <span class="nx">completed</span> <span class="nx">steps</span> <span class="nx">to</span> <span class="mi">0</span>
+<span class="kd">set</span> <span class="nx">progress</span> <span class="nx">description</span> <span class="nx">to</span> <span class="dl">"</span><span class="s2">处理中...</span><span class="dl">"</span>
+<span class="nx">delay</span> <span class="mi">1</span>
+<span class="kd">set</span> <span class="nx">progress</span> <span class="nx">completed</span> <span class="nx">steps</span> <span class="nx">to</span> <span class="mi">1</span>
+<span class="nx">delay</span> <span class="mi">1</span>
+<span class="kd">set</span> <span class="nx">progress</span> <span class="nx">completed</span> <span class="nx">steps</span> <span class="nx">to</span> <span class="mi">2</span>
+<span class="nx">delay</span> <span class="mi">1</span>
+<span class="kd">set</span> <span class="nx">progress</span> <span class="nx">completed</span> <span class="nx">steps</span> <span class="nx">to</span> <span class="mi">3</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>相关的截图可以在上面看到。</p>
 
 <h3 id="延迟一段时间后执行">延迟一段时间后执行</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>delay n
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nx">delay</span> <span class="nx">n</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">n</code>  表示秒数，支持小数。一般用来模拟用户操作的时候的延迟操作，否则可能因为脚本操作过快页面还未来得及显示等。一些奇怪的问题也可以通过延迟执行来解决，此语句可以类比于 <code class="language-plaintext highlighter-rouge">js</code> 中的 <code class="language-plaintext highlighter-rouge">setTimeout</code> 大法。</p>
@@ -497,29 +497,29 @@ set progress completed steps to 3
 
 <p>注意，此处会有系统警告，需要你确认才能执行:</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/898D7F67-700E-40F2-AC6C-D999F5543578_2.png" alt="Image" /></p>
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/898D7F67-700E-40F2-AC6C-D999F5543578_2.webp" alt="Image" title="Image" /></p>
 
 <p>确认后可以在<code class="language-plaintext highlighter-rouge">设置-安全与隐私-隐私-自动化</code>中确认：</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/47444D53-68E4-4518-87FD-521AE42B737F_2.png" alt="Image" /></p>
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/47444D53-68E4-4518-87FD-521AE42B737F_2.webp" alt="Image" title="Image" /></p>
 
 <p>可以调用其他应用来执行相应的操作，下面是唤起 <code class="language-plaintext highlighter-rouge">Terminal</code> 应用后，激活然后执行命令：</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
 5
-</pre></td><td class="rouge-code"><pre>tell application "Terminal"
-	if not (exists window 1) then reopen
-	activate
-	do script "echo $PATH" in window 1
-end tell
+</pre></td><td class="rouge-code"><pre><span class="nx">tell</span> <span class="nx">application</span> <span class="dl">"</span><span class="s2">Terminal</span><span class="dl">"</span>
+	<span class="k">if</span> <span class="nx">not</span> <span class="p">(</span><span class="nx">exists</span> <span class="nb">window</span> <span class="mi">1</span><span class="p">)</span> <span class="nx">then</span> <span class="nx">reopen</span>
+	<span class="nx">activate</span>
+	<span class="k">do</span> <span class="nx">script</span> <span class="dl">"</span><span class="s2">echo $PATH</span><span class="dl">"</span> <span class="k">in</span> <span class="nb">window</span> <span class="mi">1</span>
+<span class="nx">end</span> <span class="nx">tell</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>此语句做了一个判断，如果第一个打开的窗口存在，则激活之，然后在其内执行命令（<code class="language-plaintext highlighter-rouge">do script</code> ）；如果不存在的话则会新建一个窗口然后在其内执行命令。因为每个 <code class="language-plaintext highlighter-rouge">do script</code> 都会打开一个新的 Terminal 这个判断可以保证复用窗口。不过需要注意的是，如果 <code class="language-plaintext highlighter-rouge">window 1</code> 内已经有一个已经存在的进程（如 server 未中断），那么这个命令是不会执行的，还需要额外的判断，此处不展开。</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/8701C38B-8CE9-479A-816A-9126692B313D_2.png" alt="Image" /></p>
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/8701C38B-8CE9-479A-816A-9126692B313D_2.webp" alt="Image" title="Image" /></p>
 
 <h3 id="响应-url-scheme">响应 URL Scheme</h3>
 
@@ -527,15 +527,15 @@ end tell
 
 <p>首先你需要修改 <code class="language-plaintext highlighter-rouge">Info.plist</code> 文件，可以在 Script Editor 的右侧，右键 「显示在 Finder」 中：</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/E1F3DFE5-54E3-4615-9A74-1B084686CC37_2.png" alt="Image" /></p>
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/E1F3DFE5-54E3-4615-9A74-1B084686CC37_2.webp" alt="Image" title="Image" /></p>
 
 <p>然后向上一级，可以看到该文件：</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/DE5F9B08-4F60-4B2A-9645-DF37B420C96B_2.png" alt="Image" /></p>
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/DE5F9B08-4F60-4B2A-9645-DF37B420C96B_2.webp" alt="Image" title="Image" /></p>
 
 <p>内容是一个类似 XML 的东西编辑之，在其内加入如下字段：</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -545,21 +545,21 @@ end tell
 8
 9
 10
-</pre></td><td class="rouge-code"><pre>&lt;array&gt;
-	&lt;dict&gt;
-		&lt;key&gt;CFBundleURLName&lt;/key&gt;
-		&lt;string&gt;Open File&lt;/string&gt;
-		&lt;key&gt;CFBundleURLSchemes&lt;/key&gt;
-		&lt;array&gt;
-			&lt;string&gt;xhelper&lt;/string&gt;
-		&lt;/array&gt;
-	&lt;/dict&gt;
-&lt;/array&gt;
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;array&gt;</span>
+	<span class="nt">&lt;dict&gt;</span>
+		<span class="nt">&lt;key&gt;</span>CFBundleURLName<span class="nt">&lt;/key&gt;</span>
+		<span class="nt">&lt;string&gt;</span>Open File<span class="nt">&lt;/string&gt;</span>
+		<span class="nt">&lt;key&gt;</span>CFBundleURLSchemes<span class="nt">&lt;/key&gt;</span>
+		<span class="nt">&lt;array&gt;</span>
+			<span class="nt">&lt;string&gt;</span>xhelper<span class="nt">&lt;/string&gt;</span>
+		<span class="nt">&lt;/array&gt;</span>
+	<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/array&gt;</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>然后确认一下，用 XCode 打开该文件可以看到类似的条目：</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/901047E8-38AA-4B9C-BA60-680EC60864F5_2.png" alt="Image" /></p>
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/901047E8-38AA-4B9C-BA60-680EC60864F5_2.webp" alt="Image" title="Image" /></p>
 
 <p>表示添加成功。</p>
 
@@ -569,19 +569,19 @@ end tell
 
 <p>然后，为了让 AS 响应该 URL，需要设置一个事件监听：</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td><td class="rouge-code"><pre>on open location this_URL
-	display dialog this_URL
-end open location
+</pre></td><td class="rouge-code"><pre><span class="nx">on</span> <span class="nx">open</span> <span class="nx">location</span> <span class="nx">this_URL</span>
+	<span class="nx">display</span> <span class="nx">dialog</span> <span class="nx">this_URL</span>
+<span class="nx">end</span> <span class="nx">open</span> <span class="nx">location</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>上述代码中，<code class="language-plaintext highlighter-rouge">this_URL</code> 即为以你 <code class="language-plaintext highlighter-rouge">xhelper</code> 打开的链接。</p>
 
 <p>此时在浏览器中（截图是 Chrome）测试一个链接：</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/01F724A1-041B-4143-80CC-5F4F3D6ECFC8_2.png" alt="Image" /></p>
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/01F724A1-041B-4143-80CC-5F4F3D6ECFC8_2.webp" alt="Image" title="Image" /></p>
 
 <p>然后 AS 应用就会响应然后弹窗显示 <code class="language-plaintext highlighter-rouge">xhelper://你好！</code> ，注意这里是不用 encode 编码的。</p>
 
@@ -589,7 +589,7 @@ end open location
 
 <p>在这里放出我自己的 Craft build 代码，用的是上述的 URL Scheme，其中的 node 执行的 js 都是从 <a href="/tech/my-blog-ci-in-2022.html">之前的工作流</a> 改造的，没有什么新逻辑。另外 AS 的语法比较口语化，直接看就能看懂每句话是什么意思，这里就不一一解释了。</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -628,50 +628,50 @@ end open location
 37
 38
 39
-</pre></td><td class="rouge-code"><pre>on open location this_URL
-	try
-		set startOffset to offset of "://" in this_URL
-		set the content to text from (startOffset + 3) to -1 of this_URL
-		set node to "/Users/x/.nvm/versions/node/v14.19.1/bin/node"
-		set appPath to "/Applications/Xhelper.app/Contents/Resources/Scripts/"
-		--- 如果有两个参数表示需要发布到 wechat，如果只有一个参数则参数即为 base64 编码的内容
-		set AppleScript's text item delimiters to "&amp;"
+</pre></td><td class="rouge-code"><pre><span class="nx">on</span> <span class="nx">open</span> <span class="nx">location</span> <span class="nx">this_URL</span>
+	<span class="k">try</span>
+		<span class="kd">set</span> <span class="nx">startOffset</span> <span class="nx">to</span> <span class="nx">offset</span> <span class="k">of</span> <span class="dl">"</span><span class="s2">://</span><span class="dl">"</span> <span class="k">in</span> <span class="nx">this_URL</span>
+		<span class="kd">set</span> <span class="nx">the</span> <span class="nx">content</span> <span class="nx">to</span> <span class="nx">text</span> <span class="k">from</span> <span class="p">(</span><span class="nx">startOffset</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="nx">to</span> <span class="o">-</span><span class="mi">1</span> <span class="k">of</span> <span class="nx">this_URL</span>
+		<span class="kd">set</span> <span class="nx">node</span> <span class="nx">to</span> <span class="dl">"</span><span class="s2">/Users/x/.nvm/versions/node/v14.19.1/bin/node</span><span class="dl">"</span>
+		<span class="kd">set</span> <span class="nx">appPath</span> <span class="nx">to</span> <span class="dl">"</span><span class="s2">/Applications/Xhelper.app/Contents/Resources/Scripts/</span><span class="dl">"</span>
+		<span class="o">---</span> <span class="nx">如果有两个参数表示需要发布到</span> <span class="nx">wechat</span><span class="err">，</span><span class="nx">如果只有一个参数则参数即为</span> <span class="nx">base64</span> <span class="nx">编码的内容</span>
+		<span class="kd">set</span> <span class="nx">AppleScript</span><span class="dl">'</span><span class="s1">s text item delimiters to "&amp;"
 		set arguments to every text item of the content
-		set AppleScript's text item delimiters to ""
-		set listLength to the length of arguments
-		if listLength = 2 then
-			set realContent to item 2 of arguments
-			do shell script "echo " &amp; realContent &amp; " &gt; " &amp; appPath &amp; "content.base64.txt"
-			tell application "Terminal"
-				if not (exists window 1) then reopen
-				activate
-				set alive to do script node &amp; " " &amp; appPath &amp; "index.js" in window 1
-				--- 等待上一个脚本执行完毕后再执行下一个脚本
-				repeat
-					delay 0.1
-					if not busy of alive then exit repeat
-				end repeat
-				beep
-				do script node &amp; " " &amp; appPath &amp; "wechat.js" in window 1
-			end tell
-		else
-			do shell script "echo " &amp; content &amp; " &gt; " &amp; appPath &amp; "content.base64.txt"
-			tell application "Terminal"
-				if not (exists window 1) then reopen
-				activate
-				do script node &amp; " " &amp; appPath &amp; "index.js" in window 1
-			end tell
-		end if
-	on error error_message
-		display dialog error_message buttons {"Cancel"} default button 1
-	end try
+		set AppleScript</span><span class="dl">'</span><span class="nx">s</span> <span class="nx">text</span> <span class="nx">item</span> <span class="nx">delimiters</span> <span class="nx">to</span> <span class="dl">""</span>
+		<span class="kd">set</span> <span class="nx">listLength</span> <span class="nx">to</span> <span class="nx">the</span> <span class="nx">length</span> <span class="k">of</span> <span class="nx">arguments</span>
+		<span class="k">if</span> <span class="nx">listLength</span> <span class="o">=</span> <span class="mi">2</span> <span class="nx">then</span>
+			<span class="kd">set</span> <span class="nx">realContent</span> <span class="nx">to</span> <span class="nx">item</span> <span class="mi">2</span> <span class="k">of</span> <span class="nx">arguments</span>
+			<span class="k">do</span> <span class="nx">shell</span> <span class="nx">script</span> <span class="dl">"</span><span class="s2">echo </span><span class="dl">"</span> <span class="o">&amp;</span> <span class="nx">realContent</span> <span class="o">&amp;</span> <span class="dl">"</span><span class="s2"> &gt; </span><span class="dl">"</span> <span class="o">&amp;</span> <span class="nx">appPath</span> <span class="o">&amp;</span> <span class="dl">"</span><span class="s2">content.base64.txt</span><span class="dl">"</span>
+			<span class="nx">tell</span> <span class="nx">application</span> <span class="dl">"</span><span class="s2">Terminal</span><span class="dl">"</span>
+				<span class="k">if</span> <span class="nx">not</span> <span class="p">(</span><span class="nx">exists</span> <span class="nb">window</span> <span class="mi">1</span><span class="p">)</span> <span class="nx">then</span> <span class="nx">reopen</span>
+				<span class="nx">activate</span>
+				<span class="kd">set</span> <span class="nx">alive</span> <span class="nx">to</span> <span class="k">do</span> <span class="nx">script</span> <span class="nx">node</span> <span class="o">&amp;</span> <span class="dl">"</span><span class="s2"> </span><span class="dl">"</span> <span class="o">&amp;</span> <span class="nx">appPath</span> <span class="o">&amp;</span> <span class="dl">"</span><span class="s2">index.js</span><span class="dl">"</span> <span class="k">in</span> <span class="nb">window</span> <span class="mi">1</span>
+				<span class="o">---</span> <span class="nx">等待上一个脚本执行完毕后再执行下一个脚本</span>
+				<span class="nx">repeat</span>
+					<span class="nx">delay</span> <span class="mf">0.1</span>
+					<span class="k">if</span> <span class="nx">not</span> <span class="nx">busy</span> <span class="k">of</span> <span class="nx">alive</span> <span class="nx">then</span> <span class="nx">exit</span> <span class="nx">repeat</span>
+				<span class="nx">end</span> <span class="nx">repeat</span>
+				<span class="nx">beep</span>
+				<span class="k">do</span> <span class="nx">script</span> <span class="nx">node</span> <span class="o">&amp;</span> <span class="dl">"</span><span class="s2"> </span><span class="dl">"</span> <span class="o">&amp;</span> <span class="nx">appPath</span> <span class="o">&amp;</span> <span class="dl">"</span><span class="s2">wechat.js</span><span class="dl">"</span> <span class="k">in</span> <span class="nb">window</span> <span class="mi">1</span>
+			<span class="nx">end</span> <span class="nx">tell</span>
+		<span class="k">else</span>
+			<span class="k">do</span> <span class="nx">shell</span> <span class="nx">script</span> <span class="dl">"</span><span class="s2">echo </span><span class="dl">"</span> <span class="o">&amp;</span> <span class="nx">content</span> <span class="o">&amp;</span> <span class="dl">"</span><span class="s2"> &gt; </span><span class="dl">"</span> <span class="o">&amp;</span> <span class="nx">appPath</span> <span class="o">&amp;</span> <span class="dl">"</span><span class="s2">content.base64.txt</span><span class="dl">"</span>
+			<span class="nx">tell</span> <span class="nx">application</span> <span class="dl">"</span><span class="s2">Terminal</span><span class="dl">"</span>
+				<span class="k">if</span> <span class="nx">not</span> <span class="p">(</span><span class="nx">exists</span> <span class="nb">window</span> <span class="mi">1</span><span class="p">)</span> <span class="nx">then</span> <span class="nx">reopen</span>
+				<span class="nx">activate</span>
+				<span class="k">do</span> <span class="nx">script</span> <span class="nx">node</span> <span class="o">&amp;</span> <span class="dl">"</span><span class="s2"> </span><span class="dl">"</span> <span class="o">&amp;</span> <span class="nx">appPath</span> <span class="o">&amp;</span> <span class="dl">"</span><span class="s2">index.js</span><span class="dl">"</span> <span class="k">in</span> <span class="nb">window</span> <span class="mi">1</span>
+			<span class="nx">end</span> <span class="nx">tell</span>
+		<span class="nx">end</span> <span class="k">if</span>
+	<span class="nx">on</span> <span class="nx">error</span> <span class="nx">error_message</span>
+		<span class="nx">display</span> <span class="nx">dialog</span> <span class="nx">error_message</span> <span class="nx">buttons</span> <span class="p">{</span><span class="dl">"</span><span class="s2">Cancel</span><span class="dl">"</span><span class="p">}</span> <span class="k">default</span> <span class="nx">button</span> <span class="mi">1</span>
+	<span class="nx">end</span> <span class="k">try</span>
 	
-end open location
+<span class="nx">end</span> <span class="nx">open</span> <span class="nx">location</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>效果：</p>
 
-<p><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/F7A4DDFF-2698-4E1E-8D72-C8B3D0EC5020_2.png" alt="Image" /></p>
+<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/F7A4DDFF-2698-4E1E-8D72-C8B3D0EC5020_2.webp" alt="Image" title="Image" /></p>
 
 <h2 id="参考链接">参考链接</h2>
 
