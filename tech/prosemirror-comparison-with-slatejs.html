@@ -3,30 +3,49 @@
 
 <head>
     <meta charset="utf-8">
-    <title>科学技术是第一生产力 - Xheldon Blog</title>
+    <title>Slate 和 ProseMirror 简单对比 - Xheldon Blog</title>
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     
-        <meta name="description" content="技术就是好啊">
+        <meta name="description" content="Slate 和 Prosemirror 各用过两年后的简单对比总结">
     
     <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
     <meta name="theme-color" content="#000000">
     <meta name="twitter:card" content="summary_large_image">
     <!-- Open Graph -->
-    <meta property="og:title" content="科学技术是第一生产力 - Xheldon Blog">
+    <meta property="og:title" content="Slate 和 ProseMirror 简单对比 - Xheldon Blog">
     
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="article">
+    
+    <meta property="article:published_time" content="2023-01-06T12:14:58Z">
     
     
-        <meta name="og:description" content="技术就是好啊">
+    
+    <meta property="article:tag" content="技术">
+    
+    <meta property="article:tag" content="SlateJS">
+    
+    <meta property="article:tag" content="Prosemirror">
+    
+    <meta property="article:tag" content="对比">
+    
+    <meta property="article:tag" content="编辑器">
+    
+    <meta property="article:tag" content="选型">
+    
+    <meta property="article:tag" content="框架">
     
     
-    <meta property="twitter:image" content="https://static.xheldon.cn/img/food-bg.png">
-    <meta property="og:image" content="https://static.xheldon.cn/img/food-bg.png">
     
-    <meta property="og:url" content="https://www.xheldon.cn/tech/">
+        <meta name="og:description" content="Slate 和 Prosemirror 各用过两年后的简单对比总结">
+    
+    
+    <meta property="twitter:image" content="https://www.xheldon.cn/resources/img/logo.png">
+    <meta property="og:image" content="https://www.xheldon.cn/resources/img/logo.png">
+    
+    <meta property="og:url" content="https://www.xheldon.cn/tech/prosemirror-comparison-with-slatejs.html">
     <meta property="og:site_name" content="Xheldon Blog">
     
     <!-- Web App Manifest -->
@@ -36,7 +55,7 @@
     <link rel="shortcut icon" href="/resources/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.xheldon.cn/tech/">
+    <link rel="canonical" href="https://www.xheldon.cn/tech/prosemirror-comparison-with-slatejs.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
@@ -62,8 +81,8 @@
 
     <!-- Navigation -->
 
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -179,153 +198,252 @@
   </div>
 </div>
 
-    <!-- Page Header -->
+    <!-- Image to hack wechat -->
+<!-- <img src="/resources/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
 
-
-
-
-
+<!-- Post Header -->
 
 
 
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('https://static.xheldon.cn/img/food-bg.png');
+        background-image: url('https://static.xheldon.cn/img/index-bg.png');
         
     }
 
     
-    header.intro-header .header-mask{
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        background: rgba(0,0,0, 0.4);
-    }
-    
 </style>
 
-    <header class="intro-header" >
+<header class="intro-header style-text" >
 
     <div class="header-mask"></div>
+    
     <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        
-        <div class="site-heading">
-        
-          <h1>科学技术是第一生产力</h1>
-          <span class="subheading">技术就是好啊</span>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+                        
+                        <a class="tag" href="/archive/?tag=SlateJS" title="SlateJS">SlateJS</a>
+                        
+                        <a class="tag" href="/archive/?tag=Prosemirror" title="Prosemirror">Prosemirror</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E5%AF%B9%E6%AF%94" title="对比">对比</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8" title="编辑器">编辑器</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E9%80%89%E5%9E%8B" title="选型">选型</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E6%A1%86%E6%9E%B6" title="框架">框架</a>
+                        
+                    </div>
+                    <h1>Slate 和 ProseMirror 简单对比</h1>
+                    
+                    <h2 class="subheading"></h2>
+                    <span class="meta">✍🏼 写于 2023年01月06日</span>&nbsp;&nbsp;&nbsp;  
+                    
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </header>
 
-<style>
-.data-loading {
-    width: 150px;
-    height: 10px;
-    margin:50px auto;
-    text-align: center;
-}
-.data-loading span {
-    display: inline-block;
-    width: 10px;
-    height: 100%;
-    margin-right: 5px;
-    background: #5bc0de;
-    -webkit-animation: load 1.04s ease infinite;
-}
-.data-loading span:last-child{
-    margin-right: 0px; 
-}
-@-webkit-keyframes load{
-    0%{
-        opacity: 1;
-        -webkit-transform: scale(1.2);
-    }
-    100%{
-        opacity: .2;
-        -webkit-transform: scale(.2);
-    }
-}
-.data-loading span:nth-child(1){
-    -webkit-animation-delay:0.13s;
-}
-.data-loading span:nth-child(2){
-    -webkit-animation-delay:0.26s;
-}
-.data-loading span:nth-child(3){
-    -webkit-animation-delay:0.39s;
-}
-.data-loading span:nth-child(4){
-    -webkit-animation-delay:0.52s;
-}
-.data-loading span:nth-child(5){
-    -webkit-animation-delay:0.65s;
-}
-</style>
 
-<!-- Main Content -->
-<div class="container" >
-	<div class="row">
+
+
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <!-- Multi-Lingual -->
+                
+                
+                    
+                        
+                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
+                        <script>
+                            var timeDom = document.getElementById('from_time');
+                            var pageTime = 1672978498; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
+                            var currentTime = Date.now();
+                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
+                            if (Number(fromNow) <= 0) {
+                                fromNow = 1; // Note: 至少显示一天
+                            }
+                            timeDom.innerText = fromNow
+                        </script>
+                    
+                    
+                
+                
+                    <div class="callout-tips">🖥 &nbsp;说明：Slate 和 Prosemirror 各用过两年后的简单对比总结</div>
+                
+                
+                    <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/WCeEgxNhxwF2cu" target="_blank">https://www.craft.do/s/WCeEgxNhxwF2cu</a></div>
+                
+				<p>本人之前使用 PM 不到两年，开发过大型模块如智能表格等；使用 Slate 至今，经历过从 0.47 到 0.5+的大版本升级，算是有点发言权，鉴于圈内一些人总问我二者之间的差异，干脆写个博客简单来说说。</p>
+
+<h2 id="slate-优点">Slate 优点：</h2>
+
+<ol>
+  <li>
+    <p>上手快，开箱即用，概念易懂，代码容易理解，尤其是对熟悉 React 的同学来说，其视图层完全基于 React，基本上一周就能上手理解。</p>
+  </li>
+  <li>
+    <p>定制性强，可以根据自身的业务场景，魔改底层核心模块如 slate、slate-react 来扩展各种插件和架构，底层修改起来相对 PM 来说较为简单。</p>
+  </li>
+  <li>
+    <p>可以很好的适配协同的场景，如 sharedb，基于 json 的几乎就是为 Slate 准备的。</p>
+  </li>
+</ol>
+
+<h2 id="slate-缺点">Slate 缺点：</h2>
+
+<ol>
+  <li>
+    <p>作者修复 Bug 速度很慢，并不全职开发，基本靠社区维护，有些 API 明显不合理（如 .include，被坑过），或者有些 API 抛出异常，但是有些 API 会返回 null，明显没设计好，但是作者让你给他提 PR，而不是自己修复。</p>
+  </li>
+  <li>
+    <p>API 不稳定，目前仍未发布正式版，还在 0.x 版本，将来架构变动可能会比较巨大。</p>
+  </li>
+  <li>
+    <p>官方版本基本不可用，尤其针对 CJK 语言用户的输入法事件等来说，必须下载下来之后自己魔改一下才行。</p>
+  </li>
+  <li>
+    <p>性能优化较为困难，因为视图层完全基于 React，所以优化这部分的代码几乎只能从优化 React 出发，React 只是通用型框架，在速度上并没有任何优势。</p>
+  </li>
+  <li>
+    <p>代码没写好的话，很容易导致编辑器崩溃而导致编辑器不可用，除了修改框架代码，也没什么好的容错机制。</p>
+  </li>
+  <li>
+    <p>数据流动不清晰，容易导致 bug 的产生，如你可以直接 editor.children 赋值，覆盖掉已有的编辑器内容，而不会有任何报错。</p>
+  </li>
+  <li>
+    <p>光标问题、Mark 问题难以 hack，代码属于是入门级水平（个人理解）。</p>
+  </li>
+  <li>
+    <p>文档垃圾，有些文档和实际 API 表现不一致。</p>
+  </li>
+  <li>
+    <p>跟 React 强绑定。</p>
+  </li>
+  <li>
+    <p>移动端目前支持的不算太好，需要魔改。</p>
+  </li>
+</ol>
+
+<h2 id="prosemirror-优点">ProseMirror 优点：</h2>
+
+<ol>
+  <li>
+    <p>作者全职维护，非常热心，积极回答社区问题。</p>
+  </li>
+  <li>
+    <p>正式版发布三年多，API 一直很稳定。</p>
+  </li>
+  <li>
+    <p>有大公司背书，Google 也是用作者的另一个 CodeMirror 项目（Chrome Devtools 的 Element Tab 用的就是），可信度高。</p>
+  </li>
+  <li>
+    <p>数据流动清晰（虽然不好理解）。</p>
+  </li>
+  <li>
+    <p>没有 Slate 那么容易崩溃，报错也不会导致整个编辑器框架不可用，稳定性较高。</p>
+  </li>
+  <li>
+    <p>作者是自由工作者，靠捐款维持生活，名正言顺的接受付费解 Bug，按小时计费，每小时 200欧（邮件问过，没记错的话）。</p>
+  </li>
+  <li>
+    <p>文档树模型我觉得很好用，Schema 限制严格以及基于文本/Token偏移的定位系统是精髓，不过也是难以协同的地方。</p>
+  </li>
+  <li>
+    <p>不跟任意的视图框架依赖，可以用 React、View、Angular 开发视图框架，不过一般只有定制组件才需要，像 paragraph、heading、list 等，无需自定义 View 层，只需要使用 API 描述 DOM 结构即可。</p>
+  </li>
+  <li>
+    <p>移动端支持较好。</p>
+  </li>
+</ol>
+
+<h2 id="prosemirror-缺点">ProseMirror 缺点：</h2>
+
+<ol>
+  <li>
+    <p>一些概念较难理解，一些代码也难以理解（作者技术个人感觉深不可测）。</p>
+  </li>
+  <li>
+    <p>模块分散非开箱即用，需要一定的上手成本才能跑起来。</p>
+  </li>
+  <li>
+    <p>基于 PM 的协同方案，实现起来相较于 Slate 来说比较困难，作者17年开了个 issue，说要写一个协同的 demo，现在还没写。</p>
+  </li>
+  <li>
+    <p>上手难度较大，往往需要两周甚至一个月的时间才能开始开发基础功能。</p>
+  </li>
+  <li>
+    <p>因为是自己实现的视图层（开发者也可以使用 API 来实现渲染自定义组件如 React 组件），所以如果框架本身的视图层出问题，较难定位和修复。</p>
+  </li>
+  <li>
+    <p>几乎不可能魔改源码，成本很高，只能靠作者来修复。</p>
+  </li>
+</ol>
+
+<p>可以看下这个答主的对比，说的基本没什么大问题：</p>
+
+<p><a class="link-bookmark" href="https://www.zhihu.com/question/404836496/answer/1323431059" target="_blank"><span><img src="https://static.zhihu.com/heifetz/assets/apple-touch-icon-60.362a8eac.png" /></span><span><span>主流的开源「富文本编辑器」都有什么缺陷？ - 知乎</span><span>
+先占个坑……如何不借助 contentEditable 实现富文本编辑器？联动一下之前我在类似问题的回答我主要调研…
+</span><span>https://www.zhihu.com/question/404836496/answer/1323431059</span></span></a></p>
+
+<p>美团的学城用的是 PM：</p>
+
+<p><a class="link-bookmark" href="https://www.zhihu.com/question/404836496/answer/1326453810" target="_blank"><span><img src="https://static.zhihu.com/heifetz/assets/apple-touch-icon-60.362a8eac.png" /></span><span><span>主流的开源「富文本编辑器」都有什么缺陷？ - 知乎</span><span>
+美团的知识管理系统-学城，其富文本编辑器是基于prosemirror来实现的，我在其中开发了内部团队接入版本及…
+</span><span>https://www.zhihu.com/question/404836496/answer/1326453810</span></span></a></p>
+
+<h2 id="总结">总结</h2>
+
+<p>Slate 适合大公司，因为他上手快（大公司依赖投入产出比，不然项目拿不到资源，做了 2 月还是个 Demo 你怎么给领导交代？），因此可以很快出成果，但是打磨完美又需要很大的人力来魔改底层，所以适合大公司，前期快速上手，后期加人魔改。另外扩展性非常强，魔改后几乎可以满足任何要求（比如我们就搞了各种模块和功能，如划线评论、分级标题折叠、嵌入第三方模块等）。</p>
+
+<p>Prosemirror 适合中小型公司，各平台支持的算不错，如果有 bug 也可以放心交给作者来修复，如果实在修不好就付费让作者修。虽然上手成本高，但是让中小型公司的主力研发摸索个两周应该也可以出 demo 了。</p>
+
+                <div class="text-danger">- EOF -</div>
+                <hr style="visibility: hidden;">
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/tech/problem-use-sharp.html" data-toggle="tooltip" data-placement="top" title="使用 Sharp 转换 HEIC/HEIF 图片遇到的问题">
+                        上一篇<br>
+                        <span>使用 Sharp 转换 HEIC/HEIF 图片遇到的问题</span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+                <hr style="visibility: hidden;">
+                <div id="gitalk-container"></div>
+                <hr>
+            </div>  
+
+    <!-- Side Catalog Container -->
         
 
-<!-- USE SIDEBAR -->
-    <!-- PostList Container -->
-    
-    
-    		<div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                postlist-container
-            ">
-    			
-
-    
-
-    
-
-    
-
-    
-        <div style="color: red; font-size: 30px;">本目录内容移动到 archive 下，即将为你跳转：<span id="time">3</span></div>
-        <script>
-            document.title = '跳转中...';
-            var time = 3;
-            var dom = document.getElementById('time');
-            var t = setInterval(() => {
-                if (time) {
-                    dom.innerText = time--;
-                } else {
-                    clearInterval(t);
-                    location.href = '/archive/?tag=%E6%8A%80%E6%9C%AF';            
-                }
-            }, 1000);
-        </script>
-    
-
-    
-
-
-          
-          <div class="text-danger">- EOF -</div>
-          <hr style="visibility: hidden;">
-          <div id="gitalk-container"></div>
-          <hr>
-          
-    		</div>
     <!-- Sidebar Container -->
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
 
@@ -485,13 +603,6 @@
 </section>
 
 
-                <!-- Twitter Timeline -->
-                <hr class="twitter-timeline-hr">
-<a class="twitter-timeline" data-chrome="noheader nofooter noborders noscrollbar" data-height="1700" data-lang="zh-cn" href="https://twitter.com/_Xheldon?ref_src=twsrc%5Etfw">
-    Tweets by @_Xheldon
-</a>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
                 <!-- Friends Blog -->
                 
 <hr>
@@ -507,11 +618,15 @@
   
 </ul>
 
-    		</div>
-        
-        
-	</div>
-</div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- add support for mathjax by voleking-->
+
+
+<!-- Markdown 流程图按需加载 -->
 
 
 <!-- Gitalk 评论 start  -->
@@ -524,8 +639,8 @@
       clientSecret: 'd5bd1b65b639d8697054e6e97f6308b28e9348ba',
       repo: 'x_blog',
       owner: 'Xheldon',
-      admin: ['Xheldon'],id: "",labels: [],
-      title: "科学技术是第一生产力",
+      admin: ['Xheldon'],id: "prosemirror-comparison-with-slatejs",labels: [],
+      title: "Slate 和 ProseMirror 简单对比",
       language: "zh-CN",
       pagerDirection: 'first',
     });
@@ -535,6 +650,39 @@
 <!-- Gitalk end -->
 
 
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://static.xheldon.cn/js/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'right',
+          // icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
 
 
 
@@ -727,64 +875,6 @@
 
 
 <!-- Side Catalog -->
-
-<script type="text/javascript">
-    function generateCatalog(selector) {
-
-        // interop with multilangual 
-        if ('' == 'true') {
-            _containerSelector = 'div.post-container.active'
-        } else {
-            _containerSelector = 'div.post-container'
-        }
-
-        // init
-        var P = $(_containerSelector), a, n, t, l, i, c;
-        a = P.find('h1,h2,h3,h4,h5,h6');
-
-        // clean
-        $(selector).html('')
-
-        // appending
-        a.each(function () {
-            n = $(this).prop('tagName').toLowerCase();
-            i = "#" + $(this).prop('id');
-            t = $(this).text();
-            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-            l = $('<li class="' + n + '_nav"></li>').append(c);
-            $(selector).append(l);
-        });
-        return true;
-    }
-
-    generateCatalog(".catalog-body");
-
-    // toggle side catalog
-    $(".catalog-toggle").click((function (e) {
-        e.preventDefault();
-        $('.side-catalog').toggleClass("fold")
-    }))
-
-    /*
-     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-     * Fork by Hux to support padding
-     */
-    async("https://static.xheldon.cn/js/jquery.nav.js", function () {
-        $('.catalog-body').onePageNav({
-            currentClass: "active",
-            changeHash: !1,
-            easing: "swing",
-            filter: "",
-            scrollSpeed: 700,
-            scrollOffset: 0,
-            scrollThreshold: .2,
-            begin: null,
-            end: null,
-            scrollChange: null,
-            padding: 80
-        });
-    });
-</script>
 
 
 
