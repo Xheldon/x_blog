@@ -857,6 +857,9 @@ loadSomething().then(function...
 
                 <!-- Twitter Timeline -->
                 <hr class="twitter-timeline-hr">
+<style>
+    #twitter-widget-0 {max-width: 100%;}
+</style>
 <a class="twitter-timeline" data-chrome="noheader nofooter noborders noscrollbar" data-height="1700" data-lang="zh-cn" href="https://twitter.com/_Xheldon?ref_src=twsrc%5Etfw">
     Tweets by @_Xheldon
 </a>
@@ -984,10 +987,19 @@ loadSomething().then(function...
         if(window.matchMedia('(prefers-color-scheme: dark)').matches){
             document.documentElement.classList.remove('light');
             document.documentElement.classList.add('dark');
+            // Note: 推特列表添加暗黑主题
+            let ttl = document.querySelector('.twitter-timeline');
+            if (ttl) {
+                ttl.setAttribute('data-theme', 'dark');
+            }
         }
         if(window.matchMedia('(prefers-color-scheme: light)').matches){
             document.documentElement.classList.remove('dark');
             document.documentElement.classList.add('light');
+            let ttl = document.querySelector('.twitter-timeline');
+            if (ttl) {
+                ttl.removeAttribute('data-theme');
+            }
         }
         document.getElementById('dark-mode').addEventListener('click', function() {
             document.documentElement.classList.remove('light');

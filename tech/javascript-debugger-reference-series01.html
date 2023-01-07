@@ -1237,10 +1237,19 @@ onClick (get-started.js:15)
         if(window.matchMedia('(prefers-color-scheme: dark)').matches){
             document.documentElement.classList.remove('light');
             document.documentElement.classList.add('dark');
+            // Note: 推特列表添加暗黑主题
+            let ttl = document.querySelector('.twitter-timeline');
+            if (ttl) {
+                ttl.setAttribute('data-theme', 'dark');
+            }
         }
         if(window.matchMedia('(prefers-color-scheme: light)').matches){
             document.documentElement.classList.remove('dark');
             document.documentElement.classList.add('light');
+            let ttl = document.querySelector('.twitter-timeline');
+            if (ttl) {
+                ttl.removeAttribute('data-theme');
+            }
         }
         document.getElementById('dark-mode').addEventListener('click', function() {
             document.documentElement.classList.remove('light');
