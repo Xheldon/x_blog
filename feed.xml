@@ -5,9 +5,331 @@
     <description>The Answer to Life, the Universe and Everything is...</description>
     <link>https://www.xheldon.cn/</link>
     <atom:link href="https://www.xheldon.cn/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 13 Jul 2023 10:17:40 +0800</pubDate>
-    <lastBuildDate>Thu, 13 Jul 2023 10:17:40 +0800</lastBuildDate>
+    <pubDate>Fri, 08 Sep 2023 10:54:04 +0800</pubDate>
+    <lastBuildDate>Fri, 08 Sep 2023 10:54:04 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
+    
+      <item>
+        <title>TeslaMeta 使用指南</title>
+        <description>&lt;p class=&quot;content-callout&quot; style=&quot;background:rgb(251, 236, 221); color:;&quot;&gt;&lt;span class=&quot;content-callout-icon&quot;&gt;💡&lt;/span&gt;&lt;span&gt;本指南需要有一丁点的编程知识，知道什么是终端、什么是命令行。&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=&quot;content-callout&quot; style=&quot;background:rgba(244, 240, 247, 0.8); color:;&quot;&gt;&lt;span class=&quot;content-callout-icon&quot;&gt;💡&lt;/span&gt;&lt;span&gt;本教程使用 Docker 安装 TeslaMate，如果你是在软路由环境，可能需要做一些额外操作如端口映射等，浏览器才能访问。而我的 Mac 电脑常年不关机，因此装在了 Mac 系统下的 Docker 上。&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=&quot;content-callout&quot; style=&quot;background:rgb(231, 243, 248); color:;&quot;&gt;&lt;span class=&quot;content-callout-icon&quot;&gt;💡&lt;/span&gt;&lt;span&gt;有点遗憾的是，TeslaMate 不能获取车辆的历史信息，因此你只能查看安装 TeslaMate 后的车辆行驶数据，且 TeslaMate 的服务不能关闭，否则无法记录到相关行驶数据。&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;「TeslaMate」，简单翻译过来就是「特斯拉伴侣」，它是一款开源软件，可以获取车辆上报给特斯拉服务器的数据，然后使用 Grafana 这款 Web 数据可视化仪表盘工具显示出来。&lt;/p&gt;
+
+&lt;p&gt;TeslaMate 的仓库：&lt;/p&gt;
+
+&lt;p&gt;不支持的类型 link_preview&lt;/p&gt;
+
+&lt;p&gt;TeslaMate 的文档：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://docs.teslamate.org/docs/installation/docker&quot; target=&quot;_blank&quot;&gt;Docker install | TeslaMate&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;特斯拉的工程师们会收集这些数据进行车辆的大数据分析、软件优化、电池充电优化等，而我们个人车主获取这些信息则可以更好的了解自己爱车的一些详细数据，如历史行程、每日行驶里程数、耗电情况、充电效率等。&lt;/p&gt;
+
+&lt;p&gt;之所以有这篇博文是因为 TeslaMate 的文档只说了如何安装（很简单），但是并没有告诉你安装完成后如何配置才能看到想要的仪表盘，而网上的一些内容农场靠着 SEO 技巧，排名靠前的也都是复制粘贴官网内容来的，要找到想要的信息是有点困难的，我目前没看到有任何一篇讲从如何安装到成品的文章，所以本文从头讲起。&lt;/p&gt;
+
+&lt;p&gt;先上一张成果图（用户可以自定义面板）：&lt;/p&gt;
+
+&lt;p caption=&quot;TeslaMate 成果图&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/the-use-of-teslamate/03d97d52-796e-4e46-83be-3ec3b3013cea.webp&quot; alt=&quot;TeslaMate 成果图&quot; title=&quot;TeslaMate 成果图&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;一安装-docker&quot;&gt;一、安装 Docker&lt;/h2&gt;
+
+&lt;p&gt;如开头所述，我使用 Docker 进行安装，TeslaMate 的文档要求是安装 Docker 和 Docker Compose（别管是什么，装就完了），而我们只需要安装 Docker Desktop 即可将这二者都装了，Docker Desktop 下载在这里：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.docker.com/products/docker-desktop/&quot; target=&quot;_blank&quot;&gt;Docker Desktop: The #1 Containerization Tool for Developers | Docker&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;安装后启动，然后随便找个目录（TeslaMate 的全部文件后续都会在这个目录，不要删除），将官方给的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker-compose.yml&lt;/code&gt; 文件放入其中，我这里放到了 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/Developer/Docker/TeslaMate&lt;/code&gt; 下，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker-compose.yml&lt;/code&gt; 内容如下：&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3&quot;&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;teslamate&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;teslamate/teslamate:latest&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;restart&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;always&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ENCRYPTION_KEY=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#设置 TeslaMate API 加密密码，注意等号后面不要有空格&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;DATABASE_USER=teslamate&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;DATABASE_PASS=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#设置安全数据库密码，注意等号后面不要有空格&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;DATABASE_NAME=teslamate&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;DATABASE_HOST=database&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;MQTT_HOST=mosquitto&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;4000:4000&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;./import:/opt/app/import&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;cap_drop&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;all&lt;/span&gt;
+
+  &lt;span class=&quot;na&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;postgres:15&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;restart&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;always&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;POSTGRES_USER=teslamate&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;POSTGRES_PASSWORD=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#设置数据库密码，注意等号后面不要有空格&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;POSTGRES_DB=teslamate&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;teslamate-db:/var/lib/postgresql/data&lt;/span&gt;
+
+  &lt;span class=&quot;na&quot;&gt;grafana&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;teslamate/grafana:latest&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;restart&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;always&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;DATABASE_USER=teslamate&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;DATABASE_PASS=&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#设置 grafana 的数据库密码，注意等号后面不要有空格&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;DATABASE_NAME=teslamate&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;DATABASE_HOST=database&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;3000:3000&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;teslamate-grafana-data:/var/lib/grafana&lt;/span&gt;
+
+  &lt;span class=&quot;na&quot;&gt;mosquitto&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;eclipse-mosquitto:2&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;restart&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;always&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mosquitto -c /mosquitto-no-auth.conf&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# ports:&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;#   - 1883:1883&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mosquitto-conf:/mosquitto/config&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mosquitto-data:/mosquitto/data&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;teslamate-db&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;teslamate-grafana-data&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;mosquitto-conf&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;mosquitto-data&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;注意有些服务的密码设置是需要跟另一个服务密码一致的，所以我建议将上述的密码都设置成一样，省的麻烦。另外尤其需要注意的是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;=&lt;/code&gt; 后面不要有空格。之后打开终端执行（每行复制到终端后按回车）：&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c&quot;&gt;# 假设你放上述文件的目录为 ~/Developer/Docker/TeslaMate&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/Developer/Docker/TeslaMate
+docker compose up &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;完成后，打开 Docker Desktop，应该是这个样子：&lt;/p&gt;
+
+&lt;p caption=&quot;安装完成后截图&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/the-use-of-teslamate/cd39c66f-60b7-4d3d-81bd-f5ac50260d28.webp&quot; alt=&quot;安装完成后截图&quot; title=&quot;安装完成后截图&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;二登陆特斯拉账号授权&quot;&gt;二、登陆特斯拉账号授权&lt;/h2&gt;
+
+&lt;p&gt;上一步完成无错误后，确保全部的服务都处于 Running 状态，（可以点击上面截图的各个服务名字查看对应 log，看有无类似与 error 之类的报错），在浏览器中打开 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;localhost:4000&lt;/code&gt; 后，发现会要求你输入 API Token 和 Refresh Token，这两个获取方式官方文档有写，在这里：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://docs.teslamate.org/docs/faq/#how-to-generate-your-own-tokens&quot; target=&quot;_blank&quot;&gt;Frequently Asked Questions | TeslaMate&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;这里我使用第三种方式「Tesla Auth (macOS, Linux, Windows) 」点击以下链接查看适用于自己系统的版本，下载对应文件（是一个可执行文件）：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/adriankumpf/tesla_auth#download&quot; target=&quot;_blank&quot;&gt;GitHub - adriankumpf/tesla_auth: Securely generate API tokens for third-party access to your Tesla.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;直接双击打开（或者在终端打开）的话，如果是 MacOS 会提醒你该执行文件可能有危险，去 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;系统设置-隐私与安全性&lt;/code&gt;中，点击「仍要打开」即可。打开后会弹出一个窗口，让你登陆特斯拉账号，登陆完成后，页面会显示出特斯拉的 API Token 和 Refresh Token（截图我就不放了），将其复制到 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;localhost:4000&lt;/code&gt; 页面中的对应位置，即可成功登陆，登陆成功的界面是这样的：&lt;/p&gt;
+
+&lt;p caption=&quot;TeslaMate 授权成功界面&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/the-use-of-teslamate/8d41bc35-475f-499d-b2d3-c4812e9a72e9.webp&quot; alt=&quot;TeslaMate 授权成功界面&quot; title=&quot;TeslaMate 授权成功界面&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;到这就算是鉴权成功了，接下来配置 Grafana。&lt;/p&gt;
+
+&lt;h2 id=&quot;三grafana-基本概念&quot;&gt;三、Grafana 基本概念&lt;/h2&gt;
+
+&lt;p&gt;Grafana 是一款非常强大的 Web 数据可视化仪表盘工具，使用相对比较复杂，而且我没有研究它汉化的方法。好在 Tesla 的数据字段比较简单，也用不着汉化。这里首先简单介绍一下相关概念，方便后续的自定义。&lt;/p&gt;
+
+&lt;h3 id=&quot;dashboard-和-panel&quot;&gt;Dashboard 和 Panel&lt;/h3&gt;
+
+&lt;p&gt;Dashboard 就是一个显示各种数据的界面，可以显示不同的 Panel，Panel 就是一个查询数据库获得数据后，将数据可视化的一个个模块，如下每个红框就是一个 Panel：&lt;/p&gt;
+
+&lt;p caption=&quot;N 个 Panel 组成了一个 Dashboard&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/the-use-of-teslamate/6b5bfe32-8214-4994-a6ce-9b3a1874e11e.webp&quot; alt=&quot;N 个 Panel 组成了一个 Dashboard&quot; title=&quot;N 个 Panel 组成了一个 Dashboard&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Panel 可以在不同的 Dashboard 之间复制，如下：&lt;/p&gt;
+
+&lt;p caption=&quot;Panel 复制&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/the-use-of-teslamate/2522b63e-34e9-44e2-a0ba-2d74901ea53b.webp&quot; alt=&quot;Panel 复制&quot; title=&quot;Panel 复制&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;点击复制后，就可以在另一个 Dashboard 中粘贴，点击 Dashboard 右上角的 Add Panel 按钮（或者首次新建一个Dashboard 的时候）（如果没在上一步对 Panel 点 Copy，下图中的第四个「Paste from Clipboard 」就不会出现）就会出现下面的新建 Panel：&lt;/p&gt;
+
+&lt;p caption=&quot;粘贴刚刚复制的 Panel&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/the-use-of-teslamate/37d13b9a-d6b0-4e19-9bd9-b41712ea5e05.webp&quot; alt=&quot;粘贴刚刚复制的 Panel&quot; title=&quot;粘贴刚刚复制的 Panel&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;variable变量和-json-model&quot;&gt;Variable（变量）和 JSON Model&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Variable&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;每个 Dashboard 可以设置供 Panel 使用的 Variable，而 Panel 如何使用 Variable 呢？Panel 的数据是通过 SQL 查询查出来的，而 SQL 的部分语法是 grafana 的 SQL 模板语法，下面是查询海拔的 SQL 语法：&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt;
+	&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;ROUND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;convert_m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;elevation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'$alternative_length_unit'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elevation_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;alternative_length_unit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;positions&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;car_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;car_id&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt;
+ &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__timeFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;BY&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ASC&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;其中的带 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$&lt;/code&gt; 符号的就是预设的 Variable，有些是内置的如 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$__timeFilter&lt;/code&gt;，有些是自定义的如 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$alternative_length_unit&lt;/code&gt;，自定义的变量就是 Dashboard 配置的 Variable。Dashboard 的 Variable 在 Dashboard 右上角的 Dashboard Setting 里配置：&lt;/p&gt;
+
+&lt;p caption=&quot;Variable 配置&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/the-use-of-teslamate/f624e3f9-bea2-4293-82e0-e751886acb3b.webp&quot; alt=&quot;Variable 配置&quot; title=&quot;Variable 配置&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;JSON Model&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;有时候你会发现，从一个 Dashboard 复制了一个 Panel 粘贴到新 Dashboard 后，Panel 并不能正常显示数据，就是因为你没有将源 Panel 用到的 Variable 从源 Dashboard 中复制到新 Dashboard 中，导致 SQL 语法报错，数据无法查询出来。但是如果 Dashboard 的 Variable 很多的话，一个一个复制又非常麻烦，怎么办呢？此时可以通过 JSON Model 来解决。&lt;/p&gt;
+
+&lt;p&gt;JSON Model 其实就是 Dashboard 配置的 JSON 格式，因此，你只需要复制某个 Dashboard 对应字段的内容，就可以复制相应的内容到目标 Dashboard。Variable 在 JSON Model 中对应的字段是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;templating&lt;/code&gt; ，复制其内的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;list&lt;/code&gt; 中的对应项到目标 Dashboard 的 JSON Model 对应 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;templating&lt;/code&gt; 字段的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;list&lt;/code&gt; 字段，作为其项即可（&lt;strong&gt;记得点击 Save Changes 后再点击 Save dashboard&lt;/strong&gt;）：&lt;/p&gt;
+
+&lt;p caption=&quot;直接复制对应 JSON&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/the-use-of-teslamate/1ebb8257-1f17-48ee-9406-5849d320dea5.webp&quot; alt=&quot;直接复制对应 JSON&quot; title=&quot;直接复制对应 JSON&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Grafana 还有很多其他复杂的功能，不过对于我们特斯拉数据可视化来说，了解这么多即可。&lt;/p&gt;
+
+&lt;h2 id=&quot;四配置-grafana&quot;&gt;四、配置 Grafana&lt;/h2&gt;
+
+&lt;p&gt;访问 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;localhost:3000&lt;/code&gt; 后首先需要登录，首次默认用户密码都是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;admin&lt;/code&gt; ，首次登陆成功后会让你设置密码，设置后进入是这个界面：&lt;/p&gt;
+
+&lt;p caption=&quot;Grafana 默认 Dashboard&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/the-use-of-teslamate/de518aa9-edce-48d8-94db-fbf8a7a48f85.webp&quot; alt=&quot;Grafana 默认 Dashboard&quot; title=&quot;Grafana 默认 Dashboard&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这里，TeslaMate 已经给我们配置好了各种 Dashboard，点击左侧的这个地方可以打开文件夹查看文件夹目录下的各个 Dashboard：&lt;/p&gt;
+
+&lt;p caption=&quot;查看 TeslaMate 预设的 Dashboard&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/the-use-of-teslamate/c36ebc9b-bda2-4ab6-933d-2da603f9ccf7.webp&quot; alt=&quot;查看 TeslaMate 预设的 Dashboard&quot; title=&quot;查看 TeslaMate 预设的 Dashboard&quot; /&gt;&lt;/p&gt;
+
+&lt;p caption=&quot;各种 Dashboard&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/the-use-of-teslamate/58bbe182-7bbf-4814-97dd-c8406525a659.webp&quot; alt=&quot;各种 Dashboard&quot; title=&quot;各种 Dashboard&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;随便点开一个，如 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Drive Stats&lt;/code&gt;，可以查看相应 Dashboard 中的各种 Panel：&lt;/p&gt;
+
+&lt;p caption=&quot;Drive Stats Dashboard&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/the-use-of-teslamate/29c1c887-e773-40b5-9ea1-fb8c3cc703dd.webp&quot; alt=&quot;Drive Stats Dashboard&quot; title=&quot;Drive Stats Dashboard&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;但是我们肯定想将多个这些预设的 Dashboard 中的 Panel 按照我们的需要聚合到一个新的 Dashboard 中，这里就需要用到上一步「Grafana 概念」中的 复制 Panel、复制 Variable（复制 JSON Model）的操作，各位可以自己配置符合自己需求的 Dashboard。&lt;/p&gt;
+
+&lt;h2 id=&quot;五其他&quot;&gt;五、其他&lt;/h2&gt;
+
+&lt;p&gt;这里还有 Grafana 的其他一些使用问题，简单写一下。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;配置 Panel 标题：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;点击 Panel 上方的 Edit 后在右侧修改 Title 即可：&lt;/p&gt;
+
+&lt;p caption=&quot;修改 Panel 标题&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/the-use-of-teslamate/c7de415f-98cb-40cd-aa6d-b49485ecb96b.webp&quot; alt=&quot;修改 Panel 标题&quot; title=&quot;修改 Panel 标题&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;地图不显示：&lt;/strong&gt;不多说，需要魔法上网环境。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;设置自己的 Dashboard 为默认：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;如图：&lt;/p&gt;
+
+&lt;p caption=&quot;配置默认的 Dashboard&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/the-use-of-teslamate/f3be5470-440c-42bf-a65c-4440b05c8e00.webp&quot; alt=&quot;配置默认的 Dashboard&quot; title=&quot;配置默认的 Dashboard&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;如何在 Dashboard 中，鼠标 Hover 其中一个 Panel 查看数据的时候，另一个 Panel 也对应显示相关时间点的数据？&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;这个场景比较常用的是，鼠标 Hover 在折线图 Panel 的驾驶信息上查看车速的时候，想要同步在另一个地图 Panel 上查看在地图上的对应位置。可以通过设置 Dashboard 来解决，下图设置为 第二个即可（默认是第一个）：&lt;/p&gt;
+
+&lt;p caption=&quot;&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/the-use-of-teslamate/4099d485-a478-4553-a9a5-36beb941f5e8.webp&quot; alt=&quot;&quot; title=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;安全性？&lt;/strong&gt;：TeslaMate 是国外开源软件，安全性是可以保证的。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;换机器如何迁移数据？&lt;/strong&gt;：这个可以查看 TeslaMate 的文档，有详细说明。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;公网如何访问 Grafana？&lt;/strong&gt;：这就需要用到 DDNS 了，这个自行摸索。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;究极提醒：&lt;/strong&gt;修改 Panel 后记得点击右上角的 Save。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;如何定时刷新 Dashboard：&lt;/strong&gt;在 Dashboard 右上角可以设置刷新间隔，一般用来放到一个大的显示屏上，全天实时查看数据变化用的。&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 06 Sep 2023 08:00:00 +0800</pubDate>
+        <link>https://www.xheldon.cn/life/the-use-of-teslamate.html</link>
+        <guid isPermaLink="true">https://www.xheldon.cn/life/the-use-of-teslamate.html</guid>
+        
+        <category>折腾</category>
+        
+        <category>特斯拉</category>
+        
+        <category>车</category>
+        
+        <category>经验</category>
+        
+        <category>使用体验</category>
+        
+        <category>生活</category>
+        
+        <category>TeslaMate</category>
+        
+        
+        <category>life</category>
+        
+      </item>
     
       <item>
         <title>Arc：一个「好用」的浏览器</title>
@@ -2650,239 +2972,6 @@ found 0 vulnerabilities
         
         
         <category>tech</category>
-        
-      </item>
-    
-      <item>
-        <title>【游戏时间】战神系列之四</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;不像很多「普通人家」的孩子，从小就能拥有一台「次时代」主机。长这么大第一次拥有自己的游戏主机是工作了几年之后。既然买都买了，按照我的人设，不记录点什么就白买了，遂成此系列。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;注意，内容有战神4大量剧透和战神5部分剧透，结尾有战神6、7的猜想。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;战神的前作我没有玩儿过，因为据说是运行在 PSP 或者 PS3 上的游戏。我上手就是从战神 4 开始的。&lt;/p&gt;
-
-&lt;p&gt;奎托斯——人称「奎爷」的出身是一名斯巴达勇士，是到处播种的宙斯与人间女子的私生子，一名半神。大家都说战神4中的虽然奎托斯老了，但是眉清目秀了很多，我就找了找他过去的样子：&lt;/p&gt;
-
-&lt;p caption=&quot;战神4之前的奎托斯&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/84791362-F962-4CF5-877B-F13C5DF8A2A9_2.webp&quot; alt=&quot;战神4之前的奎托斯&quot; title=&quot;战神4之前的奎托斯&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;和现在的样子对比了一下：&lt;/p&gt;
-
-&lt;p caption=&quot;战神四中的奎托斯&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/F07B98C7-5EA3-4A32-A324-5998D9342D5B_2.webp&quot; alt=&quot;战神四中的奎托斯&quot; title=&quot;战神四中的奎托斯&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;嗯，除了纹身之外，不能说一模一样，只能说毫无关系，不过确实慈祥了许多。&lt;/p&gt;
-
-&lt;p&gt;顺便说一下，战神4之前的系列&lt;del&gt;因为没有带小孩子出场所以&lt;/del&gt;有黄暴情节，比如跟性爱女神「阿佛洛狄忒」那段；但是在战神4中就是一本正经的杀怪过关了。&lt;/p&gt;
-
-&lt;p&gt;另外奎托斯身上的纹身也是有由来的，是被他意外杀死的妻女的骨灰附着在身上形成的。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;一开始我并不清楚奎托斯（主角）的过去，也不知道他都干了啥。开场看到老婆死了，然后儿子啥也不会，所以奎托斯开始教儿子狩猎，我寻思这游戏为啥要有个儿子在一边叨叨叨的，一个人干不行吗？&lt;/p&gt;
-
-&lt;p caption=&quot;战神4中的奎托斯之子阿特柔斯&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/56A1AFD4-BD9B-4953-BC03-CF64BC6390AD_2.webp&quot; alt=&quot;战神4中的奎托斯之子阿特柔斯&quot; title=&quot;战神4中的奎托斯之子阿特柔斯&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;老婆说是巨人族的（但是为啥身体就这么大点？），叫「菲」也就是北欧神话中战神「洛基」他妈「劳菲」，而洛基是劳菲给她儿子起的名字，奎托斯给他儿子起的名字叫「阿特柔斯」跟希腊神话中的战神「阿依瑞斯」很像是吧？前作中奎托斯干死了阿依瑞斯，自己做了战神。话说这两口子给儿子起名能不能统一一下？不过这可能是一个传统，因为劳菲给自己老公奎托斯也起了个名字叫「法布提」，在北欧神话中也是一个巨人，洛基的父亲。&lt;/p&gt;
-
-&lt;p&gt;奎托斯准备按照她老婆生前的遗愿，把她的骨灰撒在世界（里面是九界）的最高峰上，所以整个游戏就是围绕这个目的来进行的，谁阻挠这个目的就干谁，真正的「人挡杀人，佛挡杀佛」。&lt;/p&gt;
-
-&lt;p&gt;说到巨人族，后来查了查相关的希腊神话资料，巨人族是由最古老的神——大地之母盖亚（话说中国神话中的大地之母是女娲）和她创造的儿子——乌拉诺斯生的，希腊神不知道为啥有乱伦和有儿子弑父的传统，有够变态的，所以这游戏以及整个希腊神话背景的游戏就别想进国行PS了。&lt;/p&gt;
-
-&lt;p&gt;接着有个小个子来找事儿，当场扭断脖子干死（当然后来没死）。小个子叫「巴德尔」，是希腊神话中的光明之神，象征着太阳，他的死会引起「芬布尔之冬」，这也是北欧神话中的重要事件（就好比「诸神黄昏」事件一样。&lt;/p&gt;
-
-&lt;p caption=&quot;战神4中的巴德尔是个天生欠揍的神&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/FB51C6B1-E38C-4A33-9DA4-BD67EF016F94_2.webp&quot; alt=&quot;战神4中的巴德尔是个天生欠揍的神&quot; title=&quot;战神4中的巴德尔是个天生欠揍的神&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;巴德尔没有痛觉（有人说是没有感觉，不过我想他连吃饱没吃饱、屎拉没拉干净都不知道没感觉的话就有点扯了，所以不对，应该就是没有痛觉而已），受伤后会很快恢复（算是九尾之力了），这个能力并不是天生的，而是爱子心切的老母求，北欧神话中的爱情与魔法的神——芙蕾雅求来的。当初儿子出生的时候看他幼小可怜又无助，加上关于诸神黄昏中的预言——巴德尔会是诸神黄昏中第一个死掉的神，于是她走遍九界，要求所有她遇到的生物都发誓不能够伤害他。也因此，九界没有任何东西能够伤害他，但是唯独一个叫做「槲（hu）寄生」的东西，被她的老母亲给忘了，于是后来被这东西给干死了。&lt;/p&gt;
-
-&lt;p caption=&quot;槲寄生&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/B5F487CB-B1DA-47BB-91CC-02AFE23511DC_2.webp&quot; alt=&quot;槲寄生&quot; title=&quot;槲寄生&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;其实巴德尔来找奎托斯是想按照奥丁的指示杀死每一个巨人的，至于为啥要这么做，别问，问就是预言说的。预言说巨人族会将奥丁所在的阿萨神族杀光，会引起诸神黄昏，所以奥丁让他的两个儿子，雷神和巴德尔，简单粗暴杀光巨人族就好了。&lt;/p&gt;
-
-&lt;p&gt;另外，因为没有痛觉，他非常想感受痛是什么滋味，所以算是个 M，受虐狂。巴德尔也因为感受不到疼痛，又死不了，所以非常怨恨自己亲妈芙蕾雅，甚至想杀了自己亲妈（这些神话的神都TM什么德行？）。&lt;/p&gt;
-
-&lt;p&gt;暂时击退了巴德尔后就赶紧出发了，然后儿子打猎的时候射到了一头猪，于是就遇到了「风韵犹存的&lt;del&gt;俏寡妇&lt;/del&gt;」芙蕾雅（我以为是寡妇其实不是，老公就是奥丁那个老头子，可恶的奥丁，该死！），一开始自称是女巫，我也不知道就跟着剧情走了，后来才知道她也是个神，属于北欧神话中的华纳神族。是爱情与魔法的女神：&lt;/p&gt;
-
-&lt;p caption=&quot;Image&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/1DEFDC70-07CB-4681-A2E2-6C660A6FF127_2.webp&quot; alt=&quot;Image&quot; title=&quot;Image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;这里也就知道，北欧存在两个神族和三个半神，阿萨神族，为首的就是奥丁；和华纳神族，为首的是海洋之神尼奥尔德（没出现过）。当时俩&lt;del&gt;帮派&lt;/del&gt;神族打的不可开交，后来用和亲的方式停战了。按理说和亲停战一般都是一方的王子迎娶一方的公主，但是北欧神话再次与众不同起来，他是阿萨神族的老大奥丁娶了华纳神族的芙蕾雅（芙蕾雅是算是质子），然后阿萨神族是把奥丁的低智商（字面意思）弟弟弗雷（没有出场）和智慧巨人密米尔（后面有出场）送给华纳神族作为质子。除了这两个神族外还有三个半神族，分别是巨人、精灵和矮人。其中，矮人是众多神器的制造者，如利维坦之斧、雷神之锤都是矮人制造的。&lt;/p&gt;
-
-&lt;p&gt;这里也遇到了两个矮人，在游戏中的作用就是为奎托斯的武器升级和推动剧情发展和支线人物的，比较搞笑的是其中一位矮人叫辛德里，居然有严重的洁癖，要知道矮人都是怕光而且生活在肮脏的地下的。他解释到是因为有一次遇到了一位华纳神族的女巫，她用魔法让辛德里看到了肉眼看不到的细菌，从那以后他就受不了了，因为他知道脏东西上面都爬满了数不清的细菌微生物（这位华纳神族的女巫考虑学医吧，魔法太好用了，都不用显微镜）。女巫告诉他橡木可以阻止细菌的繁衍和传播，于是这家伙把所有工具的把柄都用了橡木。&lt;/p&gt;
-
-&lt;p&gt;值得一提的是路上会遇到一些乌鸦（叫渡鸦）和提尔的神殿、提尔的壁画之类的。这里的渡鸦就是奥丁的化身，奥丁之眼，因此奥丁也被叫做乌鸦神。奥丁出场或者瞬移都是一大群渡鸦围绕着他然后就消失不见。在北欧神话中，奥丁肩膀有两只渡鸦，叫福金和雾尼，分表代表思想和记忆。&lt;/p&gt;
-
-&lt;p&gt;而提尔，则是北欧神话中的战神。但是刚才不是说洛基才是吗？因为洛基是后来才成战神的。北欧神话中洛基是诡计之神。&lt;/p&gt;
-
-&lt;p&gt;上面遇到芙蕾雅的事件是儿子射到了一头猪，这个猪也是有名字的，叫「希尔帝斯维尼」是芙蕾雅的好朋友（随从），在战神5中变成人有出场。&lt;/p&gt;
-
-&lt;p&gt;芙蕾雅一下就看出来奎托斯是个神以及儿子并没有意识到自己是神的事实，然后告诉他你不告诉你儿子真相的话是不对的，他早晚得知道。儿子可能是从小没妈，对芙蕾雅很有好感，这也为后来战神5中阿特柔斯单独找她，芙蕾雅却没杀他做了铺垫。然后奎托斯一行人离开了芙蕾雅后，来到了九界之湖，之后的剧情基本都是在这里。&lt;/p&gt;
-
-&lt;p&gt;九界之湖我搜了一下在希腊神话体系中没有什么故事，应该只是杜撰的一个地方，说是九界的「游客集散地」，从这里可以通往九界的任意一个国度。因此这里有很多神的雕塑和神殿，也有很多支线剧情如渴望亲自见神一面却被神杀死了儿子于是决定弑神却没能做到而含恨西北的人类交代的任务等。&lt;/p&gt;
-
-&lt;p&gt;为什么是九界而不是十界、十八界呢？因为在北欧神话中，世界都在一棵叫做「世界之树」的上面，九个世界分别就位于这棵大树的九个地方，分别为：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;米德加尔德，人类居住的世界。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;阿斯加德，阿萨神族的国度，位于在天上的太阳和月亮之间，与人类世界可经过彩虹桥想通，位于世界之树的最上层。看到彩虹桥，是不是想到了漫威雷神里面的彩虹桥，没错，都是同一个神话背景的东西。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;海姆冥界，亡灵之国，位于世界之树的最下层。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;尼福尔海姆，迷雾之国，冰天雪地的国度，病死及老死者的归宿，位于北方。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;穆斯贝尔海姆，火之国，位于南方。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;约顿海姆，巨人之国，位于东方。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;华纳海姆，华纳神族的国度，位于西方。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;亚尔夫海姆，光精灵的国度，位于人类世界和阿斯加德之间。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;尼德威阿尔，黑暗精灵或侏儒的国度，位于人类世界和冥界之间。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;在九界之湖中遇到了世界之蛇耶梦加得——不得不说这名字听上去像是佛教里面的名字。在北欧神话中，耶梦加得是北欧战神洛基（就是奎托斯的儿子阿特柔斯在北欧的名字）的儿子，它是从未来的诸神黄昏时间穿越过来的——这是后来的智慧之神密米尔说的，北欧神话中耶梦加得的宿敌就是雷神索尔。&lt;/p&gt;
-
-&lt;p&gt;世界之蛇躺在九界之湖里面，引得湖面上升，盖住了一些地方的入口，后来的剧情世界之蛇起身离开了，湖面水位因此下降，解锁了更多支线任务和剧情，从中可以看出蛇有多大。&lt;/p&gt;
-
-&lt;p caption=&quot;世界之蛇耶梦加得&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/AA604C27-D76C-4F79-9CDE-E619E106EDD0_2.webp&quot; alt=&quot;世界之蛇耶梦加得&quot; title=&quot;世界之蛇耶梦加得&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;然后他们继续走，爬山想去山上，但是遇到了一团黑雾，过不去了&lt;/p&gt;
-
-&lt;p caption=&quot;黑色的迷雾不知道是啥过不去&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/74932127-C234-4EEF-B335-0ABA1DFD5E64_2.webp&quot; alt=&quot;黑色的迷雾不知道是啥过不去&quot; title=&quot;黑色的迷雾不知道是啥过不去&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;于是才知道，九界之湖的水中央就是提尔的神殿，里面有穿越九界国度的彩虹桥。于是通过彩虹桥，他们去精灵国度拿到光源来驱散迷雾，当时精灵国正在内斗，奎托斯秉着互不干涉原则不参与光精灵和暗精灵之间的战争，说他只要那个光源就行了，别的事儿不管。话虽这么说，但是最后还是帮光精灵干掉了暗精灵的 BOSS 取得了战争的胜利，然后顺利拿到光源继续爬山。&lt;/p&gt;
-
-&lt;p caption=&quot;这暗精灵一看就不像正派啊&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/DFF90B48-7088-4C03-8FE6-DEF1825788C2_2.webp&quot; alt=&quot;这暗精灵一看就不像正派啊&quot; title=&quot;这暗精灵一看就不像正派啊&quot; /&gt;&lt;/p&gt;
-
-&lt;p caption=&quot;拿到光源之后的奎托斯遇到了回去的光精灵&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/4D895C0C-82A1-4946-AEBC-6B19C2A8A0D1_2.webp&quot; alt=&quot;拿到光源之后的奎托斯遇到了回去的光精灵&quot; title=&quot;拿到光源之后的奎托斯遇到了回去的光精灵&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;暗精灵 BOSS 死之前说「你不知道你的做法意味着什么」，我还以为会有什么伏笔，比如说其实长相丑陋的暗精灵才是正义被欺负的一方，但事实是我想多了，直到最后啥伏笔也没发生，无语子。&lt;/p&gt;
-
-&lt;p&gt;光精灵这里应该只是简单的拉长剧情的，跟希腊神话没什么关系，所以也没什么希腊神话中的背景故事和人物介绍的。&lt;/p&gt;
-
-&lt;p&gt;然后在山顶遇到了之前的巴德尔，跟另外两个也是雷神儿子的饭桶曼尼和摩迪。不知道在说啥，但是当时没打，等他们走后父子二人才出来，这里遇到了智慧之神密米尔，被奥丁囚禁了 100 年，想请求奎托斯父子解救一下他，他可以帮指路去巨人国度，但是他被嵌入到树里面跟树融为一体抠下不来，怎么办呢？&lt;/p&gt;
-
-&lt;p caption=&quot;待会儿要被砍头的密米尔&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/D5B8BF1F-FE2D-43B7-BDE2-79A2683D5A51_2.webp&quot; alt=&quot;待会儿要被砍头的密米尔&quot; title=&quot;待会儿要被砍头的密米尔&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;这个剧情「程心」熟啊，方法就是→ 「只送大脑」&lt;/p&gt;
-
-&lt;p caption=&quot;魔鬼配图&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/D3AC0F53-D1E2-40F7-B092-E374221AE4B2_2.webp&quot; alt=&quot;魔鬼配图&quot; title=&quot;魔鬼配图&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;当然只送大脑夸张了，不过类似，只需要头就行了，于是他的头被砍下来，然后送到芙蕾雅那里给复活了——当然，复活后也只有头，从此他变成了把头系到裤腰带上的人（字面意思）他之后一直被奎托斯绑在腰间带着，我常常想，奎托斯放屁岂不是第一个熏到他？&lt;/p&gt;
-
-&lt;p caption=&quot;挂在腰间的密米尔&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/2955CCEC-5B1E-436D-BC5B-1A269E176827_2.webp&quot; alt=&quot;挂在腰间的密米尔&quot; title=&quot;挂在腰间的密米尔&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;密米尔是北欧神话中的巨人，负责看管智慧之泉，奥丁要来获取知识和智慧，最终他以牺牲一只眼睛为条件成功取得智慧。这也正是奥丁是独眼龙的原因。&lt;/p&gt;
-
-&lt;p&gt;密米尔说九界最高峰根本不是他被困的那个山，最高山在巨人的国度约顿海姆。但是需要个什么东西（忘了），于是去找那个东西，遇到了索尔的两个儿子曼尼和摩迪。北欧神话中他们俩会在诸神黄昏后，雷神索尔跟耶梦加得同归于尽后继承雷神之锤，但是在战神4中，哥哥曼尼当场被干死了，摩迪赶紧逃跑了。&lt;/p&gt;
-
-&lt;p&gt;之后儿子旧疾复发，需要亡灵国度赫尔海姆的一个看守者的心脏，来都来了，都是为了孩子，去就是了。但是在亡灵国度，现在用的这个武器「利维坦之斧」因为是蕴含冰冻魔法，在本来就是寒气逼人的亡灵国度不好使，得用本来就来自冥界的武器「混沌双刃」才行。&lt;/p&gt;
-
-&lt;p caption=&quot;利维坦之斧&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/BF92D26C-6AF9-43A8-9536-82A9D3923D3C_2.webp&quot; alt=&quot;利维坦之斧&quot; title=&quot;利维坦之斧&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;说到利维坦之斧，它是由上面的矮人兄弟打造的，最开始是给劳菲，也就是奎托斯老婆在用，后来老婆死了他就用了，蕴含冰冻魔法。而「利维坦」这个名字，在北欧神话中并不存在，这个名字有迹可循的地方是在圣经中，意思是裂缝，是一头象征邪恶的巨大海怪。&lt;/p&gt;
-
-&lt;p caption=&quot;战神前作中的混沌双刃&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/89385782-CB52-40DF-8A9D-F6DBD46C83D8_2.webp&quot; alt=&quot;战神前作中的混沌双刃&quot; title=&quot;战神前作中的混沌双刃&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;这段因为我没有玩过战神的前作，因此没什么感觉，于是搜了搜战神的前作相关剧情。原来在战神4之前，奎托斯杀光希腊众神的时候用的都是混沌双刃，后来为了过平凡的日子，发誓不再使用它，于是收藏了起来。&lt;/p&gt;
-
-&lt;p caption=&quot;据说老玩家看到这个场景的时候老泪纵横&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/0CD92A68-DCB7-456B-B8DD-4C5712730CE9_2.webp&quot; alt=&quot;据说老玩家看到这个场景的时候老泪纵横&quot; title=&quot;据说老玩家看到这个场景的时候老泪纵横&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;所以当奎托斯拿到混沌双刃的时候，外面的天气和背景音乐变的十分的恐怖，这个时候最后被他干死的希腊智慧女神雅典娜也若隐若现的出现在他的面前喊他：怪物！&lt;/p&gt;
-
-&lt;p caption=&quot;雅典娜凡性的提醒&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/01BF0463-899F-4C45-8330-0E288F05C529_2.webp&quot; alt=&quot;雅典娜凡性的提醒&quot; title=&quot;雅典娜凡性的提醒&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;但是奎托斯并没有什么退缩，还是拿出了弑神的武器——混沌双刃，毕竟都是为了孩子嘛。&lt;/p&gt;
-
-&lt;p caption=&quot;战神4中的混沌双刃&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/77DC8423-9FE6-4382-9CCD-3B7759337202_2.webp&quot; alt=&quot;战神4中的混沌双刃&quot; title=&quot;战神4中的混沌双刃&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;然后奎托斯就拿到了所需要的心脏，治好了儿子的病——这里其实孩子的病是不用治的，因为神是不会生病的，也不会病死，但是为什么儿子阿特柔斯就病了都走不动路了呢？因为他不知道自己是神啊！（唯心主义了算是，不觉得自己是神就不是神了？连神的基本属性不生病都没了，离谱），于是奎托斯为了救儿子，就听从了芙蕾雅的建议，告诉了儿子自己是神，他也是神的真相。&lt;/p&gt;
-
-&lt;p&gt;知道自己是神之后，儿子阿特柔斯于是有点得意忘形，问自己是什么神？奎托斯说不知道，需要自己发掘，每个神都是独一无二的存在。好死不死，这里遇到了之前被干跑的摩迪，也就是索尔之子。&lt;/p&gt;
-
-&lt;p caption=&quot;会用闪电的摩迪&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/465DDDDA-B586-4ADF-948F-462ED878CC8E_2.webp&quot; alt=&quot;会用闪电的摩迪&quot; title=&quot;会用闪电的摩迪&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;不过此时他的状态不太好，因为他之前由于没打过奎托斯，而且自己兄弟死了自己却活着回来太丢人，被奥丁胖揍了一顿打了个半死，一点斗志都没了，而此时阿特柔斯作为新神斗志正盛，于是「彼竭我盈故克之」，不顾老父亲的反对直接把摩迪给杀了，还说自己是神，想干嘛就干嘛，但是奎托斯一直认为身为神就是一种诅咒。&lt;/p&gt;
-
-&lt;p&gt;这里奎托斯十分生气，说：弑神是要付出代价的！儿子说：你怎么知道的？！玩家内心OS：你还是不知道的好！&lt;/p&gt;
-
-&lt;p&gt;然后此时巴德尔又出现了，一顿打斗把通往最高山巨人国度的传送门给弄坏了，最后只好去巨蛇身体内拿到一个东西才能从九界之湖开启去巨人国度的通道，于是就进到了耶梦加得身体内。&lt;/p&gt;
-
-&lt;p&gt;然后拿到东西出来后，又又又碰到了巴德尔，于是又打了起来。事不过三，因为之前阿特柔斯意外获得了槲寄生做的箭矢，于是阿特柔斯一无所知的把槲寄生做的箭——唯一能伤害巴德尔的东西——射向了巴德尔，于是巴德尔领了盒饭。&lt;/p&gt;
-
-&lt;p caption=&quot;无效攻击中的阿特柔斯&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/6C3B65C8-9BFD-48FA-85E7-01FDA7B12415_2.webp&quot; alt=&quot;无效攻击中的阿特柔斯&quot; title=&quot;无效攻击中的阿特柔斯&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;虽然巴德尔十分恨自己妈芙蕾雅，甚至在这里要掐死她，奎托斯是为了救芙蕾雅才杀了巴德尔的，但是芙蕾雅还是因为杀了巴德尔而十分的憎恨奎托斯，誓要杀了他，哎，这梁子算是结下了。&lt;/p&gt;
-
-&lt;p caption=&quot;奎托斯杀巴德尔时说：人要学会成长&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/91753C16-BE95-42B9-B669-DA299C6870DB_2.webp&quot; alt=&quot;奎托斯杀巴德尔时说：人要学会成长&quot; title=&quot;奎托斯杀巴德尔时说：人要学会成长&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;然后奎托斯对自己儿子坦白了自己的过去。在知道了自己爹这么猛，杀了很多神之后，儿子乖了许多（其实并不是因为这个啦）。&lt;/p&gt;
-
-&lt;p&gt;最终，上到了巨人国度约顿海姆的最高峰，洒下了骨灰。在去的路上还看到了预言壁画，有一幅画上画的是一个战神死在了儿子身边，但是这幅画被挡住了儿子没看到，但奎托斯看到了。难道说儿子杀爹是希腊神话绕不过去的坎？&lt;/p&gt;
-
-&lt;p&gt;这一段撒骨灰的景色比较壮观，最高峰向远处看去，非常多的巨人的尸体，垒起来比山都高，一具挨着一具。这就是奥丁的杰作，也是母亲劳菲的目的：让他们知道奥丁对巨人族做过的事情，绝不原谅。&lt;/p&gt;
-
-&lt;p caption=&quot;远处都是山一样的巨人的尸体&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/BA1A7CF4-F06F-4BE0-9485-BA17104B1C7E_2.webp&quot; alt=&quot;远处都是山一样的巨人的尸体&quot; title=&quot;远处都是山一样的巨人的尸体&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;不过后来在战神5中才知道，聪明的巨人族其实并不是死光了，而是自杀了，然后灵魂躲了起来，为后来复活有了个借口。而耶梦加得就是靠被阿特柔斯在战神5中将一个巨人的灵魂注入一条死去的巨蟒而创造的。&lt;/p&gt;
-
-&lt;p&gt;在游戏的最后，时间显示是在五年后的一天，奎托斯突然在睡梦中被惊醒，连忙出门查看，一个胖子带着帽子站在门口，奎托斯问他是谁，胖子没有说话，亮出了自己标志性的武器——一把带闪电的锤子：雷神之锤，至此全游戏完毕。&lt;/p&gt;
-
-&lt;p caption=&quot;雷神之锤&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/30CE910E-60B1-4B3A-97FC-3AB54706F197_2.webp&quot; alt=&quot;雷神之锤&quot; title=&quot;雷神之锤&quot; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;在战神4中，九界中的一些国度被奥丁封锁因此无法前往，预计在战神5中会根据剧情开放，期待一下。&lt;/p&gt;
-
-&lt;p caption=&quot;灵活的胖子雷神索尔&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/612C75AA-085D-47AA-A694-69C41561D1E0_2.webp&quot; alt=&quot;灵活的胖子雷神索尔&quot; title=&quot;灵活的胖子雷神索尔&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;另外据我目前云的战神5内容来看，会出场的有奎托斯父子就不说了，奥丁、索尔、芙蕾雅、芙蕾雅的猪变的人、战神提尔（提尔的著名特点是断了一只手臂）、巨狼芬里尔、俩矮人兄弟、密米尔（的头）、安格尔伯达（北欧神话的女巨人，北欧神话中洛基的外遇对象，他们俩的孩子会带来诸神黄昏）、海姆达尔（北欧神话中彩虹桥的操作员，光之神、破晓之神），其他的人物就没注意了。&lt;/p&gt;
-
-&lt;p caption=&quot;安格尔伯达&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/6821BF6F-EB36-4668-8A48-DE700F4B1D4D_2.webp&quot; alt=&quot;安格尔伯达&quot; title=&quot;安格尔伯达&quot; /&gt;&lt;/p&gt;
-
-&lt;p caption=&quot;但我还是更喜欢白人，游戏而已别政治正确了行吗？&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/7AE7E522-625A-4FD5-B549-EF745D6FF685_2.webp&quot; alt=&quot;但我还是更喜欢白人，游戏而已别政治正确了行吗？&quot; title=&quot;但我还是更喜欢白人，游戏而已别政治正确了行吗？&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;最后的最后，战神5结尾，奎托斯干掉了奥丁，成了新的北欧神王，重建九界秩序。而儿子去寻找之前说的自杀的躲起来的巨人族的灵魂而来到了埃及（因为儿媳妇儿女朋友安格尔伯达有埃及背景，在游戏中是个黑人女孩）。战神6奎托斯寻子去埃及屠杀众神也不是不可能。&lt;/p&gt;
-
-&lt;p&gt;战神7中，奎托斯也许会来到神秘的东方，来寻找真正的大乘佛法以寻求自己内心的平静，顺便为儿子追寻长生不老之术，然后遇到了以「维稳」为名残暴统治众生的玉皇大帝等一众神；或者遇到了以极乐为诱饵，实则以苍生为食纵容手下杀人放火的西天佛祖；亦或者遇到了宣扬殉教后能升天堂，有8万奴隶和72个一直常为处女的新娘服侍的真主（不是我说瞎说的，自己去搜72处女）？不堪忍受比北欧神残暴和希腊神乱伦+弑父还恶心的奎托斯愤而全灭这些恶心又虚伪的东方神明？&lt;/p&gt;
-
-&lt;p caption=&quot;Image&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/269D345E-04FD-4ED7-9F55-2C96C8D0ECD8_2.webp&quot; alt=&quot;Image&quot; title=&quot;Image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;盲猜奎托斯会和「&lt;del&gt;风暴&lt;/del&gt;岩石降生孙悟空、不焚者、&lt;del&gt;弥林的女王&lt;/del&gt;花果山的猴王、水帘洞的&lt;del&gt;卡丽熙&lt;/del&gt;洞主、定海神针的主人、齐天大圣、天宫大闹者暨十万天兵毁灭者、斗战胜佛，石之猴」并肩作战，科科~&lt;/p&gt;
-
-&lt;p caption=&quot;连画风都跟奎托斯很像&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/god-of-war-4/CC5A9AD5-F908-492B-8664-AC9582ED3502_2.webp&quot; alt=&quot;连画风都跟奎托斯很像&quot; title=&quot;连画风都跟奎托斯很像&quot; /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Sun, 20 Nov 2022 11:51:11 +0800</pubDate>
-        <link>https://www.xheldon.cn/life/god-of-war-4.html</link>
-        <guid isPermaLink="true">https://www.xheldon.cn/life/god-of-war-4.html</guid>
-        
-        <category>生活</category>
-        
-        <category>游戏</category>
-        
-        <category>战神</category>
-        
-        <category>希腊神话</category>
-        
-        <category>北欧神话</category>
-        
-        <category>奎托斯</category>
-        
-        
-        <category>life</category>
         
       </item>
     
