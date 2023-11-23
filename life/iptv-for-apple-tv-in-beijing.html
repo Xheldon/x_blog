@@ -260,6 +260,8 @@
                     <h2 class="subheading"></h2>
                     <span class="meta">✍🏼 写于 2023年10月30日</span>&nbsp;&nbsp;&nbsp;  
                     
+                    <span class="meta">💡 更新于 2023年11月23日</span>
+                    
                 </div>
             </div>
         </div>
@@ -294,21 +296,21 @@
 
 <p>之前在 <a href="[object Object]">这篇博客</a> 讲了现在家庭观影的方案，其中提到的一个点是使用网络上别人抓取到的 IPTV 的节目地址（m3u 后缀），放入 iPlayTV 中，可以直接播。但是这个节目地址过一段时间就失效了，这是因为联通 IPTV 服务器会时不时的会更新一下节目的播放地址，而 Apple TV 上填写的地址是固定的，无法及时更新，因此本文就来解决这个问题。</p>
 
-<p class="content-callout" style="background:rgb(253, 235, 236); color:;"><span class="content-callout-icon">⚠️</span><span>**使用前必读：**本人为北京联通宽带，**光猫使用桥接方式，路由器拨号，软路由 R4S 以旁路由**的方式进行连接。本教程针对该拓扑方案进行介绍，其他网络拓扑如「光猫桥接 + R4S 当主路由进行拨号，或者光猫拨号 + R4S 旁路由」等，也可以实现，但是其中关键的 R4S 设置也许跟本教程有些许的差异，建议多搜索一下，领会其中的精神，不用完全跟我的一样。</span></p>
+<p class="content-callout" style="background:rgb(253, 235, 236); color:;"><span class="content-callout-icon">🚧</span><span>**使用前必读：**本人为北京联通宽带，**光猫使用桥接方式，路由器拨号，软路由 R4S 以旁路由**的方式进行连接。本教程针对该拓扑方案进行介绍，其他网络拓扑如「光猫桥接 + R4S 当主路由进行拨号，或者光猫拨号 + R4S 旁路由」等，也可以实现，但是其中关键的 R4S 设置也许跟本教程有些许的差异，建议多搜索一下，领会其中的精神，不用完全跟我的一样。</span></p>
 
-<p class="content-callout" style="background:rgb(251, 243, 219); color:;"><span class="content-callout-icon">⚠️</span><span>同上，如果你是使用光猫直接拨号，你可以直接从光猫接根线出来到旁/主路由上进行组播变单播；也可以直接在支持的设备上使用组播地址进行播放，就不用像我这么麻烦了。具体还要看你家的网络拓扑结构而定。</span></p>
+<p class="content-callout" style="background:rgb(251, 243, 219); color:;"><span class="content-callout-icon">🚧</span><span>同上，如果你是使用光猫直接拨号，你可以直接从光猫接根线出来到旁/主路由上进行组播变单播；也可以直接在支持的设备上使用组播地址进行播放，就不用像我这么麻烦了。具体还要看你家的网络拓扑结构而定。</span></p>
 
-<p class="content-callout" style="background:rgb(251, 236, 221); color:;"><span class="content-callout-icon">⚠️</span><span>本教程仅针对北京联通 IPTV 测试成功，其他地区可能有所差异，如果发现文本中有跟地域强相关的内容，请根据你所在的地区替换对应内容。</span></p>
+<p class="content-callout" style="background:rgb(251, 236, 221); color:;"><span class="content-callout-icon">🚧</span><span>本教程仅针对北京联通 IPTV 测试成功，其他地区可能有所差异，如果发现文本中有跟地域强相关的内容，请根据你所在的地区替换对应内容。</span></p>
 
-<p class="content-callout" style="background:rgb(244, 238, 238); color:;"><span class="content-callout-icon">⚠️</span><span>在修改设置前，请提前先备份所有路由器、设备的设置，以防万一。</span></p>
+<p class="content-callout" style="background:rgb(244, 238, 238); color:;"><span class="content-callout-icon">🚧</span><span>在修改设置前，请提前先备份所有路由器、设备的设置，以防万一。</span></p>
 
-<p class="content-callout" style="background:rgb(251, 243, 219); color:;"><span class="content-callout-icon">⚠️</span><span>我使用的软路由是 R4S，有两个网口。如果你是跟我一样的网络拓扑，请保证你的软路由至少有两个或以上网口，因为一个需要连主路由，另一个需要连光猫。</span></p>
+<p class="content-callout" style="background:rgb(251, 243, 219); color:;"><span class="content-callout-icon">🚧</span><span>我使用的软路由是 R4S，有两个网口。如果你是跟我一样的网络拓扑，请保证你的软路由至少有两个或以上网口，因为一个需要连主路由，另一个需要连光猫。</span></p>
 
-<p class="content-callout" style="background:rgba(244, 240, 247, 0.8); color:;"><span class="content-callout-icon">⚠️</span><span>我家的光猫网段是：192.168.1.x，主路由网段是 192.168.5.x；光猫地址是 192.168.1.1，R4S 的地址是 192.168.5.2，主路由 Lan 口地址是 192.168.5.1，路由器 Wan 口地址是 192.168.1.2。</span></p>
+<p class="content-callout" style="background:rgba(244, 240, 247, 0.8); color:;"><span class="content-callout-icon">🚧</span><span>我家的光猫网段是：192.168.1.x，主路由网段是 192.168.5.x；光猫地址是 192.168.1.1，R4S 的地址是 192.168.5.2，主路由 Lan 口地址是 192.168.5.1，路由器 Wan 口地址是 192.168.1.2。</span></p>
 
 <h2 id="确定是否支持白嫖">确定是否支持白嫖</h2>
 
-<p class="content-callout" style="background:rgb(231, 243, 248); color:;"><span class="content-callout-icon">⚠️</span><span>目前北京地区的 IPTV 没有增加鉴权，但是从我看到的信息来看其他地区的一些运营商有对 IPTV 进行加密鉴权，即必须用运营商给的 IPTV 盒子的 Mac 地址连接（盒子起到解密的作用），才能实现脱离盒子使用软路由进行局域网任意设备的播放。具体如何实现比较复杂，本教程不介绍这个场景。</span></p>
+<p class="content-callout" style="background:rgb(231, 243, 248); color:;"><span class="content-callout-icon">🚧</span><span>目前北京地区的 IPTV 没有增加鉴权，但是从我看到的信息来看其他地区的一些运营商有对 IPTV 进行加密鉴权，即必须用运营商给的 IPTV 盒子的 Mac 地址连接（盒子起到解密的作用），才能实现脱离盒子使用软路由进行局域网任意设备的播放。具体如何实现比较复杂，本教程不介绍这个场景。</span></p>
 
 <h3 id="提前下载-vlc">提前下载 VLC</h3>
 
@@ -416,7 +418,7 @@ Official download of VLC media player, the best Open Source player
 
 <h2 id="上手实操">上手实操</h2>
 
-<p class="content-callout" style="background:rgb(251, 243, 219); color:;"><span class="content-callout-icon">⚠️</span><span>动手之前先按照开头所述检查是否支持白嫖。</span></p>
+<p class="content-callout" style="background:rgb(251, 243, 219); color:;"><span class="content-callout-icon">🚧</span><span>动手之前先按照开头所述检查是否支持白嫖。</span></p>
 
 <h3 id="设置软路由">设置软路由</h3>
 
