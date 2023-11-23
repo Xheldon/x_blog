@@ -5,9 +5,478 @@
     <description>The Answer to Life, the Universe and Everything is...</description>
     <link>https://www.xheldon.cn/</link>
     <atom:link href="https://www.xheldon.cn/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 18 Nov 2023 22:29:31 +0800</pubDate>
-    <lastBuildDate>Sat, 18 Nov 2023 22:29:31 +0800</lastBuildDate>
+    <pubDate>Thu, 23 Nov 2023 23:44:36 +0800</pubDate>
+    <lastBuildDate>Thu, 23 Nov 2023 23:44:36 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
+    
+      <item>
+        <title>使用 Apple TV 收看北京联通 IPTV</title>
+        <description>&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;之前在 &lt;a href=&quot;[object Object]&quot;&gt;这篇博客&lt;/a&gt; 讲了现在家庭观影的方案，其中提到的一个点是使用网络上别人抓取到的 IPTV 的节目地址（m3u 后缀），放入 iPlayTV 中，可以直接播。但是这个节目地址过一段时间就失效了，这是因为联通 IPTV 服务器会时不时的会更新一下节目的播放地址，而 Apple TV 上填写的地址是固定的，无法及时更新，因此本文就来解决这个问题。&lt;/p&gt;
+
+&lt;p class=&quot;content-callout&quot; style=&quot;background:rgb(253, 235, 236); color:;&quot;&gt;&lt;span class=&quot;content-callout-icon&quot;&gt;⚠️&lt;/span&gt;&lt;span&gt;**使用前必读：**本人为北京联通宽带，**光猫使用桥接方式，路由器拨号，软路由 R4S 以旁路由**的方式进行连接。本教程针对该拓扑方案进行介绍，其他网络拓扑如「光猫桥接 + R4S 当主路由进行拨号，或者光猫拨号 + R4S 旁路由」等，也可以实现，但是其中关键的 R4S 设置也许跟本教程有些许的差异，建议多搜索一下，领会其中的精神，不用完全跟我的一样。&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=&quot;content-callout&quot; style=&quot;background:rgb(251, 243, 219); color:;&quot;&gt;&lt;span class=&quot;content-callout-icon&quot;&gt;⚠️&lt;/span&gt;&lt;span&gt;同上，如果你是使用光猫直接拨号，你可以直接从光猫接根线出来到旁/主路由上进行组播变单播；也可以直接在支持的设备上使用组播地址进行播放，就不用像我这么麻烦了。具体还要看你家的网络拓扑结构而定。&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=&quot;content-callout&quot; style=&quot;background:rgb(251, 236, 221); color:;&quot;&gt;&lt;span class=&quot;content-callout-icon&quot;&gt;⚠️&lt;/span&gt;&lt;span&gt;本教程仅针对北京联通 IPTV 测试成功，其他地区可能有所差异，如果发现文本中有跟地域强相关的内容，请根据你所在的地区替换对应内容。&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=&quot;content-callout&quot; style=&quot;background:rgb(244, 238, 238); color:;&quot;&gt;&lt;span class=&quot;content-callout-icon&quot;&gt;⚠️&lt;/span&gt;&lt;span&gt;在修改设置前，请提前先备份所有路由器、设备的设置，以防万一。&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=&quot;content-callout&quot; style=&quot;background:rgb(251, 243, 219); color:;&quot;&gt;&lt;span class=&quot;content-callout-icon&quot;&gt;⚠️&lt;/span&gt;&lt;span&gt;我使用的软路由是 R4S，有两个网口。如果你是跟我一样的网络拓扑，请保证你的软路由至少有两个或以上网口，因为一个需要连主路由，另一个需要连光猫。&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=&quot;content-callout&quot; style=&quot;background:rgba(244, 240, 247, 0.8); color:;&quot;&gt;&lt;span class=&quot;content-callout-icon&quot;&gt;⚠️&lt;/span&gt;&lt;span&gt;我家的光猫网段是：192.168.1.x，主路由网段是 192.168.5.x；光猫地址是 192.168.1.1，R4S 的地址是 192.168.5.2，主路由 Lan 口地址是 192.168.5.1，路由器 Wan 口地址是 192.168.1.2。&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;确定是否支持白嫖&quot;&gt;确定是否支持白嫖&lt;/h2&gt;
+
+&lt;p class=&quot;content-callout&quot; style=&quot;background:rgb(231, 243, 248); color:;&quot;&gt;&lt;span class=&quot;content-callout-icon&quot;&gt;⚠️&lt;/span&gt;&lt;span&gt;目前北京地区的 IPTV 没有增加鉴权，但是从我看到的信息来看其他地区的一些运营商有对 IPTV 进行加密鉴权，即必须用运营商给的 IPTV 盒子的 Mac 地址连接（盒子起到解密的作用），才能实现脱离盒子使用软路由进行局域网任意设备的播放。具体如何实现比较复杂，本教程不介绍这个场景。&lt;/span&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;提前下载-vlc&quot;&gt;提前下载 VLC&lt;/h3&gt;
+
+&lt;p&gt;光猫桥接，路由器拨号的方式上网后，连接光猫后是无法上网的，因此请先提前在电脑上下载好 VLC 播放软件，以供一会儿进行测试，VLC 播放器地址在这里下载：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.videolan.org/vlc/&quot; target=&quot;_blank&quot;&gt;Official download of VLC media player, the best Open Source player - VideoLAN&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;连接光猫&quot;&gt;连接光猫&lt;/h3&gt;
+
+&lt;p&gt;将&lt;strong&gt;电脑使用有线的方式连接光猫&lt;/strong&gt;的 IPTV 口（如果光猫上没有发现 IPTV 口，则表示光猫支持混插，即接口不区分宽带和 IPTV 口，插任意一个口都行），然后在 VLC 软件中：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;打开 File-Open Network。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;点击下面的 Open RTP/UDP Stream。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Protocol 选 RTP，Mode 选 Multicast，IP Address 填：&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;239.3.1.241&lt;/code&gt; （或者 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rtp://239.3.1.241&lt;/code&gt; ，具体哪个忘了）端口填 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;8000&lt;/code&gt; 。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;点 Open 之后，如果可以看到北京卫视，说明你可以免费白嫖。&lt;/p&gt;
+
+&lt;p caption=&quot;VLC RTP 播放&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/ea9168ee-6086-42df-b6b4-269900eb5592.webp&quot; alt=&quot;VLC RTP 播放&quot; title=&quot;VLC RTP 播放&quot; /&gt;&lt;/p&gt;
+
+&lt;p class=&quot;content-callout&quot; style=&quot;background:rgb(251, 243, 219); color:;&quot;&gt;&lt;span class=&quot;content-callout-icon&quot;&gt;💡&lt;/span&gt;&lt;span&gt;这里的 `rtp://239.3.1.241:8000` 就是北京卫视的组播地址，将来该地址可能有变化，具体准确的地址，可以到 `https://raw.githubusercontent.com/qwerttvv/Beijing-IPTV/master/IPTV-Unicom.m3u` 这里，找到任意一个 rtp 路径后面的 ip 地址进行测试。&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;基本概念解释&quot;&gt;基本概念解释&lt;/h2&gt;
+
+&lt;p&gt;不想了解的直接跳到下一节。&lt;/p&gt;
+
+&lt;h3 id=&quot;iptv&quot;&gt;IPTV&lt;/h3&gt;
+
+&lt;p&gt;根据维基百科对 IPTV 的解释：&lt;/p&gt;
+
+&lt;p class=&quot;content-callout&quot; style=&quot;background:rgb(241, 241, 239); color:;&quot;&gt;&lt;span class=&quot;content-callout-icon&quot;&gt;📖&lt;/span&gt;&lt;span&gt;网路协定电视（英语：Internet Protocol Television，缩写：IPTV）是宽频电视的一种。IPTV是用宽频网络作为介质传送电视信息的一种系统，将广播节目透过宽频上的网际协议（Internet Protocol, IP）向订户传递数码电视服务。由于需要使用网路，IPTV服务供应商经常会一并提供连接互联网及IP电话等相关服务，也可称为“三重服务”或“三合一服务”（Triple Play）。IPTV是数位电视的一种，因此普通电视机需要配合相应的机顶盒接收频道，也因此供应商通常会向客户同时提供随选视讯服务。虽透过宽频网路及网际协议，但IPTV不一定透过网际网路，为传输品质会通过局域网传输。&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;有此可知，一般情况下 IPTV 都是宽带提供商提供的服务，通过它可以看电视。&lt;/p&gt;
+
+&lt;h3 id=&quot;组播&quot;&gt;组播&lt;/h3&gt;
+
+&lt;p&gt;一种 IPTV 实现播放的技术手段，英文名叫「multicast」，也译为多播。具体概念不用弄太清楚，了解到它相比于单播：&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;优势在于：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;不占用互联网带宽。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;IPTV 盒子起到认证的作用，IPTV 运营商由于是对一个组进行广播，因此对自己的服务器压力较小。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;劣势&lt;strong&gt;在于：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;必须有线连接光猫 IPTV 口（有些光猫支持混插，即不区分 IPTV 口还是宽带口）才能用，因此只能连接 IPTV 盒子的设备使用，不能使用 WiFi 让家里任意设备观看网络电视。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;单播&quot;&gt;单播&lt;/h3&gt;
+
+&lt;p&gt;另一种较老的 IPTV 实现播放的技术手段，早期 IPTV 用户不多的时候使用该方案，相比于组播来说，彼之缺点就是其之优点，反之亦然，即：&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;优势在于：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;接入后，局域网支持 WiFi ，以供任意设备播放。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;劣势在于：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;跟服务器 1对1 连接，服务器压力较大，用户多的时候播放会比较卡顿。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;占用宽带的带宽，直接使用互联网连接进行的播放（就跟现在看直播一样）。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;udpxy&quot;&gt;udpxy&lt;/h3&gt;
+
+&lt;blockquote style=&quot;border-color:;color:&quot;&gt;&lt;p&gt;udpxy服务器是**一款UDP流转HTTP流的代理服务器**，可以将IP直播流转化为HTTP流，方便在各种终端上播放。&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;当无法直接获取到组播地址的时候，用来将组播地址转为单播地址，如组播地址是：a:b， d:e（a、d 为 ip 地址，b、e 为端口）；转换成单播地址后就是统一的地址如 z/a/b，z/d/e。播放器监听这个地址 z 即可。&lt;/p&gt;
+
+&lt;h3 id=&quot;m3u&quot;&gt;m3u&lt;/h3&gt;
+
+&lt;blockquote style=&quot;border-color:;color:&quot;&gt;&lt;p&gt;**M3U**（MP3 URL的缩写）是一种播放多媒体列表的文件格式，它的设计初衷是为了播放音频文件，比如MP3，但是越来越多的软件现在用做播放视频文件列表的格式。&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;m3u 文件就是一个里面含有全部播放组播地址的文本文件，在 Apple TV 或者电脑上读取这个文件地址，就可以播放其中的视频地址。&lt;/p&gt;
+
+&lt;h3 id=&quot;epg&quot;&gt;EPG&lt;/h3&gt;
+
+&lt;p&gt;包含节目单信息，上一步知道 m3u 地址后，里面都是一个个的 ip 地址，那如何知道每个 ip 地址是哪个频道呢？这个时候就需要一个 EPG 进行配对了，EPG 含有每个地址的节目信息，甚至是频道的简单介绍，EPG 通常会随着视频信号一起广播。&lt;/p&gt;
+
+&lt;h2 id=&quot;网络拓扑&quot;&gt;网络拓扑&lt;/h2&gt;
+
+&lt;p caption=&quot;网络拓扑-主路由拨号&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/0349a1d5-caeb-4233-b36b-8bc1c7db7565.webp&quot; alt=&quot;网络拓扑-主路由拨号&quot; title=&quot;网络拓扑-主路由拨号&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;上手实操&quot;&gt;上手实操&lt;/h2&gt;
+
+&lt;p class=&quot;content-callout&quot; style=&quot;background:rgb(251, 243, 219); color:;&quot;&gt;&lt;span class=&quot;content-callout-icon&quot;&gt;⚠️&lt;/span&gt;&lt;span&gt;动手之前先按照开头所述检查是否支持白嫖。&lt;/span&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;设置软路由&quot;&gt;设置软路由&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;安装 udpxy 和 luci-udpxy&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;这一步就是常规的操作了，UI 安装最方便，如图（安装完成后先别启用，最后一步再启用）：&lt;/p&gt;
+
+&lt;p caption=&quot;软件安装界面&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/2be1ca35-90a8-4936-89cd-5458557ac064.webp&quot; alt=&quot;软件安装界面&quot; title=&quot;软件安装界面&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;新建/配置网络接口&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;这一步为了让软路由识别到来自光猫的数据。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;网络-接口&lt;/code&gt; 中新建一个接口，随便起个名字叫 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IPTV&lt;/code&gt; ：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p caption=&quot;新建 IPTV 接口&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/a938e2a7-9723-40f5-8b86-3ed151ba12c5.webp&quot; alt=&quot;新建 IPTV 接口&quot; title=&quot;新建 IPTV 接口&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;注意箭头的部分，我已经新建好了所以括号中有 IPTV 字样，刚新建的时候是没有的。其中 eth1 是我的 Lan 口，接的是主路由；eth0 是另一个接口，接的即是光猫（IPTV 口）；这里我曾经修改过，默认情况下，eht0 是 Lan 口，eth1 是 Wan 口，不重要，这一步是将 Wan 口用作 IPTV 口。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;配置「IPTV」接口的网关跃点与防火墙设置：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p caption=&quot;配置网关跃点&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/d1df1f84-7240-4eb9-872b-6871f9c895a6.webp&quot; alt=&quot;配置网关跃点&quot; title=&quot;配置网关跃点&quot; /&gt;&lt;/p&gt;
+
+&lt;p caption=&quot;防火墙配置到 wan 上&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/c0e4032b-f066-4fcf-b906-dae85a37d070.webp&quot; alt=&quot;防火墙配置到 wan 上&quot; title=&quot;防火墙配置到 wan 上&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;配置 Wan 口的网关跃点：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p caption=&quot;Wan 口网关跃点&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/21347824-ca57-4715-9fe9-cd7b6be0f282.webp&quot; alt=&quot;Wan 口网关跃点&quot; title=&quot;Wan 口网关跃点&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;配置 Lan 口 IGMP 嗅探：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p caption=&quot;IGMP 嗅探&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/b075aaec-042b-4f9d-9437-27ea4d17211e.webp&quot; alt=&quot;IGMP 嗅探&quot; title=&quot;IGMP 嗅探&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;配置网络防火墙&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p caption=&quot;网络防火墙配置&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/577418eb-c3f6-43be-b73b-b1cf3ab5dcea.webp&quot; alt=&quot;网络防火墙配置&quot; title=&quot;网络防火墙配置&quot; /&gt;&lt;/p&gt;
+
+&lt;p caption=&quot;防火墙配置2&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/b3ce719b-a05d-41ef-ab4a-12eb866178a8.webp&quot; alt=&quot;防火墙配置2&quot; title=&quot;防火墙配置2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;配置 udpxy 服务&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;如图配置即可，注意这里的 eth0 是 Wan 口，别搞错了：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p caption=&quot;打开 UDPXY&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/bcd40c05-ed7f-43fd-b833-4cee94948150.webp&quot; alt=&quot;打开 UDPXY&quot; title=&quot;打开 UDPXY&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;最后尝试打开 &lt;a href=&quot;[object Object]&quot;&gt;http://192.168.5.2:4022/status&lt;/a&gt; 验证 udpxy 服务是否启动成功：&lt;/p&gt;
+
+&lt;p caption=&quot;看到这个就表示成功了&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/189e9cb4-80c9-4b5d-8f57-722660e66145.webp&quot; alt=&quot;看到这个就表示成功了&quot; title=&quot;看到这个就表示成功了&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;之后，将之前使用 VLC 打开的地址 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rtp://239.3.1.241:8000&lt;/code&gt; 改成 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://192.168.2.1:4022/rtp/239.3.1.241:8000&lt;/code&gt; 再尝试打开（不用点下面的 Open RTP/UDP Stream，直接在 URL 中打开）。&lt;/p&gt;
+
+&lt;p caption=&quot;尝试将 RTP 变 HTTP 播放&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/582e015c-4260-4181-a81c-5eafc97a1132.webp&quot; alt=&quot;尝试将 RTP 变 HTTP 播放&quot; title=&quot;尝试将 RTP 变 HTTP 播放&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;然后双击播放即可：&lt;/p&gt;
+
+&lt;p caption=&quot;成功画面↑&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/215aa895-e673-419a-a4fc-b94603af8baa.webp&quot; alt=&quot;成功画面↑&quot; title=&quot;成功画面↑&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;使用播放软件&quot;&gt;使用播放软件&lt;/h3&gt;
+
+&lt;p&gt;我是在 Apple TV  4K 看电视的，试了几个播放软件，这里简单说说：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;iPlayTV 不能播放，不知道为什么。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Fileball 上下换台没问题，但是一选台就闪退。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;最终选择了 IIVA 同一个开发者的 app：「TV+」，港区售价 38 港币（购买第二天就限免，尴尬）。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;如何实现自动更新地址&quot;&gt;如何实现自动更新地址&lt;/h2&gt;
+
+&lt;p&gt;联通的 IPTV 节目播放地址，每隔一段时间都会变一次，有时候变的是端口，有时候变的是 ip 地址，这个时候再用这个办法播放就失效了，怎么办呢？&lt;/p&gt;
+
+&lt;p&gt;网上有好心人，经过一系列复杂监听操作，比如这个：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://blog.friskit.me/2020/05/31/bjunicom-network.html&quot; target=&quot;_blank&quot;&gt;光纤入户光猫改桥接+内网转发IPTV=任意设备看电视直播 - Botian's Blog&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;获取到了 IPTV 电视盒子与联通服务器通信的数据，拿到了它的地址，因此我们直接使用即可，如：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/qwerttvv/Beijing-IPTV/blob/master/README.md&quot; target=&quot;_blank&quot;&gt;github.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;但是这里有个点是，你家里的软路由地址需要跟这位好心人的地址是一样的（192.168.123.1），然后将 udpxy 端口改为 23234，这样你就可以直接将这个地址放到 TV+ 里面即可：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://raw.githubusercontent.com/qwerttvv/Beijing-IPTV/master/IPTV-Unicom.m3u&quot; target=&quot;_blank&quot;&gt;raw.githubusercontent.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;否则，你就只能主动监听这个文件的变动，然后更新。&lt;/p&gt;
+
+&lt;p&gt;这里我花十分钟在 Vercel 部署了一个 API 服务，同时启用了 Vercel 的 Corn Jobs 服务，可以定时执行函数，来检测变动，代码如下，你也可以自己部署一套：&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;NextApiRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;NextApiResponse&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+ 
+&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ResponseData&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;/**
+ * 该函数用来将网友通过 IPTV 盒子抓包获取的联通单播地址，转成自己的单播地址
+ * 该函数每天 3 点触发一次，定时检测网友的单播地址是否有更新，使用 vercel corn 任务进行
+ * TODO: 该函数未做鉴权，任何人都可以手动触发检测，为了防止滥用可以加上鉴权，但是 corn 似乎没这个功能
+ */&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;handler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;NextApiRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;NextApiResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ResponseData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// Note: 步骤&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// 1. 获取网友通过监听盒子数据包抓取的（自己搞比较费劲，直接用现成的了）联通 IPTV 永久地址（rtp 协议的组播地址，多用户通用），获取其内容&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// 2. 添加本地 udpxy 转发地址&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// 3. 获取之前的 github gist 内容以对比二者&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// 4. 有差异，则更新 github gist 内容&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// 5. 没有，则不做操作&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;// Note: 环境变量，自己在 Vercel 中设置好&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;GITHUB_TOKEN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;gist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;GIST_URL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;GIST_ID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;https://raw.githubusercontent.com/qwerttvv/Beijing-IPTV/master/IPTV-Unicom.m3u&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ok&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;获取源地址异常&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+                &lt;span class=&quot;na&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;获取源地址异常&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;src&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Note: 替换网友的本地单播地址为我的，其实你也可以将自己家的路由器网段设置成跟网友的一样（192.168.123.x），udpxy 端口转发设置成跟网友一样（23234），你就可以直接使用该地址了&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;newGist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/http&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\:\/\/&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;192&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;168&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;123&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;23234/g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;http://192.168.5.2:4022&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setHeader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Content-Type&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;text/html; charset=utf-8&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Note: 获取 gist 的 raw 内容，需要加个 cache-bust 否则每次请求会被缓存&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;gist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;?cache-bust=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;floor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;na&quot;&gt;Authorization&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;`Bearer &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;preGist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;// console.log('preGist:', preGist);&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stringify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;newGist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stringify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;preGist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;// Note: 更新 Gist&lt;/span&gt;
+                &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;files&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;IPTV.m3u&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                        &lt;span class=&quot;na&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;newGist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`https://api.github.com/gists/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;na&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;PATCH&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                    &lt;span class=&quot;na&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                        &lt;span class=&quot;na&quot;&gt;Authorization&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;`Bearer &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Content-Type&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;text/plain&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;
+                    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+                    &lt;span class=&quot;na&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stringify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;files&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`更新成功: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;gist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;?cache-bust=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;floor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+                    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+                        &lt;span class=&quot;na&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;`更新成功: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;gist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;?cache-bust=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;floor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`更新失败: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+                    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+                        &lt;span class=&quot;na&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;`更新失败: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`未变化: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;gist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;?cache-bust=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;floor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+                &lt;span class=&quot;na&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;`未变化: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;gist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;?cache-bust=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;floor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`获取自己的 gist 失败: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+                &lt;span class=&quot;na&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;`获取自己的 gist 失败: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`获取别人的源失败: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;`获取别人的源失败: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;});;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Corn Jobs 服务配置：&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;crons&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;path&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/api/get&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;schedule&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0 15 * * *&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;拉取该文件后若有更新，会自动更新 gist 文件：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://gist.githubusercontent.com/Xheldon/73bf97cb5ac5db2f5237264556b20951/raw/ea44694028a38baefff04ea46c02795e448d76f0/IPTV.m3u&quot; target=&quot;_blank&quot;&gt;gist.githubusercontent.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;这样，我只需要在 TV+ 中写死这个 gist 地址，即可在网友更新这个地址的时候，自动更新了。&lt;/p&gt;
+
+&lt;h2 id=&quot;参考链接&quot;&gt;参考链接&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://blog.lishun.me/iptvhelper-guide&quot; target=&quot;_blank&quot;&gt;单线融合IPTV到家庭局域网最简单的方法：路由+桥接混合模式&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://blog.friskit.me/2020/05/31/bjunicom-network.html&quot; target=&quot;_blank&quot;&gt;光纤入户光猫改桥接+内网转发IPTV=任意设备看电视直播 - Botian's Blog&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.haoyizebo.com/posts/6a0c2301/&quot; target=&quot;_blank&quot;&gt;北京联通白嫖 IPTV&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 30 Oct 2023 08:00:00 +0800</pubDate>
+        <link>https://www.xheldon.cn/life/iptv-for-apple-tv-in-beijing.html</link>
+        <guid isPermaLink="true">https://www.xheldon.cn/life/iptv-for-apple-tv-in-beijing.html</guid>
+        
+        <category>生活</category>
+        
+        <category>Apple</category>
+        
+        <category>苹果</category>
+        
+        <category>经验</category>
+        
+        <category>网络</category>
+        
+        <category>折腾</category>
+        
+        <category>路由器</category>
+        
+        <category>教程</category>
+        
+        
+        <category>life</category>
+        
+      </item>
     
       <item>
         <title>TeslaMate 使用指南</title>
@@ -2926,52 +3395,6 @@ found 0 vulnerabilities
         
         
         <category>life</category>
-        
-      </item>
-    
-      <item>
-        <title>【视频】基于 Craft 插件的博客发布工作流介绍</title>
-        <description>&lt;p&gt;此博文为视频，发布在：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Youtube：&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p class=&quot;embed-responsive embed-responsive-16by9&quot;&gt;&lt;iframe src=&quot;https://www.youtube.com/embed/6En0qS_evH8?rel=0&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Bilibili：&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p class=&quot;embed-responsive embed-responsive-16by9&quot; style=&quot;border-bottom: 1px solid #ddd;&quot;&gt;&lt;iframe src=&quot;//player.bilibili.com/player.html?bvid=BV1Me4y1g7bW&amp;amp;high_quality=1&amp;amp;as_wide=1&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;p&gt;这里额外再补充一点：&lt;/p&gt;
-
-&lt;p&gt;视频中提到的 XHelper.app 基本是这个仓库：&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/Xheldon/craft_publish_ci&quot; target=&quot;_blank&quot;&gt;GitHub - Xheldon/craft_publish_ci: 专门用于接收 Craft 文件然后拉取其图片转存到 cos，而 markdown 转发到 x_blog_src 的 ci 仓库&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;的 Apple Script本地化版，因为最终执行的也是 nodejs 的代码，只是利用 AS 实现了响应了自定义 scheme 链接的效果。&lt;/p&gt;
-
-&lt;p caption=&quot;XHelper.app 的核心代码&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2022/workflow-of-blog-publish-base-of-craft/9585A422-AAF2-43F9-9691-9804CE43A0C0_2.webp&quot; alt=&quot;XHelper.app 的核心代码&quot; title=&quot;XHelper.app 的核心代码&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;具体为什么不用 Github Action 处理而将这个过程本地化的原因，以及 Apple Script 相关入门介绍我当时还写了个博客，见 &lt;a href=&quot;/tech/applescript-simple-use.html&quot;&gt;这里&lt;/a&gt;。&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 30 Dec 2022 22:50:55 +0800</pubDate>
-        <link>https://www.xheldon.cn/tech/workflow-of-blog-publish-base-of-craft.html</link>
-        <guid isPermaLink="true">https://www.xheldon.cn/tech/workflow-of-blog-publish-base-of-craft.html</guid>
-        
-        <category>技术</category>
-        
-        <category>Craft</category>
-        
-        <category>视频</category>
-        
-        <category>工作流</category>
-        
-        
-        <category>tech</category>
         
       </item>
     
