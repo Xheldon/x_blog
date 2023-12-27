@@ -343,13 +343,13 @@
 
 <p>因为给 Craft 反馈了他们的 <code class="language-plaintext highlighter-rouge">craft.markdown.craftBlockToMarkdown</code> 无法正确转换的问题：</p>
 
-<p><a class="link-bookmark" href="https://forum.developer.craft.do/t/wrong-render-of-markdown-with-decoration-focus-and-image-question/235" target="_blank"><span><img src="https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png" /></span><span><span>Wrong render of markdown with Decoration focus and image question</span><span>
+<p><a class="link-bookmark" href="https://forum.developer.craft.do/t/wrong-render-of-markdown-with-decoration-focus-and-image-question/235" target="_blank"><span data-bookmark-img="https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png" data-bookmark-title="W"><img src="https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png" /></span><span><span>Wrong render of markdown with Decoration focus and image question</span><span>
 Decoration block ‘focus’ should be render as ‘blockquote’ but now the markdow API craftBlockToMarkdown(flavor is ‘common’) is ignore this block type and render as plain text. The URI of Image return by markdow API craftBlockToMarkdown is avaliable in every place, which may cause some problem, I hope there will be a site white list setting, only allow those site in the list to use the image in my document. this strategy can make the AWS cost of data traffic down, too.
 </span><span>https://forum.developer.craft.do/t/wrong-render-of-markdown-with-decoration-focus-and-image-question/235</span></span></a></p>
 
 <p>但是官方似乎丝毫没有要解决的意思，于是自己写了一个简单的函数用来手动转换：</p>
 
-<p><a class="link-bookmark" href="https://gist.github.com/Xheldon/036d9b187bd83303205001e8af97eda7" target="_blank"><span><img src="https://github.githubassets.com/images/modules/gists/gist-og-image.png" /></span><span><span>craftBlockToMarkdown</span><span>
+<p><a class="link-bookmark" href="https://gist.github.com/Xheldon/036d9b187bd83303205001e8af97eda7" target="_blank"><span data-bookmark-img="https://github.githubassets.com/images/modules/gists/gist-og-image.png" data-bookmark-title="C"><img src="https://github.githubassets.com/images/modules/gists/gist-og-image.png" /></span><span><span>craftBlockToMarkdown</span><span>
 GitHub Gist: instantly share code, notes, and snippets.
 </span><span>https://gist.github.com/Xheldon/036d9b187bd83303205001e8af97eda7</span></span></a></p>
 
@@ -359,7 +359,7 @@ GitHub Gist: instantly share code, notes, and snippets.
 
 <p>此函数已经被我放到官方插件开发者论坛了，欢迎交流：</p>
 
-<p><a class="link-bookmark" href="https://forum.developer.craft.do/t/a-better-implementation-of-craft-blocks-to-markdown-transformation-methods/554" target="_blank"><span><img src="https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png" /></span><span><span>A better implementation of craft blocks to Markdown transformation methods</span><span>
+<p><a class="link-bookmark" href="https://forum.developer.craft.do/t/a-better-implementation-of-craft-blocks-to-markdown-transformation-methods/554" target="_blank"><span data-bookmark-img="https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png" data-bookmark-title="A"><img src="https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png" /></span><span><span>A better implementation of craft blocks to Markdown transformation methods</span><span>
 Craft’s markdown api has the following problems: 1. Nested lists are not supported. 2. The order of Nested blockquote and is incorrectly. 3. only the latter will be recognized as a reference block. 4. urlBlock (may called ‘bookmark’?) will be recognized as a link（in this function, you can custom render tag of jekyll, you can modify this as you wish) Note: 1. not support toggle/formula, because markdown not support those too, but you can make it. 2. I use this function for may jekyll blog ...
 </span><span>https://forum.developer.craft.do/t/a-better-implementation-of-craft-blocks-to-markdown-transformation-methods/554</span></span></a></p>
 
@@ -383,7 +383,7 @@ Craft’s markdown api has the following problems: 1. Nested lists are not suppo
 
 <p>之前的流程因为我贪图简单，加上 Craft 上传的图片不一定都有后缀（如通过拖拽、图片上传等方式上传的图片，则有后缀，若通过复制粘贴来的或者 Web 上传的图片，则无后缀），于是我将所有图片都转成了 <code class="language-plaintext highlighter-rouge">png</code> 格式，本次我移除了这个逻辑，先判断如果自身带后缀则使用其后缀；如果没有后缀，则再将其强制转为 <code class="language-plaintext highlighter-rouge">png</code> ，推荐使用 <code class="language-plaintext highlighter-rouge">Sharp</code>  这个库，非~常~好~用~：</p>
 
-<p><a class="link-bookmark" href="https://sharp.pixelplumbing.com/" target="_blank"><span><img src="https://cdn.jsdelivr.net/gh/lovell/sharp@main/docs/image/sharp-logo.png" /></span><span><span>sharp - High performance Node.js image processing</span><span>
+<p><a class="link-bookmark" href="https://sharp.pixelplumbing.com/" target="_blank"><span data-bookmark-img="https://cdn.jsdelivr.net/gh/lovell/sharp@main/docs/image/sharp-logo.png" data-bookmark-title="S"><img src="https://cdn.jsdelivr.net/gh/lovell/sharp@main/docs/image/sharp-logo.png" /></span><span><span>sharp - High performance Node.js image processing</span><span>
 "Resize large images in common formats to smaller, web-friendly JPEG, PNG, WebP, GIF and AVIF images of varying dimensions"
 </span><span>https://sharp.pixelplumbing.com/</span></span></a></p>
 
