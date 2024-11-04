@@ -3,39 +3,51 @@
 
 <head>
     <meta charset="utf-8">
-    <title>【泡脚时间】第二期：简单粗暴 - Xheldon Blog</title>
+    <title>如何让 TP-Link 关闭 DHCP 后拨号上网 - Xheldon Blog</title>
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     
-        <meta name="description" content="每次会根据五个观点、主题、想法等展开，本系列不定期更新，纯个人观点，请勿上纲上线。">
+        <meta name="description" content="TP-Link 的新款路由器有一些奇怪的限制，比如你如果关闭了路由器的 DHCP 服务，全部的口就会变成 Lan 口。">
     
     <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
     <meta name="theme-color" content="#000000">
     <meta name="twitter:card" content="summary_large_image">
     <!-- Open Graph -->
-    <meta property="og:title" content="【泡脚时间】第二期：简单粗暴 - Xheldon Blog">
+    <meta property="og:title" content="如何让 TP-Link 关闭 DHCP 后拨号上网 - Xheldon Blog">
     
     <meta property="og:type" content="article">
     
-    <meta property="article:published_time" content="2023-03-05T20:03:22Z">
+    <meta property="article:published_time" content="2024-11-04T08:00:00Z">
     
     
     
-    <meta property="article:tag" content="泡脚时间">
+    <meta property="article:tag" content="技术">
     
-    <meta property="article:tag" content="生活">
+    <meta property="article:tag" content="技巧">
+    
+    <meta property="article:tag" content="路由器">
+    
+    <meta property="article:tag" content="折腾">
+    
+    <meta property="article:tag" content="网络">
+    
+    <meta property="article:tag" content="千兆">
+    
+    <meta property="article:tag" content="软路由">
+    
+    <meta property="article:tag" content="旁路由">
     
     
     
-        <meta name="og:description" content="每次会根据五个观点、主题、想法等展开，本系列不定期更新，纯个人观点，请勿上纲上线。">
+        <meta name="og:description" content="TP-Link 的新款路由器有一些奇怪的限制，比如你如果关闭了路由器的 DHCP 服务，全部的口就会变成 Lan 口。">
     
     
-    <meta property="twitter:image" content="https://static.xheldon.cn/img/in-post/2023/time-to-talk-episode-2/photo-1446776811953-b23d57bd21aa.webp">
-    <meta property="og:image" content="https://static.xheldon.cn/img/in-post/2023/time-to-talk-episode-2/photo-1446776811953-b23d57bd21aa.webp">
+    <meta property="twitter:image" content="https://www.xheldon.com/resources/img/logo.png">
+    <meta property="og:image" content="https://www.xheldon.com/resources/img/logo.png">
     
-    <meta property="og:url" content="https://www.xheldon.com/life/time-to-talk-episode-2.html">
+    <meta property="og:url" content="https://www.xheldon.com/tech/how-to-pppoe-after-close-tp-link-dhcp.html">
     <meta property="og:site_name" content="Xheldon Blog">
     <meta name="google-adsense-account" content="ca-pub-5486286026923411">
     <script async src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1" nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script><script nonce="hkl-3cDcQhqR8uwDMTDGjQ">(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
@@ -48,7 +60,7 @@
     <link rel="shortcut icon" href="/resources/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.xheldon.com/life/time-to-talk-episode-2.html">
+    <link rel="canonical" href="https://www.xheldon.com/tech/how-to-pppoe-after-close-tp-link-dhcp.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
@@ -75,8 +87,8 @@
 
     <!-- Navigation -->
 
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -194,7 +206,7 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/resources/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/in-post/2023/time-to-talk-episode-2/photo-1446776811953-b23d57bd21aa.webp" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
 
 <!-- Post Header -->
 
@@ -203,20 +215,16 @@
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('https://static.xheldon.cn/img/in-post/2023/time-to-talk-episode-2/photo-1446776811953-b23d57bd21aa.webp');
+        background-image: url('https://static.xheldon.cn/img/index-bg.png');
         
     }
 
     
 </style>
 
-<header class="intro-header" >
+<header class="intro-header style-text" >
 
     <div class="header-mask"></div>
-    
-    <div class="header-img-credit">
-        Image by <a href="https://unsplash.com/@nasa?utm_source=xheldon_blog&utm_medium=referral" target="_blank">NASA / Unsplash</a>
-    </div>
     
     <div class="container">
         <div class="row">
@@ -224,17 +232,29 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4" title="泡脚时间">泡脚时间</a>
+                        <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
                         
-                        <a class="tag" href="/archive/?tag=%E7%94%9F%E6%B4%BB" title="生活">生活</a>
+                        <a class="tag" href="/archive/?tag=%E6%8A%80%E5%B7%A7" title="技巧">技巧</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8" title="路由器">路由器</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E6%8A%98%E8%85%BE" title="折腾">折腾</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E7%BD%91%E7%BB%9C" title="网络">网络</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E5%8D%83%E5%85%86" title="千兆">千兆</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1" title="软路由">软路由</a>
+                        
+                        <a class="tag" href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1" title="旁路由">旁路由</a>
                         
                     </div>
-                    <h1>【泡脚时间】第二期：简单粗暴</h1>
+                    <h1>如何让 TP-Link 关闭 DHCP 后拨号上网</h1>
                     
                     <h2 class="subheading"></h2>
-                    <span class="meta">✍🏼 写于 2023年03月05日</span>&nbsp;&nbsp;&nbsp;  
+                    <span class="meta">✍🏼 写于 2024年11月04日</span>&nbsp;&nbsp;&nbsp;  
                     
-                    <span class="meta">💡 更新于 2023年03月05日</span>
+                    <span class="meta">💡 更新于 2024年11月05日</span>
                     
                 </div>
             </div>
@@ -261,80 +281,166 @@
                 <!-- Multi-Lingual -->
                 
                 
+                    
+                        
+                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
+                        <script>
+                            var timeDom = document.getElementById('from_time');
+                            var pageTime = 1730678400; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
+                            var currentTime = Date.now();
+                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
+                            if (Number(fromNow) <= 0) {
+                                fromNow = 1; // Note: 至少显示一天
+                            }
+                            timeDom.innerText = fromNow
+                        </script>
+                    
+                    
                 
-                    <div class="callout-tips">🖥 &nbsp;说明：每次会根据五个观点、主题、想法等展开，本系列不定期更新，纯个人观点，请勿上纲上线。</div>
+                
+                    <div class="callout-tips">🖥 &nbsp;说明：TP-Link 的新款路由器有一些奇怪的限制，比如你如果关闭了路由器的 DHCP 服务，全部的口就会变成 Lan 口。</div>
                 
                 
-                    <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/lwTFUkOWWx3Tqb" target="_blank">https://www.craft.do/s/lwTFUkOWWx3Tqb</a></div>
                 
+                    <div class="craft-tips">📚 &nbsp;本文同步发布在 Notion：<a href="https://xheldon.notion.site/TP-Link-DHCP-134800e87a618010b5c1e76d778b8ff2" target="_blank">https://xheldon.notion.site/TP-Link-DHCP-134800e87a618010b5c1e76d778b8ff2</a></div>
                 
-				<blockquote>
-  <p>因为工作的原因，爱人每天会比我早出门一个小时，而下班会比我早到家两个小时。因此除了吃早饭的短暂时间外，在工作日的时候，我们两人交流的时间很少。因此，所谓「泡脚时间」即是每天下班回来后，给爱人烧水泡脚的时候，两人交谈的短暂时间，话题无所不包，语言也大部分是口语没有逻辑可言。<br />所谓，两个苹果交换，双方还是只有两个苹果；而两个思想交换，却不止两种思想产生。因此在这里我将我们交谈的部分观点写出来，有两个目的，一个是为了不愿做「沉默的大多数」而愿意作为一个普通人发声，另一个原因是我觉得在当前这个舆论环境下，我们大多数人可能都会有一种错觉：我身边认识的这些线下的同事、同学、朋友，为什么和网络上的人的言论和行为，有如此大的割裂感？<br />因为我和爱人都是双非本科毕业，她是艺术类院校，我是工科类院校，没有读过很多社科、哲学、人文之类的书，因此有些观点是非常市井的，所谓屁股决定脑袋，所以我能意识到有此问题存在。不过正如上面所言，我说是普通人的话，想的是普通人的事情，皇帝是否用金勺掏粪，我不关心。</p>
-</blockquote>
+				<blockquote style="border-color:;color:"><p>因为已经配置好了网络，所以一些页面我就用文字代替图片，毕竟为了写博客再重置一遍网络有点麻烦。</p></blockquote>
 
-<h2 id="简单粗暴">简单粗暴</h2>
+<h2 id="前言">前言</h2>
 
-<p>现在似乎很流行这个词。不确定性是人的焦虑来源，一件事情的不确定性总是让人不知道如何张口：它是好的？不确定，不好说；它是坏的？也不确定，还是不好说。而简单和绝对带来的确定性让人欲罢不能：这绝对是 xxx，天王老子来了它也是 xxx。</p>
+<p>我买的 TP-Link XDR-5480 有一个奇怪的设定：当你关闭了路由器的 DHCP 服务后，它的全部口（包括 SPF 转的口），都会变成 Lan 口，这就导致无法再光猫桥接+路由拨号上网了，而且你的 Lan 口 IP 无法指定，都会从前端路由（也就是光猫）获取。</p>
 
-<p>「不好说」一件事的时候，会让人感觉这个人「面」、「磨叽」，而「绝对」会让人感觉「霸气侧漏」、「威武」、「果断」。但是当你在这个复杂的世界信奉「绝对」的时候，你早晚会是那一小部分被忽视、被边缘的对象。</p>
+<p>此问题老款的 TP-Link 路由器反而没有，可以随意关闭不影响 Wan 口。也许新款 TP-Link 的产品经理觉得如果这样的话，就白白浪费了一个 Wan 口，加上新款的路由器全部都是 Wan/Lan 口混插，所以才把这个问题暴露出来了。</p>
 
-<p>因此我比较相信「因人而异」、「就事论事分析」，在没有看到事情的全部之前（也许你永远也看不到事情的全貌，毕竟你不是 <a href="https://baike.baidu.com/item/%E5%B8%83%E5%85%B0%C2%B7%E5%8F%B2%E5%A1%94%E5%85%8B/8019099?fr=kg_general">Bran Stark</a>），绝不妄下定论。</p>
+<p>因为前几天 Mac mini 发布了 M4 款，体型更小，能耗更低，因此网络上又刮起了「Mac mini 当软路由+ Mac Surge 掌管家庭网络」的邪风。因为我当前的网络架构已经很稳定了，大概有一年多没折腾新东西，所以心痒难耐；又一想，我的 Mac Studio 也一直常年不关机，不就也可以跟 mini 一样当一个软路由吗？又加上网友们鼓吹的 Surge（以下均指 Mac Surge）接管 DHCP 服务可以全屋无感魔法上网以及实时「优雅」的查看各个设备的连接情况。本着「优雅永不过时」的态度，我又开始着手琢磨如何解决这个 TP-Link 的问题。</p>
 
-<p>但是在大多数情况下，对于当权者而言，他们没有精力也没有时间管那小部分人的利益，毕竟我们需要服从集体，因为我们从小就高唱「集体主义思想放光芒」。而如果这一小部分人也跟着当权者高喊「绝对」、「简单粗暴」，那就太可笑了。</p>
+<p>网上搜了一圈，如：</p>
 
-<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2023/time-to-talk-episode-2/photo-1588641657136-a2b97ca9512a.webp" alt="Image" title="Image" /></p>
+<p><a class="link-bookmark" href="https://cn.v2ex.com/t/1053641" target="_blank"><span data-bookmark-img="https://cdn.v2ex.com/gravatar/708d900c4d23d905941b0c2cf38b7565?s=73&amp;d=retro" data-bookmark-title="T"><img src="https://cdn.v2ex.com/gravatar/708d900c4d23d905941b0c2cf38b7565?s=73&amp;d=retro" /></span><span><span>tp link 的路由器如何能在关闭 dhcp 服务的同时让 wan 口能够拨号上网？ - V2EX</span><span>
+宽带症候群 - @wniming - 我想用 dhcpd 自建一个局域网的 dhcp 服务器，为了避免和路由器的 dhcp 服务冲突所以才需要关闭路由器的 dhcp 服务。我的路由器的型号是 “TL-XDR3010 易展版”，关闭
+</span><span>https://cn.v2ex.com/t/1053641</span></span></a></p>
 
-<h2 id="媒体报道的片面性">媒体报道的片面性</h2>
+<p>以及：</p>
 
-<p>媒体根本不需要歪曲、夸大、捏造事实来蛊惑民众，而只需要仅展示部分的事实就可以达到目的。你不能说媒体的报道是错误的，因为他确实是事实，但是仅仅是部分的事实。</p>
+<p><a class="link-bookmark" href="https://www.chiphell.com/forum.php?mod=viewthread&amp;tid=2521336&amp;highlight=&amp;mobile=no" target="_blank"><span data-bookmark-img="" data-bookmark-title="请"><img src="" /></span><span><span>请教各位大佬关于华硕和tplink路由器关闭dhcp设置的问题 - 电脑讨论(新) -  Chiphell - 分享与交流用户体验</span><span>
+请教各位大佬关于华硕和tplink路由器关闭dhcp设置的问题,各位大佬好，想请教各位一个问题，我这边弄了一个下午也没明白原因。我家现在的网络是光猫（路由模式 不能改桥接）-ac86u-macmini（旁路由）今天换上tplink xdr6088， ...,电脑讨论(新),讨论区-生活与技术的讨论 ,Chiphell - 分享与交流用户体验
+</span><span>https://www.chiphell.com/forum.php?mod=viewthread&amp;tid=2521336&amp;highlight=&amp;mobile=no</span></span></a></p>
 
-<p>比如，某知名健康科普栏目宣称「身体疼痛的症状可能是某某疾病，该疾病最好的治疗时机是发病后 2 个小时内，否则会引起终身的剧烈神经疼痛，除了及时治疗，也可以通过打疫苗的方式来避免。」。</p>
+<h2 id="现状">现状</h2>
 
-<p>乍一听，感觉很危险，而且疫苗价格也不贵，而且发病快，一旦发病就是终身剧烈疼痛，不如早点去医院打疫苗。</p>
+<blockquote style="border-color:;color:"><p>注意：请提前在 TP-Link（以下均指我的  XDR-5480 型号）的设置界面备份你的路由设置，防止你操作失误，无法访问路由器的情况下重置，路由配置丢失的情况，如下图导出配置即可。注意，这里导出的配置不会涉及端口设置和网络，这个产品设计很好的解决了你设置错网络重置然后导入配置依然是错误配置无法访问网络的情况，给 TP-Link 的产品经理点赞。</p></blockquote>
 
-<p>殊不知，该病的发病率为千万分之一，同时主要发生在西方以肉类为主食的国家，我国发病率极低，完全没有打这种昂贵疫苗的必要，另外最重要的是，该疫苗的研发机构的最大股东，是该「知名健康科普栏目」的唯一股东，其用心可见一斑。</p>
+<p caption=""><img src="https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e6-9e16-eb66a08e2ff7.webp" alt="" title="" /></p>
 
-<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2023/time-to-talk-episode-2/photo-1575507479993-7bb702d5e966.webp" alt="Image" title="Image" /></p>
+<h3 id="网络拓扑图">网络拓扑图：</h3>
 
-<h2 id="不要脸烦别人要脸烦自己">不要脸烦别人，要脸烦自己</h2>
+<p caption=""><img src="https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8003-89a9-e3f05024c8b5.webp" alt="" title="" /></p>
 
-<p>此话出自爱人姥姥——一位地主阶级出身的真·资本家小姐。</p>
+<h3 id="目标">目标</h3>
 
-<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2023/time-to-talk-episode-2/photo-1603129417567-9c7cee1cf32a.webp" alt="Image" title="Image" /></p>
+<p>不改动当前任何设备的连接方式、网段的情况下（怕被骂），使用 Mac Studio 的 Surge 作为网关掌管 DHCP 服务。</p>
 
-<h2 id="城镇化建设过程中的人文关怀">城镇化建设过程中的人文关怀</h2>
+<h3 id="难点">难点</h3>
 
-<p>城镇化带来的关系疏远，因为交通方便太常见面而所以没有了仪式感。亲戚朋友来了，想着隔几天就能见着，所以也没那么隆重了。</p>
+<ol>
+  <li>
+    <p>TP-Link 关闭了自身的 DHCP 服务后，会弹窗告诉你所有的口（包括 SPF 的口）都变成 Lan 口，无法再自定义端口地址。</p>
+  </li>
+  <li>
+    <p>TP-Link 关闭了自身的 DHCP 服务后，会弹窗提示你目前所有 Lan 口的 IP 地址，都是从前端路由（也就是光猫）获取，这也无可厚非，毕竟它此时是一个纯 AP，但这也导致了 Suerge 还是能感知到光猫上存在的 DHCP 服务的。</p>
+  </li>
+  <li>
+    <p>Mac Surge 作为网关的话，它会自己开启一个 DHCP服务，同时要求网络上没有其他 DHCP 服务，否则会造成冲突掉线的情况。</p>
+  </li>
+  <li>
+    <p>根据第2点和第3点可得，你需要同时关闭光猫的 DHCP 和路由器的 DHCP 服务。但是！此操作如果你没有提前在光猫/路由器上设置好 IP 与 Mac 地址绑定的话，就无法再通过 WiFi 连接二者而只能重置路由器和光猫了！（别问我为什么知道的）所以不能关闭光猫的 DHCP 服务。</p>
+  </li>
+</ol>
 
-<p>古时候的人是那种，吃过这顿饭以后可能一辈子也见不到，所以格外隆重和仪式感满满，是真心实意的仪式感。从这个角度考虑一下人生四大喜事之一的「他乡遇故知」，是真的发自内心的开心。</p>
+<h2 id="解决办法">解决办法</h2>
 
-<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2023/time-to-talk-episode-2/photo-1591035897819-f4bdf739f446.webp" alt="Image" title="Image" /></p>
+<p>基于上面的目标和难点，「朋友们，你们记一下，我作如下部署调整」：</p>
 
-<h2 id="隐藏自己假装强大">隐藏自己，假装强大</h2>
+<p caption=""><img src="https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80ce-8790-d3cef3ef7d8f.webp" alt="" title="" /></p>
 
-<p>在工作中发现，一个人只要不对外输出，别人就不会知道这个人的真实水平。某些人在知乎微博推特有很多粉丝，但是网上几乎找不到他的分享，让人无法得知其真实水平。于是我在此提出类似于“疑罪从无”的结论：疑技从菜。</p>
+<h3 id="步骤1关闭光猫的电源">步骤1：关闭光猫的电源</h3>
 
-<p caption="Image"><img src="https://static.xheldon.cn/img/in-post/2023/time-to-talk-episode-2/photo-1504639725590-34d0984388bd.webp" alt="Image" title="Image" /></p>
+<blockquote style="border-color:;color:"><p>其实只要断开光猫与 TP-Link 的连接就可以，我这里让关闭电源，只是防止大家可能意外连上光猫的 WiFi，如果你选择忘记光猫 WiFi，那么不关闭电源只断开与 TP-Link 的连接即可。</p></blockquote>
+
+<p>我们先不设置光猫，防止它的 DHCP 服务被 Surge 检测到导致 Surge 无法开启 DHCP 服务。而且因为已经关闭了光猫与 TP-Link 的连接，当下一步关闭 TP-Link 的 DHCP 服务的时候，TP-Link 不会再自己检测前端路由器的 DHCP 服务而改变自己的 Lan 口 IP 了。</p>
+
+<h3 id="步骤2关闭路由器的-dhcp-服务">步骤2：关闭路由器的 DHCP 服务</h3>
+
+<p>在设置里面关了就行了，这里我们选择「关闭」，后续等设置成功后，我们再改为「自动」。改为自动的是为了网络健壮性，我后面说。</p>
+
+<p caption=""><img src="https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-804e-a69d-edb6a6eaabc1.webp" alt="" title="" /></p>
+
+<h3 id="步骤3开启-surge-dhcp">步骤3：开启 Surge DHCP</h3>
+
+<p>这一步在 Surge 的「概览」和「设备」tab 都可以找到入口：</p>
+
+<p caption=""><img src="https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8091-83b9-e144224f35d5.webp" alt="" title="" /></p>
+
+<p>它会提示你 Surge 会将你的 Mac 的 IP 地址改为手动并固定，我这里就是 <code class="language-plaintext highlighter-rouge">192.168.5.100</code>，具体的教程网上一大把，你既然看到这里，肯定知道怎么设置，这里就不啰嗦了。</p>
+
+<p>这里有个点需要注意的是，它会显示路由器的地址是 <code class="language-plaintext highlighter-rouge">192.168.5.1</code> 地址池是从 <code class="language-plaintext highlighter-rouge">192.168.5.100</code> 到 <code class="language-plaintext highlighter-rouge">192.168.5.200</code> 我这里把地址池改成了 <code class="language-plaintext highlighter-rouge">192.168.5.2</code> 到 <code class="language-plaintext highlighter-rouge">192.168.5.254</code> 范围更大一些。</p>
+
+<h3 id="步骤4找到新的路由器地址">步骤4：找到新的路由器地址</h3>
+
+<p>设置完 Surge 后，你再访问路由器的 <code class="language-plaintext highlighter-rouge">192.168.5.1</code> 会发现已经无法访问了！不要紧张，因为此时你的 Mac Studio 是 DHCP 服务，它「居然」会给你的 TP-Link 路由器再分配一个 IP 地址（至于为什么会这样，我也不知道）。你点击「设备」后，找到名字是「Hostname Unsuitable for Printing」的（不确定一定是这个），在地址栏访问，就会发现熟悉的路由器界面又回来了！我这里的新的路由器 IP 地址是 <code class="language-plaintext highlighter-rouge">192.168.5.114</code> 。</p>
+
+<p caption=""><img src="https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-809d-894e-fbe831126b06.webp" alt="" title="" /></p>
+
+<h3 id="步骤5修改路由器的-lan-口并拨号">步骤5：修改路由器的 Lan 口并拨号</h3>
+
+<p>此时你是无法上网的，因为你的光猫都没有通电！到这一步，你可以把光猫通电了，等到几分钟，然后在路由器的设置界面，你仍然会发现 <code class="language-plaintext highlighter-rouge">Wan 口已经断开连接</code> 再怎么点都没用。</p>
+
+<p>但是不要放弃！你想一想，你现在的 Studio 的作用，跟你折腾软路由的情况是不是类似？当时是光猫负责拨号，软路由插到主路由/或者光猫上，负责 DHCP 服务。而现在，我的朋友，你将拨号设备后移到了路由器，你的 Studio 连接了主路由，因此你的 Studio 就变成了软路由，将 DHCP 服务放到了自身上。</p>
+
+<p>因此关键是这一步：你需要再在设置里，手动指定 TP-Link Lan 口的 IP 地址为 <code class="language-plaintext highlighter-rouge">192.168.5.1</code> 即可（否则整个网络上都没有拥有 <code class="language-plaintext highlighter-rouge">192.168.5.1</code> 这个 IP 的设备了）！</p>
+
+<p caption=""><img src="https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e0-8bb3-f208b1f9c874.webp" alt="" title="" /></p>
+
+<p>手动指定完 Lan 口 IP 后（虽然叫 Lan 口，但是它连接了光猫，是可以拨号的！），此时我们再回到上网设置，点击「连接」，也许需要点个 4、5 次，因为首次拨号比较久，但是最后会成功的。</p>
+
+<p caption=""><img src="https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8092-a5bc-cc3e8f728305.webp" alt="" title="" /></p>
+
+<h3 id="步骤6结尾">步骤6：结尾</h3>
+
+<p>至此，你的设置就完成了，现在你需要手动将已连接的设备右键，点击「将 Surge 作为其网关」，然后将设备重新连接网络即可：</p>
+
+<p caption=""><img src="https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8044-b913-da4aafc3219f.webp" alt="" title="" /></p>
+
+<p>另外可以再设置一下「新设备都将 Surge 作为默认网关」就行了：</p>
+
+<p caption=""><img src="https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80fc-9142-f5520e0a2756.webp" alt="" title="" /></p>
+
+<p>此时你的全部设备均把 Surge 当做网关，可以查看他们的实时流量。</p>
+
+<p>还记得我在第2步说的，把 TP-Link 的 DHCP 服务关闭的设置吗？此时你可以再回到 TP-Link，把 DHCP 服务改为「自动」，这么做，是为了万一的万一，<strong>Surge 的 DHCP 服务崩溃了，或者 Mac 坏掉了，你和家里的设备仍然可以访问访问网络，而你，我的朋友，你不会挨骂！</strong>因为 TP-Link 的这个设置会「自动」探测局域网的 DHCP 服务，如果没有就开启自己的 DHCP，如果有就关闭：</p>
+
+<p caption=""><img src="https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-805c-98c5-e3895ef7dfe0.webp" alt="" title="" /></p>
+
+<p>注：如果你点了「关」并保存，此时你的路由器的地址又变为了 <code class="language-plaintext highlighter-rouge">192.168.5.114</code> 。而且无法修改（因为你既连了光猫，又关了 DHCP，触发了上面难点中的 1 和 2 的问题），那又需要重新从头（关闭光猫电源）走一遍流程。</p>
+
+<h2 id="结尾">结尾</h2>
+
+<p>至此就结束了。在这个过程中我遇到了一些奇怪的问题，也做过一些失败的尝试，比如你猜我为什么会想到关闭光猫电源设置好路由器后再打开这个方法？</p>
+
+<p>祝大家 WiFi 自由！</p>
 
                 <div class="text-danger">- EOF -</div>
-                <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a style="color: #ccc;" href="https://www.xheldon.com/life/time-to-talk-episode-2.html" title="【泡脚时间】第二期：简单粗暴">【泡脚时间】第二期：简单粗暴 - Xheldon Blog</a></div>
+                <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a style="color: #ccc;" href="https://www.xheldon.com/tech/how-to-pppoe-after-close-tp-link-dhcp.html" title="如何让 TP-Link 关闭 DHCP 后拨号上网">如何让 TP-Link 关闭 DHCP 后拨号上网 - Xheldon Blog</a></div>
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/life/airpods-pro2.html" data-toggle="tooltip" data-placement="top" title="开箱：AirPods Pro 2代初体验">
+                        <a href="/tech/how-i-use-notion-flow.html" data-toggle="tooltip" data-placement="top" title="如何使用 Notion Flow 模块转换">
                         上一篇<br>
-                        <span>开箱：AirPods Pro 2代初体验</span>
+                        <span>如何使用 Notion Flow 模块转换</span>
                         </a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/life/have-a-car-2023.html" data-toggle="tooltip" data-placement="top" title="2023 北京买车流水账记录">
-                        下一篇<br>
-                        <span>2023 北京买车流水账记录</span>
-                        </a>
-                    </li>
                     
                 </ul>
                 <hr style="visibility: hidden;">
@@ -644,7 +750,7 @@
         data-category="Announcements"
         data-category-id="DIC_kwDOAweTLM4B_uhM"
         data-mapping="specific"
-        data-term="【泡脚时间】第二期：简单粗暴"
+        data-term="如何让 TP-Link 关闭 DHCP 后拨号上网"
         data-strict="0"
         data-reactions-enabled="1"
         data-emit-metadata="0"

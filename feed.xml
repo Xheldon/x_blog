@@ -5,9 +5,161 @@
     <description>The Answer to Life, the Universe and Everything is...</description>
     <link>https://www.xheldon.com/</link>
     <atom:link href="https://www.xheldon.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 28 Jun 2024 19:11:26 +0800</pubDate>
-    <lastBuildDate>Fri, 28 Jun 2024 19:11:26 +0800</lastBuildDate>
+    <pubDate>Tue, 05 Nov 2024 00:42:21 +0800</pubDate>
+    <lastBuildDate>Tue, 05 Nov 2024 00:42:21 +0800</lastBuildDate>
     <generator>Jekyll v4.2.1</generator>
+    
+      <item>
+        <title>如何让 TP-Link 关闭 DHCP 后拨号上网</title>
+        <description>&lt;blockquote style=&quot;border-color:;color:&quot;&gt;&lt;p&gt;因为已经配置好了网络，所以一些页面我就用文字代替图片，毕竟为了写博客再重置一遍网络有点麻烦。&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;我买的 TP-Link XDR-5480 有一个奇怪的设定：当你关闭了路由器的 DHCP 服务后，它的全部口（包括 SPF 转的口），都会变成 Lan 口，这就导致无法再光猫桥接+路由拨号上网了，而且你的 Lan 口 IP 无法指定，都会从前端路由（也就是光猫）获取。&lt;/p&gt;
+
+&lt;p&gt;此问题老款的 TP-Link 路由器反而没有，可以随意关闭不影响 Wan 口。也许新款 TP-Link 的产品经理觉得如果这样的话，就白白浪费了一个 Wan 口，加上新款的路由器全部都是 Wan/Lan 口混插，所以才把这个问题暴露出来了。&lt;/p&gt;
+
+&lt;p&gt;因为前几天 Mac mini 发布了 M4 款，体型更小，能耗更低，因此网络上又刮起了「Mac mini 当软路由+ Mac Surge 掌管家庭网络」的邪风。因为我当前的网络架构已经很稳定了，大概有一年多没折腾新东西，所以心痒难耐；又一想，我的 Mac Studio 也一直常年不关机，不就也可以跟 mini 一样当一个软路由吗？又加上网友们鼓吹的 Surge（以下均指 Mac Surge）接管 DHCP 服务可以全屋无感魔法上网以及实时「优雅」的查看各个设备的连接情况。本着「优雅永不过时」的态度，我又开始着手琢磨如何解决这个 TP-Link 的问题。&lt;/p&gt;
+
+&lt;p&gt;网上搜了一圈，如：&lt;/p&gt;
+
+&lt;p&gt;&lt;a class=&quot;link-bookmark&quot; href=&quot;https://cn.v2ex.com/t/1053641&quot; target=&quot;_blank&quot;&gt;&lt;span data-bookmark-img=&quot;https://cdn.v2ex.com/gravatar/708d900c4d23d905941b0c2cf38b7565?s=73&amp;amp;d=retro&quot; data-bookmark-title=&quot;T&quot;&gt;&lt;img src=&quot;https://cdn.v2ex.com/gravatar/708d900c4d23d905941b0c2cf38b7565?s=73&amp;amp;d=retro&quot; /&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;tp link 的路由器如何能在关闭 dhcp 服务的同时让 wan 口能够拨号上网？ - V2EX&lt;/span&gt;&lt;span&gt;
+宽带症候群 - @wniming - 我想用 dhcpd 自建一个局域网的 dhcp 服务器，为了避免和路由器的 dhcp 服务冲突所以才需要关闭路由器的 dhcp 服务。我的路由器的型号是 “TL-XDR3010 易展版”，关闭
+&lt;/span&gt;&lt;span&gt;https://cn.v2ex.com/t/1053641&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;以及：&lt;/p&gt;
+
+&lt;p&gt;&lt;a class=&quot;link-bookmark&quot; href=&quot;https://www.chiphell.com/forum.php?mod=viewthread&amp;amp;tid=2521336&amp;amp;highlight=&amp;amp;mobile=no&quot; target=&quot;_blank&quot;&gt;&lt;span data-bookmark-img=&quot;&quot; data-bookmark-title=&quot;请&quot;&gt;&lt;img src=&quot;&quot; /&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;请教各位大佬关于华硕和tplink路由器关闭dhcp设置的问题 - 电脑讨论(新) -  Chiphell - 分享与交流用户体验&lt;/span&gt;&lt;span&gt;
+请教各位大佬关于华硕和tplink路由器关闭dhcp设置的问题,各位大佬好，想请教各位一个问题，我这边弄了一个下午也没明白原因。我家现在的网络是光猫（路由模式 不能改桥接）-ac86u-macmini（旁路由）今天换上tplink xdr6088， ...,电脑讨论(新),讨论区-生活与技术的讨论 ,Chiphell - 分享与交流用户体验
+&lt;/span&gt;&lt;span&gt;https://www.chiphell.com/forum.php?mod=viewthread&amp;amp;tid=2521336&amp;amp;highlight=&amp;amp;mobile=no&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;现状&quot;&gt;现状&lt;/h2&gt;
+
+&lt;blockquote style=&quot;border-color:;color:&quot;&gt;&lt;p&gt;注意：请提前在 TP-Link（以下均指我的  XDR-5480 型号）的设置界面备份你的路由设置，防止你操作失误，无法访问路由器的情况下重置，路由配置丢失的情况，如下图导出配置即可。注意，这里导出的配置不会涉及端口设置和网络，这个产品设计很好的解决了你设置错网络重置然后导入配置依然是错误配置无法访问网络的情况，给 TP-Link 的产品经理点赞。&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p caption=&quot;&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e6-9e16-eb66a08e2ff7.webp&quot; alt=&quot;&quot; title=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;网络拓扑图&quot;&gt;网络拓扑图：&lt;/h3&gt;
+
+&lt;p caption=&quot;&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8003-89a9-e3f05024c8b5.webp&quot; alt=&quot;&quot; title=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;目标&quot;&gt;目标&lt;/h3&gt;
+
+&lt;p&gt;不改动当前任何设备的连接方式、网段的情况下（怕被骂），使用 Mac Studio 的 Surge 作为网关掌管 DHCP 服务。&lt;/p&gt;
+
+&lt;h3 id=&quot;难点&quot;&gt;难点&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;TP-Link 关闭了自身的 DHCP 服务后，会弹窗告诉你所有的口（包括 SPF 的口）都变成 Lan 口，无法再自定义端口地址。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;TP-Link 关闭了自身的 DHCP 服务后，会弹窗提示你目前所有 Lan 口的 IP 地址，都是从前端路由（也就是光猫）获取，这也无可厚非，毕竟它此时是一个纯 AP，但这也导致了 Suerge 还是能感知到光猫上存在的 DHCP 服务的。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Mac Surge 作为网关的话，它会自己开启一个 DHCP服务，同时要求网络上没有其他 DHCP 服务，否则会造成冲突掉线的情况。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;根据第2点和第3点可得，你需要同时关闭光猫的 DHCP 和路由器的 DHCP 服务。但是！此操作如果你没有提前在光猫/路由器上设置好 IP 与 Mac 地址绑定的话，就无法再通过 WiFi 连接二者而只能重置路由器和光猫了！（别问我为什么知道的）所以不能关闭光猫的 DHCP 服务。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;解决办法&quot;&gt;解决办法&lt;/h2&gt;
+
+&lt;p&gt;基于上面的目标和难点，「朋友们，你们记一下，我作如下部署调整」：&lt;/p&gt;
+
+&lt;p caption=&quot;&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80ce-8790-d3cef3ef7d8f.webp&quot; alt=&quot;&quot; title=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;步骤1关闭光猫的电源&quot;&gt;步骤1：关闭光猫的电源&lt;/h3&gt;
+
+&lt;blockquote style=&quot;border-color:;color:&quot;&gt;&lt;p&gt;其实只要断开光猫与 TP-Link 的连接就可以，我这里让关闭电源，只是防止大家可能意外连上光猫的 WiFi，如果你选择忘记光猫 WiFi，那么不关闭电源只断开与 TP-Link 的连接即可。&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;我们先不设置光猫，防止它的 DHCP 服务被 Surge 检测到导致 Surge 无法开启 DHCP 服务。而且因为已经关闭了光猫与 TP-Link 的连接，当下一步关闭 TP-Link 的 DHCP 服务的时候，TP-Link 不会再自己检测前端路由器的 DHCP 服务而改变自己的 Lan 口 IP 了。&lt;/p&gt;
+
+&lt;h3 id=&quot;步骤2关闭路由器的-dhcp-服务&quot;&gt;步骤2：关闭路由器的 DHCP 服务&lt;/h3&gt;
+
+&lt;p&gt;在设置里面关了就行了，这里我们选择「关闭」，后续等设置成功后，我们再改为「自动」。改为自动的是为了网络健壮性，我后面说。&lt;/p&gt;
+
+&lt;p caption=&quot;&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-804e-a69d-edb6a6eaabc1.webp&quot; alt=&quot;&quot; title=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;步骤3开启-surge-dhcp&quot;&gt;步骤3：开启 Surge DHCP&lt;/h3&gt;
+
+&lt;p&gt;这一步在 Surge 的「概览」和「设备」tab 都可以找到入口：&lt;/p&gt;
+
+&lt;p caption=&quot;&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8091-83b9-e144224f35d5.webp&quot; alt=&quot;&quot; title=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;它会提示你 Surge 会将你的 Mac 的 IP 地址改为手动并固定，我这里就是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.5.100&lt;/code&gt;，具体的教程网上一大把，你既然看到这里，肯定知道怎么设置，这里就不啰嗦了。&lt;/p&gt;
+
+&lt;p&gt;这里有个点需要注意的是，它会显示路由器的地址是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.5.1&lt;/code&gt; 地址池是从 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.5.100&lt;/code&gt; 到 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.5.200&lt;/code&gt; 我这里把地址池改成了 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.5.2&lt;/code&gt; 到 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.5.254&lt;/code&gt; 范围更大一些。&lt;/p&gt;
+
+&lt;h3 id=&quot;步骤4找到新的路由器地址&quot;&gt;步骤4：找到新的路由器地址&lt;/h3&gt;
+
+&lt;p&gt;设置完 Surge 后，你再访问路由器的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.5.1&lt;/code&gt; 会发现已经无法访问了！不要紧张，因为此时你的 Mac Studio 是 DHCP 服务，它「居然」会给你的 TP-Link 路由器再分配一个 IP 地址（至于为什么会这样，我也不知道）。你点击「设备」后，找到名字是「Hostname Unsuitable for Printing」的（不确定一定是这个），在地址栏访问，就会发现熟悉的路由器界面又回来了！我这里的新的路由器 IP 地址是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.5.114&lt;/code&gt; 。&lt;/p&gt;
+
+&lt;p caption=&quot;&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-809d-894e-fbe831126b06.webp&quot; alt=&quot;&quot; title=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;步骤5修改路由器的-lan-口并拨号&quot;&gt;步骤5：修改路由器的 Lan 口并拨号&lt;/h3&gt;
+
+&lt;p&gt;此时你是无法上网的，因为你的光猫都没有通电！到这一步，你可以把光猫通电了，等到几分钟，然后在路由器的设置界面，你仍然会发现 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wan 口已经断开连接&lt;/code&gt; 再怎么点都没用。&lt;/p&gt;
+
+&lt;p&gt;但是不要放弃！你想一想，你现在的 Studio 的作用，跟你折腾软路由的情况是不是类似？当时是光猫负责拨号，软路由插到主路由/或者光猫上，负责 DHCP 服务。而现在，我的朋友，你将拨号设备后移到了路由器，你的 Studio 连接了主路由，因此你的 Studio 就变成了软路由，将 DHCP 服务放到了自身上。&lt;/p&gt;
+
+&lt;p&gt;因此关键是这一步：你需要再在设置里，手动指定 TP-Link Lan 口的 IP 地址为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.5.1&lt;/code&gt; 即可（否则整个网络上都没有拥有 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.5.1&lt;/code&gt; 这个 IP 的设备了）！&lt;/p&gt;
+
+&lt;p caption=&quot;&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e0-8bb3-f208b1f9c874.webp&quot; alt=&quot;&quot; title=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;手动指定完 Lan 口 IP 后（虽然叫 Lan 口，但是它连接了光猫，是可以拨号的！），此时我们再回到上网设置，点击「连接」，也许需要点个 4、5 次，因为首次拨号比较久，但是最后会成功的。&lt;/p&gt;
+
+&lt;p caption=&quot;&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8092-a5bc-cc3e8f728305.webp&quot; alt=&quot;&quot; title=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;步骤6结尾&quot;&gt;步骤6：结尾&lt;/h3&gt;
+
+&lt;p&gt;至此，你的设置就完成了，现在你需要手动将已连接的设备右键，点击「将 Surge 作为其网关」，然后将设备重新连接网络即可：&lt;/p&gt;
+
+&lt;p caption=&quot;&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8044-b913-da4aafc3219f.webp&quot; alt=&quot;&quot; title=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;另外可以再设置一下「新设备都将 Surge 作为默认网关」就行了：&lt;/p&gt;
+
+&lt;p caption=&quot;&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80fc-9142-f5520e0a2756.webp&quot; alt=&quot;&quot; title=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;此时你的全部设备均把 Surge 当做网关，可以查看他们的实时流量。&lt;/p&gt;
+
+&lt;p&gt;还记得我在第2步说的，把 TP-Link 的 DHCP 服务关闭的设置吗？此时你可以再回到 TP-Link，把 DHCP 服务改为「自动」，这么做，是为了万一的万一，&lt;strong&gt;Surge 的 DHCP 服务崩溃了，或者 Mac 坏掉了，你和家里的设备仍然可以访问访问网络，而你，我的朋友，你不会挨骂！&lt;/strong&gt;因为 TP-Link 的这个设置会「自动」探测局域网的 DHCP 服务，如果没有就开启自己的 DHCP，如果有就关闭：&lt;/p&gt;
+
+&lt;p caption=&quot;&quot;&gt;&lt;img src=&quot;https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-805c-98c5-e3895ef7dfe0.webp&quot; alt=&quot;&quot; title=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;注：如果你点了「关」并保存，此时你的路由器的地址又变为了 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.5.114&lt;/code&gt; 。而且无法修改（因为你既连了光猫，又关了 DHCP，触发了上面难点中的 1 和 2 的问题），那又需要重新从头（关闭光猫电源）走一遍流程。&lt;/p&gt;
+
+&lt;h2 id=&quot;结尾&quot;&gt;结尾&lt;/h2&gt;
+
+&lt;p&gt;至此就结束了。在这个过程中我遇到了一些奇怪的问题，也做过一些失败的尝试，比如你猜我为什么会想到关闭光猫电源设置好路由器后再打开这个方法？&lt;/p&gt;
+
+&lt;p&gt;祝大家 WiFi 自由！&lt;/p&gt;
+</description>
+        <pubDate>Mon, 04 Nov 2024 08:00:00 +0800</pubDate>
+        <link>https://www.xheldon.com/tech/how-to-pppoe-after-close-tp-link-dhcp.html</link>
+        <guid isPermaLink="true">https://www.xheldon.com/tech/how-to-pppoe-after-close-tp-link-dhcp.html</guid>
+        
+        <category>技术</category>
+        
+        <category>技巧</category>
+        
+        <category>路由器</category>
+        
+        <category>折腾</category>
+        
+        <category>网络</category>
+        
+        <category>千兆</category>
+        
+        <category>软路由</category>
+        
+        <category>旁路由</category>
+        
+        
+        <category>tech</category>
+        
+      </item>
     
       <item>
         <title>如何使用 Notion Flow 模块转换</title>
@@ -3236,155 +3388,6 @@ https://www.chromium.org/chromium-projects/
         
         
         <category>life</category>
-        
-      </item>
-    
-      <item>
-        <title>Slate 和 ProseMirror 简单对比</title>
-        <description>&lt;p&gt;本人之前使用 PM 不到两年，开发过大型模块如智能表格等；使用 Slate 至今，经历过从 0.47 到 0.5+ 的大版本升级，算是有点发言权，鉴于圈内一些人总问我二者之间的差异，干脆写个博客简单来说说。&lt;/p&gt;
-
-&lt;h2 id=&quot;slate-优点&quot;&gt;Slate 优点：&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;上手快，开箱即用，概念易懂，代码容易理解，尤其是对熟悉 React 的同学来说，其视图层完全基于 React，基本上一周就能上手理解。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;定制性强，可以根据自身的业务场景，魔改底层核心模块如 slate、slate-react 来扩展各种插件和架构，底层修改起来相对 PM 来说较为简单。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;可以很好的适配协同的场景，如 sharedb，基于 json 的几乎就是为 Slate 准备的。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;slate-缺点&quot;&gt;Slate 缺点：&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;作者修复 Bug 速度很慢，并不全职开发，基本靠社区维护，有些 API 明显不合理（如 .include，被坑过），或者有些 API 抛出异常，但是有些 API 会返回 null，明显没设计好，但是作者让你给他提 PR，而不是自己修复。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;API 不稳定，目前仍未发布正式版，还在 0.x 版本，将来架构变动可能会比较巨大。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;官方版本基本不可用，尤其针对 CJK 语言用户的输入法事件等来说，必须下载下来之后自己魔改一下才行。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;性能优化较为困难，因为视图层完全基于 React，所以优化这部分的代码几乎只能从优化 React 出发，React 只是通用型框架，在速度上并没有任何优势。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;代码没写好的话，很容易导致编辑器崩溃而导致编辑器不可用，除了修改框架代码，也没什么好的容错机制。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;数据流动不清晰，容易导致 bug 的产生，如你可以直接 editor.children 赋值，覆盖掉已有的编辑器内容，而不会有任何报错。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;光标问题、Mark 问题难以 hack，代码属于是入门级水平（个人理解）。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;文档垃圾，有些文档和实际 API 表现不一致。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;跟 React 强绑定。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;移动端目前支持的不算太好，需要魔改。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;prosemirror-优点&quot;&gt;ProseMirror 优点：&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;作者全职维护，非常热心，积极回答社区问题。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;正式版发布三年多，API 一直很稳定。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;有大公司背书，Google 也是用作者的另一个 CodeMirror 项目（Chrome Devtools 的 Element Tab 用的就是），可信度高。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;数据流动清晰（虽然不好理解）。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;没有 Slate 那么容易崩溃，报错也不会导致整个编辑器框架不可用，稳定性较高。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;作者是自由工作者，靠捐款维持生活，名正言顺的接受付费解 Bug，按小时计费，每小时 200欧（邮件问过，没记错的话）。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;文档树模型我觉得很好用，Schema 限制严格以及基于文本/Token偏移的定位系统是精髓，不过也是难以协同的地方。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;不跟任意的视图框架依赖，可以用 React、View、Angular 开发视图框架，不过一般只有定制组件才需要，像 paragraph、heading、list 等，无需自定义 View 层，只需要使用 API 描述 DOM 结构即可。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;移动端支持较好。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;prosemirror-缺点&quot;&gt;ProseMirror 缺点：&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;一些概念较难理解，一些代码也难以理解（作者技术个人感觉深不可测）。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;模块分散非开箱即用，需要一定的上手成本才能跑起来。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;基于 PM 的协同方案，实现起来相较于 Slate 来说比较困难，作者17年开了个 issue，说要写一个协同的 demo，现在还没写。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;上手难度较大，往往需要两周甚至一个月的时间才能开始开发基础功能。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;因为是自己实现的视图层（开发者也可以使用 API 来实现渲染自定义组件如 React 组件），所以如果框架本身的视图层出问题，较难定位和修复。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;几乎不可能魔改源码，成本很高，只能靠作者来修复。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;可以看下这个答主的对比，说的基本没什么大问题：&lt;/p&gt;
-
-&lt;p&gt;&lt;a class=&quot;link-bookmark&quot; href=&quot;https://www.zhihu.com/question/404836496/answer/1323431059&quot; target=&quot;_blank&quot;&gt;&lt;span data-bookmark-img=&quot;https://static.zhihu.com/heifetz/assets/apple-touch-icon-60.362a8eac.png&quot; data-bookmark-title=&quot;主&quot;&gt;&lt;img src=&quot;https://static.zhihu.com/heifetz/assets/apple-touch-icon-60.362a8eac.png&quot; /&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;主流的开源「富文本编辑器」都有什么缺陷？ - 知乎&lt;/span&gt;&lt;span&gt;
-先占个坑……如何不借助 contentEditable 实现富文本编辑器？联动一下之前我在类似问题的回答我主要调研…
-&lt;/span&gt;&lt;span&gt;https://www.zhihu.com/question/404836496/answer/1323431059&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;美团的学城用的是 PM：&lt;/p&gt;
-
-&lt;p&gt;&lt;a class=&quot;link-bookmark&quot; href=&quot;https://www.zhihu.com/question/404836496/answer/1326453810&quot; target=&quot;_blank&quot;&gt;&lt;span data-bookmark-img=&quot;https://static.zhihu.com/heifetz/assets/apple-touch-icon-60.362a8eac.png&quot; data-bookmark-title=&quot;主&quot;&gt;&lt;img src=&quot;https://static.zhihu.com/heifetz/assets/apple-touch-icon-60.362a8eac.png&quot; /&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;主流的开源「富文本编辑器」都有什么缺陷？ - 知乎&lt;/span&gt;&lt;span&gt;
-美团的知识管理系统-学城，其富文本编辑器是基于prosemirror来实现的，我在其中开发了内部团队接入版本及…
-&lt;/span&gt;&lt;span&gt;https://www.zhihu.com/question/404836496/answer/1326453810&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
-
-&lt;p&gt;Slate 适合大公司，因为他上手快（大公司依赖投入产出比，不然项目拿不到资源，做了 2 月还是个 Demo 你怎么给领导交代？），因此可以很快出成果，但是打磨完美又需要很大的人力来魔改底层，所以适合大公司，前期快速上手，后期加人魔改。另外扩展性非常强，魔改后几乎可以满足任何要求（比如我们就搞了各种模块和功能，如划线评论、分级标题折叠、嵌入第三方模块等）。&lt;/p&gt;
-
-&lt;p&gt;Prosemirror 适合中小型公司，各平台支持的算不错，如果有 bug 也可以放心交给作者来修复，如果实在修不好就付费让作者修。虽然上手成本高，但是让中小型公司的主力研发摸索个两周应该也可以出 demo 了。&lt;/p&gt;
-</description>
-        <pubDate>Fri, 06 Jan 2023 12:14:58 +0800</pubDate>
-        <link>https://www.xheldon.com/tech/prosemirror-comparison-with-slatejs.html</link>
-        <guid isPermaLink="true">https://www.xheldon.com/tech/prosemirror-comparison-with-slatejs.html</guid>
-        
-        <category>技术</category>
-        
-        <category>SlateJS</category>
-        
-        <category>ProseMirror</category>
-        
-        <category>对比</category>
-        
-        <category>编辑器</category>
-        
-        <category>选型</category>
-        
-        <category>框架</category>
-        
-        
-        <category>tech</category>
         
       </item>
     
