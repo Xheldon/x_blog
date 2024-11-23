@@ -1,1035 +1,685 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      我的博客自动化流程 - Xheldon Blog
+        
+  </title>
 
-<head>
-    <meta charset="utf-8">
-    <title>我的博客自动化流程 - Xheldon Blog</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="">
     
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    
-        <meta name="description" content="">
-    
-    <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
-    <meta name="theme-color" content="#000000">
-    <meta name="twitter:card" content="summary_large_image">
-    <!-- Open Graph -->
-    <meta property="og:title" content="我的博客自动化流程 - Xheldon Blog">
-    
-    <meta property="og:type" content="article">
-    
-    <meta property="article:published_time" content="2021-12-22T00:32:10Z">
-    
-    
-    
-    <meta property="article:tag" content="集成">
-    
-    
-    
-        <meta name="og:description" content="">
-    
-    
-    <meta property="twitter:image" content="https://www.xheldon.cn/resources/img/logo.png">
-    <meta property="og:image" content="https://www.xheldon.cn/resources/img/logo.png">
-    
-    <meta property="og:url" content="https://www.xheldon.cn/tech/my-blog-ci.html">
-    <meta property="og:site_name" content="Xheldon Blog">
-    <meta name="google-adsense-account" content="ca-pub-5486286026923411">
-    <script async src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1" nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script><script nonce="hkl-3cDcQhqR8uwDMTDGjQ">(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
-     crossorigin="anonymous"></script>
-    <!-- Web App Manifest -->
-    <link rel="manifest" href="/pwa/manifest.json">
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <!-- Open Graph -->
+        <meta property="og:title"
+          content="我的博客自动化流程 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2021-12-21T4:32:10"> 
+              
+                  
+                    <meta property="article:tag" content="集成">
+                    
+                      
+                          
+                            <meta name="og:description" content="">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.cn/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.cn/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.cn/tech/my-blog-ci.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="/resources/img/favicon.ico">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.xheldon.cn/tech/my-blog-ci.html">
+                                      <!-- Web App Manifest -->
+                                      <link rel="manifest" href="/js/manifest.json">
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.cn/tech/my-blog-ci.html">
 
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="https://static.xheldon.cn/css/xheldon-life-blog.min.css">
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
 
-    <!-- Custom Fonts -->
-    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
-    <link href="https://static.xheldon.cn/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
 
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
 
+  <!-- hack iOS CSS :active style -->
 
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="">
-
+  <body ontouchstart="">
     <!-- Navigation -->
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
     
-        <div class="container-fluid">
+      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        
+          <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">
-                    Xheldon Blog
-                </a>
+              <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">
+                Xheldon Blog
+              </a>
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div id="xheldonblog_navbar">
-                <div class="navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/">Home</a></li>
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-                        <li>
-                            <a href="/donate/">Donate</a>
-                        </li>
-                        <li>
-                            <a href="/archive/">Archive</a>
-                        </li>
-                        <li>
-                            <a href="/feed.xml">Rss</a>
-                        </li>
-                        <li class="search-icon">
-                            <a href="javascript:void(0)">
-                                <i class="fa fa-search"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+            <div id="xblog_navbar">
+              <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <a href="/">Home</a>
+                  </li>
+                  <li>
+                    <a href="/about/">About</a>
+                  </li>
+                  <li>
+                    <a href="/donate/">Donate</a>
+                  </li>
+                  <li>
+                    <a href="/archive/">Archive</a>
+                  </li>
+                  <li>
+                    <a href="/feed.xml">Rss</a>
+                  </li>
+                  <li class="search-icon">
+                    <a href="javascript:void(0)">
+                      <i class="fa fa-search"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
             <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-
-    <script>
+          </div>
+          <!-- /.container -->
+      </nav>
+      <script>
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
         var $body = document.body;
         var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xheldonblog_navbar');
+        var $navbar = document.querySelector('#xblog_navbar');
         var $collapse = document.querySelector('.navbar-collapse');
 
-        var __XheldonNav__ = {
-            close: function () {
-                $navbar.className = " ";
-                // wait until animation end.
-                setTimeout(function () {
-                    // prevent frequently toggle
-                    if ($navbar.className.indexOf('in') < 0) {
-                        $collapse.style.height = "0px"
-                    }
-                }, 400)
-            },
-            open: function () {
-                $collapse.style.height = "auto"
-                $navbar.className += " in";
-            }
-        }
-
+        var __XNav__ = {
+          close: function () {
+            $navbar.className = ' ';
+            // wait until animation end.
+            setTimeout(function () {
+              // prevent frequently toggle
+              if ($navbar.className.indexOf('in') < 0) {
+                $collapse.style.height = '0px';
+              }
+            }, 400);
+          },
+          open: function () {
+            $collapse.style.height = 'auto';
+            $navbar.className += ' in';
+          },
+        };
         // Bind Event
         $toggle.addEventListener('click', function (e) {
-            if ($navbar.className.indexOf('in') > 0) {
-                __XheldonNav__.close()
-            } else {
-                __XheldonNav__.open()
-            }
-        })
-
+          if ($navbar.className.indexOf('in') > 0) {
+            __XNav__.close();
+          } else {
+            __XNav__.open();
+          }
+        });
         /**
          * Since Fastclick is used to delegate 'touchstart' globally
          * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * Using 'e.stopPropagation' to stop 'touchstart' event from
          * $toggle/$collapse will break global delegation.
-         * 
+         *
          * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.  
+         * added to document close XheldonNav.
          *
          * Also, we use 'click' instead of 'touchstart' as compromise
          */
         document.addEventListener('click', function (e) {
-            if (e.target == $toggle) return;
-            if (e.target.className == 'icon-bar') return;
-            __XheldonNav__.close();
-        })
-    </script>
-    <!-- Search -->
+          if (e.target == $toggle) return;
+          if (e.target.className == 'icon-bar') return;
+          __XNav__.close();
+        });
+      </script> <!-- Search -->
 <div class="search-page">
-  <div class="search-icon-close-container">
-    <span class="search-icon-close">
-      <i class="fa fa-chevron-down"></i>
-    </span>
-  </div>
-  <div class="search-main container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <form></form>
-        <input type="text" id="search-input" placeholder="$ grep...">
-        </form>
-        <div id="search-results" class="mini-post-list"></div>
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-    <!-- Image to hack wechat -->
-<!-- <img src="/resources/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
-
-<!-- Post Header -->
-
-
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://www.xheldon.cn/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/" width="0" height="0"> -->
 
 <style type="text/css">
-    header.intro-header{
-        position: relative;
-        background-image: url('https://static.xheldon.cn/img/index-bg.png');
-        
-    }
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
 
     
+  }
+
+  
 </style>
 
-<header class="intro-header style-text" >
-
-    <div class="header-mask"></div>
+<header class="intro-header style-text">
+  
+    <div class="headerMask"></div>
     
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                        
-                        <a class="tag" href="/archive/?tag=%E9%9B%86%E6%88%90" title="集成">集成</a>
-                        
-                    </div>
-                    <h1>我的博客自动化流程</h1>
-                    
-                    <h2 class="subheading"></h2>
-                    <span class="meta">✍🏼 写于 2021年12月22日</span>&nbsp;&nbsp;&nbsp;  
-                    
-                    <span class="meta">💡 更新于 2022年01月19日</span>
-                    
-                </div>
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <div class="tags">
+              
+              <a class="tag" href="/archive/?tag=%E9%9B%86%E6%88%90" title="集成">集成</a>
+              
             </div>
+            <h1>我的博客自动化流程</h1>
+            <h2 class="subheading"></h2>
+            <span class="meta">✍🏼 写于 2021年12月21日</span>&nbsp;&nbsp;&nbsp;
+            
+            <span class="meta">💡 更新于 2022年01月19日</span>
+            
+          </div>
         </div>
+      </div>
     </div>
-</header>
+  </header>
 
-
-
-
-
-
-<!-- Post Content -->
-<article>
+  <!-- Post Content -->
+  <article>
     <div class="container">
-        <div class="row">
+      <div class="row">
 
-    <!-- Post Container -->
-            <div class="
+        <!-- Post Container -->
+        <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
                 post-container">
-
-                <!-- Multi-Lingual -->
-                
+          
+            
+              <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
+              <script>
+                var timeDom = document.getElementById('from_time');
+                var pageTime = Date.parse('Tue Dec 21 2021 16:32:10 GMT+0000');
+                var currentTime = Date.now();
+                var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
+                if (Number(fromNow) <= 0) {
+                  fromNow = 1; // Note: 至少显示一天
+                }
+                timeDom.innerText = fromNow
+              </script>
+              
                 
                     
-                        
-                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
-                        <script>
-                            var timeDom = document.getElementById('from_time');
-                            var pageTime = 1640104330; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
-                            var currentTime = Date.now();
-                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
-                            if (Number(fromNow) <= 0) {
-                                fromNow = 1; // Note: 至少显示一天
-                            }
-                            timeDom.innerText = fromNow
-                        </script>
-                    
-                    
-                
-                
-                
-                
-				<p>之前有同学问我博客是用的什么，我说就是 Github Pages 的 Jekyll，然后用 Build 后的 HTML 托管，但是这么说好像有点粗糙，而且这个过程有些各个服务集成的工作，因此这里我就详细说一下，同时将代码放出来。</p>
-
+                      
+                          
+                              
+                                  <p>之前有同学问我博客是用的什么，我说就是 Github Pages 的 Jekyll，然后用 Build 后的 HTML 托管，但是这么说好像有点粗糙，而且这个过程有些各个服务集成的工作，因此这里我就详细说一下，同时将代码放出来。</p>
 <h2 id="总体流程">总体流程</h2>
-
 <p>Markdown 文件的总体的流程图：</p>
-
 <p><img src="https://res.craft.do/user/full/747e0824-8866-cf67-b3ae-2e207380d1f9/doc/04849A4D-455F-4549-9030-53EF2C142669/1CA9FF6C-9B0A-4EB3-9814-A7BEBF9375C7_2/j8AGJOA4y32BWX6DX9aGBJ487Hzxocg7lZqxl9HtynQz/1CA9FF6C-9B0A-4EB3-9814-A7BEBF9375C7_2.png" alt="Image" /></p>
-
 <p>博客中图片的总体流程图：</p>
-
 <p><img src="https://res.craft.do/user/full/747e0824-8866-cf67-b3ae-2e207380d1f9/doc/04849A4D-455F-4549-9030-53EF2C142669/C4EEEFBD-C8E6-4EEA-BA47-BAEC621423DF_2/byOhFeNx7c5ybdg07u2BObAjiYDQpsCRxvg1g3NWn20z/C4EEEFBD-C8E6-4EEA-BA47-BAEC621423DF_2.png" alt="Image" /></p>
-
 <p>关于图片处理的几点说明：</p>
-
 <ol>
-  <li>
-    <p>本地开发的时候，图片的仓库是博客仓库的 submodule，本地写博客新增了图片后，需要先将图片 push 到图片仓库，触发仓库的 action 同步到腾讯云 COS，然后再 push 博客代码即可，否则图片引用链接会找不到。</p>
-  </li>
-  <li>
-    <p>写博客的时候，引用图片的时候会写相对路径，然后 Jekyll 有三个配置文件，分别用在本地开发、.com 网站引用、.cn 网站引用，三个 yml 的唯一不同是对静态资源的引用不同：</p>
-  </li>
-  <li>
-    <p>本地配置文件：static_url: /static</p>
-  </li>
-  <li>
-    <p>.com 配置文件：static_url: https://static.xheldon.com</p>
-  </li>
-  <li>
-    <p>.cn 配置文件：static_url: https://static.xheldon.cn</p>
-  </li>
-  <li>
-    <p>需要引用图片资源的时候，在 markdown 中的写法是：![]({{ site.static_url}}/img/in-post/qing-zheng-lu-yu/IMG_3789.png)  即可（Jekyll 会先对 Markdown 文件处理，替换掉里面的 Liquid 变量之后，才会 build 成 HTML。</p>
-  </li>
+<li>
+<p>本地开发的时候，图片的仓库是博客仓库的 submodule，本地写博客新增了图片后，需要先将图片 push 到图片仓库，触发仓库的 action 同步到腾讯云 COS，然后再 push 博客代码即可，否则图片引用链接会找不到。</p>
+</li>
+<li>
+<p>写博客的时候，引用图片的时候会写相对路径，然后 Jekyll 有三个配置文件，分别用在本地开发、.com 网站引用、.cn 网站引用，三个 yml 的唯一不同是对静态资源的引用不同：</p>
+</li>
+<li>
+<p>本地配置文件：static_url: /static</p>
+</li>
+<li>
+<p>.com 配置文件：static_url: <a href="https://static.xheldon.com">https://static.xheldon.com</a></p>
+</li>
+<li>
+<p>.cn 配置文件：static_url: <a href="https://static.xheldon.cn">https://static.xheldon.cn</a></p>
+</li>
+<li>
+<p>需要引用图片资源的时候，在 markdown 中的写法是：\!\[\]\(https://static.xheldon.cn/img/in-post/qing-zheng-lu-yu/IMG_3789.png)  即可（Jekyll 会先对 Markdown 文件处理，替换掉里面的 Liquid 变量之后，才会 build 成 HTML。</p>
+</li>
 </ol>
-
 <h2 id="起因">起因</h2>
-
 <p>因为之前想使用 Notion 作为数据源，来更新博客，于是这就需要有一台服务器，因此我买了一台腾讯云的轻量服务器作为拉取 Notion 数据的服务端，效果见这里:</p>
-
 <p><a href="https://www.xheldon.com/subscribe/">订阅&amp;付费软件 - Xheldon Blog</a></p>
-
 <p>其次，还有一个原因是，写博客肯定是需要放图片的，一开始我使用的是 jsDelivr 的 Github 仓库加速服务：</p>
-
 <p><a href="https://www.jsdelivr.com/">jsDelivr - A free, fast, and reliable CDN for Open Source</a></p>
-
 <p>不过很囧的是，jsDelivr 的加速服务对每个仓库只有 50M 的限制，也即是你可以加速一些公共 js/css 等，但是图片显然是不适合的。</p>
-
 <p>基于此，在我有一个服务器的时候，一切的答案就很明显了：再买个域名，然后开通 CDN 加速服务即可。</p>
-
-<p>然后更更近一步的，既然都买了域名了，加上访问我博客的大多数都是大陆 ip，为什么不再搞一个国内版的博客呢？域名就叫 <code class="language-plaintext highlighter-rouge">https://xheldon.cn</code> 好了。</p>
-
+<p>然后更更近一步的，既然都买了域名了，加上访问我博客的大多数都是大陆 ip，为什么不再搞一个国内版的博客呢？域名就叫 <code>https://xheldon.cn</code> 好了。</p>
 <p>于是说干就干，下面就是这个过程的总结。</p>
-
 <h2 id="服务器和域名">服务器和域名</h2>
-
 <h3 id="购买">购买</h3>
-
 <p>服务器买的是腾讯云的轻量服务器，4 核 8 G的，4M 带宽，因为是打骨折（就是做活动 0.几折的价格）的时候买的，所以很便宜。</p>
-
 <p>买了域名之后，在中国大陆当然是要备案，没有备案你的域名是不给你解析的，如果访问该域名会自动显示 ‘该域名未备案，已停止解析’ 等的字样。不过好在腾讯云提供免费备案的服务，而且现在流程也简单了很多，你只需要填写腾讯云的备案申请表即可，填写诸如家庭地址、联系方式、网站用途、申请理由等信息，如果写的不符工信部的要求，比如在申请理由一栏里面写 ‘审核个屁快给老子开通’ 之类的，直接提交到管局是肯定会被驳回的，如果填写的有问题，（腾讯管域名审核的政府机构叫‘管局’），会有工作人员联系你具体事项，帮你修改确认后提交。</p>
-
 <h3 id="配置">配置</h3>
-
 <p>配置有以下几步， 略去不表：</p>
-
 <ol>
-  <li>
-    <p>申请免费的 https 证书，开启 https。</p>
-  </li>
-  <li>
-    <p>设置 CDN 加速域名。</p>
-  </li>
-  <li>
-    <p>购买 COS 作为图片的存储地方（新用户免费送）。</p>
-  </li>
-  <li>
-    <p>启一个 Express 的 node 服务，对外通过 Nginx 反向代理暴露 80 端口，服务器从 Gitee 拉取的静态 html 资源，以及响应一些接口请求，为什么不直接从 Github 拉而要很麻烦的从 这些接口请求有：</p>
-  </li>
-  <li>
-    <p>响应来自 Gitee 的 webhooks，通知服务器拉取 Gitee 最新的 HTML 文件。</p>
-  </li>
-  <li>
-    <p>响应来自博客的 Notion 查询请求，服务端会请求 notion 的服务器，查询</p>
-  </li>
+<li>
+<p>申请免费的 https 证书，开启 https。</p>
+</li>
+<li>
+<p>设置 CDN 加速域名。</p>
+</li>
+<li>
+<p>购买 COS 作为图片的存储地方（新用户免费送）。</p>
+</li>
+<li>
+<p>启一个 Express 的 node 服务，对外通过 Nginx 反向代理暴露 80 端口，服务器从 Gitee 拉取的静态 html 资源，以及响应一些接口请求，为什么不直接从 Github 拉而要很麻烦的从 这些接口请求有：</p>
+</li>
+<li>
+<p>响应来自 Gitee 的 webhooks，通知服务器拉取 Gitee 最新的 HTML 文件。</p>
+</li>
+<li>
+<p>响应来自博客的 Notion 查询请求，服务端会请求 notion 的服务器，查询</p>
+</li>
 </ol>
-
 <p>其中有些地方需要说明一下：</p>
-
 <ol>
-  <li>
-    <p>轻量服务器我选的是 Node + Nginx 的 Docker 的镜像，你也可以选 Java 的或者自定义的，都行。</p>
-  </li>
-  <li>
-    <p>轻量服务器默认安装的 Node 和 Nginx 都是以 lighthouse 用户权限装的，经常安装包的时候提示权限不足，于是我图省事儿，删了原装的 Nginx 和 Node，自己用 root 用户装了一遍。</p>
-  </li>
-  <li>
-    <p>有时候我会需要从服务器 ftp 上传一些文件，如上面提到的，申请的ssl 证书之类的，需要配置 ftp 相关的东西，这个腾讯云有相关文档，搜一下就出来了，略。</p>
-  </li>
-  <li>
-    <p>备案需要等个至少一周以上，我好像等了两周。</p>
-  </li>
+<li>
+<p>轻量服务器我选的是 Node + Nginx 的 Docker 的镜像，你也可以选 Java 的或者自定义的，都行。</p>
+</li>
+<li>
+<p>轻量服务器默认安装的 Node 和 Nginx 都是以 lighthouse 用户权限装的，经常安装包的时候提示权限不足，于是我图省事儿，删了原装的 Nginx 和 Node，自己用 root 用户装了一遍。</p>
+</li>
+<li>
+<p>有时候我会需要从服务器 ftp 上传一些文件，如上面提到的，申请的ssl 证书之类的，需要配置 ftp 相关的东西，这个腾讯云有相关文档，搜一下就出来了，略。</p>
+</li>
+<li>
+<p>备案需要等个至少一周以上，我好像等了两周。</p>
+</li>
 </ol>
-
 <h2 id="仓库配置">仓库配置</h2>
-
 <h3 id="配置-github-actions-build-静态文件">配置 Github Actions build 静态文件</h3>
-
 <p>因为我不想暴露我的博客的源码文件，再加上 Github Pages 支持的 Jekyll 插件有限，无法满足我的需求（如不仅在首页分页，分类页也想分页的话，Github Pages 支持的插件就做不到），因此我决定自己 Build 源码成 HTML。</p>
-
 <p>又由于 Github Pages 免费版的限制，无法将私有仓库开启 Github Pages，因此我将另一个仓库设置为公开，而源码仓库设置为私有，代码提交到私有仓库后，经 Github Action build 后，Push 到那个公开仓库。</p>
-
 <p>关于 GIthub Pages 和 Github Action 的使用，可以参见我之前写的这篇：</p>
-
 <p><a href="https://www.xheldon.com/tech/the-using-of-github-pages.html">免费使用私有仓库发布 GitHub Pages - Xheldon Blog</a></p>
-
 <p>不过因为又搞了个国内的域名，所以配置文件也有一些修改，下面是新的配置文件：</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-</pre></td><td class="rouge-code"><pre>name: 博客打包任务
 
-# 代码 push 到 master 分支的时候运行该 workflow
-# TODO：不运行 commit 信息中包含特定关键词的 push
-on:
-  push:
-    branches: [ master ]
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">name: 博客打包任务<br><br># 代码 push 到 master 分支的时候运行该 workflow<br># TODO：不运行 commit 信息中包含特定关键词的 push<br>on:<br>  push:<br>    branches: [ master ]<br><br>jobs:<br>  Build:<br>    runs-on: ubuntu-latest<br><br>    steps:<br>      - name: 检出分支<br>        uses: actions/checkout@v2<br>        with:<br>          persist-credentials: fasle # false 是用 personal token，true 是使用 GitHub token<br>          fetch-depth: 0 # 保证能够 push 成功<br><br>      # 设置 ruby 环境    <br>      - name: 设置 Ruby 环境<br>        uses: ruby/setup-ruby@v1<br>        with:<br>          bundler-cache: true<br>          ruby-version: 2.6<br><br>      # 安装依赖<br>      - name: bundle 安装依赖<br>        run: bundle install<br><br>      # 打包静态资源<br>      - name: 构建 xheldon.com 页面<br>        if: $&#123;&#123; startsWith(github.event.head_commit.message, &#x27;com&#x27;) || startsWith(github.event.head_commit.message, &#x27;all&#x27;) &#125;&#125;<br>        run: bundle exec jekyll build<br><br>      - name: xheldon.com 写入信息<br>        if: $&#123;&#123; hashFiles(&#x27;./_site&#x27;) &#125;&#125;<br>        working-directory: ./_site<br>        run: |<br>            echo &quot;www.xheldon.com&quot; &gt; CNAME<br>            echo -e &quot;# [Xheldon&#x27;s blog](https://www.xheldon.com)&quot; &gt; README.md<br>    <br>      - name: 推送到 x_blog 仓库<br>        if: $&#123;&#123; hashFiles(&#x27;./_site&#x27;) &#125;&#125;<br>        working-directory: ./_site<br>        run: |<br>          pwd<br>          git init<br>          git checkout -b master<br>          git add -A<br>          git -c user.name=&#x27;github actions by $&#123;&#123;github.actor&#125;&#125;&#x27; -c user.email=&#x27;NO&#x27; commit -m &#x27;$&#123;&#123;github.event.head_commit.message&#125;&#125;&#x27; <br>          git push &quot;https://$&#123;&#123;github.actor&#125;&#125;:$&#123;&#123;secrets.X_BLOG_SITE&#125;&#125;@github.com/Xheldon/x_blog.git&quot; HEAD:master -f -q<br><br>      - name: 构建 xheldon.cn 页面<br>        if: $&#123;&#123; startsWith(github.event.head_commit.message, &#x27;cn&#x27;) || startsWith(github.event.head_commit.message, &#x27;all&#x27;) &#125;&#125;<br>        run: bundle exec jekyll build --config=_config.cn.yml -d _site_cn<br><br>      # gitee 和 github 的用户名一样<br>      - name: 推送到 x_blog_cn 仓库<br>        if: $&#123;&#123; hashFiles(&#x27;./_site_cn&#x27;) &#125;&#125;<br>        working-directory: ./_site_cn<br>        run: |<br>          pwd<br>          git init<br>          git checkout -b master<br>          git add -A<br>          git -c user.name=&#x27;gitub actions by $&#123;&#123;github.actor&#125;&#125; push to gitee&#x27; -c user.email=&#x27;NO&#x27; commit -m &#x27;$&#123;&#123;github.event.head_commit.message&#125;&#125;&#x27; <br>          git push &quot;https://$&#123;&#123;github.actor&#125;&#125;:$&#123;&#123;secrets.X_BLOG_SITE_CN&#125;&#125;@gitee.com/Xheldon/x_blog_cn.git&quot;  HEAD:master -f -q<br><br></code></pre></td></tr></table></figure>
 
-jobs:
-  Build:
-    runs-on: ubuntu-latest
 
-    steps:
-      - name: 检出分支
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: fasle # false 是用 personal token，true 是使用 GitHub token
-          fetch-depth: 0 # 保证能够 push 成功
-
-      # 设置 ruby 环境    
-      - name: 设置 Ruby 环境
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-          ruby-version: 2.6
-
-      # 安装依赖
-      - name: bundle 安装依赖
-        run: bundle install
-
-      # 打包静态资源
-      - name: 构建 xheldon.com 页面
-        if: ${{ startsWith(github.event.head_commit.message, 'com') || startsWith(github.event.head_commit.message, 'all') }}
-        run: bundle exec jekyll build
-
-      - name: xheldon.com 写入信息
-        if: ${{ hashFiles('./_site') }}
-        working-directory: ./_site
-        run: |
-            echo "www.xheldon.com" &gt; CNAME
-            echo -e "# [Xheldon's blog](https://www.xheldon.com)" &gt; README.md
-    
-      - name: 推送到 x_blog 仓库
-        if: ${{ hashFiles('./_site') }}
-        working-directory: ./_site
-        run: |
-          pwd
-          git init
-          git checkout -b master
-          git add -A
-          git -c user.name='github actions by ${{github.actor}}' -c user.email='NO' commit -m '${{github.event.head_commit.message}}' 
-          git push "https://${{github.actor}}:${{secrets.X_BLOG_SITE}}@github.com/Xheldon/x_blog.git" HEAD:master -f -q
-
-      - name: 构建 xheldon.cn 页面
-        if: ${{ startsWith(github.event.head_commit.message, 'cn') || startsWith(github.event.head_commit.message, 'all') }}
-        run: bundle exec jekyll build --config=_config.cn.yml -d _site_cn
-
-      # gitee 和 github 的用户名一样
-      - name: 推送到 x_blog_cn 仓库
-        if: ${{ hashFiles('./_site_cn') }}
-        working-directory: ./_site_cn
-        run: |
-          pwd
-          git init
-          git checkout -b master
-          git add -A
-          git -c user.name='gitub actions by ${{github.actor}} push to gitee' -c user.email='NO' commit -m '${{github.event.head_commit.message}}' 
-          git push "https://${{github.actor}}:${{secrets.X_BLOG_SITE_CN}}@gitee.com/Xheldon/x_blog_cn.git"  HEAD:master -f -q
-
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<h3 id="配置另一个仓库打开-github-pages">配置另一个仓库，打开 Github Pages</h3>
-
+<h3 id="配置另一个仓库，打开-github-pages">配置另一个仓库，打开 Github Pages</h3>
 <p>这一步就不用多说了，打开个 Github 仓库的开关而已。</p>
-
 <h3 id="配置-conding-webhooks">配置 Conding Webhooks</h3>
-
-<p>在 Gitee 的仓库管理-Webhooks 中配置你的 WebHook 地址，我的是 https://www.xheldon.cn/hooks_cn_push。</p>
-
+<p>在 Gitee 的仓库管理-Webhooks 中配置你的 WebHook 地址，我的是 <a href="https://www.xheldon.cn/hooks_cn_push%E3%80%82">https://www.xheldon.cn/hooks_cn_push。</a></p>
 <h3 id="配置服务器响应-webhooks">配置服务器响应 Webhooks</h3>
-
 <p>服务端起的 Express 服务，直接放代码：</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-</pre></td><td class="rouge-code"><pre>app.post('/hooks_cn_push', async (req, res) =&gt; {
-    // Note: 收到 x_blog_cn 的 webhooks, 执行 git pull, 将 x_blog_cn 拉取到 public 目录
-    // Note: 签名验证，暂时略
-    // Note: 拉取分支
-    const branch = req.body.repository.clone_url;
-    const headers = req.headers;
-    console.log('headers:', headers);
-    // Note: 验证一下 header 的合法性
-    if (
-        headers['x-gitee-event'] === 'Push Hook'
-            &amp;&amp; headers['x-gitee-token'] === GITEE_WEBHOOKS_SECRET
-    ) {
-        exec(`sudo rm -rf ./_public &amp;&amp; sudo git clone ${branch} ./_public &amp;&amp; sudo rsync -chir --delete ./_public/ ./public/ &amp;&amp; sudo rm -rf ./_public`, {
-            cwd: './',
-    
-        }, (err, stdout, stderr) =&gt; {
-            if (err) {
-                console.log('err:', err, stderr);
-                res.status(400).send({
-                    msg: '服务器内部 git clone 仓库失败:',
-                    stderr,
-                    stdout,
-                    err,
-                })
-            } else {
-                // Note: stdout 没有任何输出表示正常
-                console.log('out:', stdout);
-                if (!stdout) {
-                    res.json({
-                        msg: '没问题',
-                        status: 200,
-                        stderr,
-                        stdout,
-                        err,
-                    });
-                } else {
-                    res.json({
-                        msg: 'git clone 的时候返回了一些内容，请过目',
-                        status: 200,
-                        stderr,
-                        stdout,
-                        err,
-                    });
-                }
-            }
-        });
-    } else {
-        res.json({
-            msg: '恶意请求！',
-            status: 403
-        });
-    }
-});
-</pre></td></tr></tbody></table></code></pre></div></div>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">app.post(&#x27;/hooks_cn_push&#x27;, async (req, res) =&gt; &#123;<br>    // Note: 收到 x_blog_cn 的 webhooks, 执行 git pull, 将 x_blog_cn 拉取到 public 目录<br>    // Note: 签名验证，暂时略<br>    // Note: 拉取分支<br>    const branch = req.body.repository.clone_url;<br>    const headers = req.headers;<br>    console.log(&#x27;headers:&#x27;, headers);<br>    // Note: 验证一下 header 的合法性<br>    if (<br>        headers[&#x27;x-gitee-event&#x27;] === &#x27;Push Hook&#x27;<br>            &amp;&amp; headers[&#x27;x-gitee-token&#x27;] === GITEE_WEBHOOKS_SECRET<br>    ) &#123;<br>        exec(`sudo rm -rf ./_public &amp;&amp; sudo git clone $&#123;branch&#125; ./_public &amp;&amp; sudo rsync -chir --delete ./_public/ ./public/ &amp;&amp; sudo rm -rf ./_public`, &#123;<br>            cwd: &#x27;./&#x27;,<br>    <br>        &#125;, (err, stdout, stderr) =&gt; &#123;<br>            if (err) &#123;<br>                console.log(&#x27;err:&#x27;, err, stderr);<br>                res.status(400).send(&#123;<br>                    msg: &#x27;服务器内部 git clone 仓库失败:&#x27;,<br>                    stderr,<br>                    stdout,<br>                    err,<br>                &#125;)<br>            &#125; else &#123;<br>                // Note: stdout 没有任何输出表示正常<br>                console.log(&#x27;out:&#x27;, stdout);<br>                if (!stdout) &#123;<br>                    res.json(&#123;<br>                        msg: &#x27;没问题&#x27;,<br>                        status: 200,<br>                        stderr,<br>                        stdout,<br>                        err,<br>                    &#125;);<br>                &#125; else &#123;<br>                    res.json(&#123;<br>                        msg: &#x27;git clone 的时候返回了一些内容，请过目&#x27;,<br>                        status: 200,<br>                        stderr,<br>                        stdout,<br>                        err,<br>                    &#125;);<br>                &#125;<br>            &#125;<br>        &#125;);<br>    &#125; else &#123;<br>        res.json(&#123;<br>            msg: &#x27;恶意请求！&#x27;,<br>            status: 403<br>        &#125;);<br>    &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
 
 <h3 id="配置图片仓库的-action">配置图片仓库的 Action</h3>
+<p>图片上传到图片仓库 <code>x_blog-static</code> 之后，会触发 Github Action，然后增量更新到腾讯云 COS，直接放代码：</p>
 
-<p>图片上传到图片仓库 <code class="language-plaintext highlighter-rouge">x_blog-static</code> 之后，会触发 Github Action，然后增量更新到腾讯云 COS，直接放代码：</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-</pre></td><td class="rouge-code"><pre>name: 腾讯云 cos 同步任务
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">name: 腾讯云 cos 同步任务<br><br># 代码 push 到本仓库的时候触发该 ci<br># 分析提交的 commits（不只是 head commit），将全部的 added modify 归结到一起（去重）调用上传方法<br>#  将 delete 的，调用删除方法<br>on:<br>  push:<br>    branches: [master]<br><br>jobs:<br>  CheckOutAndUpload:<br>    runs-on: ubuntu-latest<br><br>    steps:<br>      - name: 检出分支<br>        uses: actions/checkout@v2<br>        with:<br>          persist-credentials: false<br>          fetch-depth: 0<br>      <br>      - name: 设置 node 环境<br>        uses: actions/setup-node@v2.4.1<br>        with:<br>          node-version: 14.x<br>          architecture: x64<br>          cache: npm<br><br>      - name: 安装依赖<br>        run: npm i<br><br>      - name: 运行上传脚本<br>        uses: actions/github-script@v5<br>        env:<br>          COS_SECRET_ID: $&#123;&#123;secrets.COS_SECRET_ID&#125;&#125;<br>          COS_SECRET_KEY: $&#123;&#123;secrets.COS_SECRET_KEY&#125;&#125;<br>          COS_BUCKET: $&#123;&#123;secrets.COS_BUCKET&#125;&#125;<br>          COS_REGION: $&#123;&#123;secrets.COS_REGION&#125;&#125;<br>        with:<br>          script: |<br>            const script = require(&#x27;./upload.js&#x27;)<br>            await script(&#123;github, context, core&#125;)<br></code></pre></td></tr></table></figure>
 
-# 代码 push 到本仓库的时候触发该 ci
-# 分析提交的 commits（不只是 head commit），将全部的 added modify 归结到一起（去重）调用上传方法
-#  将 delete 的，调用删除方法
-on:
-  push:
-    branches: [master]
-
-jobs:
-  CheckOutAndUpload:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: 检出分支
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-          fetch-depth: 0
-      
-      - name: 设置 node 环境
-        uses: actions/setup-node@v2.4.1
-        with:
-          node-version: 14.x
-          architecture: x64
-          cache: npm
-
-      - name: 安装依赖
-        run: npm i
-
-      - name: 运行上传脚本
-        uses: actions/github-script@v5
-        env:
-          COS_SECRET_ID: ${{secrets.COS_SECRET_ID}}
-          COS_SECRET_KEY: ${{secrets.COS_SECRET_KEY}}
-          COS_BUCKET: ${{secrets.COS_BUCKET}}
-          COS_REGION: ${{secrets.COS_REGION}}
-        with:
-          script: |
-            const script = require('./upload.js')
-            await script({github, context, core})
-</pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>当然，有一些环境变量，如 COS 等的秘钥，可以参照上面放的那篇 Github Action 在自己在仓库中配置即可。</p>
-
 <p>上面执行了一个 js 文件，会获取 commit 的情况，确定本次 commit 新增了什么、删除了什么、修改了什么、重命名了什么等，然后再一次性的批量上传，仓库是公共的，<a href="https://github.com/Xheldon/x_blog-static">在这里</a>。</p>
-
 <h2 id="未来计划">未来计划</h2>
-
 <p>正如 <a href="https://www.xheldon.com/tech/use-craft-extension-to-write-blog.html">这篇文章所</a> 言，本篇文章也是在 Craft 通过插件同步到 Github 仓库的，优点很多里面已经说得很清楚了，就不解释了，目前唯一的问题是通过 Craft 插入的图片是个问题，虽然官方已经放出了无 CORS 限制的 fetch API（仅 Mac 可用），但是目前还没想好该怎么将上传到 Craft 的图片同步到腾讯云会比较优雅。</p>
-
 <p>目前的计划是，废弃掉在 Github 保存图片的步骤，直接将 Craft 中的图片通过 extension 发送到腾讯云 COS。</p>
 
+                                    <div class="text-danger">- EOF -</div>
+                                    <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a
+                                        style="color: #ccc;"
+                                        href="https://www.xheldon.cn/tech/my-blog-ci.html"
+                                        title="我的博客自动化流程">
+                                        我的博客自动化流程 - Xheldon Blog
+                                      </a></div>
+                                    <hr style="visibility: hidden;">
 
-                <div class="text-danger">- EOF -</div>
-                <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a style="color: #ccc;" href="https://www.xheldon.cn/tech/my-blog-ci.html" title="我的博客自动化流程">我的博客自动化流程 - Xheldon Blog</a></div>
-                <hr style="visibility: hidden;">
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/tech/use-craft-extension-to-write-blog.html" data-toggle="tooltip" data-placement="top" title="本文通过 Craft Extension 发送">
-                        上一篇<br>
-                        <span>本文通过 Craft Extension 发送</span>
-                        </a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/tech/a-comparison-of-code-editor.html" data-toggle="tooltip" data-placement="top" title="「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比">
-                        下一篇<br>
-                        <span>「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比</span>
-                        </a>
-                    </li>
-                    
-                </ul>
-                <hr style="visibility: hidden;">
-                <div class="giscus"></div>
-                <hr>
-            </div>  
-
-    <!-- Side Catalog Container -->
+                                    <ul class="pager">
+                                      
+                                        <li class="previous">
+                                          <a href="/tech/a-comparison-of-code-editor.html" data-toggle="tooltip"
+                                            data-placement="top" title="「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比">
+                                            上一篇<br>
+                                            <span>{{page.prev.title}}</span>
+                                          </a>
+                                        </li>
+                                        
+                                          
+                                            <li class="next">
+                                              <a href="/tech/use-craft-extension-to-write-blog.html" data-toggle="tooltip"
+                                                data-placement="top" title="本文通过 Craft Extension 发送">
+                                                下一篇<br>
+                                                <span>{{page.next.title}}</span>
+                                              </a>
+                                            </li>
+                                            
+                                    </ul>
+                                    <hr style="visibility: hidden;">
+                                    <div class="giscus"></div>
+                                    <hr>
+        </div>
+        <!-- Side Catalog Container -->
         
-            <div class="
+          <div class="
                 col-lg-2 col-lg-offset-0
                 visible-lg-block
                 sidebar-container
                 catalog-container">
-                <div class="side-catalog">
-                    <hr class="hidden-sm hidden-xs">
-                    <h5>
-                        <a class="catalog-toggle" href="#">目录</a>
-                    </h5>
-                    <ul class="catalog-body"></ul>
-                </div>
+            <div class="side-catalog">
+              <hr class="hidden-sm hidden-xs">
+              <h5>
+                <a class="catalog-toggle" href="#">目录</a>
+              </h5>
+              <ul class="catalog-body"></ul>
             </div>
-        
+          </div>
+          
 
-    <!-- Sidebar Container -->
+            <!-- Sidebar Container -->
+
             <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
                 sidebar-container">
-
-                <!-- Featured Tags -->
-                
-
-
+              
 <section style="margin-bottom: 20px;">
     <h5>博主说：</h5>
     <div>
-        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/resources/img/gwechat.png" />
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
         我常常希望在面对人生中一些关键抉择的时候，有人可以告诉我最佳的做法，让我不至于白白浪费宝贵的时间。推己及人，我因此经常写博客，以期在浩渺无垠的互联网中的这个小小角落里记录下对于我来说只有一次的人生经历，希望能够帮到那些希望得到帮助的人。
     </div>
     <hr>
     <h5><a href="/archive/">热门标签</a></h5>
     <div class="tags">
         
+
         
+            <a data-sort="0028" 
+                href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技术"
+                rel="44">技术</a>
         
+            <a data-sort="0047" 
+                href="/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="25">生活</a>
         
+            <a data-sort="0062" 
+                href="/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="折腾"
+                rel="10">折腾</a>
         
+            <a data-sort="0066" 
+                href="/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻译"
+                rel="6">翻译</a>
         
-                <a data-sort="0028" 
-                    href="/archive/?tag=%E6%8A%80%E6%9C%AF"
-                    title="技术"
-                    rel="44">技术</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="技巧"
+                rel="5">技巧</a>
         
-                <a data-sort="0047" 
-                    href="/archive/?tag=%E7%94%9F%E6%B4%BB"
-                    title="生活"
-                    rel="25">生活</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="教程"
+                rel="5">教程</a>
         
-                <a data-sort="0062" 
-                    href="/archive/?tag=%E6%8A%98%E8%85%BE"
-                    title="折腾"
-                    rel="10">折腾</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="美食"
+                rel="5">美食</a>
         
-                <a data-sort="0066" 
-                    href="/archive/?tag=%E7%BF%BB%E8%AF%91"
-                    title="翻译"
-                    rel="6">翻译</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="5">ProseMirror</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=%E6%8A%80%E5%B7%A7"
-                    title="技巧"
-                    rel="5">技巧</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="工作流"
+                rel="4">工作流</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=%E6%95%99%E7%A8%8B"
-                    title="教程"
-                    rel="5">教程</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="插件"
+                rel="4">插件</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
-                    title="美食"
-                    rel="5">美食</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="网络"
+                rel="4">网络</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=ProseMirror"
-                    title="ProseMirror"
-                    rel="5">ProseMirror</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=Craft"
+                title="Craft"
+                rel="4">Craft</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
-                    title="工作流"
-                    rel="4">工作流</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=Vue"
+                title="Vue"
+                rel="4">Vue</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=%E6%8F%92%E4%BB%B6"
-                    title="插件"
-                    rel="4">插件</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体验"
+                rel="3">初体验</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=%E7%BD%91%E7%BB%9C"
-                    title="网络"
-                    rel="4">网络</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="服务器"
+                rel="3">服务器</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=Craft"
-                    title="Craft"
-                    rel="4">Craft</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="经验"
+                rel="3">经验</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=Vue"
-                    title="Vue"
-                    rel="4">Vue</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="苹果"
+                rel="3">苹果</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
-                    title="初体验"
-                    rel="3">初体验</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="路由器"
+                rel="3">路由器</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
-                    title="服务器"
-                    rel="3">服务器</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="软路由"
+                rel="3">软路由</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E7%BB%8F%E9%AA%8C"
-                    title="经验"
-                    rel="3">经验</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="随笔"
+                rel="3">随笔</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E8%8B%B9%E6%9E%9C"
-                    title="苹果"
-                    rel="3">苹果</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E9%9B%86%E6%88%90"
+                title="集成"
+                rel="3">集成</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
-                    title="路由器"
-                    rel="3">路由器</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=Apple"
+                title="Apple"
+                rel="3">Apple</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
-                    title="软路由"
-                    rel="3">软路由</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=Git"
+                title="Git"
+                rel="3">Git</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E9%9A%8F%E7%AC%94"
-                    title="随笔"
-                    rel="3">随笔</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="3">JavaScript</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E9%9B%86%E6%88%90"
-                    title="集成"
-                    rel="3">集成</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="2">主食</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=Apple"
-                    title="Apple"
-                    rel="3">Apple</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="优化"
+                rel="2">优化</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=Git"
-                    title="Git"
-                    rel="3">Git</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用体验"
+                rel="2">使用体验</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=JavaScript"
-                    title="JavaScript"
-                    rel="3">JavaScript</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E5%8D%83%E5%85%86"
+                title="千兆"
+                rel="2">千兆</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E4%B8%BB%E9%A3%9F"
-                    title="主食"
-                    rel="2">主食</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="2">大事</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E4%BC%98%E5%8C%96"
-                    title="优化"
-                    rel="2">优化</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="旁路由"
+                rel="2">旁路由</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
-                    title="使用体验"
-                    rel="2">使用体验</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="泡脚时间"
+                rel="2">泡脚时间</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E5%8D%83%E5%85%86"
-                    title="千兆"
-                    rel="2">千兆</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="测试"
+                rel="2">测试</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E5%A4%A7%E4%BA%8B"
-                    title="大事"
-                    rel="2">大事</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="特斯拉"
+                rel="2">特斯拉</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
-                    title="旁路由"
-                    rel="2">旁路由</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="编辑器"
+                rel="2">编辑器</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
-                    title="泡脚时间"
-                    rel="2">泡脚时间</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="视频"
+                rel="2">视频</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E6%B5%8B%E8%AF%95"
-                    title="测试"
-                    rel="2">测试</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="调试"
+                rel="2">调试</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
-                    title="特斯拉"
-                    rel="2">特斯拉</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%BD%A6"
+                title="车"
+                rel="2">车</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
-                    title="编辑器"
-                    rel="2">编辑器</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="迁移"
+                rel="2">迁移</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%A7%86%E9%A2%91"
-                    title="视频"
-                    rel="2">视频</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="2">AppleScript</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%B0%83%E8%AF%95"
-                    title="调试"
-                    rel="2">调试</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=CI"
+                title="CI"
+                rel="2">CI</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%BD%A6"
-                    title="车"
-                    rel="2">车</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=GitHub"
+                title="GitHub"
+                rel="2">GitHub</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%BF%81%E7%A7%BB"
-                    title="迁移"
-                    rel="2">迁移</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="2">Jekyll</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=AppleScript"
-                    title="AppleScript"
-                    rel="2">AppleScript</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=Notion"
+                title="Notion"
+                rel="2">Notion</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=CI"
-                    title="CI"
-                    rel="2">CI</a>
-        
-                <a data-sort="0070" 
-                    href="/archive/?tag=GitHub"
-                    title="GitHub"
-                    rel="2">GitHub</a>
-        
-                <a data-sort="0070" 
-                    href="/archive/?tag=Jekyll"
-                    title="Jekyll"
-                    rel="2">Jekyll</a>
-        
-                <a data-sort="0070" 
-                    href="/archive/?tag=Notion"
-                    title="Notion"
-                    rel="2">Notion</a>
     </div>
     <hr>
     <h5>专栏</h5>
@@ -1041,8 +691,6 @@ jobs:
     </div>
 </section>
 
-
-                <!-- Friends Blog -->
                 
 <hr>
 <h5>朋友们</h5>
@@ -1050,27 +698,29 @@ jobs:
   
   <li><a href="https://prosemirror.xheldon.com" target="_blank">ProseMirror 中文</a></li>
   
+  <li><a href="https://rust.xheldon.com" target="_blank">Rust 中文</a></li>
+  
   <li><a href="https://slate.xheldon.com" target="_blank">Slate 中文</a></li>
   
   <li><a href="https://notion-flow.xheldon.com" target="_blank">Notion Flow</a></li>
   
+  <li><a href="https://xpic.xheldon.com" target="_blank">xPic</a></li>
   
-    <li><a href="https://www.xheldon.com" target="_blank">国际版</a></li>
+  
+    <li><a href="https://www.xheldon.cn" target="_blank">国内版</a></li>
   
 </ul>
 
             </div>
-        </div>
+      </div>
     </div>
-</article>
+  </article>
 
-<!-- add support for mathjax by voleking-->
+  
 
+        
 
-<!-- Markdown 流程图按需加载 -->
-
-
-<script src="https://giscus.app/client.js"
+            <script src="https://giscus.app/client.js"
         data-repo="Xheldon/x_blog"
         data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
         data-category="Announcements"
@@ -1088,382 +738,363 @@ jobs:
         async>
 </script>
 
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("https://static.xheldon.cn/js/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'hover',
-          placement: 'right',
-          // icon: '#'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
-
-
-
-    <!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <!-- SNS Link -->
+              
+                <!-- async load function -->
+                <script>
+                  function async(u, c) {
+                    var d = document,
+                      t = 'script',
+                      o = d.createElement(t),
+                      s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) {
+                      o.addEventListener('load', function (e) {
+                        c(null, e);
+                      }, false);
+                    }
+                    s.parentNode.insertBefore(o, s);
+                  }
+                </script>
+                <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+                <script>
+                  async("/js/anchor.min.js", function () {
+                    anchors.options = {
+                      visible: 'always',
+                      placement: 'right',
+                      //   icon: '#'
+                    };
+                    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+                  })
+                </script>
+                <style>
+                  /* place left on bigger screen */
+                  @media all and (min-width: 800px) {
+                    .anchorjs-link {
+                      position: absolute;
+                      left: -0.75em;
+                      font-size: 1.1em;
+                      margin-top: -0.1em;
+                    }
+                  }
+                </style>
                 
 
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
 
 <ul class="list-inline text-center">
-
-
-  <!-- 
-  <li>
-    <a target="_blank" href="/feed.xml">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-   -->
-  
-  <li>
-    <a target="_blank" href="https://twitter.com/_xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  <li>
-    <a target="_blank" href="http://weibo.com/xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  
-  <li>
-    <a target="_blank" href="https://www.youtube.com/@xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  <li>
-    <a target="_blank" href="https://space.bilibili.com/13835416">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  <li>
-    <a target="_blank" href="https://t.me/xheldon_tech">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
 </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; <a href="https://github.com/Xheldon" target="_blank">Xheldon</a> 2024
-                    <br>
-                    Don't Panic | Theme fork from <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-                    <br>
-                    
-                    <a style="color: #777; vertical-align: middle;" target="_blank" href="https://beian.miit.gov.cn/">京ICP备2021031693号-1</a>
-                    <a style="color: #777" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502047432">
-                        <img style="width: 17px;height: 17px; vertical-align: middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKTWlDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVN3WJP3Fj7f92UPVkLY8LGXbIEAIiOsCMgQWaIQkgBhhBASQMWFiApWFBURnEhVxILVCkidiOKgKLhnQYqIWotVXDjuH9yntX167+3t+9f7vOec5/zOec8PgBESJpHmomoAOVKFPDrYH49PSMTJvYACFUjgBCAQ5svCZwXFAADwA3l4fnSwP/wBr28AAgBw1S4kEsfh/4O6UCZXACCRAOAiEucLAZBSAMguVMgUAMgYALBTs2QKAJQAAGx5fEIiAKoNAOz0ST4FANipk9wXANiiHKkIAI0BAJkoRyQCQLsAYFWBUiwCwMIAoKxAIi4EwK4BgFm2MkcCgL0FAHaOWJAPQGAAgJlCLMwAIDgCAEMeE80DIEwDoDDSv+CpX3CFuEgBAMDLlc2XS9IzFLiV0Bp38vDg4iHiwmyxQmEXKRBmCeQinJebIxNI5wNMzgwAABr50cH+OD+Q5+bk4eZm52zv9MWi/mvwbyI+IfHf/ryMAgQAEE7P79pf5eXWA3DHAbB1v2upWwDaVgBo3/ldM9sJoFoK0Hr5i3k4/EAenqFQyDwdHAoLC+0lYqG9MOOLPv8z4W/gi372/EAe/tt68ABxmkCZrcCjg/1xYW52rlKO58sEQjFu9+cj/seFf/2OKdHiNLFcLBWK8ViJuFAiTcd5uVKRRCHJleIS6X8y8R+W/QmTdw0ArIZPwE62B7XLbMB+7gECiw5Y0nYAQH7zLYwaC5EAEGc0Mnn3AACTv/mPQCsBAM2XpOMAALzoGFyolBdMxggAAESggSqwQQcMwRSswA6cwR28wBcCYQZEQAwkwDwQQgbkgBwKoRiWQRlUwDrYBLWwAxqgEZrhELTBMTgN5+ASXIHrcBcGYBiewhi8hgkEQcgIE2EhOogRYo7YIs4IF5mOBCJhSDSSgKQg6YgUUSLFyHKkAqlCapFdSCPyLXIUOY1cQPqQ28ggMor8irxHMZSBslED1AJ1QLmoHxqKxqBz0XQ0D12AlqJr0Rq0Hj2AtqKn0UvodXQAfYqOY4DRMQ5mjNlhXIyHRWCJWBomxxZj5Vg1Vo81Yx1YN3YVG8CeYe8IJAKLgBPsCF6EEMJsgpCQR1hMWEOoJewjtBK6CFcJg4Qxwicik6hPtCV6EvnEeGI6sZBYRqwm7iEeIZ4lXicOE1+TSCQOyZLkTgohJZAySQtJa0jbSC2kU6Q+0hBpnEwm65Btyd7kCLKArCCXkbeQD5BPkvvJw+S3FDrFiOJMCaIkUqSUEko1ZT/lBKWfMkKZoKpRzame1AiqiDqfWkltoHZQL1OHqRM0dZolzZsWQ8ukLaPV0JppZ2n3aC/pdLoJ3YMeRZfQl9Jr6Afp5+mD9HcMDYYNg8dIYigZaxl7GacYtxkvmUymBdOXmchUMNcyG5lnmA+Yb1VYKvYqfBWRyhKVOpVWlX6V56pUVXNVP9V5qgtUq1UPq15WfaZGVbNQ46kJ1Bar1akdVbupNq7OUndSj1DPUV+jvl/9gvpjDbKGhUaghkijVGO3xhmNIRbGMmXxWELWclYD6yxrmE1iW7L57Ex2Bfsbdi97TFNDc6pmrGaRZp3mcc0BDsax4PA52ZxKziHODc57LQMtPy2x1mqtZq1+rTfaetq+2mLtcu0W7eva73VwnUCdLJ31Om0693UJuja6UbqFutt1z+o+02PreekJ9cr1Dund0Uf1bfSj9Rfq79bv0R83MDQINpAZbDE4Y/DMkGPoa5hpuNHwhOGoEctoupHEaKPRSaMnuCbuh2fjNXgXPmasbxxirDTeZdxrPGFiaTLbpMSkxeS+Kc2Ua5pmutG003TMzMgs3KzYrMnsjjnVnGueYb7ZvNv8jYWlRZzFSos2i8eW2pZ8ywWWTZb3rJhWPlZ5VvVW16xJ1lzrLOtt1ldsUBtXmwybOpvLtqitm63Edptt3xTiFI8p0in1U27aMez87ArsmuwG7Tn2YfYl9m32zx3MHBId1jt0O3xydHXMdmxwvOuk4TTDqcSpw+lXZxtnoXOd8zUXpkuQyxKXdpcXU22niqdun3rLleUa7rrStdP1o5u7m9yt2W3U3cw9xX2r+00umxvJXcM970H08PdY4nHM452nm6fC85DnL152Xlle+70eT7OcJp7WMG3I28Rb4L3Le2A6Pj1l+s7pAz7GPgKfep+Hvqa+It89viN+1n6Zfgf8nvs7+sv9j/i/4XnyFvFOBWABwQHlAb2BGoGzA2sDHwSZBKUHNQWNBbsGLww+FUIMCQ1ZH3KTb8AX8hv5YzPcZyya0RXKCJ0VWhv6MMwmTB7WEY6GzwjfEH5vpvlM6cy2CIjgR2yIuB9pGZkX+X0UKSoyqi7qUbRTdHF09yzWrORZ+2e9jvGPqYy5O9tqtnJ2Z6xqbFJsY+ybuIC4qriBeIf4RfGXEnQTJAntieTE2MQ9ieNzAudsmjOc5JpUlnRjruXcorkX5unOy553PFk1WZB8OIWYEpeyP+WDIEJQLxhP5aduTR0T8oSbhU9FvqKNolGxt7hKPJLmnVaV9jjdO31D+miGT0Z1xjMJT1IreZEZkrkj801WRNberM/ZcdktOZSclJyjUg1plrQr1zC3KLdPZisrkw3keeZtyhuTh8r35CP5c/PbFWyFTNGjtFKuUA4WTC+oK3hbGFt4uEi9SFrUM99m/ur5IwuCFny9kLBQuLCz2Lh4WfHgIr9FuxYji1MXdy4xXVK6ZHhp8NJ9y2jLspb9UOJYUlXyannc8o5Sg9KlpUMrglc0lamUycturvRauWMVYZVkVe9ql9VbVn8qF5VfrHCsqK74sEa45uJXTl/VfPV5bdra3kq3yu3rSOuk626s91m/r0q9akHV0IbwDa0b8Y3lG19tSt50oXpq9Y7NtM3KzQM1YTXtW8y2rNvyoTaj9nqdf13LVv2tq7e+2Sba1r/dd3vzDoMdFTve75TsvLUreFdrvUV99W7S7oLdjxpiG7q/5n7duEd3T8Wej3ulewf2Re/ranRvbNyvv7+yCW1SNo0eSDpw5ZuAb9qb7Zp3tXBaKg7CQeXBJ9+mfHvjUOihzsPcw83fmX+39QjrSHkr0jq/dawto22gPaG97+iMo50dXh1Hvrf/fu8x42N1xzWPV56gnSg98fnkgpPjp2Snnp1OPz3Umdx590z8mWtdUV29Z0PPnj8XdO5Mt1/3yfPe549d8Lxw9CL3Ytslt0utPa49R35w/eFIr1tv62X3y+1XPK509E3rO9Hv03/6asDVc9f41y5dn3m978bsG7duJt0cuCW69fh29u0XdwruTNxdeo94r/y+2v3qB/oP6n+0/rFlwG3g+GDAYM/DWQ/vDgmHnv6U/9OH4dJHzEfVI0YjjY+dHx8bDRq98mTOk+GnsqcTz8p+Vv9563Or59/94vtLz1j82PAL+YvPv655qfNy76uprzrHI8cfvM55PfGm/K3O233vuO+638e9H5ko/ED+UPPR+mPHp9BP9z7nfP78L/eE8/sl0p8zAAA7SGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgICAgICAgICB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIgogICAgICAgICAgICB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoV2luZG93cyk8L3htcDpDcmVhdG9yVG9vbD4KICAgICAgICAgPHhtcDpDcmVhdGVEYXRlPjIwMTUtMTEtMTBUMTQ6MDQ6NTArMDg6MDA8L3htcDpDcmVhdGVEYXRlPgogICAgICAgICA8eG1wOk1ldGFkYXRhRGF0ZT4yMDE1LTExLTEwVDE0OjA0OjUwKzA4OjAwPC94bXA6TWV0YWRhdGFEYXRlPgogICAgICAgICA8eG1wOk1vZGlmeURhdGU+MjAxNS0xMS0xMFQxNDowNDo1MCswODowMDwveG1wOk1vZGlmeURhdGU+CiAgICAgICAgIDx4bXBNTTpJbnN0YW5jZUlEPnhtcC5paWQ6ODBiY2E5ODUtNGY5Yi02ZTRkLTlmYzktZThmNDkyNjdkZjRlPC94bXBNTTpJbnN0YW5jZUlEPgogICAgICAgICA8eG1wTU06RG9jdW1lbnRJRD5hZG9iZTpkb2NpZDpwaG90b3Nob3A6ZWRkYWU4MGMtODc3MC0xMWU1LTg0OWEtYmNmZGE2MDI4ZjJlPC94bXBNTTpEb2N1bWVudElEPgogICAgICAgICA8eG1wTU06T3JpZ2luYWxEb2N1bWVudElEPnhtcC5kaWQ6ZDAxN2I5NGUtOTRiZC0yNjQxLThmZjktYmY3YTBhMzY3N2IxPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOmQwMTdiOTRlLTk0YmQtMjY0MS04ZmY5LWJmN2EwYTM2NzdiMTwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNS0xMS0xMFQxNDowNDo1MCswODowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDo4MGJjYTk4NS00ZjliLTZlNGQtOWZjOS1lOGY0OTI2N2RmNGU8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTUtMTEtMTBUMTQ6MDQ6NTArMDg6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE0IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8cGhvdG9zaG9wOkRvY3VtZW50QW5jZXN0b3JzPgogICAgICAgICAgICA8cmRmOkJhZz4KICAgICAgICAgICAgICAgPHJkZjpsaT4zQ0I4RkVFOEMyRUJFNkU1QTREQTk3MzI4MzU0MTI0RTwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpPmFkb2JlOmRvY2lkOnBob3Rvc2hvcDpiZGRmY2Y2Zi04NzcwLTExZTUtODQ5YS1iY2ZkYTYwMjhmMmU8L3JkZjpsaT4KICAgICAgICAgICAgPC9yZGY6QmFnPgogICAgICAgICA8L3Bob3Rvc2hvcDpEb2N1bWVudEFuY2VzdG9ycz4KICAgICAgICAgPHBob3Rvc2hvcDpDb2xvck1vZGU+MzwvcGhvdG9zaG9wOkNvbG9yTW9kZT4KICAgICAgICAgPHBob3Rvc2hvcDpJQ0NQcm9maWxlPnNSR0IgSUVDNjE5NjYtMi4xPC9waG90b3Nob3A6SUNDUHJvZmlsZT4KICAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9wbmc8L2RjOmZvcm1hdD4KICAgICAgICAgPHRpZmY6T3JpZW50YXRpb24+MTwvdGlmZjpPcmllbnRhdGlvbj4KICAgICAgICAgPHRpZmY6WFJlc29sdXRpb24+NzIwMDAwLzEwMDAwPC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj43MjAwMDAvMTAwMDA8L3RpZmY6WVJlc29sdXRpb24+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDxleGlmOkNvbG9yU3BhY2U+MTwvZXhpZjpDb2xvclNwYWNlPgogICAgICAgICA8ZXhpZjpQaXhlbFhEaW1lbnNpb24+MjA8L2V4aWY6UGl4ZWxYRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpQaXhlbFlEaW1lbnNpb24+MjA8L2V4aWY6UGl4ZWxZRGltZW5zaW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAKPD94cGFja2V0IGVuZD0idyI/Pu6JurQAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAABRFJREFUeNpE1OtvW/Udx/H3ufj4+Ph2nDh2vLgrTSPaFNqGtd0Gy9LRTVymNoNM6ihCaEwdQ5sYAo0HTOwBYg/Yk0pDiG3qmLSiPtjGJERbdZSQaUArykXt1la9hDRNY6dpYsexj30uPj7ntwcVyT/w0ucrfT5fSQgBdguAEBlZhDhaiVikF2j22lfPjP77+Kc/9ZyO9p37th7s2rLlbegveZ4g6jggS4AMAKkkkhAC366DJJADgaJlgA/unTx+4qmT/7oyKpxJfdYzUDIma7M6TsXoDH+3/8jgnrG/iOC2o8JrIiQJECjpvlt0Q7JoimWEkQHN1Sf+8MbE40+O7226M/rtCYX9+k2e0me55+48XXfn1f1PvvfwiVdfOSLFlKitSbh8hq9+DitZFRlZSaHK1aJ35uV3f3+4zr79/fy42CD9pwtULwdUpwLqu//ID4JzPHPoEQ7+00dc/vM/Eoary3oCPR5dBROeRTxaH7x+9MWpkd3nRsyBPL/InmP6cAN5jUlgtcELkXpMTj19kr3GGfLfuovv7T62Z/GjN67aM2c3XHz/nVUw6jmo7ruJI5eT2idz23lwu0XzbAP5eh3JjBJdCnBP3iSyrhu96VD562nG7m8z8cUm3vwwKCSkVgx5aBWsL1aK4cfvHwilGKg2KWuOxjxEAh+WXKT1Bto2E/lGC42QyrRDX5cHkkStKRPtUQ9sHB5btwLOXHrvh+1yeTiT0KATRRQKZId7aSKw7ukm2Fck8dIQxjNbkHsMctuytOw2CEEhZ0Dp7L1Ls6d+sgIaicxgw/Lp73FB7+bEaQN1V4rqnrUEZQvpfy3sYzfxp5fRnh+m69mtvHWoBsQZ2qzSmlrALU0VV8BwaW5Po6ZyZ9Gi+HWN19+M859XSgztKJA2ktgXaoQLHu65GsnyMudfvsKrh6Lkh0w299WplD38pUvDK6CstkyrIZNavMLe+wM6fgL/6Dzdf/scuS9Cu0chzKlkdxUoTFylcvA8rbbC2GiEZHUSq6GiJuUIgAoQM746Lm+4Nhrk+3jiGxYH+np4vTyIP3uB7uokcjqGc6GGNZCjnCnwdzkGKZMnvrlAJ1nEvEPCyKw5tgKCnBMNwdyUxZ2D0/z2V9t48fkRjlqboeEzalfpMmXeOpakiQFkeO7nOjsGJpmbBFybsGNtXQFVs729k8zjz/uUFi7yy+EoY+NxJo7bXJK38MCmLyjEKnSO9NGuOazZaPDrB65x89Q1bF9Hz2qoprYRuPUcvOYnj1ZP/+6wM9/Gq/hQmmH9Q0NE8zoEVYKqSnPBIb2uC9Z2Q6nC9NuXcZJZEv0JYr0G6YF9O7XM9z+QhBAAdFr/fWzp/IHXAtdJVz6cR40LencOEiw5+HYL2dDRu+JIWoTqqSk6gUp6+3p8l2p6w8gjcTM1Lmn33TrZd2ZwFp2yOx9z9HyYzu8aIKi3CKwGGBqKZqLFoL3cpFWqoa/tRi/m8ZZt3LIlYmuaKKkUsS9rI9pXUfjohdzXkr2RTAGvHhIGKmGg4C5aIELa1TrNyUUkJQKShHujQiQmk/92IasZ1s9Ch9Uta0qKaPeOhyw7/ZpdKrU0ZZlUrkNEstEkH8VbRjgOyY1ZUgMpZK2JmtaQMr3XO+pdv1GN23+kaIus1kb4SBHVblTjTzsX8y859cUHPX9251c29WwKLSmhm3KXGkti3eB6rMe01dzI2aWphXFnpnaib2culBQFEbgA/H8ALiI3EysggNoAAAAASUVORK5CYII=" />
-                        <span style="vertical-align: middle;">京公网安备 11010502047432号</span>
-                    </a>
-                    
-                </p>
-            </div>
-            <!-- <div class="switch-mode" id="dark-mode">
-                <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-                    <i class="fa fa-moon-o fa-stack-1x"></i>
-                  </span>
-            </div>
-            <div class="switch-mode" id="light-mode">
-                <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-sun-o fa-stack-1x fa-inverse"></i>
-                  </span>
-            </div> -->
-        </div>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2024
+          <br>
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+          <br>
+          
+        </p>
+      </div>
     </div>
+  </div>
 </footer>
 <script>
-    if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
-        console.log('浏览器不支持主题色');
-    } else {
-        if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-            document.documentElement.classList.remove('light');
-            document.documentElement.classList.add('dark');
-            // Note: 推特列表添加暗黑主题
-            let ttl = document.querySelector('.twitter-timeline');
-            if (ttl) {
-                ttl.setAttribute('data-theme', 'dark');
-            }
-        }
-        if(window.matchMedia('(prefers-color-scheme: light)').matches){
-            document.documentElement.classList.remove('dark');
-            document.documentElement.classList.add('light');
-            let ttl = document.querySelector('.twitter-timeline');
-            if (ttl) {
-                ttl.removeAttribute('data-theme');
-            }
-        }
-        // document.getElementById('dark-mode').addEventListener('click', function() {
-        //     document.documentElement.classList.remove('light');
-        //     document.documentElement.classList.add('dark');
-        // });
-        // document.getElementById('light-mode').addEventListener('click', function() {
-        //     document.documentElement.classList.add('light');
-        //     document.documentElement.classList.remove('dark');
-        // });
-        // Note: 自动切换
-        window.matchMedia('(prefers-color-scheme: dark)').addListener(function(mediaQueryList) {
-            if (mediaQueryList.matches) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-            }
-        })
-        window.matchMedia('(prefers-color-scheme: light)').addListener(function(mediaQueryList) {
-            if (mediaQueryList.matches) {
-                document.documentElement.classList.add('light');
-                document.documentElement.classList.remove('dark');
-            }
-        })
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
     }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function(mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function(mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
 </script>
+
 <!-- jQuery -->
-<script src="https://static.xheldon.cn/js/jquery.min.js "></script>
+<script src="/js/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
-<script src="https://static.xheldon.cn/js/bootstrap.min.js "></script>
+<script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="https://static.xheldon.cn/js/xheldon-life-blog.min.js?202110012319"></script>
+<script src="/js/xblog.min.js?202405251426"></script>
 
-<!-- Simple Jekyll Search -->
-<script src="https://static.xheldon.cn/js/simple-jekyll-search.min.js"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src='/js/simple-jekyll-search.min.js'></script>
 
 <!-- Vercel web analysis -->
 
+<script defer src="/_vercel/insights/script.js"></script>
 
-<!-- Service Worker -->
 
-<script src="https://static.xheldon.cn/js/snackbar.js "></script>
-<script src="https://static.xheldon.cn/js/sw-registration.js "></script>
-
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
 <!-- async load function -->
 <script>
-    function async(u, c) {
-        var d = document, t = 'script',
-            o = d.createElement(t),
-            s = d.getElementsByTagName(t)[0];
-        o.src = u;
-        if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-        s.parentNode.insertBefore(o, s);
+  function async (u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function(e) {
+          c(null, e);
+        },
+        false
+      );
     }
+    s.parentNode.insertBefore(o, s);
+  }
 </script>
 
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-
-
+<!-- jquery.tagcloud.js -->
 
 
 <!--fastClick.js -->
 <script>
-    async("https://static.xheldon.cn/js/fastclick.min.js", function () {
-        var $nav = document.querySelector("nav");
-        if ($nav) FastClick.attach($nav);
-    })
+  async ('/js/fastclick.min.js', function() {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
 </script>
-
 
 <!-- Google Analytics -->
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-5"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
 <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'UA-79359216-5');
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', '{{config.ga_track_id}}');
 </script>
 
 
 <!-- Side Catalog -->
 
 <script type="text/javascript">
-    function generateCatalog(selector) {
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
 
-        // interop with multilangual 
-        if ('' == 'true') {
-            _containerSelector = 'div.post-container.active'
-        } else {
-            _containerSelector = 'div.post-container'
-        }
+    // clean
+    $(selector).html('');
 
-        // init
-        var P = $(_containerSelector), a, n, t, l, i, c;
-        a = P.find('h1,h2,h3,h4,h5,h6');
-
-        // clean
-        $(selector).html('')
-
-        // appending
-        a.each(function () {
-            n = $(this).prop('tagName').toLowerCase();
-            i = "#" + $(this).prop('id');
-            t = $(this).text();
-            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-            l = $('<li class="' + n + '_nav"></li>').append(c);
-            $(selector).append(l);
-        });
-        return true;
-    }
-
-    generateCatalog(".catalog-body");
-
-    // toggle side catalog
-    $(".catalog-toggle").click((function (e) {
-        e.preventDefault();
-        $('.side-catalog').toggleClass("fold")
-    }))
-
-    /*
-     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-     * Fork by Hux to support padding
-     */
-    async("https://static.xheldon.cn/js/jquery.nav.js", function () {
-        $('.catalog-body').onePageNav({
-            currentClass: "active",
-            changeHash: !1,
-            easing: "swing",
-            filter: "",
-            scrollSpeed: 700,
-            scrollOffset: 0,
-            scrollThreshold: .2,
-            begin: null,
-            end: null,
-            scrollChange: null,
-            padding: 80
-        });
+    // appending
+    a.each(function() {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
     });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function(e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async ('/js/jquery.nav.js',
+    function() {
+      $('.catalog-body').onePageNav({
+        currentClass: 'active',
+        changeHash: !1,
+        easing: 'swing',
+        filter: '',
+        scrollSpeed: 700,
+        scrollOffset: 0,
+        scrollThreshold: 0.2,
+        begin: null,
+        end: null,
+        scrollChange: null,
+        padding: 80,
+      });
+    }
+  );
 </script>
 
 
-
-<!-- Multi-Lingual -->
-
-
-<!-- Simple Jekyll Search -->
 <script>
-    // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-    function htmlDecode(input) {
-        var e = document.createElement('textarea');
-        e.innerHTML = input;
-        // handle case of empty input
-        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-    }
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+  }
 
-    SimpleJekyllSearch({
-        searchInput: document.getElementById('search-input'),
-        resultsContainer: document.getElementById('search-results'),
-        json: '/search.json',
-        searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-        noResultsText: 'No results',
-        limit: 50,
-        fuzzy: false,
-        // a hack to get escaped subtitle unescaped. for some reason, 
-        // post.subtitle w/o escape filter nuke entire search.
-        templateMiddleware: function (prop, value, template) {
-            if (prop === 'subtitle' || prop === 'title') {
-                if (value.indexOf("code")) {
-                    return htmlDecode(value);
-                } else {
-                    return value;
-                }
-            }
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('search-results'),
+    json: '/search.json',
+    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+    noResultsText: 'No results',
+    limit: 50,
+    fuzzy: false,
+    // a hack to get escaped subtitle unescaped. for some reason, 
+    // post.subtitle w/o escape filter nuke entire search.
+    templateMiddleware: function(prop, value, template) {
+      if (prop === 'subtitle' || prop === 'title') {
+        if (value.indexOf("code")) {
+          return htmlDecode(value);
+        } else {
+          return value;
         }
-    });
+      }
+    }
+  });
 
-    $(document).ready(function () {
-        var $searchPage = $('.search-page');
-        var $searchOpen = $('.search-icon');
-        var $searchClose = $('.search-icon-close');
-        var $searchInput = $('#search-input');
-        var $body = $('body');
+  $(document).ready(function() {
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
 
-        $searchOpen.on('click', function (e) {
-            e.preventDefault();
-            $searchPage.toggleClass('search-active');
-            var prevClasses = $body.attr('class') || '';
-            setTimeout(function () {
-                $body.addClass('no-scroll');
-            }, 400)
+    $searchOpen.on('click', function(e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function() {
+        $body.addClass('no-scroll');
+      }, 400)
 
-            if ($searchPage.hasClass('search-active')) {
-                $searchClose.on('click', function (e) {
-                    e.preventDefault();
-                    $searchPage.removeClass('search-active');
-                    $body.attr('class', prevClasses);  // from closure 
-                });
-                $searchInput.focus();
-            }
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function(e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure 
         });
+        $searchInput.focus();
+      }
     });
+  });
 </script>
 
-
-<!-- Image to hack wechat -->
-<img src="/resources/img/icon_wechat.png" width="0" height="0" />
-<!-- Migrate from head to bottom, no longer block render and still work -->
-
-</body>
-
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
 </html>

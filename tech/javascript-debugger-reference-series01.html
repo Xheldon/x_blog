@@ -1,1143 +1,912 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      「译」官方指南系列：JavaScript 调试指南（一） - Xheldon Blog
+        
+  </title>
 
-<head>
-    <meta charset="utf-8">
-    <title>「译」官方指南系列：JavaScript 调试指南（一） - Xheldon Blog</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="官方指南系列之一">
     
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    
-        <meta name="description" content="官方指南系列之一">
-    
-    <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
-    <meta name="theme-color" content="#000000">
-    <meta name="twitter:card" content="summary_large_image">
-    <!-- Open Graph -->
-    <meta property="og:title" content="「译」官方指南系列：JavaScript 调试指南（一） - Xheldon Blog">
-    
-    <meta property="og:type" content="article">
-    
-    <meta property="article:published_time" content="2022-09-13T09:29:30Z">
-    
-    
-    
-    <meta property="article:tag" content="技术">
-    
-    <meta property="article:tag" content="调试">
-    
-    <meta property="article:tag" content="技巧">
-    
-    <meta property="article:tag" content="JavaScript">
-    
-    
-    
-        <meta name="og:description" content="官方指南系列之一">
-    
-    
-    <meta property="twitter:image" content="https://www.xheldon.cn/resources/img/logo.png">
-    <meta property="og:image" content="https://www.xheldon.cn/resources/img/logo.png">
-    
-    <meta property="og:url" content="https://www.xheldon.cn/tech/javascript-debugger-reference-series01.html">
-    <meta property="og:site_name" content="Xheldon Blog">
-    <meta name="google-adsense-account" content="ca-pub-5486286026923411">
-    <script async src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1" nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script><script nonce="hkl-3cDcQhqR8uwDMTDGjQ">(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
-     crossorigin="anonymous"></script>
-    <!-- Web App Manifest -->
-    <link rel="manifest" href="/pwa/manifest.json">
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <!-- Open Graph -->
+        <meta property="og:title"
+          content="「译」官方指南系列：JavaScript 调试指南（一） - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2022-9-13T1:29:30"> 
+              
+                  
+                    <meta property="article:tag" content="技术">
+                    
+                    <meta property="article:tag" content="技巧">
+                    
+                    <meta property="article:tag" content="JavaScript">
+                    
+                    <meta property="article:tag" content="调试">
+                    
+                      
+                          
+                            <meta name="og:description" content="官方指南系列之一">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.cn/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.cn/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.cn/tech/javascript-debugger-reference-series01.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="/resources/img/favicon.ico">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.xheldon.cn/tech/javascript-debugger-reference-series01.html">
+                                      <!-- Web App Manifest -->
+                                      <link rel="manifest" href="/js/manifest.json">
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.cn/tech/javascript-debugger-reference-series01.html">
 
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="https://static.xheldon.cn/css/xheldon-life-blog.min.css">
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
 
-    <!-- Custom Fonts -->
-    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
-    <link href="https://static.xheldon.cn/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
 
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
 
+  <!-- hack iOS CSS :active style -->
 
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="">
-
+  <body ontouchstart="">
     <!-- Navigation -->
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
     
-        <div class="container-fluid">
+      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        
+          <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">
-                    Xheldon Blog
-                </a>
+              <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">
+                Xheldon Blog
+              </a>
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div id="xheldonblog_navbar">
-                <div class="navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/">Home</a></li>
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-                        <li>
-                            <a href="/donate/">Donate</a>
-                        </li>
-                        <li>
-                            <a href="/archive/">Archive</a>
-                        </li>
-                        <li>
-                            <a href="/feed.xml">Rss</a>
-                        </li>
-                        <li class="search-icon">
-                            <a href="javascript:void(0)">
-                                <i class="fa fa-search"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+            <div id="xblog_navbar">
+              <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <a href="/">Home</a>
+                  </li>
+                  <li>
+                    <a href="/about/">About</a>
+                  </li>
+                  <li>
+                    <a href="/donate/">Donate</a>
+                  </li>
+                  <li>
+                    <a href="/archive/">Archive</a>
+                  </li>
+                  <li>
+                    <a href="/feed.xml">Rss</a>
+                  </li>
+                  <li class="search-icon">
+                    <a href="javascript:void(0)">
+                      <i class="fa fa-search"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
             <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-
-    <script>
+          </div>
+          <!-- /.container -->
+      </nav>
+      <script>
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
         var $body = document.body;
         var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xheldonblog_navbar');
+        var $navbar = document.querySelector('#xblog_navbar');
         var $collapse = document.querySelector('.navbar-collapse');
 
-        var __XheldonNav__ = {
-            close: function () {
-                $navbar.className = " ";
-                // wait until animation end.
-                setTimeout(function () {
-                    // prevent frequently toggle
-                    if ($navbar.className.indexOf('in') < 0) {
-                        $collapse.style.height = "0px"
-                    }
-                }, 400)
-            },
-            open: function () {
-                $collapse.style.height = "auto"
-                $navbar.className += " in";
-            }
-        }
-
+        var __XNav__ = {
+          close: function () {
+            $navbar.className = ' ';
+            // wait until animation end.
+            setTimeout(function () {
+              // prevent frequently toggle
+              if ($navbar.className.indexOf('in') < 0) {
+                $collapse.style.height = '0px';
+              }
+            }, 400);
+          },
+          open: function () {
+            $collapse.style.height = 'auto';
+            $navbar.className += ' in';
+          },
+        };
         // Bind Event
         $toggle.addEventListener('click', function (e) {
-            if ($navbar.className.indexOf('in') > 0) {
-                __XheldonNav__.close()
-            } else {
-                __XheldonNav__.open()
-            }
-        })
-
+          if ($navbar.className.indexOf('in') > 0) {
+            __XNav__.close();
+          } else {
+            __XNav__.open();
+          }
+        });
         /**
          * Since Fastclick is used to delegate 'touchstart' globally
          * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * Using 'e.stopPropagation' to stop 'touchstart' event from
          * $toggle/$collapse will break global delegation.
-         * 
+         *
          * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.  
+         * added to document close XheldonNav.
          *
          * Also, we use 'click' instead of 'touchstart' as compromise
          */
         document.addEventListener('click', function (e) {
-            if (e.target == $toggle) return;
-            if (e.target.className == 'icon-bar') return;
-            __XheldonNav__.close();
-        })
-    </script>
-    <!-- Search -->
+          if (e.target == $toggle) return;
+          if (e.target.className == 'icon-bar') return;
+          __XNav__.close();
+        });
+      </script> <!-- Search -->
 <div class="search-page">
-  <div class="search-icon-close-container">
-    <span class="search-icon-close">
-      <i class="fa fa-chevron-down"></i>
-    </span>
-  </div>
-  <div class="search-main container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <form></form>
-        <input type="text" id="search-input" placeholder="$ grep...">
-        </form>
-        <div id="search-results" class="mini-post-list"></div>
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-    <!-- Image to hack wechat -->
-<!-- <img src="/resources/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
-
-<!-- Post Header -->
-
-
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://www.xheldon.cn/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/" width="0" height="0"> -->
 
 <style type="text/css">
-    header.intro-header{
-        position: relative;
-        background-image: url('https://static.xheldon.cn/img/index-bg.png');
-        
-    }
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
 
     
+  }
+
+  
 </style>
 
-<header class="intro-header style-text" >
-
-    <div class="header-mask"></div>
+<header class="intro-header style-text">
+  
+    <div class="headerMask"></div>
     
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                        
-                        <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-                        
-                        <a class="tag" href="/archive/?tag=%E8%B0%83%E8%AF%95" title="调试">调试</a>
-                        
-                        <a class="tag" href="/archive/?tag=%E6%8A%80%E5%B7%A7" title="技巧">技巧</a>
-                        
-                        <a class="tag" href="/archive/?tag=JavaScript" title="JavaScript">JavaScript</a>
-                        
-                    </div>
-                    <h1>「译」官方指南系列：JavaScript 调试指南（一）</h1>
-                    
-                    <h2 class="subheading"></h2>
-                    <span class="meta">✍🏼 写于 2022年09月13日</span>&nbsp;&nbsp;&nbsp;  
-                    
-                    <span class="meta">💡 更新于 2022年09月13日</span>
-                    
-                </div>
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <div class="tags">
+              
+              <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+              
+              <a class="tag" href="/archive/?tag=%E6%8A%80%E5%B7%A7" title="技巧">技巧</a>
+              
+              <a class="tag" href="/archive/?tag=JavaScript" title="JavaScript">JavaScript</a>
+              
+              <a class="tag" href="/archive/?tag=%E8%B0%83%E8%AF%95" title="调试">调试</a>
+              
             </div>
+            <h1>「译」官方指南系列：JavaScript 调试指南（一）</h1>
+            <h2 class="subheading"></h2>
+            <span class="meta">✍🏼 写于 2022年09月13日</span>&nbsp;&nbsp;&nbsp;
+            
+            <span class="meta">💡 更新于 2022年09月13日</span>
+            
+          </div>
         </div>
+      </div>
     </div>
-</header>
+  </header>
 
-
-
-
-
-
-<!-- Post Content -->
-<article>
+  <!-- Post Content -->
+  <article>
     <div class="container">
-        <div class="row">
+      <div class="row">
 
-    <!-- Post Container -->
-            <div class="
+        <!-- Post Container -->
+        <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
                 post-container">
-
-                <!-- Multi-Lingual -->
+          
+            
+              <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
+              <script>
+                var timeDom = document.getElementById('from_time');
+                var pageTime = Date.parse('Tue Sep 13 2022 01:29:30 GMT+0000');
+                var currentTime = Date.now();
+                var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
+                if (Number(fromNow) <= 0) {
+                  fromNow = 1; // Note: 至少显示一天
+                }
+                timeDom.innerText = fromNow
+              </script>
+              
                 
-                
+                  <div class="reference-tips">🔗 &nbsp;原文：<a href="https://developer.chrome.com/docs/devtools/javascript/reference/" target="_blank">
+                      https://developer.chrome.com/docs/devtools/javascript/reference/
+                    </a></div>
+                  
                     
+                      
+                        <div class="callout-tips">🖥 &nbsp;说明：官方指南系列之一
+                        </div>
                         
-                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
-                        <script>
-                            var timeDom = document.getElementById('from_time');
-                            var pageTime = 1663032570; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
-                            var currentTime = Date.now();
-                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
-                            if (Number(fromNow) <= 0) {
-                                fromNow = 1; // Note: 至少显示一天
-                            }
-                            timeDom.innerText = fromNow
-                        </script>
-                    
-                    
-                    <div class="reference-tips">🔗 &nbsp;原文：<a href="https://developer.chrome.com/docs/devtools/javascript/reference/" target="_blank">https://developer.chrome.com/docs/devtools/javascript/reference/</a></div>
-                    
-                
-                
-                    <div class="callout-tips">🖥 &nbsp;说明：官方指南系列之一</div>
-                
-                
-                    <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/kyKcQKCEQjAksv" target="_blank">https://www.craft.do/s/kyKcQKCEQjAksv</a></div>
-                
-                
-				<p>希望通过这篇全面的 Chrome DevTools debugging 功能介绍，能让你的 debugging 过程更上一层楼。</p>
-
+                          
+                            <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/kyKcQKCEQjAksv" target="_blank">
+                                https://www.craft.do/s/kyKcQKCEQjAksv
+                              </a></div>
+                            
+                              
+                                  <p>希望通过这篇全面的 Chrome DevTools debugging 功能介绍，能让你的 debugging 过程更上一层楼。</p>
 <p>首先你可能需要先在 <a href="https://developer.chrome.com/docs/devtools/javascript/">这里</a> （英文，待译）学习基本的 debugging 技巧。</p>
-
 <h2 id="用断点暂停代码">用断点暂停代码</h2>
-
 <p>通过设置一个断点，可以让代码在执行途中暂停。</p>
-
 <p>查看 <a href="https://developer.chrome.com/docs/devtools/javascript/breakpoints/">这里</a> （英文，待译）来学习如何设置一个断点。</p>
-
-<h3 id="在鼠标悬浮的时候查看类函数属性">在鼠标悬浮的时候查看类/函数属性</h3>
-
+<h3 id="在鼠标悬浮的时候查看类-函数属性">在鼠标悬浮的时候查看类/函数属性</h3>
 <p>当代码执行暂停的时候，将鼠标悬浮在一个类或者函数名上的时候可以预览它的属性。</p>
-
-<p caption="1"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/EA456FA6-9331-41E3-96DC-3FCCFFA82C2E_2.png" alt="1" title="1" /></p>
-
+<p caption='1'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/EA456FA6-9331-41E3-96DC-3FCCFFA82C2E_2.png' alt='1' title='1'></p>
 <h2 id="逐步运行代码">逐步运行代码</h2>
-
 <p>你的代码暂停后，你就可以一次只运行一行代码，以搞清楚代码的调用栈以及相关的属性值。</p>
-
-<h3 id="跳过step-over当前代码行">跳过（Step over）当前代码行</h3>
-
-<p>当你的断点暂停在一个与你当前调查的问题无关的代码行，且该代码行包含一个函数的时候，你可以点击 <code class="language-plaintext highlighter-rouge">Step Over</code> 来不进入该函数以继续执行代码。</p>
-
-<p caption="step_over"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/63AE5442-D0AD-46C5-8DB0-36452E2842D2_2.png" alt="step_over" title="step_over" /></p>
-
-<p>图一👆🏻，上图中蓝色方框中 <code class="language-plaintext highlighter-rouge">Step Over</code> 的含义解释：</p>
-
+<h3 id="跳过（step-over）当前代码行">跳过（Step over）当前代码行</h3>
+<p>当你的断点暂停在一个与你当前调查的问题无关的代码行，且该代码行包含一个函数的时候，你可以点击 <code>Step Over</code> 来不进入该函数以继续执行代码。</p>
+<p caption='step_over'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/63AE5442-D0AD-46C5-8DB0-36452E2842D2_2.png' alt='step_over' title='step_over'></p>
+<p>图一👆🏻，上图中蓝色方框中 <code>Step Over</code> 的含义解释：</p>
 <p>举个例子，假设你正在 debugging 下面的代码：</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">updateHeader</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">day</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getDay</span><span class="p">();</span>
-  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">getName</span><span class="p">();</span> <span class="c1">// A</span>
-  <span class="nx">updateName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// D</span>
-<span class="p">}</span>
-<span class="kd">function</span> <span class="nx">getName</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">app</span><span class="p">.</span><span class="nx">first</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">app</span><span class="p">.</span><span class="nx">last</span><span class="p">;</span> <span class="c1">// B</span>
-  <span class="k">return</span> <span class="nx">name</span><span class="p">;</span> <span class="c1">// C</span>
-<span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>此时你的断点停在了 <code class="language-plaintext highlighter-rouge">A</code> 的位置。通过点击 <strong>Step over</strong> ，Devtools 将会执行你「Step over」的位置中的所有代码，在上述示例中「Step over」的是 A 位置的 getName 函数中的 <code class="language-plaintext highlighter-rouge">B</code> 和 <code class="language-plaintext highlighter-rouge">C</code> 的位置，于是 Devtools 会将代码停在 D 的位置。</p>
-
-<h3 id="进入step-into当前代码行">进入（Step into）当前代码行</h3>
-
-<p>如果断点停在一个跟你要调查的问题有关系的地方，而且这个地方包含一个函数调用的时候，点击 <code class="language-plaintext highlighter-rouge">Step into</code> ，可以更进一步的检查这个函数。</p>
-
-<p caption="step_into"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/0B7F9CB7-7EA3-44A2-8808-8E23F9E0D786_2.png" alt="step_into" title="step_into" /></p>
-
-<p>图二👆🏻，上图中蓝色方框中 <code class="language-plaintext highlighter-rouge">Step into</code> 的含义解释：</p>
-
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">updateName</span>(name); <span class="hljs-comment">// D</span><br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// B</span><br>  <span class="hljs-keyword">return</span> name; <span class="hljs-comment">// C</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>此时你的断点停在了 <code>A</code> 的位置。通过点击 <strong>Step over</strong> ，Devtools 将会执行你「Step over」的位置中的所有代码，在上述示例中「Step over」的是 A 位置的 getName 函数中的 <code>B</code> 和 <code>C</code> 的位置，于是 Devtools 会将代码停在 D 的位置。</p>
+<h3 id="进入（step-into）当前代码行">进入（Step into）当前代码行</h3>
+<p>如果断点停在一个跟你要调查的问题有关系的地方，而且这个地方包含一个函数调用的时候，点击 <code>Step into</code> ，可以更进一步的检查这个函数。</p>
+<p caption='step_into'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/0B7F9CB7-7EA3-44A2-8808-8E23F9E0D786_2.png' alt='step_into' title='step_into'></p>
+<p>图二👆🏻，上图中蓝色方框中 <code>Step into</code> 的含义解释：</p>
 <p>举个例子，假设你正在 debugging 下面的代码：</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">updateHeader</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">day</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getDay</span><span class="p">();</span>
-  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">getName</span><span class="p">();</span> <span class="c1">// A</span>
-  <span class="nx">updateName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="kd">function</span> <span class="nx">getName</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">app</span><span class="p">.</span><span class="nx">first</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">app</span><span class="p">.</span><span class="nx">last</span><span class="p">;</span> <span class="c1">// B</span>
-  <span class="k">return</span> <span class="nx">name</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>你的断点正停在 <code class="language-plaintext highlighter-rouge">A</code> 的位置，此时点击 <strong>Step into</strong> ，Devtools 将会执行这行代码，然后停在 <code class="language-plaintext highlighter-rouge">B</code> 的位置。</p>
-
-<h3 id="跳出step-out当前代码行">跳出（Step out）当前代码行</h3>
-
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">updateName</span>(name);<br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// B</span><br>  <span class="hljs-keyword">return</span> name;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>你的断点正停在 <code>A</code> 的位置，此时点击 <strong>Step into</strong> ，Devtools 将会执行这行代码，然后停在 <code>B</code> 的位置。</p>
+<h3 id="跳出（step-out）当前代码行">跳出（Step out）当前代码行</h3>
 <p>当断点停在一个与你正在调查的问题不相关的函数内部的时候，你可以点击 <strong>Step out</strong> 来执行该函数中剩余的代码。</p>
-
-<p caption="step_out"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6E97FB74-E73D-4189-9A21-3771A1DF27AF_2.png" alt="step_out" title="step_out" /></p>
-
-<p>图三👆🏻，上图中蓝色方框中 <code class="language-plaintext highlighter-rouge">Step out</code> 的含义解释：</p>
-
+<p caption='step_out'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6E97FB74-E73D-4189-9A21-3771A1DF27AF_2.png' alt='step_out' title='step_out'></p>
+<p>图三👆🏻，上图中蓝色方框中 <code>Step out</code> 的含义解释：</p>
 <p>举个例子，假设你正在 debugging 下面的代码：</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">updateHeader</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">day</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getDay</span><span class="p">();</span>
-  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">getName</span><span class="p">();</span>
-  <span class="nx">updateName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// C</span>
-<span class="p">}</span>
-<span class="kd">function</span> <span class="nx">getName</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">app</span><span class="p">.</span><span class="nx">first</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">app</span><span class="p">.</span><span class="nx">last</span><span class="p">;</span> <span class="c1">// A</span>
-  <span class="k">return</span> <span class="nx">name</span><span class="p">;</span> <span class="c1">// B</span>
-<span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>你的断点正停在 <code class="language-plaintext highlighter-rouge">A</code> 的位置，此时点击 <strong>Step out</strong> ，DevTools 将会把 <code class="language-plaintext highlighter-rouge">getName()</code> 函数中的剩余代码执行完，也就是 B 位置的代码，然后断点停在 <code class="language-plaintext highlighter-rouge">C</code> 的位置上。</p>
-
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>();<br>  <span class="hljs-title function_">updateName</span>(name); <span class="hljs-comment">// C</span><br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// A</span><br>  <span class="hljs-keyword">return</span> name; <span class="hljs-comment">// B</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>你的断点正停在 <code>A</code> 的位置，此时点击 <strong>Step out</strong> ，DevTools 将会把 <code>getName()</code> 函数中的剩余代码执行完，也就是 B 位置的代码，然后断点停在 <code>C</code> 的位置上。</p>
 <h3 id="继续运行代码到指定行">继续运行代码到指定行</h3>
-
 <p>当 debugging 一个很长函数的时候，函数中会有很多与你正在调查的问题不相关的代码。</p>
-
-<p>你可以选择一步一步的执行这些无关的行，但是这个过程会很枯燥。你也可以选择在一个想断点的代码行处设置一个断点，然后按下 <code class="language-plaintext highlighter-rouge">Resume Script Execution</code> （恢复脚本执行），不过除此之外，还有一个更快的方式。</p>
-
+<p>你可以选择一步一步的执行这些无关的行，但是这个过程会很枯燥。你也可以选择在一个想断点的代码行处设置一个断点，然后按下 <code>Resume Script Execution</code> （恢复脚本执行），不过除此之外，还有一个更快的方式。</p>
 <p>你可以在你想要断点的代码行上右键，然后选择 <strong>Continue to here</strong> （继续执行到此处）。Devtools 将会恢复断点执行代码直到此处，然后停在这一行。</p>
-
-<p caption="continue_to_here"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/01C96466-2B8C-4088-9E66-7408708B0401_2.png" alt="continue_to_here" title="continue_to_here" /></p>
-
+<p caption='continue_to_here'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/01C96466-2B8C-4088-9E66-7408708B0401_2.png' alt='continue_to_here' title='continue_to_here'></p>
 <p>图四👆🏻，选择 <strong>Continue to here</strong> 。</p>
-
 <h3 id="恢复脚本执行">恢复脚本执行</h3>
-
 <p>你可以通过点击 <strong>Resume Script Execution</strong> 来继续在你断点暂停的位置执行代码。Devtools 会将代码一直执行下去直到遇到下一个断点（如果有）。</p>
-
-<p caption="resume_script_execution"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/E67463E2-9D01-48BB-A743-28A189DF68CD_2.png" alt="resume_script_execution" title="resume_script_execution" /></p>
-
+<p caption='resume_script_execution'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/E67463E2-9D01-48BB-A743-28A189DF68CD_2.png' alt='resume_script_execution' title='resume_script_execution'></p>
 <p>图五👆🏻，<strong>Resume Script Execution</strong> ，蓝框处。</p>
-
 <h4 id="强制执行">强制执行</h4>
-
 <p>可以通过长按 <strong>Resume Script Execution</strong> ，然后选择 <strong>Force Script Execution</strong> ，来忽略剩下的所有断点，直接执行全部代码。</p>
-
-<p caption="force_script_execution"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DAB9BD94-70F7-4464-8609-3016E8B40A44_2.png" alt="force_script_execution" title="force_script_execution" /></p>
-
+<p caption='force_script_execution'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DAB9BD94-70F7-4464-8609-3016E8B40A44_2.png' alt='force_script_execution' title='force_script_execution'></p>
 <p>图六👆🏻，选择 <strong>Force Script Execution</strong> 。</p>
-
 <h3 id="改变当前线程的上下文">改变当前线程的上下文</h3>
-
 <p>当 debugging 设计到 Web Worker 或者 Service Worker 的时候，可以通过点击出现在 <strong>Threads</strong> 栏中的上下文列表项，来转换上下文。蓝色箭头表示当前选择的上下文。</p>
-
-<p caption="change_threads_context"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1474933D-3F44-4D93-9909-FF4245545704_2.png" alt="change_threads_context" title="change_threads_context" /></p>
-
+<p caption='change_threads_context'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1474933D-3F44-4D93-9909-FF4245545704_2.png' alt='change_threads_context' title='change_threads_context'></p>
 <p>图七👆🏻，<strong>Threads</strong> （线程）栏，蓝色框的位置。</p>
-
 <p>举个例子，假设有这么个场景，你的断点同时存在于你的主脚本和你的 service worker 脚本中。你想要查看 service worker 中的本地变量和全局变量，但是 <strong>Source</strong> 栏当前正显示的是你的主脚本的上下文。此时你就可以通过点击在 <strong>Threads</strong> 栏中的 service worker 入口来切换上下文以查看你想了解的变量了。</p>
-
-<h2 id="查看和编辑局部闭包以及全局作用域中的变量属性">查看和编辑局部、闭包以及全局作用域中的变量/属性</h2>
-
+<h2 id="查看和编辑局部、闭包以及全局作用域中的变量-属性">查看和编辑局部、闭包以及全局作用域中的变量/属性</h2>
 <p>当暂停在某一行的时候，使用 Scope 栏来查看和编辑位于局部、闭包和全局变量。</p>
-
 <ul>
-  <li>
-    <p>双击属性值以修改之。</p>
-  </li>
-  <li>
-    <p>非可枚举的属性会以灰色突出显示。</p>
-  </li>
+<li>
+<p>双击属性值以修改之。</p>
+</li>
+<li>
+<p>非可枚举的属性会以灰色突出显示。</p>
+</li>
 </ul>
-
-<p caption="查看和修改变量"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/40A93D0F-ACA8-4128-A695-E502565253AD_2.png" alt="查看和修改变量" title="查看和修改变量" /></p>
-
+<p caption='查看和修改变量'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/40A93D0F-ACA8-4128-A695-E502565253AD_2.png' alt='查看和修改变量' title='查看和修改变量'></p>
 <p>图八👆🏻，<strong>Scope</strong> （作用域）栏，蓝色框的位置。</p>
-
 <h2 id="查看当前调用栈">查看当前调用栈</h2>
-
 <p>当暂停在某一行的时候，使用 <strong>Call Stack</strong> 栏来查看从代码执行一直到你当前暂停点以来的函数调用栈。</p>
-
 <p>如果你的代码中有异步代码，可以将 <strong>Async</strong> 复选框勾选上，来启用异步函数调用栈。</p>
-
 <p>点击其中的一个条目，来跳转到该条目所表示的函数的调用处。蓝色箭头图标表示当前正在高亮的函数。</p>
-
-<p caption="查看函数调用栈"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1168318B-1CFA-493D-9AE6-2CF79930C58C_2.png" alt="查看函数调用栈" title="查看函数调用栈" /></p>
-
+<p caption='查看函数调用栈'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1168318B-1CFA-493D-9AE6-2CF79930C58C_2.png' alt='查看函数调用栈' title='查看函数调用栈'></p>
 <p>图九👆🏻，<strong>Call Stack</strong> （调用栈）栏，蓝色框的位置。</p>
-
 <blockquote>
-  <p>注意：如果代码没有暂停在某一行，那 Call Stack 栏是空的。</p>
+<p>注意：如果代码没有暂停在某一行，那 Call Stack 栏是空的。</p>
 </blockquote>
-
 <h3 id="重新执行堆栈中的函数">重新执行堆栈中的函数</h3>
-
 <p>有时候想观察某一个函数的运行情况，但是又不想重新运行整个 debugging 流程，你可以在断点暂停在这个函数内部的时候重新只单独执行这个函数，换句话说，你可以在调用栈中重新放入该函数的调用上下文。</p>
-
 <blockquote>
-  <p>注意：你可以重头执行在 Call Stack （调用栈）中的任何函数，除了 WebAssembly、async、和 generator 函数。</p>
+<p>注意：你可以重头执行在 Call Stack （调用栈）中的任何函数，除了 WebAssembly、async、和 generator 函数。</p>
 </blockquote>
-
 <p>为了重新执行一个函数：</p>
-
 <ol>
-  <li>
-    <p>使用断点暂停函数，<strong>Call Stack</strong> 栏会记录函数的调用顺序。</p>
-  </li>
-  <li>
-    <p>在 <strong>Call Stack</strong> 栏，右键一个函数，然后在出现的菜单中选择 Restart frame（重头执行函数）。</p>
-  </li>
+<li>
+<p>使用断点暂停函数，<strong>Call Stack</strong> 栏会记录函数的调用顺序。</p>
+</li>
+<li>
+<p>在 <strong>Call Stack</strong> 栏，右键一个函数，然后在出现的菜单中选择 Restart frame（重头执行函数）。</p>
+</li>
 </ol>
-
-<p caption="重新执行断点所在的函数"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DFF3FAC8-B00F-415A-A581-50A299F1884D_2.png" alt="重新执行断点所在的函数" title="重新执行断点所在的函数" /></p>
-
+<p caption='重新执行断点所在的函数'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DFF3FAC8-B00F-415A-A581-50A299F1884D_2.png' alt='重新执行断点所在的函数' title='重新执行断点所在的函数'></p>
 <p>为了理解 Restart frame 如何执行，我们假设有以下代码：</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
-    <span class="nx">bar</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
-<span class="p">}</span>
- 
-<span class="kd">function</span> <span class="nx">bar</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">value</span><span class="o">++</span><span class="p">;</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
-    <span class="k">debugger</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="nx">foo</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">foo</code> 函数接受 <code class="language-plaintext highlighter-rouge">0</code> 作为参数，然后通过 log 打印到控制台，然后调用 <code class="language-plaintext highlighter-rouge">bar()</code> 函数。相应的，<code class="language-plaintext highlighter-rouge">bar</code> 函数会将这个值自增1。</p>
-
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">value</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>    <span class="hljs-title function_">bar</span>(value);<br>&#125;<br> <br><span class="hljs-keyword">function</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params">value</span>) &#123;<br>    value++;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>    <span class="hljs-keyword">debugger</span>;<br>&#125;<br><br><span class="hljs-title function_">foo</span>(<span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+<p><code>foo</code> 函数接受 <code>0</code> 作为参数，然后通过 log 打印到控制台，然后调用 <code>bar()</code> 函数。相应的，<code>bar</code> 函数会将这个值自增1。</p>
 <p>尝试以下面的方式重头执行这两个函数：</p>
-
 <ul>
-  <li>
-    <p>复制上面的代码到一个 <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/#createsources">snippet</a> （未翻译）中，然后 <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/#runsources">运行</a> （未翻译）它。断点会停在 <code class="language-plaintext highlighter-rouge">debugger</code> 的所在的 <a href="https://developer.chrome.com/docs/devtools/javascript/breakpoints/#debugger">代码行</a>。</p>
-
-    <blockquote>
-      <p>⚠️ 注意：当代码执行暂停的时候，不要在控制台执行当前调用栈中的函数，因为这可能会引起意外的错误。</p>
-    </blockquote>
-  </li>
-  <li>
-    <p>你会注意到当前的 debugger 会在其所在的函数的函数声明的右侧显示当前值：<code class="language-plaintext highlighter-rouge">value = 1</code> 。</p>
-  </li>
-</ul>
-
-<p caption="注意函数声明处右侧的值"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9111BA1D-AA80-4C2F-B54E-123FC66A5C17_2.png" alt="注意函数声明处右侧的值" title="注意函数声明处右侧的值" /></p>
-
-<ul>
-  <li>重头执行 <code class="language-plaintext highlighter-rouge">bar()</code> 函数。</li>
-</ul>
-
-<p caption="重头执行bar"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/036AAE1B-CA41-4627-A9D6-A4F7E6302C0C_2.png" alt="重头执行bar" title="重头执行bar" /></p>
-
-<ul>
-  <li>
-    <p>按 <code class="language-plaintext highlighter-rouge">F9</code> ，然后代码可以经过值自增的那一行，然后再次断到 debugger 处。</p>
-
-    <p>注意看，值变成了 2： <code class="language-plaintext highlighter-rouge">value = 2</code> 。</p>
-  </li>
-</ul>
-
-<p caption="重头执行debugger"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/09D36505-821B-4392-8DD3-BDE9D05F0210_2.png" alt="重头执行debugger" title="重头执行debugger" /></p>
-
-<ul>
-  <li>除此之外，你还可以在 Scope 栏，双击 <code class="language-plaintext highlighter-rouge">value</code> 值来编辑它将其设置成想要的值。</li>
-</ul>
-
-<p caption="双击编辑值"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9481CF99-8735-43A4-8A57-D2F953C289BC_2.png" alt="双击编辑值" title="双击编辑值" /></p>
-
-<ul>
-  <li>尝试重新执行 <code class="language-plaintext highlighter-rouge">bar()</code> 函数多次，会发现值会一直增加。</li>
-</ul>
-
-<p caption="多次重复执行后值会一直增加"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/AEE7EEA3-2150-431B-980C-6FCF03527DC7_2.png" alt="多次重复执行后值会一直增加" title="多次重复执行后值会一直增加" /></p>
-
+<li>
+<p>复制上面的代码到一个 <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/#createsources">snippet</a> （未翻译）中，然后 <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/#runsources">运行</a> （未翻译）它。断点会停在 <code>debugger</code> 的所在的 <a href="https://developer.chrome.com/docs/devtools/javascript/breakpoints/#debugger">代码行</a>。</p>
 <blockquote>
-  <p>💡 震惊！为什么 <code class="language-plaintext highlighter-rouge">value</code> 不会重置成 <code class="language-plaintext highlighter-rouge">0</code> ？</p>
+<p>⚠️ 注意：当代码执行暂停的时候，不要在控制台执行当前调用栈中的函数，因为这可能会引起意外的错误。</p>
 </blockquote>
-
-<blockquote>
-  <p>函数重头执行的时候不会重置参数。换句话说，重头执行不会恢复该函数被调用时候的初始状态。因此，它只是简单的在调用栈中移动当前调用的指针到函数的开始位置。</p>
-</blockquote>
-
-<blockquote>
-  <p>因此，当前的参数值 <code class="language-plaintext highlighter-rouge">value</code> 会在内存中一直随着相同函数的重复执行而一直存在。</p>
-</blockquote>
-
-<ul>
-  <li>现在，在 <strong>Call Stack</strong> 中重头执行 <code class="language-plaintext highlighter-rouge">foo()</code> 函数。</li>
+</li>
+<li>
+<p>你会注意到当前的 debugger 会在其所在的函数的函数声明的右侧显示当前值：<code>value = 1</code> 。</p>
+</li>
 </ul>
-
-<p caption="重头执行foo函数"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/11D4B549-3006-4564-B92D-4D1727913D74_2.png" alt="重头执行foo函数" title="重头执行foo函数" /></p>
-
-<p>注意看，<code class="language-plaintext highlighter-rouge">value</code> 重新变成了<code class="language-plaintext highlighter-rouge">0</code> 。</p>
-
-<p caption="value重新变为0"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9F706F35-0041-41E3-BB4A-70A5BFFEFE06_2.png" alt="value重新变为0" title="value重新变为0" /></p>
-
+<p caption='注意函数声明处右侧的值'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9111BA1D-AA80-4C2F-B54E-123FC66A5C17_2.png' alt='注意函数声明处右侧的值' title='注意函数声明处右侧的值'></p>
+<ul>
+<li>重头执行 <code>bar()</code> 函数。</li>
+</ul>
+<p caption='重头执行bar'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/036AAE1B-CA41-4627-A9D6-A4F7E6302C0C_2.png' alt='重头执行bar' title='重头执行bar'></p>
+<ul>
+<li>
+<p>按 <code>F9</code> ，然后代码可以经过值自增的那一行，然后再次断到 debugger 处。</p>
+<p>注意看，值变成了 2： <code>value = 2</code> 。</p>
+</li>
+</ul>
+<p caption='重头执行debugger'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/09D36505-821B-4392-8DD3-BDE9D05F0210_2.png' alt='重头执行debugger' title='重头执行debugger'></p>
+<ul>
+<li>除此之外，你还可以在 Scope 栏，双击 <code>value</code> 值来编辑它将其设置成想要的值。</li>
+</ul>
+<p caption='双击编辑值'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9481CF99-8735-43A4-8A57-D2F953C289BC_2.png' alt='双击编辑值' title='双击编辑值'></p>
+<ul>
+<li>尝试重新执行 <code>bar()</code> 函数多次，会发现值会一直增加。</li>
+</ul>
+<p caption='多次重复执行后值会一直增加'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/AEE7EEA3-2150-431B-980C-6FCF03527DC7_2.png' alt='多次重复执行后值会一直增加' title='多次重复执行后值会一直增加'></p>
 <blockquote>
-  <p>💡 再次震惊！为什么 <code class="language-plaintext highlighter-rouge">value</code> 这次被重置为 <code class="language-plaintext highlighter-rouge">0</code> 了？</p>
+<p>💡 震惊！为什么 <code>value</code> 不会重置成 <code>0</code> ？</p>
 </blockquote>
-
 <blockquote>
-  <p>很简单（此处意译了）在 JavaScript 中，参数是按值传递的，因为 <code class="language-plaintext highlighter-rouge">value</code> 是原始值，因此在函数内修改它的值不会影响到函数外它的值。</p>
+<p>函数重头执行的时候不会重置参数。换句话说，重头执行不会恢复该函数被调用时候的初始状态。因此，它只是简单的在调用栈中移动当前调用的指针到函数的开始位置。</p>
 </blockquote>
-
+<blockquote>
+<p>因此，当前的参数值 <code>value</code> 会在内存中一直随着相同函数的重复执行而一直存在。</p>
+</blockquote>
+<ul>
+<li>现在，在 <strong>Call Stack</strong> 中重头执行 <code>foo()</code> 函数。</li>
+</ul>
+<p caption='重头执行foo函数'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/11D4B549-3006-4564-B92D-4D1727913D74_2.png' alt='重头执行foo函数' title='重头执行foo函数'></p>
+<p>注意看，<code>value</code> 重新变成了<code>0</code> 。</p>
+<p caption='value重新变为0'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9F706F35-0041-41E3-BB4A-70A5BFFEFE06_2.png' alt='value重新变为0' title='value重新变为0'></p>
+<blockquote>
+<p>💡 再次震惊！为什么 <code>value</code> 这次被重置为 <code>0</code> 了？</p>
+</blockquote>
+<blockquote>
+<p>很简单（此处意译了）在 JavaScript 中，参数是按值传递的，因为 <code>value</code> 是原始值，因此在函数内修改它的值不会影响到函数外它的值。</p>
+</blockquote>
 <h3 id="复制调用栈执行路径">复制调用栈执行路径</h3>
-
 <p>在 <strong>Call Stack</strong> 栏的任意位置右键，然后选择 <strong>Copy Stack Trace</strong>（复制栈追踪），你会将当前调用栈复制到粘贴板。</p>
-
-<p caption="复制调用栈"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/7EF33B00-5F90-4D0D-8979-B18ED3CD1527_2.png" alt="复制调用栈" title="复制调用栈" /></p>
-
+<p caption='复制调用栈'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/7EF33B00-5F90-4D0D-8979-B18ED3CD1527_2.png' alt='复制调用栈' title='复制调用栈'></p>
 <p>图十👆🏻，选择 <strong>Copy Stack Trace</strong>。</p>
-
 <p>复制的内容大致会是这个样子：</p>
-
-<pre><code class="language-other">getNumber1 (get-started.js:35)
-inputsAreEmpty (get-started.js:22)
-onClick (get-started.js:15)
-</code></pre>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs other">getNumber1 (get-started.js:35)<br>inputsAreEmpty (get-started.js:22)<br>onClick (get-started.js:15)<br></code></pre></td></tr></table></figure>
 <h2 id="忽略某个脚本或者满足某种条件的脚本">忽略某个脚本或者满足某种条件的脚本</h2>
-
 <p>当 debugging 的时候，忽略某个脚本以跳过它。你通常会在当该脚本的函数比较复杂难懂而且跟你当前 debugging 的内容无关的时候选择忽略之。</p>
-
 <p>例如，假设你正在 debugging 如下代码：</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td><td class="rouge-code"><pre><span class="kd">function</span> <span class="nx">animate</span><span class="p">()</span> <span class="p">{</span>
-  <span class="nx">prepare</span><span class="p">();</span>
-  <span class="nx">lib</span><span class="p">.</span><span class="nx">doFancyStuff</span><span class="p">();</span> <span class="c1">// A</span>
-  <span class="nx">render</span><span class="p">();</span>
-<span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">A</code> 是一个你信任的第三方库。如果你十分确定你所调查的问题跟这个第三方库没有关系，那忽略它就是一个明智决定。</p>
-
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">animate</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-title function_">prepare</span>();<br>  lib.<span class="hljs-title function_">doFancyStuff</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">render</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>A</code> 是一个你信任的第三方库。如果你十分确定你所调查的问题跟这个第三方库没有关系，那忽略它就是一个明智决定。</p>
 <h3 id="从-source-编辑器栏中忽略某个脚本">从 Source 编辑器栏中忽略某个脚本</h3>
-
 <ol>
-  <li>
-    <p>打开文件</p>
-  </li>
-  <li>
-    <p>右键任何位置</p>
-  </li>
-  <li>
-    <p>选择 <strong>Add script to ignore list</strong>（将脚本添加到忽略列表）。</p>
-  </li>
+<li>
+<p>打开文件</p>
+</li>
+<li>
+<p>右键任何位置</p>
+</li>
+<li>
+<p>选择 <strong>Add script to ignore list</strong>（将脚本添加到忽略列表）。</p>
+</li>
 </ol>
-
-<p caption="忽略脚本"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/39DA9D92-C270-4705-8920-7BC248703936_2.png" alt="忽略脚本" title="忽略脚本" /></p>
-
+<p caption='忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/39DA9D92-C270-4705-8920-7BC248703936_2.png' alt='忽略脚本' title='忽略脚本'></p>
 <p>图十一👆🏻，从编辑器栏中忽略一个脚本。</p>
-
-<h3 id="从-call-stack-调用栈栏忽略某个脚本">从 Call Stack （调用栈）栏忽略某个脚本</h3>
-
+<h3 id="从-call-stack-（调用栈）栏忽略某个脚本">从 Call Stack （调用栈）栏忽略某个脚本</h3>
 <p>如果想从调用栈中忽略某个脚本，你需要：</p>
-
 <ol>
-  <li>
-    <p>在调用栈中的某个函数中右键。</p>
-  </li>
-  <li>
-    <p>选择 <strong>Add script to ignore list</strong>。</p>
-  </li>
+<li>
+<p>在调用栈中的某个函数中右键。</p>
+</li>
+<li>
+<p>选择 <strong>Add script to ignore list</strong>。</p>
+</li>
 </ol>
-
-<p caption="从调用栈中忽略脚本"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/73837AF8-CB34-4B72-AE5C-1B266E15B8EB_2.png" alt="从调用栈中忽略脚本" title="从调用栈中忽略脚本" /></p>
-
+<p caption='从调用栈中忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/73837AF8-CB34-4B72-AE5C-1B266E15B8EB_2.png' alt='从调用栈中忽略脚本' title='从调用栈中忽略脚本'></p>
 <p>图十二👆🏻，从 Call Stack（调用栈）中忽略某个脚本。</p>
-
-<h3 id="从-settings设置中忽略某个脚本">从 Settings（设置）中忽略某个脚本</h3>
-
+<h3 id="从-settings（设置）中忽略某个脚本">从 Settings（设置）中忽略某个脚本</h3>
 <blockquote>
-  <p>译者注：此处的设置为 Devtools 的设置，不是浏览器的设置。</p>
+<p>译者注：此处的设置为 Devtools 的设置，不是浏览器的设置。</p>
 </blockquote>
-
 <p>如果想从设置中忽略某一个脚本或者满足某种条件的脚本，你需要：</p>
-
 <ol>
-  <li>
-    <p>打开设置：</p>
-  </li>
-  <li>
-    <p>点击 <strong>Ignore List</strong> Tab。</p>
-  </li>
-  <li>
-    <p>点击 <strong>Add pattern</strong>。</p>
-  </li>
-  <li>
-    <p>输入脚本名或者正则来匹配需要忽略的脚本名。</p>
-  </li>
-  <li>
-    <p>点击 <strong>Add</strong>。</p>
-  </li>
+<li>
+<p>打开设置：</p>
+</li>
+<li>
+<p>点击 <strong>Ignore List</strong> Tab。</p>
+</li>
+<li>
+<p>点击 <strong>Add pattern</strong>。</p>
+</li>
+<li>
+<p>输入脚本名或者正则来匹配需要忽略的脚本名。</p>
+</li>
+<li>
+<p>点击 <strong>Add</strong>。</p>
+</li>
 </ol>
-
-<p caption="devoools设置界面"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/54F9290D-CE6A-4630-9387-34DE7EA6266F_2.png" alt="devoools设置界面" title="devoools设置界面" /></p>
-
-<p caption="devtools忽略脚本"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/65A0FE7C-D5BB-4329-B978-1C7184F6C1B6_2.png" alt="devtools忽略脚本" title="devtools忽略脚本" /></p>
-
+<p caption='devoools设置界面'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/54F9290D-CE6A-4630-9387-34DE7EA6266F_2.png' alt='devoools设置界面' title='devoools设置界面'></p>
+<p caption='devtools忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/65A0FE7C-D5BB-4329-B978-1C7184F6C1B6_2.png' alt='devtools忽略脚本' title='devtools忽略脚本'></p>
 <p>图十三👆🏻，从 Setting 中忽略脚本。</p>
-
-<h2 id="从任何页面运行-debug-代码-snippets片段">从任何页面运行 debug 代码 Snippets（片段）</h2>
-
+<h2 id="从任何页面运行-debug-代码-snippets（片段）">从任何页面运行 debug 代码 Snippets（片段）</h2>
 <p>如果你发现你正在 Console 中反复运行一些 deubg 代码，那么可以考虑一下 Snippets。Snippets 是一种你可以存储在 Devtools 中并执行的脚本。</p>
-
 <p>参见 <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/">https://developer.chrome.com/docs/devtools/javascript/snippets/</a> （未翻译）来了解更多。</p>
-
 <blockquote>
-  <p>译者注：Snippets 在执行的时候是携带当前上下文的，比如你在 debug 的时候暂停了，然后执行 Snippets 代码，此时的 Snippets 代码拥有当前上下文的变量访问权限。</p>
+<p>译者注：Snippets 在执行的时候是携带当前上下文的，比如你在 debug 的时候暂停了，然后执行 Snippets 代码，此时的 Snippets 代码拥有当前上下文的变量访问权限。</p>
 </blockquote>
-
-<h2 id="watch监听自定义的-javascript-表达式的值">Watch（监听）自定义的 JavaScript 表达式的值</h2>
-
+<h2 id="watch（监听）自定义的-javascript-表达式的值">Watch（监听）自定义的 JavaScript 表达式的值</h2>
 <p>使用 Watch 栏来监听自定义表达式的值。你可以监听任何有效的 JavaScript 表达式。</p>
-
-<p caption="监听JavaScript表达式"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/02D81797-A39F-4837-B402-648AA39E5C21_2.png" alt="监听JavaScript表达式" title="监听JavaScript表达式" /></p>
-
+<p caption='监听JavaScript表达式'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/02D81797-A39F-4837-B402-648AA39E5C21_2.png' alt='监听JavaScript表达式' title='监听JavaScript表达式'></p>
 <p>图十四👆🏻，蓝色圈住的即是 Watch 栏。</p>
-
 <ul>
-  <li>
-    <p>点击 Add Expression（添加表达式）来新建一个监视表达式。</p>
-  </li>
-  <li>
-    <p>点击 Refresh（刷新）来刷新所有已经存在的表达式。当执行代码的时候，值会自动更新。</p>
-  </li>
-  <li>
-    <p>鼠标悬浮在一个表达式上，然后点 Delete Expression（删除表达式），来删除它。</p>
-  </li>
+<li>
+<p>点击 Add Expression（添加表达式）来新建一个监视表达式。</p>
+</li>
+<li>
+<p>点击 Refresh（刷新）来刷新所有已经存在的表达式。当执行代码的时候，值会自动更新。</p>
+</li>
+<li>
+<p>鼠标悬浮在一个表达式上，然后点 Delete Expression（删除表达式），来删除它。</p>
+</li>
 </ul>
-
 <h2 id="格式化压缩后的代码以可读">格式化压缩后的代码以可读</h2>
-
-<p>点击 <code class="language-plaintext highlighter-rouge">Fromat {}</code>  来让一个压缩后的代码变成人类可读的格式。</p>
-
-<p caption="格式化压缩后的文件"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/572D9BCF-DC18-460E-8B23-62398391ED92_2.png" alt="格式化压缩后的文件" title="格式化压缩后的文件" /></p>
-
+<p>点击 <code>Fromat &#123;&#125;</code>  来让一个压缩后的代码变成人类可读的格式。</p>
+<p caption='格式化压缩后的文件'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/572D9BCF-DC18-460E-8B23-62398391ED92_2.png' alt='格式化压缩后的文件' title='格式化压缩后的文件'></p>
 <h2 id="编辑一个脚本">编辑一个脚本</h2>
-
 <p>当修复一个 bug 的时候，你经常会需要测试你的 JavaScript 代码的修改效果。你不要在一个外部的编辑器中编辑 JavaScript 代码后，再回到当前页面刷新后查看效果。你可以直接在 Devtools 中编辑你的 JavaScript 代码。</p>
-
 <p>如果想编辑脚本，你需要：</p>
-
 <ol>
-  <li>
-    <p>在 Source 栏中打开你想要编辑的文件（会出现在 Editor 栏中）。</p>
-  </li>
-  <li>
-    <p>在 Editor 栏中做出修改。</p>
-  </li>
-  <li>
-    <p>按 <code class="language-plaintext highlighter-rouge">Cmmand + S</code> （Mac）或者 <code class="language-plaintext highlighter-rouge">Ctrl + S</code> （Windows，Linux）来保存修噶。Devtools 将会以打补丁的形式将整个 js 文件加入到 Chrome 的 JavaScript 引擎中去。</p>
-  </li>
+<li>
+<p>在 Source 栏中打开你想要编辑的文件（会出现在 Editor 栏中）。</p>
+</li>
+<li>
+<p>在 Editor 栏中做出修改。</p>
+</li>
+<li>
+<p>按 <code>Cmmand + S</code> （Mac）或者 <code>Ctrl + S</code> （Windows，Linux）来保存修噶。Devtools 将会以打补丁的形式将整个 js 文件加入到 Chrome 的 JavaScript 引擎中去。</p>
+</li>
 </ol>
-
-<p caption="直接编辑js文件"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6DC1E149-D2D2-4005-A2B9-451CF0456112_2.png" alt="直接编辑js文件" title="直接编辑js文件" /></p>
-
+<p caption='直接编辑js文件'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6DC1E149-D2D2-4005-A2B9-451CF0456112_2.png' alt='直接编辑js文件' title='直接编辑js文件'></p>
 <p>上图中蓝框圈出来的就是编辑器栏。</p>
-
 <h2 id="实时编辑一个暂停的函数">实时编辑一个暂停的函数</h2>
-
 <blockquote>
-  <p>注意：此功能自 Chrome 105 版本往上才可用。</p>
+<p>注意：此功能自 Chrome 105 版本往上才可用。</p>
 </blockquote>
-
 <p>当代码暂停的时候，你可以编辑当前函数然后实时应用修改，不过有以下限制：</p>
-
 <ul>
-  <li>
-    <p>你只能编辑在 <strong>Call Stack</strong> 最顶上的函数（也即当前断点所在的函数——译者注）。</p>
-  </li>
-  <li>
-    <p>调用栈中不能有对相同函数的递归调用（否则也相当于是修改了非当前调用栈的函数——译者注）。</p>
-  </li>
+<li>
+<p>你只能编辑在 <strong>Call Stack</strong> 最顶上的函数（也即当前断点所在的函数——译者注）。</p>
+</li>
+<li>
+<p>调用栈中不能有对相同函数的递归调用（否则也相当于是修改了非当前调用栈的函数——译者注）。</p>
+</li>
 </ul>
-
 <blockquote>
-  <p>💡 实时编辑暂停函数的真相是…
+<p>💡 实时编辑暂停函数的真相是…<br />
 当你应用一个修改的时候，debugger 工具自动重新执行（和前面的「重新执行堆栈中的函数」一样）。因此，对重新执行函数的限制与实时编辑暂停函数并生效的限制是一样的。你不能重头执行 WebAssembly、async以及generator（迭代器）函数。</p>
 </blockquote>
-
 <p>如果想实时编辑一个函数，你需要：</p>
-
 <ol>
-  <li>
-    <p>用断点暂停。</p>
-  </li>
-  <li>
-    <p>编辑断点所在的正在暂停的函数。</p>
-  </li>
-  <li>
-    <p>按下 <code class="language-plaintext highlighter-rouge">Command/Control+S</code>  来应用更改，debugger 将会自动重新执行该函数。</p>
-  </li>
-  <li>
-    <p>继续执行</p>
-  </li>
+<li>
+<p>用断点暂停。</p>
+</li>
+<li>
+<p>编辑断点所在的正在暂停的函数。</p>
+</li>
+<li>
+<p>按下 <code>Command/Control+S</code>  来应用更改，debugger 将会自动重新执行该函数。</p>
+</li>
+<li>
+<p>继续执行</p>
+</li>
 </ol>
-
-<p caption="实时重新执行函数"><video controls="" muted=""><source src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/37CA2680-5D00-477F-A1CF-161AD18F2A5E_2.mp4" type="video/mp4" /></video></p>
-
-<p>在这个示例中，<code class="language-plaintext highlighter-rouge">addend1</code> 和<code class="language-plaintext highlighter-rouge">addend2</code> 变量在起始的时候有一个不正确的 <code class="language-plaintext highlighter-rouge">string</code> 类型。因此，字符串被错误的连接在一起而不是数字相加。为了修复此问题，在实时编辑的时候添加了<code class="language-plaintext highlighter-rouge">parseInt()</code> 函数。</p>
-
+<p caption='实时重新执行函数'><video controls muted><source src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/37CA2680-5D00-477F-A1CF-161AD18F2A5E_2.mp4' type='video/mp4' /></video></p>
+<p>在这个示例中，<code>addend1</code> 和<code>addend2</code> 变量在起始的时候有一个不正确的 <code>string</code> 类型。因此，字符串被错误的连接在一起而不是数字相加。为了修复此问题，在实时编辑的时候添加了<code>parseInt()</code> 函数。</p>
 <h2 id="搜索和替换在脚本中的文本">搜索和替换在脚本中的文本</h2>
-
 <p>如果想要在脚本中搜索一段文本，你需要：</p>
-
 <ol>
-  <li>
-    <p>在代码源（Sources）-编辑器（Editor）栏中打开文件。</p>
-  </li>
-  <li>
-    <p>按下 <strong>Command+F</strong>（Mac）或者 <strong>Ctrl+F</strong>（Windows、Linux）来打开内置的搜索栏。</p>
-  </li>
-  <li>
-    <p>在搜索栏中，输入你想要查询的字符串：</p>
-
-    <p>另外你还可以：</p>
-
-    <ul>
-      <li>
-        <p>点击 <code class="language-plaintext highlighter-rouge">Aa</code> 来匹配大小写，来让你的搜索大小写敏感。</p>
-      </li>
-      <li>
-        <p>点击 <code class="language-plaintext highlighter-rouge">.*</code> 来使用正则匹配。</p>
-      </li>
-    </ul>
-  </li>
-  <li>
-    <p>按下 <code class="language-plaintext highlighter-rouge">Enter</code> 键来执行搜索。可以按下 up/down 来跳转到下一个/上一个搜索结果。</p>
-  </li>
+<li>
+<p>在代码源（Sources）-编辑器（Editor）栏中打开文件。</p>
+</li>
+<li>
+<p>按下 <strong>Command+F</strong>（Mac）或者 <strong>Ctrl+F</strong>（Windows、Linux）来打开内置的搜索栏。</p>
+</li>
+<li>
+<p>在搜索栏中，输入你想要查询的字符串：</p>
+<p>另外你还可以：</p>
+<ul>
+<li>
+<p>点击 <code>Aa</code> 来匹配大小写，来让你的搜索大小写敏感。</p>
+</li>
+<li>
+<p>点击 <code>.*</code> 来使用正则匹配。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>按下 <code>Enter</code> 键来执行搜索。可以按下 up/down 来跳转到下一个/上一个搜索结果。</p>
+</li>
 </ol>
-
-<p caption="搜索字符"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6D3D4E4D-22CD-4095-8773-1DFD4F3089A5_2.png" alt="搜索字符" title="搜索字符" /></p>
-
+<p caption='搜索字符'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6D3D4E4D-22CD-4095-8773-1DFD4F3089A5_2.png' alt='搜索字符' title='搜索字符'></p>
 <p>如果想替换你搜索到的结果，你需要：</p>
-
 <ol>
-  <li>
-    <p>打开搜索栏，点击 <code class="language-plaintext highlighter-rouge">A→B</code> （手敲的不形象，看下面的图）即替换按钮来替换文本。</p>
-  </li>
-  <li>
-    <p>输入想要替换的文本，然后点击 <strong>Replce</strong> 或者 <strong>Replace all</strong> 即可。</p>
-  </li>
+<li>
+<p>打开搜索栏，点击 <code>A→B</code> （手敲的不形象，看下面的图）即替换按钮来替换文本。</p>
+</li>
+<li>
+<p>输入想要替换的文本，然后点击 <strong>Replce</strong> 或者 <strong>Replace all</strong> 即可。</p>
+</li>
 </ol>
-
-<p caption="按下替换按钮"><img src="https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/4CFF9F79-2118-4DA6-AF12-1440A520C6F8_2.png" alt="按下替换按钮" title="按下替换按钮" /></p>
-
+<p caption='按下替换按钮'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/4CFF9F79-2118-4DA6-AF12-1440A520C6F8_2.png' alt='按下替换按钮' title='按下替换按钮'></p>
 <h2 id="禁用-javascript">禁用 JavaScript</h2>
-
 <p>具体参见：<a href="https://developer.chrome.com/docs/devtools/javascript/disable/">Disable JavaScript With Chrome DevTools</a>（未翻译）。</p>
 
+                                    <div class="text-danger">- EOF -</div>
+                                    <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a
+                                        style="color: #ccc;"
+                                        href="https://www.xheldon.cn/tech/javascript-debugger-reference-series01.html"
+                                        title="「译」官方指南系列：JavaScript 调试指南（一）">
+                                        「译」官方指南系列：JavaScript 调试指南（一） - Xheldon Blog
+                                      </a></div>
+                                    <hr style="visibility: hidden;">
 
-                <div class="text-danger">- EOF -</div>
-                <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a style="color: #ccc;" href="https://www.xheldon.cn/tech/javascript-debugger-reference-series01.html" title="「译」官方指南系列：JavaScript 调试指南（一）">「译」官方指南系列：JavaScript 调试指南（一） - Xheldon Blog</a></div>
-                <hr style="visibility: hidden;">
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/tech/optimize-of-my-blog-2.html" data-toggle="tooltip" data-placement="top" title="博客自动化流程及体验优化——第二弹">
-                        上一篇<br>
-                        <span>博客自动化流程及体验优化——第二弹</span>
-                        </a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/tech/my-home-network-2022.html" data-toggle="tooltip" data-placement="top" title="2022 我的家庭网络拓扑结构">
-                        下一篇<br>
-                        <span>2022 我的家庭网络拓扑结构</span>
-                        </a>
-                    </li>
-                    
-                </ul>
-                <hr style="visibility: hidden;">
-                <div class="giscus"></div>
-                <hr>
-            </div>  
-
-    <!-- Side Catalog Container -->
+                                    <ul class="pager">
+                                      
+                                        <li class="previous">
+                                          <a href="/tech/my-home-network-2022.html" data-toggle="tooltip"
+                                            data-placement="top" title="2022 我的家庭网络拓扑结构">
+                                            上一篇<br>
+                                            <span>{{page.prev.title}}</span>
+                                          </a>
+                                        </li>
+                                        
+                                          
+                                            <li class="next">
+                                              <a href="/tech/optimize-of-my-blog-2.html" data-toggle="tooltip"
+                                                data-placement="top" title="博客自动化流程及体验优化——第二弹">
+                                                下一篇<br>
+                                                <span>{{page.next.title}}</span>
+                                              </a>
+                                            </li>
+                                            
+                                    </ul>
+                                    <hr style="visibility: hidden;">
+                                    <div class="giscus"></div>
+                                    <hr>
+        </div>
+        <!-- Side Catalog Container -->
         
-            <div class="
+          <div class="
                 col-lg-2 col-lg-offset-0
                 visible-lg-block
                 sidebar-container
                 catalog-container">
-                <div class="side-catalog">
-                    <hr class="hidden-sm hidden-xs">
-                    <h5>
-                        <a class="catalog-toggle" href="#">目录</a>
-                    </h5>
-                    <ul class="catalog-body"></ul>
-                </div>
+            <div class="side-catalog">
+              <hr class="hidden-sm hidden-xs">
+              <h5>
+                <a class="catalog-toggle" href="#">目录</a>
+              </h5>
+              <ul class="catalog-body"></ul>
             </div>
-        
+          </div>
+          
 
-    <!-- Sidebar Container -->
+            <!-- Sidebar Container -->
+
             <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
                 sidebar-container">
-
-                <!-- Featured Tags -->
-                
-
-
+              
 <section style="margin-bottom: 20px;">
     <h5>博主说：</h5>
     <div>
-        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/resources/img/gwechat.png" />
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
         我常常希望在面对人生中一些关键抉择的时候，有人可以告诉我最佳的做法，让我不至于白白浪费宝贵的时间。推己及人，我因此经常写博客，以期在浩渺无垠的互联网中的这个小小角落里记录下对于我来说只有一次的人生经历，希望能够帮到那些希望得到帮助的人。
     </div>
     <hr>
     <h5><a href="/archive/">热门标签</a></h5>
     <div class="tags">
         
+
         
+            <a data-sort="0028" 
+                href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技术"
+                rel="44">技术</a>
         
+            <a data-sort="0047" 
+                href="/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="25">生活</a>
         
+            <a data-sort="0062" 
+                href="/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="折腾"
+                rel="10">折腾</a>
         
+            <a data-sort="0066" 
+                href="/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻译"
+                rel="6">翻译</a>
         
-                <a data-sort="0028" 
-                    href="/archive/?tag=%E6%8A%80%E6%9C%AF"
-                    title="技术"
-                    rel="44">技术</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="技巧"
+                rel="5">技巧</a>
         
-                <a data-sort="0047" 
-                    href="/archive/?tag=%E7%94%9F%E6%B4%BB"
-                    title="生活"
-                    rel="25">生活</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="教程"
+                rel="5">教程</a>
         
-                <a data-sort="0062" 
-                    href="/archive/?tag=%E6%8A%98%E8%85%BE"
-                    title="折腾"
-                    rel="10">折腾</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="美食"
+                rel="5">美食</a>
         
-                <a data-sort="0066" 
-                    href="/archive/?tag=%E7%BF%BB%E8%AF%91"
-                    title="翻译"
-                    rel="6">翻译</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="5">ProseMirror</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=%E6%8A%80%E5%B7%A7"
-                    title="技巧"
-                    rel="5">技巧</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="工作流"
+                rel="4">工作流</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=%E6%95%99%E7%A8%8B"
-                    title="教程"
-                    rel="5">教程</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="插件"
+                rel="4">插件</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
-                    title="美食"
-                    rel="5">美食</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="网络"
+                rel="4">网络</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=ProseMirror"
-                    title="ProseMirror"
-                    rel="5">ProseMirror</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=Craft"
+                title="Craft"
+                rel="4">Craft</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
-                    title="工作流"
-                    rel="4">工作流</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=Vue"
+                title="Vue"
+                rel="4">Vue</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=%E6%8F%92%E4%BB%B6"
-                    title="插件"
-                    rel="4">插件</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体验"
+                rel="3">初体验</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=%E7%BD%91%E7%BB%9C"
-                    title="网络"
-                    rel="4">网络</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="服务器"
+                rel="3">服务器</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=Craft"
-                    title="Craft"
-                    rel="4">Craft</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="经验"
+                rel="3">经验</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=Vue"
-                    title="Vue"
-                    rel="4">Vue</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="苹果"
+                rel="3">苹果</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
-                    title="初体验"
-                    rel="3">初体验</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="路由器"
+                rel="3">路由器</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
-                    title="服务器"
-                    rel="3">服务器</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="软路由"
+                rel="3">软路由</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E7%BB%8F%E9%AA%8C"
-                    title="经验"
-                    rel="3">经验</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="随笔"
+                rel="3">随笔</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E8%8B%B9%E6%9E%9C"
-                    title="苹果"
-                    rel="3">苹果</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E9%9B%86%E6%88%90"
+                title="集成"
+                rel="3">集成</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
-                    title="路由器"
-                    rel="3">路由器</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=Apple"
+                title="Apple"
+                rel="3">Apple</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
-                    title="软路由"
-                    rel="3">软路由</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=Git"
+                title="Git"
+                rel="3">Git</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E9%9A%8F%E7%AC%94"
-                    title="随笔"
-                    rel="3">随笔</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="3">JavaScript</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E9%9B%86%E6%88%90"
-                    title="集成"
-                    rel="3">集成</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="2">主食</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=Apple"
-                    title="Apple"
-                    rel="3">Apple</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="优化"
+                rel="2">优化</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=Git"
-                    title="Git"
-                    rel="3">Git</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用体验"
+                rel="2">使用体验</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=JavaScript"
-                    title="JavaScript"
-                    rel="3">JavaScript</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E5%8D%83%E5%85%86"
+                title="千兆"
+                rel="2">千兆</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E4%B8%BB%E9%A3%9F"
-                    title="主食"
-                    rel="2">主食</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="2">大事</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E4%BC%98%E5%8C%96"
-                    title="优化"
-                    rel="2">优化</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="旁路由"
+                rel="2">旁路由</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
-                    title="使用体验"
-                    rel="2">使用体验</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="泡脚时间"
+                rel="2">泡脚时间</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E5%8D%83%E5%85%86"
-                    title="千兆"
-                    rel="2">千兆</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="测试"
+                rel="2">测试</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E5%A4%A7%E4%BA%8B"
-                    title="大事"
-                    rel="2">大事</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="特斯拉"
+                rel="2">特斯拉</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
-                    title="旁路由"
-                    rel="2">旁路由</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="编辑器"
+                rel="2">编辑器</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
-                    title="泡脚时间"
-                    rel="2">泡脚时间</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="视频"
+                rel="2">视频</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E6%B5%8B%E8%AF%95"
-                    title="测试"
-                    rel="2">测试</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="调试"
+                rel="2">调试</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
-                    title="特斯拉"
-                    rel="2">特斯拉</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%BD%A6"
+                title="车"
+                rel="2">车</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
-                    title="编辑器"
-                    rel="2">编辑器</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="迁移"
+                rel="2">迁移</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%A7%86%E9%A2%91"
-                    title="视频"
-                    rel="2">视频</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="2">AppleScript</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%B0%83%E8%AF%95"
-                    title="调试"
-                    rel="2">调试</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=CI"
+                title="CI"
+                rel="2">CI</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%BD%A6"
-                    title="车"
-                    rel="2">车</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=GitHub"
+                title="GitHub"
+                rel="2">GitHub</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%BF%81%E7%A7%BB"
-                    title="迁移"
-                    rel="2">迁移</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="2">Jekyll</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=AppleScript"
-                    title="AppleScript"
-                    rel="2">AppleScript</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=Notion"
+                title="Notion"
+                rel="2">Notion</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=CI"
-                    title="CI"
-                    rel="2">CI</a>
-        
-                <a data-sort="0070" 
-                    href="/archive/?tag=GitHub"
-                    title="GitHub"
-                    rel="2">GitHub</a>
-        
-                <a data-sort="0070" 
-                    href="/archive/?tag=Jekyll"
-                    title="Jekyll"
-                    rel="2">Jekyll</a>
-        
-                <a data-sort="0070" 
-                    href="/archive/?tag=Notion"
-                    title="Notion"
-                    rel="2">Notion</a>
     </div>
     <hr>
     <h5>专栏</h5>
@@ -1149,8 +918,6 @@ onClick (get-started.js:15)
     </div>
 </section>
 
-
-                <!-- Friends Blog -->
                 
 <hr>
 <h5>朋友们</h5>
@@ -1158,27 +925,29 @@ onClick (get-started.js:15)
   
   <li><a href="https://prosemirror.xheldon.com" target="_blank">ProseMirror 中文</a></li>
   
+  <li><a href="https://rust.xheldon.com" target="_blank">Rust 中文</a></li>
+  
   <li><a href="https://slate.xheldon.com" target="_blank">Slate 中文</a></li>
   
   <li><a href="https://notion-flow.xheldon.com" target="_blank">Notion Flow</a></li>
   
+  <li><a href="https://xpic.xheldon.com" target="_blank">xPic</a></li>
   
-    <li><a href="https://www.xheldon.com" target="_blank">国际版</a></li>
+  
+    <li><a href="https://www.xheldon.cn" target="_blank">国内版</a></li>
   
 </ul>
 
             </div>
-        </div>
+      </div>
     </div>
-</article>
+  </article>
 
-<!-- add support for mathjax by voleking-->
+  
 
+        
 
-<!-- Markdown 流程图按需加载 -->
-
-
-<script src="https://giscus.app/client.js"
+            <script src="https://giscus.app/client.js"
         data-repo="Xheldon/x_blog"
         data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
         data-category="Announcements"
@@ -1196,382 +965,363 @@ onClick (get-started.js:15)
         async>
 </script>
 
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("https://static.xheldon.cn/js/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'hover',
-          placement: 'right',
-          // icon: '#'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
-
-
-
-    <!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <!-- SNS Link -->
+              
+                <!-- async load function -->
+                <script>
+                  function async(u, c) {
+                    var d = document,
+                      t = 'script',
+                      o = d.createElement(t),
+                      s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) {
+                      o.addEventListener('load', function (e) {
+                        c(null, e);
+                      }, false);
+                    }
+                    s.parentNode.insertBefore(o, s);
+                  }
+                </script>
+                <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+                <script>
+                  async("/js/anchor.min.js", function () {
+                    anchors.options = {
+                      visible: 'always',
+                      placement: 'right',
+                      //   icon: '#'
+                    };
+                    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+                  })
+                </script>
+                <style>
+                  /* place left on bigger screen */
+                  @media all and (min-width: 800px) {
+                    .anchorjs-link {
+                      position: absolute;
+                      left: -0.75em;
+                      font-size: 1.1em;
+                      margin-top: -0.1em;
+                    }
+                  }
+                </style>
                 
 
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
 
 <ul class="list-inline text-center">
-
-
-  <!-- 
-  <li>
-    <a target="_blank" href="/feed.xml">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-   -->
-  
-  <li>
-    <a target="_blank" href="https://twitter.com/_xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  <li>
-    <a target="_blank" href="http://weibo.com/xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  
-  <li>
-    <a target="_blank" href="https://www.youtube.com/@xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  <li>
-    <a target="_blank" href="https://space.bilibili.com/13835416">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  <li>
-    <a target="_blank" href="https://t.me/xheldon_tech">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
 </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; <a href="https://github.com/Xheldon" target="_blank">Xheldon</a> 2024
-                    <br>
-                    Don't Panic | Theme fork from <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-                    <br>
-                    
-                    <a style="color: #777; vertical-align: middle;" target="_blank" href="https://beian.miit.gov.cn/">京ICP备2021031693号-1</a>
-                    <a style="color: #777" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502047432">
-                        <img style="width: 17px;height: 17px; vertical-align: middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKTWlDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVN3WJP3Fj7f92UPVkLY8LGXbIEAIiOsCMgQWaIQkgBhhBASQMWFiApWFBURnEhVxILVCkidiOKgKLhnQYqIWotVXDjuH9yntX167+3t+9f7vOec5/zOec8PgBESJpHmomoAOVKFPDrYH49PSMTJvYACFUjgBCAQ5svCZwXFAADwA3l4fnSwP/wBr28AAgBw1S4kEsfh/4O6UCZXACCRAOAiEucLAZBSAMguVMgUAMgYALBTs2QKAJQAAGx5fEIiAKoNAOz0ST4FANipk9wXANiiHKkIAI0BAJkoRyQCQLsAYFWBUiwCwMIAoKxAIi4EwK4BgFm2MkcCgL0FAHaOWJAPQGAAgJlCLMwAIDgCAEMeE80DIEwDoDDSv+CpX3CFuEgBAMDLlc2XS9IzFLiV0Bp38vDg4iHiwmyxQmEXKRBmCeQinJebIxNI5wNMzgwAABr50cH+OD+Q5+bk4eZm52zv9MWi/mvwbyI+IfHf/ryMAgQAEE7P79pf5eXWA3DHAbB1v2upWwDaVgBo3/ldM9sJoFoK0Hr5i3k4/EAenqFQyDwdHAoLC+0lYqG9MOOLPv8z4W/gi372/EAe/tt68ABxmkCZrcCjg/1xYW52rlKO58sEQjFu9+cj/seFf/2OKdHiNLFcLBWK8ViJuFAiTcd5uVKRRCHJleIS6X8y8R+W/QmTdw0ArIZPwE62B7XLbMB+7gECiw5Y0nYAQH7zLYwaC5EAEGc0Mnn3AACTv/mPQCsBAM2XpOMAALzoGFyolBdMxggAAESggSqwQQcMwRSswA6cwR28wBcCYQZEQAwkwDwQQgbkgBwKoRiWQRlUwDrYBLWwAxqgEZrhELTBMTgN5+ASXIHrcBcGYBiewhi8hgkEQcgIE2EhOogRYo7YIs4IF5mOBCJhSDSSgKQg6YgUUSLFyHKkAqlCapFdSCPyLXIUOY1cQPqQ28ggMor8irxHMZSBslED1AJ1QLmoHxqKxqBz0XQ0D12AlqJr0Rq0Hj2AtqKn0UvodXQAfYqOY4DRMQ5mjNlhXIyHRWCJWBomxxZj5Vg1Vo81Yx1YN3YVG8CeYe8IJAKLgBPsCF6EEMJsgpCQR1hMWEOoJewjtBK6CFcJg4Qxwicik6hPtCV6EvnEeGI6sZBYRqwm7iEeIZ4lXicOE1+TSCQOyZLkTgohJZAySQtJa0jbSC2kU6Q+0hBpnEwm65Btyd7kCLKArCCXkbeQD5BPkvvJw+S3FDrFiOJMCaIkUqSUEko1ZT/lBKWfMkKZoKpRzame1AiqiDqfWkltoHZQL1OHqRM0dZolzZsWQ8ukLaPV0JppZ2n3aC/pdLoJ3YMeRZfQl9Jr6Afp5+mD9HcMDYYNg8dIYigZaxl7GacYtxkvmUymBdOXmchUMNcyG5lnmA+Yb1VYKvYqfBWRyhKVOpVWlX6V56pUVXNVP9V5qgtUq1UPq15WfaZGVbNQ46kJ1Bar1akdVbupNq7OUndSj1DPUV+jvl/9gvpjDbKGhUaghkijVGO3xhmNIRbGMmXxWELWclYD6yxrmE1iW7L57Ex2Bfsbdi97TFNDc6pmrGaRZp3mcc0BDsax4PA52ZxKziHODc57LQMtPy2x1mqtZq1+rTfaetq+2mLtcu0W7eva73VwnUCdLJ31Om0693UJuja6UbqFutt1z+o+02PreekJ9cr1Dund0Uf1bfSj9Rfq79bv0R83MDQINpAZbDE4Y/DMkGPoa5hpuNHwhOGoEctoupHEaKPRSaMnuCbuh2fjNXgXPmasbxxirDTeZdxrPGFiaTLbpMSkxeS+Kc2Ua5pmutG003TMzMgs3KzYrMnsjjnVnGueYb7ZvNv8jYWlRZzFSos2i8eW2pZ8ywWWTZb3rJhWPlZ5VvVW16xJ1lzrLOtt1ldsUBtXmwybOpvLtqitm63Edptt3xTiFI8p0in1U27aMez87ArsmuwG7Tn2YfYl9m32zx3MHBId1jt0O3xydHXMdmxwvOuk4TTDqcSpw+lXZxtnoXOd8zUXpkuQyxKXdpcXU22niqdun3rLleUa7rrStdP1o5u7m9yt2W3U3cw9xX2r+00umxvJXcM970H08PdY4nHM452nm6fC85DnL152Xlle+70eT7OcJp7WMG3I28Rb4L3Le2A6Pj1l+s7pAz7GPgKfep+Hvqa+It89viN+1n6Zfgf8nvs7+sv9j/i/4XnyFvFOBWABwQHlAb2BGoGzA2sDHwSZBKUHNQWNBbsGLww+FUIMCQ1ZH3KTb8AX8hv5YzPcZyya0RXKCJ0VWhv6MMwmTB7WEY6GzwjfEH5vpvlM6cy2CIjgR2yIuB9pGZkX+X0UKSoyqi7qUbRTdHF09yzWrORZ+2e9jvGPqYy5O9tqtnJ2Z6xqbFJsY+ybuIC4qriBeIf4RfGXEnQTJAntieTE2MQ9ieNzAudsmjOc5JpUlnRjruXcorkX5unOy553PFk1WZB8OIWYEpeyP+WDIEJQLxhP5aduTR0T8oSbhU9FvqKNolGxt7hKPJLmnVaV9jjdO31D+miGT0Z1xjMJT1IreZEZkrkj801WRNberM/ZcdktOZSclJyjUg1plrQr1zC3KLdPZisrkw3keeZtyhuTh8r35CP5c/PbFWyFTNGjtFKuUA4WTC+oK3hbGFt4uEi9SFrUM99m/ur5IwuCFny9kLBQuLCz2Lh4WfHgIr9FuxYji1MXdy4xXVK6ZHhp8NJ9y2jLspb9UOJYUlXyannc8o5Sg9KlpUMrglc0lamUycturvRauWMVYZVkVe9ql9VbVn8qF5VfrHCsqK74sEa45uJXTl/VfPV5bdra3kq3yu3rSOuk626s91m/r0q9akHV0IbwDa0b8Y3lG19tSt50oXpq9Y7NtM3KzQM1YTXtW8y2rNvyoTaj9nqdf13LVv2tq7e+2Sba1r/dd3vzDoMdFTve75TsvLUreFdrvUV99W7S7oLdjxpiG7q/5n7duEd3T8Wej3ulewf2Re/ranRvbNyvv7+yCW1SNo0eSDpw5ZuAb9qb7Zp3tXBaKg7CQeXBJ9+mfHvjUOihzsPcw83fmX+39QjrSHkr0jq/dawto22gPaG97+iMo50dXh1Hvrf/fu8x42N1xzWPV56gnSg98fnkgpPjp2Snnp1OPz3Umdx590z8mWtdUV29Z0PPnj8XdO5Mt1/3yfPe549d8Lxw9CL3Ytslt0utPa49R35w/eFIr1tv62X3y+1XPK509E3rO9Hv03/6asDVc9f41y5dn3m978bsG7duJt0cuCW69fh29u0XdwruTNxdeo94r/y+2v3qB/oP6n+0/rFlwG3g+GDAYM/DWQ/vDgmHnv6U/9OH4dJHzEfVI0YjjY+dHx8bDRq98mTOk+GnsqcTz8p+Vv9563Or59/94vtLz1j82PAL+YvPv655qfNy76uprzrHI8cfvM55PfGm/K3O233vuO+638e9H5ko/ED+UPPR+mPHp9BP9z7nfP78L/eE8/sl0p8zAAA7SGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgICAgICAgICB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIgogICAgICAgICAgICB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoV2luZG93cyk8L3htcDpDcmVhdG9yVG9vbD4KICAgICAgICAgPHhtcDpDcmVhdGVEYXRlPjIwMTUtMTEtMTBUMTQ6MDQ6NTArMDg6MDA8L3htcDpDcmVhdGVEYXRlPgogICAgICAgICA8eG1wOk1ldGFkYXRhRGF0ZT4yMDE1LTExLTEwVDE0OjA0OjUwKzA4OjAwPC94bXA6TWV0YWRhdGFEYXRlPgogICAgICAgICA8eG1wOk1vZGlmeURhdGU+MjAxNS0xMS0xMFQxNDowNDo1MCswODowMDwveG1wOk1vZGlmeURhdGU+CiAgICAgICAgIDx4bXBNTTpJbnN0YW5jZUlEPnhtcC5paWQ6ODBiY2E5ODUtNGY5Yi02ZTRkLTlmYzktZThmNDkyNjdkZjRlPC94bXBNTTpJbnN0YW5jZUlEPgogICAgICAgICA8eG1wTU06RG9jdW1lbnRJRD5hZG9iZTpkb2NpZDpwaG90b3Nob3A6ZWRkYWU4MGMtODc3MC0xMWU1LTg0OWEtYmNmZGE2MDI4ZjJlPC94bXBNTTpEb2N1bWVudElEPgogICAgICAgICA8eG1wTU06T3JpZ2luYWxEb2N1bWVudElEPnhtcC5kaWQ6ZDAxN2I5NGUtOTRiZC0yNjQxLThmZjktYmY3YTBhMzY3N2IxPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOmQwMTdiOTRlLTk0YmQtMjY0MS04ZmY5LWJmN2EwYTM2NzdiMTwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNS0xMS0xMFQxNDowNDo1MCswODowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDo4MGJjYTk4NS00ZjliLTZlNGQtOWZjOS1lOGY0OTI2N2RmNGU8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTUtMTEtMTBUMTQ6MDQ6NTArMDg6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE0IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8cGhvdG9zaG9wOkRvY3VtZW50QW5jZXN0b3JzPgogICAgICAgICAgICA8cmRmOkJhZz4KICAgICAgICAgICAgICAgPHJkZjpsaT4zQ0I4RkVFOEMyRUJFNkU1QTREQTk3MzI4MzU0MTI0RTwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpPmFkb2JlOmRvY2lkOnBob3Rvc2hvcDpiZGRmY2Y2Zi04NzcwLTExZTUtODQ5YS1iY2ZkYTYwMjhmMmU8L3JkZjpsaT4KICAgICAgICAgICAgPC9yZGY6QmFnPgogICAgICAgICA8L3Bob3Rvc2hvcDpEb2N1bWVudEFuY2VzdG9ycz4KICAgICAgICAgPHBob3Rvc2hvcDpDb2xvck1vZGU+MzwvcGhvdG9zaG9wOkNvbG9yTW9kZT4KICAgICAgICAgPHBob3Rvc2hvcDpJQ0NQcm9maWxlPnNSR0IgSUVDNjE5NjYtMi4xPC9waG90b3Nob3A6SUNDUHJvZmlsZT4KICAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9wbmc8L2RjOmZvcm1hdD4KICAgICAgICAgPHRpZmY6T3JpZW50YXRpb24+MTwvdGlmZjpPcmllbnRhdGlvbj4KICAgICAgICAgPHRpZmY6WFJlc29sdXRpb24+NzIwMDAwLzEwMDAwPC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj43MjAwMDAvMTAwMDA8L3RpZmY6WVJlc29sdXRpb24+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDxleGlmOkNvbG9yU3BhY2U+MTwvZXhpZjpDb2xvclNwYWNlPgogICAgICAgICA8ZXhpZjpQaXhlbFhEaW1lbnNpb24+MjA8L2V4aWY6UGl4ZWxYRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpQaXhlbFlEaW1lbnNpb24+MjA8L2V4aWY6UGl4ZWxZRGltZW5zaW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAKPD94cGFja2V0IGVuZD0idyI/Pu6JurQAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAABRFJREFUeNpE1OtvW/Udx/H3ufj4+Ph2nDh2vLgrTSPaFNqGtd0Gy9LRTVymNoNM6ihCaEwdQ5sYAo0HTOwBYg/Yk0pDiG3qmLSiPtjGJERbdZSQaUArykXt1la9hDRNY6dpYsexj30uPj7ntwcVyT/w0ucrfT5fSQgBdguAEBlZhDhaiVikF2j22lfPjP77+Kc/9ZyO9p37th7s2rLlbegveZ4g6jggS4AMAKkkkhAC366DJJADgaJlgA/unTx+4qmT/7oyKpxJfdYzUDIma7M6TsXoDH+3/8jgnrG/iOC2o8JrIiQJECjpvlt0Q7JoimWEkQHN1Sf+8MbE40+O7226M/rtCYX9+k2e0me55+48XXfn1f1PvvfwiVdfOSLFlKitSbh8hq9+DitZFRlZSaHK1aJ35uV3f3+4zr79/fy42CD9pwtULwdUpwLqu//ID4JzPHPoEQ7+00dc/vM/Eoary3oCPR5dBROeRTxaH7x+9MWpkd3nRsyBPL/InmP6cAN5jUlgtcELkXpMTj19kr3GGfLfuovv7T62Z/GjN67aM2c3XHz/nVUw6jmo7ruJI5eT2idz23lwu0XzbAP5eh3JjBJdCnBP3iSyrhu96VD562nG7m8z8cUm3vwwKCSkVgx5aBWsL1aK4cfvHwilGKg2KWuOxjxEAh+WXKT1Bto2E/lGC42QyrRDX5cHkkStKRPtUQ9sHB5btwLOXHrvh+1yeTiT0KATRRQKZId7aSKw7ukm2Fck8dIQxjNbkHsMctuytOw2CEEhZ0Dp7L1Ls6d+sgIaicxgw/Lp73FB7+bEaQN1V4rqnrUEZQvpfy3sYzfxp5fRnh+m69mtvHWoBsQZ2qzSmlrALU0VV8BwaW5Po6ZyZ9Gi+HWN19+M859XSgztKJA2ktgXaoQLHu65GsnyMudfvsKrh6Lkh0w299WplD38pUvDK6CstkyrIZNavMLe+wM6fgL/6Dzdf/scuS9Cu0chzKlkdxUoTFylcvA8rbbC2GiEZHUSq6GiJuUIgAoQM746Lm+4Nhrk+3jiGxYH+np4vTyIP3uB7uokcjqGc6GGNZCjnCnwdzkGKZMnvrlAJ1nEvEPCyKw5tgKCnBMNwdyUxZ2D0/z2V9t48fkRjlqboeEzalfpMmXeOpakiQFkeO7nOjsGJpmbBFybsGNtXQFVs729k8zjz/uUFi7yy+EoY+NxJo7bXJK38MCmLyjEKnSO9NGuOazZaPDrB65x89Q1bF9Hz2qoprYRuPUcvOYnj1ZP/+6wM9/Gq/hQmmH9Q0NE8zoEVYKqSnPBIb2uC9Z2Q6nC9NuXcZJZEv0JYr0G6YF9O7XM9z+QhBAAdFr/fWzp/IHXAtdJVz6cR40LencOEiw5+HYL2dDRu+JIWoTqqSk6gUp6+3p8l2p6w8gjcTM1Lmn33TrZd2ZwFp2yOx9z9HyYzu8aIKi3CKwGGBqKZqLFoL3cpFWqoa/tRi/m8ZZt3LIlYmuaKKkUsS9rI9pXUfjohdzXkr2RTAGvHhIGKmGg4C5aIELa1TrNyUUkJQKShHujQiQmk/92IasZ1s9Ch9Uta0qKaPeOhyw7/ZpdKrU0ZZlUrkNEstEkH8VbRjgOyY1ZUgMpZK2JmtaQMr3XO+pdv1GN23+kaIus1kb4SBHVblTjTzsX8y859cUHPX9251c29WwKLSmhm3KXGkti3eB6rMe01dzI2aWphXFnpnaib2culBQFEbgA/H8ALiI3EysggNoAAAAASUVORK5CYII=" />
-                        <span style="vertical-align: middle;">京公网安备 11010502047432号</span>
-                    </a>
-                    
-                </p>
-            </div>
-            <!-- <div class="switch-mode" id="dark-mode">
-                <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-                    <i class="fa fa-moon-o fa-stack-1x"></i>
-                  </span>
-            </div>
-            <div class="switch-mode" id="light-mode">
-                <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-sun-o fa-stack-1x fa-inverse"></i>
-                  </span>
-            </div> -->
-        </div>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2024
+          <br>
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+          <br>
+          
+        </p>
+      </div>
     </div>
+  </div>
 </footer>
 <script>
-    if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
-        console.log('浏览器不支持主题色');
-    } else {
-        if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-            document.documentElement.classList.remove('light');
-            document.documentElement.classList.add('dark');
-            // Note: 推特列表添加暗黑主题
-            let ttl = document.querySelector('.twitter-timeline');
-            if (ttl) {
-                ttl.setAttribute('data-theme', 'dark');
-            }
-        }
-        if(window.matchMedia('(prefers-color-scheme: light)').matches){
-            document.documentElement.classList.remove('dark');
-            document.documentElement.classList.add('light');
-            let ttl = document.querySelector('.twitter-timeline');
-            if (ttl) {
-                ttl.removeAttribute('data-theme');
-            }
-        }
-        // document.getElementById('dark-mode').addEventListener('click', function() {
-        //     document.documentElement.classList.remove('light');
-        //     document.documentElement.classList.add('dark');
-        // });
-        // document.getElementById('light-mode').addEventListener('click', function() {
-        //     document.documentElement.classList.add('light');
-        //     document.documentElement.classList.remove('dark');
-        // });
-        // Note: 自动切换
-        window.matchMedia('(prefers-color-scheme: dark)').addListener(function(mediaQueryList) {
-            if (mediaQueryList.matches) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-            }
-        })
-        window.matchMedia('(prefers-color-scheme: light)').addListener(function(mediaQueryList) {
-            if (mediaQueryList.matches) {
-                document.documentElement.classList.add('light');
-                document.documentElement.classList.remove('dark');
-            }
-        })
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
     }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function(mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function(mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
 </script>
+
 <!-- jQuery -->
-<script src="https://static.xheldon.cn/js/jquery.min.js "></script>
+<script src="/js/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
-<script src="https://static.xheldon.cn/js/bootstrap.min.js "></script>
+<script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="https://static.xheldon.cn/js/xheldon-life-blog.min.js?202110012319"></script>
+<script src="/js/xblog.min.js?202405251426"></script>
 
-<!-- Simple Jekyll Search -->
-<script src="https://static.xheldon.cn/js/simple-jekyll-search.min.js"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src='/js/simple-jekyll-search.min.js'></script>
 
 <!-- Vercel web analysis -->
 
+<script defer src="/_vercel/insights/script.js"></script>
 
-<!-- Service Worker -->
 
-<script src="https://static.xheldon.cn/js/snackbar.js "></script>
-<script src="https://static.xheldon.cn/js/sw-registration.js "></script>
-
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
 <!-- async load function -->
 <script>
-    function async(u, c) {
-        var d = document, t = 'script',
-            o = d.createElement(t),
-            s = d.getElementsByTagName(t)[0];
-        o.src = u;
-        if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-        s.parentNode.insertBefore(o, s);
+  function async (u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function(e) {
+          c(null, e);
+        },
+        false
+      );
     }
+    s.parentNode.insertBefore(o, s);
+  }
 </script>
 
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-
-
+<!-- jquery.tagcloud.js -->
 
 
 <!--fastClick.js -->
 <script>
-    async("https://static.xheldon.cn/js/fastclick.min.js", function () {
-        var $nav = document.querySelector("nav");
-        if ($nav) FastClick.attach($nav);
-    })
+  async ('/js/fastclick.min.js', function() {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
 </script>
-
 
 <!-- Google Analytics -->
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-5"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
 <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'UA-79359216-5');
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', '{{config.ga_track_id}}');
 </script>
 
 
 <!-- Side Catalog -->
 
 <script type="text/javascript">
-    function generateCatalog(selector) {
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
 
-        // interop with multilangual 
-        if ('' == 'true') {
-            _containerSelector = 'div.post-container.active'
-        } else {
-            _containerSelector = 'div.post-container'
-        }
+    // clean
+    $(selector).html('');
 
-        // init
-        var P = $(_containerSelector), a, n, t, l, i, c;
-        a = P.find('h1,h2,h3,h4,h5,h6');
-
-        // clean
-        $(selector).html('')
-
-        // appending
-        a.each(function () {
-            n = $(this).prop('tagName').toLowerCase();
-            i = "#" + $(this).prop('id');
-            t = $(this).text();
-            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-            l = $('<li class="' + n + '_nav"></li>').append(c);
-            $(selector).append(l);
-        });
-        return true;
-    }
-
-    generateCatalog(".catalog-body");
-
-    // toggle side catalog
-    $(".catalog-toggle").click((function (e) {
-        e.preventDefault();
-        $('.side-catalog').toggleClass("fold")
-    }))
-
-    /*
-     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-     * Fork by Hux to support padding
-     */
-    async("https://static.xheldon.cn/js/jquery.nav.js", function () {
-        $('.catalog-body').onePageNav({
-            currentClass: "active",
-            changeHash: !1,
-            easing: "swing",
-            filter: "",
-            scrollSpeed: 700,
-            scrollOffset: 0,
-            scrollThreshold: .2,
-            begin: null,
-            end: null,
-            scrollChange: null,
-            padding: 80
-        });
+    // appending
+    a.each(function() {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
     });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function(e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async ('/js/jquery.nav.js',
+    function() {
+      $('.catalog-body').onePageNav({
+        currentClass: 'active',
+        changeHash: !1,
+        easing: 'swing',
+        filter: '',
+        scrollSpeed: 700,
+        scrollOffset: 0,
+        scrollThreshold: 0.2,
+        begin: null,
+        end: null,
+        scrollChange: null,
+        padding: 80,
+      });
+    }
+  );
 </script>
 
 
-
-<!-- Multi-Lingual -->
-
-
-<!-- Simple Jekyll Search -->
 <script>
-    // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-    function htmlDecode(input) {
-        var e = document.createElement('textarea');
-        e.innerHTML = input;
-        // handle case of empty input
-        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-    }
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+  }
 
-    SimpleJekyllSearch({
-        searchInput: document.getElementById('search-input'),
-        resultsContainer: document.getElementById('search-results'),
-        json: '/search.json',
-        searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-        noResultsText: 'No results',
-        limit: 50,
-        fuzzy: false,
-        // a hack to get escaped subtitle unescaped. for some reason, 
-        // post.subtitle w/o escape filter nuke entire search.
-        templateMiddleware: function (prop, value, template) {
-            if (prop === 'subtitle' || prop === 'title') {
-                if (value.indexOf("code")) {
-                    return htmlDecode(value);
-                } else {
-                    return value;
-                }
-            }
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('search-results'),
+    json: '/search.json',
+    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+    noResultsText: 'No results',
+    limit: 50,
+    fuzzy: false,
+    // a hack to get escaped subtitle unescaped. for some reason, 
+    // post.subtitle w/o escape filter nuke entire search.
+    templateMiddleware: function(prop, value, template) {
+      if (prop === 'subtitle' || prop === 'title') {
+        if (value.indexOf("code")) {
+          return htmlDecode(value);
+        } else {
+          return value;
         }
-    });
+      }
+    }
+  });
 
-    $(document).ready(function () {
-        var $searchPage = $('.search-page');
-        var $searchOpen = $('.search-icon');
-        var $searchClose = $('.search-icon-close');
-        var $searchInput = $('#search-input');
-        var $body = $('body');
+  $(document).ready(function() {
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
 
-        $searchOpen.on('click', function (e) {
-            e.preventDefault();
-            $searchPage.toggleClass('search-active');
-            var prevClasses = $body.attr('class') || '';
-            setTimeout(function () {
-                $body.addClass('no-scroll');
-            }, 400)
+    $searchOpen.on('click', function(e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function() {
+        $body.addClass('no-scroll');
+      }, 400)
 
-            if ($searchPage.hasClass('search-active')) {
-                $searchClose.on('click', function (e) {
-                    e.preventDefault();
-                    $searchPage.removeClass('search-active');
-                    $body.attr('class', prevClasses);  // from closure 
-                });
-                $searchInput.focus();
-            }
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function(e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure 
         });
+        $searchInput.focus();
+      }
     });
+  });
 </script>
 
-
-<!-- Image to hack wechat -->
-<img src="/resources/img/icon_wechat.png" width="0" height="0" />
-<!-- Migrate from head to bottom, no longer block render and still work -->
-
-</body>
-
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
 </html>

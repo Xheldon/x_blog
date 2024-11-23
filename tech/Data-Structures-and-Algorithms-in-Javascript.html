@@ -1,499 +1,478 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      JavaScript 中的数据结构和算法 - Xheldon Blog
+        
+  </title>
 
-<head>
-    <meta charset="utf-8">
-    <title>JavaScript 中的数据结构和算法 - Xheldon Blog</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="">
     
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    
-        <meta name="description" content="">
-    
-    <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
-    <meta name="theme-color" content="#000000">
-    <meta name="twitter:card" content="summary_large_image">
-    <!-- Open Graph -->
-    <meta property="og:title" content="JavaScript 中的数据结构和算法 - Xheldon Blog">
-    
-    <meta property="og:type" content="article">
-    
-    <meta property="article:published_time" content="2019-10-08T00:17:33Z">
-    
-    
-    
-    <meta property="article:tag" content="技术">
-    
-    <meta property="article:tag" content="数据结构">
-    
-    <meta property="article:tag" content="算法">
-    
-    <meta property="article:tag" content="JavaScript">
-    
-    
-    
-        <meta name="og:description" content="">
-    
-    
-    <meta property="twitter:image" content="https://www.xheldon.cn/resources/img/logo.png">
-    <meta property="og:image" content="https://www.xheldon.cn/resources/img/logo.png">
-    
-    <meta property="og:url" content="https://www.xheldon.cn/tech/Data-Structures-and-Algorithms-in-Javascript.html">
-    <meta property="og:site_name" content="Xheldon Blog">
-    <meta name="google-adsense-account" content="ca-pub-5486286026923411">
-    <script async src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1" nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script><script nonce="hkl-3cDcQhqR8uwDMTDGjQ">(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
-     crossorigin="anonymous"></script>
-    <!-- Web App Manifest -->
-    <link rel="manifest" href="/pwa/manifest.json">
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <!-- Open Graph -->
+        <meta property="og:title"
+          content="JavaScript 中的数据结构和算法 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2019-10-7T4:17:33"> 
+              
+                  
+                    <meta property="article:tag" content="技术">
+                    
+                    <meta property="article:tag" content="JavaScript">
+                    
+                    <meta property="article:tag" content="数据结构">
+                    
+                    <meta property="article:tag" content="算法">
+                    
+                      
+                          
+                            <meta name="og:description" content="">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.cn/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.cn/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.cn/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="/resources/img/favicon.ico">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.xheldon.cn/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+                                      <!-- Web App Manifest -->
+                                      <link rel="manifest" href="/js/manifest.json">
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.cn/tech/Data-Structures-and-Algorithms-in-Javascript.html">
 
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="https://static.xheldon.cn/css/xheldon-life-blog.min.css">
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
 
-    <!-- Custom Fonts -->
-    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
-    <link href="https://static.xheldon.cn/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
 
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
 
+  <!-- hack iOS CSS :active style -->
 
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="">
-
+  <body ontouchstart="">
     <!-- Navigation -->
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
     
-        <div class="container-fluid">
+      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        
+          <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">
-                    Xheldon Blog
-                </a>
+              <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">
+                Xheldon Blog
+              </a>
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div id="xheldonblog_navbar">
-                <div class="navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/">Home</a></li>
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-                        <li>
-                            <a href="/donate/">Donate</a>
-                        </li>
-                        <li>
-                            <a href="/archive/">Archive</a>
-                        </li>
-                        <li>
-                            <a href="/feed.xml">Rss</a>
-                        </li>
-                        <li class="search-icon">
-                            <a href="javascript:void(0)">
-                                <i class="fa fa-search"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+            <div id="xblog_navbar">
+              <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <a href="/">Home</a>
+                  </li>
+                  <li>
+                    <a href="/about/">About</a>
+                  </li>
+                  <li>
+                    <a href="/donate/">Donate</a>
+                  </li>
+                  <li>
+                    <a href="/archive/">Archive</a>
+                  </li>
+                  <li>
+                    <a href="/feed.xml">Rss</a>
+                  </li>
+                  <li class="search-icon">
+                    <a href="javascript:void(0)">
+                      <i class="fa fa-search"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
             <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-
-    <script>
+          </div>
+          <!-- /.container -->
+      </nav>
+      <script>
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
         var $body = document.body;
         var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xheldonblog_navbar');
+        var $navbar = document.querySelector('#xblog_navbar');
         var $collapse = document.querySelector('.navbar-collapse');
 
-        var __XheldonNav__ = {
-            close: function () {
-                $navbar.className = " ";
-                // wait until animation end.
-                setTimeout(function () {
-                    // prevent frequently toggle
-                    if ($navbar.className.indexOf('in') < 0) {
-                        $collapse.style.height = "0px"
-                    }
-                }, 400)
-            },
-            open: function () {
-                $collapse.style.height = "auto"
-                $navbar.className += " in";
-            }
-        }
-
+        var __XNav__ = {
+          close: function () {
+            $navbar.className = ' ';
+            // wait until animation end.
+            setTimeout(function () {
+              // prevent frequently toggle
+              if ($navbar.className.indexOf('in') < 0) {
+                $collapse.style.height = '0px';
+              }
+            }, 400);
+          },
+          open: function () {
+            $collapse.style.height = 'auto';
+            $navbar.className += ' in';
+          },
+        };
         // Bind Event
         $toggle.addEventListener('click', function (e) {
-            if ($navbar.className.indexOf('in') > 0) {
-                __XheldonNav__.close()
-            } else {
-                __XheldonNav__.open()
-            }
-        })
-
+          if ($navbar.className.indexOf('in') > 0) {
+            __XNav__.close();
+          } else {
+            __XNav__.open();
+          }
+        });
         /**
          * Since Fastclick is used to delegate 'touchstart' globally
          * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * Using 'e.stopPropagation' to stop 'touchstart' event from
          * $toggle/$collapse will break global delegation.
-         * 
+         *
          * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.  
+         * added to document close XheldonNav.
          *
          * Also, we use 'click' instead of 'touchstart' as compromise
          */
         document.addEventListener('click', function (e) {
-            if (e.target == $toggle) return;
-            if (e.target.className == 'icon-bar') return;
-            __XheldonNav__.close();
-        })
-    </script>
-    <!-- Search -->
+          if (e.target == $toggle) return;
+          if (e.target.className == 'icon-bar') return;
+          __XNav__.close();
+        });
+      </script> <!-- Search -->
 <div class="search-page">
-  <div class="search-icon-close-container">
-    <span class="search-icon-close">
-      <i class="fa fa-chevron-down"></i>
-    </span>
-  </div>
-  <div class="search-main container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <form></form>
-        <input type="text" id="search-input" placeholder="$ grep...">
-        </form>
-        <div id="search-results" class="mini-post-list"></div>
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-    <!-- Image to hack wechat -->
-<!-- <img src="/resources/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
-
-<!-- Post Header -->
-
-
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://www.xheldon.cn/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/" width="0" height="0"> -->
 
 <style type="text/css">
-    header.intro-header{
-        position: relative;
-        background-image: url('https://static.xheldon.cn/img/index-bg.png');
-        
-    }
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
 
     
+  }
+
+  
 </style>
 
-<header class="intro-header style-text" >
-
-    <div class="header-mask"></div>
+<header class="intro-header style-text">
+  
+    <div class="headerMask"></div>
     
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                        
-                        <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-                        
-                        <a class="tag" href="/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="数据结构">数据结构</a>
-                        
-                        <a class="tag" href="/archive/?tag=%E7%AE%97%E6%B3%95" title="算法">算法</a>
-                        
-                        <a class="tag" href="/archive/?tag=JavaScript" title="JavaScript">JavaScript</a>
-                        
-                    </div>
-                    <h1>JavaScript 中的数据结构和算法</h1>
-                    
-                    <h2 class="subheading"></h2>
-                    <span class="meta">✍🏼 写于 2019年10月08日</span>&nbsp;&nbsp;&nbsp;  
-                    
-                </div>
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <div class="tags">
+              
+              <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+              
+              <a class="tag" href="/archive/?tag=JavaScript" title="JavaScript">JavaScript</a>
+              
+              <a class="tag" href="/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="数据结构">数据结构</a>
+              
+              <a class="tag" href="/archive/?tag=%E7%AE%97%E6%B3%95" title="算法">算法</a>
+              
             </div>
+            <h1>JavaScript 中的数据结构和算法</h1>
+            <h2 class="subheading"></h2>
+            <span class="meta">✍🏼 写于 2019年10月07日</span>&nbsp;&nbsp;&nbsp;
+            
+          </div>
         </div>
+      </div>
     </div>
-</header>
+  </header>
 
-
-
-
-
-
-<!-- Post Content -->
-<article>
+  <!-- Post Content -->
+  <article>
     <div class="container">
-        <div class="row">
+      <div class="row">
 
-    <!-- Post Container -->
-            <div class="
+        <!-- Post Container -->
+        <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
                 post-container">
-
-                <!-- Multi-Lingual -->
-                
+          
+            
+              <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
+              <script>
+                var timeDom = document.getElementById('from_time');
+                var pageTime = Date.parse('Mon Oct 07 2019 16:17:33 GMT+0000');
+                var currentTime = Date.now();
+                var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
+                if (Number(fromNow) <= 0) {
+                  fromNow = 1; // Note: 至少显示一天
+                }
+                timeDom.innerText = fromNow
+              </script>
+              
                 
                     
-                        
-                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
-                        <script>
-                            var timeDom = document.getElementById('from_time');
-                            var pageTime = 1570465053; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
-                            var currentTime = Date.now();
-                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
-                            if (Number(fromNow) <= 0) {
-                                fromNow = 1; // Note: 至少显示一天
-                            }
-                            timeDom.innerText = fromNow
-                        </script>
-                    
-                    
-                
-                
-                
-                
-				<h2 id="前言">前言</h2>
-
+                      
+                          
+                              
+                                  <h2 id="前言">前言</h2>
 <p>虽然知道自己很努力, 也进入过大公司. 但是一直以来自己在计算机科学的基础方面都很薄弱, 因为自己并不是科班出身, 因此很希望能够通过后天弥补拉近与科班出身同学的差距, 因此作为程序员的三大梦(语言/算法/图形)之一, 数据结构和算法一直是我心头的一个心病, 总是在空闲的时间逛一些技术社区的时候被一些标题党的数据和算法相关标题吸引进去, 点进去看后又空洞无物. 因此终于下定决心要好好学习一下算法(基础).</p>
-
-<p>这篇文章即是我学习后记录的产物, 是在看 &lt;学习 JavaScript 数据结构与算法(第2版)&gt; 时候的总结和备忘, 先从数据结构入手, 然后是数据结构的各种算法. 大部分使用 ES5 方法, 少部分使用 ES6 方法. 只实现效果, 不考虑一些诸如执行开销等不相关问题(如使用在每个实例上添加方法而不是使用原型链等)</p>
-
+<p>这篇文章即是我学习后记录的产物, 是在看 &lt;学习 JavaScript 数据结构与算法(第 2 版)&gt; 时候的总结和备忘, 先从数据结构入手, 然后是数据结构的各种算法. 大部分使用 ES5 方法, 少部分使用 ES6 方法. 只实现效果, 不考虑一些诸如执行开销等不相关问题(如使用在每个实例上添加方法而不是使用原型链等)</p>
 <h2 id="栈">栈</h2>
-
 <h3 id="栈的基本概念和方法">栈的基本概念和方法</h3>
-
 <p>栈是一种遵从后进先出(LIFO)原则的有序集合. 新添加或待删除的元素保存在栈的一端, 称作栈顶, 另一端称作栈底. 在栈里, 新元素都靠近栈顶, 旧元素都靠近栈底. 形象的例子就是一摞书. 栈数据结构有以下方法:</p>
 <ol>
-  <li><code class="language-plaintext highlighter-rouge">push(element)</code> 添加一个或几个元素</li>
-  <li><code class="language-plaintext highlighter-rouge">pop()</code> 移除栈顶的元素, 返回被移除的元素</li>
-  <li><code class="language-plaintext highlighter-rouge">peek()</code> 返回栈顶的元素, 不修改原始栈</li>
-  <li><code class="language-plaintext highlighter-rouge">isEmpty()</code> 判断栈是否为空</li>
-  <li><code class="language-plaintext highlighter-rouge">clear()</code> 清空栈</li>
-  <li><code class="language-plaintext highlighter-rouge">size()</code> 返回栈里的元素个数</li>
+<li><code>push(element)</code> 添加一个或几个元素</li>
+<li><code>pop()</code> 移除栈顶的元素, 返回被移除的元素</li>
+<li><code>peek()</code> 返回栈顶的元素, 不修改原始栈</li>
+<li><code>isEmpty()</code> 判断栈是否为空</li>
+<li><code>clear()</code> 清空栈</li>
+<li><code>size()</code> 返回栈里的元素个数</li>
 </ol>
-
 <h3 id="栈的-javascript-实现">栈的 JavaScript 实现</h3>
-
 <ol>
-  <li><a href="https://static.xheldon.cn/example-code/2019/Stack.js">栈</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/Stack.js">栈</a></li>
 </ol>
-
 <h3 id="栈的应用">栈的应用</h3>
-
 <ol>
-  <li><a href="https://static.xheldon.cn/example-code/2019/DecimalToBinary.js">十进制转二进制</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/TowerOfHanoi.js">汉诺塔</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/DecimalToBinary.js">十进制转二进制</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/TowerOfHanoi.js">汉诺塔</a></li>
 </ol>
-
 <h2 id="队列">队列</h2>
-
 <h3 id="队列的基本概念和方法">队列的基本概念和方法</h3>
-
-<p>队列是遵循FIFO(First In First Out 先进先出)原则的一组有序项. 队列在尾部添加新元素, 并从顶部移除元素. 最新添加的元素必须排在队列的末尾. 队列数据结构有以下方法:</p>
-
+<p>队列是遵循 FIFO(First In First Out 先进先出)原则的一组有序项. 队列在尾部添加新元素, 并从顶部移除元素. 最新添加的元素必须排在队列的末尾. 队列数据结构有以下方法:</p>
 <ol>
-  <li><code class="language-plaintext highlighter-rouge">enqueue(element)</code> 向队列尾部添加一个(或多个)新的项</li>
-  <li><code class="language-plaintext highlighter-rouge">dequeue()</code> 移除队列的第一项(最先添加的元素), 并返回被移除的元素</li>
-  <li><code class="language-plaintext highlighter-rouge">front()</code> 返回队列中第一个元素(最先添加的元素), 队列不变</li>
-  <li><code class="language-plaintext highlighter-rouge">isEmpty()</code> 返回队列是否为空</li>
-  <li><code class="language-plaintext highlighter-rouge">size()</code> 队列元素个数</li>
+<li><code>enqueue(element)</code> 向队列尾部添加一个(或多个)新的项</li>
+<li><code>dequeue()</code> 移除队列的第一项(最先添加的元素), 并返回被移除的元素</li>
+<li><code>front()</code> 返回队列中第一个元素(最先添加的元素), 队列不变</li>
+<li><code>isEmpty()</code> 返回队列是否为空</li>
+<li><code>size()</code> 队列元素个数</li>
 </ol>
-
 <h3 id="队列的-javascript-实现">队列的 JavaScript 实现</h3>
-
 <ol>
-  <li><a href="https://static.xheldon.cn/example-code/2019/Queue.js">队列</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/PriorityQueue.js">加权队列</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/Queue.js">队列</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/PriorityQueue.js">加权队列</a></li>
 </ol>
-
 <h2 id="链表">链表</h2>
-
 <h3 id="链表的基本概念和方法">链表的基本概念和方法</h3>
-
 <p>链表的每项不仅存有自身的值, 还存有一个指针, 该指针指向下一个项的位置, 此谓之单向链表; 如果每项不但存有指向下一个项的位置指针, 还有一个指向上一个项的指针(除了开头/结尾项, 它们指向上一个/下一个的指针为 null), 则此谓之双向链表; 如果双向链表的首尾相连, 则谓之双向循环链表. 像下面这样(箭头就是指针, 是箭头尾部项的一部分):</p>
-
 <ol>
-  <li>单向链表
-    <pre><code class="language-mermaid">graph RL
-A(Tail) --&gt; B(第三项) --&gt; C(第二项) --&gt; D(Head)
-</code></pre>
-  </li>
-  <li>双向链表
-    <pre><code class="language-mermaid">graph LR
+<li>单向链表<pre><code class="hljs mermaid">graph RL
+A(Tail) --&gt; B(第三项) --&gt; C(第二项) --&gt; D(Head)</code></pre>
+</li>
+<li>双向链表<pre><code class="hljs mermaid">graph LR
+A(Head) --&gt; B(第二项) --&gt; A
+B --&gt; C(第三项) --&gt; B
+C --&gt; D(Tail) --&gt; C</code></pre>
+</li>
+<li>循环链表<pre><code class="hljs mermaid">graph LR
 A(Head) --&gt; B(第二项) --&gt; A
 B --&gt; C(第三项) --&gt; B
 C --&gt; D(Tail) --&gt; C
-</code></pre>
-  </li>
-  <li>循环链表
-    <pre><code class="language-mermaid">graph LR
-A(Head) --&gt; B(第二项) --&gt; A
-B --&gt; C(第三项) --&gt; B
-C --&gt; D(Tail) --&gt; C
-A --&gt; D --&gt; A
-</code></pre>
-  </li>
+A --&gt; D --&gt; A</code></pre>
+</li>
 </ol>
-
 <p>链表有以下方法:</p>
-
 <ol>
-  <li><code class="language-plaintext highlighter-rouge">append(element)</code> 向链表尾部添加一个新的项</li>
-  <li><code class="language-plaintext highlighter-rouge">insert(position, element)</code> 向链表的特定谓之插入一个新的项</li>
-  <li><code class="language-plaintext highlighter-rouge">remove(element)</code> 从链表移除一个项</li>
-  <li><code class="language-plaintext highlighter-rouge">indexOf(element)</code> 返回元素在链表中的索引, 如果没有则返回 -1;</li>
-  <li><code class="language-plaintext highlighter-rouge">removeAt(position)</code> 移除链表指定位置的项</li>
-  <li><code class="language-plaintext highlighter-rouge">isEmpty()</code> 链表是否为空</li>
-  <li><code class="language-plaintext highlighter-rouge">size()</code> 链表项个数</li>
+<li><code>append(element)</code> 向链表尾部添加一个新的项</li>
+<li><code>insert(position, element)</code> 向链表的特定谓之插入一个新的项</li>
+<li><code>remove(element)</code> 从链表移除一个项</li>
+<li><code>indexOf(element)</code> 返回元素在链表中的索引, 如果没有则返回 -1;</li>
+<li><code>removeAt(position)</code> 移除链表指定位置的项</li>
+<li><code>isEmpty()</code> 链表是否为空</li>
+<li><code>size()</code> 链表项个数</li>
 </ol>
-
 <h3 id="链表的-javascript-实现">链表的 JavaScript 实现</h3>
-
 <ol>
-  <li><a href="https://static.xheldon.cn/example-code/2019/LinkedList.js" data-open="">单向链表</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/DoublyLinkedList.js" data-open="">双向链表</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/CircularLinkedList.js" data-open="">循环链表</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/LinkedList.js">单向链表</a>{:data-open=“”}</li>
+<li><a href="https://static.xheldon.cn/example-code/2019/DoublyLinkedList.js">双向链表</a>{:data-open=“”}</li>
+<li><a href="https://static.xheldon.cn/example-code/2019/CircularLinkedList.js">循环链表</a>{:data-open=“”}</li>
 </ol>
-
 <h2 id="集合">集合</h2>
-
 <h3 id="集合的基本概念和方法">集合的基本概念和方法</h3>
-
 <p>集合是由一组无序且唯一(即不能重复)的项组成的, 集合有以下方法:</p>
-
 <ol>
-  <li><code class="language-plaintext highlighter-rouge">add(value)</code> 向集合添加一个新的项</li>
-  <li><code class="language-plaintext highlighter-rouge">remove(value)</code> 从集合移除一个项</li>
-  <li><code class="language-plaintext highlighter-rouge">has(value)</code> 判断项是否在集合中</li>
-  <li><code class="language-plaintext highlighter-rouge">clear()</code> 清空集合</li>
-  <li><code class="language-plaintext highlighter-rouge">size()</code> 集合的大小</li>
-  <li><code class="language-plaintext highlighter-rouge">values()</code> 包含集合所有值的数组</li>
-  <li><code class="language-plaintext highlighter-rouge">union(set)</code> 与另一个集合的并集</li>
-  <li><code class="language-plaintext highlighter-rouge">intersection(set)</code> 与另一个集合的交集</li>
-  <li><code class="language-plaintext highlighter-rouge">difference(set)</code> 与另一个集合的差集(当前集合减去指定集合)</li>
-  <li><code class="language-plaintext highlighter-rouge">subset(set)</code> 判断一个集合是否为另一个集合的子集</li>
+<li><code>add(value)</code> 向集合添加一个新的项</li>
+<li><code>remove(value)</code> 从集合移除一个项</li>
+<li><code>has(value)</code> 判断项是否在集合中</li>
+<li><code>clear()</code> 清空集合</li>
+<li><code>size()</code> 集合的大小</li>
+<li><code>values()</code> 包含集合所有值的数组</li>
+<li><code>union(set)</code> 与另一个集合的并集</li>
+<li><code>intersection(set)</code> 与另一个集合的交集</li>
+<li><code>difference(set)</code> 与另一个集合的差集(当前集合减去指定集合)</li>
+<li><code>subset(set)</code> 判断一个集合是否为另一个集合的子集</li>
 </ol>
-
 <h3 id="集合的-javascript-实现">集合的 JavaScript 实现</h3>
-
 <p>一般使用对象或者 ES6 的 Set 实现, 细节略</p>
-
 <h2 id="字典">字典</h2>
-
 <h3 id="字典的基本概念">字典的基本概念</h3>
-
-<p>集合表示一组互不相同的元素, 在集合中, 使用对象存储, 形式是 <code class="language-plaintext highlighter-rouge">{值: 值}</code> 的形式. 而在字典中, 使用的是 <code class="language-plaintext highlighter-rouge">{键: 值}</code> 的形式, 字段也被称作<code class="language-plaintext highlighter-rouge">映射</code>, 字典通常有以下方法:</p>
-
+<p>集合表示一组互不相同的元素, 在集合中, 使用对象存储, 形式是 <code>&#123;值: 值&#125;</code> 的形式. 而在字典中, 使用的是 <code>&#123;键: 值&#125;</code> 的形式, 字段也被称作<code>映射</code>, 字典通常有以下方法:</p>
 <ol>
-  <li><code class="language-plaintext highlighter-rouge">set(key, value)</code> 向字典中添加项</li>
-  <li><code class="language-plaintext highlighter-rouge">delete(key)</code> 删除拥有指定键的项</li>
-  <li><code class="language-plaintext highlighter-rouge">has(key)</code> 判断含有 key 的某项是否存在于字字典中</li>
-  <li><code class="language-plaintext highlighter-rouge">get(key)</code> 查找特定键的项, 并返回该项</li>
-  <li><code class="language-plaintext highlighter-rouge">clear()</code> 清空字典</li>
-  <li><code class="language-plaintext highlighter-rouge">size()</code> 返回字典的大小</li>
-  <li><code class="language-plaintext highlighter-rouge">keys()</code> 将字典中所有包含项的键以数组形式返回</li>
-  <li><code class="language-plaintext highlighter-rouge">values()</code> 将字典中所有包含项的值以数组形式返回</li>
+<li><code>set(key, value)</code> 向字典中添加项</li>
+<li><code>delete(key)</code> 删除拥有指定键的项</li>
+<li><code>has(key)</code> 判断含有 key 的某项是否存在于字字典中</li>
+<li><code>get(key)</code> 查找特定键的项, 并返回该项</li>
+<li><code>clear()</code> 清空字典</li>
+<li><code>size()</code> 返回字典的大小</li>
+<li><code>keys()</code> 将字典中所有包含项的键以数组形式返回</li>
+<li><code>values()</code> 将字典中所有包含项的值以数组形式返回</li>
 </ol>
-
 <h3 id="字典的-javascript-实现">字典的 JavaScript 实现</h3>
-
 <p>略</p>
-
 <h2 id="散列表">散列表</h2>
-
 <p>散列表, 即 HashTable(数组实现), 也叫 HashMap(对象实现), 它是字典数据结构的一种散列表实现方式. 如果字典需要找到一个项, 则最坏的情况需要遍历整个数据结构. 如果使用散列表, 以及使用附带的散列算法, 就知道值的具体位置, 因此就能够款速检索到该值. 散列函数的作用是给定一个键值, 返回值在散列表中的地址.</p>
-
 <h3 id="散列表的用途">散列表的用途</h3>
-
-<p>你可能会问, 为什么需要散列表呢? 在 JavaScript 中, 直接使用对象来获取键值映射, 就是 O(1) 的速度了呀. 这话没错, 但是试想如果有重复的键, 该怎么办呢? 比如, 想要构建一个花名册, 来记录不同同学的信息. 那么同名的同学怎么办呢? 这时候就需要一种算法来使每个同学的名字作为输入, 而输出都是独一无二的, 这样才能做到<code class="language-plaintext highlighter-rouge">一一对应</code>, 从而实现 O(1) 的算法, 此谓之完美散列, 数学中这叫做完全单射函数. 但是这样如果存储上百万个数据, 会使得该 <code class="language-plaintext highlighter-rouge">Object</code> 对象非常之庞大, 导致性能问题. 因此需要散列算法, 来使得时间和空间做一个平衡.</p>
-
-<p>还拿上述花名册做例子, 如果有同名的同学, 则依然以这个名字作为键, 只是值不再单单的是一个同学的信息, 而是一个同学信息的数组(或链表), 给定同学名后, 如果发现对应的值是数组, 则遍历该数组直到找到准确的同学信息. 这样就平衡了时间(比之前的时间O(1)要长❌)和空间(比之前的 Object 对象占用的空间要小✅). 一个好的散列算法, 应该能保证每个键上的数组都是相差不大的.</p>
-
+<p>你可能会问, 为什么需要散列表呢? 在 JavaScript 中, 直接使用对象来获取键值映射, 就是 O(1) 的速度了呀. 这话没错, 但是试想如果有重复的键, 该怎么办呢? 比如, 想要构建一个花名册, 来记录不同同学的信息. 那么同名的同学怎么办呢? 这时候就需要一种算法来使每个同学的名字作为输入, 而输出都是独一无二的, 这样才能做到<code>一一对应</code>, 从而实现 O(1) 的算法, 此谓之完美散列, 数学中这叫做完全单射函数. 但是这样如果存储上百万个数据, 会使得该 <code>Object</code> 对象非常之庞大, 导致性能问题. 因此需要散列算法, 来使得时间和空间做一个平衡.</p>
+<p>还拿上述花名册做例子, 如果有同名的同学, 则依然以这个名字作为键, 只是值不再单单的是一个同学的信息, 而是一个同学信息的数组(或链表), 给定同学名后, 如果发现对应的值是数组, 则遍历该数组直到找到准确的同学信息. 这样就平衡了时间(比之前的时间 O(1)要长 ❌)和空间(比之前的 Object 对象占用的空间要小 ✅). 一个好的散列算法, 应该能保证每个键上的数组都是相差不大的.</p>
 <h3 id="散列表的基本方法">散列表的基本方法</h3>
-
 <ol>
-  <li><code class="language-plaintext highlighter-rouge">put(key, value)</code> 向散列表新增一项</li>
-  <li><code class="language-plaintext highlighter-rouge">remove(key)</code> 根据键从散列表移除项</li>
-  <li><code class="language-plaintext highlighter-rouge">get(key)</code> 根据键查找项</li>
+<li><code>put(key, value)</code> 向散列表新增一项</li>
+<li><code>remove(key)</code> 根据键从散列表移除项</li>
+<li><code>get(key)</code> 根据键查找项</li>
 </ol>
-
 <h3 id="一个最简单的散列函数">一个最简单的散列函数</h3>
-
 <blockquote>
-  <p>以输入是字符串为例, 暂时不考虑相同字符串, 数据结构使用数组, 这样可以将 key 作为键</p>
+<p>以输入是字符串为例, 暂时不考虑相同字符串, 数据结构使用数组, 这样可以将 key 作为键</p>
 </blockquote>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-</pre></td><td class="rouge-code"><pre><span class="kd">let</span> <span class="nx">loseloseHashCode</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">){</span>
-    <span class="kd">let</span> <span class="nx">hash</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">key</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">hash</span> <span class="o">+=</span> <span class="nx">key</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">hash</span> <span class="o">%</span> <span class="mi">37</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> loseloseHashCode = <span class="hljs-keyword">function</span> (<span class="hljs-params">key</span>) &#123;<br>  <span class="hljs-keyword">let</span> hash = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; key.<span class="hljs-property">length</span>; i++) &#123;<br>    hash += key.<span class="hljs-title function_">charCodeAt</span>(i);<br>  &#125;<br>  <span class="hljs-keyword">return</span> hash % <span class="hljs-number">37</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
 <h3 id="解决散列表中的冲突">解决散列表中的冲突</h3>
-
 <p>通过上述散列算法可以看到, 算出来的键是可能冲突的, 也就是说数组中相同 key 可能有不同的值, 这样就会被覆盖, 因此需要解决冲突. 有三种方案:</p>
-
 <ol>
-  <li><code class="language-plaintext highlighter-rouge">分离链接</code> 即如果散列算法生成的键相同的时候, 键不再直接指向值, 而是指向一个数组/链表, 将问题转化为数组/链表插入/查找</li>
-  <li><code class="language-plaintext highlighter-rouge">线性探查</code> 即如果散列算法生成的键相同的时候, 键自动+1再次尝试存储, 如果仍然键冲突, 则继续+1, 知道找到为空的位置(适用于键是数字的散列表形式, 如数组), 还有些更棒的针对数字键的散列实现在 <a href="http://web.archive.org/web/20071223173210/http://www.concentric.net/~Ttwang/tech/inthash.htm">这个地方</a></li>
-  <li><code class="language-plaintext highlighter-rouge">双散列法</code> 即如果散列算法生成的键相同的时候, 再次对冲突使用另一个或者相同散列函数进行键的生成.</li>
+<li><code>分离链接</code> 即如果散列算法生成的键相同的时候, 键不再直接指向值, 而是指向一个数组/链表, 将问题转化为数组/链表插入/查找</li>
+<li><code>线性探查</code> 即如果散列算法生成的键相同的时候, 键自动+1 再次尝试存储, 如果仍然键冲突, 则继续+1, 知道找到为空的位置(适用于键是数字的散列表形式, 如数组), 还有些更棒的针对数字键的散列实现在 <a href="http://web.archive.org/web/20071223173210/http://www.concentric.net/~Ttwang/tech/inthash.htm">这个地方</a></li>
+<li><code>双散列法</code> 即如果散列算法生成的键相同的时候, 再次对冲突使用另一个或者相同散列函数进行键的生成.</li>
 </ol>
-
 <h3 id="散列表的-javascript-实现">散列表的 JavaScript 实现</h3>
-
 <ol>
-  <li>[普通散列表实现(https://static.xheldon.cn/example-code/2019/HashTable.js)</li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/HashCollisionSeparateChaining.js">分离链接</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/HashCollisionLinearProbing.js">线性探查</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/HashTable.js">普通散列表实现</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/HashCollisionSeparateChaining.js">分离链接</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/HashCollisionLinearProbing.js">线性探查</a></li>
 </ol>
-
 <h2 id="树">树</h2>
-
 <h3 id="树的相关术语">树的相关术语</h3>
-
 <p>先看结构示意图:</p>
-
-<pre><code class="language-mermaid">graph TD;
+<pre><code class="hljs mermaid">graph TD;
+    11---7;
+    11---15;
+    7---5;
+    7---9;
+    5---3;
+    5---6;
+    9---8;
+    9---10;
+    15---13;
+    15---20;
+    13---12;
+    13---14;
+    20---18;
+    20---25;</code></pre>
+<p>其中:</p>
+<ol>
+<li>11 是第 0 层, 7/15 是第 1 层, 5/9/13/20 是第 2 层, 其他是第 3 层</li>
+<li>11 叫根节点, 其他叫子节点. 至少有一个子节点的节点称为内部节点, 没有子元素的节点成为外部节点</li>
+<li>节点有深度属性, 如节点 3 有三个祖先元素, 因此深度为 3</li>
+<li>树的高度取决于所有节点深度的最大值</li>
+<li>这是一颗完全二叉树, 因为它们除了最下面一层节点没有自己点外, 其他节点都有两个节点</li>
+</ol>
+<blockquote>
+<p>注意: 相同的数据可能会有好几种树结构, 并不一定是唯一的表现形式, 因此才会有下下节的<code>AVL树</code>—它为尽量用数据构建成为一颗完全树</p>
+</blockquote>
+<h3 id="二叉树和二叉搜索树">二叉树和二叉搜索树</h3>
+<p><code>二叉树</code>的节点最多只能有两个子节点, 一个是左侧子节点, 另一个是右侧子节点. <code>二叉搜索树</code>(BST)是二叉树的一种, 但是它只允许你在任意节点的左侧存储比该节点小的值, 在任意节点的右侧存储比该节点大或等于的值. 示意图中就是一颗二叉搜索树, 有以下方法:</p>
+<ol>
+<li><code>insert(key)</code> 插入新的节点</li>
+<li><code>sertch(key)</code> 查找一个节点或返回 null</li>
+<li><code>inOrderTraverse</code> 中序遍历所有节点</li>
+<li><code>preOrderTraverse</code> 先序遍历所有节点</li>
+<li><code>postOrderTraverse</code> 后序遍历所有节点</li>
+<li><code>min</code> 返回树中的最小的值</li>
+<li><code>max</code> 返回树种最大的值</li>
+<li><code>remove(key)</code> 移除树中某项</li>
+</ol>
+<h3 id="树的遍历图示">树的遍历图示:</h3>
+<ol>
+<li>
+<p>中序遍历—常用来对树进行排序操作</p>
+<pre><code class="hljs mermaid">graph TD;
     11---7;
     11---15;
     7---5;
@@ -508,88 +487,32 @@ A --&gt; D --&gt; A
     13---14;
     20---18;
     20---25;
-</code></pre>
-
-<p>其中:</p>
-
-<ol>
-  <li>11 是第 0 层, 7/15 是第 1 层, 5/9/13/20 是第 2 层, 其他是第 3 层</li>
-  <li>11 叫根节点, 其他叫子节点. 至少有一个子节点的节点称为内部节点, 没有子元素的节点成为外部节点</li>
-  <li>节点有深度属性, 如节点 3 有三个祖先元素, 因此深度为 3</li>
-  <li>树的高度取决于所有节点深度的最大值</li>
-  <li>这是一颗完全二叉树, 因为它们除了最下面一层节点没有自己点外, 其他节点都有两个节点</li>
+    3-.-&gt;5
+    5-.-&gt;6;
+    6-.-&gt;7;
+    7-.-&gt;8;
+    8-.-&gt;9;
+    9-.-&gt;10;
+    10-.-&gt;11;
+    11-.-&gt;12;
+    12-.-&gt;13;
+    13-.-&gt;14;
+    14-.-&gt;15;
+    15-.-&gt;18;
+    18-.-&gt;20;
+    20-.-&gt;25;</code></pre>
+<p>遍历顺序是:3 5 6 7 8 9 10 11 12 13 14 15 18 20 25</p>
+</li>
+<li>
+<p>先序遍历—常用来打印一个结构化的文档, 示例图中的遍历顺序是: 11 7 5 3 6 9 8 10 15 13 12 14 20 18 25</p>
+</li>
+<li>
+<p>后序遍历—应用于计算一个目录和它的子目录中所有文件所占空间的大小, 示例图中的遍历顺序是: 3 6 5 8 10 9 7 12 14 13 18 25 20 15 11</p>
+</li>
 </ol>
-
-<blockquote>
-  <p>注意: 相同的数据可能会有好几种树结构, 并不一定是唯一的表现形式, 因此才会有下下节的<code class="language-plaintext highlighter-rouge">AVL树</code>—它为尽量用数据构建成为一颗完全树</p>
-</blockquote>
-
-<h3 id="二叉树和二叉搜索树">二叉树和二叉搜索树</h3>
-
-<p><code class="language-plaintext highlighter-rouge">二叉树</code>的节点最多只能有两个子节点, 一个是左侧子节点, 另一个是右侧子节点. <code class="language-plaintext highlighter-rouge">二叉搜索树</code>(BST)是二叉树的一种, 但是它只允许你在任意节点的左侧存储比该节点小的值, 在任意节点的右侧存储比该节点大或等于的值. 示意图中就是一颗二叉搜索树, 有以下方法:</p>
-
-<ol>
-  <li><code class="language-plaintext highlighter-rouge">insert(key)</code> 插入新的节点</li>
-  <li><code class="language-plaintext highlighter-rouge">sertch(key)</code> 查找一个节点或返回 null</li>
-  <li><code class="language-plaintext highlighter-rouge">inOrderTraverse</code> 中序遍历所有节点</li>
-  <li><code class="language-plaintext highlighter-rouge">preOrderTraverse</code> 先序遍历所有节点</li>
-  <li><code class="language-plaintext highlighter-rouge">postOrderTraverse</code> 后序遍历所有节点</li>
-  <li><code class="language-plaintext highlighter-rouge">min</code> 返回树中的最小的值</li>
-  <li><code class="language-plaintext highlighter-rouge">max</code> 返回树种最大的值</li>
-  <li><code class="language-plaintext highlighter-rouge">remove(key)</code> 移除树中某项</li>
-</ol>
-
-<h3 id="树的遍历图示">树的遍历图示:</h3>
-
-<ol>
-  <li>
-    <p>中序遍历—常用来对树进行排序操作</p>
-
-    <pre><code class="language-mermaid"> graph TD;
-     11---7;
-     11---15;
-     7---5;
-     7---9;
-     5---3;
-     5---6;
-     9---8;
-     9---10;
-     15---13;
-     15---20;
-     13---12;
-     13---14;
-     20---18;
-     20---25;
-     3-.-&gt;5
-     5-.-&gt;6;
-     6-.-&gt;7;
-     7-.-&gt;8;
-     8-.-&gt;9;
-     9-.-&gt;10;
-     10-.-&gt;11;
-     11-.-&gt;12;
-     12-.-&gt;13;
-     13-.-&gt;14;
-     14-.-&gt;15;
-     15-.-&gt;18;
-     18-.-&gt;20;
-     20-.-&gt;25;
-</code></pre>
-
-    <p>遍历顺序是:3 5 6 7 8 9 10 11 12 13 14 15 18 20 25</p>
-  </li>
-  <li>
-    <p>先序遍历—常用来打印一个结构化的文档, 示例图中的遍历顺序是: 11 7 5 3 6 9 8 10 15 13 12 14 20 18 25</p>
-  </li>
-  <li>
-    <p>后序遍历—应用于计算一个目录和它的子目录中所有文件所占空间的大小, 示例图中的遍历顺序是: 3 6 5 8 10 9 7 12 14 13 18 25 20 15 11</p>
-  </li>
-</ol>
-
-<h3 id="adelson-velskii-landi-树avl树">Adelson-Velskii-Landi 树(AVL树)</h3>
-
+<h3 id="adelson-velskii-landi-树-avl-树">Adelson-Velskii-Landi 树(AVL 树)</h3>
 <p>VAL 树是一种自平衡树. 二叉树在某些情况下可能会导致有个子树过深, 而某些子树过浅, 如下图:</p>
-<pre><code class="language-mermaid">graph TD;
+<pre><code class="hljs mermaid">graph TD;
     11---7;
     11---15;
     7---5;
@@ -605,16 +528,11 @@ A --&gt; D --&gt; A
     20---18;
     20---25;
     25---27
-    27---30
-</code></pre>
-
+    27---30</code></pre>
 <p>这个树的右侧过深, 在搜索添加删除某个节点的时候可能会引起一些性能问题, 因此需要 AVL 自平衡树. AVL 是一种自平衡二叉搜索树, 意思是任何一个节点左右两侧子树的高度之差最多为 1. 也就是说这种树会在添加或者移除节点的时候尽量试着成为一颗完全树.</p>
-
 <h4 id="avl-树的平衡因子及计算">AVL 树的平衡因子及计算</h4>
-
-<p>在 AVL 树种插入和删除节点和 BST 完全相同, AVL 的不同之处在于需要在插入/删除的时候检查它的<code class="language-plaintext highlighter-rouge">平衡因子</code>, 如果有需要则将其应用于树的自平衡. 在 AVL 树中需要对每个节点计算右子树高度(hr)和左子树高度(hl)的差值, 如果该值(hr-hl)不是 0/1/-1 的其中一个值, 则需要平衡该 VAL 树. 这就是平衡因子的概念.下面三颗树都是平衡的:</p>
-
-<pre><code class="language-mermaid">graph TD;
+<p>在 AVL 树种插入和删除节点和 BST 完全相同, AVL 的不同之处在于需要在插入/删除的时候检查它的<code>平衡因子</code>, 如果有需要则将其应用于树的自平衡. 在 AVL 树中需要对每个节点计算右子树高度(hr)和左子树高度(hl)的差值, 如果该值(hr-hl)不是 0/1/-1 的其中一个值, 则需要平衡该 VAL 树. 这就是平衡因子的概念.下面三颗树都是平衡的:</p>
+<pre><code class="hljs mermaid">graph TD;
     subgraph 第三种
         A((+1))---B(( -1))
         A---C(( -1))
@@ -630,22 +548,17 @@ A --&gt; D --&gt; A
     end
     subgraph 第一种
         M(( -1))---N((0))
-    end
-</code></pre>
-
+    end</code></pre>
 <h4 id="avl-树的旋转">AVL 树的旋转</h4>
-
 <p>在向 AVL 树插入节点的时候, 可以执行单旋转或双旋转两种平衡操作, 分别对应四种场景:</p>
-
 <ol>
-  <li><code class="language-plaintext highlighter-rouge">右---右(RR)</code> 向左的单旋转</li>
-  <li><code class="language-plaintext highlighter-rouge">左---左(LL)</code> 向右的单旋转</li>
-  <li><code class="language-plaintext highlighter-rouge">左---右(LR)</code> 向右的双旋转</li>
-  <li><code class="language-plaintext highlighter-rouge">右---左(RL)</code> 向左的双旋转</li>
+<li><code>右---右(RR)</code> 向左的单旋转</li>
+<li><code>左---左(LL)</code> 向右的单旋转</li>
+<li><code>左---右(LR)</code> 向右的双旋转</li>
+<li><code>右---左(RL)</code> 向左的双旋转</li>
 </ol>
-
-<p>右—右(RR): 向左的单旋转示意图(mermaid绘图这个地方无法绘制成二叉树导致80在左边50在右边):</p>
-<pre><code class="language-mermaid">graph TD;
+<p>右—右(RR): 向左的单旋转示意图(mermaid 绘图这个地方无法绘制成二叉树导致 80 在左边 50 在右边):</p>
+<pre><code class="hljs mermaid">graph TD;
     subgraph 之后
         G((70))---H((50))
         G---I((80))
@@ -659,11 +572,9 @@ A --&gt; D --&gt; A
         C---D((60))
         C---E((80))
         E---F((90))
-    end
-</code></pre>
-
-<p>左—左(LL)): 向右的单旋转示意图(mermaid绘图这个地方无法绘制成二叉树导致50在左边10在右边):</p>
-<pre><code class="language-mermaid">graph TD;
+    end</code></pre>
+<p>左—左(LL)): 向右的单旋转示意图(mermaid 绘图这个地方无法绘制成二叉树导致 50 在左边 10 在右边):</p>
+<pre><code class="hljs mermaid">graph TD;
     subgraph 之后
         G((30))---H((10))
         G---I((50))
@@ -677,11 +588,9 @@ A --&gt; D --&gt; A
         C---D((10))
         C---E((40))
         D---F((5))
-    end
-</code></pre>
-
-<p>左—右(LR): 向右的双旋转示意图(基本上就是做一次RR旋转后再做一次LL旋转):</p>
-<pre><code class="language-mermaid">graph TD;
+    end</code></pre>
+<p>左—右(LR): 向右的双旋转示意图(基本上就是做一次 RR 旋转后再做一次 LL 旋转):</p>
+<pre><code class="hljs mermaid">graph TD;
     subgraph 之后
         G((40))---H((30))
         G---I((50))
@@ -695,11 +604,9 @@ A --&gt; D --&gt; A
         C---D((10))
         C---E((40))
         E---F((35))
-    end
-</code></pre>
-
-<p>右—左(RL): 向左的双旋转示意图(基本上就是做一次LL旋转后再做一次RR旋转, mermaid绘图这个地方无法绘制成二叉树导致80在左边70在右边):</p>
-<pre><code class="language-mermaid">graph TD;
+    end</code></pre>
+<p>右—左(RL): 向左的双旋转示意图(基本上就是做一次 LL 旋转后再做一次 RR 旋转, mermaid 绘图这个地方无法绘制成二叉树导致 80 在左边 70 在右边):</p>
+<pre><code class="hljs mermaid">graph TD;
     subgraph 之后
         G((72))---I((70))
         G---H((80))
@@ -713,38 +620,26 @@ A --&gt; D --&gt; A
         C---D((72))
         C---E((90))
         D---F((75))
-    end
-</code></pre>
-
+    end</code></pre>
 <p>尽管 AVL 树是自平衡的, 但是其插入或移除节点的性能并不总是最好的. 更好的选择是红黑树, <a href="http://goo.gl/OxED8K">红黑树</a> 可以高效有序地遍历其节点.</p>
-
 <h3 id="树的基本方法的-javascript-实现">树的基本方法的 JavaScript 实现</h3>
-
 <ol>
-  <li><a href="https://static.xheldon.cn/example-code/2019/BinarySearchTree.js">二叉树</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/AVLTree.js">AVL 树</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/RedBlackTree.js">红黑树</a></li>
-  <li><a href="http://goo.gl/SFlhW6">堆积树</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/BinarySearchTree.js">二叉树</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/AVLTree.js">AVL 树</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/RedBlackTree.js">红黑树</a></li>
+<li><a href="http://goo.gl/SFlhW6">堆积树</a></li>
 </ol>
-
 <h2 id="图">图</h2>
-
 <h3 id="图的基本概念">图的基本概念</h3>
-
 <p>图是网络结构的抽象模型. 图示一组由边连接的节点(或定点). 任何二元关系都可以用图来表示. 可以使用图来解决两点间最短路径等问题.</p>
-
 <h3 id="图在数学上的概念">图在数学上的概念</h3>
-
 <p>一个图 G=(V, E) 由以下元素组成</p>
-
 <ol>
-  <li>V 一组定点</li>
-  <li>E 一组边, 连接 V 中的顶点</li>
+<li>V 一组定点</li>
+<li>E 一组边, 连接 V 中的顶点</li>
 </ol>
-
 <p>下面表示一个图:</p>
-
-<pre><code class="language-mermaid">graph TD;
+<pre><code class="hljs mermaid">graph TD;
     A---B
     B---E
     B---F
@@ -754,659 +649,608 @@ A --&gt; D --&gt; A
     C---D
     C---G
     D---G
-    D---H
-</code></pre>
-
+    D---H</code></pre>
 <h3 id="图的相关术语">图的相关术语</h3>
-
 <p>上述图中:</p>
-
 <ol>
-  <li>由一条边连接在一起的顶点称为<code class="language-plaintext highlighter-rouge">相邻顶点</code></li>
-  <li>一个顶点的<code class="language-plaintext highlighter-rouge">度</code>是其相邻顶点的数量, 上图中 A 和其他三个顶点相邻, 因此 A 的度为 3; E 的度为 2;</li>
-  <li><code class="language-plaintext highlighter-rouge">路径</code>是顶点 v1, v2,…vk 的一个连续序列, 其中 vi 和 v(i+1) 是相邻的. 上图中包含路径 ABEI 和 ACDG</li>
-  <li><code class="language-plaintext highlighter-rouge">简单路径</code>要求不包括重复的顶点, 如 ADG 是一条简单路径. 除去最后一个顶点(因为它和第一个顶点是相同顶点), <code class="language-plaintext highlighter-rouge">环</code>也是一个简单路径, 如 ADCA(最后一个顶点重新回到A))</li>
-  <li>如果图中不存在环, 则称该图是<code class="language-plaintext highlighter-rouge">无环</code>的. 如果图中每两个顶点间都存在路径, 则该图是<code class="language-plaintext highlighter-rouge">连通的</code></li>
-  <li>图可以使<code class="language-plaintext highlighter-rouge">有向的</code>(边有方向)也可以是<code class="language-plaintext highlighter-rouge">无向的</code>(边没有方向), 上图是一个<code class="language-plaintext highlighter-rouge">无向图</code></li>
-  <li>如果图中每两个顶点间在双向上都存在路径, 则该图是<code class="language-plaintext highlighter-rouge">强连通</code>的</li>
-  <li>图还可以是<code class="language-plaintext highlighter-rouge">未加权的</code>, 或是<code class="language-plaintext highlighter-rouge">加权的</code>, 加权图的边被赋予了权值</li>
+<li>由一条边连接在一起的顶点称为<code>相邻顶点</code></li>
+<li>一个顶点的<code>度</code>是其相邻顶点的数量, 上图中 A 和其他三个顶点相邻, 因此 A 的度为 3; E 的度为 2;</li>
+<li><code>路径</code>是顶点 v1, v2,…vk 的一个连续序列, 其中 vi 和 v(i+1) 是相邻的. 上图中包含路径 ABEI 和 ACDG</li>
+<li><code>简单路径</code>要求不包括重复的顶点, 如 ADG 是一条简单路径. 除去最后一个顶点(因为它和第一个顶点是相同顶点), <code>环</code>也是一个简单路径, 如 ADCA(最后一个顶点重新回到 A))</li>
+<li>如果图中不存在环, 则称该图是<code>无环</code>的. 如果图中每两个顶点间都存在路径, 则该图是<code>连通的</code></li>
+<li>图可以使<code>有向的</code>(边有方向)也可以是<code>无向的</code>(边没有方向), 上图是一个<code>无向图</code></li>
+<li>如果图中每两个顶点间在双向上都存在路径, 则该图是<code>强连通</code>的</li>
+<li>图还可以是<code>未加权的</code>, 或是<code>加权的</code>, 加权图的边被赋予了权值</li>
 </ol>
-
 <h3 id="图的表示">图的表示</h3>
-
 <h4 id="邻接矩阵">邻接矩阵</h4>
-
 <p>图最常见的实现是邻接矩阵, 每个节点都和一个整数相关联, 该证书将作为数组的索引. 用一个二维数组来表示顶点之间的连接. 如果索引为 i 的节点和索引为 j 的节点相邻, 则 array[i][j] === 1 否则 array[i][j] === 0. 上述的图用邻接矩阵表示为:</p>
-
 <table>
-  <thead>
-    <tr>
-      <th> </th>
-      <th>A</th>
-      <th>B</th>
-      <th>C</th>
-      <th>D</th>
-      <th>E</th>
-      <th>F</th>
-      <th>G</th>
-      <th>H</th>
-      <th>I</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>A</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>B</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>C</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>D</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>E</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>F</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>G</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>H</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>I</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
+<thead>
+<tr>
+<th></th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+<th>G</th>
+<th>H</th>
+<th>I</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>C</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>D</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>E</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>F</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>G</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>H</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>I</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
 </table>
-
-<p>不是强连通的图称为<code class="language-plaintext highlighter-rouge">稀疏图</code>, 如果用邻接矩阵来表示, 矩阵中将会有很多 0, 这意味着我们浪费了计算机中的存储空间来表示根本不存在的边.</p>
-
+<p>不是强连通的图称为<code>稀疏图</code>, 如果用邻接矩阵来表示, 矩阵中将会有很多 0, 这意味着我们浪费了计算机中的存储空间来表示根本不存在的边.</p>
 <h4 id="邻接表">邻接表</h4>
-
 <p>邻接表由图中每个顶点的相邻顶点列表所组成. 存在好几种方式来表示这种数据结构. 可以用列表(数组)/链表/甚至是散列表或者字典来表示相邻顶点列表. 上述图可以用下面的邻接表表示:</p>
-
 <table>
-  <thead>
-    <tr>
-      <th>A</th>
-      <th>B</th>
-      <th>C</th>
-      <th>D</th>
-      <th> </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>B</td>
-      <td>A</td>
-      <td>E</td>
-      <td>F</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>C</td>
-      <td>A</td>
-      <td>D</td>
-      <td>G</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>D</td>
-      <td>A</td>
-      <td>C</td>
-      <td>G</td>
-      <td>H</td>
-    </tr>
-    <tr>
-      <td>E</td>
-      <td>B</td>
-      <td>I</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>F</td>
-      <td>B</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>G</td>
-      <td>C</td>
-      <td>D</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>H</td>
-      <td>D</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>I</td>
-      <td>E</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-  </tbody>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td>A</td>
+<td>E</td>
+<td>F</td>
+<td></td>
+</tr>
+<tr>
+<td>C</td>
+<td>A</td>
+<td>D</td>
+<td>G</td>
+<td></td>
+</tr>
+<tr>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>G</td>
+<td>H</td>
+</tr>
+<tr>
+<td>E</td>
+<td>B</td>
+<td>I</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>F</td>
+<td>B</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>G</td>
+<td>C</td>
+<td>D</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>H</td>
+<td>D</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>I</td>
+<td>E</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
 </table>
-
-<h4 id="关联矩阵略">关联矩阵(略)</h4>
-
+<h4 id="关联矩阵-略">关联矩阵(略)</h4>
 <h4 id="图的相关方法">图的相关方法</h4>
-
 <ol>
-  <li><code class="language-plaintext highlighter-rouge">addVertex(v)</code> 增加新的顶点</li>
-  <li><code class="language-plaintext highlighter-rouge">addEdge(v, w)</code> 增加新的边</li>
+<li><code>addVertex(v)</code> 增加新的顶点</li>
+<li><code>addEdge(v, w)</code> 增加新的边</li>
 </ol>
-
 <h3 id="图的遍历">图的遍历</h3>
-
 <p>图的遍历可以用来寻找特定的顶点或者寻找两个顶点之间的路径, 检查图是否连通, 检查图是否含有环等. 图的遍历算法的基本思想是, 必须追踪每个第一次访问的节点, 并且追踪有哪些节点还没有被完全探索(即它还有子节点未被探索完全). 对于下面两种搜索(遍历)模式, 都需要明确指出第一个被访问的顶点. 完全探索一个顶点要求我们查看该顶点的每一条边, 对一每一条边所连接的没有被访问过的顶点, 将其标注为被发现的, 并将其加进待访问顶点列表中. 为了保证算法的效率, 务必访问每个顶点至多两次. 连通图中每条边和顶点都会被访问到. 可以用三个状态表示顶点的访问状态: 未被访问/被访问, 但未被探索完全/完全被探索过</p>
-
-<h4 id="图的广度优先搜索breadth-first-search-bfs">图的广度优先搜索(Breadth-First Search, BFS)</h4>
-
+<h4 id="图的广度优先搜索-breadth-first-search-bfs">图的广度优先搜索(Breadth-First Search, BFS)</h4>
 <p>待访问顶点列表的数据结构是队列, 将顶点存入队列中, 最先入队列的顶点先被探索.</p>
-
-<p>广度优先搜索被用来寻找最短路径(下面有实现). <code class="language-plaintext highlighter-rouge">Dijkstra 算法</code>解决了单源最短路径问题(<code class="language-plaintext highlighter-rouge">贪心算法</code>). <code class="language-plaintext highlighter-rouge">Bellman-Ford 算法</code>解决了边权值为负的单源最短路径问题. <code class="language-plaintext highlighter-rouge">A*搜索算法</code>解决了求仅一对顶点间的最短路径问题, 它用经验法则来加速搜索过程. <code class="language-plaintext highlighter-rouge">Floyd-Warshall 算法</code>解决了求所有顶点对键的最短路径这一问题(<code class="language-plaintext highlighter-rouge">动态规划算法</code>)</p>
-
-<h4 id="图的深度优先搜索depth-first-search-dfs">图的深度优先搜索(Depth-First Search, DFS)</h4>
-
-<p>待访问顶点列表的数据结构是栈, 将顶点存入栈中, 顶点是沿着路径被探索的, 存在新的相邻顶点就去访问. 当我们需要编排一些任务或步骤的执行顺序时, 这称为<code class="language-plaintext highlighter-rouge">拓扑排序(topsort/toposort))</code>, 我们可以使用深度优先搜索来进行拓扑排序. 拓扑排序只能用于<code class="language-plaintext highlighter-rouge">有向无环图(DAG)</code>, 下方有具体实现.</p>
-
-<h3 id="最小生成树mst">最小生成树(MST)</h3>
-
-<p><code class="language-plaintext highlighter-rouge">最小生成树</code>是网络设计中常见的问题. 如你的公司有几间办公室, 要以最低的成本实现办公室电话线路相互连通, 以节省资金, 最好的办法是什么? 这也可以应用于岛桥问题. 设想你要在 n 个岛屿之间建造桥梁, 想用最低的成本实现所有岛屿的相互连通. 这两个问题都可以用<code class="language-plaintext highlighter-rouge">MST算法</code>来解决:</p>
-
+<p>广度优先搜索被用来寻找最短路径(下面有实现). <code>Dijkstra 算法</code>解决了单源最短路径问题(<code>贪心算法</code>). <code>Bellman-Ford 算法</code>解决了边权值为负的单源最短路径问题. <code>A*搜索算法</code>解决了求仅一对顶点间的最短路径问题, 它用经验法则来加速搜索过程. <code>Floyd-Warshall 算法</code>解决了求所有顶点对键的最短路径这一问题(<code>动态规划算法</code>)</p>
+<h4 id="图的深度优先搜索-depth-first-search-dfs">图的深度优先搜索(Depth-First Search, DFS)</h4>
+<p>待访问顶点列表的数据结构是栈, 将顶点存入栈中, 顶点是沿着路径被探索的, 存在新的相邻顶点就去访问. 当我们需要编排一些任务或步骤的执行顺序时, 这称为<code>拓扑排序(topsort/toposort))</code>, 我们可以使用深度优先搜索来进行拓扑排序. 拓扑排序只能用于<code>有向无环图(DAG)</code>, 下方有具体实现.</p>
+<h3 id="最小生成树-mst">最小生成树(MST)</h3>
+<p><code>最小生成树</code>是网络设计中常见的问题. 如你的公司有几间办公室, 要以最低的成本实现办公室电话线路相互连通, 以节省资金, 最好的办法是什么? 这也可以应用于岛桥问题. 设想你要在 n 个岛屿之间建造桥梁, 想用最低的成本实现所有岛屿的相互连通. 这两个问题都可以用<code>MST算法</code>来解决:</p>
 <ol>
-  <li>
-    <p>Prim 算法</p>
-
-    <p>用来求解加权无向连通图的MST问题的贪心算法, 它能找出一个边的子集, 使得其构成的树包含图中所有顶点, 且边的权值之和最小.</p>
-  </li>
-  <li>
-    <p>Kruskal 算法</p>
-
-    <p>和上面一样也是求加权无向连通图MST问题的贪心算法.</p>
-  </li>
+<li>
+<p>Prim 算法</p>
+<p>用来求解加权无向连通图的 MST 问题的贪心算法, 它能找出一个边的子集, 使得其构成的树包含图中所有顶点, 且边的权值之和最小.</p>
+</li>
+<li>
+<p>Kruskal 算法</p>
+<p>和上面一样也是求加权无向连通图 MST 问题的贪心算法.</p>
+</li>
 </ol>
-
 <h4 id="图的-javascript-实现">图的 JavaScript 实现</h4>
-
 <ol>
-  <li><a href="https://static.xheldon.cn/example-code/2019/Graph.js">图</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/ShortestPath.js">最短路径算法</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/MinimumSpanningTree.js">最小生成树</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/Graph.js">图</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/ShortestPath.js">最短路径算法</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/MinimumSpanningTree.js">最小生成树</a></li>
 </ol>
-
 <h2 id="排序和搜索算法">排序和搜索算法</h2>
-
 <h3 id="排序算法">排序算法</h3>
-
 <ol>
-  <li><code class="language-plaintext highlighter-rouge">冒泡排序</code> 复杂度 O(n<sup>2</sup>) 两层循环, 满足条件则交换内层循环的两个值</li>
-  <li><code class="language-plaintext highlighter-rouge">选择排序</code> 复杂度 O(n<sup>2</sup>) 两层循环, 内层循环找到最小值, 并将其放到第一位, 然后接着找到第二小的值放到第二位</li>
-  <li><code class="language-plaintext highlighter-rouge">插入排序</code> 复杂度 O(n<sup>2</sup>) 从头开始, 每次假定前面的都已经排过序, 然后判断当前值确定该值是在前面排过序数组的哪个位置, 插入之, 然后继续判断下一个值</li>
-  <li><code class="language-plaintext highlighter-rouge">归并排序</code> 复杂度 O(nlog<sup>n</sup>) 递归思想, 先将数组分成较小的数组, 然后将每个较小数组两个两个排序(像两副已经各自排好序的扑克牌排序一样), 直到排序完成</li>
-  <li><code class="language-plaintext highlighter-rouge">快速排序</code> 复杂度 O(nlog<sup>n</sup>) 选一个主元(pivot)然后将数据划分两半, 大于它的放右边, 小于它的放左边, 直到左指针超过右指针</li>
-  <li><code class="language-plaintext highlighter-rouge">堆排序</code> 把数组当做二叉树来排序, 规则是:
-    <ol>
-      <li>索引 0 是树的根节点</li>
-      <li>除根节点以外. 任意节点 N 的父节点是 N/2</li>
-      <li>节点 L 的左子节点是 2 * L</li>
-      <li>节点 R 的右子节点是 2 * R + 1</li>
-      <li>如数组 [3, 5, 1, 6, 4, 7, 2] 可以看做下面的树:
-        <pre><code class="language-mermaid">graph TD;
+<li><code>冒泡排序</code> 复杂度 O(n<sup>2</sup>) 两层循环, 满足条件则交换内层循环的两个值</li>
+<li><code>选择排序</code> 复杂度 O(n<sup>2</sup>) 两层循环, 内层循环找到最小值, 并将其放到第一位, 然后接着找到第二小的值放到第二位</li>
+<li><code>插入排序</code> 复杂度 O(n<sup>2</sup>) 从头开始, 每次假定前面的都已经排过序, 然后判断当前值确定该值是在前面排过序数组的哪个位置, 插入之, 然后继续判断下一个值</li>
+<li><code>归并排序</code> 复杂度 O(nlog<sup>n</sup>) 递归思想, 先将数组分成较小的数组, 然后将每个较小数组两个两个排序(像两副已经各自排好序的扑克牌排序一样), 直到排序完成</li>
+<li><code>快速排序</code> 复杂度 O(nlog<sup>n</sup>) 选一个主元(pivot)然后将数据划分两半, 大于它的放右边, 小于它的放左边, 直到左指针超过右指针</li>
+<li><code>堆排序</code> 把数组当做二叉树来排序, 规则是:
+<ol>
+<li>索引 0 是树的根节点</li>
+<li>除根节点以外. 任意节点 N 的父节点是 N/2</li>
+<li>节点 L 的左子节点是 2 * L</li>
+<li>节点 R 的右子节点是 2 * R + 1</li>
+<li>如数组 [3, 5, 1, 6, 4, 7, 2] 可以看做下面的树:<pre><code class="hljs mermaid">graph TD;
 A((3))---B((5))
 A---C((1))
 B---D((6))
 B---E((4))
 C---F((7))
-C---G((2))
-</code></pre>
-      </li>
-    </ol>
-  </li>
-  <li>计数排序</li>
-  <li>桶排序</li>
-  <li>基数排序(分布式排序)</li>
+C---G((2))</code></pre>
+</li>
 </ol>
-
+</li>
+<li>计数排序</li>
+<li>桶排序</li>
+<li>基数排序(分布式排序)</li>
+</ol>
 <h3 id="搜索算法">搜索算法</h3>
-
 <ol>
-  <li>顺序搜索</li>
-  <li>二分搜索</li>
+<li>顺序搜索</li>
+<li>二分搜索</li>
 </ol>
-
-<h3 id="排序搜索算法的-javascript-实现">排序/搜索算法的 JavaScript 实现</h3>
-
+<h3 id="排序-搜索算法的-javascript-实现">排序/搜索算法的 JavaScript 实现</h3>
 <ol>
-  <li><a href="https://static.xheldon.cn/example-code/2019/SortingSearchingAlgorithms.js">各种排序/搜索算法汇总</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/SortingSearchingAlgorithms.js">各种排序/搜索算法汇总</a></li>
 </ol>
-
 <h2 id="算法模式">算法模式</h2>
-
 <h3 id="动态规划">动态规划</h3>
-
 <ol>
-  <li><code class="language-plaintext highlighter-rouge">背包问题</code> 给出一组项目, 各自有值和容量, 目标是找出总值最大的项目的集合. 限制是总容量必须小于等于背包的容量.</li>
-  <li><code class="language-plaintext highlighter-rouge">最长公共子序列</code> 找出一组序列的最长公共子序列(可由另一序列删除元素但不改变余下元素的顺序得到)</li>
-  <li><code class="language-plaintext highlighter-rouge">矩阵链相乘</code> 给出一系列矩阵, 目标是找到这些矩阵相乘的最高效办法(计算次数尽可能少). 相乘操作不会进行, 解决方案是找到这些矩阵各自相乘的顺序,</li>
-  <li><code class="language-plaintext highlighter-rouge">硬币找零</code> 给出面额为 d1, d2…dn 的一定数量的硬币和要找零的钱数, 找出有多少种找零的方法</li>
-  <li><code class="language-plaintext highlighter-rouge">图的全源最短路径</code> 对所有顶点对(u, v), 找出从顶点 u 到顶点 v 的最短路径(之前有 Floyd-Warshall 算法可以解决)</li>
+<li><code>背包问题</code> 给出一组项目, 各自有值和容量, 目标是找出总值最大的项目的集合. 限制是总容量必须小于等于背包的容量.</li>
+<li><code>最长公共子序列</code> 找出一组序列的最长公共子序列(可由另一序列删除元素但不改变余下元素的顺序得到)</li>
+<li><code>矩阵链相乘</code> 给出一系列矩阵, 目标是找到这些矩阵相乘的最高效办法(计算次数尽可能少). 相乘操作不会进行, 解决方案是找到这些矩阵各自相乘的顺序,</li>
+<li><code>硬币找零</code> 给出面额为 d1, d2…dn 的一定数量的硬币和要找零的钱数, 找出有多少种找零的方法</li>
+<li><code>图的全源最短路径</code> 对所有顶点对(u, v), 找出从顶点 u 到顶点 v 的最短路径(之前有 Floyd-Warshall 算法可以解决)</li>
 </ol>
-
 <h3 id="算法模式的-javascript-实现">算法模式的 JavaScript 实现</h3>
-
 <ol>
-  <li><a href="https://static.xheldon.cn/example-code/2019/Recursion.js">递归</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/MinCoinChangeDP.js">最少硬币找零DP算法</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/MinCoinChangeGreedy.js">最少硬币找零贪心算法</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/KnapsackProblemDP.js">背包问题DP算法</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/KnapSackProblemRecursive.js">背包问题递归算法</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/KnapSackProblemGreedy.js">背包问题贪心算法</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/LongestCommonSubsequenceDP.js">最长公共子序列DP算法</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/LongestCommonSubsequenceRecursive.js">最长公共子序列递归算法</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/MatrixChainMultiplicationDP.js">矩阵链相乘DP算法</a></li>
-  <li><a href="https://static.xheldon.cn/example-code/2019/MatrixChainMultiplicationRecursive.js">矩阵链相乘递归算法</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/Recursion.js">递归</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/MinCoinChangeDP.js">最少硬币找零 DP 算法</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/MinCoinChangeGreedy.js">最少硬币找零贪心算法</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/KnapsackProblemDP.js">背包问题 DP 算法</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/KnapSackProblemRecursive.js">背包问题递归算法</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/KnapSackProblemGreedy.js">背包问题贪心算法</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/LongestCommonSubsequenceDP.js">最长公共子序列 DP 算法</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/LongestCommonSubsequenceRecursive.js">最长公共子序列递归算法</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/MatrixChainMultiplicationDP.js">矩阵链相乘 DP 算法</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/MatrixChainMultiplicationRecursive.js">矩阵链相乘递归算法</a></li>
 </ol>
-
-<h2 id="np完全理论概述">NP完全理论概述</h2>
-
+<h2 id="np-完全理论概述">NP 完全理论概述</h2>
 <p>一般来说, 如果一个算法的复杂度为 O(n<sup>k</sup>), 其中 k 是常数, 我们就认为这个算法是高效的, 这就是多项式算法. 对于给定的问题, 如果存在多项式算法, 则计为 P(polynomial, 多项式)</p>
-
 <p>还有一类 NP(nondeterministic polynomial, 非确定性多项式)算法. 如果一个问题可以在多项式时间内验证解是否正确, 则计为 NP.</p>
-
 <p>如果一个问题存在多项式算法, 自然可以再多项式时间内验证其解, 因此所有的 P 都是 NP. 然而, P=NP 是否成立, 仍然不得而知.</p>
-
-<p>NP 问题最难的是 <code class="language-plaintext highlighter-rouge">NP完全</code> 问题, 它满足以下两个条件:</p>
+<p>NP 问题最难的是 <code>NP完全</code> 问题, 它满足以下两个条件:</p>
 <ol>
-  <li>是 NP 问题, 也就是说, 可以在多项式时间内验证解, 但还没找到多项式算法</li>
-  <li>所有的 NP 问题都能在多项式时间内归约为它</li>
+<li>是 NP 问题, 也就是说, 可以在多项式时间内验证解, 但还没找到多项式算法</li>
+<li>所有的 NP 问题都能在多项式时间内归约为它</li>
 </ol>
-
 <p>还有一类问题, 只需满足 NP 完全问题的第二个条件, 成为 NP 困难问题. 因此, NP 完全问题是 NP 困难问题的子集.</p>
+<p>非 NP 完全问题的 NP 困难问题的例子有<code>停机问题</code>和<code>布尔可满足性问题(SAT)</code>, NP 完全问题的例子有<code>子集和问题</code>, <code>旅行商问题</code>, <code>顶点覆盖问题</code> 等等</p>
+<p>最后, 刚才有些问题是<code>不可解</code>的, 然后仍然有办法在符合要求的时间内找到一个近似解. <code>启发式算法</code> 就是其中之一. 启发式算法得到的未必是最优解, 单足够解决问题了.</p>
+<p>启发式算法的例子有<code>局部搜索</code>, <code>遗传算法</code>, <code>启发式导航</code>, <code>机器学习</code>等. 更多可以<a href="http://goo.gl/gxIu9w">查看这里</a></p>
 
-<p>非 NP 完全问题的 NP 困难问题的例子有<code class="language-plaintext highlighter-rouge">停机问题</code>和<code class="language-plaintext highlighter-rouge">布尔可满足性问题(SAT)</code>, NP 完全问题的例子有<code class="language-plaintext highlighter-rouge">子集和问题</code>, <code class="language-plaintext highlighter-rouge">旅行商问题</code>, <code class="language-plaintext highlighter-rouge">顶点覆盖问题</code> 等等</p>
+                                    <div class="text-danger">- EOF -</div>
+                                    <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a
+                                        style="color: #ccc;"
+                                        href="https://www.xheldon.cn/tech/Data-Structures-and-Algorithms-in-Javascript.html"
+                                        title="JavaScript 中的数据结构和算法">
+                                        JavaScript 中的数据结构和算法 - Xheldon Blog
+                                      </a></div>
+                                    <hr style="visibility: hidden;">
 
-<p>最后, 刚才有些问题是<code class="language-plaintext highlighter-rouge">不可解</code>的, 然后仍然有办法在符合要求的时间内找到一个近似解. <code class="language-plaintext highlighter-rouge">启发式算法</code> 就是其中之一. 启发式算法得到的未必是最优解, 单足够解决问题了.</p>
-
-<p>启发式算法的例子有<code class="language-plaintext highlighter-rouge">局部搜索</code>, <code class="language-plaintext highlighter-rouge">遗传算法</code>, <code class="language-plaintext highlighter-rouge">启发式导航</code>, <code class="language-plaintext highlighter-rouge">机器学习</code>等. 更多可以<a href="http://goo.gl/gxIu9w">查看这里</a></p>
-
-
-                <div class="text-danger">- EOF -</div>
-                <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a style="color: #ccc;" href="https://www.xheldon.cn/tech/Data-Structures-and-Algorithms-in-Javascript.html" title="JavaScript 中的数据结构和算法">JavaScript 中的数据结构和算法 - Xheldon Blog</a></div>
-                <hr style="visibility: hidden;">
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/tech/linux-file-permission.html" data-toggle="tooltip" data-placement="top" title="Linux 下的文件权限备忘">
-                        上一篇<br>
-                        <span>Linux 下的文件权限备忘</span>
-                        </a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/tech/from-evernote-to-apple-notes.html" data-toggle="tooltip" data-placement="top" title="从 Evernote 转移到苹果自带备忘录">
-                        下一篇<br>
-                        <span>从 Evernote 转移到苹果自带备忘录</span>
-                        </a>
-                    </li>
-                    
-                </ul>
-                <hr style="visibility: hidden;">
-                <div class="giscus"></div>
-                <hr>
-            </div>  
-
-    <!-- Side Catalog Container -->
+                                    <ul class="pager">
+                                      
+                                        <li class="previous">
+                                          <a href="/tech/from-evernote-to-apple-notes.html" data-toggle="tooltip"
+                                            data-placement="top" title="从 Evernote 转移到苹果自带备忘录">
+                                            上一篇<br>
+                                            <span>{{page.prev.title}}</span>
+                                          </a>
+                                        </li>
+                                        
+                                          
+                                            <li class="next">
+                                              <a href="/tech/linux-file-permission.html" data-toggle="tooltip"
+                                                data-placement="top" title="Linux 下的文件权限备忘">
+                                                下一篇<br>
+                                                <span>{{page.next.title}}</span>
+                                              </a>
+                                            </li>
+                                            
+                                    </ul>
+                                    <hr style="visibility: hidden;">
+                                    <div class="giscus"></div>
+                                    <hr>
+        </div>
+        <!-- Side Catalog Container -->
         
-            <div class="
+          <div class="
                 col-lg-2 col-lg-offset-0
                 visible-lg-block
                 sidebar-container
                 catalog-container">
-                <div class="side-catalog">
-                    <hr class="hidden-sm hidden-xs">
-                    <h5>
-                        <a class="catalog-toggle" href="#">目录</a>
-                    </h5>
-                    <ul class="catalog-body"></ul>
-                </div>
+            <div class="side-catalog">
+              <hr class="hidden-sm hidden-xs">
+              <h5>
+                <a class="catalog-toggle" href="#">目录</a>
+              </h5>
+              <ul class="catalog-body"></ul>
             </div>
-        
+          </div>
+          
 
-    <!-- Sidebar Container -->
+            <!-- Sidebar Container -->
+
             <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
                 sidebar-container">
-
-                <!-- Featured Tags -->
-                
-
-
+              
 <section style="margin-bottom: 20px;">
     <h5>博主说：</h5>
     <div>
-        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/resources/img/gwechat.png" />
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
         我常常希望在面对人生中一些关键抉择的时候，有人可以告诉我最佳的做法，让我不至于白白浪费宝贵的时间。推己及人，我因此经常写博客，以期在浩渺无垠的互联网中的这个小小角落里记录下对于我来说只有一次的人生经历，希望能够帮到那些希望得到帮助的人。
     </div>
     <hr>
     <h5><a href="/archive/">热门标签</a></h5>
     <div class="tags">
         
+
         
+            <a data-sort="0028" 
+                href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技术"
+                rel="44">技术</a>
         
+            <a data-sort="0047" 
+                href="/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="25">生活</a>
         
+            <a data-sort="0062" 
+                href="/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="折腾"
+                rel="10">折腾</a>
         
+            <a data-sort="0066" 
+                href="/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻译"
+                rel="6">翻译</a>
         
-                <a data-sort="0028" 
-                    href="/archive/?tag=%E6%8A%80%E6%9C%AF"
-                    title="技术"
-                    rel="44">技术</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="技巧"
+                rel="5">技巧</a>
         
-                <a data-sort="0047" 
-                    href="/archive/?tag=%E7%94%9F%E6%B4%BB"
-                    title="生活"
-                    rel="25">生活</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="教程"
+                rel="5">教程</a>
         
-                <a data-sort="0062" 
-                    href="/archive/?tag=%E6%8A%98%E8%85%BE"
-                    title="折腾"
-                    rel="10">折腾</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="美食"
+                rel="5">美食</a>
         
-                <a data-sort="0066" 
-                    href="/archive/?tag=%E7%BF%BB%E8%AF%91"
-                    title="翻译"
-                    rel="6">翻译</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="5">ProseMirror</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=%E6%8A%80%E5%B7%A7"
-                    title="技巧"
-                    rel="5">技巧</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="工作流"
+                rel="4">工作流</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=%E6%95%99%E7%A8%8B"
-                    title="教程"
-                    rel="5">教程</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="插件"
+                rel="4">插件</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
-                    title="美食"
-                    rel="5">美食</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="网络"
+                rel="4">网络</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=ProseMirror"
-                    title="ProseMirror"
-                    rel="5">ProseMirror</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=Craft"
+                title="Craft"
+                rel="4">Craft</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
-                    title="工作流"
-                    rel="4">工作流</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=Vue"
+                title="Vue"
+                rel="4">Vue</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=%E6%8F%92%E4%BB%B6"
-                    title="插件"
-                    rel="4">插件</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体验"
+                rel="3">初体验</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=%E7%BD%91%E7%BB%9C"
-                    title="网络"
-                    rel="4">网络</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="服务器"
+                rel="3">服务器</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=Craft"
-                    title="Craft"
-                    rel="4">Craft</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="经验"
+                rel="3">经验</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=Vue"
-                    title="Vue"
-                    rel="4">Vue</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="苹果"
+                rel="3">苹果</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
-                    title="初体验"
-                    rel="3">初体验</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="路由器"
+                rel="3">路由器</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
-                    title="服务器"
-                    rel="3">服务器</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="软路由"
+                rel="3">软路由</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E7%BB%8F%E9%AA%8C"
-                    title="经验"
-                    rel="3">经验</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="随笔"
+                rel="3">随笔</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E8%8B%B9%E6%9E%9C"
-                    title="苹果"
-                    rel="3">苹果</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E9%9B%86%E6%88%90"
+                title="集成"
+                rel="3">集成</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
-                    title="路由器"
-                    rel="3">路由器</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=Apple"
+                title="Apple"
+                rel="3">Apple</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
-                    title="软路由"
-                    rel="3">软路由</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=Git"
+                title="Git"
+                rel="3">Git</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E9%9A%8F%E7%AC%94"
-                    title="随笔"
-                    rel="3">随笔</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="3">JavaScript</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E9%9B%86%E6%88%90"
-                    title="集成"
-                    rel="3">集成</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="2">主食</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=Apple"
-                    title="Apple"
-                    rel="3">Apple</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="优化"
+                rel="2">优化</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=Git"
-                    title="Git"
-                    rel="3">Git</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用体验"
+                rel="2">使用体验</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=JavaScript"
-                    title="JavaScript"
-                    rel="3">JavaScript</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E5%8D%83%E5%85%86"
+                title="千兆"
+                rel="2">千兆</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E4%B8%BB%E9%A3%9F"
-                    title="主食"
-                    rel="2">主食</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="2">大事</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E4%BC%98%E5%8C%96"
-                    title="优化"
-                    rel="2">优化</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="旁路由"
+                rel="2">旁路由</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
-                    title="使用体验"
-                    rel="2">使用体验</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="泡脚时间"
+                rel="2">泡脚时间</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E5%8D%83%E5%85%86"
-                    title="千兆"
-                    rel="2">千兆</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="测试"
+                rel="2">测试</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E5%A4%A7%E4%BA%8B"
-                    title="大事"
-                    rel="2">大事</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="特斯拉"
+                rel="2">特斯拉</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
-                    title="旁路由"
-                    rel="2">旁路由</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="编辑器"
+                rel="2">编辑器</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
-                    title="泡脚时间"
-                    rel="2">泡脚时间</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="视频"
+                rel="2">视频</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E6%B5%8B%E8%AF%95"
-                    title="测试"
-                    rel="2">测试</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="调试"
+                rel="2">调试</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
-                    title="特斯拉"
-                    rel="2">特斯拉</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%BD%A6"
+                title="车"
+                rel="2">车</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
-                    title="编辑器"
-                    rel="2">编辑器</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="迁移"
+                rel="2">迁移</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%A7%86%E9%A2%91"
-                    title="视频"
-                    rel="2">视频</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="2">AppleScript</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%B0%83%E8%AF%95"
-                    title="调试"
-                    rel="2">调试</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=CI"
+                title="CI"
+                rel="2">CI</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%BD%A6"
-                    title="车"
-                    rel="2">车</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=GitHub"
+                title="GitHub"
+                rel="2">GitHub</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%BF%81%E7%A7%BB"
-                    title="迁移"
-                    rel="2">迁移</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="2">Jekyll</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=AppleScript"
-                    title="AppleScript"
-                    rel="2">AppleScript</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=Notion"
+                title="Notion"
+                rel="2">Notion</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=CI"
-                    title="CI"
-                    rel="2">CI</a>
-        
-                <a data-sort="0070" 
-                    href="/archive/?tag=GitHub"
-                    title="GitHub"
-                    rel="2">GitHub</a>
-        
-                <a data-sort="0070" 
-                    href="/archive/?tag=Jekyll"
-                    title="Jekyll"
-                    rel="2">Jekyll</a>
-        
-                <a data-sort="0070" 
-                    href="/archive/?tag=Notion"
-                    title="Notion"
-                    rel="2">Notion</a>
     </div>
     <hr>
     <h5>专栏</h5>
@@ -1418,8 +1262,6 @@ C---G((2))
     </div>
 </section>
 
-
-                <!-- Friends Blog -->
                 
 <hr>
 <h5>朋友们</h5>
@@ -1427,57 +1269,59 @@ C---G((2))
   
   <li><a href="https://prosemirror.xheldon.com" target="_blank">ProseMirror 中文</a></li>
   
+  <li><a href="https://rust.xheldon.com" target="_blank">Rust 中文</a></li>
+  
   <li><a href="https://slate.xheldon.com" target="_blank">Slate 中文</a></li>
   
   <li><a href="https://notion-flow.xheldon.com" target="_blank">Notion Flow</a></li>
   
+  <li><a href="https://xpic.xheldon.com" target="_blank">xPic</a></li>
   
-    <li><a href="https://www.xheldon.com" target="_blank">国际版</a></li>
+  
+    <li><a href="https://www.xheldon.cn" target="_blank">国内版</a></li>
   
 </ul>
 
             </div>
-        </div>
+      </div>
     </div>
-</article>
+  </article>
 
-<!-- add support for mathjax by voleking-->
+  
 
+        
+          <script src='/js/mermaid.8.3.1.js'></script>
+          <script>
+            window.addEventListener('load', function () {
+              var config = {
+                startOnLoad: true,
+                flowchart: {
+                  useMaxWidth: false,
+                  htmlLabels: true
+                }
+              };
+              mermaid.initialize(config);
+              var elements = document.getElementsByClassName("language-mermaid");
+              for (var i = elements.length; i--;) {
+                element = elements[i];
+                var graphDefinition = element.innerText;
+                if (graphDefinition) {
+                  var svg = mermaid.render('ha_mermaid_' + i, graphDefinition, function (svg) { });
+                  if (svg) {
+                    var svgElement = document.createElement('div');
+                    preNode = element.parentNode;
+                    svgElement.innerHTML = svg;
+                    svgElement.setAttribute('class', 'mermaid');
+                    svgElement.setAttribute('data-processed', 'true');
+                    preNode.parentNode.replaceChild(svgElement, preNode);
+                  }
+                }
+              }
+            });
+          </script>
+          
 
-<!-- Markdown 流程图按需加载 -->
-
-<script src='https://static.xheldon.cn/js/mermaid.8.3.1.js'></script>
-<script>
-window.addEventListener('load', function(){
-  var config = {
-        startOnLoad:true,
-        flowchart:{
-            useMaxWidth:false,
-            htmlLabels:true
-        }
-    };
-  mermaid.initialize(config);
-  var elements = document.getElementsByClassName("language-mermaid");
-  for (var i = elements.length; i--;) {
-      element = elements[i];
-      var graphDefinition = element.innerText;
-      if (graphDefinition) {
-          var svg = mermaid.render('ha_mermaid_' + i, graphDefinition, function(svg){});
-          if (svg) {
-              var svgElement = document.createElement('div');
-              preNode = element.parentNode;
-              svgElement.innerHTML = svg;
-              svgElement.setAttribute('class', 'mermaid');
-              svgElement.setAttribute('data-processed', 'true');
-              preNode.parentNode.replaceChild(svgElement, preNode);
-          }
-      }
-  }
-});
-</script>
-
-
-<script src="https://giscus.app/client.js"
+            <script src="https://giscus.app/client.js"
         data-repo="Xheldon/x_blog"
         data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
         data-category="Announcements"
@@ -1495,382 +1339,363 @@ window.addEventListener('load', function(){
         async>
 </script>
 
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("https://static.xheldon.cn/js/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'hover',
-          placement: 'right',
-          // icon: '#'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
-
-
-
-    <!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <!-- SNS Link -->
+              
+                <!-- async load function -->
+                <script>
+                  function async(u, c) {
+                    var d = document,
+                      t = 'script',
+                      o = d.createElement(t),
+                      s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) {
+                      o.addEventListener('load', function (e) {
+                        c(null, e);
+                      }, false);
+                    }
+                    s.parentNode.insertBefore(o, s);
+                  }
+                </script>
+                <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+                <script>
+                  async("/js/anchor.min.js", function () {
+                    anchors.options = {
+                      visible: 'always',
+                      placement: 'right',
+                      //   icon: '#'
+                    };
+                    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+                  })
+                </script>
+                <style>
+                  /* place left on bigger screen */
+                  @media all and (min-width: 800px) {
+                    .anchorjs-link {
+                      position: absolute;
+                      left: -0.75em;
+                      font-size: 1.1em;
+                      margin-top: -0.1em;
+                    }
+                  }
+                </style>
                 
 
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
 
 <ul class="list-inline text-center">
-
-
-  <!-- 
-  <li>
-    <a target="_blank" href="/feed.xml">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-   -->
-  
-  <li>
-    <a target="_blank" href="https://twitter.com/_xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  <li>
-    <a target="_blank" href="http://weibo.com/xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  
-  <li>
-    <a target="_blank" href="https://www.youtube.com/@xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  <li>
-    <a target="_blank" href="https://space.bilibili.com/13835416">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  <li>
-    <a target="_blank" href="https://t.me/xheldon_tech">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
 </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; <a href="https://github.com/Xheldon" target="_blank">Xheldon</a> 2024
-                    <br>
-                    Don't Panic | Theme fork from <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-                    <br>
-                    
-                    <a style="color: #777; vertical-align: middle;" target="_blank" href="https://beian.miit.gov.cn/">京ICP备2021031693号-1</a>
-                    <a style="color: #777" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502047432">
-                        <img style="width: 17px;height: 17px; vertical-align: middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKTWlDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVN3WJP3Fj7f92UPVkLY8LGXbIEAIiOsCMgQWaIQkgBhhBASQMWFiApWFBURnEhVxILVCkidiOKgKLhnQYqIWotVXDjuH9yntX167+3t+9f7vOec5/zOec8PgBESJpHmomoAOVKFPDrYH49PSMTJvYACFUjgBCAQ5svCZwXFAADwA3l4fnSwP/wBr28AAgBw1S4kEsfh/4O6UCZXACCRAOAiEucLAZBSAMguVMgUAMgYALBTs2QKAJQAAGx5fEIiAKoNAOz0ST4FANipk9wXANiiHKkIAI0BAJkoRyQCQLsAYFWBUiwCwMIAoKxAIi4EwK4BgFm2MkcCgL0FAHaOWJAPQGAAgJlCLMwAIDgCAEMeE80DIEwDoDDSv+CpX3CFuEgBAMDLlc2XS9IzFLiV0Bp38vDg4iHiwmyxQmEXKRBmCeQinJebIxNI5wNMzgwAABr50cH+OD+Q5+bk4eZm52zv9MWi/mvwbyI+IfHf/ryMAgQAEE7P79pf5eXWA3DHAbB1v2upWwDaVgBo3/ldM9sJoFoK0Hr5i3k4/EAenqFQyDwdHAoLC+0lYqG9MOOLPv8z4W/gi372/EAe/tt68ABxmkCZrcCjg/1xYW52rlKO58sEQjFu9+cj/seFf/2OKdHiNLFcLBWK8ViJuFAiTcd5uVKRRCHJleIS6X8y8R+W/QmTdw0ArIZPwE62B7XLbMB+7gECiw5Y0nYAQH7zLYwaC5EAEGc0Mnn3AACTv/mPQCsBAM2XpOMAALzoGFyolBdMxggAAESggSqwQQcMwRSswA6cwR28wBcCYQZEQAwkwDwQQgbkgBwKoRiWQRlUwDrYBLWwAxqgEZrhELTBMTgN5+ASXIHrcBcGYBiewhi8hgkEQcgIE2EhOogRYo7YIs4IF5mOBCJhSDSSgKQg6YgUUSLFyHKkAqlCapFdSCPyLXIUOY1cQPqQ28ggMor8irxHMZSBslED1AJ1QLmoHxqKxqBz0XQ0D12AlqJr0Rq0Hj2AtqKn0UvodXQAfYqOY4DRMQ5mjNlhXIyHRWCJWBomxxZj5Vg1Vo81Yx1YN3YVG8CeYe8IJAKLgBPsCF6EEMJsgpCQR1hMWEOoJewjtBK6CFcJg4Qxwicik6hPtCV6EvnEeGI6sZBYRqwm7iEeIZ4lXicOE1+TSCQOyZLkTgohJZAySQtJa0jbSC2kU6Q+0hBpnEwm65Btyd7kCLKArCCXkbeQD5BPkvvJw+S3FDrFiOJMCaIkUqSUEko1ZT/lBKWfMkKZoKpRzame1AiqiDqfWkltoHZQL1OHqRM0dZolzZsWQ8ukLaPV0JppZ2n3aC/pdLoJ3YMeRZfQl9Jr6Afp5+mD9HcMDYYNg8dIYigZaxl7GacYtxkvmUymBdOXmchUMNcyG5lnmA+Yb1VYKvYqfBWRyhKVOpVWlX6V56pUVXNVP9V5qgtUq1UPq15WfaZGVbNQ46kJ1Bar1akdVbupNq7OUndSj1DPUV+jvl/9gvpjDbKGhUaghkijVGO3xhmNIRbGMmXxWELWclYD6yxrmE1iW7L57Ex2Bfsbdi97TFNDc6pmrGaRZp3mcc0BDsax4PA52ZxKziHODc57LQMtPy2x1mqtZq1+rTfaetq+2mLtcu0W7eva73VwnUCdLJ31Om0693UJuja6UbqFutt1z+o+02PreekJ9cr1Dund0Uf1bfSj9Rfq79bv0R83MDQINpAZbDE4Y/DMkGPoa5hpuNHwhOGoEctoupHEaKPRSaMnuCbuh2fjNXgXPmasbxxirDTeZdxrPGFiaTLbpMSkxeS+Kc2Ua5pmutG003TMzMgs3KzYrMnsjjnVnGueYb7ZvNv8jYWlRZzFSos2i8eW2pZ8ywWWTZb3rJhWPlZ5VvVW16xJ1lzrLOtt1ldsUBtXmwybOpvLtqitm63Edptt3xTiFI8p0in1U27aMez87ArsmuwG7Tn2YfYl9m32zx3MHBId1jt0O3xydHXMdmxwvOuk4TTDqcSpw+lXZxtnoXOd8zUXpkuQyxKXdpcXU22niqdun3rLleUa7rrStdP1o5u7m9yt2W3U3cw9xX2r+00umxvJXcM970H08PdY4nHM452nm6fC85DnL152Xlle+70eT7OcJp7WMG3I28Rb4L3Le2A6Pj1l+s7pAz7GPgKfep+Hvqa+It89viN+1n6Zfgf8nvs7+sv9j/i/4XnyFvFOBWABwQHlAb2BGoGzA2sDHwSZBKUHNQWNBbsGLww+FUIMCQ1ZH3KTb8AX8hv5YzPcZyya0RXKCJ0VWhv6MMwmTB7WEY6GzwjfEH5vpvlM6cy2CIjgR2yIuB9pGZkX+X0UKSoyqi7qUbRTdHF09yzWrORZ+2e9jvGPqYy5O9tqtnJ2Z6xqbFJsY+ybuIC4qriBeIf4RfGXEnQTJAntieTE2MQ9ieNzAudsmjOc5JpUlnRjruXcorkX5unOy553PFk1WZB8OIWYEpeyP+WDIEJQLxhP5aduTR0T8oSbhU9FvqKNolGxt7hKPJLmnVaV9jjdO31D+miGT0Z1xjMJT1IreZEZkrkj801WRNberM/ZcdktOZSclJyjUg1plrQr1zC3KLdPZisrkw3keeZtyhuTh8r35CP5c/PbFWyFTNGjtFKuUA4WTC+oK3hbGFt4uEi9SFrUM99m/ur5IwuCFny9kLBQuLCz2Lh4WfHgIr9FuxYji1MXdy4xXVK6ZHhp8NJ9y2jLspb9UOJYUlXyannc8o5Sg9KlpUMrglc0lamUycturvRauWMVYZVkVe9ql9VbVn8qF5VfrHCsqK74sEa45uJXTl/VfPV5bdra3kq3yu3rSOuk626s91m/r0q9akHV0IbwDa0b8Y3lG19tSt50oXpq9Y7NtM3KzQM1YTXtW8y2rNvyoTaj9nqdf13LVv2tq7e+2Sba1r/dd3vzDoMdFTve75TsvLUreFdrvUV99W7S7oLdjxpiG7q/5n7duEd3T8Wej3ulewf2Re/ranRvbNyvv7+yCW1SNo0eSDpw5ZuAb9qb7Zp3tXBaKg7CQeXBJ9+mfHvjUOihzsPcw83fmX+39QjrSHkr0jq/dawto22gPaG97+iMo50dXh1Hvrf/fu8x42N1xzWPV56gnSg98fnkgpPjp2Snnp1OPz3Umdx590z8mWtdUV29Z0PPnj8XdO5Mt1/3yfPe549d8Lxw9CL3Ytslt0utPa49R35w/eFIr1tv62X3y+1XPK509E3rO9Hv03/6asDVc9f41y5dn3m978bsG7duJt0cuCW69fh29u0XdwruTNxdeo94r/y+2v3qB/oP6n+0/rFlwG3g+GDAYM/DWQ/vDgmHnv6U/9OH4dJHzEfVI0YjjY+dHx8bDRq98mTOk+GnsqcTz8p+Vv9563Or59/94vtLz1j82PAL+YvPv655qfNy76uprzrHI8cfvM55PfGm/K3O233vuO+638e9H5ko/ED+UPPR+mPHp9BP9z7nfP78L/eE8/sl0p8zAAA7SGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgICAgICAgICB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIgogICAgICAgICAgICB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoV2luZG93cyk8L3htcDpDcmVhdG9yVG9vbD4KICAgICAgICAgPHhtcDpDcmVhdGVEYXRlPjIwMTUtMTEtMTBUMTQ6MDQ6NTArMDg6MDA8L3htcDpDcmVhdGVEYXRlPgogICAgICAgICA8eG1wOk1ldGFkYXRhRGF0ZT4yMDE1LTExLTEwVDE0OjA0OjUwKzA4OjAwPC94bXA6TWV0YWRhdGFEYXRlPgogICAgICAgICA8eG1wOk1vZGlmeURhdGU+MjAxNS0xMS0xMFQxNDowNDo1MCswODowMDwveG1wOk1vZGlmeURhdGU+CiAgICAgICAgIDx4bXBNTTpJbnN0YW5jZUlEPnhtcC5paWQ6ODBiY2E5ODUtNGY5Yi02ZTRkLTlmYzktZThmNDkyNjdkZjRlPC94bXBNTTpJbnN0YW5jZUlEPgogICAgICAgICA8eG1wTU06RG9jdW1lbnRJRD5hZG9iZTpkb2NpZDpwaG90b3Nob3A6ZWRkYWU4MGMtODc3MC0xMWU1LTg0OWEtYmNmZGE2MDI4ZjJlPC94bXBNTTpEb2N1bWVudElEPgogICAgICAgICA8eG1wTU06T3JpZ2luYWxEb2N1bWVudElEPnhtcC5kaWQ6ZDAxN2I5NGUtOTRiZC0yNjQxLThmZjktYmY3YTBhMzY3N2IxPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOmQwMTdiOTRlLTk0YmQtMjY0MS04ZmY5LWJmN2EwYTM2NzdiMTwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNS0xMS0xMFQxNDowNDo1MCswODowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDo4MGJjYTk4NS00ZjliLTZlNGQtOWZjOS1lOGY0OTI2N2RmNGU8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTUtMTEtMTBUMTQ6MDQ6NTArMDg6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE0IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8cGhvdG9zaG9wOkRvY3VtZW50QW5jZXN0b3JzPgogICAgICAgICAgICA8cmRmOkJhZz4KICAgICAgICAgICAgICAgPHJkZjpsaT4zQ0I4RkVFOEMyRUJFNkU1QTREQTk3MzI4MzU0MTI0RTwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpPmFkb2JlOmRvY2lkOnBob3Rvc2hvcDpiZGRmY2Y2Zi04NzcwLTExZTUtODQ5YS1iY2ZkYTYwMjhmMmU8L3JkZjpsaT4KICAgICAgICAgICAgPC9yZGY6QmFnPgogICAgICAgICA8L3Bob3Rvc2hvcDpEb2N1bWVudEFuY2VzdG9ycz4KICAgICAgICAgPHBob3Rvc2hvcDpDb2xvck1vZGU+MzwvcGhvdG9zaG9wOkNvbG9yTW9kZT4KICAgICAgICAgPHBob3Rvc2hvcDpJQ0NQcm9maWxlPnNSR0IgSUVDNjE5NjYtMi4xPC9waG90b3Nob3A6SUNDUHJvZmlsZT4KICAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9wbmc8L2RjOmZvcm1hdD4KICAgICAgICAgPHRpZmY6T3JpZW50YXRpb24+MTwvdGlmZjpPcmllbnRhdGlvbj4KICAgICAgICAgPHRpZmY6WFJlc29sdXRpb24+NzIwMDAwLzEwMDAwPC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj43MjAwMDAvMTAwMDA8L3RpZmY6WVJlc29sdXRpb24+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDxleGlmOkNvbG9yU3BhY2U+MTwvZXhpZjpDb2xvclNwYWNlPgogICAgICAgICA8ZXhpZjpQaXhlbFhEaW1lbnNpb24+MjA8L2V4aWY6UGl4ZWxYRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpQaXhlbFlEaW1lbnNpb24+MjA8L2V4aWY6UGl4ZWxZRGltZW5zaW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAKPD94cGFja2V0IGVuZD0idyI/Pu6JurQAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAABRFJREFUeNpE1OtvW/Udx/H3ufj4+Ph2nDh2vLgrTSPaFNqGtd0Gy9LRTVymNoNM6ihCaEwdQ5sYAo0HTOwBYg/Yk0pDiG3qmLSiPtjGJERbdZSQaUArykXt1la9hDRNY6dpYsexj30uPj7ntwcVyT/w0ucrfT5fSQgBdguAEBlZhDhaiVikF2j22lfPjP77+Kc/9ZyO9p37th7s2rLlbegveZ4g6jggS4AMAKkkkhAC366DJJADgaJlgA/unTx+4qmT/7oyKpxJfdYzUDIma7M6TsXoDH+3/8jgnrG/iOC2o8JrIiQJECjpvlt0Q7JoimWEkQHN1Sf+8MbE40+O7226M/rtCYX9+k2e0me55+48XXfn1f1PvvfwiVdfOSLFlKitSbh8hq9+DitZFRlZSaHK1aJ35uV3f3+4zr79/fy42CD9pwtULwdUpwLqu//ID4JzPHPoEQ7+00dc/vM/Eoary3oCPR5dBROeRTxaH7x+9MWpkd3nRsyBPL/InmP6cAN5jUlgtcELkXpMTj19kr3GGfLfuovv7T62Z/GjN67aM2c3XHz/nVUw6jmo7ruJI5eT2idz23lwu0XzbAP5eh3JjBJdCnBP3iSyrhu96VD562nG7m8z8cUm3vwwKCSkVgx5aBWsL1aK4cfvHwilGKg2KWuOxjxEAh+WXKT1Bto2E/lGC42QyrRDX5cHkkStKRPtUQ9sHB5btwLOXHrvh+1yeTiT0KATRRQKZId7aSKw7ukm2Fck8dIQxjNbkHsMctuytOw2CEEhZ0Dp7L1Ls6d+sgIaicxgw/Lp73FB7+bEaQN1V4rqnrUEZQvpfy3sYzfxp5fRnh+m69mtvHWoBsQZ2qzSmlrALU0VV8BwaW5Po6ZyZ9Gi+HWN19+M859XSgztKJA2ktgXaoQLHu65GsnyMudfvsKrh6Lkh0w299WplD38pUvDK6CstkyrIZNavMLe+wM6fgL/6Dzdf/scuS9Cu0chzKlkdxUoTFylcvA8rbbC2GiEZHUSq6GiJuUIgAoQM746Lm+4Nhrk+3jiGxYH+np4vTyIP3uB7uokcjqGc6GGNZCjnCnwdzkGKZMnvrlAJ1nEvEPCyKw5tgKCnBMNwdyUxZ2D0/z2V9t48fkRjlqboeEzalfpMmXeOpakiQFkeO7nOjsGJpmbBFybsGNtXQFVs729k8zjz/uUFi7yy+EoY+NxJo7bXJK38MCmLyjEKnSO9NGuOazZaPDrB65x89Q1bF9Hz2qoprYRuPUcvOYnj1ZP/+6wM9/Gq/hQmmH9Q0NE8zoEVYKqSnPBIb2uC9Z2Q6nC9NuXcZJZEv0JYr0G6YF9O7XM9z+QhBAAdFr/fWzp/IHXAtdJVz6cR40LencOEiw5+HYL2dDRu+JIWoTqqSk6gUp6+3p8l2p6w8gjcTM1Lmn33TrZd2ZwFp2yOx9z9HyYzu8aIKi3CKwGGBqKZqLFoL3cpFWqoa/tRi/m8ZZt3LIlYmuaKKkUsS9rI9pXUfjohdzXkr2RTAGvHhIGKmGg4C5aIELa1TrNyUUkJQKShHujQiQmk/92IasZ1s9Ch9Uta0qKaPeOhyw7/ZpdKrU0ZZlUrkNEstEkH8VbRjgOyY1ZUgMpZK2JmtaQMr3XO+pdv1GN23+kaIus1kb4SBHVblTjTzsX8y859cUHPX9251c29WwKLSmhm3KXGkti3eB6rMe01dzI2aWphXFnpnaib2culBQFEbgA/H8ALiI3EysggNoAAAAASUVORK5CYII=" />
-                        <span style="vertical-align: middle;">京公网安备 11010502047432号</span>
-                    </a>
-                    
-                </p>
-            </div>
-            <!-- <div class="switch-mode" id="dark-mode">
-                <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-                    <i class="fa fa-moon-o fa-stack-1x"></i>
-                  </span>
-            </div>
-            <div class="switch-mode" id="light-mode">
-                <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-sun-o fa-stack-1x fa-inverse"></i>
-                  </span>
-            </div> -->
-        </div>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2024
+          <br>
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+          <br>
+          
+        </p>
+      </div>
     </div>
+  </div>
 </footer>
 <script>
-    if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
-        console.log('浏览器不支持主题色');
-    } else {
-        if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-            document.documentElement.classList.remove('light');
-            document.documentElement.classList.add('dark');
-            // Note: 推特列表添加暗黑主题
-            let ttl = document.querySelector('.twitter-timeline');
-            if (ttl) {
-                ttl.setAttribute('data-theme', 'dark');
-            }
-        }
-        if(window.matchMedia('(prefers-color-scheme: light)').matches){
-            document.documentElement.classList.remove('dark');
-            document.documentElement.classList.add('light');
-            let ttl = document.querySelector('.twitter-timeline');
-            if (ttl) {
-                ttl.removeAttribute('data-theme');
-            }
-        }
-        // document.getElementById('dark-mode').addEventListener('click', function() {
-        //     document.documentElement.classList.remove('light');
-        //     document.documentElement.classList.add('dark');
-        // });
-        // document.getElementById('light-mode').addEventListener('click', function() {
-        //     document.documentElement.classList.add('light');
-        //     document.documentElement.classList.remove('dark');
-        // });
-        // Note: 自动切换
-        window.matchMedia('(prefers-color-scheme: dark)').addListener(function(mediaQueryList) {
-            if (mediaQueryList.matches) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-            }
-        })
-        window.matchMedia('(prefers-color-scheme: light)').addListener(function(mediaQueryList) {
-            if (mediaQueryList.matches) {
-                document.documentElement.classList.add('light');
-                document.documentElement.classList.remove('dark');
-            }
-        })
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
     }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function(mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function(mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
 </script>
+
 <!-- jQuery -->
-<script src="https://static.xheldon.cn/js/jquery.min.js "></script>
+<script src="/js/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
-<script src="https://static.xheldon.cn/js/bootstrap.min.js "></script>
+<script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="https://static.xheldon.cn/js/xheldon-life-blog.min.js?202110012319"></script>
+<script src="/js/xblog.min.js?202405251426"></script>
 
-<!-- Simple Jekyll Search -->
-<script src="https://static.xheldon.cn/js/simple-jekyll-search.min.js"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src='/js/simple-jekyll-search.min.js'></script>
 
 <!-- Vercel web analysis -->
 
+<script defer src="/_vercel/insights/script.js"></script>
 
-<!-- Service Worker -->
 
-<script src="https://static.xheldon.cn/js/snackbar.js "></script>
-<script src="https://static.xheldon.cn/js/sw-registration.js "></script>
-
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
 <!-- async load function -->
 <script>
-    function async(u, c) {
-        var d = document, t = 'script',
-            o = d.createElement(t),
-            s = d.getElementsByTagName(t)[0];
-        o.src = u;
-        if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-        s.parentNode.insertBefore(o, s);
+  function async (u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function(e) {
+          c(null, e);
+        },
+        false
+      );
     }
+    s.parentNode.insertBefore(o, s);
+  }
 </script>
 
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-
-
+<!-- jquery.tagcloud.js -->
 
 
 <!--fastClick.js -->
 <script>
-    async("https://static.xheldon.cn/js/fastclick.min.js", function () {
-        var $nav = document.querySelector("nav");
-        if ($nav) FastClick.attach($nav);
-    })
+  async ('/js/fastclick.min.js', function() {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
 </script>
-
 
 <!-- Google Analytics -->
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-5"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
 <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'UA-79359216-5');
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', '{{config.ga_track_id}}');
 </script>
 
 
 <!-- Side Catalog -->
 
 <script type="text/javascript">
-    function generateCatalog(selector) {
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
 
-        // interop with multilangual 
-        if ('' == 'true') {
-            _containerSelector = 'div.post-container.active'
-        } else {
-            _containerSelector = 'div.post-container'
-        }
+    // clean
+    $(selector).html('');
 
-        // init
-        var P = $(_containerSelector), a, n, t, l, i, c;
-        a = P.find('h1,h2,h3,h4,h5,h6');
-
-        // clean
-        $(selector).html('')
-
-        // appending
-        a.each(function () {
-            n = $(this).prop('tagName').toLowerCase();
-            i = "#" + $(this).prop('id');
-            t = $(this).text();
-            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-            l = $('<li class="' + n + '_nav"></li>').append(c);
-            $(selector).append(l);
-        });
-        return true;
-    }
-
-    generateCatalog(".catalog-body");
-
-    // toggle side catalog
-    $(".catalog-toggle").click((function (e) {
-        e.preventDefault();
-        $('.side-catalog').toggleClass("fold")
-    }))
-
-    /*
-     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-     * Fork by Hux to support padding
-     */
-    async("https://static.xheldon.cn/js/jquery.nav.js", function () {
-        $('.catalog-body').onePageNav({
-            currentClass: "active",
-            changeHash: !1,
-            easing: "swing",
-            filter: "",
-            scrollSpeed: 700,
-            scrollOffset: 0,
-            scrollThreshold: .2,
-            begin: null,
-            end: null,
-            scrollChange: null,
-            padding: 80
-        });
+    // appending
+    a.each(function() {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
     });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function(e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async ('/js/jquery.nav.js',
+    function() {
+      $('.catalog-body').onePageNav({
+        currentClass: 'active',
+        changeHash: !1,
+        easing: 'swing',
+        filter: '',
+        scrollSpeed: 700,
+        scrollOffset: 0,
+        scrollThreshold: 0.2,
+        begin: null,
+        end: null,
+        scrollChange: null,
+        padding: 80,
+      });
+    }
+  );
 </script>
 
 
-
-<!-- Multi-Lingual -->
-
-
-<!-- Simple Jekyll Search -->
 <script>
-    // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-    function htmlDecode(input) {
-        var e = document.createElement('textarea');
-        e.innerHTML = input;
-        // handle case of empty input
-        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-    }
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+  }
 
-    SimpleJekyllSearch({
-        searchInput: document.getElementById('search-input'),
-        resultsContainer: document.getElementById('search-results'),
-        json: '/search.json',
-        searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-        noResultsText: 'No results',
-        limit: 50,
-        fuzzy: false,
-        // a hack to get escaped subtitle unescaped. for some reason, 
-        // post.subtitle w/o escape filter nuke entire search.
-        templateMiddleware: function (prop, value, template) {
-            if (prop === 'subtitle' || prop === 'title') {
-                if (value.indexOf("code")) {
-                    return htmlDecode(value);
-                } else {
-                    return value;
-                }
-            }
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('search-results'),
+    json: '/search.json',
+    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+    noResultsText: 'No results',
+    limit: 50,
+    fuzzy: false,
+    // a hack to get escaped subtitle unescaped. for some reason, 
+    // post.subtitle w/o escape filter nuke entire search.
+    templateMiddleware: function(prop, value, template) {
+      if (prop === 'subtitle' || prop === 'title') {
+        if (value.indexOf("code")) {
+          return htmlDecode(value);
+        } else {
+          return value;
         }
-    });
+      }
+    }
+  });
 
-    $(document).ready(function () {
-        var $searchPage = $('.search-page');
-        var $searchOpen = $('.search-icon');
-        var $searchClose = $('.search-icon-close');
-        var $searchInput = $('#search-input');
-        var $body = $('body');
+  $(document).ready(function() {
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
 
-        $searchOpen.on('click', function (e) {
-            e.preventDefault();
-            $searchPage.toggleClass('search-active');
-            var prevClasses = $body.attr('class') || '';
-            setTimeout(function () {
-                $body.addClass('no-scroll');
-            }, 400)
+    $searchOpen.on('click', function(e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function() {
+        $body.addClass('no-scroll');
+      }, 400)
 
-            if ($searchPage.hasClass('search-active')) {
-                $searchClose.on('click', function (e) {
-                    e.preventDefault();
-                    $searchPage.removeClass('search-active');
-                    $body.attr('class', prevClasses);  // from closure 
-                });
-                $searchInput.focus();
-            }
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function(e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure 
         });
+        $searchInput.focus();
+      }
     });
+  });
 </script>
 
-
-<!-- Image to hack wechat -->
-<img src="/resources/img/icon_wechat.png" width="0" height="0" />
-<!-- Migrate from head to bottom, no longer block render and still work -->
-
-</body>
-
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
 </html>
