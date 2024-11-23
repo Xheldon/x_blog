@@ -1,843 +1,669 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      git 常用命令总结 - Xheldon Blog
+        
+  </title>
 
-<head>
-    <meta charset="utf-8">
-    <title>git 常用命令总结 - Xheldon Blog</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="">
     
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    
-        <meta name="description" content="">
-    
-    <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
-    <meta name="theme-color" content="#000000">
-    <meta name="twitter:card" content="summary_large_image">
-    <!-- Open Graph -->
-    <meta property="og:title" content="git 常用命令总结 - Xheldon Blog">
-    
-    <meta property="og:type" content="article">
-    
-    <meta property="article:published_time" content="2016-04-21T13:34:23Z">
-    
-    
-    
-    <meta property="article:tag" content="技术">
-    
-    <meta property="article:tag" content="Git">
-    
-    
-    
-        <meta name="og:description" content="">
-    
-    
-    <meta property="twitter:image" content="https://www.xheldon.com/resources/img/logo.png">
-    <meta property="og:image" content="https://www.xheldon.com/resources/img/logo.png">
-    
-    <meta property="og:url" content="https://www.xheldon.com/tech/git-command.html">
-    <meta property="og:site_name" content="Xheldon Blog">
-    <meta name="google-adsense-account" content="ca-pub-5486286026923411">
-    <script async src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1" nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script><script nonce="hkl-3cDcQhqR8uwDMTDGjQ">(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
-     crossorigin="anonymous"></script>
-    <!-- Web App Manifest -->
-    <link rel="manifest" href="/pwa/manifest.json">
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <!-- Open Graph -->
+        <meta property="og:title"
+          content="git 常用命令总结 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2016-4-21T5:34:23"> 
+              
+                  
+                    <meta property="article:tag" content="技术">
+                    
+                    <meta property="article:tag" content="Git">
+                    
+                      
+                          
+                            <meta name="og:description" content="">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/tech/git-command.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="/resources/img/favicon.ico">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.xheldon.com/tech/git-command.html">
+                                      <!-- Web App Manifest -->
+                                      <link rel="manifest" href="/js/manifest.json">
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/tech/git-command.html">
 
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="https://static.xheldon.cn/css/xheldon-life-blog.min.css">
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
 
-    <!-- Custom Fonts -->
-    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
-    <link href="https://static.xheldon.cn/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
 
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
 
+  <!-- hack iOS CSS :active style -->
 
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="">
-
+  <body ontouchstart="">
     <!-- Navigation -->
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
     
-        <div class="container-fluid">
+      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        
+          <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">
-                    Xheldon Blog
-                </a>
+              <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">
+                Xheldon Blog
+              </a>
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div id="xheldonblog_navbar">
-                <div class="navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/">Home</a></li>
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-                        <li>
-                            <a href="/donate/">Donate</a>
-                        </li>
-                        <li>
-                            <a href="/archive/">Archive</a>
-                        </li>
-                        <li>
-                            <a href="/feed.xml">Rss</a>
-                        </li>
-                        <li class="search-icon">
-                            <a href="javascript:void(0)">
-                                <i class="fa fa-search"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+            <div id="xblog_navbar">
+              <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <a href="/">Home</a>
+                  </li>
+                  <li>
+                    <a href="/about/">About</a>
+                  </li>
+                  <li>
+                    <a href="/donate/">Donate</a>
+                  </li>
+                  <li>
+                    <a href="/archive/">Archive</a>
+                  </li>
+                  <li>
+                    <a href="/feed.xml">Rss</a>
+                  </li>
+                  <li class="search-icon">
+                    <a href="javascript:void(0)">
+                      <i class="fa fa-search"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
             <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-
-    <script>
+          </div>
+          <!-- /.container -->
+      </nav>
+      <script>
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
         var $body = document.body;
         var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xheldonblog_navbar');
+        var $navbar = document.querySelector('#xblog_navbar');
         var $collapse = document.querySelector('.navbar-collapse');
 
-        var __XheldonNav__ = {
-            close: function () {
-                $navbar.className = " ";
-                // wait until animation end.
-                setTimeout(function () {
-                    // prevent frequently toggle
-                    if ($navbar.className.indexOf('in') < 0) {
-                        $collapse.style.height = "0px"
-                    }
-                }, 400)
-            },
-            open: function () {
-                $collapse.style.height = "auto"
-                $navbar.className += " in";
-            }
-        }
-
+        var __XNav__ = {
+          close: function () {
+            $navbar.className = ' ';
+            // wait until animation end.
+            setTimeout(function () {
+              // prevent frequently toggle
+              if ($navbar.className.indexOf('in') < 0) {
+                $collapse.style.height = '0px';
+              }
+            }, 400);
+          },
+          open: function () {
+            $collapse.style.height = 'auto';
+            $navbar.className += ' in';
+          },
+        };
         // Bind Event
         $toggle.addEventListener('click', function (e) {
-            if ($navbar.className.indexOf('in') > 0) {
-                __XheldonNav__.close()
-            } else {
-                __XheldonNav__.open()
-            }
-        })
-
+          if ($navbar.className.indexOf('in') > 0) {
+            __XNav__.close();
+          } else {
+            __XNav__.open();
+          }
+        });
         /**
          * Since Fastclick is used to delegate 'touchstart' globally
          * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * Using 'e.stopPropagation' to stop 'touchstart' event from
          * $toggle/$collapse will break global delegation.
-         * 
+         *
          * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.  
+         * added to document close XheldonNav.
          *
          * Also, we use 'click' instead of 'touchstart' as compromise
          */
         document.addEventListener('click', function (e) {
-            if (e.target == $toggle) return;
-            if (e.target.className == 'icon-bar') return;
-            __XheldonNav__.close();
-        })
-    </script>
-    <!-- Search -->
+          if (e.target == $toggle) return;
+          if (e.target.className == 'icon-bar') return;
+          __XNav__.close();
+        });
+      </script> <!-- Search -->
 <div class="search-page">
-  <div class="search-icon-close-container">
-    <span class="search-icon-close">
-      <i class="fa fa-chevron-down"></i>
-    </span>
-  </div>
-  <div class="search-main container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <form></form>
-        <input type="text" id="search-input" placeholder="$ grep...">
-        </form>
-        <div id="search-results" class="mini-post-list"></div>
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-    <!-- Image to hack wechat -->
-<!-- <img src="/resources/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
-
-<!-- Post Header -->
-
-
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://www.xheldon.com/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/" width="0" height="0"> -->
 
 <style type="text/css">
-    header.intro-header{
-        position: relative;
-        background-image: url('https://static.xheldon.cn/img/index-bg.png');
-        
-    }
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
 
     
+  }
+
+  
 </style>
 
-<header class="intro-header style-text" >
-
-    <div class="header-mask"></div>
+<header class="intro-header style-text">
+  
+    <div class="headerMask"></div>
     
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                        
-                        <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-                        
-                        <a class="tag" href="/archive/?tag=Git" title="Git">Git</a>
-                        
-                    </div>
-                    <h1>git 常用命令总结</h1>
-                    
-                    <h2 class="subheading"></h2>
-                    <span class="meta">✍🏼 写于 2016年04月21日</span>&nbsp;&nbsp;&nbsp;  
-                    
-                </div>
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <div class="tags">
+              
+              <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+              
+              <a class="tag" href="/archive/?tag=Git" title="Git">Git</a>
+              
             </div>
+            <h1>git 常用命令总结</h1>
+            <h2 class="subheading"></h2>
+            <span class="meta">✍🏼 写于 2016年04月21日</span>&nbsp;&nbsp;&nbsp;
+            
+          </div>
         </div>
+      </div>
     </div>
-</header>
+  </header>
 
-
-
-
-
-
-<!-- Post Content -->
-<article>
+  <!-- Post Content -->
+  <article>
     <div class="container">
-        <div class="row">
+      <div class="row">
 
-    <!-- Post Container -->
-            <div class="
+        <!-- Post Container -->
+        <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
                 post-container">
-
-                <!-- Multi-Lingual -->
-                
+          
+            
+              <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
+              <script>
+                var timeDom = document.getElementById('from_time');
+                var pageTime = Date.parse('Thu Apr 21 2016 05:34:23 GMT+0000');
+                var currentTime = Date.now();
+                var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
+                if (Number(fromNow) <= 0) {
+                  fromNow = 1; // Note: 至少显示一天
+                }
+                timeDom.innerText = fromNow
+              </script>
+              
                 
                     
-                        
-                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
-                        <script>
-                            var timeDom = document.getElementById('from_time');
-                            var pageTime = 1461216863; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
-                            var currentTime = Date.now();
-                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
-                            if (Number(fromNow) <= 0) {
-                                fromNow = 1; // Note: 至少显示一天
-                            }
-                            timeDom.innerText = fromNow
-                        </script>
-                    
-                    
-                
-                
-                
-                
-				<h2 id="前言">前言</h2>
-
+                      
+                          
+                              
+                                  <h2 id="前言">前言</h2>
 <p>经常使用git，但是一直没时间写，现在终于有时间了，所以总结一下常用命令。</p>
-
 <h2 id="正文">正文</h2>
-
 <p>新建一个分支并切换到这个分支：</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">git</span> <span class="nx">checkout</span> <span class="o">-</span><span class="nx">b</span> <span class="nx">branch_name</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git checkout -b branch_name<br></code></pre></td></tr></table></figure>
 <p>切换分支:</p>
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">git</span> <span class="nx">checkout</span> <span class="nx">branch_name</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>删除一个分支(需要先<code class="language-plaintext highlighter-rouge">checkout</code>到另一个分支):</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">git</span> <span class="nx">branch</span> <span class="o">-</span><span class="nx">d</span> <span class="nx">branch_name</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>注意，如果你在本地新建一个分支，而没有<code class="language-plaintext highlighter-rouge">git push</code>的话，执行下列命令删除一个分支会提示你</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="nx">error</span><span class="p">:</span> <span class="nx">The</span> <span class="nx">branch</span> <span class="dl">'</span><span class="s1">test</span><span class="dl">'</span> <span class="nx">is</span> <span class="nx">not</span> <span class="nx">fully</span> <span class="nx">merged</span><span class="p">.</span>
-<span class="nx">If</span> <span class="nx">you</span> <span class="nx">are</span> <span class="nx">sure</span> <span class="nx">you</span> <span class="nx">want</span> <span class="nx">to</span> <span class="k">delete</span> <span class="nx">it</span><span class="p">,</span> <span class="nx">run</span> <span class="dl">'</span><span class="s1">git branch -D test</span><span class="dl">'</span><span class="p">.</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git checkout branch_name<br></code></pre></td></tr></table></figure>
+<p>删除一个分支(需要先<code>checkout</code>到另一个分支):</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git branch -d branch_name<br></code></pre></td></tr></table></figure>
+<p>注意，如果你在本地新建一个分支，而没有<code>git push</code>的话，执行下列命令删除一个分支会提示你</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">error</span>: <span class="hljs-title class_">The</span> branch <span class="hljs-string">&#x27;test&#x27;</span> is not fully merged.<br><span class="hljs-title class_">If</span> you are sure you want to <span class="hljs-keyword">delete</span> it, run <span class="hljs-string">&#x27;git branch -D test&#x27;</span>.<br></code></pre></td></tr></table></figure>
 <p>确定不要的话，按说明强制删除即可。</p>
-
 <p>提交文件的流程是:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">git</span> <span class="nx">add</span> <span class="o">==&gt;</span> <span class="nx">git</span> <span class="nx">commit</span> <span class="o">==&gt;</span> <span class="nx">git</span> <span class="nx">push</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">git add</code>常用的有三个参数:</p>
-
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git add ==&gt; git commit ==&gt; git push<br></code></pre></td></tr></table></figure>
+<p><code>git add</code>常用的有三个参数:</p>
 <ol>
-  <li><code class="language-plaintext highlighter-rouge">git add -A</code> 所有变动记录都增加到暂存区，不管是新增还是删除还是修改。</li>
-  <li><code class="language-plaintext highlighter-rouge">git add .</code> 文件的增加记录，修改添加到暂存区，不包括删除的文件。</li>
-  <li><code class="language-plaintext highlighter-rouge">git add -u</code> 文件的删除和修改记录添加到暂存区，不包括新增的文件。</li>
+<li><code>git add -A</code> 所有变动记录都增加到暂存区，不管是新增还是删除还是修改。</li>
+<li><code>git add .</code> 文件的增加记录，修改添加到暂存区，不包括删除的文件。</li>
+<li><code>git add -u</code> 文件的删除和修改记录添加到暂存区，不包括新增的文件。</li>
 </ol>
-
-<p>人生没有后悔药，但是<code class="language-plaintext highlighter-rouge">git</code>有，如果不小心提交了错误的文件或者提交信息写错了，可以根据情况执行以下命令。</p>
-
-<p>首先<code class="language-plaintext highlighter-rouge">git status</code> 查看版本状态，(我用<code class="language-plaintext highlighter-rouge">zsh</code>)红色文件表示未<code class="language-plaintext highlighter-rouge">git add</code>到暂存区，绿色文件表示已经<code class="language-plaintext highlighter-rouge">git add</code>到缓存区，等待<code class="language-plaintext highlighter-rouge">git commit</code>。</p>
-
-<p>这个时候如果不想<code class="language-plaintext highlighter-rouge">git add</code>到缓存区的话，那就<code class="language-plaintext highlighter-rouge">git reset HEAD</code>全部将文件重新变为未<code class="language-plaintext highlighter-rouge">git add</code>的原始状态，如果只是不想<code class="language-plaintext highlighter-rouge">git add</code>某一个文件到缓存区的话, 需要指定文件名:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">git</span> <span class="nx">reset</span> <span class="nx">HEAD</span> <span class="nx">filename</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>有时候不但不想把修改过的文件<code class="language-plaintext highlighter-rouge">git add</code>到缓存区，而且想把这个文件所做的修改都忽略掉，也即回复到未修改的状态，那重新检出即可:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">git</span> <span class="nx">checkout</span> <span class="o">--</span> <span class="nx">filename</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>注意这里没有拼写错误,<code class="language-plaintext highlighter-rouge">checkout</code>和<code class="language-plaintext highlighter-rouge">filename</code>之间有左右存在一个空格的短横线。</p>
-
-<p><code class="language-plaintext highlighter-rouge">git add</code>之后就是<code class="language-plaintext highlighter-rouge">git commit</code>，可以跟一个参数<code class="language-plaintext highlighter-rouge">-m</code>来写下提交说明，这是个好习惯，而且是被强制的，如果没有<code class="language-plaintext highlighter-rouge">-m</code>参数，则会进入一个<code class="language-plaintext highlighter-rouge">vim</code>编辑状态，提示你加上信息:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">git</span> <span class="nx">commit</span> <span class="o">-</span><span class="nx">m</span> <span class="dl">'</span><span class="s1">这是一个提交说明</span><span class="dl">'</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>这个时候发现提交说明写错了，不想<code class="language-plaintext highlighter-rouge">commit</code>了（此时<code class="language-plaintext highlighter-rouge">HEAD</code>已经变了），两个方法：</p>
-
-<p>一个是移除<code class="language-plaintext highlighter-rouge">commit</code>：（因为这个还没有<code class="language-plaintext highlighter-rouge">push</code>，只是<code class="language-plaintext highlighter-rouge">commit</code>到本地仓库）</p>
-
-<p>首先<code class="language-plaintext highlighter-rouge">git log</code>，记下你误<code class="language-plaintext highlighter-rouge">commit</code>之前的一个<code class="language-plaintext highlighter-rouge">commit id</code>，是一个<code class="language-plaintext highlighter-rouge">hash(SHA)</code>，如：<code class="language-plaintext highlighter-rouge">73cf3bfc3419a85e959d7ecfcb917d9cdc24b3c9</code>或者直接是最近的一次<code class="language-plaintext highlighter-rouge">push</code>的<code class="language-plaintext highlighter-rouge">HEAD</code>也行：</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">git</span> <span class="nx">reset</span> <span class="mi">73</span><span class="nx">cf3bfc3419a85e959d7ecfcb917d9cdc24b3c9</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>（这个时候不能像<code class="language-plaintext highlighter-rouge">git add</code>的时候使用<code class="language-plaintext highlighter-rouge">git reset HEAD</code>了因为<code class="language-plaintext highlighter-rouge">git commit</code>之后<code class="language-plaintext highlighter-rouge">HEAD</code>已经变了(即已经可以通过<code class="language-plaintext highlighter-rouge">git log</code>查看提交记录了)）</p>
-
-<p>这里插一句<code class="language-plaintext highlighter-rouge">git reset</code>命令的三个参数:<code class="language-plaintext highlighter-rouge">--mixed</code>,<code class="language-plaintext highlighter-rouge">--soft</code>,<code class="language-plaintext highlighter-rouge">--hard</code>:</p>
-
+<p>人生没有后悔药，但是<code>git</code>有，如果不小心提交了错误的文件或者提交信息写错了，可以根据情况执行以下命令。</p>
+<p>首先<code>git status</code> 查看版本状态，(我用<code>zsh</code>)红色文件表示未<code>git add</code>到暂存区，绿色文件表示已经<code>git add</code>到缓存区，等待<code>git commit</code>。</p>
+<p>这个时候如果不想<code>git add</code>到缓存区的话，那就<code>git reset HEAD</code>全部将文件重新变为未<code>git add</code>的原始状态，如果只是不想<code>git add</code>某一个文件到缓存区的话, 需要指定文件名:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git reset <span class="hljs-variable constant_">HEAD</span> filename<br></code></pre></td></tr></table></figure>
+<p>有时候不但不想把修改过的文件<code>git add</code>到缓存区，而且想把这个文件所做的修改都忽略掉，也即回复到未修改的状态，那重新检出即可:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git checkout -- filename<br></code></pre></td></tr></table></figure>
+<p>注意这里没有拼写错误,<code>checkout</code>和<code>filename</code>之间有左右存在一个空格的短横线。</p>
+<p><code>git add</code>之后就是<code>git commit</code>，可以跟一个参数<code>-m</code>来写下提交说明，这是个好习惯，而且是被强制的，如果没有<code>-m</code>参数，则会进入一个<code>vim</code>编辑状态，提示你加上信息:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git commit -m <span class="hljs-string">&#x27;这是一个提交说明&#x27;</span><br></code></pre></td></tr></table></figure>
+<p>这个时候发现提交说明写错了，不想<code>commit</code>了（此时<code>HEAD</code>已经变了），两个方法：</p>
+<p>一个是移除<code>commit</code>：（因为这个还没有<code>push</code>，只是<code>commit</code>到本地仓库）</p>
+<p>首先<code>git log</code>，记下你误<code>commit</code>之前的一个<code>commit id</code>，是一个<code>hash(SHA)</code>，如：<code>73cf3bfc3419a85e959d7ecfcb917d9cdc24b3c9</code>或者直接是最近的一次<code>push</code>的<code>HEAD</code>也行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git reset 73cf3bfc3419a85e959d7ecfcb917d9cdc24b3c9<br></code></pre></td></tr></table></figure>
+<p>（这个时候不能像<code>git add</code>的时候使用<code>git reset HEAD</code>了因为<code>git commit</code>之后<code>HEAD</code>已经变了(即已经可以通过<code>git log</code>查看提交记录了)）</p>
+<p>这里插一句<code>git reset</code>命令的三个参数:<code>--mixed</code>,<code>--soft</code>,<code>--hard</code>:</p>
 <p>网上的教程一大堆，又是画图说明又是引用官方分支说明的，麻烦，我说的简单点。</p>
-
 <blockquote>
-  <p>简单的，举例子的方式简单点。 —Xheldon</p>
+<p>简单的，举例子的方式简单点。 —Xheldon</p>
 </blockquote>
-
-<p><code class="language-plaintext highlighter-rouge">git reset</code>默认是<code class="language-plaintext highlighter-rouge">mixed</code>参数，即执行<code class="language-plaintext highlighter-rouge">git reset xxxx</code>（xxx表示一个<code class="language-plaintext highlighter-rouge">SHA</code>或者未<code class="language-plaintext highlighter-rouge">commit</code>的时候是<code class="language-plaintext highlighter-rouge">HEAD</code>） 即是执行<code class="language-plaintext highlighter-rouge">git reset --mixed xxxx</code>, 他的作用是将文件恢复到你修改过文件之后没有执行任何<code class="language-plaintext highlighter-rouge">git</code>命令的状态(文件是红色状态)。</p>
-
-<p><code class="language-plaintext highlighter-rouge">--soft</code>参数是将文件仅仅是恢复到未commit的状态，其文件还是<code class="language-plaintext highlighter-rouge">git add</code>过的（还是绿的）。</p>
-
-<p><code class="language-plaintext highlighter-rouge">--hard</code>就比较强势了，它会将你的文件彻底恢复到你指定的提交记录的状态，不管你是<code class="language-plaintext highlighter-rouge">add</code>过还是<code class="language-plaintext highlighter-rouge">commit</code>过还是修改过文件，统统无视。注意，执行<code class="language-plaintext highlighter-rouge">git reset --hard xxx</code>具有一定的危险性，会将你当前的修改从本机删除。</p>
-
-<p><code class="language-plaintext highlighter-rouge">git reset --hard xxx</code>之后，文件已经从本机删除了，你所有的修改也已经被删除，但是想找回<code class="language-plaintext highlighter-rouge">hard</code>删除的文件修改记录怎么办呢？使用<code class="language-plaintext highlighter-rouge">git reflog</code></p>
-
-<p>你的每一步<code class="language-plaintext highlighter-rouge">commit</code>和<code class="language-plaintext highlighter-rouge">reset</code>操作，<code class="language-plaintext highlighter-rouge">git</code>都会生成一个记录，这个记录可以在通过<code class="language-plaintext highlighter-rouge">git reflog</code>找到，在每个记录之前有个短<code class="language-plaintext highlighter-rouge">hash</code>，复制这个短<code class="language-plaintext highlighter-rouge">hash</code>，重新执行一遍<code class="language-plaintext highlighter-rouge">git reset --hard short_hash</code>即可。</p>
-
-<p>注意，执行<code class="language-plaintext highlighter-rouge">git commit</code>之后这个时候的<code class="language-plaintext highlighter-rouge">HEAD</code>已经变成你提交过的文件的更改状态，再执行<code class="language-plaintext highlighter-rouge">git reset --mixed HEAD</code>或者<code class="language-plaintext highlighter-rouge">git  reset --soft HEAD</code>无效（因为当前的<code class="language-plaintext highlighter-rouge">HEAD</code>就是你<code class="language-plaintext highlighter-rouge">commit</code>之后的那个点（即使你没有<code class="language-plaintext highlighter-rouge">push</code>）），如果想返回到<code class="language-plaintext highlighter-rouge">git add</code>之后，<code class="language-plaintext highlighter-rouge">git commit</code>之前的状态需要<code class="language-plaintext highlighter-rouge">git reset --soft commit_id</code>，如果返回到<code class="language-plaintext highlighter-rouge">git add</code>之前的状态，需要<code class="language-plaintext highlighter-rouge">git reset --mixed commit_id</code>， 或者直接<code class="language-plaintext highlighter-rouge">git reset commit_id</code>。</p>
-
-<p><code class="language-plaintext highlighter-rouge">git commit</code>后悔药的另一牌子叫<code class="language-plaintext highlighter-rouge">--amend</code>，提交之后，后悔了，发现msg写错了，或者文件又修改了，不想再生成一条<code class="language-plaintext highlighter-rouge">commit</code>记录因为很丑而且显得你很菜，居然会犯这种提交信息写错的低级错误，那么运行：</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">git</span> <span class="nx">commit</span> <span class="o">--</span><span class="nx">amend</span> <span class="nx">change_file_name_after_commit</span> <span class="o">-</span><span class="nx">m</span> <span class="dl">"</span><span class="s2">新的msg</span><span class="dl">"</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
+<p><code>git reset</code>默认是<code>mixed</code>参数，即执行<code>git reset xxxx</code>（xxx表示一个<code>SHA</code>或者未<code>commit</code>的时候是<code>HEAD</code>） 即是执行<code>git reset --mixed xxxx</code>, 他的作用是将文件恢复到你修改过文件之后没有执行任何<code>git</code>命令的状态(文件是红色状态)。</p>
+<p><code>--soft</code>参数是将文件仅仅是恢复到未commit的状态，其文件还是<code>git add</code>过的（还是绿的）。</p>
+<p><code>--hard</code>就比较强势了，它会将你的文件彻底恢复到你指定的提交记录的状态，不管你是<code>add</code>过还是<code>commit</code>过还是修改过文件，统统无视。注意，执行<code>git reset --hard xxx</code>具有一定的危险性，会将你当前的修改从本机删除。</p>
+<p><code>git reset --hard xxx</code>之后，文件已经从本机删除了，你所有的修改也已经被删除，但是想找回<code>hard</code>删除的文件修改记录怎么办呢？使用<code>git reflog</code></p>
+<p>你的每一步<code>commit</code>和<code>reset</code>操作，<code>git</code>都会生成一个记录，这个记录可以在通过<code>git reflog</code>找到，在每个记录之前有个短<code>hash</code>，复制这个短<code>hash</code>，重新执行一遍<code>git reset --hard short_hash</code>即可。</p>
+<p>注意，执行<code>git commit</code>之后这个时候的<code>HEAD</code>已经变成你提交过的文件的更改状态，再执行<code>git reset --mixed HEAD</code>或者<code>git  reset --soft HEAD</code>无效（因为当前的<code>HEAD</code>就是你<code>commit</code>之后的那个点（即使你没有<code>push</code>）），如果想返回到<code>git add</code>之后，<code>git commit</code>之前的状态需要<code>git reset --soft commit_id</code>，如果返回到<code>git add</code>之前的状态，需要<code>git reset --mixed commit_id</code>， 或者直接<code>git reset commit_id</code>。</p>
+<p><code>git commit</code>后悔药的另一牌子叫<code>--amend</code>，提交之后，后悔了，发现msg写错了，或者文件又修改了，不想再生成一条<code>commit</code>记录因为很丑而且显得你很菜，居然会犯这种提交信息写错的低级错误，那么运行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git commit --amend change_file_name_after_commit -m <span class="hljs-string">&quot;新的msg&quot;</span><br></code></pre></td></tr></table></figure>
 <p>即可。</p>
-
-<p>后悔药吃过了，<code class="language-plaintext highlighter-rouge">git commit</code>之后确认无误就可以<code class="language-plaintext highlighter-rouge">git push</code>了。这个时候如果你当前分支所分出来的远程分支没有其他人提交更新的话，你就可以使用<code class="language-plaintext highlighter-rouge">fast forward</code> 模式，中文翻译成快进模式，直接合并进去。形象的查看合并情况可以使用：</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">git</span> <span class="nx">log</span> <span class="o">--</span><span class="nx">graph</span> <span class="o">--</span><span class="nx">pretty</span><span class="o">=</span><span class="nx">oneline</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>如果在你分出分支期间，还有其他人也提交了分支，如果没有冲突的话那也可以直接合并，需要你先<code class="language-plaintext highlighter-rouge">git pull</code>下来，再执行<code class="language-plaintext highlighter-rouge">git push</code>。
-如果有冲突的话这个时候会提示你别人的修改和你的修改有什么冲突，这个就需要你手动解决，解决完之后就<code class="language-plaintext highlighter-rouge">git add</code>, <code class="language-plaintext highlighter-rouge">git commit</code>即可。</p>
-
+<p>后悔药吃过了，<code>git commit</code>之后确认无误就可以<code>git push</code>了。这个时候如果你当前分支所分出来的远程分支没有其他人提交更新的话，你就可以使用<code>fast forward</code> 模式，中文翻译成快进模式，直接合并进去。形象的查看合并情况可以使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git log --graph --pretty=oneline<br></code></pre></td></tr></table></figure>
+<p>如果在你分出分支期间，还有其他人也提交了分支，如果没有冲突的话那也可以直接合并，需要你先<code>git pull</code>下来，再执行<code>git push</code>。<br />
+如果有冲突的话这个时候会提示你别人的修改和你的修改有什么冲突，这个就需要你手动解决，解决完之后就<code>git add</code>, <code>git commit</code>即可。</p>
 <p>合并分支：</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">git</span> <span class="nx">merge</span> <span class="nx">another_branch_name</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>这里的情况是<code class="language-plaintext highlighter-rouge">非fast forward</code>模式，即B从A分支上分出后，作为父分支的A分支又改变了，B分支这个时候也改了点东西，再想合并回A分支的时候，就出现了现在的情况以下情况：
-注意，假设你在A分支上，需要<code class="language-plaintext highlighter-rouge">merge</code>的是B分支，则<code class="language-plaintext highlighter-rouge">merg</code>过来的B分支必须是<code class="language-plaintext highlighter-rouge">git push</code>过的，如果B分支只<code class="language-plaintext highlighter-rouge">git commit</code>的分只是不会被merge的。因为<code class="language-plaintext highlighter-rouge">git merge branch_name</code>的<code class="language-plaintext highlighter-rouge">branch_name</code>是从<code class="language-plaintext highlighter-rouge">branch_name</code>的远程<code class="language-plaintext highlighter-rouge">origin</code>来<code class="language-plaintext highlighter-rouge">merge</code>的，<code class="language-plaintext highlighter-rouge">commit</code>只修改了本地的<code class="language-plaintext highlighter-rouge">HEAD</code>，没有<code class="language-plaintext highlighter-rouge">push</code>就没有修改远程<code class="language-plaintext highlighter-rouge">origin</code>。
-假设B分支已经<code class="language-plaintext highlighter-rouge">git push</code>了自己的改动到远程，而本地A也<code class="language-plaintext highlighter-rouge">git add</code>了自己的改动到本地仓库，则在A分支上执行<code class="language-plaintext highlighter-rouge">git merge B</code>的时候会出现(假设改动的是<code class="language-plaintext highlighter-rouge">config.js</code>):</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre><span class="nx">Updating</span> <span class="mi">474</span><span class="nx">cfbf</span><span class="p">..</span><span class="mi">9</span><span class="nx">c94d0c</span>
-<span class="nx">error</span><span class="p">:</span> <span class="nx">Your</span> <span class="nx">local</span> <span class="nx">changes</span> <span class="nx">to</span> <span class="nx">the</span> <span class="nx">following</span> <span class="nx">files</span> <span class="nx">would</span> <span class="nx">be</span> <span class="nx">overwritten</span> <span class="nx">by</span> <span class="nx">merge</span><span class="p">:</span><span class="nx">config</span><span class="p">.</span><span class="nx">js</span>
-<span class="nx">Please</span> <span class="nx">commit</span> <span class="nx">your</span> <span class="nx">changes</span> <span class="nx">or</span> <span class="nx">stash</span> <span class="nx">them</span> <span class="nx">before</span> <span class="nx">you</span> <span class="nx">merge</span><span class="p">.</span>
-<span class="nx">Aborting</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>意思就是合并两个分支的时候出错中断。会让你先暂存你的当前分支的修改即<code class="language-plaintext highlighter-rouge">git stash</code>或者提交你的修改即<code class="language-plaintext highlighter-rouge">git commit</code>。 之后<code class="language-plaintext highlighter-rouge">git merge</code>之后，出现冲突再手动修改，重新提交。
-OK，我们先<code class="language-plaintext highlighter-rouge">git commit</code>当前的修改，再次执行<code class="language-plaintext highlighter-rouge">git merge B</code>，这个时候出现（假设冲突文件是<code class="language-plaintext highlighter-rouge">config.js</code>）：</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre><span class="nx">Auto</span><span class="o">-</span><span class="nx">merging</span> <span class="nx">config</span><span class="p">.</span><span class="nx">js</span>
-<span class="nx">CONFLICT</span> <span class="p">(</span><span class="nx">content</span><span class="p">):</span> <span class="nx">Merge</span> <span class="nx">conflict</span> <span class="k">in</span> <span class="nx">config</span><span class="p">.</span><span class="nx">js</span>
-<span class="nx">Automatic</span> <span class="nx">merge</span> <span class="nx">failed</span><span class="p">;</span> <span class="nx">fix</span> <span class="nx">conflicts</span> <span class="nx">and</span> <span class="nx">then</span> <span class="nx">commit</span> <span class="nx">the</span> <span class="nx">result</span><span class="p">.</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>手动解决之后,再重新<code class="language-plaintext highlighter-rouge">git add</code>，<code class="language-plaintext highlighter-rouge">git commit</code>即可。</p>
-
-<p>注意，如果你在一个分支上修改了文件，而在<code class="language-plaintext highlighter-rouge">checkout</code>到另一个分支的时候没有发生冲突，则不会有任何提示，文件改动依然存在，因此你可以将文件在一个分支上改动后，再提交到另一个分支上。而如果在一个分支上改动文件之后，再<code class="language-plaintext highlighter-rouge">checkout</code>其他分支出现冲突的话(比如其他分支<code class="language-plaintext highlighter-rouge">git pull</code>了，或者其他分支<code class="language-plaintext highlighter-rouge">git commit</code>了相同文件的相同修改):</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre><span class="nx">error</span><span class="p">:</span> <span class="nx">Your</span> <span class="nx">local</span> <span class="nx">changes</span> <span class="nx">to</span> <span class="nx">the</span> <span class="nx">following</span> <span class="nx">files</span> <span class="nx">would</span> <span class="nx">be</span> <span class="nx">overwritten</span> <span class="nx">by</span> <span class="nx">checkout</span><span class="p">:</span>
-	<span class="nx">config</span><span class="p">.</span><span class="nx">js</span>
-<span class="nx">Please</span> <span class="nx">commit</span> <span class="nx">your</span> <span class="nx">changes</span> <span class="nx">or</span> <span class="nx">stash</span> <span class="nx">them</span> <span class="nx">before</span> <span class="nx">you</span> <span class="k">switch</span> <span class="nx">branches</span><span class="p">.</span>
-<span class="nx">Aborting</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>这个时候就需要你先<code class="language-plaintext highlighter-rouge">git stash</code>储藏（此<code class="language-plaintext highlighter-rouge">stash储藏</code>不是<code class="language-plaintext highlighter-rouge">git add暂存</code>，<code class="language-plaintext highlighter-rouge">stash</code>是先将文件放到一个特定的区域，等到切换完分支之后，再像一个补丁一样，应用这个<code class="language-plaintext highlighter-rouge">stash</code>到切换到的<code class="language-plaintext highlighter-rouge">checkout</code>分支，或者不应用<code class="language-plaintext highlighter-rouge">stash</code>，等切换的分上的事情做完之后，再切换回来的时候，再次应用这个<code class="language-plaintext highlighter-rouge">stash</code>，当然如果你一直不想应用你的<code class="language-plaintext highlighter-rouge">stash</code>也可以一直不应用，没有关系）.
-这里说到了<code class="language-plaintext highlighter-rouge">git stash</code>，这个命令的使用场景是同时需要做两个分支的修改的时候，其中一个分支做到了一半，这个时候另一个分支也需要修改，你不可能把已经做一半的内容丢弃，又不能<code class="language-plaintext highlighter-rouge">commit</code>，因为这有可能在<code class="language-plaintext highlighter-rouge">checkout</code>过去的会造成<code class="language-plaintext highlighter-rouge">conflict</code>，因此你需要储藏<code class="language-plaintext highlighter-rouge">stash</code>：
-先查看当前状态，<code class="language-plaintext highlighter-rouge">git status</code>：</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-</pre></td><td class="rouge-code"><pre><span class="nx">On</span> <span class="nx">branch</span> <span class="nx">optimize</span>
-<span class="nx">Your</span> <span class="nx">branch</span> <span class="nx">is</span> <span class="nx">up</span><span class="o">-</span><span class="nx">to</span><span class="o">-</span><span class="nx">date</span> <span class="kd">with</span> <span class="dl">'</span><span class="s1">origin/optimize</span><span class="dl">'</span><span class="p">.</span>
-<span class="nx">Changes</span> <span class="nx">not</span> <span class="nx">staged</span> <span class="k">for</span> <span class="nx">commit</span><span class="p">:</span>
-  <span class="p">(</span><span class="nx">use</span> <span class="dl">"</span><span class="s2">git add &lt;file&gt;...</span><span class="dl">"</span> <span class="nx">to</span> <span class="nx">update</span> <span class="nx">what</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nx">committed</span><span class="p">)</span>
-  <span class="p">(</span><span class="nx">use</span> <span class="dl">"</span><span class="s2">git checkout -- &lt;file&gt;...</span><span class="dl">"</span> <span class="nx">to</span> <span class="nx">discard</span> <span class="nx">changes</span> <span class="k">in</span> <span class="nx">working</span> <span class="nx">directory</span><span class="p">)</span>
-
-	<span class="nx">modified</span><span class="p">:</span>   <span class="nx">config</span><span class="p">.</span><span class="nx">js</span>
-
-<span class="nx">no</span> <span class="nx">changes</span> <span class="nx">added</span> <span class="nx">to</span> <span class="nx">commit</span> <span class="p">(</span><span class="nx">use</span> <span class="dl">"</span><span class="s2">git add</span><span class="dl">"</span> <span class="nx">and</span><span class="o">/</span><span class="nx">or</span> <span class="dl">"</span><span class="s2">git commit -a</span><span class="dl">"</span><span class="p">)</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>储存一下,<code class="language-plaintext highlighter-rouge">git stash</code>:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="nx">Saved</span> <span class="nx">working</span> <span class="nx">directory</span> <span class="nx">and</span> <span class="nx">index</span> <span class="nx">state</span> <span class="nx">WIP</span> <span class="nx">on</span> <span class="nx">optimize</span><span class="p">:</span> <span class="mi">24</span><span class="nx">bf0e1</span> <span class="nx">test</span> <span class="nx">add</span>
-<span class="nx">HEAD</span> <span class="nx">is</span> <span class="nx">now</span> <span class="nx">at</span> <span class="mi">24</span><span class="nx">bf0e1</span> <span class="nx">这是一个提交</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>之后再<code class="language-plaintext highlighter-rouge">git status</code>看下:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre><span class="nx">On</span> <span class="nx">branch</span> <span class="nx">optimize</span>
-<span class="nx">Your</span> <span class="nx">branch</span> <span class="nx">is</span> <span class="nx">up</span><span class="o">-</span><span class="nx">to</span><span class="o">-</span><span class="nx">date</span> <span class="kd">with</span> <span class="dl">'</span><span class="s1">origin/optimize</span><span class="dl">'</span><span class="p">.</span>
-<span class="nx">nothing</span> <span class="nx">to</span> <span class="nx">commit</span><span class="p">,</span> <span class="nx">working</span> <span class="nx">tree</span> <span class="nx">clean</span> 
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>这个时候可以放心的切换到其他分支，这里要说明的是，切换到其他分支的时候你也可以使用储藏的分支到当前分支（只要你不怕冲突），查看储藏列表,<code class="language-plaintext highlighter-rouge">git stash list</code>:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">stash</span><span class="p">@{</span><span class="mi">0</span><span class="p">}:</span> <span class="nx">WIP</span> <span class="nx">on</span> <span class="nx">optimize</span><span class="p">:</span> <span class="mi">24</span><span class="nx">bf0e1</span> <span class="nx">test</span> <span class="nx">add</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>这是刚刚<code class="language-plaintext highlighter-rouge">stash</code>起来的改动，可以使用<code class="language-plaintext highlighter-rouge">git stash apply</code>应用这个最近的改动，如果<code class="language-plaintext highlighter-rouge">stash</code>的改动有好几个，那就指定<code class="language-plaintext highlighter-rouge">stash</code>的名字:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">git</span> <span class="nx">stash</span> <span class="nx">apply</span> <span class="nx">stash</span><span class="p">@{</span><span class="mi">0</span><span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>应用之后就会从储存区删除这个<code class="language-plaintext highlighter-rouge">stash</code>，如果不希望的删除的话就：</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">git</span> <span class="nx">stash</span> <span class="nx">apply</span> <span class="nx">stash_name</span> <span class="o">--</span><span class="nx">index</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git merge another_branch_name<br></code></pre></td></tr></table></figure>
+<p>这里的情况是<code>非fast forward</code>模式，即B从A分支上分出后，作为父分支的A分支又改变了，B分支这个时候也改了点东西，再想合并回A分支的时候，就出现了现在的情况以下情况：<br />
+注意，假设你在A分支上，需要<code>merge</code>的是B分支，则<code>merg</code>过来的B分支必须是<code>git push</code>过的，如果B分支只<code>git commit</code>的分只是不会被merge的。因为<code>git merge branch_name</code>的<code>branch_name</code>是从<code>branch_name</code>的远程<code>origin</code>来<code>merge</code>的，<code>commit</code>只修改了本地的<code>HEAD</code>，没有<code>push</code>就没有修改远程<code>origin</code>。<br />
+假设B分支已经<code>git push</code>了自己的改动到远程，而本地A也<code>git add</code>了自己的改动到本地仓库，则在A分支上执行<code>git merge B</code>的时候会出现(假设改动的是<code>config.js</code>):</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Updating</span> 474cfbf..9c94d0c<br><span class="hljs-attr">error</span>: <span class="hljs-title class_">Your</span> local changes to the following files would be overwritten by <span class="hljs-attr">merge</span>:config.<span class="hljs-property">js</span><br><span class="hljs-title class_">Please</span> commit your changes or stash them before you merge.<br><span class="hljs-title class_">Aborting</span><br></code></pre></td></tr></table></figure>
+<p>意思就是合并两个分支的时候出错中断。会让你先暂存你的当前分支的修改即<code>git stash</code>或者提交你的修改即<code>git commit</code>。 之后<code>git merge</code>之后，出现冲突再手动修改，重新提交。<br />
+OK，我们先<code>git commit</code>当前的修改，再次执行<code>git merge B</code>，这个时候出现（假设冲突文件是<code>config.js</code>）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Auto</span>-merging config.<span class="hljs-property">js</span><br><span class="hljs-variable constant_">CONFLICT</span> (content): <span class="hljs-title class_">Merge</span> conflict <span class="hljs-keyword">in</span> config.<span class="hljs-property">js</span><br><span class="hljs-title class_">Automatic</span> merge failed; fix conflicts and then commit the result.<br></code></pre></td></tr></table></figure>
+<p>手动解决之后,再重新<code>git add</code>，<code>git commit</code>即可。</p>
+<p>注意，如果你在一个分支上修改了文件，而在<code>checkout</code>到另一个分支的时候没有发生冲突，则不会有任何提示，文件改动依然存在，因此你可以将文件在一个分支上改动后，再提交到另一个分支上。而如果在一个分支上改动文件之后，再<code>checkout</code>其他分支出现冲突的话(比如其他分支<code>git pull</code>了，或者其他分支<code>git commit</code>了相同文件的相同修改):</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">error</span>: <span class="hljs-title class_">Your</span> local changes to the following files would be overwritten by <span class="hljs-attr">checkout</span>:<br> config.<span class="hljs-property">js</span><br><span class="hljs-title class_">Please</span> commit your changes or stash them before you <span class="hljs-keyword">switch</span> branches.<br><span class="hljs-title class_">Aborting</span><br></code></pre></td></tr></table></figure>
+<p>这个时候就需要你先<code>git stash</code>储藏（此<code>stash储藏</code>不是<code>git add暂存</code>，<code>stash</code>是先将文件放到一个特定的区域，等到切换完分支之后，再像一个补丁一样，应用这个<code>stash</code>到切换到的<code>checkout</code>分支，或者不应用<code>stash</code>，等切换的分上的事情做完之后，再切换回来的时候，再次应用这个<code>stash</code>，当然如果你一直不想应用你的<code>stash</code>也可以一直不应用，没有关系）.<br />
+这里说到了<code>git stash</code>，这个命令的使用场景是同时需要做两个分支的修改的时候，其中一个分支做到了一半，这个时候另一个分支也需要修改，你不可能把已经做一半的内容丢弃，又不能<code>commit</code>，因为这有可能在<code>checkout</code>过去的会造成<code>conflict</code>，因此你需要储藏<code>stash</code>：<br />
+先查看当前状态，<code>git status</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">On</span> branch optimize<br><span class="hljs-title class_">Your</span> branch is up-to-date <span class="hljs-keyword">with</span> <span class="hljs-string">&#x27;origin/optimize&#x27;</span>.<br><span class="hljs-title class_">Changes</span> not staged <span class="hljs-keyword">for</span> <span class="hljs-attr">commit</span>:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)<br>  (use <span class="hljs-string">&quot;git checkout -- &lt;file&gt;...&quot;</span> to discard changes <span class="hljs-keyword">in</span> working directory)<br><br> <span class="hljs-attr">modified</span>:   config.<span class="hljs-property">js</span><br><br>no changes added to commit (use <span class="hljs-string">&quot;git add&quot;</span> and/or <span class="hljs-string">&quot;git commit -a&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>储存一下,<code>git stash</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Saved</span> working directory and index state <span class="hljs-variable constant_">WIP</span> on <span class="hljs-attr">optimize</span>: 24bf0e1 test add<br><span class="hljs-variable constant_">HEAD</span> is now at 24bf0e1 这是一个提交<br></code></pre></td></tr></table></figure>
+<p>之后再<code>git status</code>看下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">On</span> branch optimize<br><span class="hljs-title class_">Your</span> branch is up-to-date <span class="hljs-keyword">with</span> <span class="hljs-string">&#x27;origin/optimize&#x27;</span>.<br>nothing to commit, working tree clean <br></code></pre></td></tr></table></figure>
+<p>这个时候可以放心的切换到其他分支，这里要说明的是，切换到其他分支的时候你也可以使用储藏的分支到当前分支（只要你不怕冲突），查看储藏列表,<code>git stash list</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">stash@&#123;<span class="hljs-number">0</span>&#125;: <span class="hljs-variable constant_">WIP</span> on <span class="hljs-attr">optimize</span>: 24bf0e1 test add<br></code></pre></td></tr></table></figure>
+<p>这是刚刚<code>stash</code>起来的改动，可以使用<code>git stash apply</code>应用这个最近的改动，如果<code>stash</code>的改动有好几个，那就指定<code>stash</code>的名字:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git stash apply stash@&#123;<span class="hljs-number">0</span>&#125;<br></code></pre></td></tr></table></figure>
+<p>应用之后就会从储存区删除这个<code>stash</code>，如果不希望的删除的话就：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git stash apply stash_name --index<br></code></pre></td></tr></table></figure>
 <p>之后再希望删除的话就：</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">git</span> <span class="nx">stash</span> <span class="nx">drop</span> <span class="nx">stash_name</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>以上两个命令不带<code class="language-plaintext highlighter-rouge">stash_name</code>的话默认删除最近的一个<code class="language-plaintext highlighter-rouge">stash</code>。</p>
-
-<p>暂时能想到的就这么多吧，如果不熟悉，还是用<code class="language-plaintext highlighter-rouge">Sourcetree</code>吧。</p>
-
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git stash drop stash_name<br></code></pre></td></tr></table></figure>
+<p>以上两个命令不带<code>stash_name</code>的话默认删除最近的一个<code>stash</code>。</p>
+<p>暂时能想到的就这么多吧，如果不熟悉，还是用<code>Sourcetree</code>吧。</p>
 <h2 id="更新">更新</h2>
+<p><code>git revert/reset/rebase</code> 只看说明是搞不懂的, 需要你自己输入命令测试一下.</p>
+<p>我就喜欢为了干净整洁的提交历史而视同 <code>git rebase</code>, 但是这个命令很危险, 有一些使用场景需要注意. 而比 <code>git rebase</code> 更危险的是 <code>git reset</code>, 它会把当前项目重置到某一次提交. 而 <code>git revert</code> 就相对安全一些, 但是你想 <code>revert</code> 之前的某个提交最好需要保证你的缓存区是空的, 否则会遇到错误提示.</p>
+<p>当然, <code>git</code> 命令千千万(夸张), 有一些命令是针对一些特殊场景的, 在没遇到之前可能无法理解其中的一些用法, 这个很正常.</p>
+<p>比如 <code>git reset commitId</code> 即是把 <code>HEAD</code> 移动到 <code>commitId</code> 所在的地方, 你可能一头雾水, 移动 <code>HEAD</code> 有什么用? 这个命令的目的是什么? 再比如 <code>git revert commitId</code> 是把 <code>commitId</code> 的提交给移除, 而不移动 <code>HEAD</code> 的指针.</p>
+<p>看代码(<code>d0b9def</code> 对应 <code>commit -m 'reset/revert test 3'</code> 这个提交, 当前 <code>HEAD</code> 在 <code>'reset/revert test 4'</code>上):</p>
+<p><code>git revert d0b9def</code> 之后, 你的代码可能是这个样子的:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js">reset/revert test <span class="hljs-number">1</span><br>reset/revert test <span class="hljs-number">2</span><br>&lt;&lt;&lt;&lt;&lt;&lt;&lt; <span class="hljs-variable constant_">HEAD</span><br>reset/revert test <span class="hljs-number">3</span><br>reset/revert test <span class="hljs-number">4</span><br>=======<br>&gt;&gt;&gt;&gt;&gt;&gt;&gt; parent <span class="hljs-keyword">of</span> d0b9def... reset/revert test<br></code></pre></td></tr></table></figure>
+<p>在相同的 <code>HEAD</code> 上执行 <code>git reset d0b9def</code> 之后, 你的工作区可能是这个样子的:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"> reset/revert test <span class="hljs-number">1</span><br> reset/revert test <span class="hljs-number">2</span><br> reset/revert test <span class="hljs-number">3</span><br>+reset/revert test <span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
+<p>看出移动不移动 <code>HEAD</code> 的区别了吧? <code>revert</code> 一定会让你手动解决冲突, 因为其保留的是从你 <code>commitId</code> 之前的一个父 <code>commit</code> 到当前 <code>HEAD</code> 的除了 <code>d0b9def</code> 的所有变动. 而 <code>reset</code> 不会让你解决冲突, 而是默默的移动 <code>HEAD</code> 把自 <code>d0b9def</code> 以来所有的变动都显示为文件改动, 需要你手动 <code>git add/commit</code> 一下, 当然少不了 <code>push --force</code>.</p>
+<p>因此, <code>revert</code> 被设计为撤销<code>公开</code>的提交的安全方式，<code>reset</code> 被设计为重设<code>本地</code>更改。因为两个命令的目的不同，它们的实现也不一样：重设完全地移除了一堆更改，而撤销保留了原来的更改，用一个新的提交来实现撤销。</p>
 
-<p><code class="language-plaintext highlighter-rouge">git revert/reset/rebase</code> 只看说明是搞不懂的, 需要你自己输入命令测试一下.</p>
+                                    <div class="text-danger">- EOF -</div>
+                                    <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a
+                                        style="color: #ccc;"
+                                        href="https://www.xheldon.com/tech/git-command.html"
+                                        title="git 常用命令总结">
+                                        git 常用命令总结 - Xheldon Blog
+                                      </a></div>
+                                    <hr style="visibility: hidden;">
 
-<p>我就喜欢为了干净整洁的提交历史而视同 <code class="language-plaintext highlighter-rouge">git rebase</code>, 但是这个命令很危险, 有一些使用场景需要注意. 而比 <code class="language-plaintext highlighter-rouge">git rebase</code> 更危险的是 <code class="language-plaintext highlighter-rouge">git reset</code>, 它会把当前项目重置到某一次提交. 而 <code class="language-plaintext highlighter-rouge">git revert</code> 就相对安全一些, 但是你想 <code class="language-plaintext highlighter-rouge">revert</code> 之前的某个提交最好需要保证你的缓存区是空的, 否则会遇到错误提示.</p>
-
-<p>当然, <code class="language-plaintext highlighter-rouge">git</code> 命令千千万(夸张), 有一些命令是针对一些特殊场景的, 在没遇到之前可能无法理解其中的一些用法, 这个很正常.</p>
-
-<p>比如 <code class="language-plaintext highlighter-rouge">git reset commitId</code> 即是把 <code class="language-plaintext highlighter-rouge">HEAD</code> 移动到 <code class="language-plaintext highlighter-rouge">commitId</code> 所在的地方, 你可能一头雾水, 移动 <code class="language-plaintext highlighter-rouge">HEAD</code> 有什么用? 这个命令的目的是什么? 再比如 <code class="language-plaintext highlighter-rouge">git revert commitId</code> 是把 <code class="language-plaintext highlighter-rouge">commitId</code> 的提交给移除, 而不移动 <code class="language-plaintext highlighter-rouge">HEAD</code> 的指针.</p>
-
-<p>看代码(<code class="language-plaintext highlighter-rouge">d0b9def</code> 对应 <code class="language-plaintext highlighter-rouge">commit -m 'reset/revert test 3'</code> 这个提交, 当前 <code class="language-plaintext highlighter-rouge">HEAD</code> 在 <code class="language-plaintext highlighter-rouge">'reset/revert test 4'</code>上):</p>
-
-<p><code class="language-plaintext highlighter-rouge">git revert d0b9def</code> 之后, 你的代码可能是这个样子的:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-</pre></td><td class="rouge-code"><pre><span class="nx">reset</span><span class="o">/</span><span class="nx">revert</span> <span class="nx">test</span> <span class="mi">1</span>
-<span class="nx">reset</span><span class="o">/</span><span class="nx">revert</span> <span class="nx">test</span> <span class="mi">2</span>
-<span class="o">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="nx">HEAD</span>
-<span class="nx">reset</span><span class="o">/</span><span class="nx">revert</span> <span class="nx">test</span> <span class="mi">3</span>
-<span class="nx">reset</span><span class="o">/</span><span class="nx">revert</span> <span class="nx">test</span> <span class="mi">4</span>
-<span class="o">=======</span>
-<span class="o">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="nx">parent</span> <span class="k">of</span> <span class="nx">d0b9def</span><span class="p">...</span> <span class="nx">reset</span><span class="o">/</span><span class="nx">revert</span> <span class="nx">test</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>在相同的 <code class="language-plaintext highlighter-rouge">HEAD</code> 上执行 <code class="language-plaintext highlighter-rouge">git reset d0b9def</code> 之后, 你的工作区可能是这个样子的:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre> <span class="nx">reset</span><span class="o">/</span><span class="nx">revert</span> <span class="nx">test</span> <span class="mi">1</span>
- <span class="nx">reset</span><span class="o">/</span><span class="nx">revert</span> <span class="nx">test</span> <span class="mi">2</span>
- <span class="nx">reset</span><span class="o">/</span><span class="nx">revert</span> <span class="nx">test</span> <span class="mi">3</span>
-<span class="o">+</span><span class="nx">reset</span><span class="o">/</span><span class="nx">revert</span> <span class="nx">test</span> <span class="mi">4</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>看出移动不移动 <code class="language-plaintext highlighter-rouge">HEAD</code> 的区别了吧? <code class="language-plaintext highlighter-rouge">revert</code> 一定会让你手动解决冲突, 因为其保留的是从你 <code class="language-plaintext highlighter-rouge">commitId</code> 之前的一个父 <code class="language-plaintext highlighter-rouge">commit</code> 到当前 <code class="language-plaintext highlighter-rouge">HEAD</code> 的除了 <code class="language-plaintext highlighter-rouge">d0b9def</code> 的所有变动. 而 <code class="language-plaintext highlighter-rouge">reset</code> 不会让你解决冲突, 而是默默的移动 <code class="language-plaintext highlighter-rouge">HEAD</code> 把自 <code class="language-plaintext highlighter-rouge">d0b9def</code> 以来所有的变动都显示为文件改动, 需要你手动 <code class="language-plaintext highlighter-rouge">git add/commit</code> 一下, 当然少不了 <code class="language-plaintext highlighter-rouge">push --force</code>.</p>
-
-<p>因此, <code class="language-plaintext highlighter-rouge">revert</code> 被设计为撤销<code class="language-plaintext highlighter-rouge">公开</code>的提交的安全方式，<code class="language-plaintext highlighter-rouge">reset</code> 被设计为重设<code class="language-plaintext highlighter-rouge">本地</code>更改。因为两个命令的目的不同，它们的实现也不一样：重设完全地移除了一堆更改，而撤销保留了原来的更改，用一个新的提交来实现撤销。</p>
-
-
-                <div class="text-danger">- EOF -</div>
-                <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a style="color: #ccc;" href="https://www.xheldon.com/tech/git-command.html" title="git 常用命令总结">git 常用命令总结 - Xheldon Blog</a></div>
-                <hr style="visibility: hidden;">
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/tech/promise-antipattern.html" data-toggle="tooltip" data-placement="top" title="「译」 Promise 反面模式">
-                        上一篇<br>
-                        <span>「译」 Promise 反面模式</span>
-                        </a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/tech/vue-simple-use.html" data-toggle="tooltip" data-placement="top" title="Vue + Webpack 组件式开发(练习环境)初体验">
-                        下一篇<br>
-                        <span>Vue + Webpack 组件式开发(练习环境)初体验</span>
-                        </a>
-                    </li>
-                    
-                </ul>
-                <hr style="visibility: hidden;">
-                <div class="giscus"></div>
-                <hr>
-            </div>  
-
-    <!-- Side Catalog Container -->
+                                    <ul class="pager">
+                                      
+                                        <li class="previous">
+                                          <a href="/tech/vue-simple-use.html" data-toggle="tooltip"
+                                            data-placement="top" title="Vue + Webpack 组件式开发(练习环境)初体验">
+                                            上一篇<br>
+                                            <span>{{page.prev.title}}</span>
+                                          </a>
+                                        </li>
+                                        
+                                          
+                                            <li class="next">
+                                              <a href="/tech/promise-antipattern.html" data-toggle="tooltip"
+                                                data-placement="top" title="「译」 Promise 反面模式">
+                                                下一篇<br>
+                                                <span>{{page.next.title}}</span>
+                                              </a>
+                                            </li>
+                                            
+                                    </ul>
+                                    <hr style="visibility: hidden;">
+                                    <div class="giscus"></div>
+                                    <hr>
+        </div>
+        <!-- Side Catalog Container -->
         
-            <div class="
+          <div class="
                 col-lg-2 col-lg-offset-0
                 visible-lg-block
                 sidebar-container
                 catalog-container">
-                <div class="side-catalog">
-                    <hr class="hidden-sm hidden-xs">
-                    <h5>
-                        <a class="catalog-toggle" href="#">目录</a>
-                    </h5>
-                    <ul class="catalog-body"></ul>
-                </div>
+            <div class="side-catalog">
+              <hr class="hidden-sm hidden-xs">
+              <h5>
+                <a class="catalog-toggle" href="#">目录</a>
+              </h5>
+              <ul class="catalog-body"></ul>
             </div>
-        
+          </div>
+          
 
-    <!-- Sidebar Container -->
+            <!-- Sidebar Container -->
+
             <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
                 sidebar-container">
-
-                <!-- Featured Tags -->
-                
-
-
+              
 <section style="margin-bottom: 20px;">
     <h5>博主说：</h5>
     <div>
-        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/resources/img/gwechat.png" />
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
         我常常希望在面对人生中一些关键抉择的时候，有人可以告诉我最佳的做法，让我不至于白白浪费宝贵的时间。推己及人，我因此经常写博客，以期在浩渺无垠的互联网中的这个小小角落里记录下对于我来说只有一次的人生经历，希望能够帮到那些希望得到帮助的人。
     </div>
     <hr>
     <h5><a href="/archive/">热门标签</a></h5>
     <div class="tags">
         
+
         
+            <a data-sort="0028" 
+                href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技术"
+                rel="44">技术</a>
         
+            <a data-sort="0047" 
+                href="/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="25">生活</a>
         
+            <a data-sort="0062" 
+                href="/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="折腾"
+                rel="10">折腾</a>
         
+            <a data-sort="0066" 
+                href="/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻译"
+                rel="6">翻译</a>
         
-                <a data-sort="0028" 
-                    href="/archive/?tag=%E6%8A%80%E6%9C%AF"
-                    title="技术"
-                    rel="44">技术</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="技巧"
+                rel="5">技巧</a>
         
-                <a data-sort="0047" 
-                    href="/archive/?tag=%E7%94%9F%E6%B4%BB"
-                    title="生活"
-                    rel="25">生活</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="教程"
+                rel="5">教程</a>
         
-                <a data-sort="0062" 
-                    href="/archive/?tag=%E6%8A%98%E8%85%BE"
-                    title="折腾"
-                    rel="10">折腾</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="美食"
+                rel="5">美食</a>
         
-                <a data-sort="0066" 
-                    href="/archive/?tag=%E7%BF%BB%E8%AF%91"
-                    title="翻译"
-                    rel="6">翻译</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="5">ProseMirror</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=%E6%8A%80%E5%B7%A7"
-                    title="技巧"
-                    rel="5">技巧</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="工作流"
+                rel="4">工作流</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=%E6%95%99%E7%A8%8B"
-                    title="教程"
-                    rel="5">教程</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="插件"
+                rel="4">插件</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
-                    title="美食"
-                    rel="5">美食</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="网络"
+                rel="4">网络</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=ProseMirror"
-                    title="ProseMirror"
-                    rel="5">ProseMirror</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=Craft"
+                title="Craft"
+                rel="4">Craft</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
-                    title="工作流"
-                    rel="4">工作流</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=Vue"
+                title="Vue"
+                rel="4">Vue</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=%E6%8F%92%E4%BB%B6"
-                    title="插件"
-                    rel="4">插件</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体验"
+                rel="3">初体验</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=%E7%BD%91%E7%BB%9C"
-                    title="网络"
-                    rel="4">网络</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="服务器"
+                rel="3">服务器</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=Craft"
-                    title="Craft"
-                    rel="4">Craft</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="经验"
+                rel="3">经验</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=Vue"
-                    title="Vue"
-                    rel="4">Vue</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="苹果"
+                rel="3">苹果</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
-                    title="初体验"
-                    rel="3">初体验</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="路由器"
+                rel="3">路由器</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
-                    title="服务器"
-                    rel="3">服务器</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="软路由"
+                rel="3">软路由</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E7%BB%8F%E9%AA%8C"
-                    title="经验"
-                    rel="3">经验</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="随笔"
+                rel="3">随笔</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E8%8B%B9%E6%9E%9C"
-                    title="苹果"
-                    rel="3">苹果</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E9%9B%86%E6%88%90"
+                title="集成"
+                rel="3">集成</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
-                    title="路由器"
-                    rel="3">路由器</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=Apple"
+                title="Apple"
+                rel="3">Apple</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
-                    title="软路由"
-                    rel="3">软路由</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=Git"
+                title="Git"
+                rel="3">Git</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E9%9A%8F%E7%AC%94"
-                    title="随笔"
-                    rel="3">随笔</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="3">JavaScript</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E9%9B%86%E6%88%90"
-                    title="集成"
-                    rel="3">集成</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="2">主食</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=Apple"
-                    title="Apple"
-                    rel="3">Apple</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="优化"
+                rel="2">优化</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=Git"
-                    title="Git"
-                    rel="3">Git</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用体验"
+                rel="2">使用体验</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=JavaScript"
-                    title="JavaScript"
-                    rel="3">JavaScript</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E5%8D%83%E5%85%86"
+                title="千兆"
+                rel="2">千兆</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E4%B8%BB%E9%A3%9F"
-                    title="主食"
-                    rel="2">主食</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="2">大事</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E4%BC%98%E5%8C%96"
-                    title="优化"
-                    rel="2">优化</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="旁路由"
+                rel="2">旁路由</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
-                    title="使用体验"
-                    rel="2">使用体验</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="泡脚时间"
+                rel="2">泡脚时间</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E5%8D%83%E5%85%86"
-                    title="千兆"
-                    rel="2">千兆</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="测试"
+                rel="2">测试</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E5%A4%A7%E4%BA%8B"
-                    title="大事"
-                    rel="2">大事</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="特斯拉"
+                rel="2">特斯拉</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
-                    title="旁路由"
-                    rel="2">旁路由</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="编辑器"
+                rel="2">编辑器</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
-                    title="泡脚时间"
-                    rel="2">泡脚时间</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="视频"
+                rel="2">视频</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E6%B5%8B%E8%AF%95"
-                    title="测试"
-                    rel="2">测试</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="调试"
+                rel="2">调试</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
-                    title="特斯拉"
-                    rel="2">特斯拉</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%BD%A6"
+                title="车"
+                rel="2">车</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
-                    title="编辑器"
-                    rel="2">编辑器</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="迁移"
+                rel="2">迁移</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%A7%86%E9%A2%91"
-                    title="视频"
-                    rel="2">视频</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="2">AppleScript</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%B0%83%E8%AF%95"
-                    title="调试"
-                    rel="2">调试</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=CI"
+                title="CI"
+                rel="2">CI</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%BD%A6"
-                    title="车"
-                    rel="2">车</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=GitHub"
+                title="GitHub"
+                rel="2">GitHub</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%BF%81%E7%A7%BB"
-                    title="迁移"
-                    rel="2">迁移</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="2">Jekyll</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=AppleScript"
-                    title="AppleScript"
-                    rel="2">AppleScript</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=Notion"
+                title="Notion"
+                rel="2">Notion</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=CI"
-                    title="CI"
-                    rel="2">CI</a>
-        
-                <a data-sort="0070" 
-                    href="/archive/?tag=GitHub"
-                    title="GitHub"
-                    rel="2">GitHub</a>
-        
-                <a data-sort="0070" 
-                    href="/archive/?tag=Jekyll"
-                    title="Jekyll"
-                    rel="2">Jekyll</a>
-        
-                <a data-sort="0070" 
-                    href="/archive/?tag=Notion"
-                    title="Notion"
-                    rel="2">Notion</a>
     </div>
     <hr>
     <h5>专栏</h5>
@@ -849,8 +675,6 @@ OK，我们先<code class="language-plaintext highlighter-rouge">git commit</cod
     </div>
 </section>
 
-
-                <!-- Friends Blog -->
                 
 <hr>
 <h5>朋友们</h5>
@@ -858,9 +682,13 @@ OK，我们先<code class="language-plaintext highlighter-rouge">git commit</cod
   
   <li><a href="https://prosemirror.xheldon.com" target="_blank">ProseMirror 中文</a></li>
   
+  <li><a href="https://rust.xheldon.com" target="_blank">Rust 中文</a></li>
+  
   <li><a href="https://slate.xheldon.com" target="_blank">Slate 中文</a></li>
   
   <li><a href="https://notion-flow.xheldon.com" target="_blank">Notion Flow</a></li>
+  
+  <li><a href="https://xpic.xheldon.com" target="_blank">xPic</a></li>
   
   
     <li><a href="https://www.xheldon.cn" target="_blank">国内版</a></li>
@@ -868,17 +696,15 @@ OK，我们先<code class="language-plaintext highlighter-rouge">git commit</cod
 </ul>
 
             </div>
-        </div>
+      </div>
     </div>
-</article>
+  </article>
 
-<!-- add support for mathjax by voleking-->
+  
 
+        
 
-<!-- Markdown 流程图按需加载 -->
-
-
-<script src="https://giscus.app/client.js"
+            <script src="https://giscus.app/client.js"
         data-repo="Xheldon/x_blog"
         data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
         data-category="Announcements"
@@ -896,377 +722,363 @@ OK，我们先<code class="language-plaintext highlighter-rouge">git commit</cod
         async>
 </script>
 
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("https://static.xheldon.cn/js/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'hover',
-          placement: 'right',
-          // icon: '#'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
-
-
-
-    <!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <!-- SNS Link -->
+              
+                <!-- async load function -->
+                <script>
+                  function async(u, c) {
+                    var d = document,
+                      t = 'script',
+                      o = d.createElement(t),
+                      s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) {
+                      o.addEventListener('load', function (e) {
+                        c(null, e);
+                      }, false);
+                    }
+                    s.parentNode.insertBefore(o, s);
+                  }
+                </script>
+                <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+                <script>
+                  async("/js/anchor.min.js", function () {
+                    anchors.options = {
+                      visible: 'always',
+                      placement: 'right',
+                      //   icon: '#'
+                    };
+                    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+                  })
+                </script>
+                <style>
+                  /* place left on bigger screen */
+                  @media all and (min-width: 800px) {
+                    .anchorjs-link {
+                      position: absolute;
+                      left: -0.75em;
+                      font-size: 1.1em;
+                      margin-top: -0.1em;
+                    }
+                  }
+                </style>
                 
 
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
 
 <ul class="list-inline text-center">
-
-
-  <!-- 
-  <li>
-    <a target="_blank" href="/feed.xml">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-   -->
-  
-  <li>
-    <a target="_blank" href="https://twitter.com/_xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  <li>
-    <a target="_blank" href="http://weibo.com/xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  
-  <li>
-    <a target="_blank" href="https://www.youtube.com/@xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  <li>
-    <a target="_blank" href="https://space.bilibili.com/13835416">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  <li>
-    <a target="_blank" href="https://t.me/xheldon_tech">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
 </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; <a href="https://github.com/Xheldon" target="_blank">Xheldon</a> 2024
-                    <br>
-                    Don't Panic | Theme fork from <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-                    <br>
-                    
-                </p>
-            </div>
-            <!-- <div class="switch-mode" id="dark-mode">
-                <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-                    <i class="fa fa-moon-o fa-stack-1x"></i>
-                  </span>
-            </div>
-            <div class="switch-mode" id="light-mode">
-                <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-sun-o fa-stack-1x fa-inverse"></i>
-                  </span>
-            </div> -->
-        </div>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2024
+          <br>
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+          <br>
+          
+        </p>
+      </div>
     </div>
+  </div>
 </footer>
 <script>
-    if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
-        console.log('浏览器不支持主题色');
-    } else {
-        if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-            document.documentElement.classList.remove('light');
-            document.documentElement.classList.add('dark');
-            // Note: 推特列表添加暗黑主题
-            let ttl = document.querySelector('.twitter-timeline');
-            if (ttl) {
-                ttl.setAttribute('data-theme', 'dark');
-            }
-        }
-        if(window.matchMedia('(prefers-color-scheme: light)').matches){
-            document.documentElement.classList.remove('dark');
-            document.documentElement.classList.add('light');
-            let ttl = document.querySelector('.twitter-timeline');
-            if (ttl) {
-                ttl.removeAttribute('data-theme');
-            }
-        }
-        // document.getElementById('dark-mode').addEventListener('click', function() {
-        //     document.documentElement.classList.remove('light');
-        //     document.documentElement.classList.add('dark');
-        // });
-        // document.getElementById('light-mode').addEventListener('click', function() {
-        //     document.documentElement.classList.add('light');
-        //     document.documentElement.classList.remove('dark');
-        // });
-        // Note: 自动切换
-        window.matchMedia('(prefers-color-scheme: dark)').addListener(function(mediaQueryList) {
-            if (mediaQueryList.matches) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-            }
-        })
-        window.matchMedia('(prefers-color-scheme: light)').addListener(function(mediaQueryList) {
-            if (mediaQueryList.matches) {
-                document.documentElement.classList.add('light');
-                document.documentElement.classList.remove('dark');
-            }
-        })
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
     }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function(mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function(mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
 </script>
+
 <!-- jQuery -->
-<script src="https://static.xheldon.cn/js/jquery.min.js "></script>
+<script src="/js/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
-<script src="https://static.xheldon.cn/js/bootstrap.min.js "></script>
+<script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="https://static.xheldon.cn/js/xheldon-life-blog.min.js?202110012319"></script>
+<script src="/js/xblog.min.js?202405251426"></script>
 
-<!-- Simple Jekyll Search -->
-<script src="https://static.xheldon.cn/js/simple-jekyll-search.min.js"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src='/js/simple-jekyll-search.min.js'></script>
 
 <!-- Vercel web analysis -->
 
 <script defer src="/_vercel/insights/script.js"></script>
 
-<!-- Service Worker -->
 
-<script src="https://static.xheldon.cn/js/snackbar.js "></script>
-<script src="https://static.xheldon.cn/js/sw-registration.js "></script>
-
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
 <!-- async load function -->
 <script>
-    function async(u, c) {
-        var d = document, t = 'script',
-            o = d.createElement(t),
-            s = d.getElementsByTagName(t)[0];
-        o.src = u;
-        if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-        s.parentNode.insertBefore(o, s);
+  function async (u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function(e) {
+          c(null, e);
+        },
+        false
+      );
     }
+    s.parentNode.insertBefore(o, s);
+  }
 </script>
 
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-
-
+<!-- jquery.tagcloud.js -->
 
 
 <!--fastClick.js -->
 <script>
-    async("https://static.xheldon.cn/js/fastclick.min.js", function () {
-        var $nav = document.querySelector("nav");
-        if ($nav) FastClick.attach($nav);
-    })
+  async ('/js/fastclick.min.js', function() {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
 </script>
-
 
 <!-- Google Analytics -->
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
 <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'UA-79359216-1');
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', '{{config.ga_track_id}}');
 </script>
 
 
 <!-- Side Catalog -->
 
 <script type="text/javascript">
-    function generateCatalog(selector) {
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
 
-        // interop with multilangual 
-        if ('' == 'true') {
-            _containerSelector = 'div.post-container.active'
-        } else {
-            _containerSelector = 'div.post-container'
-        }
+    // clean
+    $(selector).html('');
 
-        // init
-        var P = $(_containerSelector), a, n, t, l, i, c;
-        a = P.find('h1,h2,h3,h4,h5,h6');
-
-        // clean
-        $(selector).html('')
-
-        // appending
-        a.each(function () {
-            n = $(this).prop('tagName').toLowerCase();
-            i = "#" + $(this).prop('id');
-            t = $(this).text();
-            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-            l = $('<li class="' + n + '_nav"></li>').append(c);
-            $(selector).append(l);
-        });
-        return true;
-    }
-
-    generateCatalog(".catalog-body");
-
-    // toggle side catalog
-    $(".catalog-toggle").click((function (e) {
-        e.preventDefault();
-        $('.side-catalog').toggleClass("fold")
-    }))
-
-    /*
-     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-     * Fork by Hux to support padding
-     */
-    async("https://static.xheldon.cn/js/jquery.nav.js", function () {
-        $('.catalog-body').onePageNav({
-            currentClass: "active",
-            changeHash: !1,
-            easing: "swing",
-            filter: "",
-            scrollSpeed: 700,
-            scrollOffset: 0,
-            scrollThreshold: .2,
-            begin: null,
-            end: null,
-            scrollChange: null,
-            padding: 80
-        });
+    // appending
+    a.each(function() {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
     });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function(e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async ('/js/jquery.nav.js',
+    function() {
+      $('.catalog-body').onePageNav({
+        currentClass: 'active',
+        changeHash: !1,
+        easing: 'swing',
+        filter: '',
+        scrollSpeed: 700,
+        scrollOffset: 0,
+        scrollThreshold: 0.2,
+        begin: null,
+        end: null,
+        scrollChange: null,
+        padding: 80,
+      });
+    }
+  );
 </script>
 
 
-
-<!-- Multi-Lingual -->
-
-
-<!-- Simple Jekyll Search -->
 <script>
-    // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-    function htmlDecode(input) {
-        var e = document.createElement('textarea');
-        e.innerHTML = input;
-        // handle case of empty input
-        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-    }
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+  }
 
-    SimpleJekyllSearch({
-        searchInput: document.getElementById('search-input'),
-        resultsContainer: document.getElementById('search-results'),
-        json: '/search.json',
-        searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-        noResultsText: 'No results',
-        limit: 50,
-        fuzzy: false,
-        // a hack to get escaped subtitle unescaped. for some reason, 
-        // post.subtitle w/o escape filter nuke entire search.
-        templateMiddleware: function (prop, value, template) {
-            if (prop === 'subtitle' || prop === 'title') {
-                if (value.indexOf("code")) {
-                    return htmlDecode(value);
-                } else {
-                    return value;
-                }
-            }
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('search-results'),
+    json: '/search.json',
+    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+    noResultsText: 'No results',
+    limit: 50,
+    fuzzy: false,
+    // a hack to get escaped subtitle unescaped. for some reason, 
+    // post.subtitle w/o escape filter nuke entire search.
+    templateMiddleware: function(prop, value, template) {
+      if (prop === 'subtitle' || prop === 'title') {
+        if (value.indexOf("code")) {
+          return htmlDecode(value);
+        } else {
+          return value;
         }
-    });
+      }
+    }
+  });
 
-    $(document).ready(function () {
-        var $searchPage = $('.search-page');
-        var $searchOpen = $('.search-icon');
-        var $searchClose = $('.search-icon-close');
-        var $searchInput = $('#search-input');
-        var $body = $('body');
+  $(document).ready(function() {
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
 
-        $searchOpen.on('click', function (e) {
-            e.preventDefault();
-            $searchPage.toggleClass('search-active');
-            var prevClasses = $body.attr('class') || '';
-            setTimeout(function () {
-                $body.addClass('no-scroll');
-            }, 400)
+    $searchOpen.on('click', function(e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function() {
+        $body.addClass('no-scroll');
+      }, 400)
 
-            if ($searchPage.hasClass('search-active')) {
-                $searchClose.on('click', function (e) {
-                    e.preventDefault();
-                    $searchPage.removeClass('search-active');
-                    $body.attr('class', prevClasses);  // from closure 
-                });
-                $searchInput.focus();
-            }
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function(e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure 
         });
+        $searchInput.focus();
+      }
     });
+  });
 </script>
 
-
-<!-- Image to hack wechat -->
-<img src="/resources/img/icon_wechat.png" width="0" height="0" />
-<!-- Migrate from head to bottom, no longer block render and still work -->
-
-</body>
-
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
 </html>

@@ -1,656 +1,612 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      新浪微博JS SDK API的使用 - Xheldon Blog
+        
+  </title>
 
-<head>
-    <meta charset="utf-8">
-    <title>新浪微博JS SDK API的使用 - Xheldon Blog</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="">
     
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    
-        <meta name="description" content="">
-    
-    <meta name="keywords"  content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
-    <meta name="theme-color" content="#000000">
-    <meta name="twitter:card" content="summary_large_image">
-    <!-- Open Graph -->
-    <meta property="og:title" content="新浪微博JS SDK API的使用 - Xheldon Blog">
-    
-    <meta property="og:type" content="article">
-    
-    <meta property="article:published_time" content="2015-12-21T21:23:45Z">
-    
-    
-    
-    <meta property="article:tag" content="技术">
-    
-    <meta property="article:tag" content="SDK">
-    
-    
-    
-        <meta name="og:description" content="">
-    
-    
-    <meta property="twitter:image" content="https://www.xheldon.com/resources/img/logo.png">
-    <meta property="og:image" content="https://www.xheldon.com/resources/img/logo.png">
-    
-    <meta property="og:url" content="https://www.xheldon.com/tech/weibo-jssdk.html">
-    <meta property="og:site_name" content="Xheldon Blog">
-    <meta name="google-adsense-account" content="ca-pub-5486286026923411">
-    <script async src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1" nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script><script nonce="hkl-3cDcQhqR8uwDMTDGjQ">(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
-     crossorigin="anonymous"></script>
-    <!-- Web App Manifest -->
-    <link rel="manifest" href="/pwa/manifest.json">
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <!-- Open Graph -->
+        <meta property="og:title"
+          content="新浪微博JS SDK API的使用 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2015-12-21T1:23:45"> 
+              
+                  
+                    <meta property="article:tag" content="技术">
+                    
+                    <meta property="article:tag" content="SDK">
+                    
+                      
+                          
+                            <meta name="og:description" content="">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/tech/weibo-jssdk.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="/resources/img/favicon.ico">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.xheldon.com/tech/weibo-jssdk.html">
+                                      <!-- Web App Manifest -->
+                                      <link rel="manifest" href="/js/manifest.json">
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/tech/weibo-jssdk.html">
 
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="https://static.xheldon.cn/css/bootstrap.min.css">
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="https://static.xheldon.cn/css/xheldon-life-blog.min.css">
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
 
-    <!-- Custom Fonts -->
-    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
-    <link href="https://static.xheldon.cn/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
 
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
 
+  <!-- hack iOS CSS :active style -->
 
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="">
-
+  <body ontouchstart="">
     <!-- Navigation -->
-
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
     
-        <div class="container-fluid">
+      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        
+          <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">
-                    Xheldon Blog
-                </a>
+              <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">
+                Xheldon Blog
+              </a>
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div id="xheldonblog_navbar">
-                <div class="navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/">Home</a></li>
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-                        <li>
-                            <a href="/donate/">Donate</a>
-                        </li>
-                        <li>
-                            <a href="/archive/">Archive</a>
-                        </li>
-                        <li>
-                            <a href="/feed.xml">Rss</a>
-                        </li>
-                        <li class="search-icon">
-                            <a href="javascript:void(0)">
-                                <i class="fa fa-search"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+            <div id="xblog_navbar">
+              <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <a href="/">Home</a>
+                  </li>
+                  <li>
+                    <a href="/about/">About</a>
+                  </li>
+                  <li>
+                    <a href="/donate/">Donate</a>
+                  </li>
+                  <li>
+                    <a href="/archive/">Archive</a>
+                  </li>
+                  <li>
+                    <a href="/feed.xml">Rss</a>
+                  </li>
+                  <li class="search-icon">
+                    <a href="javascript:void(0)">
+                      <i class="fa fa-search"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
             <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-
-    <script>
+          </div>
+          <!-- /.container -->
+      </nav>
+      <script>
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
         var $body = document.body;
         var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xheldonblog_navbar');
+        var $navbar = document.querySelector('#xblog_navbar');
         var $collapse = document.querySelector('.navbar-collapse');
 
-        var __XheldonNav__ = {
-            close: function () {
-                $navbar.className = " ";
-                // wait until animation end.
-                setTimeout(function () {
-                    // prevent frequently toggle
-                    if ($navbar.className.indexOf('in') < 0) {
-                        $collapse.style.height = "0px"
-                    }
-                }, 400)
-            },
-            open: function () {
-                $collapse.style.height = "auto"
-                $navbar.className += " in";
-            }
-        }
-
+        var __XNav__ = {
+          close: function () {
+            $navbar.className = ' ';
+            // wait until animation end.
+            setTimeout(function () {
+              // prevent frequently toggle
+              if ($navbar.className.indexOf('in') < 0) {
+                $collapse.style.height = '0px';
+              }
+            }, 400);
+          },
+          open: function () {
+            $collapse.style.height = 'auto';
+            $navbar.className += ' in';
+          },
+        };
         // Bind Event
         $toggle.addEventListener('click', function (e) {
-            if ($navbar.className.indexOf('in') > 0) {
-                __XheldonNav__.close()
-            } else {
-                __XheldonNav__.open()
-            }
-        })
-
+          if ($navbar.className.indexOf('in') > 0) {
+            __XNav__.close();
+          } else {
+            __XNav__.open();
+          }
+        });
         /**
          * Since Fastclick is used to delegate 'touchstart' globally
          * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from 
+         * Using 'e.stopPropagation' to stop 'touchstart' event from
          * $toggle/$collapse will break global delegation.
-         * 
+         *
          * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.  
+         * added to document close XheldonNav.
          *
          * Also, we use 'click' instead of 'touchstart' as compromise
          */
         document.addEventListener('click', function (e) {
-            if (e.target == $toggle) return;
-            if (e.target.className == 'icon-bar') return;
-            __XheldonNav__.close();
-        })
-    </script>
-    <!-- Search -->
+          if (e.target == $toggle) return;
+          if (e.target.className == 'icon-bar') return;
+          __XNav__.close();
+        });
+      </script> <!-- Search -->
 <div class="search-page">
-  <div class="search-icon-close-container">
-    <span class="search-icon-close">
-      <i class="fa fa-chevron-down"></i>
-    </span>
-  </div>
-  <div class="search-main container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <form></form>
-        <input type="text" id="search-input" placeholder="$ grep...">
-        </form>
-        <div id="search-results" class="mini-post-list"></div>
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-    <!-- Image to hack wechat -->
-<!-- <img src="/resources/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
-
-<!-- Post Header -->
-
-
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://www.xheldon.com/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/" width="0" height="0"> -->
 
 <style type="text/css">
-    header.intro-header{
-        position: relative;
-        background-image: url('https://static.xheldon.cn/img/index-bg.png');
-        
-    }
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
 
     
+  }
+
+  
 </style>
 
-<header class="intro-header style-text" >
-
-    <div class="header-mask"></div>
+<header class="intro-header style-text">
+  
+    <div class="headerMask"></div>
     
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                        
-                        <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-                        
-                        <a class="tag" href="/archive/?tag=SDK" title="SDK">SDK</a>
-                        
-                    </div>
-                    <h1>新浪微博JS SDK API的使用</h1>
-                    
-                    <h2 class="subheading"></h2>
-                    <span class="meta">✍🏼 写于 2015年12月21日</span>&nbsp;&nbsp;&nbsp;  
-                    
-                </div>
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <div class="tags">
+              
+              <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
+              
+              <a class="tag" href="/archive/?tag=SDK" title="SDK">SDK</a>
+              
             </div>
+            <h1>新浪微博JS SDK API的使用</h1>
+            <h2 class="subheading"></h2>
+            <span class="meta">✍🏼 写于 2015年12月21日</span>&nbsp;&nbsp;&nbsp;
+            
+          </div>
         </div>
+      </div>
     </div>
-</header>
+  </header>
 
-
-
-
-
-
-<!-- Post Content -->
-<article>
+  <!-- Post Content -->
+  <article>
     <div class="container">
-        <div class="row">
+      <div class="row">
 
-    <!-- Post Container -->
-            <div class="
+        <!-- Post Container -->
+        <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
                 post-container">
-
-                <!-- Multi-Lingual -->
-                
+          
+            
+              <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
+              <script>
+                var timeDom = document.getElementById('from_time');
+                var pageTime = Date.parse('Mon Dec 21 2015 13:23:45 GMT+0000');
+                var currentTime = Date.now();
+                var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
+                if (Number(fromNow) <= 0) {
+                  fromNow = 1; // Note: 至少显示一天
+                }
+                timeDom.innerText = fromNow
+              </script>
+              
                 
                     
-                        
-                        <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
-                        <script>
-                            var timeDom = document.getElementById('from_time');
-                            var pageTime = 1450704225; // Note: 见 ruby 的 time parser: https://ruby-doc.org/stdlib-3.0.2/libdoc/time/rdoc/Time.html#method-c-parse
-                            var currentTime = Date.now();
-                            var fromNow = ((currentTime - (pageTime * 1000)) / (24 * 3600 * 1000)).toFixed(0);
-                            if (Number(fromNow) <= 0) {
-                                fromNow = 1; // Note: 至少显示一天
-                            }
-                            timeDom.innerText = fromNow
-                        </script>
-                    
-                    
-                
-                
-                
-                
-				<h2 id="前言">前言</h2>
-
-<p>以前整个网站都是老大一个人怼起来的,各种bug和各种细节不完善.所以打算重构一下,侯哥搭好了<code class="language-plaintext highlighter-rouge">seajs</code>的开发框架,因此我只需要写前端逻辑即可.</p>
-
+                      
+                          
+                              
+                                  <h2 id="前言">前言</h2>
+<p>以前整个网站都是老大一个人怼起来的,各种bug和各种细节不完善.所以打算重构一下,侯哥搭好了<code>seajs</code>的开发框架,因此我只需要写前端逻辑即可.</p>
 <h2 id="现状">现状</h2>
-
-<p>注册和登陆部分是我写的,因此我打算增加个新浪微博和QQ登陆的功能,用户点击之后存储其id到数据库,当然这个需要修改数据库表字段,单独增加一个类似于<code class="language-plaintext highlighter-rouge">wb_id</code>的字段名来标示.</p>
-
+<p>注册和登陆部分是我写的,因此我打算增加个新浪微博和QQ登陆的功能,用户点击之后存储其id到数据库,当然这个需要修改数据库表字段,单独增加一个类似于<code>wb_id</code>的字段名来标示.</p>
 <p>现在流行的做法有两种,一个是用新浪微博(或其他登录方式,下同)登陆之后,后台自动创建一个id作为本站唯一的标示,同一行的wb_id存储此用户的微博id,以后用任意账号登陆即可,第一次微博登陆之后用户只需要设置一下昵称(非必须,可直接使用微博昵称)和密码(必须,因为万一以后新浪微博倒闭了,用户没法儿登陆可不行);另一种方式是新浪微博登陆之后需要引导用户手动创建一个账号和密码,或者引导用户绑定到已经注册过的用户账号上去.</p>
-
 <h2 id="我的做法">我的做法</h2>
-
-<p>好了以上是业务逻辑,我会使用第一种方式实现,下面是具体的实现方法:如何使用新浪微博的JSSDK的API.
+<p>好了以上是业务逻辑,我会使用第一种方式实现,下面是具体的实现方法:如何使用新浪微博的JSSDK的API.<br />
 首先和网上大多数教程里面说的那样,需要了解OAuth2.0协议的原理,其实不了解也没关系,知道流程就行,OAuth2.0验证流程网上说的很多了,百度一大把,这里就不再赘述了.</p>
-
 <p>注意:所有步骤的前提是,你已经取得了新浪微博开放平台的开发者权限,如果没有的话是无权调用API的,关于新浪微博开发者申请,请自行百度.申请完新浪微博开发者之后会到一个appid,这个是新浪识别谁调用了它的API的关键id,之后的步骤也会用到.</p>
-
 <p>第一步:增加命名空间,引用jssdk文件.</p>
-
 <p>增加命名空间:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nt">&lt;html</span> <span class="na">xmlns:wb=</span><span class="s">”http://open.weibo.com/wb”</span><span class="nt">&gt;</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">xmlns:wb</span>=<span class="hljs-string">”http://open.weibo.com/wb”</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>引用jssdk文件:</p>
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">”http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=YOUR</span> <span class="na">APPKEYdebug=</span><span class="s">true”</span> <span class="na">type=</span><span class="s">”text/javascript”</span> <span class="na">charset=</span><span class="s">”utf-8″</span><span class="nt">&gt;&lt;/script&gt;</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>其中的<code class="language-plaintext highlighter-rouge">YOUR APPKEY</code>替换为你申请新浪微博开发者时它给你的<code class="language-plaintext highlighter-rouge">appid</code>, <code class="language-plaintext highlighter-rouge">debug=true</code>方便你调试,正式上线时可以把<code class="language-plaintext highlighter-rouge">&amp;debug=true</code>这个给删掉.</p>
-
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">”http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey</span>=<span class="hljs-string">YOUR</span> <span class="hljs-attr">APPKEYdebug</span>=<span class="hljs-string">true”</span> <span class="hljs-attr">type</span>=<span class="hljs-string">”text/javascript”</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">”utf-8″</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>其中的<code>YOUR APPKEY</code>替换为你申请新浪微博开发者时它给你的<code>appid</code>, <code>debug=true</code>方便你调试,正式上线时可以把<code>&amp;debug=true</code>这个给删掉.</p>
 <p>第二步:使用API授权登录</p>
-
-<p>这里有两种方式,一种是点击按钮之后直接在脚本里调用API的<code class="language-plaintext highlighter-rouge">WB2.login()</code>方法具体请看新浪API,</p>
-
+<p>这里有两种方式,一种是点击按钮之后直接在脚本里调用API的<code>WB2.login()</code>方法具体请看新浪API,</p>
 <p>还一种是将用户引导到包含你appid和回调地址的地址中去(姑且叫它授权页),格式为:</p>
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">https</span><span class="p">:</span><span class="c1">//api.weibo.com/2/oauth2/authorize?client_id=YOUR APPKEY&amp;response_type=token&amp;display=js&amp;transport=html5&amp;referer=Your_CallBack_Address</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>其中的<code class="language-plaintext highlighter-rouge">YOUR APPKEY</code>和<code class="language-plaintext highlighter-rouge">Your_CallBack_Address</code>替换为你自己的,注意<code class="language-plaintext highlighter-rouge">Your_CallBack_Address</code>记得加上<code class="language-plaintext highlighter-rouge">http://</code>
-比如我的测试引导地址就是:</p>
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nx">https</span><span class="p">:</span><span class="c1">//api.weibo.com/2/oauth2/authorize?client_id=2177891434&amp;response_type=token&amp;display=js&amp;transport=html5&amp;referer=http://www.xheldon.com/gbtagsLogin.html</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-<p>注意:貌似这个回调地址必须是以php/html/jsp等动态/非动态的带后缀名的格式,如果是首页的话比如<code class="language-plaintext highlighter-rouge">http://xheldon.com</code>是不行的,需要加上<code class="language-plaintext highlighter-rouge">http://xheldon.com/index.html</code>(因为我的后台是Node的)才行,这个我没有试过,有需要的同学请自行尝试.</p>
-
-<p>第一种方法的表现形式是点击引导入口之后会直接弹出微博登陆授权页面的对话框,这个时候如果你用过的是<code class="language-plaintext highlighter-rouge">chrome</code>的话会发现在这个小窗口的地址栏左侧的地址有个小锁icon,代表这个地址是锁定的无法修改.
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">https</span>:<span class="hljs-comment">//api.weibo.com/2/oauth2/authorize?client_id=YOUR APPKEY&amp;response_type=token&amp;display=js&amp;transport=html5&amp;referer=Your_CallBack_Address</span><br><span class="hljs-string">``</span><span class="hljs-string">`  </span><br><span class="hljs-string"></span><br><span class="hljs-string">其中的`</span><span class="hljs-variable constant_">YOUR</span> <span class="hljs-variable constant_">APPKEY</span><span class="hljs-string">`和`</span><span class="hljs-title class_">Your</span>_CallBack_Address<span class="hljs-string">`替换为你自己的,注意`</span><span class="hljs-title class_">Your</span>_CallBack_Address<span class="hljs-string">`记得加上`</span><span class="hljs-attr">http</span>:<span class="hljs-comment">//`</span><br>比如我的测试引导地址就是:<br><span class="hljs-string">``</span><span class="hljs-string">`js</span><br><span class="hljs-string">https://api.weibo.com/2/oauth2/authorize?client_id=2177891434&amp;response_type=token&amp;display=js&amp;transport=html5&amp;referer=http://www.xheldon.com/gbtagsLogin.html</span><br></code></pre></td></tr></table></figure>
+<p>注意:貌似这个回调地址必须是以php/html/jsp等动态/非动态的带后缀名的格式,如果是首页的话比如<code>http://xheldon.com</code>是不行的,需要加上<code>http://xheldon.com/index.html</code>(因为我的后台是Node的)才行,这个我没有试过,有需要的同学请自行尝试.</p>
+<p>第一种方法的表现形式是点击引导入口之后会直接弹出微博登陆授权页面的对话框,这个时候如果你用过的是<code>chrome</code>的话会发现在这个小窗口的地址栏左侧的地址有个小锁icon,代表这个地址是锁定的无法修改.<br />
 在弹出的小窗口输入微博登陆账号密码授权之后对话框消失,原来的页面刷新,第三方网站就可以操作你的账号.</p>
-
-<p>第二种方法是不在脚本中使用<code class="language-plaintext highlighter-rouge">WB2.login()</code>,而是引导用户到刚才我说的那个包含appid和回调地址的地址中去,这个地址也是会让你输入账号密码,但是这个和第一种方式的区别是这个是会离开现有的页面跳转到这个授权页中去的,输入账号密码授权之后会回到你这个链接中写的回调地址中去.</p>
-
-<p>以上两步的原理其实就是<code class="language-plaintext highlighter-rouge">OAuth2.0</code>协议认证的过程,只是JSSDK给你处理好了第一次请求返回的code和第二次请求返回的<code class="language-plaintext highlighter-rouge">access token</code>,因此你不需要按照官方API里面说的那样运用<code class="language-plaintext highlighter-rouge">basic</code>方式将<code class="language-plaintext highlighter-rouge">access token</code>放到<code class="language-plaintext highlighter-rouge">header</code>中使用post或者get方式等一系列你可能听不懂的名词,而只需要关注前端的逻辑,使用获得的json格式的数据即可.</p>
-
+<p>第二种方法是不在脚本中使用<code>WB2.login()</code>,而是引导用户到刚才我说的那个包含appid和回调地址的地址中去,这个地址也是会让你输入账号密码,但是这个和第一种方式的区别是这个是会离开现有的页面跳转到这个授权页中去的,输入账号密码授权之后会回到你这个链接中写的回调地址中去.</p>
+<p>以上两步的原理其实就是<code>OAuth2.0</code>协议认证的过程,只是JSSDK给你处理好了第一次请求返回的code和第二次请求返回的<code>access token</code>,因此你不需要按照官方API里面说的那样运用<code>basic</code>方式将<code>access token</code>放到<code>header</code>中使用post或者get方式等一系列你可能听不懂的名词,而只需要关注前端的逻辑,使用获得的json格式的数据即可.</p>
 <p>还是刚才那个地址, <a href="http://open.weibo.com/wiki/Weibo-JS_V2">微博API入口级文档说明</a>.当然”入口级”这个名词 是我自创的,你知道了这五个的用法,以后的API就可以依葫芦画瓢了.</p>
-
-<p>这几个API其中的<code class="language-plaintext highlighter-rouge">WB2.login()</code> 和<code class="language-plaintext highlighter-rouge">WB2.checklogin()</code>以及<code class="language-plaintext highlighter-rouge">WB2.logout</code>比较简单,是个人都能看懂,看不懂的按照我刚才说的那个<code class="language-plaintext highlighter-rouge">WB2.login()</code>方法往script标签里面一放就可以了,只是引导登陆之后你什么也没有做.</p>
-
-<p>登陆之后想做点什么的话(这是废话,不做什么你让人家登陆干啥),比如获取登陆新浪微博登陆用户的id,获取它的粉丝数等等,都是通过这五个入口级API的最重要的一个API
-即与微博API进行数据交互及采用Js方式调用内置微博组件的入口函数(官方是这么介绍的):<code class="language-plaintext highlighter-rouge">WB2.anyWhere(callback)</code>,</p>
-
-<p>然后与数据交互的话需要使用<code class="language-plaintext highlighter-rouge">W.parseCMD(uri, callback, args, opts)</code>
-其中W形参是<code class="language-plaintext highlighter-rouge">WB2.anyWhere(callback)</code>传进去的,如果想调用微博组件的话,可以使用<code class="language-plaintext highlighter-rouge">W.widget.hoverCard(…)</code>或者<code class="language-plaintext highlighter-rouge">W.widget.followButton(…);</code>等等.</p>
-
+<p>这几个API其中的<code>WB2.login()</code> 和<code>WB2.checklogin()</code>以及<code>WB2.logout</code>比较简单,是个人都能看懂,看不懂的按照我刚才说的那个<code>WB2.login()</code>方法往script标签里面一放就可以了,只是引导登陆之后你什么也没有做.</p>
+<p>登陆之后想做点什么的话(这是废话,不做什么你让人家登陆干啥),比如获取登陆新浪微博登陆用户的id,获取它的粉丝数等等,都是通过这五个入口级API的最重要的一个API<br />
+即与微博API进行数据交互及采用Js方式调用内置微博组件的入口函数(官方是这么介绍的):<code>WB2.anyWhere(callback)</code>,</p>
+<p>然后与数据交互的话需要使用<code>W.parseCMD(uri, callback, args, opts)</code><br />
+其中W形参是<code>WB2.anyWhere(callback)</code>传进去的,如果想调用微博组件的话,可以使用<code>W.widget.hoverCard(…)</code>或者<code>W.widget.followButton(…);</code>等等.</p>
 <p>注意,最最重要的一步,即是你和新浪的数据交互的一步:</p>
-
-<p>一般<code class="language-plaintext highlighter-rouge">W.parseCMD</code>的用法是以下形式:</p>
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-</pre></td><td class="rouge-code"><pre><span class="nx">W</span><span class="p">.</span><span class="nx">parseCMD</span><span class="p">(</span><span class="dl">'</span><span class="s1">/users/show.json</span><span class="dl">'</span><span class="p">,</span><span class="err"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">oResult</span><span class="p">,</span> <span class="nx">bStatus</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">if</span><span class="p">(</span><span class="nx">bStatus</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">//to do something...</span>
-  <span class="p">}</span>
-  <span class="p">},</span> <span class="p">{</span>
-	<span class="na">screen_name</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">姚晨</span><span class="dl">'</span>
-  <span class="p">},</span> <span class="p">{</span>
-	<span class="na">method</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">get</span><span class="dl">'</span><span class="p">,</span>
-	<span class="na">cache_time</span> <span class="p">:</span> <span class="mi">30</span>
-  <span class="p">});</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-<p>其中<code class="language-plaintext highlighter-rouge">W.parseCMD()</code>的第一个参数<code class="language-plaintext highlighter-rouge">/user/show.json</code>可以换成其他的接口如:<code class="language-plaintext highlighter-rouge">/statuses/user_timeline.json</code>就可以读取这个借口的信息了,具体有哪些接口,而接口又能返回哪些数据,新浪自己给了个 <a href="http://open.weibo.com/tools/apitest.php">微博API测试工具</a> 注意:这个API测试工具的登陆界面有问题,请不要在这个页面登陆,而是先到微博首页登陆之后再在这个API测试工具的页面刷新即可.
-那个<code class="language-plaintext highlighter-rouge">screen_name</code>不是必须的,但是<code class="language-plaintext highlighter-rouge">screen_name</code>所在的{}必须保留,即使它是空的.</p>
-
-<p>下面的<code class="language-plaintext highlighter-rouge">method: get</code>是与后台交互时的参数,有时候的交互是需要使用<code class="language-plaintext highlighter-rouge">post</code>方式,<code class="language-plaintext highlighter-rouge">cache_time</code>看名字也知道什么意思吧?就不多说了.</p>
-
+<p>一般<code>W.parseCMD</code>的用法是以下形式:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js">W.<span class="hljs-title function_">parseCMD</span>(<span class="hljs-string">&#x27;/users/show.json&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">oResult, bStatus</span>) &#123;<br>  <span class="hljs-keyword">if</span>(bStatus) &#123;<br>  <span class="hljs-comment">//to do something...</span><br>  &#125;<br>  &#125;, &#123;<br> screen_name : <span class="hljs-string">&#x27;姚晨&#x27;</span><br>  &#125;, &#123;<br> method : <span class="hljs-string">&#x27;get&#x27;</span>,<br> cache_time : <span class="hljs-number">30</span><br>  &#125;);<br></code></pre></td></tr></table></figure>
+<p>其中<code>W.parseCMD()</code>的第一个参数<code>/user/show.json</code>可以换成其他的接口如:<code>/statuses/user_timeline.json</code>就可以读取这个借口的信息了,具体有哪些接口,而接口又能返回哪些数据,新浪自己给了个 <a href="http://open.weibo.com/tools/apitest.php">微博API测试工具</a> 注意:这个API测试工具的登陆界面有问题,请不要在这个页面登陆,而是先到微博首页登陆之后再在这个API测试工具的页面刷新即可.<br />
+那个<code>screen_name</code>不是必须的,但是<code>screen_name</code>所在的{}必须保留,即使它是空的.</p>
+<p>下面的<code>method: get</code>是与后台交互时的参数,有时候的交互是需要使用<code>post</code>方式,<code>cache_time</code>看名字也知道什么意思吧?就不多说了.</p>
 <p>差不多需要注意的就这么多.</p>
 
-                <div class="text-danger">- EOF -</div>
-                <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a style="color: #ccc;" href="https://www.xheldon.com/tech/weibo-jssdk.html" title="新浪微博JS SDK API的使用">新浪微博JS SDK API的使用 - Xheldon Blog</a></div>
-                <hr style="visibility: hidden;">
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/tech/how-to-work.html" data-toggle="tooltip" data-placement="top" title="关于代码优化/工作经验重要性的一次切身体会">
-                        上一篇<br>
-                        <span>关于代码优化/工作经验重要性的一次切身体会</span>
-                        </a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/tech/promise-antipattern.html" data-toggle="tooltip" data-placement="top" title="「译」 Promise 反面模式">
-                        下一篇<br>
-                        <span>「译」 Promise 反面模式</span>
-                        </a>
-                    </li>
-                    
-                </ul>
-                <hr style="visibility: hidden;">
-                <div class="giscus"></div>
-                <hr>
-            </div>  
+                                    <div class="text-danger">- EOF -</div>
+                                    <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a
+                                        style="color: #ccc;"
+                                        href="https://www.xheldon.com/tech/weibo-jssdk.html"
+                                        title="新浪微博JS SDK API的使用">
+                                        新浪微博JS SDK API的使用 - Xheldon Blog
+                                      </a></div>
+                                    <hr style="visibility: hidden;">
 
-    <!-- Side Catalog Container -->
+                                    <ul class="pager">
+                                      
+                                        <li class="previous">
+                                          <a href="/tech/promise-antipattern.html" data-toggle="tooltip"
+                                            data-placement="top" title="「译」 Promise 反面模式">
+                                            上一篇<br>
+                                            <span>{{page.prev.title}}</span>
+                                          </a>
+                                        </li>
+                                        
+                                          
+                                            <li class="next">
+                                              <a href="/tech/how-to-work.html" data-toggle="tooltip"
+                                                data-placement="top" title="关于代码优化/工作经验重要性的一次切身体会">
+                                                下一篇<br>
+                                                <span>{{page.next.title}}</span>
+                                              </a>
+                                            </li>
+                                            
+                                    </ul>
+                                    <hr style="visibility: hidden;">
+                                    <div class="giscus"></div>
+                                    <hr>
+        </div>
+        <!-- Side Catalog Container -->
         
-            <div class="
+          <div class="
                 col-lg-2 col-lg-offset-0
                 visible-lg-block
                 sidebar-container
                 catalog-container">
-                <div class="side-catalog">
-                    <hr class="hidden-sm hidden-xs">
-                    <h5>
-                        <a class="catalog-toggle" href="#">目录</a>
-                    </h5>
-                    <ul class="catalog-body"></ul>
-                </div>
+            <div class="side-catalog">
+              <hr class="hidden-sm hidden-xs">
+              <h5>
+                <a class="catalog-toggle" href="#">目录</a>
+              </h5>
+              <ul class="catalog-body"></ul>
             </div>
-        
+          </div>
+          
 
-    <!-- Sidebar Container -->
+            <!-- Sidebar Container -->
+
             <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
                 sidebar-container">
-
-                <!-- Featured Tags -->
-                
-
-
+              
 <section style="margin-bottom: 20px;">
     <h5>博主说：</h5>
     <div>
-        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/resources/img/gwechat.png" />
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
         我常常希望在面对人生中一些关键抉择的时候，有人可以告诉我最佳的做法，让我不至于白白浪费宝贵的时间。推己及人，我因此经常写博客，以期在浩渺无垠的互联网中的这个小小角落里记录下对于我来说只有一次的人生经历，希望能够帮到那些希望得到帮助的人。
     </div>
     <hr>
     <h5><a href="/archive/">热门标签</a></h5>
     <div class="tags">
         
+
         
+            <a data-sort="0028" 
+                href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技术"
+                rel="44">技术</a>
         
+            <a data-sort="0047" 
+                href="/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="25">生活</a>
         
+            <a data-sort="0062" 
+                href="/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="折腾"
+                rel="10">折腾</a>
         
+            <a data-sort="0066" 
+                href="/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻译"
+                rel="6">翻译</a>
         
-                <a data-sort="0028" 
-                    href="/archive/?tag=%E6%8A%80%E6%9C%AF"
-                    title="技术"
-                    rel="44">技术</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="技巧"
+                rel="5">技巧</a>
         
-                <a data-sort="0047" 
-                    href="/archive/?tag=%E7%94%9F%E6%B4%BB"
-                    title="生活"
-                    rel="25">生活</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="教程"
+                rel="5">教程</a>
         
-                <a data-sort="0062" 
-                    href="/archive/?tag=%E6%8A%98%E8%85%BE"
-                    title="折腾"
-                    rel="10">折腾</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="美食"
+                rel="5">美食</a>
         
-                <a data-sort="0066" 
-                    href="/archive/?tag=%E7%BF%BB%E8%AF%91"
-                    title="翻译"
-                    rel="6">翻译</a>
+            <a data-sort="0067" 
+                href="/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="5">ProseMirror</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=%E6%8A%80%E5%B7%A7"
-                    title="技巧"
-                    rel="5">技巧</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="工作流"
+                rel="4">工作流</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=%E6%95%99%E7%A8%8B"
-                    title="教程"
-                    rel="5">教程</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="插件"
+                rel="4">插件</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
-                    title="美食"
-                    rel="5">美食</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="网络"
+                rel="4">网络</a>
         
-                <a data-sort="0067" 
-                    href="/archive/?tag=ProseMirror"
-                    title="ProseMirror"
-                    rel="5">ProseMirror</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=Craft"
+                title="Craft"
+                rel="4">Craft</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
-                    title="工作流"
-                    rel="4">工作流</a>
+            <a data-sort="0068" 
+                href="/archive/?tag=Vue"
+                title="Vue"
+                rel="4">Vue</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=%E6%8F%92%E4%BB%B6"
-                    title="插件"
-                    rel="4">插件</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体验"
+                rel="3">初体验</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=%E7%BD%91%E7%BB%9C"
-                    title="网络"
-                    rel="4">网络</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="服务器"
+                rel="3">服务器</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=Craft"
-                    title="Craft"
-                    rel="4">Craft</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="经验"
+                rel="3">经验</a>
         
-                <a data-sort="0068" 
-                    href="/archive/?tag=Vue"
-                    title="Vue"
-                    rel="4">Vue</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="苹果"
+                rel="3">苹果</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
-                    title="初体验"
-                    rel="3">初体验</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="路由器"
+                rel="3">路由器</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
-                    title="服务器"
-                    rel="3">服务器</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="软路由"
+                rel="3">软路由</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E7%BB%8F%E9%AA%8C"
-                    title="经验"
-                    rel="3">经验</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="随笔"
+                rel="3">随笔</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E8%8B%B9%E6%9E%9C"
-                    title="苹果"
-                    rel="3">苹果</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=%E9%9B%86%E6%88%90"
+                title="集成"
+                rel="3">集成</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
-                    title="路由器"
-                    rel="3">路由器</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=Apple"
+                title="Apple"
+                rel="3">Apple</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
-                    title="软路由"
-                    rel="3">软路由</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=Git"
+                title="Git"
+                rel="3">Git</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E9%9A%8F%E7%AC%94"
-                    title="随笔"
-                    rel="3">随笔</a>
+            <a data-sort="0069" 
+                href="/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="3">JavaScript</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=%E9%9B%86%E6%88%90"
-                    title="集成"
-                    rel="3">集成</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="2">主食</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=Apple"
-                    title="Apple"
-                    rel="3">Apple</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="优化"
+                rel="2">优化</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=Git"
-                    title="Git"
-                    rel="3">Git</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用体验"
+                rel="2">使用体验</a>
         
-                <a data-sort="0069" 
-                    href="/archive/?tag=JavaScript"
-                    title="JavaScript"
-                    rel="3">JavaScript</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E5%8D%83%E5%85%86"
+                title="千兆"
+                rel="2">千兆</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E4%B8%BB%E9%A3%9F"
-                    title="主食"
-                    rel="2">主食</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="2">大事</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E4%BC%98%E5%8C%96"
-                    title="优化"
-                    rel="2">优化</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="旁路由"
+                rel="2">旁路由</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
-                    title="使用体验"
-                    rel="2">使用体验</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="泡脚时间"
+                rel="2">泡脚时间</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E5%8D%83%E5%85%86"
-                    title="千兆"
-                    rel="2">千兆</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="测试"
+                rel="2">测试</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E5%A4%A7%E4%BA%8B"
-                    title="大事"
-                    rel="2">大事</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="特斯拉"
+                rel="2">特斯拉</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
-                    title="旁路由"
-                    rel="2">旁路由</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="编辑器"
+                rel="2">编辑器</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
-                    title="泡脚时间"
-                    rel="2">泡脚时间</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="视频"
+                rel="2">视频</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E6%B5%8B%E8%AF%95"
-                    title="测试"
-                    rel="2">测试</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="调试"
+                rel="2">调试</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
-                    title="特斯拉"
-                    rel="2">特斯拉</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%BD%A6"
+                title="车"
+                rel="2">车</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
-                    title="编辑器"
-                    rel="2">编辑器</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="迁移"
+                rel="2">迁移</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%A7%86%E9%A2%91"
-                    title="视频"
-                    rel="2">视频</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="2">AppleScript</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%B0%83%E8%AF%95"
-                    title="调试"
-                    rel="2">调试</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=CI"
+                title="CI"
+                rel="2">CI</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%BD%A6"
-                    title="车"
-                    rel="2">车</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=GitHub"
+                title="GitHub"
+                rel="2">GitHub</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=%E8%BF%81%E7%A7%BB"
-                    title="迁移"
-                    rel="2">迁移</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="2">Jekyll</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=AppleScript"
-                    title="AppleScript"
-                    rel="2">AppleScript</a>
+            <a data-sort="0070" 
+                href="/archive/?tag=Notion"
+                title="Notion"
+                rel="2">Notion</a>
         
-                <a data-sort="0070" 
-                    href="/archive/?tag=CI"
-                    title="CI"
-                    rel="2">CI</a>
-        
-                <a data-sort="0070" 
-                    href="/archive/?tag=GitHub"
-                    title="GitHub"
-                    rel="2">GitHub</a>
-        
-                <a data-sort="0070" 
-                    href="/archive/?tag=Jekyll"
-                    title="Jekyll"
-                    rel="2">Jekyll</a>
-        
-                <a data-sort="0070" 
-                    href="/archive/?tag=Notion"
-                    title="Notion"
-                    rel="2">Notion</a>
     </div>
     <hr>
     <h5>专栏</h5>
@@ -662,8 +618,6 @@
     </div>
 </section>
 
-
-                <!-- Friends Blog -->
                 
 <hr>
 <h5>朋友们</h5>
@@ -671,9 +625,13 @@
   
   <li><a href="https://prosemirror.xheldon.com" target="_blank">ProseMirror 中文</a></li>
   
+  <li><a href="https://rust.xheldon.com" target="_blank">Rust 中文</a></li>
+  
   <li><a href="https://slate.xheldon.com" target="_blank">Slate 中文</a></li>
   
   <li><a href="https://notion-flow.xheldon.com" target="_blank">Notion Flow</a></li>
+  
+  <li><a href="https://xpic.xheldon.com" target="_blank">xPic</a></li>
   
   
     <li><a href="https://www.xheldon.cn" target="_blank">国内版</a></li>
@@ -681,17 +639,15 @@
 </ul>
 
             </div>
-        </div>
+      </div>
     </div>
-</article>
+  </article>
 
-<!-- add support for mathjax by voleking-->
+  
 
+        
 
-<!-- Markdown 流程图按需加载 -->
-
-
-<script src="https://giscus.app/client.js"
+            <script src="https://giscus.app/client.js"
         data-repo="Xheldon/x_blog"
         data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
         data-category="Announcements"
@@ -709,377 +665,363 @@
         async>
 </script>
 
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("https://static.xheldon.cn/js/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'hover',
-          placement: 'right',
-          // icon: '#'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
-
-
-
-    <!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <!-- SNS Link -->
+              
+                <!-- async load function -->
+                <script>
+                  function async(u, c) {
+                    var d = document,
+                      t = 'script',
+                      o = d.createElement(t),
+                      s = d.getElementsByTagName(t)[0];
+                    o.src = u;
+                    if (c) {
+                      o.addEventListener('load', function (e) {
+                        c(null, e);
+                      }, false);
+                    }
+                    s.parentNode.insertBefore(o, s);
+                  }
+                </script>
+                <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+                <script>
+                  async("/js/anchor.min.js", function () {
+                    anchors.options = {
+                      visible: 'always',
+                      placement: 'right',
+                      //   icon: '#'
+                    };
+                    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+                  })
+                </script>
+                <style>
+                  /* place left on bigger screen */
+                  @media all and (min-width: 800px) {
+                    .anchorjs-link {
+                      position: absolute;
+                      left: -0.75em;
+                      font-size: 1.1em;
+                      margin-top: -0.1em;
+                    }
+                  }
+                </style>
                 
 
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
 
 <ul class="list-inline text-center">
-
-
-  <!-- 
-  <li>
-    <a target="_blank" href="/feed.xml">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-   -->
-  
-  <li>
-    <a target="_blank" href="https://twitter.com/_xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  <li>
-    <a target="_blank" href="http://weibo.com/xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  
-  <li>
-    <a target="_blank" href="https://www.youtube.com/@xheldon">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  <li>
-    <a target="_blank" href="https://space.bilibili.com/13835416">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  
-  <li>
-    <a target="_blank" href="https://t.me/xheldon_tech">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
 </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; <a href="https://github.com/Xheldon" target="_blank">Xheldon</a> 2024
-                    <br>
-                    Don't Panic | Theme fork from <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-                    <br>
-                    
-                </p>
-            </div>
-            <!-- <div class="switch-mode" id="dark-mode">
-                <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-                    <i class="fa fa-moon-o fa-stack-1x"></i>
-                  </span>
-            </div>
-            <div class="switch-mode" id="light-mode">
-                <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-sun-o fa-stack-1x fa-inverse"></i>
-                  </span>
-            </div> -->
-        </div>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2024
+          <br>
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+          <br>
+          
+        </p>
+      </div>
     </div>
+  </div>
 </footer>
 <script>
-    if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
-        console.log('浏览器不支持主题色');
-    } else {
-        if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-            document.documentElement.classList.remove('light');
-            document.documentElement.classList.add('dark');
-            // Note: 推特列表添加暗黑主题
-            let ttl = document.querySelector('.twitter-timeline');
-            if (ttl) {
-                ttl.setAttribute('data-theme', 'dark');
-            }
-        }
-        if(window.matchMedia('(prefers-color-scheme: light)').matches){
-            document.documentElement.classList.remove('dark');
-            document.documentElement.classList.add('light');
-            let ttl = document.querySelector('.twitter-timeline');
-            if (ttl) {
-                ttl.removeAttribute('data-theme');
-            }
-        }
-        // document.getElementById('dark-mode').addEventListener('click', function() {
-        //     document.documentElement.classList.remove('light');
-        //     document.documentElement.classList.add('dark');
-        // });
-        // document.getElementById('light-mode').addEventListener('click', function() {
-        //     document.documentElement.classList.add('light');
-        //     document.documentElement.classList.remove('dark');
-        // });
-        // Note: 自动切换
-        window.matchMedia('(prefers-color-scheme: dark)').addListener(function(mediaQueryList) {
-            if (mediaQueryList.matches) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-            }
-        })
-        window.matchMedia('(prefers-color-scheme: light)').addListener(function(mediaQueryList) {
-            if (mediaQueryList.matches) {
-                document.documentElement.classList.add('light');
-                document.documentElement.classList.remove('dark');
-            }
-        })
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
     }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function(mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function(mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
 </script>
+
 <!-- jQuery -->
-<script src="https://static.xheldon.cn/js/jquery.min.js "></script>
+<script src="/js/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
-<script src="https://static.xheldon.cn/js/bootstrap.min.js "></script>
+<script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="https://static.xheldon.cn/js/xheldon-life-blog.min.js?202110012319"></script>
+<script src="/js/xblog.min.js?202405251426"></script>
 
-<!-- Simple Jekyll Search -->
-<script src="https://static.xheldon.cn/js/simple-jekyll-search.min.js"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src='/js/simple-jekyll-search.min.js'></script>
 
 <!-- Vercel web analysis -->
 
 <script defer src="/_vercel/insights/script.js"></script>
 
-<!-- Service Worker -->
 
-<script src="https://static.xheldon.cn/js/snackbar.js "></script>
-<script src="https://static.xheldon.cn/js/sw-registration.js "></script>
-
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
 <!-- async load function -->
 <script>
-    function async(u, c) {
-        var d = document, t = 'script',
-            o = d.createElement(t),
-            s = d.getElementsByTagName(t)[0];
-        o.src = u;
-        if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-        s.parentNode.insertBefore(o, s);
+  function async (u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function(e) {
+          c(null, e);
+        },
+        false
+      );
     }
+    s.parentNode.insertBefore(o, s);
+  }
 </script>
 
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-
-
+<!-- jquery.tagcloud.js -->
 
 
 <!--fastClick.js -->
 <script>
-    async("https://static.xheldon.cn/js/fastclick.min.js", function () {
-        var $nav = document.querySelector("nav");
-        if ($nav) FastClick.attach($nav);
-    })
+  async ('/js/fastclick.min.js', function() {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
 </script>
-
 
 <!-- Google Analytics -->
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
 <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'UA-79359216-1');
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', '{{config.ga_track_id}}');
 </script>
 
 
 <!-- Side Catalog -->
 
 <script type="text/javascript">
-    function generateCatalog(selector) {
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
 
-        // interop with multilangual 
-        if ('' == 'true') {
-            _containerSelector = 'div.post-container.active'
-        } else {
-            _containerSelector = 'div.post-container'
-        }
+    // clean
+    $(selector).html('');
 
-        // init
-        var P = $(_containerSelector), a, n, t, l, i, c;
-        a = P.find('h1,h2,h3,h4,h5,h6');
-
-        // clean
-        $(selector).html('')
-
-        // appending
-        a.each(function () {
-            n = $(this).prop('tagName').toLowerCase();
-            i = "#" + $(this).prop('id');
-            t = $(this).text();
-            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-            l = $('<li class="' + n + '_nav"></li>').append(c);
-            $(selector).append(l);
-        });
-        return true;
-    }
-
-    generateCatalog(".catalog-body");
-
-    // toggle side catalog
-    $(".catalog-toggle").click((function (e) {
-        e.preventDefault();
-        $('.side-catalog').toggleClass("fold")
-    }))
-
-    /*
-     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-     * Fork by Hux to support padding
-     */
-    async("https://static.xheldon.cn/js/jquery.nav.js", function () {
-        $('.catalog-body').onePageNav({
-            currentClass: "active",
-            changeHash: !1,
-            easing: "swing",
-            filter: "",
-            scrollSpeed: 700,
-            scrollOffset: 0,
-            scrollThreshold: .2,
-            begin: null,
-            end: null,
-            scrollChange: null,
-            padding: 80
-        });
+    // appending
+    a.each(function() {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
     });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function(e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async ('/js/jquery.nav.js',
+    function() {
+      $('.catalog-body').onePageNav({
+        currentClass: 'active',
+        changeHash: !1,
+        easing: 'swing',
+        filter: '',
+        scrollSpeed: 700,
+        scrollOffset: 0,
+        scrollThreshold: 0.2,
+        begin: null,
+        end: null,
+        scrollChange: null,
+        padding: 80,
+      });
+    }
+  );
 </script>
 
 
-
-<!-- Multi-Lingual -->
-
-
-<!-- Simple Jekyll Search -->
 <script>
-    // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-    function htmlDecode(input) {
-        var e = document.createElement('textarea');
-        e.innerHTML = input;
-        // handle case of empty input
-        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-    }
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+  }
 
-    SimpleJekyllSearch({
-        searchInput: document.getElementById('search-input'),
-        resultsContainer: document.getElementById('search-results'),
-        json: '/search.json',
-        searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-        noResultsText: 'No results',
-        limit: 50,
-        fuzzy: false,
-        // a hack to get escaped subtitle unescaped. for some reason, 
-        // post.subtitle w/o escape filter nuke entire search.
-        templateMiddleware: function (prop, value, template) {
-            if (prop === 'subtitle' || prop === 'title') {
-                if (value.indexOf("code")) {
-                    return htmlDecode(value);
-                } else {
-                    return value;
-                }
-            }
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('search-results'),
+    json: '/search.json',
+    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+    noResultsText: 'No results',
+    limit: 50,
+    fuzzy: false,
+    // a hack to get escaped subtitle unescaped. for some reason, 
+    // post.subtitle w/o escape filter nuke entire search.
+    templateMiddleware: function(prop, value, template) {
+      if (prop === 'subtitle' || prop === 'title') {
+        if (value.indexOf("code")) {
+          return htmlDecode(value);
+        } else {
+          return value;
         }
-    });
+      }
+    }
+  });
 
-    $(document).ready(function () {
-        var $searchPage = $('.search-page');
-        var $searchOpen = $('.search-icon');
-        var $searchClose = $('.search-icon-close');
-        var $searchInput = $('#search-input');
-        var $body = $('body');
+  $(document).ready(function() {
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
 
-        $searchOpen.on('click', function (e) {
-            e.preventDefault();
-            $searchPage.toggleClass('search-active');
-            var prevClasses = $body.attr('class') || '';
-            setTimeout(function () {
-                $body.addClass('no-scroll');
-            }, 400)
+    $searchOpen.on('click', function(e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function() {
+        $body.addClass('no-scroll');
+      }, 400)
 
-            if ($searchPage.hasClass('search-active')) {
-                $searchClose.on('click', function (e) {
-                    e.preventDefault();
-                    $searchPage.removeClass('search-active');
-                    $body.attr('class', prevClasses);  // from closure 
-                });
-                $searchInput.focus();
-            }
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function(e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure 
         });
+        $searchInput.focus();
+      }
     });
+  });
 </script>
 
-
-<!-- Image to hack wechat -->
-<img src="/resources/img/icon_wechat.png" width="0" height="0" />
-<!-- Migrate from head to bottom, no longer block render and still work -->
-
-</body>
-
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
 </html>
