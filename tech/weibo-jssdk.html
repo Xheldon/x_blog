@@ -100,8 +100,8 @@
   <body ontouchstart="">
     <!-- Navigation -->
     
-      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+  <nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -150,50 +150,53 @@
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
-        var $body = document.body;
-        var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xblog_navbar');
-        var $collapse = document.querySelector('.navbar-collapse');
+        document.addEventListener('DOMContentLoaded', function () {
 
-        var __XNav__ = {
-          close: function () {
-            $navbar.className = ' ';
-            // wait until animation end.
-            setTimeout(function () {
-              // prevent frequently toggle
-              if ($navbar.className.indexOf('in') < 0) {
-                $collapse.style.height = '0px';
-              }
-            }, 400);
-          },
-          open: function () {
-            $collapse.style.height = 'auto';
-            $navbar.className += ' in';
-          },
-        };
-        // Bind Event
-        $toggle.addEventListener('click', function (e) {
-          if ($navbar.className.indexOf('in') > 0) {
+          var $body = document.body;
+          var $toggle = document.querySelector('.navbar-toggle');
+          var $navbar = document.querySelector('#xblog_navbar');
+          var $collapse = document.querySelector('.navbar-collapse');
+          console.log('shit22');
+          var __XNav__ = {
+            close: function () {
+              $navbar.className = ' ';
+              // wait until animation end.
+              setTimeout(function () {
+                // prevent frequently toggle
+                if ($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = '0px';
+                }
+              }, 400);
+            },
+            open: function () {
+              $collapse.style.height = 'auto';
+              $navbar.className += ' in';
+            },
+          };
+          // Bind Event
+          $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+              __XNav__.close();
+            } else {
+              __XNav__.open();
+            }
+          });
+          /**
+           * Since Fastclick is used to delegate 'touchstart' globally
+           * to hack 300ms delay in iOS by performing a fake 'click',
+           * Using 'e.stopPropagation' to stop 'touchstart' event from
+           * $toggle/$collapse will break global delegation.
+           *
+           * Instead, we use a 'e.target' filter to prevent handler
+           * added to document close XheldonNav.
+           *
+           * Also, we use 'click' instead of 'touchstart' as compromise
+           */
+          document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
             __XNav__.close();
-          } else {
-            __XNav__.open();
-          }
-        });
-        /**
-         * Since Fastclick is used to delegate 'touchstart' globally
-         * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from
-         * $toggle/$collapse will break global delegation.
-         *
-         * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.
-         *
-         * Also, we use 'click' instead of 'touchstart' as compromise
-         */
-        document.addEventListener('click', function (e) {
-          if (e.target == $toggle) return;
-          if (e.target.className == 'icon-bar') return;
-          __XNav__.close();
+          });
         });
       </script> <!-- Search -->
 <div class="search-page">
@@ -231,30 +234,40 @@
   
 </style>
 
-<header class="intro-header style-text">
-  
-    <div class="headerMask"></div>
+  <header class="intro-header style-text">
     
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <div class="post-heading">
-            <div class="tags">
-              
-              <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-              
-              <a class="tag" href="/archive/?tag=SDK" title="SDK">SDK</a>
-              
-            </div>
-            <h1>新浪微博JS SDK API的使用</h1>
-            <h2 class="subheading"></h2>
-            <span class="meta">✍🏼 写于 2015年12月21日</span>&nbsp;&nbsp;&nbsp;
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技术">
+                            技术
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=SDK"
+                            title="SDK">
+                            SDK
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        新浪微博JS SDK API的使用
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 写于 2015年12月21日</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
 
   <!-- Post Content -->
   <article>
@@ -286,39 +299,42 @@
                           
                               
                                   <h2 id="前言">前言</h2>
-<p>以前整个网站都是老大一个人怼起来的,各种bug和各种细节不完善.所以打算重构一下,侯哥搭好了<code>seajs</code>的开发框架,因此我只需要写前端逻辑即可.</p>
+<p>以前整个网站都是老大一个人怼起来的,各种 bug 和各种细节不完善.所以打算重构一下,侯哥搭好了<code>seajs</code>的开发框架,因此我只需要写前端逻辑即可.</p>
 <h2 id="现状">现状</h2>
-<p>注册和登陆部分是我写的,因此我打算增加个新浪微博和QQ登陆的功能,用户点击之后存储其id到数据库,当然这个需要修改数据库表字段,单独增加一个类似于<code>wb_id</code>的字段名来标示.</p>
-<p>现在流行的做法有两种,一个是用新浪微博(或其他登录方式,下同)登陆之后,后台自动创建一个id作为本站唯一的标示,同一行的wb_id存储此用户的微博id,以后用任意账号登陆即可,第一次微博登陆之后用户只需要设置一下昵称(非必须,可直接使用微博昵称)和密码(必须,因为万一以后新浪微博倒闭了,用户没法儿登陆可不行);另一种方式是新浪微博登陆之后需要引导用户手动创建一个账号和密码,或者引导用户绑定到已经注册过的用户账号上去.</p>
+<p>注册和登陆部分是我写的,因此我打算增加个新浪微博和 QQ 登陆的功能,用户点击之后存储其 id 到数据库,当然这个需要修改数据库表字段,单独增加一个类似于<code>wb_id</code>的字段名来标示.</p>
+<p>现在流行的做法有两种,一个是用新浪微博(或其他登录方式,下同)登陆之后,后台自动创建一个 id 作为本站唯一的标示,同一行的 wb_id 存储此用户的微博 id,以后用任意账号登陆即可,第一次微博登陆之后用户只需要设置一下昵称(非必须,可直接使用微博昵称)和密码(必须,因为万一以后新浪微博倒闭了,用户没法儿登陆可不行);另一种方式是新浪微博登陆之后需要引导用户手动创建一个账号和密码,或者引导用户绑定到已经注册过的用户账号上去.</p>
 <h2 id="我的做法">我的做法</h2>
-<p>好了以上是业务逻辑,我会使用第一种方式实现,下面是具体的实现方法:如何使用新浪微博的JSSDK的API.<br />
-首先和网上大多数教程里面说的那样,需要了解OAuth2.0协议的原理,其实不了解也没关系,知道流程就行,OAuth2.0验证流程网上说的很多了,百度一大把,这里就不再赘述了.</p>
-<p>注意:所有步骤的前提是,你已经取得了新浪微博开放平台的开发者权限,如果没有的话是无权调用API的,关于新浪微博开发者申请,请自行百度.申请完新浪微博开发者之后会到一个appid,这个是新浪识别谁调用了它的API的关键id,之后的步骤也会用到.</p>
-<p>第一步:增加命名空间,引用jssdk文件.</p>
+<p>好了以上是业务逻辑,我会使用第一种方式实现,下面是具体的实现方法:如何使用新浪微博的 JSSDK 的 API.<br />
+首先和网上大多数教程里面说的那样,需要了解 OAuth2.0 协议的原理,其实不了解也没关系,知道流程就行,OAuth2.0 验证流程网上说的很多了,百度一大把,这里就不再赘述了.</p>
+<p>注意:所有步骤的前提是,你已经取得了新浪微博开放平台的开发者权限,如果没有的话是无权调用 API 的,关于新浪微博开发者申请,请自行百度.申请完新浪微博开发者之后会到一个 appid,这个是新浪识别谁调用了它的 API 的关键 id,之后的步骤也会用到.</p>
+<p>第一步:增加命名空间,引用 jssdk 文件.</p>
 <p>增加命名空间:</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">xmlns:wb</span>=<span class="hljs-string">”http://open.weibo.com/wb”</span>&gt;</span><br></code></pre></td></tr></table></figure>
-<p>引用jssdk文件:</p>
+<p>引用 jssdk 文件:</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">”http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey</span>=<span class="hljs-string">YOUR</span> <span class="hljs-attr">APPKEYdebug</span>=<span class="hljs-string">true”</span> <span class="hljs-attr">type</span>=<span class="hljs-string">”text/javascript”</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">”utf-8″</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>其中的<code>YOUR APPKEY</code>替换为你申请新浪微博开发者时它给你的<code>appid</code>, <code>debug=true</code>方便你调试,正式上线时可以把<code>&amp;debug=true</code>这个给删掉.</p>
-<p>第二步:使用API授权登录</p>
-<p>这里有两种方式,一种是点击按钮之后直接在脚本里调用API的<code>WB2.login()</code>方法具体请看新浪API,</p>
-<p>还一种是将用户引导到包含你appid和回调地址的地址中去(姑且叫它授权页),格式为:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">https</span>:<span class="hljs-comment">//api.weibo.com/2/oauth2/authorize?client_id=YOUR APPKEY&amp;response_type=token&amp;display=js&amp;transport=html5&amp;referer=Your_CallBack_Address</span><br><span class="hljs-string">``</span><span class="hljs-string">`  </span><br><span class="hljs-string"></span><br><span class="hljs-string">其中的`</span><span class="hljs-variable constant_">YOUR</span> <span class="hljs-variable constant_">APPKEY</span><span class="hljs-string">`和`</span><span class="hljs-title class_">Your</span>_CallBack_Address<span class="hljs-string">`替换为你自己的,注意`</span><span class="hljs-title class_">Your</span>_CallBack_Address<span class="hljs-string">`记得加上`</span><span class="hljs-attr">http</span>:<span class="hljs-comment">//`</span><br>比如我的测试引导地址就是:<br><span class="hljs-string">``</span><span class="hljs-string">`js</span><br><span class="hljs-string">https://api.weibo.com/2/oauth2/authorize?client_id=2177891434&amp;response_type=token&amp;display=js&amp;transport=html5&amp;referer=http://www.xheldon.com/gbtagsLogin.html</span><br></code></pre></td></tr></table></figure>
-<p>注意:貌似这个回调地址必须是以php/html/jsp等动态/非动态的带后缀名的格式,如果是首页的话比如<code>http://xheldon.com</code>是不行的,需要加上<code>http://xheldon.com/index.html</code>(因为我的后台是Node的)才行,这个我没有试过,有需要的同学请自行尝试.</p>
-<p>第一种方法的表现形式是点击引导入口之后会直接弹出微博登陆授权页面的对话框,这个时候如果你用过的是<code>chrome</code>的话会发现在这个小窗口的地址栏左侧的地址有个小锁icon,代表这个地址是锁定的无法修改.<br />
+<p>第二步:使用 API 授权登录</p>
+<p>这里有两种方式,一种是点击按钮之后直接在脚本里调用 API 的<code>WB2.login()</code>方法具体请看新浪 API,</p>
+<p>还一种是将用户引导到包含你 appid 和回调地址的地址中去(姑且叫它授权页),格式为:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">https</span>:<span class="hljs-comment">//api.weibo.com/2/oauth2/authorize?client_id=YOUR APPKEY&amp;response_type=token&amp;display=js&amp;transport=html5&amp;referer=Your_CallBack_Address</span><br></code></pre></td></tr></table></figure>
+<p>其中的<code>YOUR APPKEY</code>和<code>Your_CallBack_Address</code>替换为你自己的,注意<code>Your_CallBack_Address</code>记得加上<code>http://</code><br />
+比如我的测试引导地址就是:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">https</span>:<span class="hljs-comment">//api.weibo.com/2/oauth2/authorize?client_id=2177891434&amp;response_type=token&amp;display=js&amp;transport=html5&amp;referer=http://www.xheldon.com/gbtagsLogin.html</span><br></code></pre></td></tr></table></figure>
+<p>注意:貌似这个回调地址必须是以 php/html/jsp 等动态/非动态的带后缀名的格式,如果是首页的话比如<code>http://xheldon.com</code>是不行的,需要加上<code>http://xheldon.com/index.html</code>(因为我的后台是 Node 的)才行,这个我没有试过,有需要的同学请自行尝试.</p>
+<p>第一种方法的表现形式是点击引导入口之后会直接弹出微博登陆授权页面的对话框,这个时候如果你用过的是<code>chrome</code>的话会发现在这个小窗口的地址栏左侧的地址有个小锁 icon,代表这个地址是锁定的无法修改.<br />
 在弹出的小窗口输入微博登陆账号密码授权之后对话框消失,原来的页面刷新,第三方网站就可以操作你的账号.</p>
-<p>第二种方法是不在脚本中使用<code>WB2.login()</code>,而是引导用户到刚才我说的那个包含appid和回调地址的地址中去,这个地址也是会让你输入账号密码,但是这个和第一种方式的区别是这个是会离开现有的页面跳转到这个授权页中去的,输入账号密码授权之后会回到你这个链接中写的回调地址中去.</p>
-<p>以上两步的原理其实就是<code>OAuth2.0</code>协议认证的过程,只是JSSDK给你处理好了第一次请求返回的code和第二次请求返回的<code>access token</code>,因此你不需要按照官方API里面说的那样运用<code>basic</code>方式将<code>access token</code>放到<code>header</code>中使用post或者get方式等一系列你可能听不懂的名词,而只需要关注前端的逻辑,使用获得的json格式的数据即可.</p>
-<p>还是刚才那个地址, <a href="http://open.weibo.com/wiki/Weibo-JS_V2">微博API入口级文档说明</a>.当然”入口级”这个名词 是我自创的,你知道了这五个的用法,以后的API就可以依葫芦画瓢了.</p>
-<p>这几个API其中的<code>WB2.login()</code> 和<code>WB2.checklogin()</code>以及<code>WB2.logout</code>比较简单,是个人都能看懂,看不懂的按照我刚才说的那个<code>WB2.login()</code>方法往script标签里面一放就可以了,只是引导登陆之后你什么也没有做.</p>
-<p>登陆之后想做点什么的话(这是废话,不做什么你让人家登陆干啥),比如获取登陆新浪微博登陆用户的id,获取它的粉丝数等等,都是通过这五个入口级API的最重要的一个API<br />
-即与微博API进行数据交互及采用Js方式调用内置微博组件的入口函数(官方是这么介绍的):<code>WB2.anyWhere(callback)</code>,</p>
+<p>第二种方法是不在脚本中使用<code>WB2.login()</code>,而是引导用户到刚才我说的那个包含 appid 和回调地址的地址中去,这个地址也是会让你输入账号密码,但是这个和第一种方式的区别是这个是会离开现有的页面跳转到这个授权页中去的,输入账号密码授权之后会回到你这个链接中写的回调地址中去.</p>
+<p>以上两步的原理其实就是<code>OAuth2.0</code>协议认证的过程,只是 JSSDK 给你处理好了第一次请求返回的 code 和第二次请求返回的<code>access token</code>,因此你不需要按照官方 API 里面说的那样运用<code>basic</code>方式将<code>access token</code>放到<code>header</code>中使用 post 或者 get 方式等一系列你可能听不懂的名词,而只需要关注前端的逻辑,使用获得的 json 格式的数据即可.</p>
+<p>还是刚才那个地址, <a href="http://open.weibo.com/wiki/Weibo-JS_V2">微博 API 入口级文档说明</a>.当然”入口级”这个名词 是我自创的,你知道了这五个的用法,以后的 API 就可以依葫芦画瓢了.</p>
+<p>这几个 API 其中的<code>WB2.login()</code> 和<code>WB2.checklogin()</code>以及<code>WB2.logout</code>比较简单,是个人都能看懂,看不懂的按照我刚才说的那个<code>WB2.login()</code>方法往 script 标签里面一放就可以了,只是引导登陆之后你什么也没有做.</p>
+<p>登陆之后想做点什么的话(这是废话,不做什么你让人家登陆干啥),比如获取登陆新浪微博登陆用户的 id,获取它的粉丝数等等,都是通过这五个入口级 API 的最重要的一个 API<br />
+即与微博 API 进行数据交互及采用 Js 方式调用内置微博组件的入口函数(官方是这么介绍的):<code>WB2.anyWhere(callback)</code>,</p>
 <p>然后与数据交互的话需要使用<code>W.parseCMD(uri, callback, args, opts)</code><br />
-其中W形参是<code>WB2.anyWhere(callback)</code>传进去的,如果想调用微博组件的话,可以使用<code>W.widget.hoverCard(…)</code>或者<code>W.widget.followButton(…);</code>等等.</p>
+其中 W 形参是<code>WB2.anyWhere(callback)</code>传进去的,如果想调用微博组件的话,可以使用<code>W.widget.hoverCard(…)</code>或者<code>W.widget.followButton(…);</code>等等.</p>
 <p>注意,最最重要的一步,即是你和新浪的数据交互的一步:</p>
 <p>一般<code>W.parseCMD</code>的用法是以下形式:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js">W.<span class="hljs-title function_">parseCMD</span>(<span class="hljs-string">&#x27;/users/show.json&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">oResult, bStatus</span>) &#123;<br>  <span class="hljs-keyword">if</span>(bStatus) &#123;<br>  <span class="hljs-comment">//to do something...</span><br>  &#125;<br>  &#125;, &#123;<br> screen_name : <span class="hljs-string">&#x27;姚晨&#x27;</span><br>  &#125;, &#123;<br> method : <span class="hljs-string">&#x27;get&#x27;</span>,<br> cache_time : <span class="hljs-number">30</span><br>  &#125;);<br></code></pre></td></tr></table></figure>
-<p>其中<code>W.parseCMD()</code>的第一个参数<code>/user/show.json</code>可以换成其他的接口如:<code>/statuses/user_timeline.json</code>就可以读取这个借口的信息了,具体有哪些接口,而接口又能返回哪些数据,新浪自己给了个 <a href="http://open.weibo.com/tools/apitest.php">微博API测试工具</a> 注意:这个API测试工具的登陆界面有问题,请不要在这个页面登陆,而是先到微博首页登陆之后再在这个API测试工具的页面刷新即可.<br />
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js">W.<span class="hljs-title function_">parseCMD</span>(<br>  <span class="hljs-string">&#x27;/users/show.json&#x27;</span>,<br>  <span class="hljs-keyword">function</span> (<span class="hljs-params">oResult, bStatus</span>) &#123;<br>    <span class="hljs-keyword">if</span> (bStatus) &#123;<br>      <span class="hljs-comment">//to do something...</span><br>    &#125;<br>  &#125;,<br>  &#123;<br>    <span class="hljs-attr">screen_name</span>: <span class="hljs-string">&#x27;姚晨&#x27;</span>,<br>  &#125;,<br>  &#123;<br>    <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;get&#x27;</span>,<br>    <span class="hljs-attr">cache_time</span>: <span class="hljs-number">30</span>,<br>  &#125;<br>);<br></code></pre></td></tr></table></figure>
+<p>其中<code>W.parseCMD()</code>的第一个参数<code>/user/show.json</code>可以换成其他的接口如:<code>/statuses/user_timeline.json</code>就可以读取这个借口的信息了,具体有哪些接口,而接口又能返回哪些数据,新浪自己给了个 <a href="http://open.weibo.com/tools/apitest.php">微博 API 测试工具</a> 注意:这个 API 测试工具的登陆界面有问题,请不要在这个页面登陆,而是先到微博首页登陆之后再在这个 API 测试工具的页面刷新即可.<br />
 那个<code>screen_name</code>不是必须的,但是<code>screen_name</code>所在的{}必须保留,即使它是空的.</p>
 <p>下面的<code>method: get</code>是与后台交互时的参数,有时候的交互是需要使用<code>post</code>方式,<code>cache_time</code>看名字也知道什么意思吧?就不多说了.</p>
 <p>差不多需要注意的就这么多.</p>
@@ -769,16 +785,16 @@
   </ul>
 </ul>
 
-        <p class="copyright text-muted">
-          Copyright &copy;
-          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
-          2024
-          <br>
-          Don't Panic | Theme fork from
-          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-          <br>
-          
-        </p>
+          <p class="copyright text-muted">
+            Copyright &copy;
+            <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+            2024
+              <br>
+              Don't Panic | Theme fork from
+              <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+              <br>
+              
+          </p>
       </div>
     </div>
   </div>
@@ -815,7 +831,7 @@
     // Note: 自动切换
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('dark');
           document.documentElement.classList.remove('light');
@@ -823,7 +839,7 @@
       });
     window
       .matchMedia('(prefers-color-scheme: light)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('light');
           document.documentElement.classList.remove('dark');
@@ -839,7 +855,7 @@
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/xblog.min.js?202405251426"></script>
+<script src="/js/xheldon-life-blog.min.js?202405251426"></script>
 
 
 <!-- Simple Jekyll Search 复制逻辑 -->
@@ -847,178 +863,178 @@
 
 <!-- Vercel web analysis -->
 
-<script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  
 
+    <!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
-<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
-
-<!-- async load function -->
-<script>
-  function async (u, c) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) {
-      o.addEventListener(
-        'load',
-        function(e) {
-          c(null, e);
-        },
-        false
-      );
-    }
-    s.parentNode.insertBefore(o, s);
-  }
-</script>
-
-<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
-
-<!-- jquery.tagcloud.js -->
-
-
-<!--fastClick.js -->
-<script>
-  async ('/js/fastclick.min.js', function() {
-    var $nav = document.querySelector('nav');
-    if ($nav) FastClick.attach($nav);
-  });
-</script>
-
-<!-- Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-
-  gtag('config', '{{config.ga_track_id}}');
-</script>
-
-
-<!-- Side Catalog -->
-
-<script type="text/javascript">
-  function generateCatalog(selector) {
-    // TODO: 多语种没有迁移过来
-    // init
-    var P = $('div.post-container'),
-      a,
-      n,
-      t,
-      l,
-      i,
-      c;
-    a = P.find('h1,h2,h3,h4,h5,h6');
-
-    // clean
-    $(selector).html('');
-
-    // appending
-    a.each(function() {
-      n = $(this).prop('tagName').toLowerCase();
-      i = '#' + $(this).prop('id');
-      t = $(this).text();
-      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-      l = $('<li class="' + n + '_nav"></li>').append(c);
-      $(selector).append(l);
-    });
-    return true;
-  }
-
-  generateCatalog('.catalog-body');
-
-  // toggle side catalog
-  $('.catalog-toggle').click(function(e) {
-    e.preventDefault();
-    $('.side-catalog').toggleClass('fold');
-  });
-
-  /*
-   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-   * Fork by Hux to support padding
-   */
-  async ('/js/jquery.nav.js',
-    function() {
-      $('.catalog-body').onePageNav({
-        currentClass: 'active',
-        changeHash: !1,
-        easing: 'swing',
-        filter: '',
-        scrollSpeed: 700,
-        scrollOffset: 0,
-        scrollThreshold: 0.2,
-        begin: null,
-        end: null,
-        scrollChange: null,
-        padding: 80,
-      });
-    }
-  );
-</script>
-
-
-<script>
-  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-  function htmlDecode(input) {
-    var e = document.createElement('textarea');
-    e.innerHTML = input;
-    // handle case of empty input
-    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-  }
-
-  SimpleJekyllSearch({
-    searchInput: document.getElementById('search-input'),
-    resultsContainer: document.getElementById('search-results'),
-    json: '/search.json',
-    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-    noResultsText: 'No results',
-    limit: 50,
-    fuzzy: false,
-    // a hack to get escaped subtitle unescaped. for some reason, 
-    // post.subtitle w/o escape filter nuke entire search.
-    templateMiddleware: function(prop, value, template) {
-      if (prop === 'subtitle' || prop === 'title') {
-        if (value.indexOf("code")) {
-          return htmlDecode(value);
-        } else {
-          return value;
+    <!-- async load function -->
+    <script>
+      function async(u, c) {
+        var d = document,
+          t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+          o.addEventListener(
+            'load',
+            function (e) {
+              c(null, e);
+            },
+            false
+          );
         }
+        s.parentNode.insertBefore(o, s);
       }
-    }
-  });
+    </script>
 
-  $(document).ready(function() {
-    var $searchPage = $('.search-page');
-    var $searchOpen = $('.search-icon');
-    var $searchClose = $('.search-icon-close');
-    var $searchInput = $('#search-input');
-    var $body = $('body');
+    <!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-    $searchOpen.on('click', function(e) {
-      e.preventDefault();
-      $searchPage.toggleClass('search-active');
-      var prevClasses = $body.attr('class') || '';
-      setTimeout(function() {
-        $body.addClass('no-scroll');
-      }, 400)
+    <!-- jquery.tagcloud.js -->
+    
 
-      if ($searchPage.hasClass('search-active')) {
-        $searchClose.on('click', function(e) {
-          e.preventDefault();
-          $searchPage.removeClass('search-active');
-          $body.attr('class', prevClasses); // from closure 
-        });
-        $searchInput.focus();
-      }
-    });
-  });
-</script>
+        <!--fastClick.js -->
+        <script>
+          async('/js/fastclick.min.js', function () {
+            var $nav = document.querySelector('nav');
+            if ($nav) FastClick.attach($nav);
+          });
+        </script>
+
+        <!-- Google Analytics -->
+        
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', '{{config.ga_track_id}}');
+          </script>
+          
+
+            <!-- Side Catalog -->
+            
+              <script type="text/javascript">
+                function generateCatalog(selector) {
+                  // TODO: 多语种没有迁移过来
+                  // init
+                  var P = $('div.post-container'),
+                    a,
+                    n,
+                    t,
+                    l,
+                    i,
+                    c;
+                  a = P.find('h1,h2,h3,h4,h5,h6');
+
+                  // clean
+                  $(selector).html('');
+
+                  // appending
+                  a.each(function () {
+                    n = $(this).prop('tagName').toLowerCase();
+                    i = '#' + $(this).prop('id');
+                    t = $(this).text();
+                    c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+                    l = $('<li class="' + n + '_nav"></li>').append(c);
+                    $(selector).append(l);
+                  });
+                  return true;
+                }
+
+                generateCatalog('.catalog-body');
+
+                // toggle side catalog
+                $('.catalog-toggle').click(function (e) {
+                  e.preventDefault();
+                  $('.side-catalog').toggleClass('fold');
+                });
+
+                /*
+                 * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+                 * Fork by Hux to support padding
+                 */
+                async('/js/jquery.nav.js',
+                  function () {
+                    $('.catalog-body').onePageNav({
+                      currentClass: 'active',
+                      changeHash: !1,
+                      easing: 'swing',
+                      filter: '',
+                      scrollSpeed: 700,
+                      scrollOffset: 0,
+                      scrollThreshold: 0.2,
+                      begin: null,
+                      end: null,
+                      scrollChange: null,
+                      padding: 80,
+                    });
+                  }
+                );
+              </script>
+              
+
+                <script>
+                  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+                  function htmlDecode(input) {
+                    var e = document.createElement('textarea');
+                    e.innerHTML = input;
+                    // handle case of empty input
+                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                  }
+
+
+                  $(document).ready(function () {
+                    SimpleJekyllSearch({
+                      searchInput: document.getElementById('search-input'),
+                      resultsContainer: document.getElementById('search-results'),
+                      json: '/search.json',
+                      searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+                      noResultsText: 'No results',
+                      limit: 50,
+                      fuzzy: false,
+                      // a hack to get escaped subtitle unescaped. for some reason, 
+                      // post.subtitle w/o escape filter nuke entire search.
+                      templateMiddleware: function (prop, value, template) {
+                        if (prop === 'subtitle' || prop === 'title') {
+                          if (value.indexOf("code")) {
+                            return htmlDecode(value);
+                          } else {
+                            return value;
+                          }
+                        }
+                      }
+                    });
+                    var $searchPage = $('.search-page');
+                    var $searchOpen = $('.search-icon');
+                    var $searchClose = $('.search-icon-close');
+                    var $searchInput = $('#search-input');
+                    var $body = $('body');
+
+                    $searchOpen.on('click', function (e) {
+                      e.preventDefault();
+                      $searchPage.toggleClass('search-active');
+                      var prevClasses = $body.attr('class') || '';
+                      setTimeout(function () {
+                        $body.addClass('no-scroll');
+                      }, 400)
+
+                      if ($searchPage.hasClass('search-active')) {
+                        $searchClose.on('click', function (e) {
+                          e.preventDefault();
+                          $searchPage.removeClass('search-active');
+                          $body.attr('class', prevClasses); // from closure 
+                        });
+                        $searchInput.focus();
+                      }
+                    });
+                  });
+                </script>
 
     <!-- Image to hack wechat -->
     <img src="/img/icon_wechat.png" width="0" height="0" />

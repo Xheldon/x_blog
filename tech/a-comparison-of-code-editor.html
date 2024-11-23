@@ -100,8 +100,8 @@
   <body ontouchstart="">
     <!-- Navigation -->
     
-      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+  <nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -150,50 +150,53 @@
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
-        var $body = document.body;
-        var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xblog_navbar');
-        var $collapse = document.querySelector('.navbar-collapse');
+        document.addEventListener('DOMContentLoaded', function () {
 
-        var __XNav__ = {
-          close: function () {
-            $navbar.className = ' ';
-            // wait until animation end.
-            setTimeout(function () {
-              // prevent frequently toggle
-              if ($navbar.className.indexOf('in') < 0) {
-                $collapse.style.height = '0px';
-              }
-            }, 400);
-          },
-          open: function () {
-            $collapse.style.height = 'auto';
-            $navbar.className += ' in';
-          },
-        };
-        // Bind Event
-        $toggle.addEventListener('click', function (e) {
-          if ($navbar.className.indexOf('in') > 0) {
+          var $body = document.body;
+          var $toggle = document.querySelector('.navbar-toggle');
+          var $navbar = document.querySelector('#xblog_navbar');
+          var $collapse = document.querySelector('.navbar-collapse');
+          console.log('shit22');
+          var __XNav__ = {
+            close: function () {
+              $navbar.className = ' ';
+              // wait until animation end.
+              setTimeout(function () {
+                // prevent frequently toggle
+                if ($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = '0px';
+                }
+              }, 400);
+            },
+            open: function () {
+              $collapse.style.height = 'auto';
+              $navbar.className += ' in';
+            },
+          };
+          // Bind Event
+          $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+              __XNav__.close();
+            } else {
+              __XNav__.open();
+            }
+          });
+          /**
+           * Since Fastclick is used to delegate 'touchstart' globally
+           * to hack 300ms delay in iOS by performing a fake 'click',
+           * Using 'e.stopPropagation' to stop 'touchstart' event from
+           * $toggle/$collapse will break global delegation.
+           *
+           * Instead, we use a 'e.target' filter to prevent handler
+           * added to document close XheldonNav.
+           *
+           * Also, we use 'click' instead of 'touchstart' as compromise
+           */
+          document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
             __XNav__.close();
-          } else {
-            __XNav__.open();
-          }
-        });
-        /**
-         * Since Fastclick is used to delegate 'touchstart' globally
-         * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from
-         * $toggle/$collapse will break global delegation.
-         *
-         * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.
-         *
-         * Also, we use 'click' instead of 'touchstart' as compromise
-         */
-        document.addEventListener('click', function (e) {
-          if (e.target == $toggle) return;
-          if (e.target.className == 'icon-bar') return;
-          __XNav__.close();
+          });
         });
       </script> <!-- Search -->
 <div class="search-page">
@@ -231,32 +234,42 @@
   
 </style>
 
-<header class="intro-header style-text">
-  
-    <div class="headerMask"></div>
+  <header class="intro-header style-text">
     
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <div class="post-heading">
-            <div class="tags">
-              
-              <a class="tag" href="/archive/?tag=%E7%BF%BB%E8%AF%91" title="翻译">翻译</a>
-              
-              <a class="tag" href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8" title="编辑器">编辑器</a>
-              
-            </div>
-            <h1>「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比</h1>
-            <h2 class="subheading"></h2>
-            <span class="meta">✍🏼 写于 2022年01月16日</span>&nbsp;&nbsp;&nbsp;
-            
-            <span class="meta">💡 更新于 2022年05月29日</span>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                          <a class="tag" href="/archive/?tag=%E7%BF%BB%E8%AF%91"
+                            title="翻译">
+                            翻译
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                            title="编辑器">
+                            编辑器
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 写于 2022年01月16日</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 更新于 2022年05月29日</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
 
   <!-- Post Content -->
   <article>
@@ -304,7 +317,7 @@
 <h3 id="前奏：ace">前奏：Ace</h3>
 <p>在 Replit 早期，大约在 2011 年，是没有代码编辑器的。我们使用一个纯粹的 <a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop">REPL</a> 界面，一个带有简单输入框的控制台。添加代码编辑器显然是迫在眉睫的，特别是如果我们想要创造更加复杂的程序的情况下。代码编辑器为我们提供了语法高亮显示、编辑器快捷键、自动缩进、搜索和替换等功能。Cloud9 当时发布了 Ace，它是一个功能齐全、性能出色的基于 Web 的代码编辑器。截止目前为止，Ace 编辑器仍然在积极维护中；它有着丰富的生态系统，支持多语言、按键绑定，并且在浏览器中运行良好。</p>
 <blockquote>
-<p>👇🏻原始的 Replit的界面和 Ace 代码编辑器对比，该截图由我们的社区成员提供，他们从 2011 年开始，重新托管了 Replit 的开源版本 <a href="https://www.repldotit.com">https://www.repldotit.com</a>。</p>
+<p>👇🏻 原始的 Replit 的界面和 Ace 代码编辑器对比，该截图由我们的社区成员提供，他们从 2011 年开始，重新托管了 Replit 的开源版本 <a href="https://www.repldotit.com">https://www.repldotit.com</a>。</p>
 </blockquote>
 <p><img src="https://static.xheldon.cn/img/in-post/2022/a-comparison-of-code-editor/FCE24555-97DB-4453-9DA4-A8C9BE00FF52_2.png" alt="Image" /></p>
 <p>我们一直使用 Ace，一直到 2017 年左右我们才切换到 Monaco。虽然 Ace 仍然在维护中，但是它的维护者只有一个人。亚马逊收购 Cloud9 之后，他们似乎重新调整了开源项目的优先级。编辑器不再像之前一样有那么多的更新，Github 上的 issue 也开始堆积，同时维护人员也几乎没有再添加任何新的功能。总体而言，Ace 的 API 开始让开发人员感到过时和笨重。它的维护者很棒，但是他能做的也只是如此了。</p>
@@ -321,7 +334,7 @@
 <h3 id="后幕：codemirror">后幕：CodeMirror</h3>
 <p>2018 年底，Marijn 宣布<a href="https://web.archive.org/web/20180830201622/https://codemirror.net/6/">重写 CodeMirror</a>，以将其版本更新到 6，并附上了<a href="https://web.archive.org/web/20181109055050/https://codemirror.net/6/design.html">出色的设计文档</a>。重写的主要动机之一是增加对触摸设备的支持。在此期间，我们认识到移动端（普遍意义上的）是我们战略的重要组成部分；如果我们想让接下来的 10 亿软件创作者在线，我们必须让移动端能够使用才行。CodeMirror 将通过依赖原生浏览器的文本编辑能力（通过 contenteditable），而不是完全在 JavaScript/库层面（就像 Google Docs 的 Google Clouser 一样）来实现移动端的可用性。</p>
 <p><a href="https://prosemirror.net">ProseMirror </a>启发了 CodeMirror 6 的 API 设计，它是 Marijn 的另一个项目。我之前在我当时开发的 WYSIWYG 项目中使用过，我很喜欢它。ProseMirror 有一个非常小的核心，而其他的一切都是通过其插件系统实现的。作为一个编辑器库而言，它是模块化的、可插拔的、函数性的，并且具有难以置信的使用授权。因此，我决定让公司赞助新版的 CodeMirror 的开发，我甚至亲自资助了该项目。</p>
-<p>去年，CodeMirror 6 发布了测试版，我非常兴奋的开始将其添加到 Replit中，团队的其他成员也是如此。我们开始玩弄编辑器，虽然它的学习曲线有点陡，但是当你最终「得到」它的时候，你会感觉自己像一个 超级-代码编辑器-开发者。为了让 CodeMirror 6 能够应用到项目中，我开始在项目中逐步的使用它。我们首先在 Relpit 上，将其添加为只读的编辑器，然后开始将其添加到网站的其他可以编辑代码的地方。</p>
+<p>去年，CodeMirror 6 发布了测试版，我非常兴奋的开始将其添加到 Replit 中，团队的其他成员也是如此。我们开始玩弄编辑器，虽然它的学习曲线有点陡，但是当你最终「得到」它的时候，你会感觉自己像一个 超级-代码编辑器-开发者。为了让 CodeMirror 6 能够应用到项目中，我开始在项目中逐步的使用它。我们首先在 Relpit 上，将其添加为只读的编辑器，然后开始将其添加到网站的其他可以编辑代码的地方。</p>
 <p>今年早些时候，我们开始了「信仰之跃」（译者注：刺客信条的梗），开始将 CodeMirror 集成到我们的移动环境中。从用户的角度来看，CodeMirror 客观上讲比手机上的任何其他编辑器都要好。尽管它尚未支持我们支持的所有语言和其他一些功能，但是将其集成到移动端依然是值得的。这个集成之后的用户反馈比我们预想的更好。参与 CodeMirror 使用的用户中（译者注：可能是灰度小流量测试，也可能是提供了新版和旧版切换的入口以统计不同编辑器的用户使用情况），移动端用户占比将近 70%！它（CodeMirror）比在移动端使用 Ace 更能留住用户。有了 CodeMirror 的可插拔性（提供的无限可能性），很明显，（上述的）这些（令人振奋的结果）只是我们在移动端提供更多有价值的事情的开始而已，我们将首先从在移动端缺失的 PC 端的功能移植到移动端的 CodeMirror 开始。</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2022/a-comparison-of-code-editor/7F0728B9-BE37-44CF-A518-F4020E276758_2.png" alt="Image" /></p>
 <p>CodeMirror 6 的社区依然处于起步阶段，因此我们必须自己写很多东西，或者为特定的功能赞助一些钱以及与 Marijn 一起解决 bug。我们希望通过我们的贡献帮助引导和回报 CodeMirror 社区。我在这里列举一些我们正在积极开发的功能清单：Vim Mode、Emacs Mode、LSP 客户端、缩进标记、CSS 颜色选择器、语言解析器，以及我们将在未来发布桌面端 CodeMirror 的时候，在帖子中宣布的许多其他的事情。我认为人们对新的 CodeMirror 感到兴奋，我们将在未来一到两年内看到社区和生态系统用户数量的激增，许多人急于在生产环境中使用它。</p>
@@ -369,7 +382,7 @@
 <tr>
 <td>Ace</td>
 <td>⭐️⭐️</td>
-<td>出色的开箱即用体验，支持如此多的功能和语言，包括一些基本的JavaScript Lint 功能（使用JSHint）和自动完成特性。只是用户界面有点过时，所以你有时候可能感觉有点乱。</td>
+<td>出色的开箱即用体验，支持如此多的功能和语言，包括一些基本的 JavaScript Lint 功能（使用 JSHint）和自动完成特性。只是用户界面有点过时，所以你有时候可能感觉有点乱。</td>
 </tr>
 <tr>
 <td>Monaco</td>
@@ -944,16 +957,16 @@
   </ul>
 </ul>
 
-        <p class="copyright text-muted">
-          Copyright &copy;
-          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
-          2024
-          <br>
-          Don't Panic | Theme fork from
-          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-          <br>
-          
-        </p>
+          <p class="copyright text-muted">
+            Copyright &copy;
+            <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+            2024
+              <br>
+              Don't Panic | Theme fork from
+              <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+              <br>
+              
+          </p>
       </div>
     </div>
   </div>
@@ -990,7 +1003,7 @@
     // Note: 自动切换
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('dark');
           document.documentElement.classList.remove('light');
@@ -998,7 +1011,7 @@
       });
     window
       .matchMedia('(prefers-color-scheme: light)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('light');
           document.documentElement.classList.remove('dark');
@@ -1014,7 +1027,7 @@
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/xblog.min.js?202405251426"></script>
+<script src="/js/xheldon-life-blog.min.js?202405251426"></script>
 
 
 <!-- Simple Jekyll Search 复制逻辑 -->
@@ -1022,178 +1035,178 @@
 
 <!-- Vercel web analysis -->
 
-<script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  
 
+    <!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
-<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
-
-<!-- async load function -->
-<script>
-  function async (u, c) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) {
-      o.addEventListener(
-        'load',
-        function(e) {
-          c(null, e);
-        },
-        false
-      );
-    }
-    s.parentNode.insertBefore(o, s);
-  }
-</script>
-
-<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
-
-<!-- jquery.tagcloud.js -->
-
-
-<!--fastClick.js -->
-<script>
-  async ('/js/fastclick.min.js', function() {
-    var $nav = document.querySelector('nav');
-    if ($nav) FastClick.attach($nav);
-  });
-</script>
-
-<!-- Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-
-  gtag('config', '{{config.ga_track_id}}');
-</script>
-
-
-<!-- Side Catalog -->
-
-<script type="text/javascript">
-  function generateCatalog(selector) {
-    // TODO: 多语种没有迁移过来
-    // init
-    var P = $('div.post-container'),
-      a,
-      n,
-      t,
-      l,
-      i,
-      c;
-    a = P.find('h1,h2,h3,h4,h5,h6');
-
-    // clean
-    $(selector).html('');
-
-    // appending
-    a.each(function() {
-      n = $(this).prop('tagName').toLowerCase();
-      i = '#' + $(this).prop('id');
-      t = $(this).text();
-      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-      l = $('<li class="' + n + '_nav"></li>').append(c);
-      $(selector).append(l);
-    });
-    return true;
-  }
-
-  generateCatalog('.catalog-body');
-
-  // toggle side catalog
-  $('.catalog-toggle').click(function(e) {
-    e.preventDefault();
-    $('.side-catalog').toggleClass('fold');
-  });
-
-  /*
-   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-   * Fork by Hux to support padding
-   */
-  async ('/js/jquery.nav.js',
-    function() {
-      $('.catalog-body').onePageNav({
-        currentClass: 'active',
-        changeHash: !1,
-        easing: 'swing',
-        filter: '',
-        scrollSpeed: 700,
-        scrollOffset: 0,
-        scrollThreshold: 0.2,
-        begin: null,
-        end: null,
-        scrollChange: null,
-        padding: 80,
-      });
-    }
-  );
-</script>
-
-
-<script>
-  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-  function htmlDecode(input) {
-    var e = document.createElement('textarea');
-    e.innerHTML = input;
-    // handle case of empty input
-    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-  }
-
-  SimpleJekyllSearch({
-    searchInput: document.getElementById('search-input'),
-    resultsContainer: document.getElementById('search-results'),
-    json: '/search.json',
-    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-    noResultsText: 'No results',
-    limit: 50,
-    fuzzy: false,
-    // a hack to get escaped subtitle unescaped. for some reason, 
-    // post.subtitle w/o escape filter nuke entire search.
-    templateMiddleware: function(prop, value, template) {
-      if (prop === 'subtitle' || prop === 'title') {
-        if (value.indexOf("code")) {
-          return htmlDecode(value);
-        } else {
-          return value;
+    <!-- async load function -->
+    <script>
+      function async(u, c) {
+        var d = document,
+          t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+          o.addEventListener(
+            'load',
+            function (e) {
+              c(null, e);
+            },
+            false
+          );
         }
+        s.parentNode.insertBefore(o, s);
       }
-    }
-  });
+    </script>
 
-  $(document).ready(function() {
-    var $searchPage = $('.search-page');
-    var $searchOpen = $('.search-icon');
-    var $searchClose = $('.search-icon-close');
-    var $searchInput = $('#search-input');
-    var $body = $('body');
+    <!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-    $searchOpen.on('click', function(e) {
-      e.preventDefault();
-      $searchPage.toggleClass('search-active');
-      var prevClasses = $body.attr('class') || '';
-      setTimeout(function() {
-        $body.addClass('no-scroll');
-      }, 400)
+    <!-- jquery.tagcloud.js -->
+    
 
-      if ($searchPage.hasClass('search-active')) {
-        $searchClose.on('click', function(e) {
-          e.preventDefault();
-          $searchPage.removeClass('search-active');
-          $body.attr('class', prevClasses); // from closure 
-        });
-        $searchInput.focus();
-      }
-    });
-  });
-</script>
+        <!--fastClick.js -->
+        <script>
+          async('/js/fastclick.min.js', function () {
+            var $nav = document.querySelector('nav');
+            if ($nav) FastClick.attach($nav);
+          });
+        </script>
+
+        <!-- Google Analytics -->
+        
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', '{{config.ga_track_id}}');
+          </script>
+          
+
+            <!-- Side Catalog -->
+            
+              <script type="text/javascript">
+                function generateCatalog(selector) {
+                  // TODO: 多语种没有迁移过来
+                  // init
+                  var P = $('div.post-container'),
+                    a,
+                    n,
+                    t,
+                    l,
+                    i,
+                    c;
+                  a = P.find('h1,h2,h3,h4,h5,h6');
+
+                  // clean
+                  $(selector).html('');
+
+                  // appending
+                  a.each(function () {
+                    n = $(this).prop('tagName').toLowerCase();
+                    i = '#' + $(this).prop('id');
+                    t = $(this).text();
+                    c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+                    l = $('<li class="' + n + '_nav"></li>').append(c);
+                    $(selector).append(l);
+                  });
+                  return true;
+                }
+
+                generateCatalog('.catalog-body');
+
+                // toggle side catalog
+                $('.catalog-toggle').click(function (e) {
+                  e.preventDefault();
+                  $('.side-catalog').toggleClass('fold');
+                });
+
+                /*
+                 * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+                 * Fork by Hux to support padding
+                 */
+                async('/js/jquery.nav.js',
+                  function () {
+                    $('.catalog-body').onePageNav({
+                      currentClass: 'active',
+                      changeHash: !1,
+                      easing: 'swing',
+                      filter: '',
+                      scrollSpeed: 700,
+                      scrollOffset: 0,
+                      scrollThreshold: 0.2,
+                      begin: null,
+                      end: null,
+                      scrollChange: null,
+                      padding: 80,
+                    });
+                  }
+                );
+              </script>
+              
+
+                <script>
+                  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+                  function htmlDecode(input) {
+                    var e = document.createElement('textarea');
+                    e.innerHTML = input;
+                    // handle case of empty input
+                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                  }
+
+
+                  $(document).ready(function () {
+                    SimpleJekyllSearch({
+                      searchInput: document.getElementById('search-input'),
+                      resultsContainer: document.getElementById('search-results'),
+                      json: '/search.json',
+                      searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+                      noResultsText: 'No results',
+                      limit: 50,
+                      fuzzy: false,
+                      // a hack to get escaped subtitle unescaped. for some reason, 
+                      // post.subtitle w/o escape filter nuke entire search.
+                      templateMiddleware: function (prop, value, template) {
+                        if (prop === 'subtitle' || prop === 'title') {
+                          if (value.indexOf("code")) {
+                            return htmlDecode(value);
+                          } else {
+                            return value;
+                          }
+                        }
+                      }
+                    });
+                    var $searchPage = $('.search-page');
+                    var $searchOpen = $('.search-icon');
+                    var $searchClose = $('.search-icon-close');
+                    var $searchInput = $('#search-input');
+                    var $body = $('body');
+
+                    $searchOpen.on('click', function (e) {
+                      e.preventDefault();
+                      $searchPage.toggleClass('search-active');
+                      var prevClasses = $body.attr('class') || '';
+                      setTimeout(function () {
+                        $body.addClass('no-scroll');
+                      }, 400)
+
+                      if ($searchPage.hasClass('search-active')) {
+                        $searchClose.on('click', function (e) {
+                          e.preventDefault();
+                          $searchPage.removeClass('search-active');
+                          $body.attr('class', prevClasses); // from closure 
+                        });
+                        $searchInput.focus();
+                      }
+                    });
+                  });
+                </script>
 
     <!-- Image to hack wechat -->
     <img src="/img/icon_wechat.png" width="0" height="0" />

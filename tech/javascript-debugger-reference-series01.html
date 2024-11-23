@@ -26,11 +26,11 @@
             <meta property="article:published_time" content=" 2022-9-13T1:29:30"> 
               
                   
-                    <meta property="article:tag" content="技术">
-                    
                     <meta property="article:tag" content="技巧">
                     
                     <meta property="article:tag" content="JavaScript">
+                    
+                    <meta property="article:tag" content="技术">
                     
                     <meta property="article:tag" content="调试">
                     
@@ -104,8 +104,8 @@
   <body ontouchstart="">
     <!-- Navigation -->
     
-      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+  <nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -154,50 +154,53 @@
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
-        var $body = document.body;
-        var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xblog_navbar');
-        var $collapse = document.querySelector('.navbar-collapse');
+        document.addEventListener('DOMContentLoaded', function () {
 
-        var __XNav__ = {
-          close: function () {
-            $navbar.className = ' ';
-            // wait until animation end.
-            setTimeout(function () {
-              // prevent frequently toggle
-              if ($navbar.className.indexOf('in') < 0) {
-                $collapse.style.height = '0px';
-              }
-            }, 400);
-          },
-          open: function () {
-            $collapse.style.height = 'auto';
-            $navbar.className += ' in';
-          },
-        };
-        // Bind Event
-        $toggle.addEventListener('click', function (e) {
-          if ($navbar.className.indexOf('in') > 0) {
+          var $body = document.body;
+          var $toggle = document.querySelector('.navbar-toggle');
+          var $navbar = document.querySelector('#xblog_navbar');
+          var $collapse = document.querySelector('.navbar-collapse');
+          console.log('shit22');
+          var __XNav__ = {
+            close: function () {
+              $navbar.className = ' ';
+              // wait until animation end.
+              setTimeout(function () {
+                // prevent frequently toggle
+                if ($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = '0px';
+                }
+              }, 400);
+            },
+            open: function () {
+              $collapse.style.height = 'auto';
+              $navbar.className += ' in';
+            },
+          };
+          // Bind Event
+          $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+              __XNav__.close();
+            } else {
+              __XNav__.open();
+            }
+          });
+          /**
+           * Since Fastclick is used to delegate 'touchstart' globally
+           * to hack 300ms delay in iOS by performing a fake 'click',
+           * Using 'e.stopPropagation' to stop 'touchstart' event from
+           * $toggle/$collapse will break global delegation.
+           *
+           * Instead, we use a 'e.target' filter to prevent handler
+           * added to document close XheldonNav.
+           *
+           * Also, we use 'click' instead of 'touchstart' as compromise
+           */
+          document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
             __XNav__.close();
-          } else {
-            __XNav__.open();
-          }
-        });
-        /**
-         * Since Fastclick is used to delegate 'touchstart' globally
-         * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from
-         * $toggle/$collapse will break global delegation.
-         *
-         * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.
-         *
-         * Also, we use 'click' instead of 'touchstart' as compromise
-         */
-        document.addEventListener('click', function (e) {
-          if (e.target == $toggle) return;
-          if (e.target.className == 'icon-bar') return;
-          __XNav__.close();
+          });
         });
       </script> <!-- Search -->
 <div class="search-page">
@@ -235,36 +238,52 @@
   
 </style>
 
-<header class="intro-header style-text">
-  
-    <div class="headerMask"></div>
+  <header class="intro-header style-text">
     
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <div class="post-heading">
-            <div class="tags">
-              
-              <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-              
-              <a class="tag" href="/archive/?tag=%E6%8A%80%E5%B7%A7" title="技巧">技巧</a>
-              
-              <a class="tag" href="/archive/?tag=JavaScript" title="JavaScript">JavaScript</a>
-              
-              <a class="tag" href="/archive/?tag=%E8%B0%83%E8%AF%95" title="调试">调试</a>
-              
-            </div>
-            <h1>「译」官方指南系列：JavaScript 调试指南（一）</h1>
-            <h2 class="subheading"></h2>
-            <span class="meta">✍🏼 写于 2022年09月13日</span>&nbsp;&nbsp;&nbsp;
-            
-            <span class="meta">💡 更新于 2022年09月13日</span>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E5%B7%A7"
+                            title="技巧">
+                            技巧
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=JavaScript"
+                            title="JavaScript">
+                            JavaScript
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技术">
+                            技术
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E8%B0%83%E8%AF%95"
+                            title="调试">
+                            调试
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        「译」官方指南系列：JavaScript 调试指南（一）
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 写于 2022年09月13日</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 更新于 2022年09月13日</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
 
   <!-- Post Content -->
   <article>
@@ -319,21 +338,21 @@
 <h3 id="跳过（step-over）当前代码行">跳过（Step over）当前代码行</h3>
 <p>当你的断点暂停在一个与你当前调查的问题无关的代码行，且该代码行包含一个函数的时候，你可以点击 <code>Step Over</code> 来不进入该函数以继续执行代码。</p>
 <p caption='step_over'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/63AE5442-D0AD-46C5-8DB0-36452E2842D2_2.png' alt='step_over' title='step_over'></p>
-<p>图一👆🏻，上图中蓝色方框中 <code>Step Over</code> 的含义解释：</p>
+<p>图一 👆🏻，上图中蓝色方框中 <code>Step Over</code> 的含义解释：</p>
 <p>举个例子，假设你正在 debugging 下面的代码：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">updateName</span>(name); <span class="hljs-comment">// D</span><br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// B</span><br>  <span class="hljs-keyword">return</span> name; <span class="hljs-comment">// C</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>此时你的断点停在了 <code>A</code> 的位置。通过点击 <strong>Step over</strong> ，Devtools 将会执行你「Step over」的位置中的所有代码，在上述示例中「Step over」的是 A 位置的 getName 函数中的 <code>B</code> 和 <code>C</code> 的位置，于是 Devtools 会将代码停在 D 的位置。</p>
 <h3 id="进入（step-into）当前代码行">进入（Step into）当前代码行</h3>
 <p>如果断点停在一个跟你要调查的问题有关系的地方，而且这个地方包含一个函数调用的时候，点击 <code>Step into</code> ，可以更进一步的检查这个函数。</p>
 <p caption='step_into'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/0B7F9CB7-7EA3-44A2-8808-8E23F9E0D786_2.png' alt='step_into' title='step_into'></p>
-<p>图二👆🏻，上图中蓝色方框中 <code>Step into</code> 的含义解释：</p>
+<p>图二 👆🏻，上图中蓝色方框中 <code>Step into</code> 的含义解释：</p>
 <p>举个例子，假设你正在 debugging 下面的代码：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">updateName</span>(name);<br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// B</span><br>  <span class="hljs-keyword">return</span> name;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>你的断点正停在 <code>A</code> 的位置，此时点击 <strong>Step into</strong> ，Devtools 将会执行这行代码，然后停在 <code>B</code> 的位置。</p>
 <h3 id="跳出（step-out）当前代码行">跳出（Step out）当前代码行</h3>
 <p>当断点停在一个与你正在调查的问题不相关的函数内部的时候，你可以点击 <strong>Step out</strong> 来执行该函数中剩余的代码。</p>
 <p caption='step_out'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6E97FB74-E73D-4189-9A21-3771A1DF27AF_2.png' alt='step_out' title='step_out'></p>
-<p>图三👆🏻，上图中蓝色方框中 <code>Step out</code> 的含义解释：</p>
+<p>图三 👆🏻，上图中蓝色方框中 <code>Step out</code> 的含义解释：</p>
 <p>举个例子，假设你正在 debugging 下面的代码：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>();<br>  <span class="hljs-title function_">updateName</span>(name); <span class="hljs-comment">// C</span><br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// A</span><br>  <span class="hljs-keyword">return</span> name; <span class="hljs-comment">// B</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>你的断点正停在 <code>A</code> 的位置，此时点击 <strong>Step out</strong> ，DevTools 将会把 <code>getName()</code> 函数中的剩余代码执行完，也就是 B 位置的代码，然后断点停在 <code>C</code> 的位置上。</p>
@@ -342,19 +361,19 @@
 <p>你可以选择一步一步的执行这些无关的行，但是这个过程会很枯燥。你也可以选择在一个想断点的代码行处设置一个断点，然后按下 <code>Resume Script Execution</code> （恢复脚本执行），不过除此之外，还有一个更快的方式。</p>
 <p>你可以在你想要断点的代码行上右键，然后选择 <strong>Continue to here</strong> （继续执行到此处）。Devtools 将会恢复断点执行代码直到此处，然后停在这一行。</p>
 <p caption='continue_to_here'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/01C96466-2B8C-4088-9E66-7408708B0401_2.png' alt='continue_to_here' title='continue_to_here'></p>
-<p>图四👆🏻，选择 <strong>Continue to here</strong> 。</p>
+<p>图四 👆🏻，选择 <strong>Continue to here</strong> 。</p>
 <h3 id="恢复脚本执行">恢复脚本执行</h3>
 <p>你可以通过点击 <strong>Resume Script Execution</strong> 来继续在你断点暂停的位置执行代码。Devtools 会将代码一直执行下去直到遇到下一个断点（如果有）。</p>
 <p caption='resume_script_execution'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/E67463E2-9D01-48BB-A743-28A189DF68CD_2.png' alt='resume_script_execution' title='resume_script_execution'></p>
-<p>图五👆🏻，<strong>Resume Script Execution</strong> ，蓝框处。</p>
+<p>图五 👆🏻，<strong>Resume Script Execution</strong> ，蓝框处。</p>
 <h4 id="强制执行">强制执行</h4>
 <p>可以通过长按 <strong>Resume Script Execution</strong> ，然后选择 <strong>Force Script Execution</strong> ，来忽略剩下的所有断点，直接执行全部代码。</p>
 <p caption='force_script_execution'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DAB9BD94-70F7-4464-8609-3016E8B40A44_2.png' alt='force_script_execution' title='force_script_execution'></p>
-<p>图六👆🏻，选择 <strong>Force Script Execution</strong> 。</p>
+<p>图六 👆🏻，选择 <strong>Force Script Execution</strong> 。</p>
 <h3 id="改变当前线程的上下文">改变当前线程的上下文</h3>
 <p>当 debugging 设计到 Web Worker 或者 Service Worker 的时候，可以通过点击出现在 <strong>Threads</strong> 栏中的上下文列表项，来转换上下文。蓝色箭头表示当前选择的上下文。</p>
 <p caption='change_threads_context'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1474933D-3F44-4D93-9909-FF4245545704_2.png' alt='change_threads_context' title='change_threads_context'></p>
-<p>图七👆🏻，<strong>Threads</strong> （线程）栏，蓝色框的位置。</p>
+<p>图七 👆🏻，<strong>Threads</strong> （线程）栏，蓝色框的位置。</p>
 <p>举个例子，假设有这么个场景，你的断点同时存在于你的主脚本和你的 service worker 脚本中。你想要查看 service worker 中的本地变量和全局变量，但是 <strong>Source</strong> 栏当前正显示的是你的主脚本的上下文。此时你就可以通过点击在 <strong>Threads</strong> 栏中的 service worker 入口来切换上下文以查看你想了解的变量了。</p>
 <h2 id="查看和编辑局部、闭包以及全局作用域中的变量-属性">查看和编辑局部、闭包以及全局作用域中的变量/属性</h2>
 <p>当暂停在某一行的时候，使用 Scope 栏来查看和编辑位于局部、闭包和全局变量。</p>
@@ -367,13 +386,13 @@
 </li>
 </ul>
 <p caption='查看和修改变量'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/40A93D0F-ACA8-4128-A695-E502565253AD_2.png' alt='查看和修改变量' title='查看和修改变量'></p>
-<p>图八👆🏻，<strong>Scope</strong> （作用域）栏，蓝色框的位置。</p>
+<p>图八 👆🏻，<strong>Scope</strong> （作用域）栏，蓝色框的位置。</p>
 <h2 id="查看当前调用栈">查看当前调用栈</h2>
 <p>当暂停在某一行的时候，使用 <strong>Call Stack</strong> 栏来查看从代码执行一直到你当前暂停点以来的函数调用栈。</p>
 <p>如果你的代码中有异步代码，可以将 <strong>Async</strong> 复选框勾选上，来启用异步函数调用栈。</p>
 <p>点击其中的一个条目，来跳转到该条目所表示的函数的调用处。蓝色箭头图标表示当前正在高亮的函数。</p>
 <p caption='查看函数调用栈'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1168318B-1CFA-493D-9AE6-2CF79930C58C_2.png' alt='查看函数调用栈' title='查看函数调用栈'></p>
-<p>图九👆🏻，<strong>Call Stack</strong> （调用栈）栏，蓝色框的位置。</p>
+<p>图九 👆🏻，<strong>Call Stack</strong> （调用栈）栏，蓝色框的位置。</p>
 <blockquote>
 <p>注意：如果代码没有暂停在某一行，那 Call Stack 栏是空的。</p>
 </blockquote>
@@ -393,8 +412,8 @@
 </ol>
 <p caption='重新执行断点所在的函数'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DFF3FAC8-B00F-415A-A581-50A299F1884D_2.png' alt='重新执行断点所在的函数' title='重新执行断点所在的函数'></p>
 <p>为了理解 Restart frame 如何执行，我们假设有以下代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">value</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>    <span class="hljs-title function_">bar</span>(value);<br>&#125;<br> <br><span class="hljs-keyword">function</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params">value</span>) &#123;<br>    value++;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>    <span class="hljs-keyword">debugger</span>;<br>&#125;<br><br><span class="hljs-title function_">foo</span>(<span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
-<p><code>foo</code> 函数接受 <code>0</code> 作为参数，然后通过 log 打印到控制台，然后调用 <code>bar()</code> 函数。相应的，<code>bar</code> 函数会将这个值自增1。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">value</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>  <span class="hljs-title function_">bar</span>(value);<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params">value</span>) &#123;<br>  value++;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>  <span class="hljs-keyword">debugger</span>;<br>&#125;<br><br><span class="hljs-title function_">foo</span>(<span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+<p><code>foo</code> 函数接受 <code>0</code> 作为参数，然后通过 log 打印到控制台，然后调用 <code>bar()</code> 函数。相应的，<code>bar</code> 函数会将这个值自增 1。</p>
 <p>尝试以下面的方式重头执行这两个函数：</p>
 <ul>
 <li>
@@ -451,7 +470,7 @@
 <h3 id="复制调用栈执行路径">复制调用栈执行路径</h3>
 <p>在 <strong>Call Stack</strong> 栏的任意位置右键，然后选择 <strong>Copy Stack Trace</strong>（复制栈追踪），你会将当前调用栈复制到粘贴板。</p>
 <p caption='复制调用栈'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/7EF33B00-5F90-4D0D-8979-B18ED3CD1527_2.png' alt='复制调用栈' title='复制调用栈'></p>
-<p>图十👆🏻，选择 <strong>Copy Stack Trace</strong>。</p>
+<p>图十 👆🏻，选择 <strong>Copy Stack Trace</strong>。</p>
 <p>复制的内容大致会是这个样子：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs other">getNumber1 (get-started.js:35)<br>inputsAreEmpty (get-started.js:22)<br>onClick (get-started.js:15)<br></code></pre></td></tr></table></figure>
 <h2 id="忽略某个脚本或者满足某种条件的脚本">忽略某个脚本或者满足某种条件的脚本</h2>
@@ -472,7 +491,7 @@
 </li>
 </ol>
 <p caption='忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/39DA9D92-C270-4705-8920-7BC248703936_2.png' alt='忽略脚本' title='忽略脚本'></p>
-<p>图十一👆🏻，从编辑器栏中忽略一个脚本。</p>
+<p>图十一 👆🏻，从编辑器栏中忽略一个脚本。</p>
 <h3 id="从-call-stack-（调用栈）栏忽略某个脚本">从 Call Stack （调用栈）栏忽略某个脚本</h3>
 <p>如果想从调用栈中忽略某个脚本，你需要：</p>
 <ol>
@@ -484,7 +503,7 @@
 </li>
 </ol>
 <p caption='从调用栈中忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/73837AF8-CB34-4B72-AE5C-1B266E15B8EB_2.png' alt='从调用栈中忽略脚本' title='从调用栈中忽略脚本'></p>
-<p>图十二👆🏻，从 Call Stack（调用栈）中忽略某个脚本。</p>
+<p>图十二 👆🏻，从 Call Stack（调用栈）中忽略某个脚本。</p>
 <h3 id="从-settings（设置）中忽略某个脚本">从 Settings（设置）中忽略某个脚本</h3>
 <blockquote>
 <p>译者注：此处的设置为 Devtools 的设置，不是浏览器的设置。</p>
@@ -509,7 +528,7 @@
 </ol>
 <p caption='devoools设置界面'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/54F9290D-CE6A-4630-9387-34DE7EA6266F_2.png' alt='devoools设置界面' title='devoools设置界面'></p>
 <p caption='devtools忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/65A0FE7C-D5BB-4329-B978-1C7184F6C1B6_2.png' alt='devtools忽略脚本' title='devtools忽略脚本'></p>
-<p>图十三👆🏻，从 Setting 中忽略脚本。</p>
+<p>图十三 👆🏻，从 Setting 中忽略脚本。</p>
 <h2 id="从任何页面运行-debug-代码-snippets（片段）">从任何页面运行 debug 代码 Snippets（片段）</h2>
 <p>如果你发现你正在 Console 中反复运行一些 deubg 代码，那么可以考虑一下 Snippets。Snippets 是一种你可以存储在 Devtools 中并执行的脚本。</p>
 <p>参见 <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/">https://developer.chrome.com/docs/devtools/javascript/snippets/</a> （未翻译）来了解更多。</p>
@@ -519,7 +538,7 @@
 <h2 id="watch（监听）自定义的-javascript-表达式的值">Watch（监听）自定义的 JavaScript 表达式的值</h2>
 <p>使用 Watch 栏来监听自定义表达式的值。你可以监听任何有效的 JavaScript 表达式。</p>
 <p caption='监听JavaScript表达式'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/02D81797-A39F-4837-B402-648AA39E5C21_2.png' alt='监听JavaScript表达式' title='监听JavaScript表达式'></p>
-<p>图十四👆🏻，蓝色圈住的即是 Watch 栏。</p>
+<p>图十四 👆🏻，蓝色圈住的即是 Watch 栏。</p>
 <ul>
 <li>
 <p>点击 Add Expression（添加表达式）来新建一个监视表达式。</p>
@@ -532,7 +551,7 @@
 </li>
 </ul>
 <h2 id="格式化压缩后的代码以可读">格式化压缩后的代码以可读</h2>
-<p>点击 <code>Fromat &#123;&#125;</code>  来让一个压缩后的代码变成人类可读的格式。</p>
+<p>点击 <code>Fromat &#123;&#125;</code> 来让一个压缩后的代码变成人类可读的格式。</p>
 <p caption='格式化压缩后的文件'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/572D9BCF-DC18-460E-8B23-62398391ED92_2.png' alt='格式化压缩后的文件' title='格式化压缩后的文件'></p>
 <h2 id="编辑一个脚本">编辑一个脚本</h2>
 <p>当修复一个 bug 的时候，你经常会需要测试你的 JavaScript 代码的修改效果。你不要在一个外部的编辑器中编辑 JavaScript 代码后，再回到当前页面刷新后查看效果。你可以直接在 Devtools 中编辑你的 JavaScript 代码。</p>
@@ -565,7 +584,7 @@
 </ul>
 <blockquote>
 <p>💡 实时编辑暂停函数的真相是…<br />
-当你应用一个修改的时候，debugger 工具自动重新执行（和前面的「重新执行堆栈中的函数」一样）。因此，对重新执行函数的限制与实时编辑暂停函数并生效的限制是一样的。你不能重头执行 WebAssembly、async以及generator（迭代器）函数。</p>
+当你应用一个修改的时候，debugger 工具自动重新执行（和前面的「重新执行堆栈中的函数」一样）。因此，对重新执行函数的限制与实时编辑暂停函数并生效的限制是一样的。你不能重头执行 WebAssembly、async 以及 generator（迭代器）函数。</p>
 </blockquote>
 <p>如果想实时编辑一个函数，你需要：</p>
 <ol>
@@ -576,7 +595,7 @@
 <p>编辑断点所在的正在暂停的函数。</p>
 </li>
 <li>
-<p>按下 <code>Command/Control+S</code>  来应用更改，debugger 将会自动重新执行该函数。</p>
+<p>按下 <code>Command/Control+S</code> 来应用更改，debugger 将会自动重新执行该函数。</p>
 </li>
 <li>
 <p>继续执行</p>
@@ -1069,16 +1088,16 @@
   </ul>
 </ul>
 
-        <p class="copyright text-muted">
-          Copyright &copy;
-          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
-          2024
-          <br>
-          Don't Panic | Theme fork from
-          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-          <br>
-          
-        </p>
+          <p class="copyright text-muted">
+            Copyright &copy;
+            <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+            2024
+              <br>
+              Don't Panic | Theme fork from
+              <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+              <br>
+              
+          </p>
       </div>
     </div>
   </div>
@@ -1115,7 +1134,7 @@
     // Note: 自动切换
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('dark');
           document.documentElement.classList.remove('light');
@@ -1123,7 +1142,7 @@
       });
     window
       .matchMedia('(prefers-color-scheme: light)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('light');
           document.documentElement.classList.remove('dark');
@@ -1139,7 +1158,7 @@
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/xblog.min.js?202405251426"></script>
+<script src="/js/xheldon-life-blog.min.js?202405251426"></script>
 
 
 <!-- Simple Jekyll Search 复制逻辑 -->
@@ -1147,178 +1166,178 @@
 
 <!-- Vercel web analysis -->
 
-<script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  
 
+    <!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
-<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
-
-<!-- async load function -->
-<script>
-  function async (u, c) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) {
-      o.addEventListener(
-        'load',
-        function(e) {
-          c(null, e);
-        },
-        false
-      );
-    }
-    s.parentNode.insertBefore(o, s);
-  }
-</script>
-
-<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
-
-<!-- jquery.tagcloud.js -->
-
-
-<!--fastClick.js -->
-<script>
-  async ('/js/fastclick.min.js', function() {
-    var $nav = document.querySelector('nav');
-    if ($nav) FastClick.attach($nav);
-  });
-</script>
-
-<!-- Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-
-  gtag('config', '{{config.ga_track_id}}');
-</script>
-
-
-<!-- Side Catalog -->
-
-<script type="text/javascript">
-  function generateCatalog(selector) {
-    // TODO: 多语种没有迁移过来
-    // init
-    var P = $('div.post-container'),
-      a,
-      n,
-      t,
-      l,
-      i,
-      c;
-    a = P.find('h1,h2,h3,h4,h5,h6');
-
-    // clean
-    $(selector).html('');
-
-    // appending
-    a.each(function() {
-      n = $(this).prop('tagName').toLowerCase();
-      i = '#' + $(this).prop('id');
-      t = $(this).text();
-      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-      l = $('<li class="' + n + '_nav"></li>').append(c);
-      $(selector).append(l);
-    });
-    return true;
-  }
-
-  generateCatalog('.catalog-body');
-
-  // toggle side catalog
-  $('.catalog-toggle').click(function(e) {
-    e.preventDefault();
-    $('.side-catalog').toggleClass('fold');
-  });
-
-  /*
-   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-   * Fork by Hux to support padding
-   */
-  async ('/js/jquery.nav.js',
-    function() {
-      $('.catalog-body').onePageNav({
-        currentClass: 'active',
-        changeHash: !1,
-        easing: 'swing',
-        filter: '',
-        scrollSpeed: 700,
-        scrollOffset: 0,
-        scrollThreshold: 0.2,
-        begin: null,
-        end: null,
-        scrollChange: null,
-        padding: 80,
-      });
-    }
-  );
-</script>
-
-
-<script>
-  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-  function htmlDecode(input) {
-    var e = document.createElement('textarea');
-    e.innerHTML = input;
-    // handle case of empty input
-    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-  }
-
-  SimpleJekyllSearch({
-    searchInput: document.getElementById('search-input'),
-    resultsContainer: document.getElementById('search-results'),
-    json: '/search.json',
-    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-    noResultsText: 'No results',
-    limit: 50,
-    fuzzy: false,
-    // a hack to get escaped subtitle unescaped. for some reason, 
-    // post.subtitle w/o escape filter nuke entire search.
-    templateMiddleware: function(prop, value, template) {
-      if (prop === 'subtitle' || prop === 'title') {
-        if (value.indexOf("code")) {
-          return htmlDecode(value);
-        } else {
-          return value;
+    <!-- async load function -->
+    <script>
+      function async(u, c) {
+        var d = document,
+          t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+          o.addEventListener(
+            'load',
+            function (e) {
+              c(null, e);
+            },
+            false
+          );
         }
+        s.parentNode.insertBefore(o, s);
       }
-    }
-  });
+    </script>
 
-  $(document).ready(function() {
-    var $searchPage = $('.search-page');
-    var $searchOpen = $('.search-icon');
-    var $searchClose = $('.search-icon-close');
-    var $searchInput = $('#search-input');
-    var $body = $('body');
+    <!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-    $searchOpen.on('click', function(e) {
-      e.preventDefault();
-      $searchPage.toggleClass('search-active');
-      var prevClasses = $body.attr('class') || '';
-      setTimeout(function() {
-        $body.addClass('no-scroll');
-      }, 400)
+    <!-- jquery.tagcloud.js -->
+    
 
-      if ($searchPage.hasClass('search-active')) {
-        $searchClose.on('click', function(e) {
-          e.preventDefault();
-          $searchPage.removeClass('search-active');
-          $body.attr('class', prevClasses); // from closure 
-        });
-        $searchInput.focus();
-      }
-    });
-  });
-</script>
+        <!--fastClick.js -->
+        <script>
+          async('/js/fastclick.min.js', function () {
+            var $nav = document.querySelector('nav');
+            if ($nav) FastClick.attach($nav);
+          });
+        </script>
+
+        <!-- Google Analytics -->
+        
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', '{{config.ga_track_id}}');
+          </script>
+          
+
+            <!-- Side Catalog -->
+            
+              <script type="text/javascript">
+                function generateCatalog(selector) {
+                  // TODO: 多语种没有迁移过来
+                  // init
+                  var P = $('div.post-container'),
+                    a,
+                    n,
+                    t,
+                    l,
+                    i,
+                    c;
+                  a = P.find('h1,h2,h3,h4,h5,h6');
+
+                  // clean
+                  $(selector).html('');
+
+                  // appending
+                  a.each(function () {
+                    n = $(this).prop('tagName').toLowerCase();
+                    i = '#' + $(this).prop('id');
+                    t = $(this).text();
+                    c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+                    l = $('<li class="' + n + '_nav"></li>').append(c);
+                    $(selector).append(l);
+                  });
+                  return true;
+                }
+
+                generateCatalog('.catalog-body');
+
+                // toggle side catalog
+                $('.catalog-toggle').click(function (e) {
+                  e.preventDefault();
+                  $('.side-catalog').toggleClass('fold');
+                });
+
+                /*
+                 * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+                 * Fork by Hux to support padding
+                 */
+                async('/js/jquery.nav.js',
+                  function () {
+                    $('.catalog-body').onePageNav({
+                      currentClass: 'active',
+                      changeHash: !1,
+                      easing: 'swing',
+                      filter: '',
+                      scrollSpeed: 700,
+                      scrollOffset: 0,
+                      scrollThreshold: 0.2,
+                      begin: null,
+                      end: null,
+                      scrollChange: null,
+                      padding: 80,
+                    });
+                  }
+                );
+              </script>
+              
+
+                <script>
+                  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+                  function htmlDecode(input) {
+                    var e = document.createElement('textarea');
+                    e.innerHTML = input;
+                    // handle case of empty input
+                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                  }
+
+
+                  $(document).ready(function () {
+                    SimpleJekyllSearch({
+                      searchInput: document.getElementById('search-input'),
+                      resultsContainer: document.getElementById('search-results'),
+                      json: '/search.json',
+                      searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+                      noResultsText: 'No results',
+                      limit: 50,
+                      fuzzy: false,
+                      // a hack to get escaped subtitle unescaped. for some reason, 
+                      // post.subtitle w/o escape filter nuke entire search.
+                      templateMiddleware: function (prop, value, template) {
+                        if (prop === 'subtitle' || prop === 'title') {
+                          if (value.indexOf("code")) {
+                            return htmlDecode(value);
+                          } else {
+                            return value;
+                          }
+                        }
+                      }
+                    });
+                    var $searchPage = $('.search-page');
+                    var $searchOpen = $('.search-icon');
+                    var $searchClose = $('.search-icon-close');
+                    var $searchInput = $('#search-input');
+                    var $body = $('body');
+
+                    $searchOpen.on('click', function (e) {
+                      e.preventDefault();
+                      $searchPage.toggleClass('search-active');
+                      var prevClasses = $body.attr('class') || '';
+                      setTimeout(function () {
+                        $body.addClass('no-scroll');
+                      }, 400)
+
+                      if ($searchPage.hasClass('search-active')) {
+                        $searchClose.on('click', function (e) {
+                          e.preventDefault();
+                          $searchPage.removeClass('search-active');
+                          $body.attr('class', prevClasses); // from closure 
+                        });
+                        $searchInput.focus();
+                      }
+                    });
+                  });
+                </script>
 
     <!-- Image to hack wechat -->
     <img src="/img/icon_wechat.png" width="0" height="0" />

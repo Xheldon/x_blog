@@ -100,8 +100,8 @@
   <body ontouchstart="">
     <!-- Navigation -->
     
-      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+  <nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -150,50 +150,53 @@
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
-        var $body = document.body;
-        var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xblog_navbar');
-        var $collapse = document.querySelector('.navbar-collapse');
+        document.addEventListener('DOMContentLoaded', function () {
 
-        var __XNav__ = {
-          close: function () {
-            $navbar.className = ' ';
-            // wait until animation end.
-            setTimeout(function () {
-              // prevent frequently toggle
-              if ($navbar.className.indexOf('in') < 0) {
-                $collapse.style.height = '0px';
-              }
-            }, 400);
-          },
-          open: function () {
-            $collapse.style.height = 'auto';
-            $navbar.className += ' in';
-          },
-        };
-        // Bind Event
-        $toggle.addEventListener('click', function (e) {
-          if ($navbar.className.indexOf('in') > 0) {
+          var $body = document.body;
+          var $toggle = document.querySelector('.navbar-toggle');
+          var $navbar = document.querySelector('#xblog_navbar');
+          var $collapse = document.querySelector('.navbar-collapse');
+          console.log('shit22');
+          var __XNav__ = {
+            close: function () {
+              $navbar.className = ' ';
+              // wait until animation end.
+              setTimeout(function () {
+                // prevent frequently toggle
+                if ($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = '0px';
+                }
+              }, 400);
+            },
+            open: function () {
+              $collapse.style.height = 'auto';
+              $navbar.className += ' in';
+            },
+          };
+          // Bind Event
+          $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+              __XNav__.close();
+            } else {
+              __XNav__.open();
+            }
+          });
+          /**
+           * Since Fastclick is used to delegate 'touchstart' globally
+           * to hack 300ms delay in iOS by performing a fake 'click',
+           * Using 'e.stopPropagation' to stop 'touchstart' event from
+           * $toggle/$collapse will break global delegation.
+           *
+           * Instead, we use a 'e.target' filter to prevent handler
+           * added to document close XheldonNav.
+           *
+           * Also, we use 'click' instead of 'touchstart' as compromise
+           */
+          document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
             __XNav__.close();
-          } else {
-            __XNav__.open();
-          }
-        });
-        /**
-         * Since Fastclick is used to delegate 'touchstart' globally
-         * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from
-         * $toggle/$collapse will break global delegation.
-         *
-         * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.
-         *
-         * Also, we use 'click' instead of 'touchstart' as compromise
-         */
-        document.addEventListener('click', function (e) {
-          if (e.target == $toggle) return;
-          if (e.target.className == 'icon-bar') return;
-          __XNav__.close();
+          });
         });
       </script> <!-- Search -->
 <div class="search-page">
@@ -231,30 +234,40 @@
   
 </style>
 
-<header class="intro-header style-text">
-  
-    <div class="headerMask"></div>
+  <header class="intro-header style-text">
     
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <div class="post-heading">
-            <div class="tags">
-              
-              <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-              
-              <a class="tag" href="/archive/?tag=CORS" title="CORS">CORS</a>
-              
-            </div>
-            <h1>我对 CORS 的探究</h1>
-            <h2 class="subheading"></h2>
-            <span class="meta">✍🏼 写于 2016年07月07日</span>&nbsp;&nbsp;&nbsp;
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技术">
+                            技术
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=CORS"
+                            title="CORS">
+                            CORS
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        我对 CORS 的探究
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 写于 2016年07月07日</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
 
   <!-- Post Content -->
   <article>
@@ -291,15 +304,15 @@
 <p>什么是简单请求请自行谷歌/SO. 这里注意一个基本事实, <code>cookie</code> 是跟随着 <code>域名</code> 的, 而不是跟随着 <code>IP地址</code>, 我在本地起了一个简单的能处理 <code>cookie</code> 的 <code>express</code> 服务, 同时在我的 <code>VPS</code> 上也起了一个相同的服务, 然后通过修改 <code>hosts</code> 来实现不同的域名:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 修改 hosts 如下</span><br><span class="hljs-comment">// 本机 ip</span><br><span class="hljs-number">172.16</span><span class="hljs-number">.26</span><span class="hljs-number">.57</span> www.<span class="hljs-property">a</span>.<span class="hljs-property">com</span><br><span class="hljs-comment">// VPS ip</span><br><span class="hljs-number">45.78</span><span class="hljs-number">.41</span><span class="hljs-number">.32</span> www.<span class="hljs-property">b</span>.<span class="hljs-property">com</span><br></code></pre></td></tr></table></figure>
 <p>首先是在 <code>VPS</code> 服务器上启动一个 <code>express</code> 服务, 不设置任何东西, 只是简单的返回 <code>header</code>, 端口起在 <code>9091</code>:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);<br><span class="hljs-keyword">var</span> app = <span class="hljs-title function_">express</span>();<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>)&#123;<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br><br>app.<span class="hljs-title function_">listen</span>(<span class="hljs-number">9091</span>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);<br><span class="hljs-keyword">var</span> app = <span class="hljs-title function_">express</span>();<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br><br>app.<span class="hljs-title function_">listen</span>(<span class="hljs-number">9091</span>);<br></code></pre></td></tr></table></figure>
 <p><code>a.com</code> 的 <code>Server</code> 端基本一样, 只是加了个静态页为了发送 <code>ajax</code>, 端口起在 <code>9090</code>:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);<br><span class="hljs-keyword">var</span> app = <span class="hljs-title function_">express</span>();<br><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) &#123;<br>  res.<span class="hljs-title function_">sendFile</span>(path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">&#x27;index.html&#x27;</span>));<br>&#125;);<br>app.<span class="hljs-title function_">listen</span>(<span class="hljs-number">9090</span>);<br></code></pre></td></tr></table></figure>
 <p><code>index.html</code> 内容:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>a.com<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;button&quot;</span>&gt;</span>点我发请求, 打开控制台查看信息<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-keyword">var</span> button = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;button&#x27;</span>);</span><br><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">xhrSend</span>(<span class="hljs-params">e</span>)&#123;</span><br><span class="language-javascript">  e.<span class="hljs-title function_">preventDefault</span>();</span><br><span class="language-javascript">  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();</span><br><span class="language-javascript">  xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://www.b.com:9091&#x27;</span>, <span class="hljs-literal">true</span>);</span><br><span class="language-javascript">  xhr.<span class="hljs-title function_">send</span>();</span><br><span class="language-javascript">&#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript">button.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, xhrSend);</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>a.com<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;button&quot;</span>&gt;</span>点我发请求, 打开控制台查看信息<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">      <span class="hljs-keyword">var</span> button = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;button&#x27;</span>);</span><br><span class="language-javascript"></span><br><span class="language-javascript">      <span class="hljs-keyword">function</span> <span class="hljs-title function_">xhrSend</span>(<span class="hljs-params">e</span>) &#123;</span><br><span class="language-javascript">        e.<span class="hljs-title function_">preventDefault</span>();</span><br><span class="language-javascript">        <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();</span><br><span class="language-javascript">        xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://www.b.com:9091&#x27;</span>, <span class="hljs-literal">true</span>);</span><br><span class="language-javascript">        xhr.<span class="hljs-title function_">send</span>();</span><br><span class="language-javascript">      &#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript">      button.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, xhrSend);</span><br><span class="language-javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>因为服务端没有设置 <code>Access-Control-Allow-Origin</code>, 因此报错:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError.png" alt="VPSServerError" title="VPSServerError" /></p>
 <p>接下来在 <code>b.com</code> 的服务端加上允许来自 <code>a.com</code> 的 <code>ajax</code>(需要精确到端口):</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>)&#123;<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span><br>  &#125;);<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>  &#125;);<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
 <p>再次发起请求:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError1.png" alt="VPSServerError1" title="VPSServerError1" /></p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError1.1.png" alt="VPSServerError1.1" title="VPSServerError1.1" /></p>
@@ -318,17 +331,17 @@
 <p>和没有加 <code>cookie</code> 一样, 并没有获取到来自 <code>a.com</code> 的 <code>cookie</code>, 这当然是因为安全限制, 也是意料之中.</p>
 <h2 id="额外定一个小目标-非简单请求">额外定一个小目标: 非简单请求</h2>
 <p>此处插播一个关于简单请求的测试, 在 <code>xhr</code> 中新增一个 <code>header</code>, 之后再发请求:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">xhrSend</span>(<span class="hljs-params">e</span>)&#123;<br>  e.<span class="hljs-title function_">preventDefault</span>();<br>  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>  xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://www.b.com:9091&#x27;</span>, <span class="hljs-literal">true</span>);<br>  xhr.<span class="hljs-title function_">setRequestHeader</span>(<span class="hljs-string">&#x27;xiaodan&#x27;</span>, <span class="hljs-string">&#x27;xheldon&#x27;</span>);<br>    xhr.<span class="hljs-title function_">send</span>();<br>  &#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">xhrSend</span>(<span class="hljs-params">e</span>) &#123;<br>  e.<span class="hljs-title function_">preventDefault</span>();<br>  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>  xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://www.b.com:9091&#x27;</span>, <span class="hljs-literal">true</span>);<br>  xhr.<span class="hljs-title function_">setRequestHeader</span>(<span class="hljs-string">&#x27;xiaodan&#x27;</span>, <span class="hljs-string">&#x27;xheldon&#x27;</span>);<br>  xhr.<span class="hljs-title function_">send</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>因为这次是在加了 <code>Access-Control-Allow-Origin</code> 之后的操作, 因此这次浏览器报了个不一样的错误:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.1.png" alt="VPSServerError2.1" title="VPSServerError2.1" /></p>
 <p>注意到还是因为 <code>Access-Control-Allow-Origin</code> 的错误, 但是这次是因为前端设置了一个自定义的 <code>header</code>, 因此是一个非简单请求, 对于非简单请求会先发一个预检请求(<code>prelight</code>), 请求类型是 <code>OPTIONS</code>, 可以查看 <a href="http://harttle.com/2016/12/30/cors-preflight.html">这篇文章</a> 了解更多. 预检请求目的是嘘寒问暖 <code>b.com</code> 的服务器, 是否接受这个 <code>xiaodan</code> 的 <code>header</code>, 后端在返回的 <code>header</code> <code>Access-Control-Alow-Headers</code> 中, 没有这个叫做 <code>xiaodan</code> 的值, 因此报错.</p>
 <p>那接下来我们把 <code>b.com</code> 返回的内容加上 相应的 <code>header</code>:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>)&#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">headers</span>);<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span><br>  &#125;);<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">headers</span>);<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>  &#125;);<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
 <p>再次发起请求看看:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.1.png" alt="VPSServerError2.1" title="VPSServerError2.1" /></p>
 <p>居然是一样的报错结果, 虽然响应了 <code>200</code>, 但是服务端没有返回相应的 <code>Access-Control-Allow-Headers</code>, 返回结果被浏览器拒绝了(注意不是被服务器拒绝, 服务器是返回了 <code>200</code> 的).</p>
 <p>排查了一下发现, 问题出在这个非简单请求上面, 我把 <code>b.com</code> 函数稍微修改下:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">use</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>)&#123;<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span><br>  &#125;);<br>  <span class="hljs-title function_">next</span>();<br>&#125;);<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>)&#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">headers</span>);<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">use</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>  &#125;);<br>  <span class="hljs-title function_">next</span>();<br>&#125;);<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">headers</span>);<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
 <p>服务端:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.2.png" alt="VPSServerError2.2" title="VPSServerError2.2" /></p>
 <p>客户端:</p>
@@ -336,10 +349,10 @@
 <p>分析原因在于(待求证, 回头翻翻 <code>HTTP</code> 权威指南再说), 非简单请求的 <code>prelight</code> 请求, 不会发起实际请求, 而是先发送一个预检请求, 来测试服务器是否支持某个非简单 <code>header</code> 字段, 也就是说, 带有非简单头部的请求不会走到 <code>app.get('/')</code> 里面. 同时可以在 <code>b.com</code> 的服务器看到, 因为 <code>console.log(req.headers)</code> 是写在 <code>app.get('/')</code> 里面的, 刚刚的请求 <code>b.com</code> 服务器并没有输出任何东西, 因此也印证了这一点. <code>这一设计旨在确保服务器对 CORS 标准知情，以保护不支持 CORS 的旧服务器</code>.</p>
 <h2 id="小目标-4-把-a-com-域下的-cookie-发送到-b-com">小目标-4: 把 <code>a.com</code> 域下的 <code>cookie</code> 发送到 <code>b.com</code></h2>
 <p>OK, 插播结束, 我们来测试下在客户端, 也即 <code>a.com</code> 下发起的 <code>xhr</code> 请求的页面设置 <code>withCredentials = true</code> (只列出 <code>xhrSend</code> 部分)能否将 <code>a.com</code> 的 <code>cookie</code> 发送到 <code>b.com</code>(这里简单请求和非简单请求是一样的结果, 为了方便查看差异我把 <code>xhr</code> 设置的 <code>header</code> 去掉了):</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 设置允许 cookie</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">xhrSend</span>(<span class="hljs-params">e</span>)&#123;<br>  e.<span class="hljs-title function_">preventDefault</span>();<br>  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>  xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://www.b.com/&#x27;</span>, <span class="hljs-literal">true</span>);<br>  xhr.<span class="hljs-property">withCredentials</span> = <span class="hljs-literal">true</span>;<br>  xhr.<span class="hljs-title function_">send</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 设置允许 cookie</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">xhrSend</span>(<span class="hljs-params">e</span>) &#123;<br>  e.<span class="hljs-title function_">preventDefault</span>();<br>  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>  xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://www.b.com/&#x27;</span>, <span class="hljs-literal">true</span>);<br>  xhr.<span class="hljs-property">withCredentials</span> = <span class="hljs-literal">true</span>;<br>  xhr.<span class="hljs-title function_">send</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.4.png" alt="VPSServerError2.4" title="VPSServerError2.4" /></p>
 <p>这次错误提醒变化, 变成服务端没有设置 <code>Access-Control-Allow-Credentials</code> 为 <code>true</code> 了, 这个 <code>header</code> 是来设置允许请求携带 <code>cookie</code> 的, 因此设置一下:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">use</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">req,res, next</span>)&#123;<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>:<span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Credentials&#x27;</span>: <span class="hljs-literal">true</span><br>  &#125;);<br>  <span class="hljs-title function_">next</span>();<br>&#125;);<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>)&#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">headers</span>);<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">use</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Credentials&#x27;</span>: <span class="hljs-literal">true</span>,<br>  &#125;);<br>  <span class="hljs-title function_">next</span>();<br>&#125;);<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">headers</span>);<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.5.png" alt="VPSServerError2.5" title="VPSServerError2.5" /></p>
 <p>仍然没有, 看下 <code>Chrome</code> 的 <code>cookie</code>:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.6.png" alt="VPSServerError2.6" title="VPSServerError2.6" /></p>
@@ -352,7 +365,7 @@
 <p>OK, 找不到问题的时候就吃个冰淇淋吧. 下楼买了个香菜味的雀巢冰激凌(吃不起哈根达斯), 然后在上楼的时候灵光一闪, 好像我们这个属于是第三方 <code>cookie</code>, 会不会是我禁止浏览器追踪导致的呢? 于是吃完冰激凌我在 <code>chrome</code> 的设置中, 把 <code>随浏览流量一起发送&quot;不跟踪&quot;请求</code> 的钩钩给去掉了:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.8.png" alt="VPSServerError2.8" title="VPSServerError2.8" /></p>
 <p>对了, 这次我把 <code>req.headers</code> 放到了 <code>app.use</code> 里面以防万一(其实不会有什么万一)：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">use</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">req,res, next</span>)&#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">headers</span>);<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>:<span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Credentials&#x27;</span>: <span class="hljs-literal">true</span><br>  &#125;);<br>  <span class="hljs-title function_">next</span>();<br>&#125;);<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>)&#123;<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">use</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">headers</span>);<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Credentials&#x27;</span>: <span class="hljs-literal">true</span>,<br>  &#125;);<br>  <span class="hljs-title function_">next</span>();<br>&#125;);<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
 <p>再次点击按钮发送请求, 然后查看 <code>chrome</code> 控制台和 <code>b.com</code> 的服务器输出:</p>
 <p>因为有非简单头部, 因此和之前一样, 显示的是两个请求:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.9.png" alt="VPSServerError2.9" title="VPSServerError2.9" /></p>
@@ -363,9 +376,9 @@
 <p>我又想起了文章开头的那句话: ‘注意, 设置了 <code>withCredentials = true</code> 之后, 携带的 <code>cookie</code> 是目标域的 <code>cookie</code>’. 难道我在 <code>a.com</code> 点击按钮发送请求到 <code>b.com</code>, 发送的是 <code>b.com</code> 设置的 <code>cookie</code> 吗?</p>
 <p>于是我先把 <code>b.com</code> 服务器上也新建一个 <code>index.html</code>, 里面随便加点 <code>cookie</code>:</p>
 <p><code>b.com</code> 的服务器代码:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);<br><span class="hljs-keyword">var</span> app = <span class="hljs-title function_">express</span>();<br><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br>app.<span class="hljs-title function_">use</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">req,res, next</span>)&#123;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">headers</span>);<br>res.<span class="hljs-title function_">set</span>(&#123;<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>:<span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Credentials&#x27;</span>: <span class="hljs-literal">true</span><br>&#125;);<br><span class="hljs-title function_">next</span>();<br>&#125;);<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>)&#123;<br>  res.<span class="hljs-title function_">sendFile</span>(path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">&#x27;index.html&#x27;</span>));<br>&#125;);<br><br>app.<span class="hljs-title function_">listen</span>(<span class="hljs-number">9091</span>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);<br><span class="hljs-keyword">var</span> app = <span class="hljs-title function_">express</span>();<br><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br>app.<span class="hljs-title function_">use</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">headers</span>);<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Credentials&#x27;</span>: <span class="hljs-literal">true</span>,<br>  &#125;);<br>  <span class="hljs-title function_">next</span>();<br>&#125;);<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  res.<span class="hljs-title function_">sendFile</span>(path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">&#x27;index.html&#x27;</span>));<br>&#125;);<br><br>app.<span class="hljs-title function_">listen</span>(<span class="hljs-number">9091</span>);<br></code></pre></td></tr></table></figure>
 <p><a href="http://b.com">b.com</a> 的 index.html 代码:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>a.com<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>open Application inspector to check whether the cookie is be setting<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span> = <span class="hljs-string">&#x27;yes=you_cant_believe_i_from_b.com&#x27;</span></span><br><span class="language-javascript">    <span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span> = <span class="hljs-string">&#x27;from=this_is_from_b.com&#x27;</span></span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>a.com<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br>      open Application inspector to check whether the cookie is be setting<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">      <span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span> = <span class="hljs-string">&#x27;yes=you_cant_believe_i_from_b.com&#x27;</span>;</span><br><span class="language-javascript">      <span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span> = <span class="hljs-string">&#x27;from=this_is_from_b.com&#x27;</span>;</span><br><span class="language-javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>OK, 我们首先访问 <code>b.com</code>:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError4.png" alt="VPSServerError4" title="VPSServerError4" /></p>
 <p>没毛病, 正常返回网页, 正常设置 <code>cookie</code>, 接下来我们在 <code>a.com</code> 下, 点击按钮发送请求:</p>
@@ -376,21 +389,21 @@
 <p>既然能在 <code>a.com</code> 发送 <code>b.com</code> 的 <code>cookie</code>, 那么前端能不能获取到 <code>b.com</code> 的 <code>cookie</code> 呢?</p>
 <p>看了下文档, <code>ajax</code> 有 <code>getAllResponseHeaders()</code> 和 <code>getResponseHeader()</code>两个接口, 服务端有 <code>Access-Control-Expose-Header</code>, 于是我测试了下(我就是要分开输出, 怎样?).</p>
 <p>先从简单的来, 首先是调用 <code>xhr</code> 的 <code>getAllResponseHeaders()</code> 接口:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 设置允许 cookie</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">xhrSend</span>(<span class="hljs-params">e</span>)&#123;<br>  e.<span class="hljs-title function_">preventDefault</span>();<br>  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>  xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://www.b.com/&#x27;</span>, <span class="hljs-literal">true</span>);<br>  xhr.<span class="hljs-property">withCredentials</span> = <span class="hljs-literal">true</span>;<br>  xhr.<span class="hljs-property">onreadystatechange</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">status</span> === <span class="hljs-number">200</span>)&#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;AllRes:&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getAllResponseHeaders</span>())<br>    &#125;<br>  &#125;;<br>  xhr.<span class="hljs-title function_">send</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 设置允许 cookie</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">xhrSend</span>(<span class="hljs-params">e</span>) &#123;<br>  e.<span class="hljs-title function_">preventDefault</span>();<br>  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>  xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://www.b.com/&#x27;</span>, <span class="hljs-literal">true</span>);<br>  xhr.<span class="hljs-property">withCredentials</span> = <span class="hljs-literal">true</span>;<br>  xhr.<span class="hljs-property">onreadystatechange</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">status</span> === <span class="hljs-number">200</span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;AllRes:&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getAllResponseHeaders</span>());<br>    &#125;<br>  &#125;;<br>  xhr.<span class="hljs-title function_">send</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer3.png" alt="LocalServer3" title="LocalServer3" /></p>
 <p>发现并没有出现 <code>header</code> 的 <code>Cookie</code> 字段, 意料之中, 想着万一 <code>getAllResponseHeaders()</code> 遍历 <code>header</code> 的没有 <code>Cookie</code> 是因为其被设置成 <code>enumerable: false</code> 了呢? 于是我又尝试了 <code>getResponseHeader()</code>:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 设置允许 cookie</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">xhrSend</span>(<span class="hljs-params">e</span>)&#123;<br>  e.<span class="hljs-title function_">preventDefault</span>();<br>  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>  xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://www.b.com/&#x27;</span>, <span class="hljs-literal">true</span>);<br>  xhr.<span class="hljs-property">withCredentials</span> = <span class="hljs-literal">true</span>;<br>  xhr.<span class="hljs-property">onreadystatechange</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">status</span> === <span class="hljs-number">200</span>)&#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Res:&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getResponseHeader</span>(<span class="hljs-string">&#x27;Cookie&#x27;</span>))<br>    &#125;<br>  &#125;;<br>  xhr.<span class="hljs-title function_">send</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 设置允许 cookie</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">xhrSend</span>(<span class="hljs-params">e</span>) &#123;<br>  e.<span class="hljs-title function_">preventDefault</span>();<br>  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>  xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://www.b.com/&#x27;</span>, <span class="hljs-literal">true</span>);<br>  xhr.<span class="hljs-property">withCredentials</span> = <span class="hljs-literal">true</span>;<br>  xhr.<span class="hljs-property">onreadystatechange</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">status</span> === <span class="hljs-number">200</span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Res:&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getResponseHeader</span>(<span class="hljs-string">&#x27;Cookie&#x27;</span>));<br>    &#125;<br>  &#125;;<br>  xhr.<span class="hljs-title function_">send</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer3.1.png" alt="LocalServer3.1" title="LocalServer3.1" /></p>
 <p>还是意料之中, 因为服务端没有设置暴露出来的 <code>header</code> 内容, 于是我在 <code>b.com</code> 设置了 <code>Access-Control-Expose-Header</code>:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">res.<span class="hljs-title function_">set</span>(&#123;<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>:<span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Credentials&#x27;</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Expose-Headers&#x27;</span>: <span class="hljs-string">&#x27;Cookie&#x27;</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">res.<span class="hljs-title function_">set</span>(&#123;<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Credentials&#x27;</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Expose-Headers&#x27;</span>: <span class="hljs-string">&#x27;Cookie&#x27;</span>,<br>&#125;);<br></code></pre></td></tr></table></figure>
 <p>然后重新执行 <code>getResponseHeader('Cookie')</code> 和 <code>getAllResponseHeaders()</code></p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer3.2.png" alt="LocalServer3.2" title="LocalServer3.2" /></p>
 <p>没有错误了, 但是还是无法获取到 <code>b.com</code> 的 <code>cookie</code>, 即使 <code>b.com</code> 服务端都同意了也不行.</p>
 <p>查找资料得知, 这个 <code>Access-Control-Expose-Header</code> 只能设置为自定义的 <code>header</code> 来被前端获得. 但是这个没什么意义啊, 因为这个自定义的 <code>header</code> 就是我前端设置的, 唯一的作用就是 后端修改/新建自定义的 <code>header</code> 之后, 前端来获取. 下面我在后端设置一个 <code>header</code>, 让前端来获取:</p>
 <p><code>b.com</code> 的 <code>server</code>:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js">res.<span class="hljs-title function_">set</span>(&#123;<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>:<span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Credentials&#x27;</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Expose-Headers&#x27;</span>: <span class="hljs-string">&#x27;Xheldon&#x27;</span>,<br>  <span class="hljs-string">&#x27;Xheldon&#x27;</span>: <span class="hljs-string">&#x27;MyNameIsXheldon&#x27;</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js">res.<span class="hljs-title function_">set</span>(&#123;<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Credentials&#x27;</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Expose-Headers&#x27;</span>: <span class="hljs-string">&#x27;Xheldon&#x27;</span>,<br>  <span class="hljs-title class_">Xheldon</span>: <span class="hljs-string">&#x27;MyNameIsXheldon&#x27;</span>,<br>&#125;);<br></code></pre></td></tr></table></figure>
 <p><code>a.com</code> 的 <code>index.html</code>:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">xhr.<span class="hljs-property">onreadystatechange</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">if</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">status</span> === <span class="hljs-number">200</span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Res:&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getResponseHeader</span>(<span class="hljs-string">&#x27;Xheldon&#x27;</span>));<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;AllRes:&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getAllResponseHeaders</span>());<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">xhr.<span class="hljs-property">onreadystatechange</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">status</span> === <span class="hljs-number">200</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Res:&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getResponseHeader</span>(<span class="hljs-string">&#x27;Xheldon&#x27;</span>));<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;AllRes:&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getAllResponseHeaders</span>());<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer3.3.png" alt="LocalServer3.3" title="LocalServer3.3" /></p>
 <p>就是这样.</p>
 <p>所以这个小目标是实现不了了, 但是 <code>SO</code> 社区给出了一些解决办法, 比如 使用第三方服务/后端做转发 等, 毕竟规定是死的, 人是活的, 就像 <code>jsonp</code> 一样, 是吧.</p>
@@ -407,7 +420,7 @@
 <p><code>AUTH</code>, 可以让用户在 <code>A</code> 网站访问 <code>B</code> 网站的资源. 前提是需要用户授权, 步骤是:</p>
 <ol>
 <li>在 <code>A</code> 网站发起请求.</li>
-<li>步骤1跳转到 <code>B</code> 站, 确认授权, 再跳转回 <code>A</code> 网站.</li>
+<li>步骤 1 跳转到 <code>B</code> 站, 确认授权, 再跳转回 <code>A</code> 网站.</li>
 <li>此时 <code>A</code> 网站拿到 <code>tooken(令牌)</code> 就能访问用户在 <code>B</code> 网站的资源了.</li>
 </ol>
 <p>有木有很像?</p>
@@ -429,7 +442,7 @@
 <p>远程链接保持不断开, 最简单的办法是将其后台(前提是保持链接, 不然断开链接之后, 请求过来进行 <code>I/O</code> 操作, 仍然会被断开). 可以运行 <code>node index.js &amp;</code>, 或者在已经运行 <code>node index.js</code> 的时候按 <code>ctrl+z</code>, 将其冻结在后台, 然后执行 <code>bg</code> 命令将最近一个后台的任务激活. <code>jobs</code> 命令可以查看在当前任务列表. 如果退出了当前 <code>session</code>, 之后重新连接的话, 任务仍然在运行, 但是 <code>jobs</code> 已经看不到该任务了, 因此需要 <code>ps -A</code> 列出所有进程, 然后 <code>kill ID</code> 终止 <code>node</code> 所在的那个进程, 重新运行即可.</p>
 </li>
 <li>
-<p>完成小目标期间出错的时候我怀疑是没有把自定义字段设置为以 <code>X-</code> 开头才报错的, 看了下标准发现并没有以 <code>X-</code> 的规定, 维基和SO 上只是推荐自定义 <code>Header</code> 以 <code>X-</code> 开头而已.</p>
+<p>完成小目标期间出错的时候我怀疑是没有把自定义字段设置为以 <code>X-</code> 开头才报错的, 看了下标准发现并没有以 <code>X-</code> 的规定, 维基和 SO 上只是推荐自定义 <code>Header</code> 以 <code>X-</code> 开头而已.</p>
 </li>
 <li>
 <p>设置了 <code>withCredentials = true</code> 之后, 服务端的 <code>Access-Control-Allow-Origin</code> 就不能再设置为 <code>wildcard</code> <code>*</code> 了</p>
@@ -882,16 +895,16 @@
   </ul>
 </ul>
 
-        <p class="copyright text-muted">
-          Copyright &copy;
-          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
-          2024
-          <br>
-          Don't Panic | Theme fork from
-          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-          <br>
-          
-        </p>
+          <p class="copyright text-muted">
+            Copyright &copy;
+            <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+            2024
+              <br>
+              Don't Panic | Theme fork from
+              <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+              <br>
+              
+          </p>
       </div>
     </div>
   </div>
@@ -928,7 +941,7 @@
     // Note: 自动切换
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('dark');
           document.documentElement.classList.remove('light');
@@ -936,7 +949,7 @@
       });
     window
       .matchMedia('(prefers-color-scheme: light)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('light');
           document.documentElement.classList.remove('dark');
@@ -952,7 +965,7 @@
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/xblog.min.js?202405251426"></script>
+<script src="/js/xheldon-life-blog.min.js?202405251426"></script>
 
 
 <!-- Simple Jekyll Search 复制逻辑 -->
@@ -960,178 +973,178 @@
 
 <!-- Vercel web analysis -->
 
-<script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  
 
+    <!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
-<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
-
-<!-- async load function -->
-<script>
-  function async (u, c) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) {
-      o.addEventListener(
-        'load',
-        function(e) {
-          c(null, e);
-        },
-        false
-      );
-    }
-    s.parentNode.insertBefore(o, s);
-  }
-</script>
-
-<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
-
-<!-- jquery.tagcloud.js -->
-
-
-<!--fastClick.js -->
-<script>
-  async ('/js/fastclick.min.js', function() {
-    var $nav = document.querySelector('nav');
-    if ($nav) FastClick.attach($nav);
-  });
-</script>
-
-<!-- Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-
-  gtag('config', '{{config.ga_track_id}}');
-</script>
-
-
-<!-- Side Catalog -->
-
-<script type="text/javascript">
-  function generateCatalog(selector) {
-    // TODO: 多语种没有迁移过来
-    // init
-    var P = $('div.post-container'),
-      a,
-      n,
-      t,
-      l,
-      i,
-      c;
-    a = P.find('h1,h2,h3,h4,h5,h6');
-
-    // clean
-    $(selector).html('');
-
-    // appending
-    a.each(function() {
-      n = $(this).prop('tagName').toLowerCase();
-      i = '#' + $(this).prop('id');
-      t = $(this).text();
-      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-      l = $('<li class="' + n + '_nav"></li>').append(c);
-      $(selector).append(l);
-    });
-    return true;
-  }
-
-  generateCatalog('.catalog-body');
-
-  // toggle side catalog
-  $('.catalog-toggle').click(function(e) {
-    e.preventDefault();
-    $('.side-catalog').toggleClass('fold');
-  });
-
-  /*
-   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-   * Fork by Hux to support padding
-   */
-  async ('/js/jquery.nav.js',
-    function() {
-      $('.catalog-body').onePageNav({
-        currentClass: 'active',
-        changeHash: !1,
-        easing: 'swing',
-        filter: '',
-        scrollSpeed: 700,
-        scrollOffset: 0,
-        scrollThreshold: 0.2,
-        begin: null,
-        end: null,
-        scrollChange: null,
-        padding: 80,
-      });
-    }
-  );
-</script>
-
-
-<script>
-  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-  function htmlDecode(input) {
-    var e = document.createElement('textarea');
-    e.innerHTML = input;
-    // handle case of empty input
-    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-  }
-
-  SimpleJekyllSearch({
-    searchInput: document.getElementById('search-input'),
-    resultsContainer: document.getElementById('search-results'),
-    json: '/search.json',
-    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-    noResultsText: 'No results',
-    limit: 50,
-    fuzzy: false,
-    // a hack to get escaped subtitle unescaped. for some reason, 
-    // post.subtitle w/o escape filter nuke entire search.
-    templateMiddleware: function(prop, value, template) {
-      if (prop === 'subtitle' || prop === 'title') {
-        if (value.indexOf("code")) {
-          return htmlDecode(value);
-        } else {
-          return value;
+    <!-- async load function -->
+    <script>
+      function async(u, c) {
+        var d = document,
+          t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+          o.addEventListener(
+            'load',
+            function (e) {
+              c(null, e);
+            },
+            false
+          );
         }
+        s.parentNode.insertBefore(o, s);
       }
-    }
-  });
+    </script>
 
-  $(document).ready(function() {
-    var $searchPage = $('.search-page');
-    var $searchOpen = $('.search-icon');
-    var $searchClose = $('.search-icon-close');
-    var $searchInput = $('#search-input');
-    var $body = $('body');
+    <!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-    $searchOpen.on('click', function(e) {
-      e.preventDefault();
-      $searchPage.toggleClass('search-active');
-      var prevClasses = $body.attr('class') || '';
-      setTimeout(function() {
-        $body.addClass('no-scroll');
-      }, 400)
+    <!-- jquery.tagcloud.js -->
+    
 
-      if ($searchPage.hasClass('search-active')) {
-        $searchClose.on('click', function(e) {
-          e.preventDefault();
-          $searchPage.removeClass('search-active');
-          $body.attr('class', prevClasses); // from closure 
-        });
-        $searchInput.focus();
-      }
-    });
-  });
-</script>
+        <!--fastClick.js -->
+        <script>
+          async('/js/fastclick.min.js', function () {
+            var $nav = document.querySelector('nav');
+            if ($nav) FastClick.attach($nav);
+          });
+        </script>
+
+        <!-- Google Analytics -->
+        
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', '{{config.ga_track_id}}');
+          </script>
+          
+
+            <!-- Side Catalog -->
+            
+              <script type="text/javascript">
+                function generateCatalog(selector) {
+                  // TODO: 多语种没有迁移过来
+                  // init
+                  var P = $('div.post-container'),
+                    a,
+                    n,
+                    t,
+                    l,
+                    i,
+                    c;
+                  a = P.find('h1,h2,h3,h4,h5,h6');
+
+                  // clean
+                  $(selector).html('');
+
+                  // appending
+                  a.each(function () {
+                    n = $(this).prop('tagName').toLowerCase();
+                    i = '#' + $(this).prop('id');
+                    t = $(this).text();
+                    c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+                    l = $('<li class="' + n + '_nav"></li>').append(c);
+                    $(selector).append(l);
+                  });
+                  return true;
+                }
+
+                generateCatalog('.catalog-body');
+
+                // toggle side catalog
+                $('.catalog-toggle').click(function (e) {
+                  e.preventDefault();
+                  $('.side-catalog').toggleClass('fold');
+                });
+
+                /*
+                 * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+                 * Fork by Hux to support padding
+                 */
+                async('/js/jquery.nav.js',
+                  function () {
+                    $('.catalog-body').onePageNav({
+                      currentClass: 'active',
+                      changeHash: !1,
+                      easing: 'swing',
+                      filter: '',
+                      scrollSpeed: 700,
+                      scrollOffset: 0,
+                      scrollThreshold: 0.2,
+                      begin: null,
+                      end: null,
+                      scrollChange: null,
+                      padding: 80,
+                    });
+                  }
+                );
+              </script>
+              
+
+                <script>
+                  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+                  function htmlDecode(input) {
+                    var e = document.createElement('textarea');
+                    e.innerHTML = input;
+                    // handle case of empty input
+                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                  }
+
+
+                  $(document).ready(function () {
+                    SimpleJekyllSearch({
+                      searchInput: document.getElementById('search-input'),
+                      resultsContainer: document.getElementById('search-results'),
+                      json: '/search.json',
+                      searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+                      noResultsText: 'No results',
+                      limit: 50,
+                      fuzzy: false,
+                      // a hack to get escaped subtitle unescaped. for some reason, 
+                      // post.subtitle w/o escape filter nuke entire search.
+                      templateMiddleware: function (prop, value, template) {
+                        if (prop === 'subtitle' || prop === 'title') {
+                          if (value.indexOf("code")) {
+                            return htmlDecode(value);
+                          } else {
+                            return value;
+                          }
+                        }
+                      }
+                    });
+                    var $searchPage = $('.search-page');
+                    var $searchOpen = $('.search-icon');
+                    var $searchClose = $('.search-icon-close');
+                    var $searchInput = $('#search-input');
+                    var $body = $('body');
+
+                    $searchOpen.on('click', function (e) {
+                      e.preventDefault();
+                      $searchPage.toggleClass('search-active');
+                      var prevClasses = $body.attr('class') || '';
+                      setTimeout(function () {
+                        $body.addClass('no-scroll');
+                      }, 400)
+
+                      if ($searchPage.hasClass('search-active')) {
+                        $searchClose.on('click', function (e) {
+                          e.preventDefault();
+                          $searchPage.removeClass('search-active');
+                          $body.attr('class', prevClasses); // from closure 
+                        });
+                        $searchInput.focus();
+                      }
+                    });
+                  });
+                </script>
 
     <!-- Image to hack wechat -->
     <img src="/img/icon_wechat.png" width="0" height="0" />

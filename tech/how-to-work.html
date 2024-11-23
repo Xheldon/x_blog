@@ -100,8 +100,8 @@
   <body ontouchstart="">
     <!-- Navigation -->
     
-      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+  <nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -150,50 +150,53 @@
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
-        var $body = document.body;
-        var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xblog_navbar');
-        var $collapse = document.querySelector('.navbar-collapse');
+        document.addEventListener('DOMContentLoaded', function () {
 
-        var __XNav__ = {
-          close: function () {
-            $navbar.className = ' ';
-            // wait until animation end.
-            setTimeout(function () {
-              // prevent frequently toggle
-              if ($navbar.className.indexOf('in') < 0) {
-                $collapse.style.height = '0px';
-              }
-            }, 400);
-          },
-          open: function () {
-            $collapse.style.height = 'auto';
-            $navbar.className += ' in';
-          },
-        };
-        // Bind Event
-        $toggle.addEventListener('click', function (e) {
-          if ($navbar.className.indexOf('in') > 0) {
+          var $body = document.body;
+          var $toggle = document.querySelector('.navbar-toggle');
+          var $navbar = document.querySelector('#xblog_navbar');
+          var $collapse = document.querySelector('.navbar-collapse');
+          console.log('shit22');
+          var __XNav__ = {
+            close: function () {
+              $navbar.className = ' ';
+              // wait until animation end.
+              setTimeout(function () {
+                // prevent frequently toggle
+                if ($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = '0px';
+                }
+              }, 400);
+            },
+            open: function () {
+              $collapse.style.height = 'auto';
+              $navbar.className += ' in';
+            },
+          };
+          // Bind Event
+          $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+              __XNav__.close();
+            } else {
+              __XNav__.open();
+            }
+          });
+          /**
+           * Since Fastclick is used to delegate 'touchstart' globally
+           * to hack 300ms delay in iOS by performing a fake 'click',
+           * Using 'e.stopPropagation' to stop 'touchstart' event from
+           * $toggle/$collapse will break global delegation.
+           *
+           * Instead, we use a 'e.target' filter to prevent handler
+           * added to document close XheldonNav.
+           *
+           * Also, we use 'click' instead of 'touchstart' as compromise
+           */
+          document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
             __XNav__.close();
-          } else {
-            __XNav__.open();
-          }
-        });
-        /**
-         * Since Fastclick is used to delegate 'touchstart' globally
-         * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from
-         * $toggle/$collapse will break global delegation.
-         *
-         * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.
-         *
-         * Also, we use 'click' instead of 'touchstart' as compromise
-         */
-        document.addEventListener('click', function (e) {
-          if (e.target == $toggle) return;
-          if (e.target.className == 'icon-bar') return;
-          __XNav__.close();
+          });
         });
       </script> <!-- Search -->
 <div class="search-page">
@@ -231,30 +234,40 @@
   
 </style>
 
-<header class="intro-header style-text">
-  
-    <div class="headerMask"></div>
+  <header class="intro-header style-text">
     
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <div class="post-heading">
-            <div class="tags">
-              
-              <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-              
-              <a class="tag" href="/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C" title="工作经验">工作经验</a>
-              
-            </div>
-            <h1>关于代码优化/工作经验重要性的一次切身体会</h1>
-            <h2 class="subheading"></h2>
-            <span class="meta">✍🏼 写于 2015年10月30日</span>&nbsp;&nbsp;&nbsp;
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技术">
+                            技术
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                            title="工作经验">
+                            工作经验
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        关于代码优化/工作经验重要性的一次切身体会
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 写于 2015年10月30日</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
 
   <!-- Post Content -->
   <article>
@@ -288,22 +301,22 @@
                                   <h2 id="前言">前言</h2>
 <p>因为没有项目经验，经常在前端和后端之间的职能上面出错。</p>
 <h2 id="正文">正文</h2>
-<p>比如我需要实现一个点击按钮用后台给的接口查询数据再用handlebar显示到前端的功能，但是每次查询的数据（返回数组，每项为map类型）都是比较长的，全部一次性加载显示在页面不合适，于是我就排序设计为「每次点击按钮都从后台查询数据」，然后对每次获得的数据做slice处理，每次都截取相同的长度，即第一次截取0到x，第二次截取x到2x，以此类推。</p>
-<p>但是这里有个问题，即我不确定后台SQL查询出来的数据是否order by过，如果没有的话，那我每次点击按钮查询的数据都是无序的，如果不能保证数组的顺序，那就不能保证每次按照顺序截取的数据是自己想要的，因为有可能这次截取的0到x个数组项中包含h项，下一次查询这个h项跑到了x+h项里，再次被查询出来丢到handlebar里面了，这是不对的。</p>
-<p>我当然要再自己力所能及的范围内解决这个问题，于是我打算在前端按照数组中的项中的某个属性如uid来sort一下，这时前端的leader问我在做什么，我说我要sort一下后台查出来的这个无序数组，他就跟我说：</p>
+<p>比如我需要实现一个点击按钮用后台给的接口查询数据再用 handlebar 显示到前端的功能，但是每次查询的数据（返回数组，每项为 map 类型）都是比较长的，全部一次性加载显示在页面不合适，于是我就排序设计为「每次点击按钮都从后台查询数据」，然后对每次获得的数据做 slice 处理，每次都截取相同的长度，即第一次截取 0 到 x，第二次截取 x 到 2x，以此类推。</p>
+<p>但是这里有个问题，即我不确定后台 SQL 查询出来的数据是否 order by 过，如果没有的话，那我每次点击按钮查询的数据都是无序的，如果不能保证数组的顺序，那就不能保证每次按照顺序截取的数据是自己想要的，因为有可能这次截取的 0 到 x 个数组项中包含 h 项，下一次查询这个 h 项跑到了 x+h 项里，再次被查询出来丢到 handlebar 里面了，这是不对的。</p>
+<p>我当然要再自己力所能及的范围内解决这个问题，于是我打算在前端按照数组中的项中的某个属性如 uid 来 sort 一下，这时前端的 leader 问我在做什么，我说我要 sort 一下后台查出来的这个无序数组，他就跟我说：</p>
 <p>『这个是后台做的，你前端去做的话会影响性能』</p>
 <p>于是开始跟我解释起来：</p>
-<p>『一般情况下，前端是拿后台给的接口用的，而无需再次对接口查询到的数据做二次处理，不过如果在类似handlebar这种的模板里面，有时候还是需要对查出来的数据中的属性进行拼装处理，再输出到页面，不过你这个情况我可以明确告诉你这个是后台干的事情，他们在给你接口的时候就要保证满足需求』</p>
-<p>『你现在的情况是，你是需要实现翻页功能，但是后端的接口只能每次将所有内容全部查询出来，无法做到需要多少就差多少，也就是说，现有接口无法满足需求，怎么办？两个方案：时间紧的话前端牺牲下性能，直接处理了，时间不紧的话，找后台要接口去，也就是增加一个start，offset的事情，这个接口并不难写。』</p>
+<p>『一般情况下，前端是拿后台给的接口用的，而无需再次对接口查询到的数据做二次处理，不过如果在类似 handlebar 这种的模板里面，有时候还是需要对查出来的数据中的属性进行拼装处理，再输出到页面，不过你这个情况我可以明确告诉你这个是后台干的事情，他们在给你接口的时候就要保证满足需求』</p>
+<p>『你现在的情况是，你是需要实现翻页功能，但是后端的接口只能每次将所有内容全部查询出来，无法做到需要多少就差多少，也就是说，现有接口无法满足需求，怎么办？两个方案：时间紧的话前端牺牲下性能，直接处理了，时间不紧的话，找后台要接口去，也就是增加一个 start，offset 的事情，这个接口并不难写。』</p>
 <p>另外还有一个最佳实践：<strong>查询操作越少越好，能从页面获取信息就不要从数据库获取信息</strong>。<br />
 比如后台增加接口之后我仍然需要进行四次查询操作，分别为：初始化、点击加载更多、选项卡切换。每次都有性能损耗，为什么呢？我的逻辑是这样的：</p>
-<p>第一次：页面初始化时候，查询数据并截取固定长度的数组）并将数据放到页面（查询一次），我需要获取每次点击「更多」按钮多少次，由此来判断最大点击次数，而查询到的总数据长度除以每次需要的数据长度，取整+1就得到需要点击的次数，点击这么多次才能把数据都加载出来，然后显示『没有更多啦』按钮（查询一次）这个毫无疑问吧？</p>
-<p>第二次：点击「加载更多」需要查询数据，将需要的长度放到页面上，然后点击次数count+1（查询一次）</p>
+<p>第一次：页面初始化时候，查询数据并截取固定长度的数组）并将数据放到页面（查询一次），我需要获取每次点击「更多」按钮多少次，由此来判断最大点击次数，而查询到的总数据长度除以每次需要的数据长度，取整+1 就得到需要点击的次数，点击这么多次才能把数据都加载出来，然后显示『没有更多啦』按钮（查询一次）这个毫无疑问吧？</p>
+<p>第二次：点击「加载更多」需要查询数据，将需要的长度放到页面上，然后点击次数 count+1（查询一次）</p>
 <p>第三次：因为有个我的社区、和我的动态两个选项卡，所以点击这两个按钮的时候都需要查询（查询一次）</p>
-<p>最让人崩溃的是，我居然把我的社区和我的动态这两个选项卡的内容重叠！也即每次点击按钮之后原来的内容是被强行用jQuery的$(container).html()方法替换掉，因为中只有一个容器的缘故（我的设计），所以切换之间只能用html，点击『加载更多』才能用append！<br />
+<p>最让人崩溃的是，我居然把我的社区和我的动态这两个选项卡的内容重叠！也即每次点击按钮之后原来的内容是被强行用 jQuery 的$(container).html()方法替换掉，因为中只有一个容器的缘故（我的设计），所以切换之间只能用 html，点击『加载更多』才能用 append！<br />
 真是令人羞耻。</p>
 <h2 id="后记">后记</h2>
-<p>后来我遵循了最佳实践（前面有说过），此外，尽可能的将功能分开和集中来，怎么理解这句话呢？意思就是说，选项卡切换的话，那这个选项卡就负责切换，不管数据查询的事情（功能分开），而『加载更多』按钮就负责查询数据，不干其他的事情，甚至页面初始化的时候也用trigger来触发这个按钮查询数据，而不是在页面加载之初先查询，点击按钮之后再次查询（功能集中）。</p>
+<p>后来我遵循了最佳实践（前面有说过），此外，尽可能的将功能分开和集中来，怎么理解这句话呢？意思就是说，选项卡切换的话，那这个选项卡就负责切换，不管数据查询的事情（功能分开），而『加载更多』按钮就负责查询数据，不干其他的事情，甚至页面初始化的时候也用 trigger 来触发这个按钮查询数据，而不是在页面加载之初先查询，点击按钮之后再次查询（功能集中）。</p>
 
                                     <div class="text-danger">- EOF -</div>
                                     <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a
@@ -751,16 +764,16 @@
   </ul>
 </ul>
 
-        <p class="copyright text-muted">
-          Copyright &copy;
-          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
-          2024
-          <br>
-          Don't Panic | Theme fork from
-          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-          <br>
-          
-        </p>
+          <p class="copyright text-muted">
+            Copyright &copy;
+            <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+            2024
+              <br>
+              Don't Panic | Theme fork from
+              <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+              <br>
+              
+          </p>
       </div>
     </div>
   </div>
@@ -797,7 +810,7 @@
     // Note: 自动切换
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('dark');
           document.documentElement.classList.remove('light');
@@ -805,7 +818,7 @@
       });
     window
       .matchMedia('(prefers-color-scheme: light)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('light');
           document.documentElement.classList.remove('dark');
@@ -821,7 +834,7 @@
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/xblog.min.js?202405251426"></script>
+<script src="/js/xheldon-life-blog.min.js?202405251426"></script>
 
 
 <!-- Simple Jekyll Search 复制逻辑 -->
@@ -829,178 +842,178 @@
 
 <!-- Vercel web analysis -->
 
-<script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  
 
+    <!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
-<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
-
-<!-- async load function -->
-<script>
-  function async (u, c) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) {
-      o.addEventListener(
-        'load',
-        function(e) {
-          c(null, e);
-        },
-        false
-      );
-    }
-    s.parentNode.insertBefore(o, s);
-  }
-</script>
-
-<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
-
-<!-- jquery.tagcloud.js -->
-
-
-<!--fastClick.js -->
-<script>
-  async ('/js/fastclick.min.js', function() {
-    var $nav = document.querySelector('nav');
-    if ($nav) FastClick.attach($nav);
-  });
-</script>
-
-<!-- Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-
-  gtag('config', '{{config.ga_track_id}}');
-</script>
-
-
-<!-- Side Catalog -->
-
-<script type="text/javascript">
-  function generateCatalog(selector) {
-    // TODO: 多语种没有迁移过来
-    // init
-    var P = $('div.post-container'),
-      a,
-      n,
-      t,
-      l,
-      i,
-      c;
-    a = P.find('h1,h2,h3,h4,h5,h6');
-
-    // clean
-    $(selector).html('');
-
-    // appending
-    a.each(function() {
-      n = $(this).prop('tagName').toLowerCase();
-      i = '#' + $(this).prop('id');
-      t = $(this).text();
-      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-      l = $('<li class="' + n + '_nav"></li>').append(c);
-      $(selector).append(l);
-    });
-    return true;
-  }
-
-  generateCatalog('.catalog-body');
-
-  // toggle side catalog
-  $('.catalog-toggle').click(function(e) {
-    e.preventDefault();
-    $('.side-catalog').toggleClass('fold');
-  });
-
-  /*
-   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-   * Fork by Hux to support padding
-   */
-  async ('/js/jquery.nav.js',
-    function() {
-      $('.catalog-body').onePageNav({
-        currentClass: 'active',
-        changeHash: !1,
-        easing: 'swing',
-        filter: '',
-        scrollSpeed: 700,
-        scrollOffset: 0,
-        scrollThreshold: 0.2,
-        begin: null,
-        end: null,
-        scrollChange: null,
-        padding: 80,
-      });
-    }
-  );
-</script>
-
-
-<script>
-  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-  function htmlDecode(input) {
-    var e = document.createElement('textarea');
-    e.innerHTML = input;
-    // handle case of empty input
-    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-  }
-
-  SimpleJekyllSearch({
-    searchInput: document.getElementById('search-input'),
-    resultsContainer: document.getElementById('search-results'),
-    json: '/search.json',
-    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-    noResultsText: 'No results',
-    limit: 50,
-    fuzzy: false,
-    // a hack to get escaped subtitle unescaped. for some reason, 
-    // post.subtitle w/o escape filter nuke entire search.
-    templateMiddleware: function(prop, value, template) {
-      if (prop === 'subtitle' || prop === 'title') {
-        if (value.indexOf("code")) {
-          return htmlDecode(value);
-        } else {
-          return value;
+    <!-- async load function -->
+    <script>
+      function async(u, c) {
+        var d = document,
+          t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+          o.addEventListener(
+            'load',
+            function (e) {
+              c(null, e);
+            },
+            false
+          );
         }
+        s.parentNode.insertBefore(o, s);
       }
-    }
-  });
+    </script>
 
-  $(document).ready(function() {
-    var $searchPage = $('.search-page');
-    var $searchOpen = $('.search-icon');
-    var $searchClose = $('.search-icon-close');
-    var $searchInput = $('#search-input');
-    var $body = $('body');
+    <!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-    $searchOpen.on('click', function(e) {
-      e.preventDefault();
-      $searchPage.toggleClass('search-active');
-      var prevClasses = $body.attr('class') || '';
-      setTimeout(function() {
-        $body.addClass('no-scroll');
-      }, 400)
+    <!-- jquery.tagcloud.js -->
+    
 
-      if ($searchPage.hasClass('search-active')) {
-        $searchClose.on('click', function(e) {
-          e.preventDefault();
-          $searchPage.removeClass('search-active');
-          $body.attr('class', prevClasses); // from closure 
-        });
-        $searchInput.focus();
-      }
-    });
-  });
-</script>
+        <!--fastClick.js -->
+        <script>
+          async('/js/fastclick.min.js', function () {
+            var $nav = document.querySelector('nav');
+            if ($nav) FastClick.attach($nav);
+          });
+        </script>
+
+        <!-- Google Analytics -->
+        
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', '{{config.ga_track_id}}');
+          </script>
+          
+
+            <!-- Side Catalog -->
+            
+              <script type="text/javascript">
+                function generateCatalog(selector) {
+                  // TODO: 多语种没有迁移过来
+                  // init
+                  var P = $('div.post-container'),
+                    a,
+                    n,
+                    t,
+                    l,
+                    i,
+                    c;
+                  a = P.find('h1,h2,h3,h4,h5,h6');
+
+                  // clean
+                  $(selector).html('');
+
+                  // appending
+                  a.each(function () {
+                    n = $(this).prop('tagName').toLowerCase();
+                    i = '#' + $(this).prop('id');
+                    t = $(this).text();
+                    c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+                    l = $('<li class="' + n + '_nav"></li>').append(c);
+                    $(selector).append(l);
+                  });
+                  return true;
+                }
+
+                generateCatalog('.catalog-body');
+
+                // toggle side catalog
+                $('.catalog-toggle').click(function (e) {
+                  e.preventDefault();
+                  $('.side-catalog').toggleClass('fold');
+                });
+
+                /*
+                 * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+                 * Fork by Hux to support padding
+                 */
+                async('/js/jquery.nav.js',
+                  function () {
+                    $('.catalog-body').onePageNav({
+                      currentClass: 'active',
+                      changeHash: !1,
+                      easing: 'swing',
+                      filter: '',
+                      scrollSpeed: 700,
+                      scrollOffset: 0,
+                      scrollThreshold: 0.2,
+                      begin: null,
+                      end: null,
+                      scrollChange: null,
+                      padding: 80,
+                    });
+                  }
+                );
+              </script>
+              
+
+                <script>
+                  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+                  function htmlDecode(input) {
+                    var e = document.createElement('textarea');
+                    e.innerHTML = input;
+                    // handle case of empty input
+                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                  }
+
+
+                  $(document).ready(function () {
+                    SimpleJekyllSearch({
+                      searchInput: document.getElementById('search-input'),
+                      resultsContainer: document.getElementById('search-results'),
+                      json: '/search.json',
+                      searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+                      noResultsText: 'No results',
+                      limit: 50,
+                      fuzzy: false,
+                      // a hack to get escaped subtitle unescaped. for some reason, 
+                      // post.subtitle w/o escape filter nuke entire search.
+                      templateMiddleware: function (prop, value, template) {
+                        if (prop === 'subtitle' || prop === 'title') {
+                          if (value.indexOf("code")) {
+                            return htmlDecode(value);
+                          } else {
+                            return value;
+                          }
+                        }
+                      }
+                    });
+                    var $searchPage = $('.search-page');
+                    var $searchOpen = $('.search-icon');
+                    var $searchClose = $('.search-icon-close');
+                    var $searchInput = $('#search-input');
+                    var $body = $('body');
+
+                    $searchOpen.on('click', function (e) {
+                      e.preventDefault();
+                      $searchPage.toggleClass('search-active');
+                      var prevClasses = $body.attr('class') || '';
+                      setTimeout(function () {
+                        $body.addClass('no-scroll');
+                      }, 400)
+
+                      if ($searchPage.hasClass('search-active')) {
+                        $searchClose.on('click', function (e) {
+                          e.preventDefault();
+                          $searchPage.removeClass('search-active');
+                          $body.attr('class', prevClasses); // from closure 
+                        });
+                        $searchInput.focus();
+                      }
+                    });
+                  });
+                </script>
 
     <!-- Image to hack wechat -->
     <img src="/img/icon_wechat.png" width="0" height="0" />
