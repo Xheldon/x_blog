@@ -110,8 +110,8 @@
   <body ontouchstart="">
     <!-- Navigation -->
     
-      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+  <nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -160,50 +160,53 @@
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
-        var $body = document.body;
-        var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xblog_navbar');
-        var $collapse = document.querySelector('.navbar-collapse');
+        document.addEventListener('DOMContentLoaded', function () {
 
-        var __XNav__ = {
-          close: function () {
-            $navbar.className = ' ';
-            // wait until animation end.
-            setTimeout(function () {
-              // prevent frequently toggle
-              if ($navbar.className.indexOf('in') < 0) {
-                $collapse.style.height = '0px';
-              }
-            }, 400);
-          },
-          open: function () {
-            $collapse.style.height = 'auto';
-            $navbar.className += ' in';
-          },
-        };
-        // Bind Event
-        $toggle.addEventListener('click', function (e) {
-          if ($navbar.className.indexOf('in') > 0) {
+          var $body = document.body;
+          var $toggle = document.querySelector('.navbar-toggle');
+          var $navbar = document.querySelector('#xblog_navbar');
+          var $collapse = document.querySelector('.navbar-collapse');
+          console.log('shit22');
+          var __XNav__ = {
+            close: function () {
+              $navbar.className = ' ';
+              // wait until animation end.
+              setTimeout(function () {
+                // prevent frequently toggle
+                if ($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = '0px';
+                }
+              }, 400);
+            },
+            open: function () {
+              $collapse.style.height = 'auto';
+              $navbar.className += ' in';
+            },
+          };
+          // Bind Event
+          $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+              __XNav__.close();
+            } else {
+              __XNav__.open();
+            }
+          });
+          /**
+           * Since Fastclick is used to delegate 'touchstart' globally
+           * to hack 300ms delay in iOS by performing a fake 'click',
+           * Using 'e.stopPropagation' to stop 'touchstart' event from
+           * $toggle/$collapse will break global delegation.
+           *
+           * Instead, we use a 'e.target' filter to prevent handler
+           * added to document close XheldonNav.
+           *
+           * Also, we use 'click' instead of 'touchstart' as compromise
+           */
+          document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
             __XNav__.close();
-          } else {
-            __XNav__.open();
-          }
-        });
-        /**
-         * Since Fastclick is used to delegate 'touchstart' globally
-         * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from
-         * $toggle/$collapse will break global delegation.
-         *
-         * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.
-         *
-         * Also, we use 'click' instead of 'touchstart' as compromise
-         */
-        document.addEventListener('click', function (e) {
-          if (e.target == $toggle) return;
-          if (e.target.className == 'icon-bar') return;
-          __XNav__.close();
+          });
         });
       </script> <!-- Search -->
 <div class="search-page">
@@ -241,42 +244,67 @@
   
 </style>
 
-<header class="intro-header style-text">
-  
-    <div class="headerMask"></div>
+  <header class="intro-header style-text">
     
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <div class="post-heading">
-            <div class="tags">
-              
-              <a class="tag" href="/archive/?tag=%E6%8A%98%E8%85%BE" title="折腾">折腾</a>
-              
-              <a class="tag" href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1" title="软路由">软路由</a>
-              
-              <a class="tag" href="/archive/?tag=%E7%BD%91%E7%BB%9C" title="网络">网络</a>
-              
-              <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-              
-              <a class="tag" href="/archive/?tag=%E6%8B%93%E6%89%91" title="拓扑">拓扑</a>
-              
-              <a class="tag" href="/archive/?tag=R4S" title="R4S">R4S</a>
-              
-              <a class="tag" href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1" title="旁路由">旁路由</a>
-              
-            </div>
-            <h1>2022 我的家庭网络拓扑结构</h1>
-            <h2 class="subheading"></h2>
-            <span class="meta">✍🏼 写于 2022年09月14日</span>&nbsp;&nbsp;&nbsp;
-            
-            <span class="meta">💡 更新于 2022年09月20日</span>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                          <a class="tag" href="/archive/?tag=%E6%8A%98%E8%85%BE"
+                            title="折腾">
+                            折腾
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                            title="软路由">
+                            软路由
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E7%BD%91%E7%BB%9C"
+                            title="网络">
+                            网络
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技术">
+                            技术
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%8B%93%E6%89%91"
+                            title="拓扑">
+                            拓扑
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=R4S"
+                            title="R4S">
+                            R4S
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                            title="旁路由">
+                            旁路由
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        2022 我的家庭网络拓扑结构
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 写于 2022年09月14日</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 更新于 2022年09月20日</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
 
   <!-- Post Content -->
   <article>
@@ -342,17 +370,17 @@
 <p>下面按上图的设备顺序说一下细节。</p>
 <h2 id="网络连接">网络连接</h2>
 <h3 id="互联网-→-光猫">互联网 → 光猫</h3>
-<p><strong>花费：149元/月（宽带费用）</strong></p>
+<p><strong>花费：149 元/月（宽带费用）</strong></p>
 <p>联通融合宽带 500M 光纤入户，宽带和手机号绑定，融合宽带的意思即手机不停机宽带就一直用，只是需要每年存 1000 块，然后按月返还。另外还送了一条 500M 的宽带让我卖给同事回回血了。办宽带的时候还送了个 WiFi 6 的 中兴路由器，网上查了查 200 块左右，还算稳定，所以一直用着。</p>
 <h3 id="光猫-→-路由器">光猫 → 路由器</h3>
 <p><strong>花费：0</strong></p>
 <p>路由器就是上面说的，办宽带送的。网上很多人说不建议使用光猫拨号，让用路由器拨号，这样可以省下来一个网段，而且光猫的性能显然没有路由器强。不过这些场景都是需要万兆宽带的大佬才搞的，我是觉得没必要，而且多一个网段刚好可以把一些需要直连的智障设备隔离开，索性就没搞了。更何况送的路由器也没有很好。</p>
 <h2 id="光猫-→-无线设备">光猫 → 无线设备</h2>
-<p>有些智障硬件，走复杂网络的时候会出现无法连接的情况，如 360智障看家相机，因此这里我没有关闭光猫的无线功能。光猫的无线也可以在网络出问题的时候作为一个检测手段，来看看是路由器的问题还是光猫的问题。</p>
+<p>有些智障硬件，走复杂网络的时候会出现无法连接的情况，如 360 智障看家相机，因此这里我没有关闭光猫的无线功能。光猫的无线也可以在网络出问题的时候作为一个检测手段，来看看是路由器的问题还是光猫的问题。</p>
 <h2 id="路由器-→-多个设备">路由器 → 多个设备</h2>
 <p>路由器只有四个网口，我曾经在京东搜过目前流行的路由器，发现都是最多只有四个网口。因此，路由器除了连接光猫、连接 R4S，就只剩下两个网口供设备连有线了，我选择把这两个口给 Mac Studio 和 PS 5。</p>
 <h3 id="路由器-→-r4s">路由器 → R4S</h3>
-<p><strong>花费：620元（满血R4S配置）</strong></p>
+<p><strong>花费：620 元（满血 R4S 配置）</strong></p>
 <p>R4S 使用旁路由的方式连接，这种非侵入式的接入方式比较符合我的需求。旁路由也即将 R4S 当成一个路由器下的设备，需要使用 R4S 中服务的设备如主机加速器服务，就把主机网络设置中的网关和 DNS 指向与它同网段的 R4S 的地址即可。</p>
 <h3 id="路由器-→-ps5-mac-studio">路由器 → PS5/Mac Studio</h3>
 <p>实测 PS5 连接有线比无线下载游戏快的多的多。而我的 Mac Studio，这么强的配置不得配个有线的网？</p>
@@ -362,37 +390,37 @@
 <p>这里的细节主要是 R4S 的，因为之前使用旁路由的时候需要各种设置比较费劲，于是这里记录一下。</p>
 <h3 id="旁路由的设置">旁路由的设置</h3>
 <h3 id="r4s-wan-口变-lan-口">R4S Wan 口变 Lan 口</h3>
-<p><strong>花费：79元（USB 转千兆网口线）</strong></p>
+<p><strong>花费：79 元（USB 转千兆网口线）</strong></p>
 <p>因为 R4S 自带了两个网口，且作为旁路由使用，因此就浪费了一个 Wan 口，又得知其实它的 Wan 口和 Lan 口都是通用的，于是就简单设置了一下，将 Wan 口变 Lan 口了。关于如何将 R4S 作为旁路由的设置，见下面这个视频，讲解的比较清楚，按照视频一步一步设置即可：</p>
-<p><a class='link-bookmark' href='https://www.youtube.com/watch?v=w7rwNF2Q3lM&t=399s' target='_blank'><span data-bookmark-img='https://i.ytimg.com/vi/w7rwNF2Q3lM/maxresdefault.jpg' data-bookmark-title='软'><img src='https://i.ytimg.com/vi/w7rwNF2Q3lM/maxresdefault.jpg'/></span><span><span> 软路由做旁路由三步搞定！openwrt软路由 R2S R4S openwrt软路由科学上网设置</span><span> 洋葱的淘宝店：https://shop58444096.taobao.com/ （R2S R4S软路由）软路由做旁路由三步搞定！openwrt软路由 R2S R4S openwrt软路由科学上网设置旁路由在软路由的使用方法里，也算是一种，不管是因为什么原因要做旁路由，它相比主路由和二级路由的设置来说，旁路由的确难...</span><span> https://www.youtube.com/watch?v=w7rwNF2Q3lM&t=399s</span></span></a></p>
+<p><a class='link-bookmark' href='https://www.youtube.com/watch?v=w7rwNF2Q3lM&t=399s' target='_blank'><span data-bookmark-img='https://i.ytimg.com/vi/w7rwNF2Q3lM/maxresdefault.jpg' data-bookmark-title='软'><img src='https://i.ytimg.com/vi/w7rwNF2Q3lM/maxresdefault.jpg'/></span><span><span> 软路由做旁路由三步搞定！openwrt软路由 R2S R4S openwrt软路由科学上网设置</span><span> 洋葱的淘宝店：https://shop58444096.taobao.com/ （R2S R4S 软路由）软路由做旁路由三步搞定！openwrt 软路由 R2S R4S openwrt 软路由科学上网设置旁路由在软路由的使用方法里，也算是一种，不管是因为什么原因要做旁路由，它相比主路由和二级路由的设置来说，旁路由的确难...</span><span> https://www.youtube.com/watch?v=w7rwNF2Q3lM&t=399s</span></span></a></p>
 <p>而 Wan 口变 Lan 口更简单，在 <code>网络-接口</code> 中的 <code>接口总览</code> 中，将 WAN 口删除，然后在 LAN 口中的物理设置中，勾选上 <code>桥接接口</code>，再将下面的两个物理接口 <code>eth0</code> （原 wan 物理接口）和 <code>eth1</code> （现有的 lan 物理接口）都勾选上，保存并应用即可。</p>
 <p caption='删除WAN口接口'><img src='https://static.xheldon.cn/img/in-post/2022/my-home-network-2022/99893BE3-9853-4B8D-ACA6-A8F49ABD1040_2.png' alt='删除WAN口接口' title='删除WAN口接口'></p>
 <p caption='物理接口桥接'><img src='https://static.xheldon.cn/img/in-post/2022/my-home-network-2022/EDACBD7C-2FA3-4713-9090-DAEEBEA6E8E8_2.png' alt='物理接口桥接' title='物理接口桥接'></p>
 <p>至此就大功告成了。我将 Switch 连接了这个 Lan 口，但是因为 Switch 并没有网口，因此使用的是 USB 转千兆网口，京东买的：</p>
 <p caption='绿联USB转网口线'><img src='https://static.xheldon.cn/img/in-post/2022/my-home-network-2022/FE060576-56CF-45CB-8D48-73B03A392CAF_2.png' alt='绿联USB转网口线' title='绿联USB转网口线'></p>
-<p><a class='link-bookmark' href='https://item.jd.com/100023032574.html' target='_blank'><span data-bookmark-img='https://item.jd.com/favicon.ico' data-bookmark-title='【'><img src='https://item.jd.com/favicon.ico'/></span><span><span> 【绿联50922】绿联 USB3.0千兆有线网卡转RJ45网线接口转换头 适用苹果华为笔记本任天堂Switch外置网口扩展坞分线器转接器【行情 报价 价格 评测】-京东</span><span> "【绿联50922】京东JD.COM提供绿联50922正品行货，并包括UGREEN50922网购指南，以及绿联50922图片、50922参数、50922评论、50922心得、50922技巧等信息，网购绿联50922上京东,放心又轻松"</span><span> https://item.jd.com/100023032574.html</span></span></a></p>
+<p><a class='link-bookmark' href='https://item.jd.com/100023032574.html' target='_blank'><span data-bookmark-img='https://item.jd.com/favicon.ico' data-bookmark-title='【'><img src='https://item.jd.com/favicon.ico'/></span><span><span> 【绿联50922】绿联 USB3.0千兆有线网卡转RJ45网线接口转换头 适用苹果华为笔记本任天堂Switch外置网口扩展坞分线器转接器【行情 报价 价格 评测】-京东</span><span> "【绿联 50922】京东 JD.COM 提供绿联 50922 正品行货，并包括 UGREEN50922 网购指南，以及绿联 50922 图片、50922 参数、50922 评论、50922 心得、50922 技巧等信息，网购绿联 50922 上京东,放心又轻松"</span><span> https://item.jd.com/100023032574.html</span></span></a></p>
 <h3 id="r4s-装阿里云盘-webdav">R4S 装阿里云盘 WebDav</h3>
-<p><strong>花费：98元/年（阿里云盘服务）+ 9.9 美元/年 （Infuse 7 订阅）费 + 1399 元（Apple TV）</strong></p>
+<p><strong>花费：98 元/年（阿里云盘服务）+ 9.9 美元/年 （Infuse 7 订阅）费 + 1399 元（Apple TV）</strong></p>
 <p>不赘述，详见：</p>
 <p><a class='link-bookmark' href='https://www.xheldon.com/life/the-way-to-watching-tv.html#%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98' target='_blank'><span data-bookmark-img='https://static.xheldon.cn/img/in-post/2022/the-way-to-watching-tv/photo-1440404653325-ab127d49abc1.png' data-bookmark-title='我'><img src='https://static.xheldon.cn/img/in-post/2022/the-way-to-watching-tv/photo-1440404653325-ab127d49abc1.png'/></span><span><span> 我的家庭观影之路 - Xheldon Blog</span><span> "为家人实现观影自由，也是一种幸福。"</span><span> https://www.xheldon.com/life/the-way-to-watching-tv.html#%E9%98%BF%E9%87%8C%E4%BA%91%E7%9B%98</span></span></a></p>
 <p>（如果访问速度慢，中文博客地址是上述域名 <code>.com</code> 改成 <code>.cn</code> 即可。）</p>
-<h3 id="r4s装-uu-路由器插件">R4S装 UU 路由器插件</h3>
-<p><strong>花费：30元/月（UU 加速器费用）+ 599港元/年（PS 高级会员） + 30.6元/年（任天堂会员）</strong></p>
+<h3 id="r4s-装-uu-路由器插件">R4S 装 UU 路由器插件</h3>
+<p><strong>花费：30 元/月（UU 加速器费用）+ 599 港元/年（PS 高级会员） + 30.6 元/年（任天堂会员）</strong></p>
 <p>买 R4S 的时候内置了该插件，如果需要可以自己装。但神奇的是我曾经因为执念而觉得官方的安装会更好，于是就把 R4S 内置的 UU 加速器插件删了，用官方的方式安装（官方安装方式不带 luci 界面）：</p>
-<p><a class='link-bookmark' href='https://uu.163.com/router/direction.html' target='_blank'><span data-bookmark-img='https://uu.163.com/favicon.ico' data-bookmark-title='网'><img src='https://uu.163.com/favicon.ico'/></span><span><span> 网易UU加速器——玩出超快感，全球加速72小时免费体验</span><span> "网易UU加速器（主机加速）专门针对PS4/PS5/Xbox/Switch游戏进行网络优化，基于网易公司20年技术沉淀，强力保障您在游戏时网络流畅。注册即送3天免费使用，解决游戏下载缓慢、对战掉线、联机卡顿等一系列问题，并提供了UU加速盒、路由器加速、手机热点加速等三种解决方案，一个账号多种选择！"</span><span> https://uu.163.com/router/direction.html</span></span></a></p>
+<p><a class='link-bookmark' href='https://uu.163.com/router/direction.html' target='_blank'><span data-bookmark-img='https://uu.163.com/favicon.ico' data-bookmark-title='网'><img src='https://uu.163.com/favicon.ico'/></span><span><span> 网易UU加速器——玩出超快感，全球加速72小时免费体验</span><span> "网易 UU 加速器（主机加速）专门针对 PS4/PS5/Xbox/Switch 游戏进行网络优化，基于网易公司 20 年技术沉淀，强力保障您在游戏时网络流畅。注册即送 3 天免费使用，解决游戏下载缓慢、对战掉线、联机卡顿等一系列问题，并提供了 UU 加速盒、路由器加速、手机热点加速等三种解决方案，一个账号多种选择！"</span><span> https://uu.163.com/router/direction.html</span></span></a></p>
 <p>但是加速效果很差（也可能是心理作用，毕竟我没有专业的测速和控制变量对比，只是感觉），于是怒重置 R4S 系统，重新用回了预装的带界面的 UU 加速器路由插件，感觉还不错。</p>
 <p caption='UU加速器路由插件'><img src='https://static.xheldon.cn/img/in-post/2022/my-home-network-2022/8C970209-06FC-4D2B-BAAC-9FA0A049C41B_2.png' alt='UU加速器路由插件' title='UU加速器路由插件'></p>
-<p>不过说是带界面的，其实也就一个开关🥲。</p>
+<p>不过说是带界面的，其实也就一个开关 🥲。</p>
 <p>看下 Switch 的加速效果：</p>
 <p caption='使用UU加速器前'><img src='https://static.xheldon.cn/img/in-post/2022/my-home-network-2022/B0B44A63-E971-4E65-A5BD-05C5F32C7168_2.jpeg' alt='使用UU加速器前' title='使用UU加速器前'></p>
 <p caption='使用UU加速器后'><img src='https://static.xheldon.cn/img/in-post/2022/my-home-network-2022/402B4436-D2F3-4353-BF06-A9F6D5225F9F_2.jpeg' alt='使用UU加速器后' title='使用UU加速器后'></p>
-<p>可以看到加速的效果还是很明显的，玩喷射战士3和马里奥卡丁车8 一下午，只发生了 2 次连接失败的情况（喷射战士基本几分钟一局，打一下午有几十局）。</p>
-<h3 id="r4s装-qbittorrent">R4S装 qBittorrent</h3>
+<p>可以看到加速的效果还是很明显的，玩喷射战士 3 和马里奥卡丁车 8 一下午，只发生了 2 次连接失败的情况（喷射战士基本几分钟一局，打一下午有几十局）。</p>
+<h3 id="r4s-装-qbittorrent">R4S 装 qBittorrent</h3>
 <p>不赘述，详见：</p>
 <p><a class='link-bookmark' href='https://www.xheldon.com/life/the-way-to-watching-tv.html#qbittorrent' target='_blank'><span data-bookmark-img='https://static.xheldon.cn/img/in-post/2022/the-way-to-watching-tv/photo-1440404653325-ab127d49abc1.png' data-bookmark-title='我'><img src='https://static.xheldon.cn/img/in-post/2022/the-way-to-watching-tv/photo-1440404653325-ab127d49abc1.png'/></span><span><span> 我的家庭观影之路 - Xheldon Blog</span><span> "为家人实现观影自由，也是一种幸福。"</span><span> https://www.xheldon.com/life/the-way-to-watching-tv.html#qbittorrent</span></span></a></p>
 <p>（如果访问速度慢，中文博客地址是上述域名 <code>.com</code> 改成 <code>.cn</code> 即可。）</p>
 <h2 id="翻墙服务">翻墙服务</h2>
-<p><strong>花费：241元/年（忍者云） + 137元/年（AgentNEO）</strong></p>
+<p><strong>花费：241 元/年（忍者云） + 137 元/年（AgentNEO）</strong></p>
 <p>之前在 R4S 上用过翻墙服务，诚然可以让 Apple TV、PS5 等设备直接访问 YouTube，或者可以直接将主机相册内容分享到 Twitter，但是这些功能一个是并不是必须的，一个是在 R4S 上使用翻墙插件会与 UU 游戏加速器的 VPN 服务冲突（也许可以共存，但是我没折腾了），于是我就只保留了加速器功能，毕竟 YouTube、Netflix 等服务本来看的就少，而且也可以在电脑端看。</p>
 <h2 id="其他">其他</h2>
 <ol>
@@ -872,16 +900,16 @@
   </ul>
 </ul>
 
-        <p class="copyright text-muted">
-          Copyright &copy;
-          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
-          2024
-          <br>
-          Don't Panic | Theme fork from
-          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-          <br>
-          
-        </p>
+          <p class="copyright text-muted">
+            Copyright &copy;
+            <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+            2024
+              <br>
+              Don't Panic | Theme fork from
+              <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+              <br>
+              
+          </p>
       </div>
     </div>
   </div>
@@ -918,7 +946,7 @@
     // Note: 自动切换
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('dark');
           document.documentElement.classList.remove('light');
@@ -926,7 +954,7 @@
       });
     window
       .matchMedia('(prefers-color-scheme: light)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('light');
           document.documentElement.classList.remove('dark');
@@ -942,7 +970,7 @@
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/xblog.min.js?202405251426"></script>
+<script src="/js/xheldon-life-blog.min.js?202405251426"></script>
 
 
 <!-- Simple Jekyll Search 复制逻辑 -->
@@ -950,178 +978,178 @@
 
 <!-- Vercel web analysis -->
 
-<script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  
 
+    <!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
-<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
-
-<!-- async load function -->
-<script>
-  function async (u, c) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) {
-      o.addEventListener(
-        'load',
-        function(e) {
-          c(null, e);
-        },
-        false
-      );
-    }
-    s.parentNode.insertBefore(o, s);
-  }
-</script>
-
-<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
-
-<!-- jquery.tagcloud.js -->
-
-
-<!--fastClick.js -->
-<script>
-  async ('/js/fastclick.min.js', function() {
-    var $nav = document.querySelector('nav');
-    if ($nav) FastClick.attach($nav);
-  });
-</script>
-
-<!-- Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-
-  gtag('config', '{{config.ga_track_id}}');
-</script>
-
-
-<!-- Side Catalog -->
-
-<script type="text/javascript">
-  function generateCatalog(selector) {
-    // TODO: 多语种没有迁移过来
-    // init
-    var P = $('div.post-container'),
-      a,
-      n,
-      t,
-      l,
-      i,
-      c;
-    a = P.find('h1,h2,h3,h4,h5,h6');
-
-    // clean
-    $(selector).html('');
-
-    // appending
-    a.each(function() {
-      n = $(this).prop('tagName').toLowerCase();
-      i = '#' + $(this).prop('id');
-      t = $(this).text();
-      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-      l = $('<li class="' + n + '_nav"></li>').append(c);
-      $(selector).append(l);
-    });
-    return true;
-  }
-
-  generateCatalog('.catalog-body');
-
-  // toggle side catalog
-  $('.catalog-toggle').click(function(e) {
-    e.preventDefault();
-    $('.side-catalog').toggleClass('fold');
-  });
-
-  /*
-   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-   * Fork by Hux to support padding
-   */
-  async ('/js/jquery.nav.js',
-    function() {
-      $('.catalog-body').onePageNav({
-        currentClass: 'active',
-        changeHash: !1,
-        easing: 'swing',
-        filter: '',
-        scrollSpeed: 700,
-        scrollOffset: 0,
-        scrollThreshold: 0.2,
-        begin: null,
-        end: null,
-        scrollChange: null,
-        padding: 80,
-      });
-    }
-  );
-</script>
-
-
-<script>
-  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-  function htmlDecode(input) {
-    var e = document.createElement('textarea');
-    e.innerHTML = input;
-    // handle case of empty input
-    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-  }
-
-  SimpleJekyllSearch({
-    searchInput: document.getElementById('search-input'),
-    resultsContainer: document.getElementById('search-results'),
-    json: '/search.json',
-    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-    noResultsText: 'No results',
-    limit: 50,
-    fuzzy: false,
-    // a hack to get escaped subtitle unescaped. for some reason, 
-    // post.subtitle w/o escape filter nuke entire search.
-    templateMiddleware: function(prop, value, template) {
-      if (prop === 'subtitle' || prop === 'title') {
-        if (value.indexOf("code")) {
-          return htmlDecode(value);
-        } else {
-          return value;
+    <!-- async load function -->
+    <script>
+      function async(u, c) {
+        var d = document,
+          t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+          o.addEventListener(
+            'load',
+            function (e) {
+              c(null, e);
+            },
+            false
+          );
         }
+        s.parentNode.insertBefore(o, s);
       }
-    }
-  });
+    </script>
 
-  $(document).ready(function() {
-    var $searchPage = $('.search-page');
-    var $searchOpen = $('.search-icon');
-    var $searchClose = $('.search-icon-close');
-    var $searchInput = $('#search-input');
-    var $body = $('body');
+    <!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-    $searchOpen.on('click', function(e) {
-      e.preventDefault();
-      $searchPage.toggleClass('search-active');
-      var prevClasses = $body.attr('class') || '';
-      setTimeout(function() {
-        $body.addClass('no-scroll');
-      }, 400)
+    <!-- jquery.tagcloud.js -->
+    
 
-      if ($searchPage.hasClass('search-active')) {
-        $searchClose.on('click', function(e) {
-          e.preventDefault();
-          $searchPage.removeClass('search-active');
-          $body.attr('class', prevClasses); // from closure 
-        });
-        $searchInput.focus();
-      }
-    });
-  });
-</script>
+        <!--fastClick.js -->
+        <script>
+          async('/js/fastclick.min.js', function () {
+            var $nav = document.querySelector('nav');
+            if ($nav) FastClick.attach($nav);
+          });
+        </script>
+
+        <!-- Google Analytics -->
+        
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', '{{config.ga_track_id}}');
+          </script>
+          
+
+            <!-- Side Catalog -->
+            
+              <script type="text/javascript">
+                function generateCatalog(selector) {
+                  // TODO: 多语种没有迁移过来
+                  // init
+                  var P = $('div.post-container'),
+                    a,
+                    n,
+                    t,
+                    l,
+                    i,
+                    c;
+                  a = P.find('h1,h2,h3,h4,h5,h6');
+
+                  // clean
+                  $(selector).html('');
+
+                  // appending
+                  a.each(function () {
+                    n = $(this).prop('tagName').toLowerCase();
+                    i = '#' + $(this).prop('id');
+                    t = $(this).text();
+                    c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+                    l = $('<li class="' + n + '_nav"></li>').append(c);
+                    $(selector).append(l);
+                  });
+                  return true;
+                }
+
+                generateCatalog('.catalog-body');
+
+                // toggle side catalog
+                $('.catalog-toggle').click(function (e) {
+                  e.preventDefault();
+                  $('.side-catalog').toggleClass('fold');
+                });
+
+                /*
+                 * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+                 * Fork by Hux to support padding
+                 */
+                async('/js/jquery.nav.js',
+                  function () {
+                    $('.catalog-body').onePageNav({
+                      currentClass: 'active',
+                      changeHash: !1,
+                      easing: 'swing',
+                      filter: '',
+                      scrollSpeed: 700,
+                      scrollOffset: 0,
+                      scrollThreshold: 0.2,
+                      begin: null,
+                      end: null,
+                      scrollChange: null,
+                      padding: 80,
+                    });
+                  }
+                );
+              </script>
+              
+
+                <script>
+                  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+                  function htmlDecode(input) {
+                    var e = document.createElement('textarea');
+                    e.innerHTML = input;
+                    // handle case of empty input
+                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                  }
+
+
+                  $(document).ready(function () {
+                    SimpleJekyllSearch({
+                      searchInput: document.getElementById('search-input'),
+                      resultsContainer: document.getElementById('search-results'),
+                      json: '/search.json',
+                      searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+                      noResultsText: 'No results',
+                      limit: 50,
+                      fuzzy: false,
+                      // a hack to get escaped subtitle unescaped. for some reason, 
+                      // post.subtitle w/o escape filter nuke entire search.
+                      templateMiddleware: function (prop, value, template) {
+                        if (prop === 'subtitle' || prop === 'title') {
+                          if (value.indexOf("code")) {
+                            return htmlDecode(value);
+                          } else {
+                            return value;
+                          }
+                        }
+                      }
+                    });
+                    var $searchPage = $('.search-page');
+                    var $searchOpen = $('.search-icon');
+                    var $searchClose = $('.search-icon-close');
+                    var $searchInput = $('#search-input');
+                    var $body = $('body');
+
+                    $searchOpen.on('click', function (e) {
+                      e.preventDefault();
+                      $searchPage.toggleClass('search-active');
+                      var prevClasses = $body.attr('class') || '';
+                      setTimeout(function () {
+                        $body.addClass('no-scroll');
+                      }, 400)
+
+                      if ($searchPage.hasClass('search-active')) {
+                        $searchClose.on('click', function (e) {
+                          e.preventDefault();
+                          $searchPage.removeClass('search-active');
+                          $body.attr('class', prevClasses); // from closure 
+                        });
+                        $searchInput.focus();
+                      }
+                    });
+                  });
+                </script>
 
     <!-- Image to hack wechat -->
     <img src="/img/icon_wechat.png" width="0" height="0" />

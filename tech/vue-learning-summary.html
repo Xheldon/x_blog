@@ -100,8 +100,8 @@
   <body ontouchstart="">
     <!-- Navigation -->
     
-      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+  <nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -150,50 +150,53 @@
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
-        var $body = document.body;
-        var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xblog_navbar');
-        var $collapse = document.querySelector('.navbar-collapse');
+        document.addEventListener('DOMContentLoaded', function () {
 
-        var __XNav__ = {
-          close: function () {
-            $navbar.className = ' ';
-            // wait until animation end.
-            setTimeout(function () {
-              // prevent frequently toggle
-              if ($navbar.className.indexOf('in') < 0) {
-                $collapse.style.height = '0px';
-              }
-            }, 400);
-          },
-          open: function () {
-            $collapse.style.height = 'auto';
-            $navbar.className += ' in';
-          },
-        };
-        // Bind Event
-        $toggle.addEventListener('click', function (e) {
-          if ($navbar.className.indexOf('in') > 0) {
+          var $body = document.body;
+          var $toggle = document.querySelector('.navbar-toggle');
+          var $navbar = document.querySelector('#xblog_navbar');
+          var $collapse = document.querySelector('.navbar-collapse');
+          console.log('shit22');
+          var __XNav__ = {
+            close: function () {
+              $navbar.className = ' ';
+              // wait until animation end.
+              setTimeout(function () {
+                // prevent frequently toggle
+                if ($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = '0px';
+                }
+              }, 400);
+            },
+            open: function () {
+              $collapse.style.height = 'auto';
+              $navbar.className += ' in';
+            },
+          };
+          // Bind Event
+          $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+              __XNav__.close();
+            } else {
+              __XNav__.open();
+            }
+          });
+          /**
+           * Since Fastclick is used to delegate 'touchstart' globally
+           * to hack 300ms delay in iOS by performing a fake 'click',
+           * Using 'e.stopPropagation' to stop 'touchstart' event from
+           * $toggle/$collapse will break global delegation.
+           *
+           * Instead, we use a 'e.target' filter to prevent handler
+           * added to document close XheldonNav.
+           *
+           * Also, we use 'click' instead of 'touchstart' as compromise
+           */
+          document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
             __XNav__.close();
-          } else {
-            __XNav__.open();
-          }
-        });
-        /**
-         * Since Fastclick is used to delegate 'touchstart' globally
-         * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from
-         * $toggle/$collapse will break global delegation.
-         *
-         * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.
-         *
-         * Also, we use 'click' instead of 'touchstart' as compromise
-         */
-        document.addEventListener('click', function (e) {
-          if (e.target == $toggle) return;
-          if (e.target.className == 'icon-bar') return;
-          __XNav__.close();
+          });
         });
       </script> <!-- Search -->
 <div class="search-page">
@@ -231,30 +234,40 @@
   
 </style>
 
-<header class="intro-header style-text">
-  
-    <div class="headerMask"></div>
+  <header class="intro-header style-text">
     
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <div class="post-heading">
-            <div class="tags">
-              
-              <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-              
-              <a class="tag" href="/archive/?tag=Vue" title="Vue">Vue</a>
-              
-            </div>
-            <h1>Vue 学习总结</h1>
-            <h2 class="subheading"></h2>
-            <span class="meta">✍🏼 写于 2016年06月01日</span>&nbsp;&nbsp;&nbsp;
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技术">
+                            技术
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=Vue"
+                            title="Vue">
+                            Vue
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        Vue 学习总结
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 写于 2016年06月01日</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
 
   <!-- Post Content -->
   <article>
@@ -301,18 +314,18 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Vue</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span>&#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Vue</span>);<span class="hljs-comment">//true</span><br>    <span class="hljs-keyword">return</span> &#123;&#125;<br>  &#125;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <h2 id="props-vs-data">props vs data</h2>
 <p>初始化组件的时候, <code>prop</code> 上的属性和 <code>data</code> 上的属性以及 <code>computed</code> 的方法, 都被绑定到 <code>Vue</code> 实例上了, 但是 <code>porps</code> 上的属性, 优先级比 <code>data</code> 同名属性要高,下面是验证:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span>&#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;first:&#x27;</span>,<span class="hljs-variable language_">this</span>);<span class="hljs-comment">//list 的实例</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">a</span>: <span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-comment">//属性 a 代表的值挂在 data 上, 但是被下面的 prop 属性同名覆盖(查看上面控制台输出的内容即可)</span><br>      <span class="hljs-attr">d</span>: <span class="hljs-string">&#x27;d&#x27;</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">props</span>: [<span class="hljs-string">&#x27;a&#x27;</span>],<span class="hljs-comment">//和 data 中的 a 属性同名, 因此来自父级的数据将 data 中的同名属性 a 上的数据覆盖.(注:父级是根组件, 挂载在一个实例上)</span><br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;first:&#x27;</span>, <span class="hljs-variable language_">this</span>); <span class="hljs-comment">//list 的实例</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">a</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-comment">//属性 a 代表的值挂在 data 上, 但是被下面的 prop 属性同名覆盖(查看上面控制台输出的内容即可)</span><br>      <span class="hljs-attr">d</span>: <span class="hljs-string">&#x27;d&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">props</span>: [<span class="hljs-string">&#x27;a&#x27;</span>], <span class="hljs-comment">//和 data 中的 a 属性同名, 因此来自父级的数据将 data 中的同名属性 a 上的数据覆盖.(注:父级是根组件, 挂载在一个实例上)</span><br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>结果出现警告(不是报错, 不影响渲染):</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">[<span class="hljs-title class_">Vue</span> warn]: <span class="hljs-title class_">The</span> data property <span class="hljs-string">&quot;a&quot;</span> is already declared <span class="hljs-keyword">as</span> a prop. <span class="hljs-title class_">Use</span> prop <span class="hljs-keyword">default</span> value instead.<br></code></pre></td></tr></table></figure>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/propsVSdata.png" alt="props VS data" title="props VS data" /></p>
 <p>而 <code>computed</code> 返回的函数名和 <code>data</code> 上的属性名可以重复, 并且不会有任何提示, 但是同名覆盖了之后, 因为在初始化的时候, 从控制台可以看到 <code>_data</code> 后于 <code>_computedWatcher</code> 来设置这个重复属性的 <code>getter</code> 和 <code>setter</code>(不知道是不是这个原因, 先放在这个地方以待我深入研究之后再修改这篇文章), 因此导致了被覆盖. 相关原理可以 <a href="https://juejin.im/entry/577639de165abd00547b0924">看这篇介绍</a></p>
 <p>它们都在初始化的时候绑定到了实例 <code>属性</code> 上, 同名的 <code>computed</code> 属性被覆盖了, 但是 <code>Vue devtool</code> 仍然正确显示了出来)</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span>&#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;first:&#x27;</span>,<span class="hljs-variable language_">this</span>);<span class="hljs-comment">//list 的实例</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">ab</span>: <span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-comment">//属性 a 代表的值挂在 data 上, 但是被下面的 prop 属性同名覆盖(查看上面控制台输出的内容即可)</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">computed</span>: &#123;<br>    <span class="hljs-title function_">ab</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed a&#x27;</span>;<span class="hljs-comment">//方法名跟 data 上的 a 属性同名, 因此console 出来的 this 不会出现它的值, 用花括号输出的时候也是输出的 data 上的同名属性</span><br>    &#125;,<br>    <span class="hljs-title function_">f</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed f&#x27;</span><span class="hljs-comment">//方法名没有重复的, 因此 console 出来的 this 会有它的同名属性, 且值为 &#x27;computed f&#x27;, 我们提供的 function 被作为该属性的 getter(计算属性默认只有 getter, 可以手动添加 setter)</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;first:&#x27;</span>, <span class="hljs-variable language_">this</span>); <span class="hljs-comment">//list 的实例</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">ab</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-comment">//属性 a 代表的值挂在 data 上, 但是被下面的 prop 属性同名覆盖(查看上面控制台输出的内容即可)</span><br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">computed</span>: &#123;<br>    <span class="hljs-title function_">ab</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed a&#x27;</span>; <span class="hljs-comment">//方法名跟 data 上的 a 属性同名, 因此console 出来的 this 不会出现它的值, 用花括号输出的时候也是输出的 data 上的同名属性</span><br>    &#125;,<br>    <span class="hljs-title function_">f</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed f&#x27;</span>; <span class="hljs-comment">//方法名没有重复的, 因此 console 出来的 this 会有它的同名属性, 且值为 &#x27;computed f&#x27;, 我们提供的 function 被作为该属性的 getter(计算属性默认只有 getter, 可以手动添加 setter)</span><br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/computedVSdata1.png" alt="computed VS data" title="computed VS data" /></p>
 <p><code>Vue devtool</code> 正确显示了出来:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/computedVSdata3.png" alt="computed VS data" title="computed VS data" /></p>
 <p>如果 <code>computed</code> 上的方法名和 <code>data</code> 上的属性名不重复:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span>&#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;first:&#x27;</span>,<span class="hljs-variable language_">this</span>);<span class="hljs-comment">//list 的实例</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">a</span>: <span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-comment">//属性 a 代表的值挂在 data 上, 但是被下面的 prop 属性同名覆盖(查看上面控制台输出的内容即可)</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">computed</span>: &#123;<br>    <span class="hljs-title function_">ab</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed a&#x27;</span>;<span class="hljs-comment">//方法名跟 data 上的 a 属性同名, 因此 console 出来的 this 不会出现它的值, 但 Vue devtool 控制台正确显示了出来, 用花括号输出的时候也是其返回值 computed a.</span><br>    &#125;,<br>    <span class="hljs-title function_">f</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed f&#x27;</span><span class="hljs-comment">//方法名没有重复的, 因此 console 出来的 this 会有它的同名属性, 且值为 &#x27;computed f&#x27;, 我们提供的 function 被作为该属性的 getter</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;first:&#x27;</span>, <span class="hljs-variable language_">this</span>); <span class="hljs-comment">//list 的实例</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">a</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-comment">//属性 a 代表的值挂在 data 上, 但是被下面的 prop 属性同名覆盖(查看上面控制台输出的内容即可)</span><br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">computed</span>: &#123;<br>    <span class="hljs-title function_">ab</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed a&#x27;</span>; <span class="hljs-comment">//方法名跟 data 上的 a 属性同名, 因此 console 出来的 this 不会出现它的值, 但 Vue devtool 控制台正确显示了出来, 用花括号输出的时候也是其返回值 computed a.</span><br>    &#125;,<br>    <span class="hljs-title function_">f</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed f&#x27;</span>; <span class="hljs-comment">//方法名没有重复的, 因此 console 出来的 this 会有它的同名属性, 且值为 &#x27;computed f&#x27;, 我们提供的 function 被作为该属性的 getter</span><br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/computedVSdata2.png" alt="computed VS data" title="computed VS data" /></p>
 <p>此外, <code>methods</code> 和 <code>computed</code> 方法的区别除了后者有缓存而前者没有外(即后者除非其所依赖的响应式数据发生变化, 否则不会重新计算), 如果两者均是为了返回插值的话,则 <code>methods</code> 上的方法使用是 <code>functionName()</code>,<br />
 而 <code>computed</code> 上的方法引用是 <code>functionName</code>, 即前者需要执行函数, 后者不需要执行.</p>
@@ -321,9 +334,9 @@
 <p>这样的话, 当需要真正的函数------这里如果使用函数调用, 则 <code>computed</code> 需要返回一个函数不仅仅指是返回一个值, 而是需要传递参数------的时候, <code>metohds</code> 首当其冲.</p>
 <p>下面是一个不同于官网的另一个版本的 <code>todo list</code>:</p>
 <p>模板:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">keyup.enter</span>=<span class="hljs-string">&quot;addToList&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;todotext&quot;</span></span><br><span class="hljs-tag">  /&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span><br>  &#123;% raw %&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span>&gt;</span><br>    &#123;&#123;key&#125;&#125;:&#123;&#123;value&#125;&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span>&gt;</span>X<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>  &#123;% endraw %&#125;<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> @<span class="hljs-attr">keyup.enter</span>=<span class="hljs-string">&quot;addToList&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;todotext&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span><br>      &#123;% raw %&#125;<br>      <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span>&gt;</span><br>        &#123;&#123;key&#125;&#125;:&#123;&#123;value&#125;&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span>&gt;</span>X<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>      &#123;% endraw %&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>逻辑:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span>&#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span>&#123;<br>      <span class="hljs-attr">todolist</span>:[],<br>      <span class="hljs-attr">todotext</span>:<span class="hljs-string">&#x27;&#x27;</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-title function_">addToList</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">push</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">todotext</span>);<br>    &#125;,<br>    <span class="hljs-title function_">deletetodo</span>(<span class="hljs-params">key</span>)&#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">splice</span>(key, <span class="hljs-number">1</span>);<br>    &#125;<br>  &#125;<span class="hljs-comment">/*,</span><br><span class="hljs-comment">  computed:&#123;</span><br><span class="hljs-comment">    deletetodo(key)&#123;//不接收参数</span><br><span class="hljs-comment">      console.log(arguments);</span><br><span class="hljs-comment">      this.todolist.splice(key, 1);</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">  &#125;*/</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">todolist</span>: [],<br>      <span class="hljs-attr">todotext</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-title function_">addToList</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">push</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">todotext</span>);<br>    &#125;,<br>    <span class="hljs-title function_">deletetodo</span>(<span class="hljs-params">key</span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">splice</span>(key, <span class="hljs-number">1</span>);<br>    &#125;,<br>  &#125; <span class="hljs-comment">/*,</span><br><span class="hljs-comment">  computed:&#123;</span><br><span class="hljs-comment">    deletetodo(key)&#123;//不接收参数</span><br><span class="hljs-comment">      console.log(arguments);</span><br><span class="hljs-comment">      this.todolist.splice(key, 1);</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">  &#125;*/</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>此例子中, 如果使用这种模板, 则需要传递一个参数, 以在点击 <code>button</code> 的时候删除当前 <code>li</code>, 因此这个情况必须使用 <code>methods</code>.</p>
 <p>使用 <code>computed</code> 的时候, 不接受参数 <a href="http://whereswalden.com/2010/08/22/incompatible-es5-change-literal-getter-and-setter-functions-must-now-have-exactly-zero-or-one-arguments">(因为是一个 <code>getter</code>)</a>, 即使其返回一个 <code>function</code> :</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">computed</span>:&#123;<br>  <span class="hljs-title function_">deletetodo</span>(<span class="hljs-params">key</span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//控制台输出当前组件实例</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">splice</span>(key, <span class="hljs-number">1</span>);<span class="hljs-comment">//报错</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -340,7 +353,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;methods&#x27;</span>)<br>  &#125;<br>&#125;,<br><span class="hljs-attr">computed</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-comment">//computed 返回一个函数</span><br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;computed&#x27;</span>)<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出 <code>computed</code></p>
 <p>如果使用 <a href="https://cn.vuejs.org/v2/guide/events.html#%E6%96%B9%E6%B3%95%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A8">方法事件处理器</a>, 结果一样:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;%raw%&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;a&quot;</span>&gt;</span>click me<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>//注意此处不带括号<br>&#123;% endraw%&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;%raw%&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;a&quot;</span>&gt;</span>click me<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>//注意此处不带括号 &#123;% endraw%&#125;<br></code></pre></td></tr></table></figure>
 <p>逻辑:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;methods&#x27;</span>)<br>  &#125;<br>&#125;,<br><span class="hljs-attr">computed</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-comment">//computed 返回一个函数</span><br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;computed&#x27;</span>)<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出 <code>computed</code></p>
@@ -374,8 +387,7 @@
 <p>有些指令可以直接使用如 <code>v-if</code>, 有些必须加上参数: <code>v-bind:href/v-on:click</code></p>
 <p>注意, <code>value</code> 带不带双引号结果都是一样的, 即 <code>:propName=&quot;value&quot;</code> 和 <code>:propName=value</code> 是一样的, 除特殊说明, 下列所有情况均适用.</p>
 <p>如果 <code>value</code> 转换成布尔值后为 <code>false</code> 则 <code>propName</code> 被移除, 为 <code>true</code> 则该 <code>propName</code> 出现, 实际上, 它遵守以下规则(仅限自定义属性):</p>
-<p>1.<code>null</code>, <code>undefined</code>, <code>false</code> 的直接量, <code>propName</code> 属性被移除.<br />
-2.<code>value</code> 为一个未定义的变量, 如 <code>:propName=&quot;wxd&quot;</code> 则 <code>propName</code> 移除, 且出现警告:</p>
+<p>1.<code>null</code>, <code>undefined</code>, <code>false</code> 的直接量, <code>propName</code> 属性被移除. 2.<code>value</code> 为一个未定义的变量, 如 <code>:propName=&quot;wxd&quot;</code> 则 <code>propName</code> 移除, 且出现警告:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">[<span class="hljs-title class_">Vue</span> warn]: <span class="hljs-title class_">Property</span> or method <span class="hljs-string">&quot;s&quot;</span> is not defined on the instance but referenced during render. <span class="hljs-title class_">Make</span> sure to declare reactive data properties <span class="hljs-keyword">in</span> the data option.<br></code></pre></td></tr></table></figure>
 <p>3.如果 <code>value</code> 为一个数组, 因为数组为对象, 因此 <code>propName</code> 除了下面第二种情况外, 恒存在, 而 <code>value</code> 分以下情况:</p>
 <ol>
@@ -395,35 +407,35 @@
 <p>4.如果 <code>value</code> 为一个对象, 则 <code>propName</code> 保留, 值为 <code>[object Object]</code></p>
 <p>5.如果 <code>value</code> 为一个数字或者字符串, 如 <code>:propName = &quot;'fff'&quot;</code>, 则 <code>propName</code> 保留, <code>value </code>为字符串或数字值.</p>
 <p>看了下源码, 也确实是这么个逻辑:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">setAttr</span> (el, key, value) &#123;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isBooleanAttr</span>(key)) &#123;<br>    <span class="hljs-comment">// set attribute for blank value</span><br>    <span class="hljs-comment">// e.g. &lt;option disabled&gt;Select one&lt;/option&gt;</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isFalsyAttrValue</span>(value)) &#123;<br>      el.<span class="hljs-title function_">removeAttribute</span>(key);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      el.<span class="hljs-title function_">setAttribute</span>(key, key);<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isEnumeratedAttr</span>(key)) &#123;<br>    el.<span class="hljs-title function_">setAttribute</span>(key, <span class="hljs-title function_">isFalsyAttrValue</span>(value) || value === <span class="hljs-string">&#x27;false&#x27;</span> ? <span class="hljs-string">&#x27;false&#x27;</span> : <span class="hljs-string">&#x27;true&#x27;</span>);<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isXlink</span>(key)) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isFalsyAttrValue</span>(value)) &#123;<br>      el.<span class="hljs-title function_">removeAttributeNS</span>(xlinkNS, <span class="hljs-title function_">getXlinkProp</span>(key));<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      el.<span class="hljs-title function_">setAttributeNS</span>(xlinkNS, key, value);<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isFalsyAttrValue</span>(value)) &#123;<br>      el.<span class="hljs-title function_">removeAttribute</span>(key);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      el.<span class="hljs-title function_">setAttribute</span>(key, value);<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">setAttr</span>(<span class="hljs-params">el, key, value</span>) &#123;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isBooleanAttr</span>(key)) &#123;<br>    <span class="hljs-comment">// set attribute for blank value</span><br>    <span class="hljs-comment">// e.g. &lt;option disabled&gt;Select one&lt;/option&gt;</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isFalsyAttrValue</span>(value)) &#123;<br>      el.<span class="hljs-title function_">removeAttribute</span>(key);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      el.<span class="hljs-title function_">setAttribute</span>(key, key);<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isEnumeratedAttr</span>(key)) &#123;<br>    el.<span class="hljs-title function_">setAttribute</span>(<br>      key,<br>      <span class="hljs-title function_">isFalsyAttrValue</span>(value) || value === <span class="hljs-string">&#x27;false&#x27;</span> ? <span class="hljs-string">&#x27;false&#x27;</span> : <span class="hljs-string">&#x27;true&#x27;</span><br>    );<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isXlink</span>(key)) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isFalsyAttrValue</span>(value)) &#123;<br>      el.<span class="hljs-title function_">removeAttributeNS</span>(xlinkNS, <span class="hljs-title function_">getXlinkProp</span>(key));<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      el.<span class="hljs-title function_">setAttributeNS</span>(xlinkNS, key, value);<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isFalsyAttrValue</span>(value)) &#123;<br>      el.<span class="hljs-title function_">removeAttribute</span>(key);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      el.<span class="hljs-title function_">setAttribute</span>(key, value);<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>这些规则仅限自定义属性, 如果是内置属性, 则又不同, 比如绑定 <code>class</code> 属性:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">v-<span class="hljs-attr">bind</span>:<span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;&#123;active: isActive&#125;&quot;</span><br></code></pre></td></tr></table></figure>
 <p>则表示如果 <code>isActive</code> 值为是 <code>false</code> 或者是其他可以转换成布尔值 <code>false</code> 的值, 则 <code>active</code> 这个类名不应用, 反之, 则应用该类名(同 if 语句的真假判定一致).</p>
 <h2 id="过滤器">过滤器</h2>
 <p>过滤器串联起来的话, 第一个过滤器的参数是初始值, 随后的过滤器第一个参数为上一个过滤器的返回值, 没有返回值则为 <code>undefined</code>.</p>
 <p>模板:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">v-bind:prop</span>=<span class="hljs-string">&quot;rawProp | filterOne | filterTwo&quot;</span>&gt;</span>控制台查看 filter 函数的参数<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">v-bind:prop</span>=<span class="hljs-string">&quot;rawProp | filterOne | filterTwo&quot;</span>&gt;</span><br>  控制台查看 filter 函数的参数<br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>逻辑:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">rawProp</span>: <span class="hljs-string">&#x27;this is raw prop&#x27;</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">filters</span>: &#123;<br>    <span class="hljs-title function_">filterOne</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;this param is pass to next filter&#x27;</span><br>    &#125;,<br>    <span class="hljs-title function_">filterTwo</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-header&#x27;</span>,<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">rawProp</span>: <span class="hljs-string">&#x27;this is raw prop&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">filters</span>: &#123;<br>    <span class="hljs-title function_">filterOne</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;this param is pass to next filter&#x27;</span>;<br>    &#125;,<br>    <span class="hljs-title function_">filterTwo</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-header&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>除了第一个 <code>filter</code> ,后面的 <code>filter</code> 没有办法获取到初始值. 当然, 如果你想传参数, 办法有的是, 比如第一个 <code>filter</code> 返回一个数组等等.</p>
 <h2 id="列表渲染">列表渲染</h2>
 <p><code>v-for</code> 中, 如果参数是两个, 则是和原生 <code>js</code> 中的 <code>forEach</code> 参数一致, 是 <code>value, key</code>, 而使用 <code>of</code> 操作符和使用 <code>in</code> 操作符的效果完全一样------虽然在原生 <code>js</code> 中并不是.</p>
 <p>还有个需要注意的地方是, 组件使用 <code>v-for</code> 的时候, 父级是不能自动传递数据到组件的, 因为组件有自己的独立作用域. 因此你为了传递数据给子组件用, 需要使用 <code>props</code> 属性写的稍微麻烦一点:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">my-component</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(item, index) in items&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-bind:item</span>=<span class="hljs-string">&quot;item&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-bind:index</span>=<span class="hljs-string">&quot;index&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">my-component</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">my-component</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(item, index) in items&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-bind:item</span>=<span class="hljs-string">&quot;item&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-bind:index</span>=<span class="hljs-string">&quot;index&quot;</span></span><br><span class="hljs-tag">&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">my-component</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>另外, <code>v-for</code> 使用在对象上面的时候, 迭代值是对象的值, 而不是键, 这个和原生 <code>js</code> 不一样, 原生 <code>js</code> 的 <code>for in</code> 循环若要输出值, 需要你手动遍历 <code>obj['i']</code>, 而想要输出键需要写第二个参数<code>(value, key)</code>:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">obj</span>:&#123;<br>  <span class="hljs-attr">first</span>: <span class="hljs-string">&#x27;xheldon&#x27;</span>,<br>  <span class="hljs-attr">last</span>: <span class="hljs-string">&#x27;cao&#x27;</span>,<br>  <span class="hljs-attr">age</span>: <span class="hljs-string">&#x27;25&#x27;</span><br>&#125;<br>&lt;div v-<span class="hljs-keyword">for</span>=<span class="hljs-string">&quot;(value, key) in obj&quot;</span>&gt;&#123;% raw %&#125;&#123;&#123;value&#125;&#125;-&#123;&#123;key&#125;&#125;&#123;% endraw %&#125;&lt;<span class="hljs-regexp">/div&gt;/</span>/ 输出 xheldon cao <span class="hljs-number">25</span><br></code></pre></td></tr></table></figure>
 <p>注意, 原生 <code>js</code> 除非你手动实现了一个 <code>Symbol.iterator</code>, 否则是不能使用 <code>for of</code> 循环的, 但是 <code>Vue</code> 可以------虽然效果和 <code>for in</code> 完全一样.</p>
 <p>列表渲染还有一个小 <code>tips</code> 叫就地复用原则, 什么意思呢? 还是拿上面说的 <code>tololist</code> 说, 如果没有给每个元素指定一个独一无二的 <code>key</code> 值, 就像这样:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span>&gt;</span>&#123;%raw%&#125;&#123;&#123;value.key&#125;&#125;:&#123;&#123;value.value&#125;&#125;&#123;%endraw%&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span>&gt;</span>X<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span>&gt;</span><br>  &#123;%raw%&#125;&#123;&#123;value.key&#125;&#125;:&#123;&#123;value.value&#125;&#125;&#123;%endraw%&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span></span><br><span class="hljs-tag">    @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    X<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>那么每次点击这个叉叉删除当前 <code>li</code> 的时候, <code>Vue</code> 都会就地复用当前的元素, 直接移动数据到正确的位置, 而不是 <code>remove</code> 删除的 <code>dom</code> 元素, 避免 <code>reflow</code>, 下面是使用 <code>chrome</code> 的 <code>devtool</code> 工具显示的当点击叉叉删除元素的时候, 页面 <code>render</code> 的情况:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/nokey.png" alt="没有key" title="没有key" /></p>
 <p>可以看到 <code>reflow</code> 的部分只有最下面那一点</p>
 <p>而当加上 <code>key</code> 之后:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span> <span class="hljs-attr">:key</span>=<span class="hljs-string">&quot;value.key&quot;</span>&gt;</span>&#123;% raw %&#125;&#123;&#123;value.key&#125;&#125;:&#123;&#123;value.value&#125;&#125;&#123;% endraw%&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span>&gt;</span>X<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span> <span class="hljs-attr">:key</span>=<span class="hljs-string">&quot;value.key&quot;</span>&gt;</span><br>  &#123;% raw %&#125;&#123;&#123;value.key&#125;&#125;:&#123;&#123;value.value&#125;&#125;&#123;% endraw%&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span></span><br><span class="hljs-tag">    @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    X<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>再看点击叉叉之后浏览器的 <code>render</code> 的情况:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/key.png" alt="有key" title="有key" /></p>
 <p>有人可能会有疑惑, 为什么这个地方需要自己手动实现一个 <code>value</code> 上的 <code>value.key</code>, 而不是使用 <code>Vue</code> 给的 <code>(value, key)</code> 中的 <code>key</code> 呢?:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;% raw %&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span> <span class="hljs-attr">:key</span>=<span class="hljs-string">&quot;key&quot;</span>&gt;</span>&#123;&#123;value.key&#125;&#125;:&#123;&#123;value.value&#125;&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span>&gt;</span>X<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>&#123;% endraw %&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;% raw %&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span> <span class="hljs-attr">:key</span>=<span class="hljs-string">&quot;key&quot;</span>&gt;</span><br>  &#123;&#123;value.key&#125;&#125;:&#123;&#123;value.value&#125;&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span>&gt;</span>X<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>&#123;% endraw %&#125;<br></code></pre></td></tr></table></figure>
 <p>答案是, <code>Vue</code> 给的 <code>key</code>, 看起来是个 <code>key</code>, 但是还是跟当前数据是无关的, 因此当删除一个 <code>li</code> 的时候, <code>key</code> 仅仅只是重新算了一下, 并没有跟着删除的或者被删除的元素移除或者上移下移. 如果使用上面的写法, 效果和第一种没有 <code>key</code> 的是一样的, 仍然使用了就地复用策略, 变动的还是数据, 不变的还是 <code>dom</code> 结构, 因此你需要手动实现一个 <code>key</code>, 大致是这样的:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span>&#123;<br>    <span class="hljs-attr">toolist</span>:[],<br>    <span class="hljs-attr">truekey</span>: <span class="hljs-number">0</span>,<span class="hljs-comment">//手动实现一个 key</span><br>    <span class="hljs-attr">todotext</span>: <span class="hljs-string">&#x27;&#x27;</span><br>  &#125;<br>&#125;,<br><span class="hljs-attr">methods</span>: &#123;<br>  <span class="hljs-title function_">addTolist</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">push</span>(&#123;<span class="hljs-attr">value</span>:<span class="hljs-variable language_">this</span>.<span class="hljs-property">todotext</span>, <span class="hljs-attr">key</span>: ++<span class="hljs-variable language_">this</span>.<span class="hljs-property">truekey</span>&#125;);<span class="hljs-comment">// 把 key 放到 data 上</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h2 id="事件处理器">事件处理器</h2>
@@ -436,7 +448,7 @@
 <p>注: 官网文档讲 <code>v-model</code> 的时候会讲到 <code>IME</code>, 说的就是这个问题, 如果希望使用输入法的时候, <code>v-model</code> 也即时响应, 那么可以绑定 <code>input</code> 事件.</p>
 <h2 id="表单控件">表单控件</h2>
 <p><code>v-model</code> 一般用在 <code>input</code> 上面, 而模板中的 <code>input</code> 的 <code>value</code> 值会被忽略------ <code>v-model</code> 只认在 <code>js</code> 中的初始值, 并与之绑定, 因此如果你写了 <code>v-model</code>, 又写了 <code>value</code> 属性, 则后者虽然会出现在 <code>dom</code> 结构中, 但是 <code>js</code> 获取其值的时候会忽略掉它而取 <code>v-model</code> 绑定的值:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;我出现在 dom 结构的 value 属性中, 但是只能通过 getAttribute 获取到我, .value 并不能获取到, 伤心~&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span></span><br><span class="hljs-tag">  <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;我出现在 dom 结构的 value 属性中, 但是只能通过 getAttribute 获取到我, .value 并不能获取到, 伤心~&quot;</span></span><br><span class="hljs-tag">/&gt;</span><br></code></pre></td></tr></table></figure>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span>&#123;<br>    <span class="hljs-attr">todotext</span>:<span class="hljs-string">&#x27;我是真正的初始值, js 获取的是我, 虽然我并不出现在 dom 中的 value 属性中~&#x27;</span>,<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>二者的区别类似于 <code>jQuery</code> 中的, <code>.data</code> 和 <code>.attr</code> 的区别------写在行内的是 <code>attr('data','xxx')</code>的值, 查看 <code>dom</code> 结构看到的也是 <code>xxx</code> 的值, 但是 <code>js</code> 获取到的实际的值是通过 <code>js</code> 绑定的 <code>.data('yyy')</code> 的值------当然除非你使用 <code>attr</code> 读取 <code>dom</code> 结构.(注意, 实例化之后再修改 <code>attr</code> 的值, <code>js</code> 获取到的就是 <code>attr</code> 的值了, 这里的忽略初始值, 仅仅是忽略初始值而已, 举个例子就是初始化之后的 <code>v-model</code> 绑定了 <code>value</code> 之后, 手动修改 <code>dom</code> 结构的 <code>value</code> 值, 那 <code>v-model</code> 再获取该元素的 <code>value</code> 值就会使用修改后的 <code>attr</code> 属性值, 而不是 <code>data</code> 上面的值).</p>
 <p>如果需求比较奇葩, 不想通过 <code>v-model</code> 获取 <code>input</code> 的值, 然后实时更新, 或者需要获取 <code>input</code> 的值处理后再更新, 同时不想使用 <code>v-model</code>, 可以试试 <code>$ref</code>(<code>e.target.value</code> 也是可以的):</p>
@@ -445,7 +457,7 @@
 <p>逻辑:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;&#x27;</span><br>&#125;,<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">input</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">message</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">$refs</span>.<span class="hljs-property">inputvalue</span>.<span class="hljs-property">value</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>官网文档也说了, <code>v-model</code> 只是一个实现双向数据绑定的语法糖:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-bind:value</span>=<span class="hljs-string">&quot;something&quot;</span> <span class="hljs-attr">v-on:input</span>=<span class="hljs-string">&quot;something = $event.target.value&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-bind:value</span>=<span class="hljs-string">&quot;something&quot;</span> <span class="hljs-attr">v-on:input</span>=<span class="hljs-string">&quot;something = $event.target.value&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
 <p>不过监听 <code>input</code> 事件, 导致的问题是使用输入法的时候, 在没按空格选中词语的时候, 也会触发输入的事件, 所以如果没有这个需求, 还是老老实实用 <code>v-model</code> 的好.</p>
 <p>如果需要多个元素绑定相同的值并输出, 常见的需求是一组 <code>checkbox</code>, 这个时候需要使用数组:</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;messages&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;xheldon&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;messages&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;xiaodan&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123;messages&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
@@ -460,10 +472,10 @@
 <p>首先需要区分的是, 什么是 <code>DOM</code> 模板, 什么是字符串模板.</p>
 <p><code>HTML</code> 模板指的是普通的 <code>html</code> 中的元素, 这些元素会通过 <code>Vue</code> 实例的 <code>el</code> 选项进行绑定:<br />
 字符串模板部分:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;div id=<span class="hljs-string">&quot;tpl&quot;</span>&gt;  实例挂载元素<br>  html 自有组件:<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br>  自定义组件:<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">my-component</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-component</span>&gt;</span></span><br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;div id=<span class="hljs-string">&#x27;tpl&#x27;</span>&gt;<br>  &#123;<span class="hljs-string">&#x27; &#x27;</span>&#125;<br>  实例挂载元素 html 自有组件:<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br>  自定义组件:<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">my-component</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-component</span>&gt;</span></span><br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
 <p>字符串模板指的是:</p>
 <p>1.<code>js</code> 中通过 <code>template</code> 注册的模板如:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">component</span>(<span class="hljs-string">&#x27;my-component&#x27;</span>, &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;span&gt;&#123;&#123;message&#125;&#125;&lt;/span&gt;&#x27;</span>,<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;hello, xheldon&#x27;</span><br>  &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">component</span>(<span class="hljs-string">&#x27;my-component&#x27;</span>, &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;span&gt;&#123;&#123;message&#125;&#125;&lt;/span&gt;&#x27;</span>,<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;hello, xheldon&#x27;</span>;<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
 <p>或者:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> <span class="hljs-title class_">Child</span> = &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;div&gt;&#x27;</span>hello, xheldon<span class="hljs-string">&#x27;&lt;/div&gt;&#x27;</span><br>&#125;<br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>(&#123;<br>  <span class="hljs-attr">components</span>: &#123;<br>    <span class="hljs-string">&#x27;my-component&#x27;</span>: <span class="hljs-title class_">Child</span><br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
 <p>2.通过<code>&lt;script type=&quot;text/x-tempalge&quot;&gt;&lt;/script&gt;</code>注册的模板(和 <code>Handlebar</code> 一样)</p>
@@ -472,7 +484,7 @@
 <h2 id="字面量语法-vs-动态语法">字面量语法 VS 动态语法</h2>
 <p>这里需要注意个问题, 即在原生 <code>js</code> 中, 对象的属性是可以为数字的, 只是其会被当成是字符串(仅限 <code>ES5</code>, <code>ES6</code> 中对象属性可以为任意值, 不过和之后要说的不冲突). 但是在 <code>Vue</code> 中, <code>data</code> 属性上不能使用数字作为属性, 如果是字面量语法, 传递数字会被先 <code>toString</code> 处理, 而如果是动态语法, 则会直接当做是数字处理, 不会寻找 <code>data</code> 上绑定的属性值:</p>
 <p>子组件模板:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;%raw%&#125;&#123;&#123;dynamic&#125;&#125;&#123;%endraw%&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;alertProp&quot;</span>&gt;</span> 点我看上面 props 传参的类型<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;%raw%&#125;&#123;&#123;dynamic&#125;&#125;&#123;%endraw%&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;alertProp&quot;</span>&gt;</span>点我看上面 props 传参的类型<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>子组件逻辑:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">props</span>:[<span class="hljs-string">&#x27;dynamic&#x27;</span>],<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">alertProp</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-title function_">alert</span>(<span class="hljs-keyword">typeof</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">dynamic</span>)<span class="hljs-comment">//上面说过了, props 属性也是绑定到 Vue 实例上的, 因此可以直接使用 this</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>父组件-字面量语法:</p>
@@ -481,7 +493,7 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">com-child</span> <span class="hljs-attr">:dynamic</span>=<span class="hljs-string">&quot;11&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">com-todolist</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>以上两种语法下父组件逻辑均为:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-number">11</span>:<span class="hljs-string">&#x27;属性-动态语法&#x27;</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>结果是, 当使用父组件字面量语法毫无疑问点击 <code>button</code> 的时候传递给子组件的是 <code>1</code>, 而且文档也说了, 是字符串的 <code>1</code>, 因此 <code>alert</code> 出来的是 <code>string</code>; 而当父组件动态语法使用 <code>v-bind</code> 绑定了父组件 <code>data</code> 的 <code>1</code> 属性, 但是子组件并没有接收到 <code>1</code> 属性对应的 <code>属性-动态语法</code> 这个值, 而还是 <code>1</code> 这个值,  因此点击 <code>button</code> 时候 <code>alert</code> 出来的是 <code>number</code>.</p>
+<p>结果是, 当使用父组件字面量语法毫无疑问点击 <code>button</code> 的时候传递给子组件的是 <code>1</code>, 而且文档也说了, 是字符串的 <code>1</code>, 因此 <code>alert</code> 出来的是 <code>string</code>; 而当父组件动态语法使用 <code>v-bind</code> 绑定了父组件 <code>data</code> 的 <code>1</code> 属性, 但是子组件并没有接收到 <code>1</code> 属性对应的 <code>属性-动态语法</code> 这个值, 而还是 <code>1</code> 这个值, 因此点击 <code>button</code> 时候 <code>alert</code> 出来的是 <code>number</code>.</p>
 <p>结论: 最好不要使用数字作为 <code>data</code> 对象的属性.</p>
 <p>注意: 如果传递给子组件属性的是一个数组或者对象, 在子组件中修改这个属性值, 则会反映到父组件上------这通常是不应该的, 因为俗话说得好: <code>props down, events up</code>(举例略), 最佳实践应该是使用父组件传递过来的引用类型的深拷贝------当然如果你就是需要子组件影响父组件的状态, 那我祝你好运.</p>
 <p><code>events up</code> 的时候, 如果子组件 <code>$emit</code> 的时候传递了除了事件名之外的其他参数, 则这些参数会被传递给父组件的事件监听函数:</p>
@@ -490,22 +502,22 @@
 <p>子组件逻辑:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">props</span>:[<span class="hljs-string">&#x27;data&#x27;</span>],<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">someEventHandlerForOriginalEventLikeClickOrInput</span>(<span class="hljs-params">e</span>)&#123;<br>    <span class="hljs-variable language_">this</span>.$emit(<span class="hljs-string">&#x27;eventPasstoParent&#x27;</span>, e.<span class="hljs-property">target</span>.<span class="hljs-property">value</span>, <span class="hljs-string">&#x27;someOtherArgus&#x27;</span>);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>父级模板:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">com-todolist</span> <span class="hljs-attr">:data</span>=<span class="hljs-string">&quot;someParentData&quot;</span> @<span class="hljs-attr">eventPasstoParent</span>=<span class="hljs-string">&quot;someParentEventHandler&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">com-todolist</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">com-todolist</span></span><br><span class="hljs-tag">  <span class="hljs-attr">:data</span>=<span class="hljs-string">&quot;someParentData&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">eventPasstoParent</span>=<span class="hljs-string">&quot;someParentEventHandler&quot;</span></span><br><span class="hljs-tag">&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">com-todolist</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>父级逻辑:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">someParentData</span>: <span class="hljs-string">&#x27;&#x27;</span><br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">someParentEventHandler</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">someParentData</span> = [...<span class="hljs-variable language_">arguments</span>];<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h2 id="异步更新队列">异步更新队列</h2>
 <p>有了 <code>Vue</code>, 就不再需要 <code>jQuery</code> 了, 框架的最大好处是避免了我们对相同操作的写出重复的代码. 双向数据绑定可以帮我们解决很多 <code>DOM</code> 操作问题, 但是有些情况下 <code>jQuery</code> 却更有优势, 比如操作 <code>DOM</code> 的时候, <code>jQuery</code> 会接收一个函数作为回调函数, 动画执行完成的时候触发. 而我们使用的双向数据绑定, 设置完数据之后, 如何知道 <code>DOM</code> 已经更新了呢? 答案和 <code>jQuery</code> 一样, 就是异步更新队列.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> vm = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>(&#123;<br>  <span class="hljs-attr">el</span>: <span class="hljs-string">&#x27;#example&#x27;</span>,<br>  <span class="hljs-attr">data</span>: &#123;<br>    <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;123&#x27;</span><br>  &#125;<br>&#125;)<br>vm.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;new message&#x27;</span> <span class="hljs-comment">// 更改数据</span><br>vm.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span> === <span class="hljs-string">&#x27;new message&#x27;</span> <span class="hljs-comment">// false</span><br><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">nextTick</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  vm.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span> === <span class="hljs-string">&#x27;new message&#x27;</span> <span class="hljs-comment">// true</span><br>&#125;)<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> vm = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>(&#123;<br>  <span class="hljs-attr">el</span>: <span class="hljs-string">&#x27;#example&#x27;</span>,<br>  <span class="hljs-attr">data</span>: &#123;<br>    <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;123&#x27;</span>,<br>  &#125;,<br>&#125;);<br>vm.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;new message&#x27;</span>; <span class="hljs-comment">// 更改数据</span><br>vm.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span> === <span class="hljs-string">&#x27;new message&#x27;</span>; <span class="hljs-comment">// false</span><br><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">nextTick</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  vm.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span> === <span class="hljs-string">&#x27;new message&#x27;</span>; <span class="hljs-comment">// true</span><br>&#125;);<br></code></pre></td></tr></table></figure>
 <p>这么写我个人是不推荐的, 因为我认为最好的逻辑是写到实例的属性/方法里面, 而不是写到实例的外面, 还好 <code>Vue</code> 给我们提供了实现方式:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">component</span>(<span class="hljs-string">&#x27;example&#x27;</span>, &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;span&gt;&#123;&#123; message &#125;&#125;&lt;/span&gt;&#x27;</span>,<br>  <span class="hljs-attr">data</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;not updated&#x27;</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-attr">updateMessage</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;updated&#x27;</span><br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>) <span class="hljs-comment">// =&gt; &#x27;没有更新&#x27;</span><br>      <span class="hljs-variable language_">this</span>.$nextTick(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>) <span class="hljs-comment">// =&gt; &#x27;更新完成&#x27;</span><br>      &#125;)<br>    &#125;<br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">component</span>(<span class="hljs-string">&#x27;example&#x27;</span>, &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;span&gt;&#123;&#123; message &#125;&#125;&lt;/span&gt;&#x27;</span>,<br>  <span class="hljs-attr">data</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;not updated&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-attr">updateMessage</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;updated&#x27;</span>;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>); <span class="hljs-comment">// =&gt; &#x27;没有更新&#x27;</span><br>      <span class="hljs-variable language_">this</span>.$nextTick(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>); <span class="hljs-comment">// =&gt; &#x27;更新完成&#x27;</span><br>      &#125;);<br>    &#125;,<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
 <h2 id="动画">动画</h2>
 <p>动画没什么好说的, 主要是 <code>JavaScript</code> 钩子函数中的两个钩子需要说下, 一个是 <code>enterCanceled</code> 和 <code>leaveCancelled</code>. <code>enterCancelled</code> 在 <code>v-if</code> 和 <code>v-show</code> 中使用, 均可能触发, 而触发时机, 是触发 <code>enter</code> 的事件之后, 在动画还没有执行完的过程中, 又需要执行其他动画的时候. 而 <code>leaveCancelled</code> 只用于 <code>v-show</code> 中, 在 <code>v-if</code> 中使用时无效的, 永远不会被触发, 其触发时机是在离开动画(即 <code>xxx-leave-active</code> 动画)播放未完成的时候, 又执行了其他动画的时候触发.</p>
 <p>测试代码:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;show=!show&quot;</span>&gt;</span>点击我切换状态<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">transition</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;go&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">before-enter</span>=<span class="hljs-string">&quot;beforeEnter&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">enter</span>=<span class="hljs-string">&quot;enter&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">after-enter</span>=<span class="hljs-string">&quot;afterEnter&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">enter-cancelled</span>=<span class="hljs-string">&quot;enterCancelled&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">before-leave</span>=<span class="hljs-string">&quot;beforeLeave&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">leave</span>=<span class="hljs-string">&quot;leave&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">after-leave</span>=<span class="hljs-string">&quot;afterLeave&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">leave-cancelled</span>=<span class="hljs-string">&quot;leaveCancelled&quot;</span></span><br><span class="hljs-tag">&gt;</span><br>此处使用 v-show, 修改成 v-if 的时候发现, leave-cancelled 不会触发.<br><span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-show</span>=<span class="hljs-string">&quot;show&quot;</span>&gt;</span><br>  点击展示我, 再点击一下隐藏我.<br><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">transition</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;show=!show&quot;</span>&gt;</span>点击我切换状态<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">transition</span></span><br><span class="hljs-tag">  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;go&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">before-enter</span>=<span class="hljs-string">&quot;beforeEnter&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">enter</span>=<span class="hljs-string">&quot;enter&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">after-enter</span>=<span class="hljs-string">&quot;afterEnter&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">enter-cancelled</span>=<span class="hljs-string">&quot;enterCancelled&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">before-leave</span>=<span class="hljs-string">&quot;beforeLeave&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">leave</span>=<span class="hljs-string">&quot;leave&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">after-leave</span>=<span class="hljs-string">&quot;afterLeave&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">leave-cancelled</span>=<span class="hljs-string">&quot;leaveCancelled&quot;</span></span><br><span class="hljs-tag">&gt;</span><br>  此处使用 v-show, 修改成 v-if 的时候发现, leave-cancelled 不会触发.<br>  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-show</span>=<span class="hljs-string">&quot;show&quot;</span>&gt;</span>点击展示我, 再点击一下隐藏我.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">transition</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>逻辑:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span>&#123;<br>    <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span><br>  &#125;<br>&#125;,<br><span class="hljs-attr">methods</span>: &#123;<br>  <span class="hljs-title function_">beforeEnter</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-title function_">alert</span>(<span class="hljs-number">1</span>);&#125;,<br>  <span class="hljs-title function_">enter</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">2</span>);&#125;,<br>  <span class="hljs-title function_">afterEnter</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">3</span>);&#125;,<br>  <span class="hljs-title function_">enterCancelled</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">4</span>);&#125;,<br>  <span class="hljs-title function_">beforeLeave</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">5</span>);&#125;,<br>  <span class="hljs-title function_">leave</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-title function_">alert</span>(<span class="hljs-number">6</span>);&#125;,<br>  <span class="hljs-title function_">afterLeave</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">7</span>);&#125;,<br>  <span class="hljs-title function_">leaveCancelled</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">8</span>);&#125;<br>&#125;,<br></code></pre></td></tr></table></figure>
 <p>样式:</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span>&#123;<br>  <span class="hljs-attribute">margin-left</span>:<span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">5s</span> ease;<br>&#125;<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">5s</span> <span class="hljs-built_in">cubic-bezier</span>(<span class="hljs-number">1.0</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">0.8</span>, <span class="hljs-number">1.0</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter</span>, <span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">10px</span>);<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">5s</span> ease;<br>&#125;<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">5s</span> <span class="hljs-built_in">cubic-bezier</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">0.8</span>, <span class="hljs-number">1</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter</span>,<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">10px</span>);<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>钩子们的参数除了 <code>enter</code> 和 <code>leave</code> 是 <code>el</code> 元素本身(原生的 <code>Element</code> 类型元素), 和 <code>done</code> 回调函数外, 其他钩子的参数均为 <code>el</code> 元素本身.</p>
 <p>元素的过渡, 最好给每个元素加个 <code>key</code>, 因为之前提到的就地复用策略, 可能在切换的时候直接替换数据, 没有动画效果.</p>
 <p>在官方文档中完全没有说明的一点是, <code>Vue transition</code> 的动画类名 <code>css</code> 的写法是有顺序限制的, <code>v-enter</code> 和 <code>v-leave</code> 必须写在 <code>v-enter-active</code> 和 <code>v-leave-active</code> 的后面, 否则无效, 比如我想写一个点击按钮的淡入淡出效果, 点击按钮之后会有一个按钮从左向右淡入, 同时当前点击的按钮任从左往右淡出:<br />
@@ -514,18 +526,18 @@
 <p>结构:</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;button-animate&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">transition</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;go&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;a&quot;</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;isShow&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>on<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;b&quot;</span> <span class="hljs-attr">v-else</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>off<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">transition</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>如果你的样式是这样的:</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span>&#123;<br>  <span class="hljs-attribute">margin-left</span>:<span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>&#125;<br><span class="hljs-selector-class">.go-enter</span>&#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave</span>&#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span>&#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">0px</span>);<br>&#125;<br><br><span class="hljs-selector-class">.go-leave-active</span>&#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>&#125;<br><span class="hljs-selector-class">.go-enter</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">0px</span>);<br>&#125;<br><br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>会发现动画效果并不如意:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/animateBad.gif" alt="animate" title="animate" /></p>
 <p>而如果把 <code>enter</code> 放到 <code>enter-active</code> 的后面:</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span>&#123;<br>  <span class="hljs-attribute">margin-left</span>:<span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span>&#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">0px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter</span>&#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave-active</span>&#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave</span>&#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">25px</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">0px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">25px</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>就完美了:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/animateGood.gif" alt="animate" title="animate" /></p>
 <p>在对比了这四个 <code>css</code> 类名的可能顺序之后, 发现只要 <code>v-enter</code> 放到 <code>v-enter-active</code> 的后面就能实现效果, 其他类名随意.</p>
 <p><code>transition</code> 标签中不能放其他元素而只能是放需要动画的元素, 如果上述示例结构写成这个样子:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">transition</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;go&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;button-animate&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;a&quot;</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;isShow&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>on<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;b&quot;</span> <span class="hljs-attr">v-else</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>off<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">transition</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">transition</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;go&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;button-animate&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;a&quot;</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;isShow&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>on<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;b&quot;</span> <span class="hljs-attr">v-else</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>off<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">transition</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>则不会有任何动画效果, 而如果在正常 <code>css</code> 类名中使用一些 <code>css</code> 属性规定了元素的样式, 而在动画类名如 <code>v-enter</code> 中又使用了相同的属性, 则也不会生效, <a href="https://cn.vuejs.org/v2/guide/transitions.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%87%E6%B8%A1%E7%B1%BB%E5%90%8D">文档</a> 说&quot;他们的优先级高于普通的类名&quot;, 实则不然(也不知道是我理解错误?欢迎指正), 还是上例, 样式中, 设置 <code>button</code> 的正常 <code>css</code> 属性:</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span>&#123;<br>  <span class="hljs-attribute">margin-left</span>:<span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>  <span class="hljs-attribute">transform</span>:<span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span>&#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">0px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter</span>&#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave-active</span>&#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave</span>&#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">25px</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">0px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">25px</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>结果:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/animateWithout.gif" alt="animate" title="animate" /></p>
 <p>可以看到, 只有 <code>opacity</code> 产生了动画, <code>transform</code> 没有动画!(同学们可以测试下是用 <code>animate.css</code> 的时候, 使用 <code>Animate.css</code> 中相同的属性来提前设置元素, 是否还有动画效果, 欢迎提 <code>issue</code>.)</p>
@@ -997,16 +1009,16 @@
   </ul>
 </ul>
 
-        <p class="copyright text-muted">
-          Copyright &copy;
-          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
-          2024
-          <br>
-          Don't Panic | Theme fork from
-          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-          <br>
-          
-        </p>
+          <p class="copyright text-muted">
+            Copyright &copy;
+            <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+            2024
+              <br>
+              Don't Panic | Theme fork from
+              <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+              <br>
+              
+          </p>
       </div>
     </div>
   </div>
@@ -1043,7 +1055,7 @@
     // Note: 自动切换
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('dark');
           document.documentElement.classList.remove('light');
@@ -1051,7 +1063,7 @@
       });
     window
       .matchMedia('(prefers-color-scheme: light)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('light');
           document.documentElement.classList.remove('dark');
@@ -1067,7 +1079,7 @@
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/xblog.min.js?202405251426"></script>
+<script src="/js/xheldon-life-blog.min.js?202405251426"></script>
 
 
 <!-- Simple Jekyll Search 复制逻辑 -->
@@ -1075,178 +1087,178 @@
 
 <!-- Vercel web analysis -->
 
-<script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  
 
+    <!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
-<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
-
-<!-- async load function -->
-<script>
-  function async (u, c) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) {
-      o.addEventListener(
-        'load',
-        function(e) {
-          c(null, e);
-        },
-        false
-      );
-    }
-    s.parentNode.insertBefore(o, s);
-  }
-</script>
-
-<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
-
-<!-- jquery.tagcloud.js -->
-
-
-<!--fastClick.js -->
-<script>
-  async ('/js/fastclick.min.js', function() {
-    var $nav = document.querySelector('nav');
-    if ($nav) FastClick.attach($nav);
-  });
-</script>
-
-<!-- Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-
-  gtag('config', '{{config.ga_track_id}}');
-</script>
-
-
-<!-- Side Catalog -->
-
-<script type="text/javascript">
-  function generateCatalog(selector) {
-    // TODO: 多语种没有迁移过来
-    // init
-    var P = $('div.post-container'),
-      a,
-      n,
-      t,
-      l,
-      i,
-      c;
-    a = P.find('h1,h2,h3,h4,h5,h6');
-
-    // clean
-    $(selector).html('');
-
-    // appending
-    a.each(function() {
-      n = $(this).prop('tagName').toLowerCase();
-      i = '#' + $(this).prop('id');
-      t = $(this).text();
-      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-      l = $('<li class="' + n + '_nav"></li>').append(c);
-      $(selector).append(l);
-    });
-    return true;
-  }
-
-  generateCatalog('.catalog-body');
-
-  // toggle side catalog
-  $('.catalog-toggle').click(function(e) {
-    e.preventDefault();
-    $('.side-catalog').toggleClass('fold');
-  });
-
-  /*
-   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-   * Fork by Hux to support padding
-   */
-  async ('/js/jquery.nav.js',
-    function() {
-      $('.catalog-body').onePageNav({
-        currentClass: 'active',
-        changeHash: !1,
-        easing: 'swing',
-        filter: '',
-        scrollSpeed: 700,
-        scrollOffset: 0,
-        scrollThreshold: 0.2,
-        begin: null,
-        end: null,
-        scrollChange: null,
-        padding: 80,
-      });
-    }
-  );
-</script>
-
-
-<script>
-  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-  function htmlDecode(input) {
-    var e = document.createElement('textarea');
-    e.innerHTML = input;
-    // handle case of empty input
-    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-  }
-
-  SimpleJekyllSearch({
-    searchInput: document.getElementById('search-input'),
-    resultsContainer: document.getElementById('search-results'),
-    json: '/search.json',
-    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-    noResultsText: 'No results',
-    limit: 50,
-    fuzzy: false,
-    // a hack to get escaped subtitle unescaped. for some reason, 
-    // post.subtitle w/o escape filter nuke entire search.
-    templateMiddleware: function(prop, value, template) {
-      if (prop === 'subtitle' || prop === 'title') {
-        if (value.indexOf("code")) {
-          return htmlDecode(value);
-        } else {
-          return value;
+    <!-- async load function -->
+    <script>
+      function async(u, c) {
+        var d = document,
+          t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+          o.addEventListener(
+            'load',
+            function (e) {
+              c(null, e);
+            },
+            false
+          );
         }
+        s.parentNode.insertBefore(o, s);
       }
-    }
-  });
+    </script>
 
-  $(document).ready(function() {
-    var $searchPage = $('.search-page');
-    var $searchOpen = $('.search-icon');
-    var $searchClose = $('.search-icon-close');
-    var $searchInput = $('#search-input');
-    var $body = $('body');
+    <!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-    $searchOpen.on('click', function(e) {
-      e.preventDefault();
-      $searchPage.toggleClass('search-active');
-      var prevClasses = $body.attr('class') || '';
-      setTimeout(function() {
-        $body.addClass('no-scroll');
-      }, 400)
+    <!-- jquery.tagcloud.js -->
+    
 
-      if ($searchPage.hasClass('search-active')) {
-        $searchClose.on('click', function(e) {
-          e.preventDefault();
-          $searchPage.removeClass('search-active');
-          $body.attr('class', prevClasses); // from closure 
-        });
-        $searchInput.focus();
-      }
-    });
-  });
-</script>
+        <!--fastClick.js -->
+        <script>
+          async('/js/fastclick.min.js', function () {
+            var $nav = document.querySelector('nav');
+            if ($nav) FastClick.attach($nav);
+          });
+        </script>
+
+        <!-- Google Analytics -->
+        
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', '{{config.ga_track_id}}');
+          </script>
+          
+
+            <!-- Side Catalog -->
+            
+              <script type="text/javascript">
+                function generateCatalog(selector) {
+                  // TODO: 多语种没有迁移过来
+                  // init
+                  var P = $('div.post-container'),
+                    a,
+                    n,
+                    t,
+                    l,
+                    i,
+                    c;
+                  a = P.find('h1,h2,h3,h4,h5,h6');
+
+                  // clean
+                  $(selector).html('');
+
+                  // appending
+                  a.each(function () {
+                    n = $(this).prop('tagName').toLowerCase();
+                    i = '#' + $(this).prop('id');
+                    t = $(this).text();
+                    c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+                    l = $('<li class="' + n + '_nav"></li>').append(c);
+                    $(selector).append(l);
+                  });
+                  return true;
+                }
+
+                generateCatalog('.catalog-body');
+
+                // toggle side catalog
+                $('.catalog-toggle').click(function (e) {
+                  e.preventDefault();
+                  $('.side-catalog').toggleClass('fold');
+                });
+
+                /*
+                 * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+                 * Fork by Hux to support padding
+                 */
+                async('/js/jquery.nav.js',
+                  function () {
+                    $('.catalog-body').onePageNav({
+                      currentClass: 'active',
+                      changeHash: !1,
+                      easing: 'swing',
+                      filter: '',
+                      scrollSpeed: 700,
+                      scrollOffset: 0,
+                      scrollThreshold: 0.2,
+                      begin: null,
+                      end: null,
+                      scrollChange: null,
+                      padding: 80,
+                    });
+                  }
+                );
+              </script>
+              
+
+                <script>
+                  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+                  function htmlDecode(input) {
+                    var e = document.createElement('textarea');
+                    e.innerHTML = input;
+                    // handle case of empty input
+                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                  }
+
+
+                  $(document).ready(function () {
+                    SimpleJekyllSearch({
+                      searchInput: document.getElementById('search-input'),
+                      resultsContainer: document.getElementById('search-results'),
+                      json: '/search.json',
+                      searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+                      noResultsText: 'No results',
+                      limit: 50,
+                      fuzzy: false,
+                      // a hack to get escaped subtitle unescaped. for some reason, 
+                      // post.subtitle w/o escape filter nuke entire search.
+                      templateMiddleware: function (prop, value, template) {
+                        if (prop === 'subtitle' || prop === 'title') {
+                          if (value.indexOf("code")) {
+                            return htmlDecode(value);
+                          } else {
+                            return value;
+                          }
+                        }
+                      }
+                    });
+                    var $searchPage = $('.search-page');
+                    var $searchOpen = $('.search-icon');
+                    var $searchClose = $('.search-icon-close');
+                    var $searchInput = $('#search-input');
+                    var $body = $('body');
+
+                    $searchOpen.on('click', function (e) {
+                      e.preventDefault();
+                      $searchPage.toggleClass('search-active');
+                      var prevClasses = $body.attr('class') || '';
+                      setTimeout(function () {
+                        $body.addClass('no-scroll');
+                      }, 400)
+
+                      if ($searchPage.hasClass('search-active')) {
+                        $searchClose.on('click', function (e) {
+                          e.preventDefault();
+                          $searchPage.removeClass('search-active');
+                          $body.attr('class', prevClasses); // from closure 
+                        });
+                        $searchInput.focus();
+                      }
+                    });
+                  });
+                </script>
 
     <!-- Image to hack wechat -->
     <img src="/img/icon_wechat.png" width="0" height="0" />

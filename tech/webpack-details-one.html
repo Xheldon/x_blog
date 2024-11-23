@@ -100,8 +100,8 @@
   <body ontouchstart="">
     <!-- Navigation -->
     
-      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+  <nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -150,50 +150,53 @@
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
-        var $body = document.body;
-        var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xblog_navbar');
-        var $collapse = document.querySelector('.navbar-collapse');
+        document.addEventListener('DOMContentLoaded', function () {
 
-        var __XNav__ = {
-          close: function () {
-            $navbar.className = ' ';
-            // wait until animation end.
-            setTimeout(function () {
-              // prevent frequently toggle
-              if ($navbar.className.indexOf('in') < 0) {
-                $collapse.style.height = '0px';
-              }
-            }, 400);
-          },
-          open: function () {
-            $collapse.style.height = 'auto';
-            $navbar.className += ' in';
-          },
-        };
-        // Bind Event
-        $toggle.addEventListener('click', function (e) {
-          if ($navbar.className.indexOf('in') > 0) {
+          var $body = document.body;
+          var $toggle = document.querySelector('.navbar-toggle');
+          var $navbar = document.querySelector('#xblog_navbar');
+          var $collapse = document.querySelector('.navbar-collapse');
+          console.log('shit22');
+          var __XNav__ = {
+            close: function () {
+              $navbar.className = ' ';
+              // wait until animation end.
+              setTimeout(function () {
+                // prevent frequently toggle
+                if ($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = '0px';
+                }
+              }, 400);
+            },
+            open: function () {
+              $collapse.style.height = 'auto';
+              $navbar.className += ' in';
+            },
+          };
+          // Bind Event
+          $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+              __XNav__.close();
+            } else {
+              __XNav__.open();
+            }
+          });
+          /**
+           * Since Fastclick is used to delegate 'touchstart' globally
+           * to hack 300ms delay in iOS by performing a fake 'click',
+           * Using 'e.stopPropagation' to stop 'touchstart' event from
+           * $toggle/$collapse will break global delegation.
+           *
+           * Instead, we use a 'e.target' filter to prevent handler
+           * added to document close XheldonNav.
+           *
+           * Also, we use 'click' instead of 'touchstart' as compromise
+           */
+          document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
             __XNav__.close();
-          } else {
-            __XNav__.open();
-          }
-        });
-        /**
-         * Since Fastclick is used to delegate 'touchstart' globally
-         * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from
-         * $toggle/$collapse will break global delegation.
-         *
-         * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.
-         *
-         * Also, we use 'click' instead of 'touchstart' as compromise
-         */
-        document.addEventListener('click', function (e) {
-          if (e.target == $toggle) return;
-          if (e.target.className == 'icon-bar') return;
-          __XNav__.close();
+          });
         });
       </script> <!-- Search -->
 <div class="search-page">
@@ -231,30 +234,40 @@
   
 </style>
 
-<header class="intro-header style-text">
-  
-    <div class="headerMask"></div>
+  <header class="intro-header style-text">
     
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <div class="post-heading">
-            <div class="tags">
-              
-              <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-              
-              <a class="tag" href="/archive/?tag=Webpack" title="Webpack">Webpack</a>
-              
-            </div>
-            <h1>Webpack 异步按需加载</h1>
-            <h2 class="subheading"></h2>
-            <span class="meta">✍🏼 写于 2016年05月02日</span>&nbsp;&nbsp;&nbsp;
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技术">
+                            技术
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=Webpack"
+                            title="Webpack">
+                            Webpack
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        Webpack 异步按需加载
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 写于 2016年05月02日</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
 
   <!-- Post Content -->
   <article>
@@ -291,19 +304,19 @@
 <h2 id="正文">正文</h2>
 <p>实现主要是靠 <code>require.ensure([], callback)</code> 这个东西, 老实说我会注意到这个东西是因为在 <code>webpack.config.js</code> 的 <code>output</code> 字段有一个字段叫做 <code>chunkFilename</code>, 我这个打破沙锅的毛病就不得不想看看这个和 <code>filename</code> 字段有什么区别, 搜索了一下发现 <code>filename</code> (假设是 <code>bundle.js</code>) 是把页面需要的所有 <code>js</code> 打包, 最终生成的总的 <code>js</code> (当然多页面的时候可以提取公共模块, 这个不是本次的重点). 而 <code>chunkFilename</code> 是那些非入口点(<code>entry</code> 中列举的字段)的 <code>chunk</code> 文件打包生成的文件, 主要使用在按需异步加载模块的时候.</p>
 <p>这些文件没有打包在 <code>bundle.js</code> 中, 而且只被部分(非全部的)模块依赖, 同时又需要异步加载, 因此就会通过使用 <code>require.ensure</code> 被打包到额外的 <code>js</code> 中, 而这些 <code>js</code>, 仍然是通过最终的 <code>bundle.js</code> 创建 <code>script</code> 标签, 然后被 <code>append</code> 到页面中的:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// This file contains only the entry chunk.</span><br><span class="hljs-comment">// The chunk loading function for additional chunks</span><br>__webpack_require__.<span class="hljs-property">e</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">requireEnsure</span>(<span class="hljs-params">chunkId, callback</span>) &#123;<br>  <span class="hljs-comment">// &quot;0&quot; is the signal for &quot;already loaded&quot;</span><br>  <span class="hljs-keyword">if</span>(installedChunks[chunkId] === <span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">return</span> callback.<span class="hljs-title function_">call</span>(<span class="hljs-literal">null</span>, __webpack_require__);<br><br>  <span class="hljs-comment">// an array means &quot;currently loading&quot;.</span><br>  <span class="hljs-keyword">if</span>(installedChunks[chunkId] !== <span class="hljs-literal">undefined</span>) &#123;<br>    installedChunks[chunkId].<span class="hljs-title function_">push</span>(callback);<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">// start chunk loading</span><br>    installedChunks[chunkId] = [callback];<br>    <span class="hljs-keyword">var</span> head = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementsByTagName</span>(<span class="hljs-string">&#x27;head&#x27;</span>)[<span class="hljs-number">0</span>];<br>    <span class="hljs-keyword">var</span> script = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;script&#x27;</span>);<br>    script.<span class="hljs-property">type</span> = <span class="hljs-string">&#x27;text/javascript&#x27;</span>;<br>    script.<span class="hljs-property">charset</span> = <span class="hljs-string">&#x27;utf-8&#x27;</span>;<br>    script.<span class="hljs-property">async</span> = <span class="hljs-literal">true</span>;<br><br>    script.<span class="hljs-property">src</span> = __webpack_require__.<span class="hljs-property">p</span> + <span class="hljs-string">&quot;&quot;</span> + (&#123;&#125;[chunkId]||chunkId) + <span class="hljs-string">&quot;.js&quot;</span>;<br>    head.<span class="hljs-title function_">appendChild</span>(script);<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// This file contains only the entry chunk.</span><br><span class="hljs-comment">// The chunk loading function for additional chunks</span><br>__webpack_require__.<span class="hljs-property">e</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">requireEnsure</span>(<span class="hljs-params">chunkId, callback</span>) &#123;<br>  <span class="hljs-comment">// &quot;0&quot; is the signal for &quot;already loaded&quot;</span><br>  <span class="hljs-keyword">if</span> (installedChunks[chunkId] === <span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">return</span> callback.<span class="hljs-title function_">call</span>(<span class="hljs-literal">null</span>, __webpack_require__);<br><br>  <span class="hljs-comment">// an array means &quot;currently loading&quot;.</span><br>  <span class="hljs-keyword">if</span> (installedChunks[chunkId] !== <span class="hljs-literal">undefined</span>) &#123;<br>    installedChunks[chunkId].<span class="hljs-title function_">push</span>(callback);<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">// start chunk loading</span><br>    installedChunks[chunkId] = [callback];<br>    <span class="hljs-keyword">var</span> head = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementsByTagName</span>(<span class="hljs-string">&#x27;head&#x27;</span>)[<span class="hljs-number">0</span>];<br>    <span class="hljs-keyword">var</span> script = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;script&#x27;</span>);<br>    script.<span class="hljs-property">type</span> = <span class="hljs-string">&#x27;text/javascript&#x27;</span>;<br>    script.<span class="hljs-property">charset</span> = <span class="hljs-string">&#x27;utf-8&#x27;</span>;<br>    script.<span class="hljs-property">async</span> = <span class="hljs-literal">true</span>;<br><br>    script.<span class="hljs-property">src</span> = __webpack_require__.<span class="hljs-property">p</span> + <span class="hljs-string">&#x27;&#x27;</span> + (&#123;&#125;[chunkId] || chunkId) + <span class="hljs-string">&#x27;.js&#x27;</span>;<br>    head.<span class="hljs-title function_">appendChild</span>(script);<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>OK, 这些理解起来都很容易, 但是查看 <a href="http://webpack.github.io/docs/code-splitting.html#defining-a-split-point">官方文档</a> 的时候, 发现了几个需要注意的细节.</p>
 <h2 id="commonjs-和-amd-require-时候的区别"><em><code>CommonJS</code></em> 和 <em><code>AMD</code></em> <code>require</code> 时候的区别</h2>
 <p><code>CommonJS</code> 是使用 <code>require.ensure([''], callback)</code> 来处理异步加载模块的, <code>AMD</code> 是和一般的 <code>AMD</code> 模块一样, 使用 <code>require</code> 一个数组依赖的形式处理的 <code>require([''], callback)</code></p>
 <p>但是 <code>CommonJS</code> 加载数组中模块的时候, 是只加载不执行, 除非是在 <code>callback</code> 中, 又 <code>require</code> 了一遍才执行:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">require</span>([<span class="hljs-string">&#x27;./other/ensure.js&#x27;</span>,<span class="hljs-string">&#x27;./other/ensure2.js&#x27;</span>], <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">var</span> ensure = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./other/ensure.js&#x27;</span>);<br>  <span class="hljs-keyword">var</span> ensure2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./other/ensure2.js&#x27;</span>);<br><br>  <span class="hljs-title function_">module1</span>();<br>  <span class="hljs-title function_">module2</span>();<br>&#125;, chunkFilename);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">require</span>([<span class="hljs-string">&#x27;./other/ensure.js&#x27;</span>, <span class="hljs-string">&#x27;./other/ensure2.js&#x27;</span>], <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> ensure = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./other/ensure.js&#x27;</span>);<br>  <span class="hljs-keyword">var</span> ensure2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./other/ensure2.js&#x27;</span>);<br><br>  <span class="hljs-title function_">module1</span>();<br>  <span class="hljs-title function_">module2</span>();<br>&#125;, chunkFilename);<br></code></pre></td></tr></table></figure>
 <blockquote>
 <p>The require.ensure method ensures that every dependency in dependencies can be synchronously required when calling the callback. An implementation of the require function is sent as a parameter to the callback.</p>
 </blockquote>
 <p>而且这个 <code>callback</code> 的参数, 是一个实现了 <code>require</code> 接口的函数(没错的话应该只是一个 <code>require</code> 函数的引用);</p>
 <p>这个 <code>chunkFilename</code> 会被 <code>output</code> 中的 <code>chunkFilename</code> 设置覆盖.</p>
 <p>而 <code>AMD</code> 因为是正常一贯的依赖前置, 所以其会在 <code>require</code> 的时候就执行模块:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">require</span>([<span class="hljs-string">&#x27;./other/ensure.js&#x27;</span>,<span class="hljs-string">&#x27;./other/ensure2.js&#x27;</span>], <span class="hljs-keyword">function</span>(<span class="hljs-params">ensure, ensure2</span>)&#123;<br>  <span class="hljs-title function_">ensure</span>();<br>  <span class="hljs-title function_">ensure2</span>();<br>&#125;);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">require</span>([<span class="hljs-string">&#x27;./other/ensure.js&#x27;</span>, <span class="hljs-string">&#x27;./other/ensure2.js&#x27;</span>], <span class="hljs-keyword">function</span> (<span class="hljs-params"></span><br><span class="hljs-params">  ensure,</span><br><span class="hljs-params">  ensure2</span><br><span class="hljs-params"></span>) &#123;<br>  <span class="hljs-title function_">ensure</span>();<br>  <span class="hljs-title function_">ensure2</span>();<br>&#125;);<br></code></pre></td></tr></table></figure>
 <p>OK, <code>AMD</code> 的例子不熟, 下面以 <code>CommonJS</code> 为例说明一些细节.</p>
 <p>首先, 如果给 <code>require.ensure</code> 传递一个 <code>callback</code> , 则在回调函数中 <code>require</code> 来的模块也会被全部打包到最终异步加载的文件中.</p>
 <h2 id="chunk-打包优化策略"><code>chunk</code> 打包优化策略</h2>
@@ -315,15 +328,15 @@
 <p>其中第二条不好理解, 其实它所说的情况是, 在一个入口文件 <code>A.js</code> 中包含 <code>b</code> 模块, 而使用 <code>require.ensure</code> 打包生成了一个 <code>chunk.js</code> 文件中也包含这个 <code>b</code> 模块, 因为 <code>require.ensure</code> 是在 <code>A.js</code> 文件中调用的, 因此 <code>A.js</code> 算是这个 <code>chunk.js</code> 的父级 <code>chunk</code>, 那么最终打包生成的 <code>chunk.js</code> 中包含的 <code>b</code> 模块 内容将被移除. 而 <code>在所有父级 chunk 都可用</code> 指的是第一条所说的情况: 几个 <code>chunk</code> 包含相同的 <code>module</code>, 那么只会生成一个最终的 <code>bundle.js</code>, 但导致的可能是这个 <code>chunk</code> 存在多个父级 <code>chunk</code> (即 <code>entry</code> 对应的 <code>chunk</code> 文件).</p>
 <p>验证一下:</p>
 <p>入口文件 <code>app.js</code> 的代码:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><br><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../other/if_be_remove.js&#x27;</span>)();<br><span class="hljs-built_in">require</span>.<span class="hljs-title function_">ensure</span>([<span class="hljs-string">&#x27;../other/ensure.js&#x27;</span>], <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br> <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../other/ensure.js&#x27;</span>)();<br>&#125;, <span class="hljs-string">&#x27;love&#x27;</span>);<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../other/if_be_remove.js&#x27;</span>)();<br><span class="hljs-built_in">require</span>.<span class="hljs-title function_">ensure</span>(<br>  [<span class="hljs-string">&#x27;../other/ensure.js&#x27;</span>],<br>  <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../other/ensure.js&#x27;</span>)();<br>  &#125;,<br>  <span class="hljs-string">&#x27;love&#x27;</span><br>);<br></code></pre></td></tr></table></figure>
 <p>另一个入口文件 <code>app2.js</code> 的代码:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><br><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../other/if_be_remove.js&#x27;</span>)();<br><span class="hljs-built_in">require</span>.<span class="hljs-title function_">ensure</span>([<span class="hljs-string">&#x27;../other/ensure2.js&#x27;</span>], <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br> <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../other/ensure2.js&#x27;</span>)();<br>&#125;, <span class="hljs-string">&#x27;hate&#x27;</span>);<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../other/if_be_remove.js&#x27;</span>)();<br><span class="hljs-built_in">require</span>.<span class="hljs-title function_">ensure</span>(<br>  [<span class="hljs-string">&#x27;../other/ensure2.js&#x27;</span>],<br>  <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../other/ensure2.js&#x27;</span>)();<br>  &#125;,<br>  <span class="hljs-string">&#x27;hate&#x27;</span><br>);<br></code></pre></td></tr></table></figure>
 <p><code>ensure.js</code> 的代码:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><br><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./if_be_remove.js&#x27;</span>)();<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;i\&#x27;m be ensure!&#x27;</span>);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./if_be_remove.js&#x27;</span>)();<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;i&#x27;m be ensure!&quot;</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p><code>ensure2.js</code> 的代码:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><br><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./if_be_remove.js&#x27;</span>)();<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;i\&#x27;m be ensure2!&#x27;</span>);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./if_be_remove.js&#x27;</span>)();<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;i&#x27;m be ensure2!&quot;</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>最后, 在子 <code>chunk</code> 和父级 <code>chunk</code> 都存在的 <code>if_be_remove.js</code> 的代码:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;im be removed!&#x27;</span>);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;im be removed!&#x27;</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>看下 <code>Chrome</code> 浏览器控制台中 <code>Network</code> 中加载的 <code>js</code> 的内容(这里使用 <code>[id].[name].js</code> 的命名方式)</p>
 <p><code>app.js</code> 页面:</p>
 <p><img src="https://static.xheldon.cn/img/in-post/2016/webpack-async-1.png" alt="webpack-async" title="webpack-async" /></p>
@@ -785,16 +798,16 @@
   </ul>
 </ul>
 
-        <p class="copyright text-muted">
-          Copyright &copy;
-          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
-          2024
-          <br>
-          Don't Panic | Theme fork from
-          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-          <br>
-          
-        </p>
+          <p class="copyright text-muted">
+            Copyright &copy;
+            <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+            2024
+              <br>
+              Don't Panic | Theme fork from
+              <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+              <br>
+              
+          </p>
       </div>
     </div>
   </div>
@@ -831,7 +844,7 @@
     // Note: 自动切换
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('dark');
           document.documentElement.classList.remove('light');
@@ -839,7 +852,7 @@
       });
     window
       .matchMedia('(prefers-color-scheme: light)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('light');
           document.documentElement.classList.remove('dark');
@@ -855,7 +868,7 @@
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/xblog.min.js?202405251426"></script>
+<script src="/js/xheldon-life-blog.min.js?202405251426"></script>
 
 
 <!-- Simple Jekyll Search 复制逻辑 -->
@@ -863,178 +876,178 @@
 
 <!-- Vercel web analysis -->
 
-<script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  
 
+    <!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
-<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
-
-<!-- async load function -->
-<script>
-  function async (u, c) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) {
-      o.addEventListener(
-        'load',
-        function(e) {
-          c(null, e);
-        },
-        false
-      );
-    }
-    s.parentNode.insertBefore(o, s);
-  }
-</script>
-
-<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
-
-<!-- jquery.tagcloud.js -->
-
-
-<!--fastClick.js -->
-<script>
-  async ('/js/fastclick.min.js', function() {
-    var $nav = document.querySelector('nav');
-    if ($nav) FastClick.attach($nav);
-  });
-</script>
-
-<!-- Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-
-  gtag('config', '{{config.ga_track_id}}');
-</script>
-
-
-<!-- Side Catalog -->
-
-<script type="text/javascript">
-  function generateCatalog(selector) {
-    // TODO: 多语种没有迁移过来
-    // init
-    var P = $('div.post-container'),
-      a,
-      n,
-      t,
-      l,
-      i,
-      c;
-    a = P.find('h1,h2,h3,h4,h5,h6');
-
-    // clean
-    $(selector).html('');
-
-    // appending
-    a.each(function() {
-      n = $(this).prop('tagName').toLowerCase();
-      i = '#' + $(this).prop('id');
-      t = $(this).text();
-      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-      l = $('<li class="' + n + '_nav"></li>').append(c);
-      $(selector).append(l);
-    });
-    return true;
-  }
-
-  generateCatalog('.catalog-body');
-
-  // toggle side catalog
-  $('.catalog-toggle').click(function(e) {
-    e.preventDefault();
-    $('.side-catalog').toggleClass('fold');
-  });
-
-  /*
-   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-   * Fork by Hux to support padding
-   */
-  async ('/js/jquery.nav.js',
-    function() {
-      $('.catalog-body').onePageNav({
-        currentClass: 'active',
-        changeHash: !1,
-        easing: 'swing',
-        filter: '',
-        scrollSpeed: 700,
-        scrollOffset: 0,
-        scrollThreshold: 0.2,
-        begin: null,
-        end: null,
-        scrollChange: null,
-        padding: 80,
-      });
-    }
-  );
-</script>
-
-
-<script>
-  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-  function htmlDecode(input) {
-    var e = document.createElement('textarea');
-    e.innerHTML = input;
-    // handle case of empty input
-    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-  }
-
-  SimpleJekyllSearch({
-    searchInput: document.getElementById('search-input'),
-    resultsContainer: document.getElementById('search-results'),
-    json: '/search.json',
-    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-    noResultsText: 'No results',
-    limit: 50,
-    fuzzy: false,
-    // a hack to get escaped subtitle unescaped. for some reason, 
-    // post.subtitle w/o escape filter nuke entire search.
-    templateMiddleware: function(prop, value, template) {
-      if (prop === 'subtitle' || prop === 'title') {
-        if (value.indexOf("code")) {
-          return htmlDecode(value);
-        } else {
-          return value;
+    <!-- async load function -->
+    <script>
+      function async(u, c) {
+        var d = document,
+          t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+          o.addEventListener(
+            'load',
+            function (e) {
+              c(null, e);
+            },
+            false
+          );
         }
+        s.parentNode.insertBefore(o, s);
       }
-    }
-  });
+    </script>
 
-  $(document).ready(function() {
-    var $searchPage = $('.search-page');
-    var $searchOpen = $('.search-icon');
-    var $searchClose = $('.search-icon-close');
-    var $searchInput = $('#search-input');
-    var $body = $('body');
+    <!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-    $searchOpen.on('click', function(e) {
-      e.preventDefault();
-      $searchPage.toggleClass('search-active');
-      var prevClasses = $body.attr('class') || '';
-      setTimeout(function() {
-        $body.addClass('no-scroll');
-      }, 400)
+    <!-- jquery.tagcloud.js -->
+    
 
-      if ($searchPage.hasClass('search-active')) {
-        $searchClose.on('click', function(e) {
-          e.preventDefault();
-          $searchPage.removeClass('search-active');
-          $body.attr('class', prevClasses); // from closure 
-        });
-        $searchInput.focus();
-      }
-    });
-  });
-</script>
+        <!--fastClick.js -->
+        <script>
+          async('/js/fastclick.min.js', function () {
+            var $nav = document.querySelector('nav');
+            if ($nav) FastClick.attach($nav);
+          });
+        </script>
+
+        <!-- Google Analytics -->
+        
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', '{{config.ga_track_id}}');
+          </script>
+          
+
+            <!-- Side Catalog -->
+            
+              <script type="text/javascript">
+                function generateCatalog(selector) {
+                  // TODO: 多语种没有迁移过来
+                  // init
+                  var P = $('div.post-container'),
+                    a,
+                    n,
+                    t,
+                    l,
+                    i,
+                    c;
+                  a = P.find('h1,h2,h3,h4,h5,h6');
+
+                  // clean
+                  $(selector).html('');
+
+                  // appending
+                  a.each(function () {
+                    n = $(this).prop('tagName').toLowerCase();
+                    i = '#' + $(this).prop('id');
+                    t = $(this).text();
+                    c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+                    l = $('<li class="' + n + '_nav"></li>').append(c);
+                    $(selector).append(l);
+                  });
+                  return true;
+                }
+
+                generateCatalog('.catalog-body');
+
+                // toggle side catalog
+                $('.catalog-toggle').click(function (e) {
+                  e.preventDefault();
+                  $('.side-catalog').toggleClass('fold');
+                });
+
+                /*
+                 * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+                 * Fork by Hux to support padding
+                 */
+                async('/js/jquery.nav.js',
+                  function () {
+                    $('.catalog-body').onePageNav({
+                      currentClass: 'active',
+                      changeHash: !1,
+                      easing: 'swing',
+                      filter: '',
+                      scrollSpeed: 700,
+                      scrollOffset: 0,
+                      scrollThreshold: 0.2,
+                      begin: null,
+                      end: null,
+                      scrollChange: null,
+                      padding: 80,
+                    });
+                  }
+                );
+              </script>
+              
+
+                <script>
+                  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+                  function htmlDecode(input) {
+                    var e = document.createElement('textarea');
+                    e.innerHTML = input;
+                    // handle case of empty input
+                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                  }
+
+
+                  $(document).ready(function () {
+                    SimpleJekyllSearch({
+                      searchInput: document.getElementById('search-input'),
+                      resultsContainer: document.getElementById('search-results'),
+                      json: '/search.json',
+                      searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+                      noResultsText: 'No results',
+                      limit: 50,
+                      fuzzy: false,
+                      // a hack to get escaped subtitle unescaped. for some reason, 
+                      // post.subtitle w/o escape filter nuke entire search.
+                      templateMiddleware: function (prop, value, template) {
+                        if (prop === 'subtitle' || prop === 'title') {
+                          if (value.indexOf("code")) {
+                            return htmlDecode(value);
+                          } else {
+                            return value;
+                          }
+                        }
+                      }
+                    });
+                    var $searchPage = $('.search-page');
+                    var $searchOpen = $('.search-icon');
+                    var $searchClose = $('.search-icon-close');
+                    var $searchInput = $('#search-input');
+                    var $body = $('body');
+
+                    $searchOpen.on('click', function (e) {
+                      e.preventDefault();
+                      $searchPage.toggleClass('search-active');
+                      var prevClasses = $body.attr('class') || '';
+                      setTimeout(function () {
+                        $body.addClass('no-scroll');
+                      }, 400)
+
+                      if ($searchPage.hasClass('search-active')) {
+                        $searchClose.on('click', function (e) {
+                          e.preventDefault();
+                          $searchPage.removeClass('search-active');
+                          $body.attr('class', prevClasses); // from closure 
+                        });
+                        $searchInput.focus();
+                      }
+                    });
+                  });
+                </script>
 
     <!-- Image to hack wechat -->
     <img src="/img/icon_wechat.png" width="0" height="0" />

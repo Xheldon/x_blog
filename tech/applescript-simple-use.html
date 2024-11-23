@@ -102,8 +102,8 @@
   <body ontouchstart="">
     <!-- Navigation -->
     
-      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+  <nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -152,50 +152,53 @@
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
-        var $body = document.body;
-        var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xblog_navbar');
-        var $collapse = document.querySelector('.navbar-collapse');
+        document.addEventListener('DOMContentLoaded', function () {
 
-        var __XNav__ = {
-          close: function () {
-            $navbar.className = ' ';
-            // wait until animation end.
-            setTimeout(function () {
-              // prevent frequently toggle
-              if ($navbar.className.indexOf('in') < 0) {
-                $collapse.style.height = '0px';
-              }
-            }, 400);
-          },
-          open: function () {
-            $collapse.style.height = 'auto';
-            $navbar.className += ' in';
-          },
-        };
-        // Bind Event
-        $toggle.addEventListener('click', function (e) {
-          if ($navbar.className.indexOf('in') > 0) {
+          var $body = document.body;
+          var $toggle = document.querySelector('.navbar-toggle');
+          var $navbar = document.querySelector('#xblog_navbar');
+          var $collapse = document.querySelector('.navbar-collapse');
+          console.log('shit22');
+          var __XNav__ = {
+            close: function () {
+              $navbar.className = ' ';
+              // wait until animation end.
+              setTimeout(function () {
+                // prevent frequently toggle
+                if ($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = '0px';
+                }
+              }, 400);
+            },
+            open: function () {
+              $collapse.style.height = 'auto';
+              $navbar.className += ' in';
+            },
+          };
+          // Bind Event
+          $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+              __XNav__.close();
+            } else {
+              __XNav__.open();
+            }
+          });
+          /**
+           * Since Fastclick is used to delegate 'touchstart' globally
+           * to hack 300ms delay in iOS by performing a fake 'click',
+           * Using 'e.stopPropagation' to stop 'touchstart' event from
+           * $toggle/$collapse will break global delegation.
+           *
+           * Instead, we use a 'e.target' filter to prevent handler
+           * added to document close XheldonNav.
+           *
+           * Also, we use 'click' instead of 'touchstart' as compromise
+           */
+          document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
             __XNav__.close();
-          } else {
-            __XNav__.open();
-          }
-        });
-        /**
-         * Since Fastclick is used to delegate 'touchstart' globally
-         * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from
-         * $toggle/$collapse will break global delegation.
-         *
-         * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.
-         *
-         * Also, we use 'click' instead of 'touchstart' as compromise
-         */
-        document.addEventListener('click', function (e) {
-          if (e.target == $toggle) return;
-          if (e.target.className == 'icon-bar') return;
-          __XNav__.close();
+          });
         });
       </script> <!-- Search -->
 <div class="search-page">
@@ -233,34 +236,47 @@
   
 </style>
 
-<header class="intro-header style-text">
-  
-    <div class="headerMask"></div>
+  <header class="intro-header style-text">
     
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <div class="post-heading">
-            <div class="tags">
-              
-              <a class="tag" href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C" title="初体验">初体验</a>
-              
-              <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-              
-              <a class="tag" href="/archive/?tag=AppleScript" title="AppleScript">AppleScript</a>
-              
-            </div>
-            <h1>AppleScript 初体验</h1>
-            <h2 class="subheading"></h2>
-            <span class="meta">✍🏼 写于 2022年05月03日</span>&nbsp;&nbsp;&nbsp;
-            
-            <span class="meta">💡 更新于 2023年01月05日</span>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                          <a class="tag" href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                            title="初体验">
+                            初体验
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技术">
+                            技术
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=AppleScript"
+                            title="AppleScript">
+                            AppleScript
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        AppleScript 初体验
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 写于 2022年05月03日</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 更新于 2023年01月05日</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
 
   <!-- Post Content -->
   <article>
@@ -299,7 +315,7 @@
                             
                               
                                   <h2 id="前言">前言</h2>
-<p>最近新买了 Mac Studio，配备了 M1 Max 芯片和 64G 的内存，性能非常强。与此同时，之前的 <a href="/tech/my-blog-ci-in-2022.html">博客处理流程</a> 中，因为需要使用 Github Action 将从 Craft 拉取的图片（这一步很快，毕竟二者都在国外），往腾讯云 COS传的时候，经常遇到网络过慢的问题</p>
+<p>最近新买了 Mac Studio，配备了 M1 Max 芯片和 64G 的内存，性能非常强。与此同时，之前的 <a href="/tech/my-blog-ci-in-2022.html">博客处理流程</a> 中，因为需要使用 Github Action 将从 Craft 拉取的图片（这一步很快，毕竟二者都在国外），往腾讯云 COS 传的时候，经常遇到网络过慢的问题</p>
 <p caption='SCR-20220502-q47'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/FBB4B556-8472-4C92-8EFD-E07015DC5FBB_2.webp' alt='SCR-20220502-q47' title='SCR-20220502-q47'></p>
 <p>调研了一番发现，Github 貌似 <a href="https://github.community/t/is-there-a-way-to-specify-virtual-machine-region/120438">不支持设置 Action 服务器的区域</a>。鉴于此，所以打算之后将发布流程放到本地，，以加快构建流程，遂有此文。下面的 AppleScript 简称 AS。</p>
 <h2 id="为什么用-applescript-而不是其他？">为什么用 AppleScript 而不是其他？</h2>
@@ -315,7 +331,7 @@
 <p>将构建结果推送到 github。</p>
 </li>
 </ol>
-<p>由于需要在一个 App 中通过链接调用另一个 App，因此使用 AppleScript 是唯一选择。不过，虽然使用的是 AS，但是其实执行的还是已有的 js 文件，只是将 <a href="https://github.com/Xheldon/craft_publish_ci/blob/master/.github/workflows/publish.yml">craft_publish_ci 中的 workflow任务</a> 挪到了本地执行而已。</p>
+<p>由于需要在一个 App 中通过链接调用另一个 App，因此使用 AppleScript 是唯一选择。不过，虽然使用的是 AS，但是其实执行的还是已有的 js 文件，只是将 <a href="https://github.com/Xheldon/craft_publish_ci/blob/master/.github/workflows/publish.yml">craft_publish_ci 中的 workflow 任务</a> 挪到了本地执行而已。</p>
 <h2 id="applescript-简介">AppleScript 简介</h2>
 <p>概念图：</p>
 <p caption='execute_script_2x'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/6C1FA0DD-5875-4C15-BCA8-495B34F5F699_2.webp' alt='execute_script_2x' title='execute_script_2x'></p>
@@ -353,7 +369,7 @@
 <p>脚本顾名思义就是像 js 一样的可执行文件，不同的是 as 是在 Mac 桌面环境执行，而 js 是在 Chrome 中执行的。双击即可运行。下图是脚本 process 显示进度的界面，通过点击脚本右上角的「运行」按钮运行：</p>
 <p caption='SCR-20220502-r3e'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/A8E4D5D2-C4A6-4E6D-80DA-7E3A0EFA7D41_2.webp' alt='SCR-20220502-r3e' title='SCR-20220502-r3e'></p>
 <h4 id="应用">应用</h4>
-<p>保存成 Application 的 AS 的后缀名跟普通的应用如 Safari、Chrome、微信等应用一样，会以 <code>.app</code> 结尾，也可以查看包内容。有多种运行方式如 URL Scheme 调用、双击、拖拽内容到 app 图标上，你需要写相关的事件函数来响应相关用户操作。下图是 应用process 显示进度的界面，通过双击 「xxx.app」运行：</p>
+<p>保存成 Application 的 AS 的后缀名跟普通的应用如 Safari、Chrome、微信等应用一样，会以 <code>.app</code> 结尾，也可以查看包内容。有多种运行方式如 URL Scheme 调用、双击、拖拽内容到 app 图标上，你需要写相关的事件函数来响应相关用户操作。下图是 应用 process 显示进度的界面，通过双击 「xxx.app」运行：</p>
 <p caption='SCR-20220502-r33'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/E0B4F2DA-21AA-4EF1-B059-9C500E18B67C_2.webp' alt='SCR-20220502-r33' title='SCR-20220502-r33'></p>
 <h4 id="其他">其他</h4>
 <p>除了上述两者，其他的不常用，不过如果你需要将 script 保存成服务以在状态栏或者任意界面的右键的服务中能够调用该脚本，这需要上述两者之外的形式：</p>
@@ -387,10 +403,10 @@
 <p>注意，命令行中的 PATH 环境变量为 <code>/usr/bin:/bin:/usr/sbin:/sbin</code> ，因此无法在其中执行诸如 <code>node</code> 、<code>nvm</code> 等后来安装的命令，这些命令执行的时候需要手动指定命令所在位置。</p>
 </blockquote>
 <p>执行 node 脚本：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">set node to <span class="hljs-string">&quot;/Users/x/.nvm/versions/node/v14.19.1/bin/node&quot;</span>set appPath to <span class="hljs-string">&quot;/Applications/Xhelper.app/Contents/Resources/Scripts/&quot;</span><span class="hljs-keyword">do</span> shell script node &amp; <span class="hljs-string">&quot; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;index.js&quot;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">set node to <span class="hljs-string">&quot;/Users/x/.nvm/versions/node/v14.19.1/bin/node&quot;</span><br>set appPath to <span class="hljs-string">&quot;/Applications/Xhelper.app/Contents/Resources/Scripts/&quot;</span><br><span class="hljs-keyword">do</span> shell script node &amp; <span class="hljs-string">&quot; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;index.js&quot;</span><br></code></pre></td></tr></table></figure>
 <h3 id="获取上一个语句的输出结果">获取上一个语句的输出结果</h3>
 <p>直接在上一句语句后立即使用 <code>result</code> 表示结果即可：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">do</span> shell script <span class="hljs-string">&quot;echo $PATH&quot;</span>display dialog result <span class="hljs-keyword">with</span> title <span class="hljs-string">&quot;通知&quot;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">do</span> shell script <span class="hljs-string">&quot;echo $PATH&quot;</span><br>display dialog result <span class="hljs-keyword">with</span> title <span class="hljs-string">&quot;通知&quot;</span><br></code></pre></td></tr></table></figure>
 <p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/6214E292-E4CB-49BC-B8D2-945C135E5B45_2.webp' alt='Image' title='Image'></p>
 <h3 id="显示调试信息">显示调试信息</h3>
 <p>直接使用 <code>log</code> 语句即可，然后在 <code>Script Editor</code> 下方的 <code>Replies</code> 中获取输出信息，可以在这里看到 <code>shell script</code> 命令执行的过程中，脚本向控制台输出的内容，如执行 js 脚本的时候的 <code>console.log</code> 等。</p>
@@ -398,18 +414,18 @@
 <p caption='SCR-20220502-sov'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/1089533E-DE38-418F-A20C-592669941C2D_2.webp' alt='SCR-20220502-sov' title='SCR-20220502-sov'></p>
 <h3 id="显示进度">显示进度</h3>
 <p>显示进度用到 progress ，语句相对来说比较复杂，因为需要显示不同的状态进度，需要多行：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">set progress total steps to <span class="hljs-number">3</span>set progress completed steps to <span class="hljs-number">0</span>set progress description to <span class="hljs-string">&quot;处理中...&quot;</span>delay <span class="hljs-number">1</span>set progress completed steps to <span class="hljs-number">1</span>delay <span class="hljs-number">1</span>set progress completed steps to <span class="hljs-number">2</span>delay <span class="hljs-number">1</span>set progress completed steps to <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript">set progress total steps to <span class="hljs-number">3</span><br>set progress completed steps to <span class="hljs-number">0</span><br>set progress description to <span class="hljs-string">&quot;处理中...&quot;</span><br>delay <span class="hljs-number">1</span><br>set progress completed steps to <span class="hljs-number">1</span><br>delay <span class="hljs-number">1</span><br>set progress completed steps to <span class="hljs-number">2</span><br>delay <span class="hljs-number">1</span><br>set progress completed steps to <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
 <p>相关的截图可以在上面看到。</p>
 <h3 id="延迟一段时间后执行">延迟一段时间后执行</h3>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">delay n<br></code></pre></td></tr></table></figure>
-<p><code>n</code>  表示秒数，支持小数。一般用来模拟用户操作的时候的延迟操作，否则可能因为脚本操作过快页面还未来得及显示等。一些奇怪的问题也可以通过延迟执行来解决，此语句可以类比于 <code>js</code> 中的 <code>setTimeout</code> 大法。</p>
+<p><code>n</code> 表示秒数，支持小数。一般用来模拟用户操作的时候的延迟操作，否则可能因为脚本操作过快页面还未来得及显示等。一些奇怪的问题也可以通过延迟执行来解决，此语句可以类比于 <code>js</code> 中的 <code>setTimeout</code> 大法。</p>
 <h3 id="调用其他应用">调用其他应用</h3>
 <p>注意，此处会有系统警告，需要你确认才能执行:</p>
 <p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/898D7F67-700E-40F2-AC6C-D999F5543578_2.webp' alt='Image' title='Image'></p>
 <p>确认后可以在<code>设置-安全与隐私-隐私-自动化</code>中确认：</p>
 <p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/47444D53-68E4-4518-87FD-521AE42B737F_2.webp' alt='Image' title='Image'></p>
 <p>可以调用其他应用来执行相应的操作，下面是唤起 <code>Terminal</code> 应用后，激活然后执行命令：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">tell application <span class="hljs-string">&quot;Terminal&quot;</span> <span class="hljs-keyword">if</span> not (exists <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>) then reopen	activate	<span class="hljs-keyword">do</span> script <span class="hljs-string">&quot;echo $PATH&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>end tell<br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript">tell application <span class="hljs-string">&quot;Terminal&quot;</span><br> <span class="hljs-keyword">if</span> not (exists <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>) then reopen<br> activate<br> <span class="hljs-keyword">do</span> script <span class="hljs-string">&quot;echo $PATH&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span><br>end tell<br></code></pre></td></tr></table></figure>
 <p>此语句做了一个判断，如果第一个打开的窗口存在，则激活之，然后在其内执行命令（<code>do script</code> ）；如果不存在的话则会新建一个窗口然后在其内执行命令。因为每个 <code>do script</code> 都会打开一个新的 Terminal 这个判断可以保证复用窗口。不过需要注意的是，如果 <code>window 1</code> 内已经有一个已经存在的进程（如 server 未中断），那么这个命令是不会执行的，还需要额外的判断，此处不展开。</p>
 <p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/8701C38B-8CE9-479A-816A-9126692B313D_2.webp' alt='Image' title='Image'></p>
 <h3 id="响应-url-scheme">响应 URL Scheme</h3>
@@ -433,7 +449,7 @@
 <p>然后 AS 应用就会响应然后弹窗显示 <code>xhelper://你好！</code> ，注意这里是不用 encode 编码的。</p>
 <h2 id="我的使用">我的使用</h2>
 <p>在这里放出我自己的 Craft build 代码，用的是上述的 URL Scheme，其中的 node 执行的 js 都是从 <a href="/tech/my-blog-ci-in-2022.html">之前的工作流</a> 改造的，没有什么新逻辑。另外 AS 的语法比较口语化，直接看就能看懂每句话是什么意思，这里就不一一解释了。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript">on open location this_URL <span class="hljs-keyword">try</span>		set startOffset to offset <span class="hljs-keyword">of</span> <span class="hljs-string">&quot;://&quot;</span> <span class="hljs-keyword">in</span> this_URL		set the content to text <span class="hljs-keyword">from</span> (startOffset + <span class="hljs-number">3</span>) to -<span class="hljs-number">1</span> <span class="hljs-keyword">of</span> this_URL		set node to <span class="hljs-string">&quot;/Users/x/.nvm/versions/node/v14.19.1/bin/node&quot;</span>		set appPath to <span class="hljs-string">&quot;/Applications/Xhelper.app/Contents/Resources/Scripts/&quot;</span><br>  --- 如果有两个参数表示需要发布到 wechat，如果只有一个参数则参数即为 base64 编码的内容		set <span class="hljs-title class_">AppleScript</span><span class="hljs-string">&#x27;s text item delimiters to &quot;&amp;&quot;		set arguments to every text item of the content		set AppleScript&#x27;</span>s text item delimiters to <span class="hljs-string">&quot;&quot;</span>		set listLength to the length <span class="hljs-keyword">of</span> <span class="hljs-variable language_">arguments</span>		<span class="hljs-keyword">if</span> listLength = <span class="hljs-number">2</span> then			set realContent to item <span class="hljs-number">2</span> <span class="hljs-keyword">of</span> <span class="hljs-variable language_">arguments</span>			<span class="hljs-keyword">do</span> shell script <span class="hljs-string">&quot;echo &quot;</span> &amp; realContent &amp; <span class="hljs-string">&quot; &gt; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;content.base64.txt&quot;</span>			tell application <span class="hljs-string">&quot;Terminal&quot;</span>				<span class="hljs-keyword">if</span> not (exists <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>) then reopen				activate				set alive to <span class="hljs-keyword">do</span> script node &amp; <span class="hljs-string">&quot; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;index.js&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>				--- 等待上一个脚本执行完毕后再执行下一个脚本				repeat					delay <span class="hljs-number">0.1</span>					<span class="hljs-keyword">if</span> not busy <span class="hljs-keyword">of</span> alive then exit repeat				end repeat				beep				<span class="hljs-keyword">do</span> script node &amp; <span class="hljs-string">&quot; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;wechat.js&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>			end tell		<span class="hljs-keyword">else</span>			<span class="hljs-keyword">do</span> shell script <span class="hljs-string">&quot;echo &quot;</span> &amp; content &amp; <span class="hljs-string">&quot; &gt; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;content.base64.txt&quot;</span>			tell application <span class="hljs-string">&quot;Terminal&quot;</span>				<span class="hljs-keyword">if</span> not (exists <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>) then reopen				activate				<span class="hljs-keyword">do</span> script node &amp; <span class="hljs-string">&quot; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;index.js&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>			end tell		end <span class="hljs-keyword">if</span>	on error error_message		display dialog error_message buttons &#123;<span class="hljs-string">&quot;Cancel&quot;</span>&#125; <span class="hljs-keyword">default</span> button <span class="hljs-number">1</span>	end <span class="hljs-keyword">try</span>	end open location<br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs javascript">on open location this_URL<br> <span class="hljs-keyword">try</span><br>  set startOffset to offset <span class="hljs-keyword">of</span> <span class="hljs-string">&quot;://&quot;</span> <span class="hljs-keyword">in</span> this_URL<br>  set the content to text <span class="hljs-keyword">from</span> (startOffset + <span class="hljs-number">3</span>) to -<span class="hljs-number">1</span> <span class="hljs-keyword">of</span> this_URL<br>  set node to <span class="hljs-string">&quot;/Users/x/.nvm/versions/node/v14.19.1/bin/node&quot;</span><br>  set appPath to <span class="hljs-string">&quot;/Applications/Xhelper.app/Contents/Resources/Scripts/&quot;</span><br>  --- 如果有两个参数表示需要发布到 wechat，如果只有一个参数则参数即为 base64 编码的内容<br>  set <span class="hljs-title class_">AppleScript</span><span class="hljs-string">&#x27;s text item delimiters to &quot;&amp;&quot;</span><br><span class="hljs-string">  set arguments to every text item of the content</span><br><span class="hljs-string">  set AppleScript&#x27;</span>s text item delimiters to <span class="hljs-string">&quot;&quot;</span><br>  set listLength to the length <span class="hljs-keyword">of</span> <span class="hljs-variable language_">arguments</span><br>  <span class="hljs-keyword">if</span> listLength = <span class="hljs-number">2</span> then<br>   set realContent to item <span class="hljs-number">2</span> <span class="hljs-keyword">of</span> <span class="hljs-variable language_">arguments</span><br>   <span class="hljs-keyword">do</span> shell script <span class="hljs-string">&quot;echo &quot;</span> &amp; realContent &amp; <span class="hljs-string">&quot; &gt; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;content.base64.txt&quot;</span><br>   tell application <span class="hljs-string">&quot;Terminal&quot;</span><br>    <span class="hljs-keyword">if</span> not (exists <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>) then reopen<br>    activate<br>    set alive to <span class="hljs-keyword">do</span> script node &amp; <span class="hljs-string">&quot; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;index.js&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span><br>    --- 等待上一个脚本执行完毕后再执行下一个脚本<br>    repeat<br>     delay <span class="hljs-number">0.1</span><br>     <span class="hljs-keyword">if</span> not busy <span class="hljs-keyword">of</span> alive then exit repeat<br>    end repeat<br>    beep<br>    <span class="hljs-keyword">do</span> script node &amp; <span class="hljs-string">&quot; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;wechat.js&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span><br>   end tell<br>  <span class="hljs-keyword">else</span><br>   <span class="hljs-keyword">do</span> shell script <span class="hljs-string">&quot;echo &quot;</span> &amp; content &amp; <span class="hljs-string">&quot; &gt; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;content.base64.txt&quot;</span><br>   tell application <span class="hljs-string">&quot;Terminal&quot;</span><br>    <span class="hljs-keyword">if</span> not (exists <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>) then reopen<br>    activate<br>    <span class="hljs-keyword">do</span> script node &amp; <span class="hljs-string">&quot; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;index.js&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span><br>   end tell<br>  end <span class="hljs-keyword">if</span><br> on error error_message<br>  display dialog error_message buttons &#123;<span class="hljs-string">&quot;Cancel&quot;</span>&#125; <span class="hljs-keyword">default</span> button <span class="hljs-number">1</span><br> end <span class="hljs-keyword">try</span><br><br>end open location<br></code></pre></td></tr></table></figure>
 <p>效果：</p>
 <p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/F7A4DDFF-2698-4E1E-8D72-C8B3D0EC5020_2.webp' alt='Image' title='Image'></p>
 <h2 id="参考链接">参考链接</h2>
@@ -916,16 +932,16 @@
   </ul>
 </ul>
 
-        <p class="copyright text-muted">
-          Copyright &copy;
-          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
-          2024
-          <br>
-          Don't Panic | Theme fork from
-          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-          <br>
-          
-        </p>
+          <p class="copyright text-muted">
+            Copyright &copy;
+            <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+            2024
+              <br>
+              Don't Panic | Theme fork from
+              <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+              <br>
+              
+          </p>
       </div>
     </div>
   </div>
@@ -962,7 +978,7 @@
     // Note: 自动切换
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('dark');
           document.documentElement.classList.remove('light');
@@ -970,7 +986,7 @@
       });
     window
       .matchMedia('(prefers-color-scheme: light)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('light');
           document.documentElement.classList.remove('dark');
@@ -986,7 +1002,7 @@
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/xblog.min.js?202405251426"></script>
+<script src="/js/xheldon-life-blog.min.js?202405251426"></script>
 
 
 <!-- Simple Jekyll Search 复制逻辑 -->
@@ -994,178 +1010,178 @@
 
 <!-- Vercel web analysis -->
 
-<script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  
 
+    <!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
-<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
-
-<!-- async load function -->
-<script>
-  function async (u, c) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) {
-      o.addEventListener(
-        'load',
-        function(e) {
-          c(null, e);
-        },
-        false
-      );
-    }
-    s.parentNode.insertBefore(o, s);
-  }
-</script>
-
-<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
-
-<!-- jquery.tagcloud.js -->
-
-
-<!--fastClick.js -->
-<script>
-  async ('/js/fastclick.min.js', function() {
-    var $nav = document.querySelector('nav');
-    if ($nav) FastClick.attach($nav);
-  });
-</script>
-
-<!-- Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-
-  gtag('config', '{{config.ga_track_id}}');
-</script>
-
-
-<!-- Side Catalog -->
-
-<script type="text/javascript">
-  function generateCatalog(selector) {
-    // TODO: 多语种没有迁移过来
-    // init
-    var P = $('div.post-container'),
-      a,
-      n,
-      t,
-      l,
-      i,
-      c;
-    a = P.find('h1,h2,h3,h4,h5,h6');
-
-    // clean
-    $(selector).html('');
-
-    // appending
-    a.each(function() {
-      n = $(this).prop('tagName').toLowerCase();
-      i = '#' + $(this).prop('id');
-      t = $(this).text();
-      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-      l = $('<li class="' + n + '_nav"></li>').append(c);
-      $(selector).append(l);
-    });
-    return true;
-  }
-
-  generateCatalog('.catalog-body');
-
-  // toggle side catalog
-  $('.catalog-toggle').click(function(e) {
-    e.preventDefault();
-    $('.side-catalog').toggleClass('fold');
-  });
-
-  /*
-   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-   * Fork by Hux to support padding
-   */
-  async ('/js/jquery.nav.js',
-    function() {
-      $('.catalog-body').onePageNav({
-        currentClass: 'active',
-        changeHash: !1,
-        easing: 'swing',
-        filter: '',
-        scrollSpeed: 700,
-        scrollOffset: 0,
-        scrollThreshold: 0.2,
-        begin: null,
-        end: null,
-        scrollChange: null,
-        padding: 80,
-      });
-    }
-  );
-</script>
-
-
-<script>
-  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-  function htmlDecode(input) {
-    var e = document.createElement('textarea');
-    e.innerHTML = input;
-    // handle case of empty input
-    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-  }
-
-  SimpleJekyllSearch({
-    searchInput: document.getElementById('search-input'),
-    resultsContainer: document.getElementById('search-results'),
-    json: '/search.json',
-    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-    noResultsText: 'No results',
-    limit: 50,
-    fuzzy: false,
-    // a hack to get escaped subtitle unescaped. for some reason, 
-    // post.subtitle w/o escape filter nuke entire search.
-    templateMiddleware: function(prop, value, template) {
-      if (prop === 'subtitle' || prop === 'title') {
-        if (value.indexOf("code")) {
-          return htmlDecode(value);
-        } else {
-          return value;
+    <!-- async load function -->
+    <script>
+      function async(u, c) {
+        var d = document,
+          t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+          o.addEventListener(
+            'load',
+            function (e) {
+              c(null, e);
+            },
+            false
+          );
         }
+        s.parentNode.insertBefore(o, s);
       }
-    }
-  });
+    </script>
 
-  $(document).ready(function() {
-    var $searchPage = $('.search-page');
-    var $searchOpen = $('.search-icon');
-    var $searchClose = $('.search-icon-close');
-    var $searchInput = $('#search-input');
-    var $body = $('body');
+    <!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-    $searchOpen.on('click', function(e) {
-      e.preventDefault();
-      $searchPage.toggleClass('search-active');
-      var prevClasses = $body.attr('class') || '';
-      setTimeout(function() {
-        $body.addClass('no-scroll');
-      }, 400)
+    <!-- jquery.tagcloud.js -->
+    
 
-      if ($searchPage.hasClass('search-active')) {
-        $searchClose.on('click', function(e) {
-          e.preventDefault();
-          $searchPage.removeClass('search-active');
-          $body.attr('class', prevClasses); // from closure 
-        });
-        $searchInput.focus();
-      }
-    });
-  });
-</script>
+        <!--fastClick.js -->
+        <script>
+          async('/js/fastclick.min.js', function () {
+            var $nav = document.querySelector('nav');
+            if ($nav) FastClick.attach($nav);
+          });
+        </script>
+
+        <!-- Google Analytics -->
+        
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', '{{config.ga_track_id}}');
+          </script>
+          
+
+            <!-- Side Catalog -->
+            
+              <script type="text/javascript">
+                function generateCatalog(selector) {
+                  // TODO: 多语种没有迁移过来
+                  // init
+                  var P = $('div.post-container'),
+                    a,
+                    n,
+                    t,
+                    l,
+                    i,
+                    c;
+                  a = P.find('h1,h2,h3,h4,h5,h6');
+
+                  // clean
+                  $(selector).html('');
+
+                  // appending
+                  a.each(function () {
+                    n = $(this).prop('tagName').toLowerCase();
+                    i = '#' + $(this).prop('id');
+                    t = $(this).text();
+                    c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+                    l = $('<li class="' + n + '_nav"></li>').append(c);
+                    $(selector).append(l);
+                  });
+                  return true;
+                }
+
+                generateCatalog('.catalog-body');
+
+                // toggle side catalog
+                $('.catalog-toggle').click(function (e) {
+                  e.preventDefault();
+                  $('.side-catalog').toggleClass('fold');
+                });
+
+                /*
+                 * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+                 * Fork by Hux to support padding
+                 */
+                async('/js/jquery.nav.js',
+                  function () {
+                    $('.catalog-body').onePageNav({
+                      currentClass: 'active',
+                      changeHash: !1,
+                      easing: 'swing',
+                      filter: '',
+                      scrollSpeed: 700,
+                      scrollOffset: 0,
+                      scrollThreshold: 0.2,
+                      begin: null,
+                      end: null,
+                      scrollChange: null,
+                      padding: 80,
+                    });
+                  }
+                );
+              </script>
+              
+
+                <script>
+                  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+                  function htmlDecode(input) {
+                    var e = document.createElement('textarea');
+                    e.innerHTML = input;
+                    // handle case of empty input
+                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                  }
+
+
+                  $(document).ready(function () {
+                    SimpleJekyllSearch({
+                      searchInput: document.getElementById('search-input'),
+                      resultsContainer: document.getElementById('search-results'),
+                      json: '/search.json',
+                      searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+                      noResultsText: 'No results',
+                      limit: 50,
+                      fuzzy: false,
+                      // a hack to get escaped subtitle unescaped. for some reason, 
+                      // post.subtitle w/o escape filter nuke entire search.
+                      templateMiddleware: function (prop, value, template) {
+                        if (prop === 'subtitle' || prop === 'title') {
+                          if (value.indexOf("code")) {
+                            return htmlDecode(value);
+                          } else {
+                            return value;
+                          }
+                        }
+                      }
+                    });
+                    var $searchPage = $('.search-page');
+                    var $searchOpen = $('.search-icon');
+                    var $searchClose = $('.search-icon-close');
+                    var $searchInput = $('#search-input');
+                    var $body = $('body');
+
+                    $searchOpen.on('click', function (e) {
+                      e.preventDefault();
+                      $searchPage.toggleClass('search-active');
+                      var prevClasses = $body.attr('class') || '';
+                      setTimeout(function () {
+                        $body.addClass('no-scroll');
+                      }, 400)
+
+                      if ($searchPage.hasClass('search-active')) {
+                        $searchClose.on('click', function (e) {
+                          e.preventDefault();
+                          $searchPage.removeClass('search-active');
+                          $body.attr('class', prevClasses); // from closure 
+                        });
+                        $searchInput.focus();
+                      }
+                    });
+                  });
+                </script>
 
     <!-- Image to hack wechat -->
     <img src="/img/icon_wechat.png" width="0" height="0" />

@@ -100,8 +100,8 @@
   <body ontouchstart="">
     <!-- Navigation -->
     
-      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+  <nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -150,50 +150,53 @@
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
-        var $body = document.body;
-        var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xblog_navbar');
-        var $collapse = document.querySelector('.navbar-collapse');
+        document.addEventListener('DOMContentLoaded', function () {
 
-        var __XNav__ = {
-          close: function () {
-            $navbar.className = ' ';
-            // wait until animation end.
-            setTimeout(function () {
-              // prevent frequently toggle
-              if ($navbar.className.indexOf('in') < 0) {
-                $collapse.style.height = '0px';
-              }
-            }, 400);
-          },
-          open: function () {
-            $collapse.style.height = 'auto';
-            $navbar.className += ' in';
-          },
-        };
-        // Bind Event
-        $toggle.addEventListener('click', function (e) {
-          if ($navbar.className.indexOf('in') > 0) {
+          var $body = document.body;
+          var $toggle = document.querySelector('.navbar-toggle');
+          var $navbar = document.querySelector('#xblog_navbar');
+          var $collapse = document.querySelector('.navbar-collapse');
+          console.log('shit22');
+          var __XNav__ = {
+            close: function () {
+              $navbar.className = ' ';
+              // wait until animation end.
+              setTimeout(function () {
+                // prevent frequently toggle
+                if ($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = '0px';
+                }
+              }, 400);
+            },
+            open: function () {
+              $collapse.style.height = 'auto';
+              $navbar.className += ' in';
+            },
+          };
+          // Bind Event
+          $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+              __XNav__.close();
+            } else {
+              __XNav__.open();
+            }
+          });
+          /**
+           * Since Fastclick is used to delegate 'touchstart' globally
+           * to hack 300ms delay in iOS by performing a fake 'click',
+           * Using 'e.stopPropagation' to stop 'touchstart' event from
+           * $toggle/$collapse will break global delegation.
+           *
+           * Instead, we use a 'e.target' filter to prevent handler
+           * added to document close XheldonNav.
+           *
+           * Also, we use 'click' instead of 'touchstart' as compromise
+           */
+          document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
             __XNav__.close();
-          } else {
-            __XNav__.open();
-          }
-        });
-        /**
-         * Since Fastclick is used to delegate 'touchstart' globally
-         * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from
-         * $toggle/$collapse will break global delegation.
-         *
-         * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.
-         *
-         * Also, we use 'click' instead of 'touchstart' as compromise
-         */
-        document.addEventListener('click', function (e) {
-          if (e.target == $toggle) return;
-          if (e.target.className == 'icon-bar') return;
-          __XNav__.close();
+          });
         });
       </script> <!-- Search -->
 <div class="search-page">
@@ -231,30 +234,40 @@
   
 </style>
 
-<header class="intro-header style-text">
-  
-    <div class="headerMask"></div>
+  <header class="intro-header style-text">
     
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <div class="post-heading">
-            <div class="tags">
-              
-              <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-              
-              <a class="tag" href="/archive/?tag=%E9%9D%A2%E8%AF%95" title="面试">面试</a>
-              
-            </div>
-            <h1>2018 寒冬面试经历</h1>
-            <h2 class="subheading"></h2>
-            <span class="meta">✍🏼 写于 2019年09月13日</span>&nbsp;&nbsp;&nbsp;
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技术">
+                            技术
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E9%9D%A2%E8%AF%95"
+                            title="面试">
+                            面试
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        2018 寒冬面试经历
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 写于 2019年09月13日</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
 
   <!-- Post Content -->
   <article>
@@ -294,7 +307,7 @@
 <p>可以看到安排的非常满, 有时候一天面 6 场(含电话面试). 好了废话不多说, 下面按时间顺序开始正文.</p>
 <h3 id="腾讯面试">腾讯面试</h3>
 <p>第一家联系的是腾讯(腾讯的 HR 都在深圳?), 简单说了下情况后就约了去面试. 位置在中关村科学城那边, 离后来去面的头条很近, 大概五分钟的距离(头条的办公地方很多).</p>
-<p>简单自我介绍之后, 发现, 他们是腾讯旗下的外包部门, toG 的, 就是承接政府部门的各种小程序业务然后制定一些开发的规范和方式, 转交给其他外包部门进行开发, 之后再交给他们. 问的问题 <em><strong>比较实际</strong></em> 这点要点赞, 下面摘要几个对话:</p>
+<p>简单自我介绍之后, 发现, 他们是腾讯旗下的外包部门, toG 的, 就是承接政府部门的各种小程序业务然后制定一些开发的规范和方式, 转交给其他外包部门进行开发, 之后再交给他们. 问的问题 <strong><em>比较实际</em></strong> 这点要点赞, 下面摘要几个对话:</p>
 <blockquote>
 <p>一面负责人: 我们会对接多个小程序外包进行开发, 如何保证他们提交代码的质量? <br><br />
 我: 1. 制定开发规范进行约束; 2. 开发小程序组件库, 写明组件库文档和使用说明. 3. 开发小程序插件, 强制使用某种开发规范, 否则编译不通过; 4. (开玩笑) 不合规范的扣绩效工资. 这 4 步从软到硬.<br><br />
@@ -316,9 +329,9 @@
 <li>其他 JS 相关的问题</li>
 <li>最后一题: A 和 B 两个人抛硬币, 抛到正面为胜利, A 先抛, B 再抛. 问 A 第一次抛完后, B 胜利的概率.</li>
 </ol>
-<p>之后一面面试官就来了, 先看了我做的面试题, 然后问了一些问题如缓存/Flex布局/Http相关的东西就结束了, 进入二面.</p>
+<p>之后一面面试官就来了, 先看了我做的面试题, 然后问了一些问题如缓存/Flex 布局/Http 相关的东西就结束了, 进入二面.</p>
 <p>二面问了一些业务方面的问题, 我做的事情, 我在业务中的价值等, 然后让我等一会儿.</p>
-<p>之后 HR (是个大学来实习的妹子, 我是她的候选人, 她特别热情搞得我都不好意思)过来说我进入终面了, 但是终面的老大在头条总部, 就是那个抖音里面拍的那个中航的总部, 坐班车去就行了. 于是我做了头条的班车去了(说是班车, 其实就是个7人座的私家车…)</p>
+<p>之后 HR (是个大学来实习的妹子, 我是她的候选人, 她特别热情搞得我都不好意思)过来说我进入终面了, 但是终面的老大在头条总部, 就是那个抖音里面拍的那个中航的总部, 坐班车去就行了. 于是我做了头条的班车去了(说是班车, 其实就是个 7 人座的私家车…)</p>
 <p>到了总部后, 等了会儿, 就有一个年纪跟我爸差不多, 气质也跟我爸差不多的大叔过来, 带我去了地下食堂, 说是食堂, 但是里面有很多显示器可以演示 PPT, 因为不在饭点, 很多人都在这里开会. 所以我的面试地点就在这个地方开始了.</p>
 <blockquote>
 <p>终面面试官: 你前两面都很不错, 面试评价很高, 我不是你的直接领导, 过来帮忙交叉面的. 就是跟你随便谈谈, 别紧张.<br><br />
@@ -348,7 +361,7 @@
 我: 好的<br><br />
 面试官: 有一个 JS 文件, 含有全局变量, 全局变量, 全局函数, 局部函数, 它们的执行步骤说一下<br><br />
 我: blabla<br><br />
-面试官: 我们都知道 JS 是单线程的对吧? 那异步时候的  setTimeout 是怎么回事儿? <br><br />
+面试官: 我们都知道 JS 是单线程的对吧? 那异步时候的 setTimeout 是怎么回事儿? <br><br />
 我: JS 是单线程, 但是浏览器是多线程的, 类似 setTimeout 和 ajax 这种的异步操作, 浏览器都会新开一个线程进行处理, 处理完毕后会通知 JS 线程, 相似的还有渲染线程等. 当然 CPU 是不分单线程多线程的, 因为只有一颗 CPU, 它只能以尽可能快方式排队调用. 当然现在浏览器对 CPU 这种任务调度机制有优化措施, 大量重复的任务会被优化到能够快速调用的存储空间中. 或者使用多核进行任务交叉分配执行调度<br><br />
 面试官: CPU 的运行机制…是你自己想的?<br><br />
 我: 我看书上说的, 哈哈<br><br />
@@ -360,7 +373,7 @@
 <h3 id="玩吧面试">玩吧面试</h3>
 <p>玩吧在东直门外大街那边, 去了之后一个面色冷峻的男人过来, 问了我一些比较正常的问题, 自我感觉也比较不错, 不过他问我是否考虑带团队, 我说暂时还没这个打算, 还是想往技术方面专研一下. 我觉得是这个原因让我挂了.</p>
 <h3 id="锤子科技面试">锤子科技面试</h3>
-<p>跟美团一起在数码港四楼, 面试的部门其实是锤子旗下的一个子部门, 做在线办公文档的. 去了之后两个人一起面的我, 问了一些东西, 和一些计算机相关的东西, 在知道我也关注科技圈的时候, 就跟我开起了老罗的玩笑, 气氛非常好. 不过因为强制早10晚10以及公积金按 6k 缴纳, 虽然报销晚餐和晚上回家打车费用, 但是还是不太能接受. 后来发了 offer, 薪资符合预期, 但是还是没去.</p>
+<p>跟美团一起在数码港四楼, 面试的部门其实是锤子旗下的一个子部门, 做在线办公文档的. 去了之后两个人一起面的我, 问了一些东西, 和一些计算机相关的东西, 在知道我也关注科技圈的时候, 就跟我开起了老罗的玩笑, 气氛非常好. 不过因为强制早 10 晚 10 以及公积金按 6k 缴纳, 虽然报销晚餐和晚上回家打车费用, 但是还是不太能接受. 后来发了 offer, 薪资符合预期, 但是还是没去.</p>
 <h3 id="滴滴面试">滴滴面试</h3>
 <p>滴滴在中关村科技园. 记得有四面, 问了一些基础问题如 git rever reset rebase 用法; 一些业务问题如之前做什么的, 有什么技术难度; 一些疑难问题的细节, 应该是想考察解决问题的思路. 后来终面的时候问了我的职业规划, 问了我眼中的前端发展的方向/看法, 最后让回去等消息, 也没过. 后来才知道, 滴滴那个时候发生了不亚于美团的裁员潮, 不过赔偿比美团强多了. 在脉脉专门吐槽了这个事情, 终面的负责人特意私信我解释我没过的原因.</p>
 <h3 id="小米面试">小米面试</h3>
@@ -873,16 +886,16 @@ ES6 RequireJS CommonJS AMDJS CMDJS SeaJS 的区别?<br><br />
   </ul>
 </ul>
 
-        <p class="copyright text-muted">
-          Copyright &copy;
-          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
-          2024
-          <br>
-          Don't Panic | Theme fork from
-          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-          <br>
-          
-        </p>
+          <p class="copyright text-muted">
+            Copyright &copy;
+            <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+            2024
+              <br>
+              Don't Panic | Theme fork from
+              <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+              <br>
+              
+          </p>
       </div>
     </div>
   </div>
@@ -919,7 +932,7 @@ ES6 RequireJS CommonJS AMDJS CMDJS SeaJS 的区别?<br><br />
     // Note: 自动切换
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('dark');
           document.documentElement.classList.remove('light');
@@ -927,7 +940,7 @@ ES6 RequireJS CommonJS AMDJS CMDJS SeaJS 的区别?<br><br />
       });
     window
       .matchMedia('(prefers-color-scheme: light)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('light');
           document.documentElement.classList.remove('dark');
@@ -943,7 +956,7 @@ ES6 RequireJS CommonJS AMDJS CMDJS SeaJS 的区别?<br><br />
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/xblog.min.js?202405251426"></script>
+<script src="/js/xheldon-life-blog.min.js?202405251426"></script>
 
 
 <!-- Simple Jekyll Search 复制逻辑 -->
@@ -951,178 +964,178 @@ ES6 RequireJS CommonJS AMDJS CMDJS SeaJS 的区别?<br><br />
 
 <!-- Vercel web analysis -->
 
-<script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  
 
+    <!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
-<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
-
-<!-- async load function -->
-<script>
-  function async (u, c) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) {
-      o.addEventListener(
-        'load',
-        function(e) {
-          c(null, e);
-        },
-        false
-      );
-    }
-    s.parentNode.insertBefore(o, s);
-  }
-</script>
-
-<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
-
-<!-- jquery.tagcloud.js -->
-
-
-<!--fastClick.js -->
-<script>
-  async ('/js/fastclick.min.js', function() {
-    var $nav = document.querySelector('nav');
-    if ($nav) FastClick.attach($nav);
-  });
-</script>
-
-<!-- Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-
-  gtag('config', '{{config.ga_track_id}}');
-</script>
-
-
-<!-- Side Catalog -->
-
-<script type="text/javascript">
-  function generateCatalog(selector) {
-    // TODO: 多语种没有迁移过来
-    // init
-    var P = $('div.post-container'),
-      a,
-      n,
-      t,
-      l,
-      i,
-      c;
-    a = P.find('h1,h2,h3,h4,h5,h6');
-
-    // clean
-    $(selector).html('');
-
-    // appending
-    a.each(function() {
-      n = $(this).prop('tagName').toLowerCase();
-      i = '#' + $(this).prop('id');
-      t = $(this).text();
-      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-      l = $('<li class="' + n + '_nav"></li>').append(c);
-      $(selector).append(l);
-    });
-    return true;
-  }
-
-  generateCatalog('.catalog-body');
-
-  // toggle side catalog
-  $('.catalog-toggle').click(function(e) {
-    e.preventDefault();
-    $('.side-catalog').toggleClass('fold');
-  });
-
-  /*
-   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-   * Fork by Hux to support padding
-   */
-  async ('/js/jquery.nav.js',
-    function() {
-      $('.catalog-body').onePageNav({
-        currentClass: 'active',
-        changeHash: !1,
-        easing: 'swing',
-        filter: '',
-        scrollSpeed: 700,
-        scrollOffset: 0,
-        scrollThreshold: 0.2,
-        begin: null,
-        end: null,
-        scrollChange: null,
-        padding: 80,
-      });
-    }
-  );
-</script>
-
-
-<script>
-  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-  function htmlDecode(input) {
-    var e = document.createElement('textarea');
-    e.innerHTML = input;
-    // handle case of empty input
-    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-  }
-
-  SimpleJekyllSearch({
-    searchInput: document.getElementById('search-input'),
-    resultsContainer: document.getElementById('search-results'),
-    json: '/search.json',
-    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-    noResultsText: 'No results',
-    limit: 50,
-    fuzzy: false,
-    // a hack to get escaped subtitle unescaped. for some reason, 
-    // post.subtitle w/o escape filter nuke entire search.
-    templateMiddleware: function(prop, value, template) {
-      if (prop === 'subtitle' || prop === 'title') {
-        if (value.indexOf("code")) {
-          return htmlDecode(value);
-        } else {
-          return value;
+    <!-- async load function -->
+    <script>
+      function async(u, c) {
+        var d = document,
+          t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+          o.addEventListener(
+            'load',
+            function (e) {
+              c(null, e);
+            },
+            false
+          );
         }
+        s.parentNode.insertBefore(o, s);
       }
-    }
-  });
+    </script>
 
-  $(document).ready(function() {
-    var $searchPage = $('.search-page');
-    var $searchOpen = $('.search-icon');
-    var $searchClose = $('.search-icon-close');
-    var $searchInput = $('#search-input');
-    var $body = $('body');
+    <!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-    $searchOpen.on('click', function(e) {
-      e.preventDefault();
-      $searchPage.toggleClass('search-active');
-      var prevClasses = $body.attr('class') || '';
-      setTimeout(function() {
-        $body.addClass('no-scroll');
-      }, 400)
+    <!-- jquery.tagcloud.js -->
+    
 
-      if ($searchPage.hasClass('search-active')) {
-        $searchClose.on('click', function(e) {
-          e.preventDefault();
-          $searchPage.removeClass('search-active');
-          $body.attr('class', prevClasses); // from closure 
-        });
-        $searchInput.focus();
-      }
-    });
-  });
-</script>
+        <!--fastClick.js -->
+        <script>
+          async('/js/fastclick.min.js', function () {
+            var $nav = document.querySelector('nav');
+            if ($nav) FastClick.attach($nav);
+          });
+        </script>
+
+        <!-- Google Analytics -->
+        
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', '{{config.ga_track_id}}');
+          </script>
+          
+
+            <!-- Side Catalog -->
+            
+              <script type="text/javascript">
+                function generateCatalog(selector) {
+                  // TODO: 多语种没有迁移过来
+                  // init
+                  var P = $('div.post-container'),
+                    a,
+                    n,
+                    t,
+                    l,
+                    i,
+                    c;
+                  a = P.find('h1,h2,h3,h4,h5,h6');
+
+                  // clean
+                  $(selector).html('');
+
+                  // appending
+                  a.each(function () {
+                    n = $(this).prop('tagName').toLowerCase();
+                    i = '#' + $(this).prop('id');
+                    t = $(this).text();
+                    c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+                    l = $('<li class="' + n + '_nav"></li>').append(c);
+                    $(selector).append(l);
+                  });
+                  return true;
+                }
+
+                generateCatalog('.catalog-body');
+
+                // toggle side catalog
+                $('.catalog-toggle').click(function (e) {
+                  e.preventDefault();
+                  $('.side-catalog').toggleClass('fold');
+                });
+
+                /*
+                 * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+                 * Fork by Hux to support padding
+                 */
+                async('/js/jquery.nav.js',
+                  function () {
+                    $('.catalog-body').onePageNav({
+                      currentClass: 'active',
+                      changeHash: !1,
+                      easing: 'swing',
+                      filter: '',
+                      scrollSpeed: 700,
+                      scrollOffset: 0,
+                      scrollThreshold: 0.2,
+                      begin: null,
+                      end: null,
+                      scrollChange: null,
+                      padding: 80,
+                    });
+                  }
+                );
+              </script>
+              
+
+                <script>
+                  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+                  function htmlDecode(input) {
+                    var e = document.createElement('textarea');
+                    e.innerHTML = input;
+                    // handle case of empty input
+                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                  }
+
+
+                  $(document).ready(function () {
+                    SimpleJekyllSearch({
+                      searchInput: document.getElementById('search-input'),
+                      resultsContainer: document.getElementById('search-results'),
+                      json: '/search.json',
+                      searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+                      noResultsText: 'No results',
+                      limit: 50,
+                      fuzzy: false,
+                      // a hack to get escaped subtitle unescaped. for some reason, 
+                      // post.subtitle w/o escape filter nuke entire search.
+                      templateMiddleware: function (prop, value, template) {
+                        if (prop === 'subtitle' || prop === 'title') {
+                          if (value.indexOf("code")) {
+                            return htmlDecode(value);
+                          } else {
+                            return value;
+                          }
+                        }
+                      }
+                    });
+                    var $searchPage = $('.search-page');
+                    var $searchOpen = $('.search-icon');
+                    var $searchClose = $('.search-icon-close');
+                    var $searchInput = $('#search-input');
+                    var $body = $('body');
+
+                    $searchOpen.on('click', function (e) {
+                      e.preventDefault();
+                      $searchPage.toggleClass('search-active');
+                      var prevClasses = $body.attr('class') || '';
+                      setTimeout(function () {
+                        $body.addClass('no-scroll');
+                      }, 400)
+
+                      if ($searchPage.hasClass('search-active')) {
+                        $searchClose.on('click', function (e) {
+                          e.preventDefault();
+                          $searchPage.removeClass('search-active');
+                          $body.attr('class', prevClasses); // from closure 
+                        });
+                        $searchInput.focus();
+                      }
+                    });
+                  });
+                </script>
 
     <!-- Image to hack wechat -->
     <img src="/img/icon_wechat.png" width="0" height="0" />

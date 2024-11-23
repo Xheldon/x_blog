@@ -102,8 +102,8 @@
   <body ontouchstart="">
     <!-- Navigation -->
     
-      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+  <nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -152,50 +152,53 @@
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
-        var $body = document.body;
-        var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xblog_navbar');
-        var $collapse = document.querySelector('.navbar-collapse');
+        document.addEventListener('DOMContentLoaded', function () {
 
-        var __XNav__ = {
-          close: function () {
-            $navbar.className = ' ';
-            // wait until animation end.
-            setTimeout(function () {
-              // prevent frequently toggle
-              if ($navbar.className.indexOf('in') < 0) {
-                $collapse.style.height = '0px';
-              }
-            }, 400);
-          },
-          open: function () {
-            $collapse.style.height = 'auto';
-            $navbar.className += ' in';
-          },
-        };
-        // Bind Event
-        $toggle.addEventListener('click', function (e) {
-          if ($navbar.className.indexOf('in') > 0) {
+          var $body = document.body;
+          var $toggle = document.querySelector('.navbar-toggle');
+          var $navbar = document.querySelector('#xblog_navbar');
+          var $collapse = document.querySelector('.navbar-collapse');
+          console.log('shit22');
+          var __XNav__ = {
+            close: function () {
+              $navbar.className = ' ';
+              // wait until animation end.
+              setTimeout(function () {
+                // prevent frequently toggle
+                if ($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = '0px';
+                }
+              }, 400);
+            },
+            open: function () {
+              $collapse.style.height = 'auto';
+              $navbar.className += ' in';
+            },
+          };
+          // Bind Event
+          $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+              __XNav__.close();
+            } else {
+              __XNav__.open();
+            }
+          });
+          /**
+           * Since Fastclick is used to delegate 'touchstart' globally
+           * to hack 300ms delay in iOS by performing a fake 'click',
+           * Using 'e.stopPropagation' to stop 'touchstart' event from
+           * $toggle/$collapse will break global delegation.
+           *
+           * Instead, we use a 'e.target' filter to prevent handler
+           * added to document close XheldonNav.
+           *
+           * Also, we use 'click' instead of 'touchstart' as compromise
+           */
+          document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
             __XNav__.close();
-          } else {
-            __XNav__.open();
-          }
-        });
-        /**
-         * Since Fastclick is used to delegate 'touchstart' globally
-         * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from
-         * $toggle/$collapse will break global delegation.
-         *
-         * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.
-         *
-         * Also, we use 'click' instead of 'touchstart' as compromise
-         */
-        document.addEventListener('click', function (e) {
-          if (e.target == $toggle) return;
-          if (e.target.className == 'icon-bar') return;
-          __XNav__.close();
+          });
         });
       </script> <!-- Search -->
 <div class="search-page">
@@ -233,32 +236,45 @@
   
 </style>
 
-<header class="intro-header style-text">
-  
-    <div class="headerMask"></div>
+  <header class="intro-header style-text">
     
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <div class="post-heading">
-            <div class="tags">
-              
-              <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-              
-              <a class="tag" href="/archive/?tag=Git" title="Git">Git</a>
-              
-              <a class="tag" href="/archive/?tag=GitHub" title="GitHub">GitHub</a>
-              
-            </div>
-            <h1>免费使用私有仓库发布 GitHub Pages</h1>
-            <h2 class="subheading"></h2>
-            <span class="meta">✍🏼 写于 2020年10月31日</span>&nbsp;&nbsp;&nbsp;
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技术">
+                            技术
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=Git"
+                            title="Git">
+                            Git
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=GitHub"
+                            title="GitHub">
+                            GitHub
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        免费使用私有仓库发布 GitHub Pages
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 写于 2020年10月31日</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
 
   <!-- Post Content -->
   <article>
@@ -325,7 +341,7 @@
 </ol>
 <h2 id="具体步骤">具体步骤</h2>
 <p>上面已经说的很详细了，下面直接列出文件，挨个分析。需要用到的时候直接复制该内容稍加修改即可：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 该 ci 的名字，可以在仓库的 Github Actions tab 看到</span><br><span class="hljs-attr">name:</span> <span class="hljs-string">Blog</span> <span class="hljs-string">Generator</span><br><br><span class="hljs-comment"># 触发时机</span><br><span class="hljs-attr">on:</span><br>  <span class="hljs-comment"># 代码 push 到 master 分支的时候运行该 workflow</span><br>  <span class="hljs-comment"># TODO：不运行 commit 信息中包含特定关键词的 push</span><br>  <span class="hljs-attr">push:</span><br>    <span class="hljs-attr">branches:</span> [ <span class="hljs-string">master</span> ]<br><br><span class="hljs-attr">jobs:</span><br>  <span class="hljs-comment"># build-and-push 是 jobs 名字，随便取，可以有多个 jobs 默认并行</span><br>  <span class="hljs-attr">build-and-push:</span><br>    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span> <span class="hljs-comment"># 该 jobs 运行的环境</span><br>    <span class="hljs-attr">steps:</span><br>      <span class="hljs-comment"># 首先一般都是 checkout 当前的仓库代码，用官方的 actions/checkout@v2</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v2</span><br>        <span class="hljs-attr">with:</span> <span class="hljs-comment"># with 表示所需要的参数</span><br>          <span class="hljs-attr">persist-credentials:</span> <span class="hljs-string">fasle</span> <span class="hljs-comment"># false 是用 personal token，true 是使用 GitHub token</span><br>          <span class="hljs-attr">fetch-depth:</span> <span class="hljs-number">0</span> <span class="hljs-comment"># 保证能够 push 成功</span><br><br>      <span class="hljs-comment"># 设置 ruby 环境，这里用的也是官方的 actions</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Set</span> <span class="hljs-string">up</span> <span class="hljs-string">Ruby</span><br>        <span class="hljs-attr">uses:</span> <span class="hljs-string">ruby/setup-ruby@v1</span><br>        <span class="hljs-attr">with:</span><br>          <span class="hljs-attr">ruby-version:</span> <span class="hljs-number">2.6</span><br><br>      <span class="hljs-comment"># 安装依赖</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Install</span> <span class="hljs-string">dependencies</span> <span class="hljs-comment"># 操作名字，会显示在 Github Actions 的任务输出界面，方便你 debug</span><br>        <span class="hljs-attr">run:</span> <span class="hljs-string">bundle</span> <span class="hljs-string">install</span> <span class="hljs-comment"># 运行的命令</span><br><br>      <span class="hljs-comment"># 打包静态资源</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Build</span> <span class="hljs-string">Pages</span><br>        <span class="hljs-attr">run:</span> <span class="hljs-string">bundle</span> <span class="hljs-string">exec</span> <span class="hljs-string">jekyll</span> <span class="hljs-string">build</span> <br><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Add</span> <span class="hljs-string">Message</span><br>        <span class="hljs-attr">working-directory:</span> <span class="hljs-string">./_site</span> <span class="hljs-comment"># jekyll 默认 build 到 _site 目录，因此设置命令执行的目录为 ./_site</span><br>        <span class="hljs-attr">run:</span> <span class="hljs-string">|</span> <span class="hljs-comment"># run 后面加个 ‘|’ 然后换行可以同时执行多个命令，每行一个</span><br>           <span class="hljs-string">echo</span> <span class="hljs-string">&quot;www.xheldon.com&quot;</span> <span class="hljs-string">&gt;</span> <span class="hljs-string">CNAME</span><br>           <span class="hljs-string">echo</span> <span class="hljs-string">-e</span> <span class="hljs-string">&quot;# [Xheldon&#x27;s Tech blog](https://www.xheldon.com)&quot;</span> <span class="hljs-string">&gt;</span> <span class="hljs-string">README.md</span><br>     <br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Commit</span> <span class="hljs-string">and</span> <span class="hljs-string">Push</span> <span class="hljs-comment"># 将打包后的位于 _site 目录的文件 push 到 A 仓库即可</span><br>        <span class="hljs-attr">working-directory:</span> <span class="hljs-string">./_site</span><br>        <span class="hljs-attr">run:</span> <span class="hljs-string">|</span><br><span class="hljs-string">          git init</span><br><span class="hljs-string">          git checkout -b master</span><br><span class="hljs-string">          git add -A</span><br><span class="hljs-string">          git -c user.name=&#x27;github actions by $&#123;&#123;github.actor&#125;&#125;&#x27; -c user.email=&#x27;NO&#x27; commit -m &#x27;update&#x27; </span><br><span class="hljs-string">          git push &quot;https://&#123;%raw%&#125;$&#123;&#123;github.actor&#125;&#125;:$&#123;&#123;secrets.X_BLOG_SITE&#125;&#125;&#123;%endraw%&#125;@github.com/Xheldon/x_blog.git&quot; HEAD:master -f -q</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 该 ci 的名字，可以在仓库的 Github Actions tab 看到</span><br><span class="hljs-attr">name:</span> <span class="hljs-string">Blog</span> <span class="hljs-string">Generator</span><br><br><span class="hljs-comment"># 触发时机</span><br><span class="hljs-attr">on:</span><br>  <span class="hljs-comment"># 代码 push 到 master 分支的时候运行该 workflow</span><br>  <span class="hljs-comment"># TODO：不运行 commit 信息中包含特定关键词的 push</span><br>  <span class="hljs-attr">push:</span><br>    <span class="hljs-attr">branches:</span> [<span class="hljs-string">master</span>]<br><br><span class="hljs-attr">jobs:</span><br>  <span class="hljs-comment"># build-and-push 是 jobs 名字，随便取，可以有多个 jobs 默认并行</span><br>  <span class="hljs-attr">build-and-push:</span><br>    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span> <span class="hljs-comment"># 该 jobs 运行的环境</span><br>    <span class="hljs-attr">steps:</span><br>      <span class="hljs-comment"># 首先一般都是 checkout 当前的仓库代码，用官方的 actions/checkout@v2</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v2</span><br>        <span class="hljs-attr">with:</span> <span class="hljs-comment"># with 表示所需要的参数</span><br>          <span class="hljs-attr">persist-credentials:</span> <span class="hljs-string">fasle</span> <span class="hljs-comment"># false 是用 personal token，true 是使用 GitHub token</span><br>          <span class="hljs-attr">fetch-depth:</span> <span class="hljs-number">0</span> <span class="hljs-comment"># 保证能够 push 成功</span><br><br>      <span class="hljs-comment"># 设置 ruby 环境，这里用的也是官方的 actions</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Set</span> <span class="hljs-string">up</span> <span class="hljs-string">Ruby</span><br>        <span class="hljs-attr">uses:</span> <span class="hljs-string">ruby/setup-ruby@v1</span><br>        <span class="hljs-attr">with:</span><br>          <span class="hljs-attr">ruby-version:</span> <span class="hljs-number">2.6</span><br><br>      <span class="hljs-comment"># 安装依赖</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Install</span> <span class="hljs-string">dependencies</span> <span class="hljs-comment"># 操作名字，会显示在 Github Actions 的任务输出界面，方便你 debug</span><br>        <span class="hljs-attr">run:</span> <span class="hljs-string">bundle</span> <span class="hljs-string">install</span> <span class="hljs-comment"># 运行的命令</span><br><br>      <span class="hljs-comment"># 打包静态资源</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Build</span> <span class="hljs-string">Pages</span><br>        <span class="hljs-attr">run:</span> <span class="hljs-string">bundle</span> <span class="hljs-string">exec</span> <span class="hljs-string">jekyll</span> <span class="hljs-string">build</span><br><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Add</span> <span class="hljs-string">Message</span><br>        <span class="hljs-attr">working-directory:</span> <span class="hljs-string">./_site</span> <span class="hljs-comment"># jekyll 默认 build 到 _site 目录，因此设置命令执行的目录为 ./_site</span><br>        <span class="hljs-attr">run:</span> <span class="hljs-string">|</span> <span class="hljs-comment"># run 后面加个 ‘|’ 然后换行可以同时执行多个命令，每行一个</span><br>          <span class="hljs-string">echo</span> <span class="hljs-string">&quot;www.xheldon.com&quot;</span> <span class="hljs-string">&gt;</span> <span class="hljs-string">CNAME</span><br>          <span class="hljs-string">echo</span> <span class="hljs-string">-e</span> <span class="hljs-string">&quot;# [Xheldon&#x27;s Tech blog](https://www.xheldon.com)&quot;</span> <span class="hljs-string">&gt;</span> <span class="hljs-string">README.md</span><br><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Commit</span> <span class="hljs-string">and</span> <span class="hljs-string">Push</span> <span class="hljs-comment"># 将打包后的位于 _site 目录的文件 push 到 A 仓库即可</span><br>        <span class="hljs-attr">working-directory:</span> <span class="hljs-string">./_site</span><br>        <span class="hljs-attr">run:</span> <span class="hljs-string">|</span><br><span class="hljs-string">          git init</span><br><span class="hljs-string">          git checkout -b master</span><br><span class="hljs-string">          git add -A</span><br><span class="hljs-string">          git -c user.name=&#x27;github actions by $&#123;&#123;github.actor&#125;&#125;&#x27; -c user.email=&#x27;NO&#x27; commit -m &#x27;update&#x27; </span><br><span class="hljs-string">          git push &quot;https://&#123;%raw%&#125;$&#123;&#123;github.actor&#125;&#125;:$&#123;&#123;secrets.X_BLOG_SITE&#125;&#125;&#123;%endraw%&#125;@github.com/Xheldon/x_blog.git&quot; HEAD:master -f -q</span><br></code></pre></td></tr></table></figure>
 <p>这里最后一步需要说明下，<code>X_BLOG_SITE</code> 即为我自定义的加密数据，值是配置的 Personal Token。另外 push 到远端的话，如果该 CI 只操作当前仓库，则不用将仓库名写死，可以用环境变量写做如下形式：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">git</span> <span class="hljs-string">push</span> <span class="hljs-string">&quot;https://&#123;%raw%&#125;$<span class="hljs-template-variable">&#123;&#123;github.actor&#125;&#125;</span>:$<span class="hljs-template-variable">&#123;&#123;secrets.GITHUB_TOKEN&#125;&#125;</span>@github.com/$<span class="hljs-template-variable">&#123;&#123;github.repository&#125;&#125;</span>&#123;%endraw%&#125;.git&quot;</span> <span class="hljs-string">HEAD:master</span> <span class="hljs-string">-f</span> <span class="hljs-string">-q</span><br></code></pre></td></tr></table></figure>
 <p>即使用 <a href="http://github.XXX">github.XXX</a> 来指代相关信息，可以 <a href="https://docs.github.com/cn/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions#github-context">在这里</a> 查看更多上下文参数说明。</p>
@@ -778,16 +794,16 @@
   </ul>
 </ul>
 
-        <p class="copyright text-muted">
-          Copyright &copy;
-          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
-          2024
-          <br>
-          Don't Panic | Theme fork from
-          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-          <br>
-          
-        </p>
+          <p class="copyright text-muted">
+            Copyright &copy;
+            <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+            2024
+              <br>
+              Don't Panic | Theme fork from
+              <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+              <br>
+              
+          </p>
       </div>
     </div>
   </div>
@@ -824,7 +840,7 @@
     // Note: 自动切换
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('dark');
           document.documentElement.classList.remove('light');
@@ -832,7 +848,7 @@
       });
     window
       .matchMedia('(prefers-color-scheme: light)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('light');
           document.documentElement.classList.remove('dark');
@@ -848,7 +864,7 @@
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/xblog.min.js?202405251426"></script>
+<script src="/js/xheldon-life-blog.min.js?202405251426"></script>
 
 
 <!-- Simple Jekyll Search 复制逻辑 -->
@@ -856,178 +872,178 @@
 
 <!-- Vercel web analysis -->
 
-<script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  
 
+    <!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
-<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
-
-<!-- async load function -->
-<script>
-  function async (u, c) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) {
-      o.addEventListener(
-        'load',
-        function(e) {
-          c(null, e);
-        },
-        false
-      );
-    }
-    s.parentNode.insertBefore(o, s);
-  }
-</script>
-
-<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
-
-<!-- jquery.tagcloud.js -->
-
-
-<!--fastClick.js -->
-<script>
-  async ('/js/fastclick.min.js', function() {
-    var $nav = document.querySelector('nav');
-    if ($nav) FastClick.attach($nav);
-  });
-</script>
-
-<!-- Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-
-  gtag('config', '{{config.ga_track_id}}');
-</script>
-
-
-<!-- Side Catalog -->
-
-<script type="text/javascript">
-  function generateCatalog(selector) {
-    // TODO: 多语种没有迁移过来
-    // init
-    var P = $('div.post-container'),
-      a,
-      n,
-      t,
-      l,
-      i,
-      c;
-    a = P.find('h1,h2,h3,h4,h5,h6');
-
-    // clean
-    $(selector).html('');
-
-    // appending
-    a.each(function() {
-      n = $(this).prop('tagName').toLowerCase();
-      i = '#' + $(this).prop('id');
-      t = $(this).text();
-      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-      l = $('<li class="' + n + '_nav"></li>').append(c);
-      $(selector).append(l);
-    });
-    return true;
-  }
-
-  generateCatalog('.catalog-body');
-
-  // toggle side catalog
-  $('.catalog-toggle').click(function(e) {
-    e.preventDefault();
-    $('.side-catalog').toggleClass('fold');
-  });
-
-  /*
-   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-   * Fork by Hux to support padding
-   */
-  async ('/js/jquery.nav.js',
-    function() {
-      $('.catalog-body').onePageNav({
-        currentClass: 'active',
-        changeHash: !1,
-        easing: 'swing',
-        filter: '',
-        scrollSpeed: 700,
-        scrollOffset: 0,
-        scrollThreshold: 0.2,
-        begin: null,
-        end: null,
-        scrollChange: null,
-        padding: 80,
-      });
-    }
-  );
-</script>
-
-
-<script>
-  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-  function htmlDecode(input) {
-    var e = document.createElement('textarea');
-    e.innerHTML = input;
-    // handle case of empty input
-    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-  }
-
-  SimpleJekyllSearch({
-    searchInput: document.getElementById('search-input'),
-    resultsContainer: document.getElementById('search-results'),
-    json: '/search.json',
-    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-    noResultsText: 'No results',
-    limit: 50,
-    fuzzy: false,
-    // a hack to get escaped subtitle unescaped. for some reason, 
-    // post.subtitle w/o escape filter nuke entire search.
-    templateMiddleware: function(prop, value, template) {
-      if (prop === 'subtitle' || prop === 'title') {
-        if (value.indexOf("code")) {
-          return htmlDecode(value);
-        } else {
-          return value;
+    <!-- async load function -->
+    <script>
+      function async(u, c) {
+        var d = document,
+          t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+          o.addEventListener(
+            'load',
+            function (e) {
+              c(null, e);
+            },
+            false
+          );
         }
+        s.parentNode.insertBefore(o, s);
       }
-    }
-  });
+    </script>
 
-  $(document).ready(function() {
-    var $searchPage = $('.search-page');
-    var $searchOpen = $('.search-icon');
-    var $searchClose = $('.search-icon-close');
-    var $searchInput = $('#search-input');
-    var $body = $('body');
+    <!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-    $searchOpen.on('click', function(e) {
-      e.preventDefault();
-      $searchPage.toggleClass('search-active');
-      var prevClasses = $body.attr('class') || '';
-      setTimeout(function() {
-        $body.addClass('no-scroll');
-      }, 400)
+    <!-- jquery.tagcloud.js -->
+    
 
-      if ($searchPage.hasClass('search-active')) {
-        $searchClose.on('click', function(e) {
-          e.preventDefault();
-          $searchPage.removeClass('search-active');
-          $body.attr('class', prevClasses); // from closure 
-        });
-        $searchInput.focus();
-      }
-    });
-  });
-</script>
+        <!--fastClick.js -->
+        <script>
+          async('/js/fastclick.min.js', function () {
+            var $nav = document.querySelector('nav');
+            if ($nav) FastClick.attach($nav);
+          });
+        </script>
+
+        <!-- Google Analytics -->
+        
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', '{{config.ga_track_id}}');
+          </script>
+          
+
+            <!-- Side Catalog -->
+            
+              <script type="text/javascript">
+                function generateCatalog(selector) {
+                  // TODO: 多语种没有迁移过来
+                  // init
+                  var P = $('div.post-container'),
+                    a,
+                    n,
+                    t,
+                    l,
+                    i,
+                    c;
+                  a = P.find('h1,h2,h3,h4,h5,h6');
+
+                  // clean
+                  $(selector).html('');
+
+                  // appending
+                  a.each(function () {
+                    n = $(this).prop('tagName').toLowerCase();
+                    i = '#' + $(this).prop('id');
+                    t = $(this).text();
+                    c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+                    l = $('<li class="' + n + '_nav"></li>').append(c);
+                    $(selector).append(l);
+                  });
+                  return true;
+                }
+
+                generateCatalog('.catalog-body');
+
+                // toggle side catalog
+                $('.catalog-toggle').click(function (e) {
+                  e.preventDefault();
+                  $('.side-catalog').toggleClass('fold');
+                });
+
+                /*
+                 * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+                 * Fork by Hux to support padding
+                 */
+                async('/js/jquery.nav.js',
+                  function () {
+                    $('.catalog-body').onePageNav({
+                      currentClass: 'active',
+                      changeHash: !1,
+                      easing: 'swing',
+                      filter: '',
+                      scrollSpeed: 700,
+                      scrollOffset: 0,
+                      scrollThreshold: 0.2,
+                      begin: null,
+                      end: null,
+                      scrollChange: null,
+                      padding: 80,
+                    });
+                  }
+                );
+              </script>
+              
+
+                <script>
+                  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+                  function htmlDecode(input) {
+                    var e = document.createElement('textarea');
+                    e.innerHTML = input;
+                    // handle case of empty input
+                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                  }
+
+
+                  $(document).ready(function () {
+                    SimpleJekyllSearch({
+                      searchInput: document.getElementById('search-input'),
+                      resultsContainer: document.getElementById('search-results'),
+                      json: '/search.json',
+                      searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+                      noResultsText: 'No results',
+                      limit: 50,
+                      fuzzy: false,
+                      // a hack to get escaped subtitle unescaped. for some reason, 
+                      // post.subtitle w/o escape filter nuke entire search.
+                      templateMiddleware: function (prop, value, template) {
+                        if (prop === 'subtitle' || prop === 'title') {
+                          if (value.indexOf("code")) {
+                            return htmlDecode(value);
+                          } else {
+                            return value;
+                          }
+                        }
+                      }
+                    });
+                    var $searchPage = $('.search-page');
+                    var $searchOpen = $('.search-icon');
+                    var $searchClose = $('.search-icon-close');
+                    var $searchInput = $('#search-input');
+                    var $body = $('body');
+
+                    $searchOpen.on('click', function (e) {
+                      e.preventDefault();
+                      $searchPage.toggleClass('search-active');
+                      var prevClasses = $body.attr('class') || '';
+                      setTimeout(function () {
+                        $body.addClass('no-scroll');
+                      }, 400)
+
+                      if ($searchPage.hasClass('search-active')) {
+                        $searchClose.on('click', function (e) {
+                          e.preventDefault();
+                          $searchPage.removeClass('search-active');
+                          $body.attr('class', prevClasses); // from closure 
+                        });
+                        $searchInput.focus();
+                      }
+                    });
+                  });
+                </script>
 
     <!-- Image to hack wechat -->
     <img src="/img/icon_wechat.png" width="0" height="0" />

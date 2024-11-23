@@ -100,8 +100,8 @@
   <body ontouchstart="">
     <!-- Navigation -->
     
-      <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+  <nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -150,50 +150,53 @@
         // Drop Bootstarp low-performance Navbar
         // Use customize navbar with high-quality material design animation
         // in high-perf jank-free CSS3 implementation
-        var $body = document.body;
-        var $toggle = document.querySelector('.navbar-toggle');
-        var $navbar = document.querySelector('#xblog_navbar');
-        var $collapse = document.querySelector('.navbar-collapse');
+        document.addEventListener('DOMContentLoaded', function () {
 
-        var __XNav__ = {
-          close: function () {
-            $navbar.className = ' ';
-            // wait until animation end.
-            setTimeout(function () {
-              // prevent frequently toggle
-              if ($navbar.className.indexOf('in') < 0) {
-                $collapse.style.height = '0px';
-              }
-            }, 400);
-          },
-          open: function () {
-            $collapse.style.height = 'auto';
-            $navbar.className += ' in';
-          },
-        };
-        // Bind Event
-        $toggle.addEventListener('click', function (e) {
-          if ($navbar.className.indexOf('in') > 0) {
+          var $body = document.body;
+          var $toggle = document.querySelector('.navbar-toggle');
+          var $navbar = document.querySelector('#xblog_navbar');
+          var $collapse = document.querySelector('.navbar-collapse');
+          console.log('shit22');
+          var __XNav__ = {
+            close: function () {
+              $navbar.className = ' ';
+              // wait until animation end.
+              setTimeout(function () {
+                // prevent frequently toggle
+                if ($navbar.className.indexOf('in') < 0) {
+                  $collapse.style.height = '0px';
+                }
+              }, 400);
+            },
+            open: function () {
+              $collapse.style.height = 'auto';
+              $navbar.className += ' in';
+            },
+          };
+          // Bind Event
+          $toggle.addEventListener('click', function (e) {
+            if ($navbar.className.indexOf('in') > 0) {
+              __XNav__.close();
+            } else {
+              __XNav__.open();
+            }
+          });
+          /**
+           * Since Fastclick is used to delegate 'touchstart' globally
+           * to hack 300ms delay in iOS by performing a fake 'click',
+           * Using 'e.stopPropagation' to stop 'touchstart' event from
+           * $toggle/$collapse will break global delegation.
+           *
+           * Instead, we use a 'e.target' filter to prevent handler
+           * added to document close XheldonNav.
+           *
+           * Also, we use 'click' instead of 'touchstart' as compromise
+           */
+          document.addEventListener('click', function (e) {
+            if (e.target == $toggle) return;
+            if (e.target.className == 'icon-bar') return;
             __XNav__.close();
-          } else {
-            __XNav__.open();
-          }
-        });
-        /**
-         * Since Fastclick is used to delegate 'touchstart' globally
-         * to hack 300ms delay in iOS by performing a fake 'click',
-         * Using 'e.stopPropagation' to stop 'touchstart' event from
-         * $toggle/$collapse will break global delegation.
-         *
-         * Instead, we use a 'e.target' filter to prevent handler
-         * added to document close XheldonNav.
-         *
-         * Also, we use 'click' instead of 'touchstart' as compromise
-         */
-        document.addEventListener('click', function (e) {
-          if (e.target == $toggle) return;
-          if (e.target.className == 'icon-bar') return;
-          __XNav__.close();
+          });
         });
       </script> <!-- Search -->
 <div class="search-page">
@@ -231,30 +234,40 @@
   
 </style>
 
-<header class="intro-header style-text">
-  
-    <div class="headerMask"></div>
+  <header class="intro-header style-text">
     
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <div class="post-heading">
-            <div class="tags">
-              
-              <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF" title="技术">技术</a>
-              
-              <a class="tag" href="/archive/?tag=Vue" title="Vue">Vue</a>
-              
-            </div>
-            <h1>Vue + Webpack 组件式开发(练习环境)初体验</h1>
-            <h2 class="subheading"></h2>
-            <span class="meta">✍🏼 写于 2016年04月29日</span>&nbsp;&nbsp;&nbsp;
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技术">
+                            技术
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=Vue"
+                            title="Vue">
+                            Vue
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        Vue + Webpack 组件式开发(练习环境)初体验
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 写于 2016年04月29日</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
 
   <!-- Post Content -->
   <article>
@@ -311,18 +324,18 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs js">&#123;<br>  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;vue-components&quot;</span>,<br>  <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;0.0.1&quot;</span>,<br>  <span class="hljs-string">&quot;description&quot;</span>: <span class="hljs-string">&quot;vue components test&quot;</span>,<br>  <span class="hljs-string">&quot;main&quot;</span>: <span class="hljs-string">&quot;app/app.js&quot;</span>,<br>  <span class="hljs-string">&quot;scripts&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;dev&quot;</span>: <span class="hljs-string">&quot;webpack-dev-server --hot&quot;</span>,<br>    <span class="hljs-string">&quot;build&quot;</span>: <span class="hljs-string">&quot;webpack&quot;</span><br>  &#125;,<br>  <span class="hljs-string">&quot;keywords&quot;</span>: [<br>    <span class="hljs-string">&quot;vue&quot;</span>,<br>    <span class="hljs-string">&quot;components&quot;</span><br>  ],<br>  <span class="hljs-string">&quot;author&quot;</span>: <span class="hljs-string">&quot;xheldon&quot;</span>,<br>  <span class="hljs-string">&quot;license&quot;</span>: <span class="hljs-string">&quot;MIT&quot;</span>,<br>  <span class="hljs-string">&quot;dependencies&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;vue&quot;</span>: <span class="hljs-string">&quot;^2.2.4&quot;</span><br>  &#125;,<br>  <span class="hljs-string">&quot;devDependencies&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;babel&quot;</span>: <span class="hljs-string">&quot;^6.23.0&quot;</span>,<br>    <span class="hljs-string">&quot;babel-core&quot;</span>: <span class="hljs-string">&quot;^6.24.0&quot;</span>,<br>    <span class="hljs-string">&quot;babel-loader&quot;</span>: <span class="hljs-string">&quot;^6.4.1&quot;</span>,<br>    <span class="hljs-string">&quot;babel-preset-es2015&quot;</span>: <span class="hljs-string">&quot;^6.24.0&quot;</span>,<br>    <span class="hljs-string">&quot;css-loader&quot;</span>: <span class="hljs-string">&quot;^0.27.3&quot;</span>,<br>    <span class="hljs-string">&quot;extract-text-webpack-plugin&quot;</span>: <span class="hljs-string">&quot;^1.0.1&quot;</span>,<br>    <span class="hljs-string">&quot;html-webpack-plugin&quot;</span>: <span class="hljs-string">&quot;^2.28.0&quot;</span>,<br>    <span class="hljs-string">&quot;style-loader&quot;</span>: <span class="hljs-string">&quot;^0.16.0&quot;</span>,<br>    <span class="hljs-string">&quot;vue-html-loader&quot;</span>: <span class="hljs-string">&quot;^1.2.4&quot;</span>,<br>    <span class="hljs-string">&quot;vue-loader&quot;</span>: <span class="hljs-string">&quot;^11.3.1&quot;</span>,<br>    <span class="hljs-string">&quot;vue-style-loader&quot;</span>: <span class="hljs-string">&quot;^2.0.4&quot;</span>,<br>    <span class="hljs-string">&quot;vue-template-compiler&quot;</span>: <span class="hljs-string">&quot;^2.2.4&quot;</span>,<br>    <span class="hljs-string">&quot;webpack&quot;</span>: <span class="hljs-string">&quot;^1.12.2&quot;</span>,<br>    <span class="hljs-string">&quot;webpack-dev-server&quot;</span>: <span class="hljs-string">&quot;^1.12.1&quot;</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h2 id="项目说明">项目说明</h2>
 <p>Ok, 依赖安装完了, 接下来看下 <code>webpack</code> 配置, 因为是想尽快测试 <code>vue</code> 官方文档的组件部分, 所以一切从简了:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br><span class="hljs-keyword">var</span> webpack = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;webpack&#x27;</span>);<br><span class="hljs-keyword">var</span> <span class="hljs-title class_">HtmlwebpackPlugin</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;html-webpack-plugin&#x27;</span>);<br><br><span class="hljs-comment">// 常用配置,项目较小不抽出了</span><br><span class="hljs-keyword">var</span> <span class="hljs-variable constant_">ROOT_PATH</span> = path.<span class="hljs-title function_">resolve</span>(__dirname);<span class="hljs-comment">//根路径</span><br><span class="hljs-keyword">var</span> <span class="hljs-variable constant_">APP_PATH</span> = path.<span class="hljs-title function_">resolve</span>(<span class="hljs-variable constant_">ROOT_PATH</span>, <span class="hljs-string">&#x27;app&#x27;</span>);<span class="hljs-comment">//开发路径</span><br><span class="hljs-keyword">var</span> <span class="hljs-variable constant_">BUILD_PATH</span> = path.<span class="hljs-title function_">resolve</span>(<span class="hljs-variable constant_">ROOT_PATH</span>, <span class="hljs-string">&#x27;build&#x27;</span>);<span class="hljs-comment">//输出路径</span><br><span class="hljs-keyword">var</span>  <span class="hljs-title class_">ExtractTextPlugin</span>= <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;extract-text-webpack-plugin&#x27;</span>);<br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">entry</span>: &#123;<br>    <span class="hljs-attr">app</span>: path.<span class="hljs-title function_">resolve</span>(<span class="hljs-variable constant_">APP_PATH</span>, <span class="hljs-string">&#x27;app.js&#x27;</span>)<br>  &#125;,<br>  <span class="hljs-attr">output</span>: &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-variable constant_">BUILD_PATH</span>,<br>    <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;bundle.js&#x27;</span><span class="hljs-comment">//因为只有一个入口文件, 因此直接写死了</span><br>  &#125;,<br>  <span class="hljs-attr">resolve</span>: &#123;<br>    <span class="hljs-attr">alias</span>: &#123;<br>      <span class="hljs-comment">//注意, 这里导入的是/node_module/vue/dist/vue.js, 跟 vue-router.js 的不同</span><br>      <span class="hljs-attr">vue</span>: <span class="hljs-string">&#x27;vue/dist/vue.js&#x27;</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-comment">//开启 dev source map</span><br>  <span class="hljs-attr">devtool</span>: <span class="hljs-string">&#x27;eval-source-map&#x27;</span>,<br>  <span class="hljs-comment">//开启 dev server</span><br>  <span class="hljs-attr">devServer</span>: &#123;<br>    <span class="hljs-attr">historyApiFallback</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">hot</span>: <span class="hljs-literal">true</span>,<span class="hljs-comment">//HMR</span><br>    <span class="hljs-attr">inline</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">progress</span>: <span class="hljs-literal">true</span><br>  &#125;,<br>  <span class="hljs-attr">module</span>: &#123;<br>    <span class="hljs-attr">loaders</span>:[<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.vue$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;vue&#x27;</span><br>      &#125;,<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.css$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-title class_">ExtractTextPlugin</span>.<span class="hljs-title function_">extract</span>(<span class="hljs-string">&#x27;css-loader&#x27;</span>)<br>      &#125;,<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.js$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;babel&#x27;</span>,<br>        <span class="hljs-attr">include</span>: <span class="hljs-variable constant_">ROOT_PATH</span>,<br>        <span class="hljs-attr">exclude</span>: <span class="hljs-regexp">/node_modules/</span><br>      &#125;,<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.html$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;vue-html&#x27;</span><br>      &#125;<br>    ]<br>  &#125;,<br>  <span class="hljs-attr">vue</span>:&#123;<br>    <span class="hljs-attr">loaders</span>: &#123;<br>      <span class="hljs-attr">css</span>: <span class="hljs-title class_">ExtractTextPlugin</span>.<span class="hljs-title function_">extract</span>(<span class="hljs-string">&#x27;css-loader&#x27;</span>)    &#125;<br>  &#125;,<br>  <span class="hljs-attr">plugins</span>:[<br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">HtmlwebpackPlugin</span>(&#123;<br>      <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Vue component test&#x27;</span>,<br>      <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;this_is_final_filename_address_you_visit_in_browser.html&#x27;</span>,<span class="hljs-comment">//生成的最终文件名</span><br>      <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;app/this_is_main_page_which_you_put_components_into.html&#x27;</span>,<span class="hljs-comment">//放置组件的地方, 一般是一个 body 下一个孤零零的 app 标签即可.</span><br>      <span class="hljs-attr">inject</span>: <span class="hljs-literal">true</span><br>    &#125;)<br>  ]<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br><span class="hljs-keyword">var</span> webpack = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;webpack&#x27;</span>);<br><span class="hljs-keyword">var</span> <span class="hljs-title class_">HtmlwebpackPlugin</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;html-webpack-plugin&#x27;</span>);<br><br><span class="hljs-comment">// 常用配置,项目较小不抽出了</span><br><span class="hljs-keyword">var</span> <span class="hljs-variable constant_">ROOT_PATH</span> = path.<span class="hljs-title function_">resolve</span>(__dirname); <span class="hljs-comment">//根路径</span><br><span class="hljs-keyword">var</span> <span class="hljs-variable constant_">APP_PATH</span> = path.<span class="hljs-title function_">resolve</span>(<span class="hljs-variable constant_">ROOT_PATH</span>, <span class="hljs-string">&#x27;app&#x27;</span>); <span class="hljs-comment">//开发路径</span><br><span class="hljs-keyword">var</span> <span class="hljs-variable constant_">BUILD_PATH</span> = path.<span class="hljs-title function_">resolve</span>(<span class="hljs-variable constant_">ROOT_PATH</span>, <span class="hljs-string">&#x27;build&#x27;</span>); <span class="hljs-comment">//输出路径</span><br><span class="hljs-keyword">var</span> <span class="hljs-title class_">ExtractTextPlugin</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;extract-text-webpack-plugin&#x27;</span>);<br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">entry</span>: &#123;<br>    <span class="hljs-attr">app</span>: path.<span class="hljs-title function_">resolve</span>(<span class="hljs-variable constant_">APP_PATH</span>, <span class="hljs-string">&#x27;app.js&#x27;</span>),<br>  &#125;,<br>  <span class="hljs-attr">output</span>: &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-variable constant_">BUILD_PATH</span>,<br>    <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;bundle.js&#x27;</span>, <span class="hljs-comment">//因为只有一个入口文件, 因此直接写死了</span><br>  &#125;,<br>  <span class="hljs-attr">resolve</span>: &#123;<br>    <span class="hljs-attr">alias</span>: &#123;<br>      <span class="hljs-comment">//注意, 这里导入的是/node_module/vue/dist/vue.js, 跟 vue-router.js 的不同</span><br>      <span class="hljs-attr">vue</span>: <span class="hljs-string">&#x27;vue/dist/vue.js&#x27;</span>,<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-comment">//开启 dev source map</span><br>  <span class="hljs-attr">devtool</span>: <span class="hljs-string">&#x27;eval-source-map&#x27;</span>,<br>  <span class="hljs-comment">//开启 dev server</span><br>  <span class="hljs-attr">devServer</span>: &#123;<br>    <span class="hljs-attr">historyApiFallback</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">hot</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">//HMR</span><br>    <span class="hljs-attr">inline</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">progress</span>: <span class="hljs-literal">true</span>,<br>  &#125;,<br>  <span class="hljs-attr">module</span>: &#123;<br>    <span class="hljs-attr">loaders</span>: [<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.vue$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;vue&#x27;</span>,<br>      &#125;,<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.css$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-title class_">ExtractTextPlugin</span>.<span class="hljs-title function_">extract</span>(<span class="hljs-string">&#x27;css-loader&#x27;</span>),<br>      &#125;,<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.js$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;babel&#x27;</span>,<br>        <span class="hljs-attr">include</span>: <span class="hljs-variable constant_">ROOT_PATH</span>,<br>        <span class="hljs-attr">exclude</span>: <span class="hljs-regexp">/node_modules/</span>,<br>      &#125;,<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.html$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;vue-html&#x27;</span>,<br>      &#125;,<br>    ],<br>  &#125;,<br>  <span class="hljs-attr">vue</span>: &#123;<br>    <span class="hljs-attr">loaders</span>: &#123;<br>      <span class="hljs-attr">css</span>: <span class="hljs-title class_">ExtractTextPlugin</span>.<span class="hljs-title function_">extract</span>(<span class="hljs-string">&#x27;css-loader&#x27;</span>),<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">plugins</span>: [<br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">HtmlwebpackPlugin</span>(&#123;<br>      <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Vue component test&#x27;</span>,<br>      <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;this_is_final_filename_address_you_visit_in_browser.html&#x27;</span>, <span class="hljs-comment">//生成的最终文件名</span><br>      <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;app/this_is_main_page_which_you_put_components_into.html&#x27;</span>, <span class="hljs-comment">//放置组件的地方, 一般是一个 body 下一个孤零零的 app 标签即可.</span><br>      <span class="hljs-attr">inject</span>: <span class="hljs-literal">true</span>,<br>    &#125;),<br>  ],<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>关于这个配置, 有点东西需要说一下.</p>
 <p>从上往下, 首先是 <code>alias</code> , 使用过 <a href="https://github.com/vuejs/vue-router/"><code>vue-router</code></a> 的人可能不需要这个配置, 但是使用 <code>.vue</code> 组件的项目必须这个配置,因为需要指定使用的 <code>vue</code> 的 <code>js</code> 类型, 看下本项目下 <code>node_module/vue/dist/</code> 文件夹下的文件, 有 <code>vue.js</code> 和 <code>vue.common.js</code> 两种, 其中 <code>vue</code> 编译 <code>template</code> 组件的时候是需要一个 <code>compiler.js</code> 的, 目的是把 <code>template</code> 中的 <code>html</code> 内容编译成 <code>render</code> 函数:</p>
 <p>编译前:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span><br>  Hello &#123;&#123;who&#125;&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">  <span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>(&#123;</span><br><span class="language-javascript">    <span class="hljs-attr">el</span>: <span class="hljs-string">&#x27;#app&#x27;</span>,</span><br><span class="language-javascript">    <span class="hljs-attr">data</span>: &#123;<span class="hljs-attr">who</span>: <span class="hljs-string">&#x27;Vue&#x27;</span>&#125;</span><br><span class="language-javascript">  &#125;)</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>```<br><br>编译后:<br><br>```js<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">  <span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>(&#123;</span><br><span class="language-javascript">    <span class="hljs-attr">el</span>: <span class="hljs-string">&#x27;#app&#x27;</span>,</span><br><span class="language-javascript">    <span class="hljs-attr">render</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">      <span class="hljs-keyword">with</span> (<span class="hljs-variable language_">this</span>) &#123;</span><br><span class="language-javascript">        <span class="hljs-title function_">__h__</span>(<span class="hljs-string">&#x27;div&#x27;</span>,</span><br><span class="language-javascript">          &#123;<span class="hljs-attr">staticAttrs</span>:&#123;<span class="hljs-string">&quot;id&quot;</span>:<span class="hljs-string">&quot;app&quot;</span>&#125;&#125;,</span><br><span class="language-javascript">          [(<span class="hljs-string">&quot;\n  Hello &quot;</span>+<span class="hljs-title function_">__toString__</span>(who)+<span class="hljs-string">&quot;\n&quot;</span>)],</span><br><span class="language-javascript">          <span class="hljs-string">&#x27;&#x27;</span></span><br><span class="language-javascript">        )</span><br><span class="language-javascript">      &#125;</span><br><span class="language-javascript">    &#125;,</span><br><span class="language-javascript">    <span class="hljs-attr">data</span>: &#123;<span class="hljs-attr">who</span>: <span class="hljs-string">&#x27;Vue&#x27;</span>&#125;</span><br><span class="language-javascript">  &#125;)</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span>Hello &#123;&#123;who&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">  <span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>(&#123;</span><br><span class="language-javascript">    <span class="hljs-attr">el</span>: <span class="hljs-string">&#x27;#app&#x27;</span>,</span><br><span class="language-javascript">    <span class="hljs-attr">data</span>: &#123; <span class="hljs-attr">who</span>: <span class="hljs-string">&#x27;Vue&#x27;</span> &#125;,</span><br><span class="language-javascript">  &#125;);</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>``` 编译后: ```js<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">  <span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>(&#123;</span><br><span class="language-javascript">    <span class="hljs-attr">el</span>: <span class="hljs-string">&#x27;#app&#x27;</span>,</span><br><span class="language-javascript">    <span class="hljs-attr">render</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">      <span class="hljs-keyword">with</span> (<span class="hljs-variable language_">this</span>) &#123;</span><br><span class="language-javascript">        <span class="hljs-title function_">__h__</span>(</span><br><span class="language-javascript">          <span class="hljs-string">&#x27;div&#x27;</span>,</span><br><span class="language-javascript">          &#123; <span class="hljs-attr">staticAttrs</span>: &#123; <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;app&#x27;</span> &#125; &#125;,</span><br><span class="language-javascript">          [<span class="hljs-string">&#x27;\n  Hello &#x27;</span> + <span class="hljs-title function_">__toString__</span>(who) + <span class="hljs-string">&#x27;\n&#x27;</span>],</span><br><span class="language-javascript">          <span class="hljs-string">&#x27;&#x27;</span></span><br><span class="language-javascript">        );</span><br><span class="language-javascript">      &#125;</span><br><span class="language-javascript">    &#125;,</span><br><span class="language-javascript">    <span class="hljs-attr">data</span>: &#123; <span class="hljs-attr">who</span>: <span class="hljs-string">&#x27;Vue&#x27;</span> &#125;,</span><br><span class="language-javascript">  &#125;);</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>而 <code>vue</code> 使用 <code>compiler</code> 编译 <code>template</code> 后的 <code>js</code> 在运行的时候发现有 <code>render</code> 函数的话就直接执行 <code>render</code>, <code>template</code> 字段下的内容会被忽略. 而执行编译后的 <code>render</code> 的任务,是由 <code>vue.common.js</code> 完成的.因此:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">vue.<span class="hljs-property">js</span> = vue.<span class="hljs-property">common</span>.<span class="hljs-property">js</span> + compiler.<span class="hljs-property">js</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">vue.<span class="hljs-property">js</span> = vue.<span class="hljs-property">common</span>.<span class="hljs-property">js</span> + compiler.<span class="hljs-property">js</span>;<br></code></pre></td></tr></table></figure>
 <p>所以, 如果你使用的是 <code>vue-router</code>, 它的 <code>package.json</code> 中的 <code>main</code> 字段是指向 <code>node_module/dist/vue.common.js</code> 的, 如果你直接复制这个到你的项目下, 运行的时候会提示你类似于 <code>vue.common.js</code> 的 <code>runtime</code> 错误之类的信息.</p>
 <p>其次需要说的是这个 <code>css-loader</code> 和 <code>style-loader</code> 以及 <code>vue-style-loader</code>, 有了 <code>style-loader</code> 为何还要个 <code>vue-style-loader</code> 呢? 看了下 <code>vue-style-loader</code> 的说明, 明白了其仅仅是一个 <code>style-loader</code> 的 <code>fork</code>, 但是为了单独处理 <code>.vue</code> 文件, 同时为了让用户配置 <code>vue</code> 更清晰, 将其加到了 <code>webpack@1.x</code> 的配置文件中的 <code>vue</code> 字段中. 可以通过将 <code>extract-text-webpack-plugin</code> 插件的配置从:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">vue</span>:&#123;<br>  <span class="hljs-attr">loaders</span>: &#123;<br>    <span class="hljs-attr">css</span>: <span class="hljs-title class_">ExtractTextPlugin</span>.<span class="hljs-title function_">extract</span>(<span class="hljs-string">&#x27;vue-style-loader&#x27;</span>,<span class="hljs-string">&#x27;css-loader&#x27;</span>)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">vue</span>: &#123;<br>  <span class="hljs-attr">loaders</span>: &#123;<br>    <span class="hljs-attr">css</span>: <span class="hljs-title class_">ExtractTextPlugin</span>.<span class="hljs-title function_">extract</span>(<span class="hljs-string">&#x27;vue-style-loader&#x27;</span>, <span class="hljs-string">&#x27;css-loader&#x27;</span>);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>改成:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">vue</span>:&#123;<br>  <span class="hljs-attr">loaders</span>: &#123;<br>    <span class="hljs-attr">css</span>: <span class="hljs-title class_">ExtractTextPlugin</span>.<span class="hljs-title function_">extract</span>(<span class="hljs-string">&#x27;style-loader&#x27;</span>,<span class="hljs-string">&#x27;css-loader&#x27;</span>)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">vue</span>: &#123;<br>  <span class="hljs-attr">loaders</span>: &#123;<br>    <span class="hljs-attr">css</span>: <span class="hljs-title class_">ExtractTextPlugin</span>.<span class="hljs-title function_">extract</span>(<span class="hljs-string">&#x27;style-loader&#x27;</span>, <span class="hljs-string">&#x27;css-loader&#x27;</span>);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>发现编译后的结果一样证实.</p>
 <p>而默认情况下, <code>vue-loader</code> 是自动使用 <code>vue-style-loader</code> 的, 所以如果你不在 <code>.vue</code> 文件中 <code>@import</code> 任何 <code>css</code> , 那么你不需要手动把 <code>vue-loader-style</code> 放到 <code>vue.loaders</code> 字段中. <code>vue-loader</code> 会自动处理 <code>.vue</code> 文件中的 <code>style</code> 标签中的内容, 并将其放到 <code>style</code> 标签中插入页面. 而如果你需要在 <code>.vue</code> 文件中的 <code>style</code> 标签内 <code>@import css</code> 文件, 那么你就需要在 <code>module.exports.vue</code> 单独配置.可以通过把 <code>vue</code> 字段的 <code>vue-style-loader</code> 去掉来测试:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">module</span>: &#123;<br>  <span class="hljs-attr">loaders</span>:[<br>    &#123;<br>      <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.vue$/</span>,<br>      <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;vue&#x27;</span><br>    &#125;<br>  ]<br>&#125;,<br><span class="hljs-attr">vue</span>:&#123;<br>  <span class="hljs-comment">// loaders: &#123;</span><br>  <span class="hljs-comment">//   css: &#x27;vue-style-loader!css-loader&#x27;</span><br>  <span class="hljs-comment">// &#125;</span><br>&#125;<br></code></pre></td></tr></table></figure>
@@ -346,7 +359,7 @@
 <p>因此, 一个页面下是至少三个文件的, <code>.vue</code> 文件, <code>.js</code> 入口文件, 和 <code>.html</code>, 组件插入的文件.</p>
 <p><code>html</code> 中写一个组件 <code>app</code> 的名字, 入口文件实例化一个 <code>vue</code>, 然后使用 <code>app</code> 这个组件, 同时这个叫做 <code>app</code> 组件的模板来自 <code>index.vue</code>, 组件对应的 <code>css</code> 和 <code>js</code> 以及 <code>mvvm</code> 的特色:数据绑定也写在 <code>index.vue</code> 里面.</p>
 <p>有同学会疑惑, 入口文件 <code>js</code> 是怎么找到同目录的 <code>html</code> 文件的呢? 其实这个在 <code>webpack.config.js</code> 配置文件就已经写好了:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">plugins</span>:[<br>  <span class="hljs-keyword">new</span> <span class="hljs-title class_">HtmlwebpackPlugin</span>(&#123;<br>    <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Vue component test&#x27;</span>,<br>    <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;this_is_final_filename_address_you_visit_in_browser.html&#x27;</span>,<span class="hljs-comment">//生成的最终文件名</span><br>    <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;app/this_is_main_page_which_you_put_components_into.html&#x27;</span>,<span class="hljs-comment">//放置组件的地方, 一般是一个 body 下一个孤零零的 app 标签即可.</span><br>    <span class="hljs-attr">inject</span>: <span class="hljs-literal">true</span><br>  &#125;)<br>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">plugins</span>: [<br>  <span class="hljs-keyword">new</span> <span class="hljs-title class_">HtmlwebpackPlugin</span>(&#123;<br>    <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Vue component test&#x27;</span>,<br>    <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;this_is_final_filename_address_you_visit_in_browser.html&#x27;</span>, <span class="hljs-comment">//生成的最终文件名</span><br>    <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;app/this_is_main_page_which_you_put_components_into.html&#x27;</span>, <span class="hljs-comment">//放置组件的地方, 一般是一个 body 下一个孤零零的 app 标签即可.</span><br>    <span class="hljs-attr">inject</span>: <span class="hljs-literal">true</span>,<br>  &#125;),<br>];<br></code></pre></td></tr></table></figure>
 <p>这个 <code>html</code> 生成的插件告诉 <code>js</code> 入口文件, 所需要的模板来自 <code>app</code> 下的 <code>xxx.html</code>, 而最后打包的 <code>bundle.js</code> 也是 <code>inject</code> 这个里面, 再生成最终的页面.</p>
 <p>还有同学会问, 在入口 <code>js</code> 文件中, <code>vue</code> 实例化的时候用到的 <code>components.App</code> 到底是在编译过程就找到了 <code>this_is_main_page_which_you_put_components_into.html</code> 文件中的 <code>&lt;app&gt;</code> 组件引用, 还是在 <code>runtime</code> 的时候, 从最终打包的 <code>bundle.js</code> 中运行, 然后寻找 <code>this_is_final_filename_address_you_visit_in_browser.html</code> 页面中的 <code>&lt;app&gt;</code> 标签呢? 答案是后者, 因为刚才说的 <code>HtmlwebpackPlugin</code> 插件只负责生成 <code>html</code> 和注入打包后的 <code>bundle.js</code>, 而 <code>vue</code> 被打包进了 <code>bundle.js</code> 之后实例化 <code>vue</code> 时候才会寻找 <code>&lt;app&gt;</code> 标签.</p>
 <p>这么一看, 和直接在 <code>script</code> 标签中引用 <code>vue.js</code> 文件再渲染的效果是一样的, 只是 <code>webpack</code> 这种开发方式帮我们分离了组件, 使开发过程的代码/组件结构更清晰, 而且直接引用 <code>vue.js</code> 是前端 <code>runtime render</code>, 一个是 <code>compiler render</code> 之后直接执行, 后者效率更高.</p>
@@ -803,16 +816,16 @@
   </ul>
 </ul>
 
-        <p class="copyright text-muted">
-          Copyright &copy;
-          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
-          2024
-          <br>
-          Don't Panic | Theme fork from
-          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-          <br>
-          
-        </p>
+          <p class="copyright text-muted">
+            Copyright &copy;
+            <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+            2024
+              <br>
+              Don't Panic | Theme fork from
+              <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+              <br>
+              
+          </p>
       </div>
     </div>
   </div>
@@ -849,7 +862,7 @@
     // Note: 自动切换
     window
       .matchMedia('(prefers-color-scheme: dark)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('dark');
           document.documentElement.classList.remove('light');
@@ -857,7 +870,7 @@
       });
     window
       .matchMedia('(prefers-color-scheme: light)')
-      .addListener(function(mediaQueryList) {
+      .addListener(function (mediaQueryList) {
         if (mediaQueryList.matches) {
           document.documentElement.classList.add('light');
           document.documentElement.classList.remove('dark');
@@ -873,7 +886,7 @@
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/xblog.min.js?202405251426"></script>
+<script src="/js/xheldon-life-blog.min.js?202405251426"></script>
 
 
 <!-- Simple Jekyll Search 复制逻辑 -->
@@ -881,178 +894,178 @@
 
 <!-- Vercel web analysis -->
 
-<script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  
 
+    <!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
-<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
-
-<!-- async load function -->
-<script>
-  function async (u, c) {
-    var d = document,
-      t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) {
-      o.addEventListener(
-        'load',
-        function(e) {
-          c(null, e);
-        },
-        false
-      );
-    }
-    s.parentNode.insertBefore(o, s);
-  }
-</script>
-
-<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
-
-<!-- jquery.tagcloud.js -->
-
-
-<!--fastClick.js -->
-<script>
-  async ('/js/fastclick.min.js', function() {
-    var $nav = document.querySelector('nav');
-    if ($nav) FastClick.attach($nav);
-  });
-</script>
-
-<!-- Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-
-  gtag('config', '{{config.ga_track_id}}');
-</script>
-
-
-<!-- Side Catalog -->
-
-<script type="text/javascript">
-  function generateCatalog(selector) {
-    // TODO: 多语种没有迁移过来
-    // init
-    var P = $('div.post-container'),
-      a,
-      n,
-      t,
-      l,
-      i,
-      c;
-    a = P.find('h1,h2,h3,h4,h5,h6');
-
-    // clean
-    $(selector).html('');
-
-    // appending
-    a.each(function() {
-      n = $(this).prop('tagName').toLowerCase();
-      i = '#' + $(this).prop('id');
-      t = $(this).text();
-      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-      l = $('<li class="' + n + '_nav"></li>').append(c);
-      $(selector).append(l);
-    });
-    return true;
-  }
-
-  generateCatalog('.catalog-body');
-
-  // toggle side catalog
-  $('.catalog-toggle').click(function(e) {
-    e.preventDefault();
-    $('.side-catalog').toggleClass('fold');
-  });
-
-  /*
-   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-   * Fork by Hux to support padding
-   */
-  async ('/js/jquery.nav.js',
-    function() {
-      $('.catalog-body').onePageNav({
-        currentClass: 'active',
-        changeHash: !1,
-        easing: 'swing',
-        filter: '',
-        scrollSpeed: 700,
-        scrollOffset: 0,
-        scrollThreshold: 0.2,
-        begin: null,
-        end: null,
-        scrollChange: null,
-        padding: 80,
-      });
-    }
-  );
-</script>
-
-
-<script>
-  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-  function htmlDecode(input) {
-    var e = document.createElement('textarea');
-    e.innerHTML = input;
-    // handle case of empty input
-    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-  }
-
-  SimpleJekyllSearch({
-    searchInput: document.getElementById('search-input'),
-    resultsContainer: document.getElementById('search-results'),
-    json: '/search.json',
-    searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-    noResultsText: 'No results',
-    limit: 50,
-    fuzzy: false,
-    // a hack to get escaped subtitle unescaped. for some reason, 
-    // post.subtitle w/o escape filter nuke entire search.
-    templateMiddleware: function(prop, value, template) {
-      if (prop === 'subtitle' || prop === 'title') {
-        if (value.indexOf("code")) {
-          return htmlDecode(value);
-        } else {
-          return value;
+    <!-- async load function -->
+    <script>
+      function async(u, c) {
+        var d = document,
+          t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+          o.addEventListener(
+            'load',
+            function (e) {
+              c(null, e);
+            },
+            false
+          );
         }
+        s.parentNode.insertBefore(o, s);
       }
-    }
-  });
+    </script>
 
-  $(document).ready(function() {
-    var $searchPage = $('.search-page');
-    var $searchOpen = $('.search-icon');
-    var $searchClose = $('.search-icon-close');
-    var $searchInput = $('#search-input');
-    var $body = $('body');
+    <!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-    $searchOpen.on('click', function(e) {
-      e.preventDefault();
-      $searchPage.toggleClass('search-active');
-      var prevClasses = $body.attr('class') || '';
-      setTimeout(function() {
-        $body.addClass('no-scroll');
-      }, 400)
+    <!-- jquery.tagcloud.js -->
+    
 
-      if ($searchPage.hasClass('search-active')) {
-        $searchClose.on('click', function(e) {
-          e.preventDefault();
-          $searchPage.removeClass('search-active');
-          $body.attr('class', prevClasses); // from closure 
-        });
-        $searchInput.focus();
-      }
-    });
-  });
-</script>
+        <!--fastClick.js -->
+        <script>
+          async('/js/fastclick.min.js', function () {
+            var $nav = document.querySelector('nav');
+            if ($nav) FastClick.attach($nav);
+          });
+        </script>
+
+        <!-- Google Analytics -->
+        
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', '{{config.ga_track_id}}');
+          </script>
+          
+
+            <!-- Side Catalog -->
+            
+              <script type="text/javascript">
+                function generateCatalog(selector) {
+                  // TODO: 多语种没有迁移过来
+                  // init
+                  var P = $('div.post-container'),
+                    a,
+                    n,
+                    t,
+                    l,
+                    i,
+                    c;
+                  a = P.find('h1,h2,h3,h4,h5,h6');
+
+                  // clean
+                  $(selector).html('');
+
+                  // appending
+                  a.each(function () {
+                    n = $(this).prop('tagName').toLowerCase();
+                    i = '#' + $(this).prop('id');
+                    t = $(this).text();
+                    c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+                    l = $('<li class="' + n + '_nav"></li>').append(c);
+                    $(selector).append(l);
+                  });
+                  return true;
+                }
+
+                generateCatalog('.catalog-body');
+
+                // toggle side catalog
+                $('.catalog-toggle').click(function (e) {
+                  e.preventDefault();
+                  $('.side-catalog').toggleClass('fold');
+                });
+
+                /*
+                 * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+                 * Fork by Hux to support padding
+                 */
+                async('/js/jquery.nav.js',
+                  function () {
+                    $('.catalog-body').onePageNav({
+                      currentClass: 'active',
+                      changeHash: !1,
+                      easing: 'swing',
+                      filter: '',
+                      scrollSpeed: 700,
+                      scrollOffset: 0,
+                      scrollThreshold: 0.2,
+                      begin: null,
+                      end: null,
+                      scrollChange: null,
+                      padding: 80,
+                    });
+                  }
+                );
+              </script>
+              
+
+                <script>
+                  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+                  function htmlDecode(input) {
+                    var e = document.createElement('textarea');
+                    e.innerHTML = input;
+                    // handle case of empty input
+                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                  }
+
+
+                  $(document).ready(function () {
+                    SimpleJekyllSearch({
+                      searchInput: document.getElementById('search-input'),
+                      resultsContainer: document.getElementById('search-results'),
+                      json: '/search.json',
+                      searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+                      noResultsText: 'No results',
+                      limit: 50,
+                      fuzzy: false,
+                      // a hack to get escaped subtitle unescaped. for some reason, 
+                      // post.subtitle w/o escape filter nuke entire search.
+                      templateMiddleware: function (prop, value, template) {
+                        if (prop === 'subtitle' || prop === 'title') {
+                          if (value.indexOf("code")) {
+                            return htmlDecode(value);
+                          } else {
+                            return value;
+                          }
+                        }
+                      }
+                    });
+                    var $searchPage = $('.search-page');
+                    var $searchOpen = $('.search-icon');
+                    var $searchClose = $('.search-icon-close');
+                    var $searchInput = $('#search-input');
+                    var $body = $('body');
+
+                    $searchOpen.on('click', function (e) {
+                      e.preventDefault();
+                      $searchPage.toggleClass('search-active');
+                      var prevClasses = $body.attr('class') || '';
+                      setTimeout(function () {
+                        $body.addClass('no-scroll');
+                      }, 400)
+
+                      if ($searchPage.hasClass('search-active')) {
+                        $searchClose.on('click', function (e) {
+                          e.preventDefault();
+                          $searchPage.removeClass('search-active');
+                          $body.attr('class', prevClasses); // from closure 
+                        });
+                        $searchInput.focus();
+                      }
+                    });
+                  });
+                </script>
 
     <!-- Image to hack wechat -->
     <img src="/img/icon_wechat.png" width="0" height="0" />
