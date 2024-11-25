@@ -273,44 +273,40 @@
               </div>
       </header>
 
-  <!-- Post Content -->
-  <article>
-    <div class="container">
-      <div class="row">
-
-        <!-- Post Container -->
-        <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;注意：离本文创建时间已经过去了
+          <code id="from_time"></code> 天，请注意时效性
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1567788540000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+         
+        <div class="reference-tips">
+          🔗 &nbsp;原文：<a href="https://prosemirror.net/docs/guide/" target="_blank">
+            https://prosemirror.net/docs/guide/
+          </a>
+        </div>
           
-            
-              <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
-              <script>
-                var timeDom = document.getElementById('from_time');
-                var pageTime = Number("1567788540000");
-                console.log(pageTime);
-                var currentTime = Date.now();
-                var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(0);
-                if (Number(fromNow) <= 0) {
-                  fromNow = 1; // Note: 至少显示一天
-                }
-                timeDom.innerText = fromNow
-              </script>
-              
-                
-                  <div class="reference-tips">🔗 &nbsp;原文：<a href="https://prosemirror.net/docs/guide/" target="_blank">
-                      https://prosemirror.net/docs/guide/
-                    </a></div>
-                  
-                    
-                      
-                        <div class="callout-tips">🖥 &nbsp;说明：本文中涉及到的文档或者手册 API 说明，都可以在这个 https://prosemirror.xheldon.com/docs/ref/ 查看
-                        </div>
-                        
-                          
-                              
-                                  <blockquote>
+        <div class="callout-tips">🖥 &nbsp;说明：本文中涉及到的文档或者手册 API 说明，都可以在这个 https://prosemirror.xheldon.com/docs/ref/ 查看</div>
+           <blockquote>
 <p>文中指向 <code>https://prosemirror.xheldon.com</code> 域名的内容，都可以通过将其替换成 <code>https://prosemirror.net</code> 来获取英文原文</p>
 </blockquote>
 <h2 id="翻译说明">翻译说明:</h2>
@@ -711,63 +707,71 @@
 <p>当一个步骤集合被 authority 拒绝的时候, 它将会保持变动步骤的未确认状态直到——也许很快——我们从 authority 接受新的改动步骤的时候. 在这之后(即接受了新的改动之后), 因为 onNewSteps 回调调用了 <a href="https://prosemirror.xheldon.com/docs/ref/#state.Transaction">dispatch</a>, 因此将会触发我们的 dispatchTransaction 函数, 这使得它将会尝试再次提交它的改动.</p>
 <p>这些就是全部了. 当然, 对于异步数据流(比如在 <a href="https://github.com/ProseMirror/website/blob/master/src/collab/client/collab.js">colab demo</a> 中的长轮询或者 web sockets), 你会需要更复杂的通信和同步代码. 你可能会想要你的 authority 在一些时候丢掉一些步骤以减少内存消耗. 不过总体上来说这个小小的示例完整描述了 authority 应该有的实现.</p>
 
-                                    <div class="text-danger">- EOF -</div>
-                                    <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a
-                                        style="color: #ccc;"
-                                        href="https://www.xheldon.cn/tech/prosemirror-guide-chinese.html"
-                                        title="「译」 ProseMirror 中文指南">
-                                        「译」 ProseMirror 中文指南 - Xheldon Blog
-                                      </a></div>
-                                    <hr style="visibility: hidden;">
-
-                                    <ul class="pager">
-                                      
-                                        <li class="previous">
-                                          <a href="/tech/interview-in-2018-winter.html" data-toggle="tooltip"
-                                            data-placement="top" title="2018 寒冬面试经历">
-                                            上一篇<br>
-                                            <span>2018 寒冬面试经历</span>
-                                          </a>
-                                        </li>
-                                        
-                                          
-                                            <li class="next">
-                                              <a href="/tech/yes-im-back.html" data-toggle="tooltip"
-                                                data-placement="top" title="是的, 三年后我又重新开始更新这个小小的博客了">
-                                                下一篇<br>
-                                                <span>是的, 三年后我又重新开始更新这个小小的博客了</span>
-                                              </a>
-                                            </li>
-                                            
-                                    </ul>
-                                    <hr style="visibility: hidden;">
-                                    <div class="giscus"></div>
-                                    <hr>
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          本文最先发布在:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.cn/tech/prosemirror-guide-chinese.html"
+            title="「译」 ProseMirror 中文指南"
+          >
+            「译」 ProseMirror 中文指南 - Xheldon Blog
+          </a>
         </div>
-        <!-- Side Catalog Container -->
-        
-          <div class="
-                col-lg-2 col-lg-offset-0
-                visible-lg-block
-                sidebar-container
-                catalog-container">
-            <div class="side-catalog">
-              <hr class="hidden-sm hidden-xs">
-              <h5>
-                <a class="catalog-toggle" href="#">目录</a>
-              </h5>
-              <ul class="catalog-body"></ul>
-            </div>
-          </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
           
+          <li class="previous">
+            <a
+              href="/tech/interview-in-2018-winter.html"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="2018 寒冬面试经历"
+            >
+              上一篇<br />
+              <span>2018 寒冬面试经历</span>
+            </a>
+          </li>
+           
+          <li class="next">
+            <a
+              href="/tech/yes-im-back.html"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="是的, 三年后我又重新开始更新这个小小的博客了"
+            >
+              下一篇<br />
+              <span>是的, 三年后我又重新开始更新这个小小的博客了</span>
+            </a>
+          </li>
+          
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">目录</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
 
-            <!-- Sidebar Container -->
+      <!-- Sidebar Container -->
 
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-              
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
 <section style="margin-bottom: 20px;">
     <h5>博主说：</h5>
     <div>
@@ -1005,8 +1009,7 @@
         <a href="/my-food">美食推荐</a>
     </div>
 </section>
-
-                
+ 
   <hr>
   <h5>朋友们</h5>
   <ul class="list-inline">
@@ -1036,16 +1039,12 @@
           
   </ul>
   
-            </div>
       </div>
     </div>
-  </article>
+  </div>
+</article>
 
-  
-
-        
-
-            <script src="https://giscus.app/client.js"
+  <script src="https://giscus.app/client.js"
         data-repo="Xheldon/x_blog"
         data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
         data-category="Announcements"
@@ -1061,48 +1060,55 @@
         data-loading="lazy"
         crossorigin="anonymous"
         async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
 </script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
 
-              
-                <!-- async load function -->
-                <script>
-                  function async(u, c) {
-                    var d = document,
-                      t = 'script',
-                      o = d.createElement(t),
-                      s = d.getElementsByTagName(t)[0];
-                    o.src = u;
-                    if (c) {
-                      o.addEventListener('load', function (e) {
-                        c(null, e);
-                      }, false);
-                    }
-                    s.parentNode.insertBefore(o, s);
-                  }
-                </script>
-                <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-                <script>
-                  async("/js/anchor.min.js", function () {
-                    anchors.options = {
-                      visible: 'always',
-                      placement: 'right',
-                      //   icon: '#'
-                    };
-                    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-                  })
-                </script>
-                <style>
-                  /* place left on bigger screen */
-                  @media all and (min-width: 800px) {
-                    .anchorjs-link {
-                      position: absolute;
-                      left: -0.75em;
-                      font-size: 1.1em;
-                      margin-top: -0.1em;
-                    }
-                  }
-                </style>
-                
+
 
     <!-- Footer -->
     <footer>

@@ -300,44 +300,43 @@
               </div>
       </header>
 
-  <!-- Post Content -->
-  <article>
-    <div class="container">
-      <div class="row">
-
-        <!-- Post Container -->
-        <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-          
-            
-              <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
-              <script>
-                var timeDom = document.getElementById('from_time');
-                var pageTime = Number("1672891610000");
-                console.log(pageTime);
-                var currentTime = Date.now();
-                var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(0);
-                if (Number(fromNow) <= 0) {
-                  fromNow = 1; // Note: 至少显示一天
-                }
-                timeDom.innerText = fromNow
-              </script>
-              
-                
-                    
-                      
-                        <div class="callout-tips">🖥 &nbsp;说明：记录使用 Sharp 压缩 HEIC 格式图片时遇到的问题和解决的过程
-                        </div>
-                        
-                          
-                            <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/mHmLa16eR5YWPi" target="_blank">
-                                https://www.craft.do/s/mHmLa16eR5YWPi
-                              </a></div>
-                            
-                              
-                                  <p>苹果相机在 iOS 11 之后，将相机默认的格式设置为了 HEIC，据说可以在不缩减照片质量的前提下，大幅缩减照片体积，你可以在 <code>设置-相机-格式</code> 来查看，「高效」表示的就是 HEIC 格式，「兼容性最佳」表示的是原始的 JEPG 格式。关于 HEIC 格式更多介绍可以看 <a href="https://www.adobe.com/hk_zh/creativecloud/file-types/image/raster/heic-file.html">这里</a>。</p>
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;注意：离本文创建时间已经过去了
+          <code id="from_time"></code> 天，请注意时效性
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1672891610000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+           
+        <div class="callout-tips">🖥 &nbsp;说明：记录使用 Sharp 压缩 HEIC 格式图片时遇到的问题和解决的过程</div>
+         
+        <div class="craft-tips">
+          📚 &nbsp;本文同步发布在 Craft：<a
+            href="https://www.craft.do/s/mHmLa16eR5YWPi"
+            target="_blank"
+          >
+            https://www.craft.do/s/mHmLa16eR5YWPi
+          </a>
+        </div>
+          <p>苹果相机在 iOS 11 之后，将相机默认的格式设置为了 HEIC，据说可以在不缩减照片质量的前提下，大幅缩减照片体积，你可以在 <code>设置-相机-格式</code> 来查看，「高效」表示的就是 HEIC 格式，「兼容性最佳」表示的是原始的 JEPG 格式。关于 HEIC 格式更多介绍可以看 <a href="https://www.adobe.com/hk_zh/creativecloud/file-types/image/raster/heic-file.html">这里</a>。</p>
 <p>由此带来的问题是，目前所有的 Web 浏览器都不支持显示 HEIC 格式的图片，因此如何转换该格式的图片就成为了一个问题。</p>
 <p>我经常将苹果相册中的图片直接从相册中拖拽或复制粘贴到 Craft 中，因此如果直接将该格式的图片上传到个人博客的话，是无法显示出来的，因此必须转换成通用格式如 PNG 或者 JPEG，这里我选择使用 Sharp 库进行转换，将其转换成了 Webp（因为 HEIC 转 PNG 太大了）。</p>
 <p><a class='link-bookmark' href='https://github.com/lovell/sharp' target='_blank'><span data-bookmark-img='https://repository-images.githubusercontent.com/12226786/cf816100-9a08-11ea-8fc1-7af9d4bcbf9e' data-bookmark-title='G'><img src='https://repository-images.githubusercontent.com/12226786/cf816100-9a08-11ea-8fc1-7af9d4bcbf9e'/></span><span><span> GitHub - lovell/sharp: High performance Node.js image processing, the fastest module to resize JPEG, PNG, WebP, AVIF and TIFF images. Uses the libvips library.</span><span> High performance Node.js image processing, the fastest module to resize JPEG, PNG, WebP, AVIF and TIFF images. Uses the libvips library. - GitHub - lovell/sharp: High performance Node.js image proc...</span><span> https://github.com/lovell/sharp</span></span></a></p>
@@ -376,49 +375,59 @@
 <p>但是作者解释说这个函数这么做是有原因的，因此我建议他在安装 Sharp 的时候提醒用户并未使用全局安装的 libvips 包的原因，最终作者采纳并接受了我的意见：</p>
 <p><a class='link-bookmark' href='https://github.com/lovell/sharp/commit/5be36c2deb735577fc76fa52242836d40df276bd' target='_blank'><span data-bookmark-img='https://opengraph.githubassets.com/5e0efe7cbe5118b1d549459eefc68e1e3f6cac81430e4702e87cd1f5bb28616c/lovell/sharp/commit/5be36c2deb735577fc76fa52242836d40df276bd' data-bookmark-title='I'><img src='https://opengraph.githubassets.com/5e0efe7cbe5118b1d549459eefc68e1e3f6cac81430e4702e87cd1f5bb28616c/lovell/sharp/commit/5be36c2deb735577fc76fa52242836d40df276bd'/></span><span><span> Install: log Rosetta detection, improve related docs · lovell/sharp@5be36c2</span><span> "High performance Node.js image processing, the fastest module to resize JPEG, PNG, WebP, AVIF and TIFF images. Uses the libvips library. - Install: log Rosetta detection, improve related docs · lovell/sharp@5be36c2"</span><span> https://github.com/lovell/sharp/commit/5be36c2deb735577fc76fa52242836d40df276bd</span></span></a></p>
 
-                                    <div class="text-danger">- EOF -</div>
-                                    <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a
-                                        style="color: #ccc;"
-                                        href="https://www.xheldon.cn/tech/problem-use-sharp.html"
-                                        title="使用 Sharp 转换 HEIC/HEIF 图片遇到的问题">
-                                        使用 Sharp 转换 HEIC/HEIF 图片遇到的问题 - Xheldon Blog
-                                      </a></div>
-                                    <hr style="visibility: hidden;">
-
-                                    <ul class="pager">
-                                      
-                                        <li class="previous">
-                                          <a href="/tech/prosemirror-comparison-with-slatejs.html" data-toggle="tooltip"
-                                            data-placement="top" title="Slate 和 ProseMirror 简单对比">
-                                            上一篇<br>
-                                            <span>Slate 和 ProseMirror 简单对比</span>
-                                          </a>
-                                        </li>
-                                        
-                                          
-                                            <li class="next">
-                                              <a href="/life/my-2022.html" data-toggle="tooltip"
-                                                data-placement="top" title="2023 年展望和 2022 年回顾">
-                                                下一篇<br>
-                                                <span>2023 年展望和 2022 年回顾</span>
-                                              </a>
-                                            </li>
-                                            
-                                    </ul>
-                                    <hr style="visibility: hidden;">
-                                    <div class="giscus"></div>
-                                    <hr>
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          本文最先发布在:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.cn/tech/problem-use-sharp.html"
+            title="使用 Sharp 转换 HEIC/HEIF 图片遇到的问题"
+          >
+            使用 Sharp 转换 HEIC/HEIF 图片遇到的问题 - Xheldon Blog
+          </a>
         </div>
-        <!-- Side Catalog Container -->
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+          
+          <li class="previous">
+            <a
+              href="/tech/prosemirror-comparison-with-slatejs.html"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Slate 和 ProseMirror 简单对比"
+            >
+              上一篇<br />
+              <span>Slate 和 ProseMirror 简单对比</span>
+            </a>
+          </li>
+           
+          <li class="next">
+            <a
+              href="/life/my-2022.html"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="2023 年展望和 2022 年回顾"
+            >
+              下一篇<br />
+              <span>2023 年展望和 2022 年回顾</span>
+            </a>
+          </li>
+          
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
         
-
-            <!-- Sidebar Container -->
-
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-              
 <section style="margin-bottom: 20px;">
     <h5>博主说：</h5>
     <div>
@@ -656,8 +665,7 @@
         <a href="/my-food">美食推荐</a>
     </div>
 </section>
-
-                
+ 
   <hr>
   <h5>朋友们</h5>
   <ul class="list-inline">
@@ -687,16 +695,12 @@
           
   </ul>
   
-            </div>
       </div>
     </div>
-  </article>
+  </div>
+</article>
 
-  
-
-        
-
-            <script src="https://giscus.app/client.js"
+  <script src="https://giscus.app/client.js"
         data-repo="Xheldon/x_blog"
         data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
         data-category="Announcements"
@@ -712,48 +716,55 @@
         data-loading="lazy"
         crossorigin="anonymous"
         async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
 </script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
 
-              
-                <!-- async load function -->
-                <script>
-                  function async(u, c) {
-                    var d = document,
-                      t = 'script',
-                      o = d.createElement(t),
-                      s = d.getElementsByTagName(t)[0];
-                    o.src = u;
-                    if (c) {
-                      o.addEventListener('load', function (e) {
-                        c(null, e);
-                      }, false);
-                    }
-                    s.parentNode.insertBefore(o, s);
-                  }
-                </script>
-                <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-                <script>
-                  async("/js/anchor.min.js", function () {
-                    anchors.options = {
-                      visible: 'always',
-                      placement: 'right',
-                      //   icon: '#'
-                    };
-                    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-                  })
-                </script>
-                <style>
-                  /* place left on bigger screen */
-                  @media all and (min-width: 800px) {
-                    .anchorjs-link {
-                      position: absolute;
-                      left: -0.75em;
-                      font-size: 1.1em;
-                      margin-top: -0.1em;
-                    }
-                  }
-                </style>
-                
+
 
     <!-- Footer -->
     <footer>
