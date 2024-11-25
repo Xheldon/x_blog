@@ -259,37 +259,32 @@
               </div>
       </header>
 
-  <!-- Post Content -->
-  <article>
-    <div class="container">
-      <div class="row">
-
-        <!-- Post Container -->
-        <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-          
-            
-              <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
-              <script>
-                var timeDom = document.getElementById('from_time');
-                var pageTime = Number("1640104330000");
-                console.log(pageTime);
-                var currentTime = Date.now();
-                var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(0);
-                if (Number(fromNow) <= 0) {
-                  fromNow = 1; // Note: 至少显示一天
-                }
-                timeDom.innerText = fromNow
-              </script>
-              
-                
-                    
-                      
-                          
-                              
-                                  <p>之前有同学问我博客是用的什么，我说就是 Github Pages 的 Jekyll，然后用 Build 后的 HTML 托管，但是这么说好像有点粗糙，而且这个过程有些各个服务集成的工作，因此这里我就详细说一下，同时将代码放出来。</p>
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;注意：离本文创建时间已经过去了
+          <code id="from_time"></code> 天，请注意时效性
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1640104330000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+              <p>之前有同学问我博客是用的什么，我说就是 Github Pages 的 Jekyll，然后用 Build 后的 HTML 托管，但是这么说好像有点粗糙，而且这个过程有些各个服务集成的工作，因此这里我就详细说一下，同时将代码放出来。</p>
 <h2 id="总体流程">总体流程</h2>
 <p>Markdown 文件的总体的流程图：</p>
 <p><img src="https://res.craft.do/user/full/747e0824-8866-cf67-b3ae-2e207380d1f9/doc/04849A4D-455F-4549-9030-53EF2C142669/1CA9FF6C-9B0A-4EB3-9814-A7BEBF9375C7_2/j8AGJOA4y32BWX6DX9aGBJ487Hzxocg7lZqxl9HtynQz/1CA9FF6C-9B0A-4EB3-9814-A7BEBF9375C7_2.png" alt="Image" /></p>
@@ -402,63 +397,71 @@
 <p>正如 <a href="https://www.xheldon.com/tech/use-craft-extension-to-write-blog.html">这篇文章所</a> 言，本篇文章也是在 Craft 通过插件同步到 Github 仓库的，优点很多里面已经说得很清楚了，就不解释了，目前唯一的问题是通过 Craft 插入的图片是个问题，虽然官方已经放出了无 CORS 限制的 fetch API（仅 Mac 可用），但是目前还没想好该怎么将上传到 Craft 的图片同步到腾讯云会比较优雅。</p>
 <p>目前的计划是，废弃掉在 Github 保存图片的步骤，直接将 Craft 中的图片通过 extension 发送到腾讯云 COS。</p>
 
-                                    <div class="text-danger">- EOF -</div>
-                                    <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a
-                                        style="color: #ccc;"
-                                        href="https://www.xheldon.com/tech/my-blog-ci.html"
-                                        title="我的博客自动化流程">
-                                        我的博客自动化流程 - Xheldon Blog
-                                      </a></div>
-                                    <hr style="visibility: hidden;">
-
-                                    <ul class="pager">
-                                      
-                                        <li class="previous">
-                                          <a href="/tech/a-comparison-of-code-editor.html" data-toggle="tooltip"
-                                            data-placement="top" title="「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比">
-                                            上一篇<br>
-                                            <span>「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比</span>
-                                          </a>
-                                        </li>
-                                        
-                                          
-                                            <li class="next">
-                                              <a href="/tech/use-craft-extension-to-write-blog.html" data-toggle="tooltip"
-                                                data-placement="top" title="本文通过 Craft Extension 发送">
-                                                下一篇<br>
-                                                <span>本文通过 Craft Extension 发送</span>
-                                              </a>
-                                            </li>
-                                            
-                                    </ul>
-                                    <hr style="visibility: hidden;">
-                                    <div class="giscus"></div>
-                                    <hr>
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          本文最先发布在:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/my-blog-ci.html"
+            title="我的博客自动化流程"
+          >
+            我的博客自动化流程 - Xheldon Blog
+          </a>
         </div>
-        <!-- Side Catalog Container -->
-        
-          <div class="
-                col-lg-2 col-lg-offset-0
-                visible-lg-block
-                sidebar-container
-                catalog-container">
-            <div class="side-catalog">
-              <hr class="hidden-sm hidden-xs">
-              <h5>
-                <a class="catalog-toggle" href="#">目录</a>
-              </h5>
-              <ul class="catalog-body"></ul>
-            </div>
-          </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
           
+          <li class="previous">
+            <a
+              href="/tech/a-comparison-of-code-editor.html"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比"
+            >
+              上一篇<br />
+              <span>「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比</span>
+            </a>
+          </li>
+           
+          <li class="next">
+            <a
+              href="/tech/use-craft-extension-to-write-blog.html"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="本文通过 Craft Extension 发送"
+            >
+              下一篇<br />
+              <span>本文通过 Craft Extension 发送</span>
+            </a>
+          </li>
+          
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">目录</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
 
-            <!-- Sidebar Container -->
+      <!-- Sidebar Container -->
 
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-              
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
 <section style="margin-bottom: 20px;">
     <h5>博主说：</h5>
     <div>
@@ -696,8 +699,7 @@
         <a href="/my-food">美食推荐</a>
     </div>
 </section>
-
-                
+ 
   <hr>
   <h5>朋友们</h5>
   <ul class="list-inline">
@@ -727,16 +729,12 @@
             
   </ul>
   
-            </div>
       </div>
     </div>
-  </article>
+  </div>
+</article>
 
-  
-
-        
-
-            <script src="https://giscus.app/client.js"
+  <script src="https://giscus.app/client.js"
         data-repo="Xheldon/x_blog"
         data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
         data-category="Announcements"
@@ -752,48 +750,55 @@
         data-loading="lazy"
         crossorigin="anonymous"
         async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
 </script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
 
-              
-                <!-- async load function -->
-                <script>
-                  function async(u, c) {
-                    var d = document,
-                      t = 'script',
-                      o = d.createElement(t),
-                      s = d.getElementsByTagName(t)[0];
-                    o.src = u;
-                    if (c) {
-                      o.addEventListener('load', function (e) {
-                        c(null, e);
-                      }, false);
-                    }
-                    s.parentNode.insertBefore(o, s);
-                  }
-                </script>
-                <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-                <script>
-                  async("/js/anchor.min.js", function () {
-                    anchors.options = {
-                      visible: 'always',
-                      placement: 'right',
-                      //   icon: '#'
-                    };
-                    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-                  })
-                </script>
-                <style>
-                  /* place left on bigger screen */
-                  @media all and (min-width: 800px) {
-                    .anchorjs-link {
-                      position: absolute;
-                      left: -0.75em;
-                      font-size: 1.1em;
-                      margin-top: -0.1em;
-                    }
-                  }
-                </style>
-                
+
 
     <!-- Footer -->
     <footer>

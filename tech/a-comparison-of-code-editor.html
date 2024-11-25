@@ -266,48 +266,49 @@
               </div>
       </header>
 
-  <!-- Post Content -->
-  <article>
-    <div class="container">
-      <div class="row">
-
-        <!-- Post Container -->
-        <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;注意：离本文创建时间已经过去了
+          <code id="from_time"></code> 天，请注意时效性
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1642348638000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+         
+        <div class="reference-tips">
+          🔗 &nbsp;原文：<a href="https://blog.replit.com/code-editors" target="_blank">
+            https://blog.replit.com/code-editors
+          </a>
+        </div>
           
-            
-              <div class="time-tips">❗️&nbsp;注意：离本文创建时间已经过去了 <code id="from_time"></code> 天，请注意时效性</div>
-              <script>
-                var timeDom = document.getElementById('from_time');
-                var pageTime = Number("1642348638000");
-                console.log(pageTime);
-                var currentTime = Date.now();
-                var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(0);
-                if (Number(fromNow) <= 0) {
-                  fromNow = 1; // Note: 至少显示一天
-                }
-                timeDom.innerText = fromNow
-              </script>
-              
-                
-                  <div class="reference-tips">🔗 &nbsp;原文：<a href="https://blog.replit.com/code-editors" target="_blank">
-                      https://blog.replit.com/code-editors
-                    </a></div>
-                  
-                    
-                      
-                        <div class="callout-tips">🖥 &nbsp;说明：最近看到这篇外文，觉得不错，注意这里对比的是「代码编辑器」，与富文本编辑器还是有些许不同的。
-                        </div>
-                        
-                          
-                            <div class="craft-tips">📚 &nbsp;本文同步发布在 Craft：<a href="https://www.craft.do/s/anoVgw55pjshwp" target="_blank">
-                                https://www.craft.do/s/anoVgw55pjshwp
-                              </a></div>
-                            
-                              
-                                  <p>我已经为 Replit 工作了大约有六年的时间，随着团队的发展，我一直专注于产品的 IDE （我们称之为「工作区」）部分。理所当然的，我就越来越专注于代码编辑器。虽然我们考虑过创建一个满足我们需求的代码编辑器，但是开发代码编辑器的复杂性、可用的开源选项的丰富性以及我们员工的规模使其成为一个充满未知挑战的事情，因此我的时间可能不会花在构建一个我们自己的编辑器这方面。我有幸（和痛苦）在生产环境中使用 <a href="https://ace.c9.io">Ace</a>、<a href="https://microsoft.github.io/monaco-editor/">Monaco</a> 和 <a href="https://codemirror.net/6/">CodeMirror</a> 这三种代码编辑器，有时候是同时使用（稍后会有详细介绍）。在本文章中，我将回顾一些 Replit 的历史和我使用编辑器的经验，以及这二者是如何相互作用的。</p>
+        <div class="callout-tips">🖥 &nbsp;说明：最近看到这篇外文，觉得不错，注意这里对比的是「代码编辑器」，与富文本编辑器还是有些许不同的。</div>
+         
+        <div class="craft-tips">
+          📚 &nbsp;本文同步发布在 Craft：<a
+            href="https://www.craft.do/s/anoVgw55pjshwp"
+            target="_blank"
+          >
+            https://www.craft.do/s/anoVgw55pjshwp
+          </a>
+        </div>
+          <p>我已经为 Replit 工作了大约有六年的时间，随着团队的发展，我一直专注于产品的 IDE （我们称之为「工作区」）部分。理所当然的，我就越来越专注于代码编辑器。虽然我们考虑过创建一个满足我们需求的代码编辑器，但是开发代码编辑器的复杂性、可用的开源选项的丰富性以及我们员工的规模使其成为一个充满未知挑战的事情，因此我的时间可能不会花在构建一个我们自己的编辑器这方面。我有幸（和痛苦）在生产环境中使用 <a href="https://ace.c9.io">Ace</a>、<a href="https://microsoft.github.io/monaco-editor/">Monaco</a> 和 <a href="https://codemirror.net/6/">CodeMirror</a> 这三种代码编辑器，有时候是同时使用（稍后会有详细介绍）。在本文章中，我将回顾一些 Replit 的历史和我使用编辑器的经验，以及这二者是如何相互作用的。</p>
 <p>如果你看这篇文章只是为了直接比较这三种代码编辑器，那么请直接跳到最后，我将总结和比较放到了那里。</p>
 <h2 id="故事">故事</h2>
 <h3 id="前奏：ace">前奏：Ace</h3>
@@ -507,63 +508,71 @@
 <h2 id="感谢阅读！">感谢阅读！</h2>
 <p>这部分是作者打广告时间，暂时不翻译了。</p>
 
-                                    <div class="text-danger">- EOF -</div>
-                                    <div style="font-size: 12px; color: #ccc!important;">本文最先发布在: <a
-                                        style="color: #ccc;"
-                                        href="https://www.xheldon.com/tech/a-comparison-of-code-editor.html"
-                                        title="「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比">
-                                        「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比 - Xheldon Blog
-                                      </a></div>
-                                    <hr style="visibility: hidden;">
-
-                                    <ul class="pager">
-                                      
-                                        <li class="previous">
-                                          <a href="/tech/craft-markdown-api-test.html" data-toggle="tooltip"
-                                            data-placement="top" title="The Craft Markdown and The Github Markdown">
-                                            上一篇<br>
-                                            <span>The Craft Markdown and The Github Markdown</span>
-                                          </a>
-                                        </li>
-                                        
-                                          
-                                            <li class="next">
-                                              <a href="/tech/my-blog-ci.html" data-toggle="tooltip"
-                                                data-placement="top" title="我的博客自动化流程">
-                                                下一篇<br>
-                                                <span>我的博客自动化流程</span>
-                                              </a>
-                                            </li>
-                                            
-                                    </ul>
-                                    <hr style="visibility: hidden;">
-                                    <div class="giscus"></div>
-                                    <hr>
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          本文最先发布在:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/a-comparison-of-code-editor.html"
+            title="「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比"
+          >
+            「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比 - Xheldon Blog
+          </a>
         </div>
-        <!-- Side Catalog Container -->
-        
-          <div class="
-                col-lg-2 col-lg-offset-0
-                visible-lg-block
-                sidebar-container
-                catalog-container">
-            <div class="side-catalog">
-              <hr class="hidden-sm hidden-xs">
-              <h5>
-                <a class="catalog-toggle" href="#">目录</a>
-              </h5>
-              <ul class="catalog-body"></ul>
-            </div>
-          </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
           
+          <li class="previous">
+            <a
+              href="/tech/craft-markdown-api-test.html"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="The Craft Markdown and The Github Markdown"
+            >
+              上一篇<br />
+              <span>The Craft Markdown and The Github Markdown</span>
+            </a>
+          </li>
+           
+          <li class="next">
+            <a
+              href="/tech/my-blog-ci.html"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="我的博客自动化流程"
+            >
+              下一篇<br />
+              <span>我的博客自动化流程</span>
+            </a>
+          </li>
+          
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">目录</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
 
-            <!-- Sidebar Container -->
+      <!-- Sidebar Container -->
 
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-              
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
 <section style="margin-bottom: 20px;">
     <h5>博主说：</h5>
     <div>
@@ -801,8 +810,7 @@
         <a href="/my-food">美食推荐</a>
     </div>
 </section>
-
-                
+ 
   <hr>
   <h5>朋友们</h5>
   <ul class="list-inline">
@@ -832,16 +840,12 @@
             
   </ul>
   
-            </div>
       </div>
     </div>
-  </article>
+  </div>
+</article>
 
-  
-
-        
-
-            <script src="https://giscus.app/client.js"
+  <script src="https://giscus.app/client.js"
         data-repo="Xheldon/x_blog"
         data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
         data-category="Announcements"
@@ -857,48 +861,55 @@
         data-loading="lazy"
         crossorigin="anonymous"
         async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
 </script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
 
-              
-                <!-- async load function -->
-                <script>
-                  function async(u, c) {
-                    var d = document,
-                      t = 'script',
-                      o = d.createElement(t),
-                      s = d.getElementsByTagName(t)[0];
-                    o.src = u;
-                    if (c) {
-                      o.addEventListener('load', function (e) {
-                        c(null, e);
-                      }, false);
-                    }
-                    s.parentNode.insertBefore(o, s);
-                  }
-                </script>
-                <!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-                <script>
-                  async("/js/anchor.min.js", function () {
-                    anchors.options = {
-                      visible: 'always',
-                      placement: 'right',
-                      //   icon: '#'
-                    };
-                    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-                  })
-                </script>
-                <style>
-                  /* place left on bigger screen */
-                  @media all and (min-width: 800px) {
-                    .anchorjs-link {
-                      position: absolute;
-                      left: -0.75em;
-                      font-size: 1.1em;
-                      margin-top: -0.1em;
-                    }
-                  }
-                </style>
-                
+
 
     <!-- Footer -->
     <footer>
