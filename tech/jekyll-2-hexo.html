@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      Jekyll 迁移到 Hexo 问题记录 - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="本文记录了从 Jekyll 博客引擎迁移到 Hexo 过程中遇到的一些问题。">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="Jekyll 迁移到 Hexo 问题记录 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2024-5-27T12:00:00"> 
+              
+                  
+                    <meta property="article:tag" content="使用体验">
+                    
+                    <meta property="article:tag" content="折腾">
+                    
+                    <meta property="article:tag" content="总结">
+                    
+                    <meta property="article:tag" content="教程">
+                    
+                    <meta property="article:tag" content="技巧">
+                    
+                    <meta property="article:tag" content="JavaScript">
+                    
+                    <meta property="article:tag" content="技术">
+                    
+                    <meta property="article:tag" content="框架">
+                    
+                      
+                          
+                            <meta name="og:description" content="本文记录了从 Jekyll 博客引擎迁移到 Hexo 过程中遇到的一些问题。">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/tech/jekyll-2-hexo.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/tech/jekyll-2-hexo.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/">主页</a>
+            </li>
+            <li>
+              <a href="/about/">关于</a>
+            </li>
+            <li>
+              <a href="/donate/">赞助</a>
+            </li>
+            <li>
+              <a href="/archive/">归档</a>
+            </li>
+            <li>
+              <a href="/feed.xml">RSS</a>
+            </li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                          <a class="tag" href="/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                            title="使用体验">
+                            使用体验
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%8A%98%E8%85%BE"
+                            title="折腾">
+                            折腾
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%80%BB%E7%BB%93"
+                            title="总结">
+                            总结
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%95%99%E7%A8%8B"
+                            title="教程">
+                            教程
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E5%B7%A7"
+                            title="技巧">
+                            技巧
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=JavaScript"
+                            title="JavaScript">
+                            JavaScript
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技术">
+                            技术
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%A1%86%E6%9E%B6"
+                            title="框架">
+                            框架
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        Jekyll 迁移到 Hexo 问题记录
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 写于 2024年05月27日</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 更新于 2025年01月07日</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;注意：离本文创建时间已经过去了
+          <code id="from_time"></code> 天，请注意时效性
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1716768000000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+           
+        <div class="callout-tips">🖥 &nbsp;说明：本文记录了从 Jekyll 博客引擎迁移到 Hexo 过程中遇到的一些问题。</div>
+          
+        <div class="craft-tips">
+          📚 &nbsp;本文同步发布在 Notion：<a
+            href="https://xheldon.notion.site/Jekyll-Hexo-ae2ad29d4dcf495eaf6a598a2d33f7d1?pvs=4"
+            target="_blank"
+          >
+            https://xheldon.notion.site/Jekyll-Hexo-ae2ad29d4dcf495eaf6a598a2d33f7d1?pvs=4
+          </a>
+        </div>
+         <h2 id="前言">前言</h2>
+<p>我是一名前端开发人员，因此对其他的一些脚本语言如 Ruby 并不熟悉。刚开始写博客的时候使用了 Github Pages 作为博客平台，它默认使用的是 Jeklly 框架，想着内容比框架更重要，因此也就用着了，这一用就是 10 年。</p>
+<p>期间换过一些主题，后来锁定了 Hux 的主题，简洁大方好看，而且是开源的：</p>
+<p><a class='link-bookmark' href='https://huangxuan.me/' target='_blank'><span data-bookmark-img='http%3A%2F%2Fgithub.com%2FHuxpro.png?table=block&id=174800e8-7a61-80c4-b473-cd8657f76849&spaceId=1e3e7c05-fc11-4038-9f76-92db32b98824&width=500&userId=0bfcee52-05b1-4d38-bf9a-26223d36426c&cache=v2' data-bookmark-title='黄'><img src='http%3A%2F%2Fgithub.com%2FHuxpro.png?table=block&id=174800e8-7a61-80c4-b473-cd8657f76849&spaceId=1e3e7c05-fc11-4038-9f76-92db32b98824&width=500&userId=0bfcee52-05b1-4d38-bf9a-26223d36426c&cache=v2'/></span><span><span> 黄玄的博客 | Hux Blog</span><span> 「离开世界之前 一切都是过程」</span><span> https://huangxuan.me/</span></span></a></p>
+<p>我针对这个主题做了很多的定制化内容，如自定义右侧内容、自定义数据、使用 Notion 作为数据源渲染等。</p>
+<p>但随着苹果的 M 系列芯片的发布，我越来越难以处理 Ruby 在 Intel 和 Apple 芯片之间的差异，举个例子来说，我构建的时候需要特定使用 x86 架构的指令才能偶然正确 build，这还是我不能随便动任意一个依赖的前提下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">arch</span> -x86_64 bundle <span class="hljs-built_in">exec</span> jekyll server --trace --config=_config.dev.yml --ssl-key local.xheldon.cn.key --ssl-cert local.xheldon.cn.pem<br></code></pre></td></tr></table></figure>
+<p>因此我意识到如果再不尽快更换框架，我可能将来就完全无法发布博客了。</p>
+<h2 id="技术选型">技术选型</h2>
+<p>这一节没有什么好说的，你基本可以认为，Hexo 是 Jekyll 的 JavaScript 实现。里面的很多概念，95% 的都相同，因此迁移上手无难度。</p>
+<p>更重要的是，Hexo 中也有人做了 Hux 的博客主题模板，因此我就直接拿来用了，在这个过程中简单记录一下过程。</p>
+<h2 id="迁移过程">迁移过程</h2>
+<h3 id="插件迁移">插件迁移</h3>
+<p>这个属于比较容易的，在 Jekyll 中的插件，在 Hexo 中我是用辅助函数实现，如下是我处理来自 Notion 的 Bookmark 的标签的函数（路径是 <code>_plugins/add-attribute.rb</code>：）</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">module</span> <span class="hljs-title class_">Jekyll</span><br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">RenderBookMarkBlock</span> &lt; <span class="hljs-title class_ inherited__">Liquid::Block</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">initialize</span>(<span class="hljs-params">tag_name, attr, tokens</span>)<br>            <span class="hljs-variable language_">super</span><br>            <span class="hljs-comment"># 普通的链接没有 yid 和 bid</span><br>            attrs = attr.scan(<span class="hljs-regexp">/url\=\&quot;(.*)\&quot;\stitle\=\&quot;(.*)\&quot;\simg\=\&quot;(.*)\&quot;\syid\=\&quot;(.*)\&quot;\sbid\=\&quot;(.*)\&quot;/</span>)<br>            <span class="hljs-keyword">if</span> !attrs.empty?<br>                <span class="hljs-variable">@url</span> = attrs[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br>                <span class="hljs-variable">@title</span> = attrs[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>]<br>                <span class="hljs-variable">@img</span> = attrs[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>]<br>                <span class="hljs-variable">@yid</span> = attrs[<span class="hljs-number">0</span>][<span class="hljs-number">3</span>]<br>                <span class="hljs-variable">@bid</span> = attrs[<span class="hljs-number">0</span>][<span class="hljs-number">4</span>]<br>                <span class="hljs-variable">@firstChar</span> = <span class="hljs-variable">@title</span>.empty? ? <span class="hljs-string">&quot;&quot;</span> : (<span class="hljs-variable">@title</span>)[<span class="hljs-number">0</span>].upcase<br>                <span class="hljs-variable">@error</span> = <span class="hljs-string">&quot;&quot;</span><br>            <span class="hljs-keyword">else</span><br>                attrs = attr.scan(<span class="hljs-regexp">/url\=\&quot;(.*)\&quot;\stitle\=\&quot;(.*)\&quot;\simg\=\&quot;(.*)\&quot;/</span>)<br>                <span class="hljs-variable">@url</span> = attrs[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br>                <span class="hljs-variable">@title</span> = attrs[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>]<br>                <span class="hljs-variable">@img</span> = attrs[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>]<br>                <span class="hljs-variable">@firstChar</span> = <span class="hljs-variable">@title</span>.empty? ? <span class="hljs-string">&quot;&quot;</span> : (<span class="hljs-variable">@title</span>)[<span class="hljs-number">0</span>].upcase<br>                <span class="hljs-variable">@error</span> = <span class="hljs-string">&quot;&quot;</span><br>            <span class="hljs-keyword">end</span><br>        <span class="hljs-keyword">end</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">render</span>(<span class="hljs-params">context</span>)<br>            <span class="hljs-variable">@desc</span> = <span class="hljs-variable language_">super</span><br>            <span class="hljs-keyword">if</span> !<span class="hljs-variable">@yid</span>.<span class="hljs-literal">nil</span>? &amp;&amp; !<span class="hljs-variable">@yid</span>.empty?<br>                <span class="hljs-string">&quot;&lt;p class=&#x27;embed-responsive embed-responsive-16by9&#x27;&gt;&lt;iframe src=&#x27;https://www.youtube.com/embed/<span class="hljs-subst">#&#123;<span class="hljs-variable">@yid</span>&#125;</span>?rel=0&#x27; title=&#x27;YouTube video player&#x27; frameborder=&#x27;0&#x27; allow=&#x27;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&#x27; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;&quot;</span><br>            <span class="hljs-keyword">elsif</span> !<span class="hljs-variable">@bid</span>.<span class="hljs-literal">nil</span>? &amp;&amp; !<span class="hljs-variable">@bid</span>.empty?<br>                <span class="hljs-string">&quot;&lt;p class=&#x27;embed-responsive embed-responsive-16by9&#x27; style=&#x27;border-bottom: 1px solid #ddd;&#x27;&gt;&lt;iframe src=&#x27;//player.bilibili.com/player.html?bvid=<span class="hljs-subst">#&#123;<span class="hljs-variable">@bid</span>&#125;</span>&amp;high_quality=1&amp;as_wide=1&#x27; scrolling=&#x27;no&#x27; border=&#x27;0&#x27; frameborder=&#x27;no&#x27; framespacing=&#x27;0&#x27; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;&quot;</span><br>            <span class="hljs-keyword">else</span><br>                <span class="hljs-string">&quot;&lt;p&gt;&lt;a class=&#x27;link-bookmark&#x27; href=&#x27;<span class="hljs-subst">#&#123;<span class="hljs-variable">@url</span>&#125;</span>&#x27; target=&#x27;_blank&#x27;&gt;&lt;span data-bookmark-img=&#x27;<span class="hljs-subst">#&#123;<span class="hljs-variable">@img</span>&#125;</span>&#x27; data-bookmark-title=&#x27;<span class="hljs-subst">#&#123;<span class="hljs-variable">@firstChar</span>&#125;</span>&#x27;&gt;&lt;img src=&#x27;<span class="hljs-subst">#&#123;<span class="hljs-variable">@img</span>&#125;</span>&#x27;/&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;<span class="hljs-subst">#&#123;<span class="hljs-variable">@title</span>&#125;</span>&lt;/span&gt;&lt;span&gt;<span class="hljs-subst">#&#123;<span class="hljs-variable">@desc</span>&#125;</span>&lt;/span&gt;&lt;span&gt;<span class="hljs-subst">#&#123;<span class="hljs-variable">@url</span>&#125;</span>&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&quot;</span><br>            <span class="hljs-keyword">end</span><br>        <span class="hljs-keyword">end</span><br>    <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-title class_">Liquid</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:Template</span>.register_tag(<span class="hljs-string">&#x27;render_bookmark&#x27;</span>, <span class="hljs-title class_">Jekyll</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:RenderBookMarkBlock</span>)<br></code></pre></td></tr></table></figure>
+<p>而在 Hexo 中我是这么写的（路径是 <code>scripts/liquid.js</code>）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs javascript">hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">tag</span>.<span class="hljs-title function_">register</span>(<span class="hljs-string">&#x27;render_bookmark&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">args, content</span>) &#123;<br>    <span class="hljs-keyword">const</span> [url, title, img, yid, bid] = args.<span class="hljs-title function_">map</span>(getValue);<br>    <span class="hljs-keyword">const</span> firstChar = title ? title[<span class="hljs-number">0</span>].<span class="hljs-title function_">toUpperCase</span>() : <span class="hljs-string">&#x27;&#x27;</span>;<br>    <span class="hljs-keyword">const</span> strip_html = hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">helper</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;strip_html&#x27;</span>).<span class="hljs-title function_">bind</span>(hexo);<br>    <span class="hljs-keyword">const</span> trim = hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">helper</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;trim&#x27;</span>).<span class="hljs-title function_">bind</span>(hexo);<br>    <span class="hljs-keyword">if</span> (yid) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;p class=&#x27;embed-responsive embed-responsive-16by9&#x27;&gt;&lt;iframe src=&#x27;https://www.youtube.com/embed/<span class="hljs-subst">$&#123;yid&#125;</span>?rel=0&#x27; title=&#x27;YouTube video player&#x27; frameborder=&#x27;0&#x27; allow=&#x27;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&#x27; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;`</span><br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (bid) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;p class=&#x27;embed-responsive embed-responsive-16by9&#x27; style=&#x27;border-bottom: 1px solid #ddd;&#x27;&gt;&lt;iframe src=&#x27;//player.bilibili.com/player.html?bvid=<span class="hljs-subst">$&#123;bid&#125;</span>&amp;high_quality=1&amp;as_wide=1&#x27; scrolling=&#x27;no&#x27; border=&#x27;0&#x27; frameborder=&#x27;no&#x27; framespacing=&#x27;0&#x27; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;`</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;p&gt;&lt;a class=&#x27;link-bookmark&#x27; href=&#x27;<span class="hljs-subst">$&#123;url&#125;</span>&#x27; target=&#x27;_blank&#x27;&gt;&lt;span data-bookmark-img=&#x27;<span class="hljs-subst">$&#123;img&#125;</span>&#x27; data-bookmark-title=&#x27;<span class="hljs-subst">$&#123;firstChar&#125;</span>&#x27;&gt;&lt;img src=&#x27;<span class="hljs-subst">$&#123;img&#125;</span>&#x27;/&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; <span class="hljs-subst">$&#123;title&#125;</span>&lt;/span&gt;&lt;span&gt; <span class="hljs-subst">$&#123;strip_html(trim(content))&#125;</span>&lt;/span&gt;&lt;span&gt; <span class="hljs-subst">$&#123;url&#125;</span>&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;`</span>;<br>&#125;, &#123;<br>    <span class="hljs-attr">ends</span>: <span class="hljs-literal">true</span>,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<h3 id="permalink-问题">Permalink 问题</h3>
+<p>不知道为什么，我在 Hexo 中设置了 <code>:category/:name.html</code> 但是依然给我生成的是 <code>life/2024-life-xxx.html</code>（使用 <code>-</code>目录分割） 而预期应该是 <code>life/xxx.html</code>，看源码 <code>name</code> 使用了 <code>slug</code>，的 <code>basename</code>，但是 <code>slug</code> 生成逻辑是基于 folder 路径然后加上 - 的，因此我只能自己手动修改文件名。Jekyll 中，文件名前的日期格式，如 <a href="http://2024-02-12-xxx.md">2024-02-12-xxx.md</a> 中，2024-02-12 会被忽略，title 直接就是 xxx，但是在 Hexo 中 title 在 post 中读取的 title front matter，所以只能写一个 filter 插件来最终确定 permalink 地址:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * permalink 中的 name 不符合预期，对于 _posts/life/2015/xxx.md 来说，在文档中 :name 表示的是 xxx，但是实际是 life-2015-xxx</span><br><span class="hljs-comment"> */</span><br>hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">filter</span>.<span class="hljs-title function_">register</span>(<span class="hljs-string">&#x27;post_permalink&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) &#123;<br>  <span class="hljs-comment">// 在这里修改 post.name 的值</span><br>  <span class="hljs-keyword">const</span> arr = data.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;/&#x27;</span>).<span class="hljs-title function_">filter</span>(<span class="hljs-title class_">Boolean</span>);<br>  <span class="hljs-keyword">const</span> categories = arr[<span class="hljs-number">0</span>];<br>  <span class="hljs-keyword">const</span> name = arr[<span class="hljs-number">1</span>];<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;categories&#125;</span>/<span class="hljs-subst">$&#123;name.split(<span class="hljs-string">&#x27;-&#x27;</span>).filter(<span class="hljs-built_in">Boolean</span>).slice(<span class="hljs-number">3</span>).join(<span class="hljs-string">&#x27;-&#x27;</span>)&#125;</span>`</span>;<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>另外，permalink 不能是纯数字，得用字符串：</p>
+<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/jekyll-2-hexo/147800e8-7a61-8006-a660-e8ecfbe7da9a.webp' alt='' title=''></p>
+<p>不然报错（看 .endsWith 就知道为什么报错啦）：</p>
+<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/jekyll-2-hexo/147800e8-7a61-8032-8e51-d6528f277306.webp' alt='' title=''></p>
+<h3 id="ejs-模板语法问题">EJS 模板语法问题</h3>
+<p>ejs 模板嵌套的时候，与 Jekyll 的 liquid 语法不同的是，它不能在模板中自定义 front-matter。也就是说，模板之间的传参，只能外层到内层，不能从内到外。比如我 index 的 layout 是  page，同时还设置了 fornt-matter，但是此 front-matter 无法被 page.ejs 这个模板读取到，因此我只能每个用到的地方都往下传参。</p>
+<h3 id="markdown-语法渲染问题">Markdown 语法渲染问题</h3>
+<p>Hexo 自带的  marked 的 markdown 渲染跟 jekyll 的 karmarkdown 渲染有出入，前者会把诸如  ## h2 （换行+空行）段落 中的空行+段落给忽略，而后者不会。</p>
+<p>虽然无伤大雅，但是这样会导致我在首页的时候，内容摘要会少一个空格导致不完全一致，而我希望尽可能的完全一致，这样 SEO 才不会降权，才能让搜索引擎不会认为我的内容有巨大改动。</p>
+<p>于是我使用了 markdown-it 进行处理，安装 hexo-renderer-markdown-it 即可。</p>
+<h3 id="liquid-排序问题">Liquid 排序问题</h3>
+<p>我 Jekyll 的 liquid 的排序是这么用的： <code>&#123;&#123; tags | split:'`**`SEPARATOR`**`' | sort &#125;&#125;</code> :</p>
+<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/jekyll-2-hexo/0389dcbb-8bb7-413c-a968-4a77a8b76b71.webp' alt='' title=''></p>
+<p>问题是，Liquid 的排序在 sort 部分相同后，会按照后面的 href 字符串排序的，因此继承过来：</p>
+<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/jekyll-2-hexo/a24e2d73-ab8b-4b5d-a57d-7e0f2f5f0a66.webp' alt='' title=''></p>
+<h3 id="mermaid-语法问题">Mermaid 语法问题</h3>
+<p>mermaid 不能被 highlight 高亮，需要在 hexo 的 config 中排除掉：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">exclude_languages:</span><br> <span class="hljs-bullet">-</span> <span class="hljs-string">mermaid</span><br></code></pre></td></tr></table></figure>
+<h3 id="markdown-无法使用-ejs-语法问题">Markdown 无法使用 EJS 语法问题</h3>
+<p>暂时没管，曲线绕。</p>
+<h3 id="分页生成问题">分页生成问题</h3>
+<p>hexo-generator-index 的 pagination 生成的是 page/2 page/3 但是 jekyll 中的格式是 page2, page3 所以复制了该插件源码放到本地进行修改（位于 <code>scripts/pagination.js</code>）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-meta">&#x27;use strict&#x27;</span>;<br><span class="hljs-keyword">const</span> pagination = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;hexo-pagination&#x27;</span>);<br>hexo.<span class="hljs-property">config</span>.<span class="hljs-property">index_generator</span> = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>(<br>  &#123;<br>    <span class="hljs-attr">per_page</span>:<br>      <span class="hljs-keyword">typeof</span> hexo.<span class="hljs-property">config</span>.<span class="hljs-property">per_page</span> === <span class="hljs-string">&#x27;undefined&#x27;</span> ? <span class="hljs-number">10</span> : hexo.<span class="hljs-property">config</span>.<span class="hljs-property">per_page</span>,<br>    <span class="hljs-attr">order_by</span>: <span class="hljs-string">&#x27;-date&#x27;</span>,<br>  &#125;,<br>  hexo.<span class="hljs-property">config</span>.<span class="hljs-property">index_generator</span><br>);<br>hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">generator</span>.<span class="hljs-title function_">register</span>(<span class="hljs-string">&#x27;index&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">locals</span>) &#123;<br>  <span class="hljs-keyword">const</span> config = <span class="hljs-variable language_">this</span>.<span class="hljs-property">config</span>;<br>  <span class="hljs-keyword">const</span> posts = locals.<span class="hljs-property">posts</span>.<span class="hljs-title function_">sort</span>(config.<span class="hljs-property">index_generator</span>.<span class="hljs-property">order_by</span>);<br>  posts.<span class="hljs-property">data</span>.<span class="hljs-title function_">sort</span>(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> (b.<span class="hljs-property">sticky</span> || <span class="hljs-number">0</span>) - (a.<span class="hljs-property">sticky</span> || <span class="hljs-number">0</span>));<br>  <span class="hljs-keyword">const</span> paginationDir = config.<span class="hljs-property">pagination_dir</span> || <span class="hljs-string">&#x27;page&#x27;</span>;<br>  <span class="hljs-keyword">const</span> path = config.<span class="hljs-property">index_generator</span>.<span class="hljs-property">path</span> || <span class="hljs-string">&#x27;&#x27;</span>;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">pagination</span>(path, posts, &#123;<br>    <span class="hljs-attr">perPage</span>: config.<span class="hljs-property">index_generator</span>.<span class="hljs-property">per_page</span>,<br>    <span class="hljs-attr">layout</span>: [<span class="hljs-string">&#x27;index&#x27;</span>, <span class="hljs-string">&#x27;archive&#x27;</span>],<br>    <span class="hljs-attr">format</span>: paginationDir + <span class="hljs-string">&#x27;%d/&#x27;</span>,<br>    <span class="hljs-attr">data</span>: &#123;<br>      <span class="hljs-attr">__index</span>: <span class="hljs-literal">true</span>,<br>    &#125;,<br>  &#125;);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<hr />
+<h3 id="删除线实现问题">删除线实现问题</h3>
+<p>默认删除线是 s 标签，但是 jekyll 是 del，用 after_render:html 直接替换（位于 <code>scripts/tag-del.js</code>）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">filter</span>.<span class="hljs-title function_">register</span>(<span class="hljs-string">&#x27;after_render:html&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">str</span>) &#123;<br>  <span class="hljs-keyword">return</span> str.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/&lt;s&gt;/g</span>, <span class="hljs-string">&#x27;&lt;del&gt;&#x27;</span>).<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/&lt;\/s&gt;/g</span>, <span class="hljs-string">&#x27;&lt;/del&gt;&#x27;</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<hr />
+<h3 id="构建后多余文件问题">构建后多余文件问题</h3>
+<p>有些文件是多余的，构建后删除掉：</p>
+<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/jekyll-2-hexo/147800e8-7a61-8077-911f-f5d55f484628.webp' alt='' title=''></p>
+<p>具体有：</p>
+<ul>
+<li>
+<p>categories/*</p>
+</li>
+<li>
+<p>i_dont_wanna_use_default_archives/*</p>
+</li>
+<li>
+<p>i_dont_wanna_use_default_tags/*</p>
+</li>
+<li>
+<p>less/*</p>
+</li>
+</ul>
+<h3 id="rss-问题">RSS 问题</h3>
+<p>我使用了自定义的标签样式来渲染来自 Notion Bookmark 的，以期望跟 Notion 的 Bookmark 一样好看，但是如此一来，RSS 阅读器如 Reeder 就无法正确渲染出样式了，因此我处理了以下，在 Jekyll 中使用的是模板语法处理函数，也即在构建的时候动态替换掉自定义的样式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">module</span> <span class="hljs-title class_">Jekyll</span><br>    <span class="hljs-variable language_">module</span> <span class="hljs-title class_">BookmarkFilter</span><br>      def <span class="hljs-title function_">bookmark_filter</span>(input)<br>        input.<span class="hljs-title function_">gsub</span>(<span class="hljs-regexp">/^\&lt;p\&gt;\&lt;a\s+class=\&quot;link-bookmark\&quot;\shref=(.*)\starget=\&quot;_blank\&quot;\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;span\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;span\&gt;\n(.*)\n\&lt;\/span\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;\/span\&gt;\&lt;\/a\&gt;\&lt;\/p\&gt;$/</span>, <span class="hljs-string">&#x27;&lt;p&gt;&lt;a href=\1 target=&quot;_blank&quot;&gt;\3&lt;/a&gt;&lt;/p&gt;&#x27;</span>);<br>      end<br>    end<br>  end<br>  <br>  <span class="hljs-title class_">Liquid</span>::<span class="hljs-title class_">Template</span>.<span class="hljs-title function_">register_filter</span>(<span class="hljs-title class_">Jekyll</span>::<span class="hljs-title class_">BookmarkFilter</span>)<br></code></pre></td></tr></table></figure>
+<p>而在 Hexo 中是在构建之后打补丁的方式处理（位于 <code>scripts/rss-gene.js</code>）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);<br><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br><span class="hljs-keyword">const</span> ejs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ejs&#x27;</span>);<br><span class="hljs-keyword">const</span> rootDate = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>();<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getDate</span>(<span class="hljs-params">_date</span>) &#123;<br>  <span class="hljs-keyword">const</span> date = _date ? <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(_date) : rootDate;<br>  <span class="hljs-comment">// 获取各个部分</span><br>  <span class="hljs-keyword">const</span> days = [<span class="hljs-string">&#x27;Sun&#x27;</span>, <span class="hljs-string">&#x27;Mon&#x27;</span>, <span class="hljs-string">&#x27;Tue&#x27;</span>, <span class="hljs-string">&#x27;Wed&#x27;</span>, <span class="hljs-string">&#x27;Thu&#x27;</span>, <span class="hljs-string">&#x27;Fri&#x27;</span>, <span class="hljs-string">&#x27;Sat&#x27;</span>];<br>  <span class="hljs-keyword">const</span> months = [<br>    <span class="hljs-string">&#x27;Jan&#x27;</span>,<br>    <span class="hljs-string">&#x27;Feb&#x27;</span>,<br>    <span class="hljs-string">&#x27;Mar&#x27;</span>,<br>    <span class="hljs-string">&#x27;Apr&#x27;</span>,<br>    <span class="hljs-string">&#x27;May&#x27;</span>,<br>    <span class="hljs-string">&#x27;Jun&#x27;</span>,<br>    <span class="hljs-string">&#x27;Jul&#x27;</span>,<br>    <span class="hljs-string">&#x27;Aug&#x27;</span>,<br>    <span class="hljs-string">&#x27;Sep&#x27;</span>,<br>    <span class="hljs-string">&#x27;Oct&#x27;</span>,<br>    <span class="hljs-string">&#x27;Nov&#x27;</span>,<br>    <span class="hljs-string">&#x27;Dec&#x27;</span>,<br>  ];<br>  <span class="hljs-keyword">const</span> dayName = days[date.<span class="hljs-title function_">getDay</span>()];<br>  <span class="hljs-keyword">const</span> day = <span class="hljs-title class_">String</span>(date.<span class="hljs-title function_">getDate</span>()).<span class="hljs-title function_">padStart</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;0&#x27;</span>);<br>  <span class="hljs-keyword">const</span> month = months[date.<span class="hljs-title function_">getMonth</span>()];<br>  <span class="hljs-keyword">const</span> year = date.<span class="hljs-title function_">getFullYear</span>();<br>  <span class="hljs-keyword">const</span> hours = <span class="hljs-title class_">String</span>(date.<span class="hljs-title function_">getHours</span>()).<span class="hljs-title function_">padStart</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;0&#x27;</span>);<br>  <span class="hljs-keyword">const</span> minutes = <span class="hljs-title class_">String</span>(date.<span class="hljs-title function_">getMinutes</span>()).<span class="hljs-title function_">padStart</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;0&#x27;</span>);<br>  <span class="hljs-keyword">const</span> seconds = <span class="hljs-title class_">String</span>(date.<span class="hljs-title function_">getSeconds</span>()).<span class="hljs-title function_">padStart</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;0&#x27;</span>);<br><br>  <span class="hljs-comment">// 获取时区偏移（以分钟为单位）</span><br>  <span class="hljs-keyword">const</span> timezoneOffset = -date.<span class="hljs-title function_">getTimezoneOffset</span>();<br>  <span class="hljs-keyword">const</span> sign = timezoneOffset &gt;= <span class="hljs-number">0</span> ? <span class="hljs-string">&#x27;+&#x27;</span> : <span class="hljs-string">&#x27;-&#x27;</span>;<br>  <span class="hljs-keyword">const</span> offsetHours = <span class="hljs-title class_">String</span>(<br>    <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">abs</span>(timezoneOffset) / <span class="hljs-number">60</span>)<br>  ).<span class="hljs-title function_">padStart</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;0&#x27;</span>);<br>  <span class="hljs-keyword">const</span> offsetMinutes = <span class="hljs-title class_">String</span>(<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">abs</span>(timezoneOffset) % <span class="hljs-number">60</span>).<span class="hljs-title function_">padStart</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;0&#x27;</span>);<br><br>  <span class="hljs-comment">// 格式化为 RFC 2822 格式的字符串</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;dayName&#125;</span>, <span class="hljs-subst">$&#123;day&#125;</span> <span class="hljs-subst">$&#123;month&#125;</span> <span class="hljs-subst">$&#123;year&#125;</span> <span class="hljs-subst">$&#123;hours&#125;</span>:<span class="hljs-subst">$&#123;minutes&#125;</span>:<span class="hljs-subst">$&#123;seconds&#125;</span> <span class="hljs-subst">$&#123;sign&#125;</span><span class="hljs-subst">$&#123;offsetHours&#125;</span><span class="hljs-subst">$&#123;offsetMinutes&#125;</span>`</span>;<br>&#125;<br><br>hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">generator</span>.<span class="hljs-title function_">register</span>(<span class="hljs-string">&#x27;xml&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">locals</span>) &#123;<br>  <span class="hljs-comment">// 仿照 Liquid 内置的日期格式写法</span><br>  <span class="hljs-comment">// 注意如果前面不加这个 \uFEFF 则不会被识别为 xml</span><br>  <span class="hljs-keyword">const</span> template =<br>    <span class="hljs-string">&#x27;\uFEFF&#x27;</span> +<br>    <span class="hljs-string">`&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="hljs-string">    &lt;rss version=&quot;2.0&quot; xmlns:atom=&quot;http://www.w3.org/2005/Atom&quot;&gt;</span><br><span class="hljs-string">    &lt;channel&gt;</span><br><span class="hljs-string">        &lt;title&gt;Xheldon Blog&lt;/title&gt;</span><br><span class="hljs-string">        &lt;description&gt;The Answer to Life, the Universe and Everything is...&lt;/description&gt;</span><br><span class="hljs-string">        &lt;link&gt;https://www.xheldon.com&lt;/link&gt;</span><br><span class="hljs-string">        &lt;atom:link href=&quot;https://www.xheldon.com/feed.xml&quot; rel=&quot;self&quot; type=&quot;application/rss+xml&quot; /&gt;</span><br><span class="hljs-string">        &lt;pubDate&gt;&lt;%= getDate() %&gt;&lt;/pubDate&gt;</span><br><span class="hljs-string">        &lt;lastBuildDate&gt;&lt;%= getDate() %&gt;&lt;/lastBuildDate&gt;</span><br><span class="hljs-string">        &lt;generator&gt;Hexo v&lt;%= version %&gt;&lt;/generator&gt;</span><br><span class="hljs-string">        &lt;% for (post of posts.sort((a, b) =&gt; (new Date(b.date).getTime()) - (new Date(a.date).getTime())).slice(0, 10)) &#123; %&gt;</span><br><span class="hljs-string">        &lt;item&gt;</span><br><span class="hljs-string">            &lt;title&gt;&lt;%= post.title %&gt;&lt;/title&gt;</span><br><span class="hljs-string">            &lt;description&gt;&lt;%= bookmark_filter(post.content) %&gt;&lt;/description&gt;</span><br><span class="hljs-string">            &lt;pubDate&gt;&lt;%= getDate(post.date) %&gt;&lt;/pubDate&gt;</span><br><span class="hljs-string">            &lt;link&gt;&lt;%= post.permalink %&gt;&lt;/link&gt;</span><br><span class="hljs-string">            &lt;guid isPermaLink=&quot;true&quot;&gt;&lt;%= post.permalink %&gt;&lt;/guid&gt;</span><br><span class="hljs-string">            &lt;% for (tag of post.tags.data) &#123; %&gt;</span><br><span class="hljs-string">                &lt;category&gt;&lt;%= tag.name %&gt;&lt;/category&gt;</span><br><span class="hljs-string">            &lt;% &#125; %&gt;</span><br><span class="hljs-string">            &lt;% for (cat of post.categories.data) &#123; %&gt;</span><br><span class="hljs-string">                &lt;category&gt;&lt;%- escape_html(cat.name) %&gt;&lt;/category&gt;</span><br><span class="hljs-string">            &lt;% &#125; %&gt;</span><br><span class="hljs-string">        &lt;/item&gt;</span><br><span class="hljs-string">        &lt;% &#125; %&gt;</span><br><span class="hljs-string">    &lt;/channel&gt;</span><br><span class="hljs-string">    &lt;/rss&gt;`</span>;<br><br>  <span class="hljs-keyword">const</span> bookmark_filter = hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">helper</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;bookmark_filter&#x27;</span>).<span class="hljs-title function_">bind</span>(hexo);<br>  <span class="hljs-keyword">const</span> escape_html = hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">helper</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;escape_html&#x27;</span>).<span class="hljs-title function_">bind</span>(hexo);<br><br>  <span class="hljs-keyword">const</span> data = &#123;<br>    <span class="hljs-attr">posts</span>: locals.<span class="hljs-property">posts</span>.<span class="hljs-title function_">toArray</span>(),<br>    getDate,<br>    <span class="hljs-attr">version</span>: hexo.<span class="hljs-property">version</span>,<br>    escape_html,<br>    bookmark_filter,<br>  &#125;;<br><br>  <span class="hljs-keyword">const</span> jsonContent = ejs.<span class="hljs-title function_">render</span>(template, data);<br><br>  <span class="hljs-keyword">const</span> outputPath = path.<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;source/_posts&#x27;</span>, <span class="hljs-string">&#x27;feed.xml&#x27;</span>);<br>  fs.<span class="hljs-title function_">writeFileSync</span>(outputPath, jsonContent, &#123; <span class="hljs-attr">encoding</span>: <span class="hljs-string">&#x27;utf8&#x27;</span> &#125;);<br><br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;feed.xml&#x27;</span>,<br>    <span class="hljs-attr">data</span>: jsonContent,<br>  &#125;;<br>&#125;);<br></code></pre></td></tr></table></figure>
+<h3 id="service-worker-问题">Service-Worker 问题</h3>
+<p>移除了 service worker，因为每次构建，页面的 tags 部分一定会变，导致 html 页面一定会更新，会导致经常需要手动刷新页面，不胜其烦，因此直接移除了。</p>
+<h3 id="其他问题">其他问题</h3>
+<ul>
+<li>
+<p>有些文件是需要的但是没放进入，构建后放入，如 ads.txt 等。</p>
+</li>
+<li>
+<p><code>layout</code> 值是 <code>post</code>  类型的文章， <code>page.path</code> 的值不以 <code>/</code> 开头，这点要注意。</p>
+</li>
+</ul>
+<h2 id="后话">后话</h2>
+<p>基本就是这么多，使用 BeyondCompare 逐行对比后基本可以最小化变化的迁移过去。</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          本文最先发布在:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/jekyll-2-hexo.html"
+            title="Jekyll 迁移到 Hexo 问题记录"
+          >
+            Jekyll 迁移到 Hexo 问题记录 - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+          
+          <li class="previous">
+            <a
+              href="/tech/how-to-pppoe-after-close-tp-link-dhcp.html"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="如何让 TP-Link 关闭 DHCP 后拨号上网"
+            >
+              上一篇<br />
+              <span>如何让 TP-Link 关闭 DHCP 后拨号上网</span>
+            </a>
+          </li>
+           
+          <li class="next">
+            <a
+              href="/tech/how-i-use-notion-flow.html"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="如何使用 Notion Flow 模块转换"
+            >
+              下一篇<br />
+              <span>如何使用 Notion Flow 模块转换</span>
+            </a>
+          </li>
+          
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">目录</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>博主说：</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        我常常希望在面对人生中一些关键抉择的时候，有人可以告诉我最佳的做法，让我不至于白白浪费宝贵的时间。推己及人，我因此经常写博客，以期在浩渺无垠的互联网中的这个小小角落里记录下对于我来说只有一次的人生经历，希望能够帮到那些希望得到帮助的人。
+    </div>
+    <hr>
+    <h5><a href="/archive/">热门标签</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0029" 
+                href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技术"
+                rel="45">技术</a>
+        
+            <a data-sort="0048" 
+                href="/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="26">生活</a>
+        
+            <a data-sort="0063" 
+                href="/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="折腾"
+                rel="11">折腾</a>
+        
+            <a data-sort="0068" 
+                href="/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="技巧"
+                rel="6">技巧</a>
+        
+            <a data-sort="0068" 
+                href="/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="教程"
+                rel="6">教程</a>
+        
+            <a data-sort="0068" 
+                href="/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻译"
+                rel="6">翻译</a>
+        
+            <a data-sort="0069" 
+                href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="美食"
+                rel="5">美食</a>
+        
+            <a data-sort="0069" 
+                href="/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="5">ProseMirror</a>
+        
+            <a data-sort="0070" 
+                href="/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="工作流"
+                rel="4">工作流</a>
+        
+            <a data-sort="0070" 
+                href="/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="插件"
+                rel="4">插件</a>
+        
+            <a data-sort="0070" 
+                href="/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="经验"
+                rel="4">经验</a>
+        
+            <a data-sort="0070" 
+                href="/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="网络"
+                rel="4">网络</a>
+        
+            <a data-sort="0070" 
+                href="/archive/?tag=Craft"
+                title="Craft"
+                rel="4">Craft</a>
+        
+            <a data-sort="0070" 
+                href="/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="4">JavaScript</a>
+        
+            <a data-sort="0070" 
+                href="/archive/?tag=Vue"
+                title="Vue"
+                rel="4">Vue</a>
+        
+            <a data-sort="0071" 
+                href="/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用体验"
+                rel="3">使用体验</a>
+        
+            <a data-sort="0071" 
+                href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体验"
+                rel="3">初体验</a>
+        
+            <a data-sort="0071" 
+                href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="服务器"
+                rel="3">服务器</a>
+        
+            <a data-sort="0071" 
+                href="/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="苹果"
+                rel="3">苹果</a>
+        
+            <a data-sort="0071" 
+                href="/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="路由器"
+                rel="3">路由器</a>
+        
+            <a data-sort="0071" 
+                href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="软路由"
+                rel="3">软路由</a>
+        
+            <a data-sort="0071" 
+                href="/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="随笔"
+                rel="3">随笔</a>
+        
+            <a data-sort="0071" 
+                href="/archive/?tag=%E9%9B%86%E6%88%90"
+                title="集成"
+                rel="3">集成</a>
+        
+            <a data-sort="0071" 
+                href="/archive/?tag=Apple"
+                title="Apple"
+                rel="3">Apple</a>
+        
+            <a data-sort="0071" 
+                href="/archive/?tag=Git"
+                title="Git"
+                rel="3">Git</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="2">主食</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="优化"
+                rel="2">优化</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E5%8D%83%E5%85%86"
+                title="千兆"
+                rel="2">千兆</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="2">大事</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="总结"
+                rel="2">总结</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="旁路由"
+                rel="2">旁路由</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="框架"
+                rel="2">框架</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="泡脚时间"
+                rel="2">泡脚时间</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="测试"
+                rel="2">测试</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="特斯拉"
+                rel="2">特斯拉</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="编辑器"
+                rel="2">编辑器</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="视频"
+                rel="2">视频</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="调试"
+                rel="2">调试</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E8%BD%A6"
+                title="车"
+                rel="2">车</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="迁移"
+                rel="2">迁移</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="2">AppleScript</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=CI"
+                title="CI"
+                rel="2">CI</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=GitHub"
+                title="GitHub"
+                rel="2">GitHub</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="2">Jekyll</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=Notion"
+                title="Notion"
+                rel="2">Notion</a>
+        
+    </div>
+    <hr>
+    <h5>专栏</h5>
+    <div class="tags">
+        <a href="/projects">开源项目</a>
+        <a href="/book-list">技术书单</a>
+        <a href="/subscribe">订阅&付费软件</a>
+        <a href="/my-food">美食推荐</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>朋友们</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">国内版</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="Jekyll 迁移到 Hexo 问题记录"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+          <p class="copyright text-muted">
+            Copyright &copy;
+            <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+            2025
+              <br>
+              Don't Panic | Theme fork from
+              <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
+              <br>
+              
+          </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src='/js/simple-jekyll-search.min.js'></script>
+
+<!-- Vercel web analysis -->
+
+  <script defer src="/_vercel/insights/script.js"></script>
+  
+
+    <!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+    <!-- async load function -->
+    <script>
+      function async(u, c) {
+        var d = document,
+          t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        o.src = u;
+        if (c) {
+          o.addEventListener(
+            'load',
+            function (e) {
+              c(null, e);
+            },
+            false
+          );
+        }
+        s.parentNode.insertBefore(o, s);
+      }
+    </script>
+
+    <!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+    <!-- jquery.tagcloud.js -->
+    
+
+        <!--fastClick.js -->
+        <script>
+          async('/js/fastclick.min.js', function () {
+            var $nav = document.querySelector('nav');
+            if ($nav) FastClick.attach($nav);
+          });
+        </script>
+
+        <!-- Google Analytics -->
+        
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-79359216-1');
+          </script>
+          
+
+            <!-- Side Catalog -->
+            
+              <script type="text/javascript">
+                function generateCatalog(selector) {
+                  // TODO: 多语种没有迁移过来
+                  // init
+                  var P = $('div.post-container'),
+                    a,
+                    n,
+                    t,
+                    l,
+                    i,
+                    c;
+                  a = P.find('h1,h2,h3,h4,h5,h6');
+
+                  // clean
+                  $(selector).html('');
+
+                  // appending
+                  a.each(function () {
+                    n = $(this).prop('tagName').toLowerCase();
+                    i = '#' + $(this).prop('id');
+                    t = $(this).text();
+                    c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+                    l = $('<li class="' + n + '_nav"></li>').append(c);
+                    $(selector).append(l);
+                  });
+                  return true;
+                }
+
+                generateCatalog('.catalog-body');
+
+                // toggle side catalog
+                $('.catalog-toggle').click(function (e) {
+                  e.preventDefault();
+                  $('.side-catalog').toggleClass('fold');
+                });
+
+                /*
+                 * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+                 * Fork by Hux to support padding
+                 */
+                async('/js/jquery.nav.js',
+                  function () {
+                    $('.catalog-body').onePageNav({
+                      currentClass: 'active',
+                      changeHash: !1,
+                      easing: 'swing',
+                      filter: '',
+                      scrollSpeed: 700,
+                      scrollOffset: 0,
+                      scrollThreshold: 0.2,
+                      begin: null,
+                      end: null,
+                      scrollChange: null,
+                      padding: 80,
+                    });
+                  }
+                );
+              </script>
+              
+
+                <script>
+                  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+                  function htmlDecode(input) {
+                    var e = document.createElement('textarea');
+                    e.innerHTML = input;
+                    // handle case of empty input
+                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                  }
+
+
+                  $(document).ready(function () {
+                    SimpleJekyllSearch({
+                      searchInput: document.getElementById('search-input'),
+                      resultsContainer: document.getElementById('search-results'),
+                      json: '/search.json',
+                      searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+                      noResultsText: 'No results',
+                      limit: 50,
+                      fuzzy: false,
+                      // a hack to get escaped subtitle unescaped. for some reason, 
+                      // post.subtitle w/o escape filter nuke entire search.
+                      templateMiddleware: function (prop, value, template) {
+                        if (prop === 'subtitle' || prop === 'title') {
+                          if (value.indexOf("code")) {
+                            return htmlDecode(value);
+                          } else {
+                            return value;
+                          }
+                        }
+                      }
+                    });
+                    var $searchPage = $('.search-page');
+                    var $searchOpen = $('.search-icon');
+                    var $searchClose = $('.search-icon-close');
+                    var $searchInput = $('#search-input');
+                    var $body = $('body');
+
+                    $searchOpen.on('click', function (e) {
+                      e.preventDefault();
+                      $searchPage.toggleClass('search-active');
+                      var prevClasses = $body.attr('class') || '';
+                      setTimeout(function () {
+                        $body.addClass('no-scroll');
+                      }, 400)
+
+                      if ($searchPage.hasClass('search-active')) {
+                        $searchClose.on('click', function (e) {
+                          e.preventDefault();
+                          $searchPage.removeClass('search-active');
+                          $body.attr('class', prevClasses); // from closure 
+                        });
+                        $searchInput.focus();
+                      }
+                    });
+                  });
+                </script>
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>
