@@ -22,7 +22,7 @@
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2024-5-27T12:00:00"> 
+            <meta property="article:published_time" content=" 2025-1-7T12:00:00"> 
               
                   
                     <meta property="article:tag" content="使用体验">
@@ -300,7 +300,7 @@
                       <h2 class="subheading">
                         
                       </h2>
-                      <span class="meta">✍🏼 写于 2024年05月27日</span>&nbsp;&nbsp;&nbsp;
+                      <span class="meta">✍🏼 写于 2025年01月07日</span>&nbsp;&nbsp;&nbsp;
                       
                         <span class="meta">💡 更新于 2025年01月07日</span>
                         
@@ -325,7 +325,7 @@
         </div>
         <script>
           var timeDom = document.getElementById('from_time');
-          var pageTime = Number('1716768000000');
+          var pageTime = Number('1736208000000');
           var currentTime = Date.now();
           var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
             0
@@ -348,7 +348,7 @@
         </div>
          <h2 id="前言">前言</h2>
 <p>我是一名前端开发人员，因此对其他的一些脚本语言如 Ruby 并不熟悉。刚开始写博客的时候使用了 Github Pages 作为博客平台，它默认使用的是 Jeklly 框架，想着内容比框架更重要，因此也就用着了，这一用就是 10 年。</p>
-<p>期间换过一些主题，后来锁定了 Hux 的主题，简洁大方好看，而且是开源的：</p>
+<p>期间换过一些主题，后来锁定了 Hux 提供的主题，简洁大方好看，而且是开源的：</p>
 <p><a class='link-bookmark' href='https://huangxuan.me/' target='_blank'><span data-bookmark-img='http%3A%2F%2Fgithub.com%2FHuxpro.png?table=block&id=174800e8-7a61-80c4-b473-cd8657f76849&spaceId=1e3e7c05-fc11-4038-9f76-92db32b98824&width=500&userId=0bfcee52-05b1-4d38-bf9a-26223d36426c&cache=v2' data-bookmark-title='黄'><img src='http%3A%2F%2Fgithub.com%2FHuxpro.png?table=block&id=174800e8-7a61-80c4-b473-cd8657f76849&spaceId=1e3e7c05-fc11-4038-9f76-92db32b98824&width=500&userId=0bfcee52-05b1-4d38-bf9a-26223d36426c&cache=v2'/></span><span><span> 黄玄的博客 | Hux Blog</span><span> 「离开世界之前 一切都是过程」</span><span> https://huangxuan.me/</span></span></a></p>
 <p>我针对这个主题做了很多的定制化内容，如自定义右侧内容、自定义数据、使用 Notion 作为数据源渲染等。</p>
 <p>但随着苹果的 M 系列芯片的发布，我越来越难以处理 Ruby 在 Intel 和 Apple 芯片之间的差异，举个例子来说，我构建的时候需要特定使用 x86 架构的指令才能偶然正确 build，这还是我不能随便动任意一个依赖的前提下：</p>
@@ -367,9 +367,9 @@
 <p>不知道为什么，我在 Hexo 中设置了 <code>:category/:name.html</code> 但是依然给我生成的是 <code>life/2024-life-xxx.html</code>（使用 <code>-</code>目录分割） 而预期应该是 <code>life/xxx.html</code>，看源码 <code>name</code> 使用了 <code>slug</code>，的 <code>basename</code>，但是 <code>slug</code> 生成逻辑是基于 folder 路径然后加上 - 的，因此我只能自己手动修改文件名。Jekyll 中，文件名前的日期格式，如 <a href="http://2024-02-12-xxx.md">2024-02-12-xxx.md</a> 中，2024-02-12 会被忽略，title 直接就是 xxx，但是在 Hexo 中 title 在 post 中读取的 title front matter，所以只能写一个 filter 插件来最终确定 permalink 地址:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * permalink 中的 name 不符合预期，对于 _posts/life/2015/xxx.md 来说，在文档中 :name 表示的是 xxx，但是实际是 life-2015-xxx</span><br><span class="hljs-comment"> */</span><br>hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">filter</span>.<span class="hljs-title function_">register</span>(<span class="hljs-string">&#x27;post_permalink&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) &#123;<br>  <span class="hljs-comment">// 在这里修改 post.name 的值</span><br>  <span class="hljs-keyword">const</span> arr = data.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;/&#x27;</span>).<span class="hljs-title function_">filter</span>(<span class="hljs-title class_">Boolean</span>);<br>  <span class="hljs-keyword">const</span> categories = arr[<span class="hljs-number">0</span>];<br>  <span class="hljs-keyword">const</span> name = arr[<span class="hljs-number">1</span>];<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;categories&#125;</span>/<span class="hljs-subst">$&#123;name.split(<span class="hljs-string">&#x27;-&#x27;</span>).filter(<span class="hljs-built_in">Boolean</span>).slice(<span class="hljs-number">3</span>).join(<span class="hljs-string">&#x27;-&#x27;</span>)&#125;</span>`</span>;<br>&#125;);<br></code></pre></td></tr></table></figure>
 <p>另外，permalink 不能是纯数字，得用字符串：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/jekyll-2-hexo/147800e8-7a61-8006-a660-e8ecfbe7da9a.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8006-a660-e8ecfbe7da9a.webp' alt='' title=''></p>
 <p>不然报错（看 .endsWith 就知道为什么报错啦）：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/jekyll-2-hexo/147800e8-7a61-8032-8e51-d6528f277306.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8032-8e51-d6528f277306.webp' alt='' title=''></p>
 <h3 id="ejs-模板语法问题">EJS 模板语法问题</h3>
 <p>ejs 模板嵌套的时候，与 Jekyll 的 liquid 语法不同的是，它不能在模板中自定义 front-matter。也就是说，模板之间的传参，只能外层到内层，不能从内到外。比如我 index 的 layout 是  page，同时还设置了 fornt-matter，但是此 front-matter 无法被 page.ejs 这个模板读取到，因此我只能每个用到的地方都往下传参。</p>
 <h3 id="markdown-语法渲染问题">Markdown 语法渲染问题</h3>
@@ -378,9 +378,9 @@
 <p>于是我使用了 markdown-it 进行处理，安装 hexo-renderer-markdown-it 即可。</p>
 <h3 id="liquid-排序问题">Liquid 排序问题</h3>
 <p>我 Jekyll 的 liquid 的排序是这么用的： <code>&#123;&#123; tags | split:'`**`SEPARATOR`**`' | sort &#125;&#125;</code> :</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/jekyll-2-hexo/0389dcbb-8bb7-413c-a968-4a77a8b76b71.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/0389dcbb-8bb7-413c-a968-4a77a8b76b71.webp' alt='' title=''></p>
 <p>问题是，Liquid 的排序在 sort 部分相同后，会按照后面的 href 字符串排序的，因此继承过来：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/jekyll-2-hexo/a24e2d73-ab8b-4b5d-a57d-7e0f2f5f0a66.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/a24e2d73-ab8b-4b5d-a57d-7e0f2f5f0a66.webp' alt='' title=''></p>
 <h3 id="mermaid-语法问题">Mermaid 语法问题</h3>
 <p>mermaid 不能被 highlight 高亮，需要在 hexo 的 config 中排除掉：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">exclude_languages:</span><br> <span class="hljs-bullet">-</span> <span class="hljs-string">mermaid</span><br></code></pre></td></tr></table></figure>
@@ -396,7 +396,7 @@
 <hr />
 <h3 id="构建后多余文件问题">构建后多余文件问题</h3>
 <p>有些文件是多余的，构建后删除掉：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/jekyll-2-hexo/147800e8-7a61-8077-911f-f5d55f484628.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8077-911f-f5d55f484628.webp' alt='' title=''></p>
 <p>具体有：</p>
 <ul>
 <li>
@@ -445,28 +445,16 @@
         <hr style="visibility: hidden" />
 
         <ul class="pager">
-          
-          <li class="previous">
-            <a
-              href="/tech/how-to-pppoe-after-close-tp-link-dhcp.html"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="如何让 TP-Link 关闭 DHCP 后拨号上网"
-            >
-              上一篇<br />
-              <span>如何让 TP-Link 关闭 DHCP 后拨号上网</span>
-            </a>
-          </li>
            
           <li class="next">
             <a
-              href="/tech/how-i-use-notion-flow.html"
+              href="/life/the-tools-i-used-in-2024.html"
               data-toggle="tooltip"
               data-placement="top"
-              title="如何使用 Notion Flow 模块转换"
+              title="赛博朋克 2024：我正在使用的工具们"
             >
               下一篇<br />
-              <span>如何使用 Notion Flow 模块转换</span>
+              <span>赛博朋克 2024：我正在使用的工具们</span>
             </a>
           </li>
           
@@ -511,9 +499,9 @@
             <a data-sort="0029" 
                 href="/archive/?tag=%E6%8A%80%E6%9C%AF"
                 title="技术"
-                rel="46">技术</a>
+                rel="45">技术</a>
         
-            <a data-sort="0049" 
+            <a data-sort="0048" 
                 href="/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="生活"
                 rel="26">生活</a>
@@ -521,214 +509,214 @@
             <a data-sort="0063" 
                 href="/archive/?tag=%E6%8A%98%E8%85%BE"
                 title="折腾"
-                rel="12">折腾</a>
+                rel="11">折腾</a>
         
             <a data-sort="0068" 
                 href="/archive/?tag=%E6%8A%80%E5%B7%A7"
                 title="技巧"
-                rel="7">技巧</a>
+                rel="6">技巧</a>
         
             <a data-sort="0068" 
                 href="/archive/?tag=%E6%95%99%E7%A8%8B"
                 title="教程"
-                rel="7">教程</a>
+                rel="6">教程</a>
         
-            <a data-sort="0069" 
+            <a data-sort="0068" 
                 href="/archive/?tag=%E7%BF%BB%E8%AF%91"
                 title="翻译"
                 rel="6">翻译</a>
         
-            <a data-sort="0070" 
+            <a data-sort="0069" 
                 href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
                 title="美食"
                 rel="5">美食</a>
         
-            <a data-sort="0070" 
-                href="/archive/?tag=JavaScript"
-                title="JavaScript"
-                rel="5">JavaScript</a>
-        
-            <a data-sort="0070" 
+            <a data-sort="0069" 
                 href="/archive/?tag=ProseMirror"
                 title="ProseMirror"
                 rel="5">ProseMirror</a>
         
-            <a data-sort="0071" 
-                href="/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
-                title="使用体验"
-                rel="4">使用体验</a>
-        
-            <a data-sort="0071" 
+            <a data-sort="0070" 
                 href="/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
                 title="工作流"
                 rel="4">工作流</a>
         
-            <a data-sort="0071" 
+            <a data-sort="0070" 
                 href="/archive/?tag=%E6%8F%92%E4%BB%B6"
                 title="插件"
                 rel="4">插件</a>
         
-            <a data-sort="0071" 
+            <a data-sort="0070" 
                 href="/archive/?tag=%E7%BB%8F%E9%AA%8C"
                 title="经验"
                 rel="4">经验</a>
         
-            <a data-sort="0071" 
+            <a data-sort="0070" 
                 href="/archive/?tag=%E7%BD%91%E7%BB%9C"
                 title="网络"
                 rel="4">网络</a>
         
-            <a data-sort="0071" 
+            <a data-sort="0070" 
                 href="/archive/?tag=Craft"
                 title="Craft"
                 rel="4">Craft</a>
         
-            <a data-sort="0071" 
+            <a data-sort="0070" 
+                href="/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="4">JavaScript</a>
+        
+            <a data-sort="0070" 
                 href="/archive/?tag=Vue"
                 title="Vue"
                 rel="4">Vue</a>
         
-            <a data-sort="0072" 
+            <a data-sort="0071" 
+                href="/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用体验"
+                rel="3">使用体验</a>
+        
+            <a data-sort="0071" 
                 href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
                 title="初体验"
                 rel="3">初体验</a>
         
-            <a data-sort="0072" 
-                href="/archive/?tag=%E6%80%BB%E7%BB%93"
-                title="总结"
-                rel="3">总结</a>
-        
-            <a data-sort="0072" 
+            <a data-sort="0071" 
                 href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
                 title="服务器"
                 rel="3">服务器</a>
         
-            <a data-sort="0072" 
-                href="/archive/?tag=%E6%A1%86%E6%9E%B6"
-                title="框架"
-                rel="3">框架</a>
-        
-            <a data-sort="0072" 
+            <a data-sort="0071" 
                 href="/archive/?tag=%E8%8B%B9%E6%9E%9C"
                 title="苹果"
                 rel="3">苹果</a>
         
-            <a data-sort="0072" 
+            <a data-sort="0071" 
                 href="/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
                 title="路由器"
                 rel="3">路由器</a>
         
-            <a data-sort="0072" 
+            <a data-sort="0071" 
                 href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
                 title="软路由"
                 rel="3">软路由</a>
         
-            <a data-sort="0072" 
+            <a data-sort="0071" 
                 href="/archive/?tag=%E9%9A%8F%E7%AC%94"
                 title="随笔"
                 rel="3">随笔</a>
         
-            <a data-sort="0072" 
+            <a data-sort="0071" 
                 href="/archive/?tag=%E9%9B%86%E6%88%90"
                 title="集成"
                 rel="3">集成</a>
         
-            <a data-sort="0072" 
+            <a data-sort="0071" 
                 href="/archive/?tag=Apple"
                 title="Apple"
                 rel="3">Apple</a>
         
-            <a data-sort="0072" 
+            <a data-sort="0071" 
                 href="/archive/?tag=Git"
                 title="Git"
                 rel="3">Git</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=%E4%B8%BB%E9%A3%9F"
                 title="主食"
                 rel="2">主食</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=%E4%BC%98%E5%8C%96"
                 title="优化"
                 rel="2">优化</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=%E5%8D%83%E5%85%86"
                 title="千兆"
                 rel="2">千兆</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=%E5%A4%A7%E4%BA%8B"
                 title="大事"
                 rel="2">大事</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
+                href="/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="总结"
+                rel="2">总结</a>
+        
+            <a data-sort="0072" 
                 href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
                 title="旁路由"
                 rel="2">旁路由</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
+                href="/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="框架"
+                rel="2">框架</a>
+        
+            <a data-sort="0072" 
                 href="/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
                 title="泡脚时间"
                 rel="2">泡脚时间</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=%E6%B5%8B%E8%AF%95"
                 title="测试"
                 rel="2">测试</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
                 title="特斯拉"
                 rel="2">特斯拉</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
                 title="编辑器"
                 rel="2">编辑器</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=%E8%A7%86%E9%A2%91"
                 title="视频"
                 rel="2">视频</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=%E8%B0%83%E8%AF%95"
                 title="调试"
                 rel="2">调试</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=%E8%BD%A6"
                 title="车"
                 rel="2">车</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=%E8%BF%81%E7%A7%BB"
                 title="迁移"
                 rel="2">迁移</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=AppleScript"
                 title="AppleScript"
                 rel="2">AppleScript</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=CI"
                 title="CI"
                 rel="2">CI</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=GitHub"
                 title="GitHub"
                 rel="2">GitHub</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=Jekyll"
                 title="Jekyll"
                 rel="2">Jekyll</a>
         
-            <a data-sort="0073" 
+            <a data-sort="0072" 
                 href="/archive/?tag=Notion"
                 title="Notion"
                 rel="2">Notion</a>
