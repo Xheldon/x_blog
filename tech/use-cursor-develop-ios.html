@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>
     
-      「译」 Promise 反面模式 - Xheldon Blog
+      如何使用 Cusor 开发 iOS 应用并实时预览 - Xheldon Blog
         
   </title>
 
@@ -12,28 +12,34 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="">
+    <meta name="description" content="本文图文并茂的介绍如何使用 Cursor 来开发 iOS 应用并实现实时预览效果。">
     
         <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
         <meta property="og:title"
-          content="「译」 Promise 反面模式 - Xheldon Blog">
+          content="如何使用 Cusor 开发 iOS 应用并实时预览 - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2016-3-4T2:43:12"> 
+            <meta property="article:published_time" content=" 2025-2-11T12:00:00"> 
               
                   
+                    <meta property="article:tag" content="Apple">
+                    
+                    <meta property="article:tag" content="教程">
+                    
+                    <meta property="article:tag" content="技巧">
+                    
+                    <meta property="article:tag" content="AI">
+                    
                     <meta property="article:tag" content="技术">
                     
-                    <meta property="article:tag" content="Promise">
-                    
-                    <meta property="article:tag" content="翻译">
+                    <meta property="article:tag" content="XCode">
                     
                       
                           
-                            <meta name="og:description" content="">
+                            <meta name="og:description" content="本文图文并茂的介绍如何使用 Cursor 来开发 iOS 应用并实现实时预览效果。">
                             
                                 
                                     <meta property="twitter:image"
@@ -41,7 +47,7 @@
                                     <meta property="og:image"
                                       content="https://www.xheldon.cn/img/logo.png">
                                     
-                                      <meta property="og:url" content="https://www.xheldon.cn/tech/promise-antipattern.html">
+                                      <meta property="og:url" content="https://www.xheldon.cn/tech/use-cursor-develop-ios.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta name="google-adsense-account" content="ca-pub-5486286026923411">
                                       <script async
@@ -74,7 +80,7 @@
                                       <!-- <link rel="manifest" href="/js/manifest.json"> -->
                                       <link rel="shortcut icon" href="/img/favicon.ico">
                                       <link rel="canonical"
-                                        href="https://www.xheldon.cn/tech/promise-antipattern.html">
+                                        href="https://www.xheldon.cn/tech/use-cursor-develop-ios.html">
 
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
@@ -243,30 +249,47 @@
                     <div class="post-heading">
                       <div class="tags">
                         
+                          <a class="tag" href="/archive/?tag=Apple"
+                            title="Apple">
+                            Apple
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%95%99%E7%A8%8B"
+                            title="教程">
+                            教程
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E5%B7%A7"
+                            title="技巧">
+                            技巧
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=AI"
+                            title="AI">
+                            AI
+                          </a>
+                          
                           <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF"
                             title="技术">
                             技术
                           </a>
                           
-                          <a class="tag" href="/archive/?tag=Promise"
-                            title="Promise">
-                            Promise
-                          </a>
-                          
-                          <a class="tag" href="/archive/?tag=%E7%BF%BB%E8%AF%91"
-                            title="翻译">
-                            翻译
+                          <a class="tag" href="/archive/?tag=XCode"
+                            title="XCode">
+                            XCode
                           </a>
                           
                       </div>
                       <h1>
-                        「译」 Promise 反面模式
+                        如何使用 Cusor 开发 iOS 应用并实时预览
                       </h1>
                       <h2 class="subheading">
                         
                       </h2>
-                      <span class="meta">✍🏼 写于 2016年03月04日</span>&nbsp;&nbsp;&nbsp;
+                      <span class="meta">✍🏼 写于 2025年02月11日</span>&nbsp;&nbsp;&nbsp;
                       
+                        <span class="meta">💡 更新于 2025年02月11日</span>
+                        
                     </div>
                   </div>
                 </div>
@@ -288,7 +311,7 @@
         </div>
         <script>
           var timeDom = document.getElementById('from_time');
-          var pageTime = Number('1457102592000');
+          var pageTime = Number('1739232000000');
           var currentTime = Date.now();
           var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
             0
@@ -298,97 +321,63 @@
           }
           timeDom.innerText = fromNow;
         </script>
-              <p>最近在看<code>Promise</code>相关的东西，看到了这篇文章，觉得很不错，遂记录下来。</p>
-<p><code>Promises</code>本身是很简单的，前提是你得找得到头绪，下面是几个关于 Promise 的容易困惑的知识点来验证你是否真的掌握了<code>Promise</code>。其中的几个真的曾经让我抓狂过。</p>
-<h2 id="嵌套-promises">嵌套 Promises</h2>
-<p>你有一捆的 Promises 互相嵌套着：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">loadSomething</span>().<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">something</span>) &#123;<br>  <span class="hljs-title function_">loadAnotherthing</span>().<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">another</span>) &#123;<br>    <span class="hljs-title class_">DoSomethingOnThem</span>(something, another);<br>  &#125;);<br>&#125;);<br></code></pre></td></tr></table></figure>
-<p>你这么做的原因是你需要处理这两个 Promises 的结果，所以你不能链式调用他们因为<code>then()</code>方法只接受上一个<code>then()</code>返回的结果。（意思是这两个<code>Promise</code>是需要同时处理没有先后关系的，但是<code>then</code>却有个先后关系，如果前者<code>throw</code> <code>error</code>直接进入<code>catch</code>处理环节）</p>
-<p>呵呵，其实你这么写的真正原因是你不知道<code>all()</code>方法：</p>
-<p>解决这种丑陋写法的方案：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">q.<span class="hljs-title function_">all</span>([<span class="hljs-title function_">loadSomething</span>(), <span class="hljs-title function_">loadAnotherThing</span>()]).<span class="hljs-title function_">spread</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span><br><span class="hljs-params">  something,</span><br><span class="hljs-params">  another</span><br><span class="hljs-params"></span>) &#123;<br>  <span class="hljs-title class_">DoSomethingOnThem</span>(something, another);<br>&#125;);<br></code></pre></td></tr></table></figure>
-<p>更简洁了。<code>q.all()</code>返回一个<code>promise</code>对象，并将这个结果结合成一个数组并传递给<code>resolve</code>方法供之后的<code>then</code>方法调用，<code>spread()</code>方法将会分割这个数组为几个数组长度的参数传递给其中的<code>DoSomethingOnThem</code>函数。</p>
-<p>（注：<code>Promise.all()</code>接受一个数组作为参数,数组元素为<code>promise</code>,元素之前没有先后顺序,同时执行,最后传递给<code>then</code>方法的值为各个<code>promise</code>方法<code>return</code>值的数组。这里作者使用的是<code>node</code>中的一个模块<code>q</code>作为示例)</p>
-<h2 id="中断的链式调用">中断的链式调用</h2>
-<p>假设你有这样一段代码：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">anAsyncCall</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> promise = <span class="hljs-title function_">doSomethingAsync</span>();<br>  promise.<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-title function_">somethingComplicated</span>();<br>  &#125;);<br>  <span class="hljs-keyword">return</span> promise;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>这段代码的问题是，出现在<code>somethingComplicated()</code>函数的<code>error</code>都不会被捕获。<code>Promises</code>意味着能够链式调用（不然还叫什么<code>then</code>，直接<code>done</code>就行了）每一个被调用的<code>then()</code>方法返回一个新的<code>promise</code>，这个新的<code>promise</code>是会被下一个<code>then()</code>方法继续调用的。正常来说，最后一个调用应该是<code>catch()</code>方法，出现在链式调用任何地方的任何<code>error</code>都会被它捕获并处理。</p>
-<p>在上面的的代码中，链式调用在你返回第一个<code>promise</code>而不是返回一个<code>then</code>处理后的新的的<code>promise</code>给最后一个<code>then</code>调用的时候中断了（即<code>then</code>不改变原有的<code>promise</code>，它只处理它，然后返回一个新的<code>promise</code>）。<br />
-解决这个问题的方案：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">anAsyncCall</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> promise = <span class="hljs-title function_">doSomethingAsync</span>();<br>  <span class="hljs-keyword">return</span> promise.<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-title function_">somethingComplicated</span>();<br>  &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>记住，总是返回最后一个<code>then()</code>的结果（以能够使用链式调用）。</p>
-<h2 id="混乱的集合">混乱的集合</h2>
-<p>你有一组元素的数组，你想对这个数组的每个元素之执行一些异步操作。所以你发现你需要做一些涉及到递归调用的事情。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">workMyCollection</span>(<span class="hljs-params">arr</span>) &#123;<br>  <span class="hljs-keyword">var</span> resultArr = [];<br>  <span class="hljs-keyword">function</span> <span class="hljs-title function_">_recursive</span>(<span class="hljs-params">idx</span>) &#123;<br>    <span class="hljs-keyword">if</span> (idx &gt;= resultArr.<span class="hljs-property">length</span>) <span class="hljs-keyword">return</span> resultArr;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">doSomethingAsync</span>(arr[idx]).<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">res</span>) &#123;<br>      resultArr.<span class="hljs-title function_">push</span>(res);<br>      <span class="hljs-keyword">return</span> <span class="hljs-title function_">_recursive</span>(idx + <span class="hljs-number">1</span>);<br>    &#125;);<br>  &#125;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">_recursive</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>额。。这段代码不是很直观，问题的关键在与，当你不知道有多长的链式调用的时候，链式调用就变成一个意见痛苦的事情。除非你知道(<code>JavaScript ES5+</code>原生的数组方法)<code>map()</code>和<code>reduce()</code></p>
-<p>解决方案：<br />
-记住，<code>q.all</code>参数是一个由<code>promise</code>构成的数组，同时它会把结果放到一个数组中并传给<code>resolve</code>方法。我们可以简单的使用数组元素的 map 方法来对每个数组中的元素执行这个异步调用方法，像下面这样：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">workMyCollection</span>(<span class="hljs-params">arr</span>) &#123;<br>  <span class="hljs-keyword">return</span> q.<span class="hljs-title function_">all</span>(<br>    arr.<span class="hljs-title function_">map</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">item</span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-title function_">doSomethingAsync</span>(item);<br>    &#125;)<br>  );<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>不像开始那个并不是什么解决方案的递归调用，这段代码将同步调用数组中的每个元素传递给一个异步调用函数。明显在时间上更有效率一些。<br />
-如果你需要按顺序返回<code>promises</code>，你可以使用<code>reduce</code>：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">workMyCollection</span>(<span class="hljs-params">arr</span>) &#123;<br>  <span class="hljs-keyword">return</span> arr.<span class="hljs-title function_">reduce</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">promise, item</span>) &#123;<br>    <span class="hljs-keyword">return</span> promise.<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">result</span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-title function_">doSomethingAsyncWithResult</span>(item, result);<br>    &#125;);<br>  &#125;, <span class="hljs-title function_">q</span>());<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>看起来不是很简单明了，但是确实比最开始的那个简洁多了。（Not quite as tidy, but certainly tidier.）</p>
-<h2 id="幽灵-promise">幽灵 Promise</h2>
-<p>有一个确定的方法（意思是已经在开始执行 Promise 时就给出此方法，而不是在执行中由结果来确定的方法—译者注），有时候需要异步调用，有时候又不需要。因此你为了应对这两种情况只创建了一个 promise 仅仅是为了保持异步和非异步的情况下代码一致（以便于抽象和解耦—译者注），即使这种情况实际只可能出现其中一种。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> promise;<br><span class="hljs-keyword">if</span> (asyncCallNeeded) promise = <span class="hljs-title function_">doSomethingAsync</span>();<br><span class="hljs-keyword">else</span> promise = Q.<span class="hljs-title function_">resolve</span>(<span class="hljs-number">42</span>);<br>promise.<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-title function_">doSomethingCool</span>();<br>&#125;);<br></code></pre></td></tr></table></figure>
-<p>以上这段代码在反面模式中并不算最糟糕的地方，但是却应该写的更清晰一些—用<code>Q()</code>来包裹<code>value</code>或<code>promise</code>。Q()方法即接受一个值也接受一个<code>promise</code>作为参数：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">Q</span>(asyncCallNeeded ? <span class="hljs-title function_">doSomethingAsync</span>() : <span class="hljs-number">42</span>)<br>  .<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">value</span>) &#123;<br>    <span class="hljs-title function_">doSomethingGood</span>();<br>  &#125;)<br>  .<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) &#123;<br>    <span class="hljs-title function_">handleTheError</span>();<br>  &#125;);<br></code></pre></td></tr></table></figure>
-<p>备注：开始的时候我在这个情况下建议使用<code>Q.when()</code>，多亏了 Kris Kowal 同学在评论中的建议把我从错误中拯救出来。不要使用<code>Q.when()</code>，只使用<code>Q()</code>就够了，后者更清晰一些。</p>
-<h2 id="饥渴的错误处理函数">饥渴的错误处理函数</h2>
-<blockquote>
-<p>小节标题意思是在<code>then</code>中同时设置<code>fulfilled</code>和<code>rejected</code>，以期能够使用<code>rejected</code>函数处理同样作为<code>then</code>函数参数的<code>fulfilled</code>中的错误，但是这是不可能的，<code>fulfilled</code>中的<code>error</code>只能传递给下一个<code>then()</code>而不能在当前被<code>rejected</code>函数处理，所以这小节的标题为『过度渴望』—它虽然渴望处理错误，但是错误永远不会传递给它让他处理—译者注</p>
-</blockquote>
-<p><code>then()</code>方法接受两个参数，对<code>fulfilled</code>状态的操作函数和对<code>rejected</code>状态操作函数。你可能写过下面这种代码：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js">somethingAsync.<span class="hljs-title function_">then</span>(<br>  <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">somethingElseAsync</span>();<br>  &#125;,<br>  <span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) &#123;<br>    <span class="hljs-title function_">handleMyError</span>(err);<br>  &#125;<br>);<br></code></pre></td></tr></table></figure>
-<p>这么写的问题是，发生在<code>fulfilled</code>状态的的<code>error</code>不会传递给错误处理函数。<br />
-解决这个问的的方法是，确保错误处理函数在一个独立的 then 方法中：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js">somethingAsync<br>  .<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">somethingElseAsync</span>();<br>  &#125;)<br>  .<span class="hljs-title function_">then</span>(<span class="hljs-literal">null</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) &#123;<br>    <span class="hljs-title function_">handleMyError</span>(err);<br>  &#125;);<br></code></pre></td></tr></table></figure>
-<p>或者使用<code>catch()</code>：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js">somethingAsync<br>  .<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">somethingElseAsync</span>();<br>  &#125;)<br>  .<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) &#123;<br>    <span class="hljs-title function_">handleMyError</span>(err);<br>  &#125;);<br></code></pre></td></tr></table></figure>
-<p>这样可以确保任何发生在链式调用中的<code>error</code>都能得到处理。</p>
-<h2 id="被遗忘的-promise">被遗忘的 Promise</h2>
-<p>你调用一个方法，返回一个<code>promise</code>，然而你忘记了这个<code>promise</code>，然后又创建了一个<code>promise</code>：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> deferred = Q.<span class="hljs-title function_">defer</span>();<br><span class="hljs-title function_">doSomethingAsync</span>().<span class="hljs-title function_">then</span>(<br>  <span class="hljs-keyword">function</span> (<span class="hljs-params">res</span>) &#123;<br>    res = <span class="hljs-title function_">manipulateMeInSomeWay</span>(res);<br>    deferred.<span class="hljs-title function_">resolve</span>(res);<br>  &#125;,<br>  <span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) &#123;<br>    deferred.<span class="hljs-title function_">reject</span>(err);<br>  &#125;<br>);<br><br><span class="hljs-keyword">return</span> deferred.<span class="hljs-property">promise</span>;<br></code></pre></td></tr></table></figure>
-<p>这段代码真的是把<code>promsie</code>的简洁特性抛弃的一干二净—有太多无用的代码了。<br />
-解决方案是，仅仅返回<code>promise</code>即可：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">return</span> <span class="hljs-title function_">doSomethingAsync</span>().<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">res</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">manipulateMeInSomeWay</span>(res);<br>&#125;);<br></code></pre></td></tr></table></figure>
+         
+        <div class="reference-tips">
+          🔗 &nbsp;原文：<a href="https://blog.imjp.uk/fxxk-xcode" target="_blank">
+            https://blog.imjp.uk/fxxk-xcode
+          </a>
+        </div>
+          
+        <div class="callout-tips">🖥 &nbsp;说明：本文图文并茂的介绍如何使用 Cursor 来开发 iOS 应用并实现实时预览效果。</div>
+          
+        <div class="craft-tips">
+          📚 &nbsp;本文同步发布在 Notion：<a
+            href="https://xheldon.notion.site/Cusor-iOS-197800e87a6180e59fe6e6fd71d50970?pvs=4"
+            target="_blank"
+          >
+            https://xheldon.notion.site/Cusor-iOS-197800e87a6180e59fe6e6fd71d50970?pvs=4
+          </a>
+        </div>
+         <p>本文是原作者的扩展版，原作者的原文见：</p>
+<p><a class='link-bookmark' href='https://blog.imjp.uk/fxxk-xcode' target='_blank'><span data-bookmark-img='https%3A%2F%2Fi.typlog.com%2Fitsukay%2F8270139839_251618.png%3Fx-oss-process%3Dstyle%2Fl?table=block&id=197800e8-7a61-80de-b547-c5f4e4d0015d&spaceId=1e3e7c05-fc11-4038-9f76-92db32b98824&width=500&userId=0bfcee52-05b1-4d38-bf9a-26223d36426c&cache=v2' data-bookmark-title='在'><img src='https%3A%2F%2Fi.typlog.com%2Fitsukay%2F8270139839_251618.png%3Fx-oss-process%3Dstyle%2Fl?table=block&id=197800e8-7a61-80de-b547-c5f4e4d0015d&spaceId=1e3e7c05-fc11-4038-9f76-92db32b98824&width=500&userId=0bfcee52-05b1-4d38-bf9a-26223d36426c&cache=v2'/></span><span><span> 在 Cursor 打造高效 iOS 开发环境： AI 编程 + 实时预览完整指南</span><span> 本文将会介绍如何正确的配置 Curosr/VSCode，以便于在其中进行 iOS 开发。设置完成后，你将可以： 在 Cursor/VSCode 中开发 iOS 应用，脱离臃肿缓慢的 Xcode，获得好心情好脾气 使用领先的 AI 编程功能，...</span><span> https://blog.imjp.uk/fxxk-xcode</span></span></a></p>
+<p>我在这里做个额外的补充是因为在我看这个教程的时候，有些地方因为完全不懂 XCode 和 iOS 开发，因此走了一些弯路，因此在此做个记录。</p>
+<blockquote style='border-color: ;color: '><p> 本文主要对原文做一个补充，请先查看原文。</p></blockquote>
+<h3 id="对「安装-swift-插件和-codelldb-插件。」的补充：">对「安装 Swift 插件和 CodeLLDB 插件。」的补充：</h3>
+<p>这里的写的 Swift 插件已经过时了，需要用最新的插件，插件市场搜索：**Swift Programming Language **即可。</p>
+<h3 id="对「设置热加载」第二步的补充：">对「<strong>设置热加载</strong>」第二步的补充：</h3>
+<blockquote style='border-color: ;color: '><p> 打开项目对应 Target 的设置 -> Build Settings -> 搜索 Other Linker Flags，分别添加 -Xlinker 和 -interposable。</p></blockquote>
+<p>这里注意要同时添加，即复制 <code>-Xlinker -interposable</code> 粘贴到下图中：</p>
+<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/use-cursor-develop-ios/197800e8-7a61-8012-b016-c6caf5e72435.webp' alt='' title=''></p>
+<h3 id="添加新文件后，会报-source-kit-找不到文件的问题">添加新文件后，会报 Source Kit 找不到文件的问题</h3>
+<p>得用 Xcode-Build-Server 重新运行一次原文中提到的命令：</p>
+<blockquote style='border-color: ;color: '><p> 然后在项目根目录下根据你的项目文件类型执行对应的命令 :</p></blockquote>
+<h3 id="调试-swiftui-的时候修改无法实时预览的问题：">调试 SwiftUI 的时候修改无法实时预览的问题：</h3>
+<p>部分 ViewModifier 添加/修改后确实无法实时更新，但是类似于 Text 中的 String 的修改，一般就没问题。我也不知道为什么。</p>
 
         <div class="text-danger">- EOF -</div>
         <div style="font-size: 12px; color: #ccc !important">
           本文最先发布在:
           <a
             style="color: #ccc"
-            href="https://www.xheldon.cn/tech/promise-antipattern.html"
-            title="「译」 Promise 反面模式"
+            href="https://www.xheldon.cn/tech/use-cursor-develop-ios.html"
+            title="如何使用 Cusor 开发 iOS 应用并实时预览"
           >
-            「译」 Promise 反面模式 - Xheldon Blog
+            如何使用 Cusor 开发 iOS 应用并实时预览 - Xheldon Blog
           </a>
         </div>
         <hr style="visibility: hidden" />
 
         <ul class="pager">
-          
-          <li class="previous">
-            <a
-              href="/tech/git-command.html"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="git 常用命令总结"
-            >
-              上一篇<br />
-              <span>git 常用命令总结</span>
-            </a>
-          </li>
            
           <li class="next">
             <a
-              href="/tech/weibo-jssdk.html"
+              href="/tech/jekyll-2-hexo.html"
               data-toggle="tooltip"
               data-placement="top"
-              title="新浪微博JS SDK API的使用"
+              title="Jekyll 迁移到 Hexo 问题记录"
             >
               下一篇<br />
-              <span>新浪微博JS SDK API的使用</span>
+              <span>Jekyll 迁移到 Hexo 问题记录</span>
             </a>
           </li>
           
@@ -711,7 +700,7 @@
         data-category="Announcements"
         data-category-id="DIC_kwDOAweTLM4B_uhM"
         data-mapping="specific"
-        data-term="「译」 Promise 反面模式"
+        data-term="如何使用 Cusor 开发 iOS 应用并实时预览"
         data-strict="0"
         data-reactions-enabled="1"
         data-emit-metadata="0"
