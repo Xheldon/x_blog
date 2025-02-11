@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>
     
-      Vue 响应式原理及实现 - Xheldon Blog
+      如何使用 Cusor 开发 iOS 应用并实时预览 - Xheldon Blog
         
   </title>
 
@@ -12,26 +12,34 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="">
+    <meta name="description" content="本文图文并茂的介绍如何使用 Cursor 来开发 iOS 应用并实现实时预览效果。">
     
         <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
         <meta property="og:title"
-          content="Vue 响应式原理及实现 - Xheldon Blog">
+          content="如何使用 Cusor 开发 iOS 应用并实时预览 - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2016-8-2T7:12:54"> 
+            <meta property="article:published_time" content=" 2025-2-11T12:00:00"> 
               
                   
+                    <meta property="article:tag" content="Apple">
+                    
+                    <meta property="article:tag" content="教程">
+                    
+                    <meta property="article:tag" content="技巧">
+                    
+                    <meta property="article:tag" content="AI">
+                    
                     <meta property="article:tag" content="技术">
                     
-                    <meta property="article:tag" content="Vue">
+                    <meta property="article:tag" content="XCode">
                     
                       
                           
-                            <meta name="og:description" content="">
+                            <meta name="og:description" content="本文图文并茂的介绍如何使用 Cursor 来开发 iOS 应用并实现实时预览效果。">
                             
                                 
                                     <meta property="twitter:image"
@@ -39,7 +47,7 @@
                                     <meta property="og:image"
                                       content="https://www.xheldon.com/img/logo.png">
                                     
-                                      <meta property="og:url" content="https://www.xheldon.com/tech/vue-reactive.html">
+                                      <meta property="og:url" content="https://www.xheldon.com/tech/use-cursor-develop-ios.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta name="google-adsense-account" content="ca-pub-5486286026923411">
                                       <script async
@@ -72,7 +80,7 @@
                                       <!-- <link rel="manifest" href="/js/manifest.json"> -->
                                       <link rel="shortcut icon" href="/img/favicon.ico">
                                       <link rel="canonical"
-                                        href="https://www.xheldon.com/tech/vue-reactive.html">
+                                        href="https://www.xheldon.com/tech/use-cursor-develop-ios.html">
 
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
@@ -241,25 +249,47 @@
                     <div class="post-heading">
                       <div class="tags">
                         
+                          <a class="tag" href="/archive/?tag=Apple"
+                            title="Apple">
+                            Apple
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%95%99%E7%A8%8B"
+                            title="教程">
+                            教程
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E5%B7%A7"
+                            title="技巧">
+                            技巧
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=AI"
+                            title="AI">
+                            AI
+                          </a>
+                          
                           <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF"
                             title="技术">
                             技术
                           </a>
                           
-                          <a class="tag" href="/archive/?tag=Vue"
-                            title="Vue">
-                            Vue
+                          <a class="tag" href="/archive/?tag=XCode"
+                            title="XCode">
+                            XCode
                           </a>
                           
                       </div>
                       <h1>
-                        Vue 响应式原理及实现
+                        如何使用 Cusor 开发 iOS 应用并实时预览
                       </h1>
                       <h2 class="subheading">
                         
                       </h2>
-                      <span class="meta">✍🏼 写于 2016年08月02日</span>&nbsp;&nbsp;&nbsp;
+                      <span class="meta">✍🏼 写于 2025年02月11日</span>&nbsp;&nbsp;&nbsp;
                       
+                        <span class="meta">💡 更新于 2025年02月11日</span>
+                        
                     </div>
                   </div>
                 </div>
@@ -281,7 +311,7 @@
         </div>
         <script>
           var timeDom = document.getElementById('from_time');
-          var pageTime = Number('1470121974000');
+          var pageTime = Number('1739232000000');
           var currentTime = Date.now();
           var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
             0
@@ -291,62 +321,63 @@
           }
           timeDom.innerText = fromNow;
         </script>
-              <h2 id="本文由来">本文由来</h2>
-<p>研究了下 Vue 的响应式原理, 想记录下来, 顺便将 Vue 的响应式给实现一遍, 因此有了本文.</p>
-<h2 id="概述">概述</h2>
-<p><code>Vue</code> 响应式数据的初始化, 是在 <code>initState</code> 的 <code>initData</code> 中进行的, 通过 <code>observe</code> 函数观察 <code>vm</code> 对象的 <code>data</code> 属性, 然后设置 <code>getter</code> 和 <code>setter</code>属性;<br />
-因此起码需要三个函数: 设置属性 <code>getter</code> 和 <code>setter</code> 的观察者, 触发 <code>getter</code> 和 <code>setter</code> 的 <code>监听者</code>, 以及保存属性依赖的 <code>收集框</code>, 我分别命名为: <code>observe</code>, <code>watcher</code>, 和 <code>dep</code></p>
-<h2 id="流程">流程</h2>
-<p>首先是在 <code>observe</code> 中, 将 <code>data</code> 中的属性, 递归的加上 <code>getter</code> 和 <code>setter</code>; 之后, 在 <code>watcher</code> 其中的一个属性的时候, <code>watcher</code> 实例触发 <code>getter</code> 拦截器, 然后该属性的拦截器将 <code>watcher</code> 实例添加到该属性的闭包依赖收集器 <code>dep</code> 中, 同时将该闭包依赖收集器, 放入该 <code>watcher</code> 中;</p>
-<p>之后, 当修改上述的属性的时候, 触发 <code>observe</code> 中定义的 <code>setter</code> 拦截器, 此时 <code>dep</code> 中的 <code>watcher</code> 将开始工作, 执行该 <code>watcher</code> 的回调;</p>
-<h2 id="注意事项">注意事项</h2>
-<h3 id="如何保证触发-getter-的时候-依赖不重复收集">如何保证触发 <code>getter</code> 的时候, 依赖不重复收集?</h3>
-<p><code>watcher</code> 触发 <code>getter</code> 的时候, 会把当前属性的依赖收集器添加到 <code>watcher</code> 的 Set 数组中, 进行对比, 如果重复则不再添加:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js">addDep (dep) &#123;<br>  <span class="hljs-keyword">var</span> id = dep.<span class="hljs-property">id</span>;<br>  <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">depIds</span>.<span class="hljs-title function_">has</span>(id)) &#123; <span class="hljs-comment">// 一次求值时候的去重</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">deps</span>.<span class="hljs-title function_">push</span>(dep);<br>    dep.<span class="hljs-title function_">addSubs</span>(<span class="hljs-variable language_">this</span>); <span class="hljs-comment">// 再将 watcher 放到字段的 Dep 的实例 subs 中, 以供值变化的时候 执行 notity, 把 subs 中的 watcher 拉出来挨个执行一遍</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h3 id="如何在触发-setter-的时候执行回调">如何在触发 <code>setter</code> 的时候执行回调?</h3>
-<p>触发 <code>setter</code> 的时候, 会将该属性的中装有 <code>watcher</code> 的数组拉出来挨个执行一遍:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// setter</span><br>set (newVal) &#123;<br>  <span class="hljs-comment">// 先触发一次依赖, 在 watcher 中 维护一个 depId 去重</span><br>  <span class="hljs-keyword">if</span> (newVal === val) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;值相等, 未变化, 呵呵&#x27;</span>);<br>    <span class="hljs-keyword">return</span>;<br>  &#125;<br>  val = newVal;<br>  dep.<span class="hljs-title function_">notity</span>(); <span class="hljs-comment">// 触发 值 watcher 的  update 操作</span><br>&#125;<br><span class="hljs-comment">// dep.notity() 函数:</span><br>notity () &#123;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">subs</span>.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">watcher</span>) =&gt;</span> &#123;<br>    watcher.<span class="hljs-title function_">update</span>();<br>  &#125;);<br>&#125;,<br><span class="hljs-comment">// watcher.update() 函数:</span><br>update () &#123; <span class="hljs-comment">// 触发值变化的时候, 执行该函数进行求值及更新操作</span><br>  <span class="hljs-keyword">var</span> value = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">get</span>();<br>  <span class="hljs-keyword">if</span> (value !== <span class="hljs-variable language_">this</span>.<span class="hljs-property">value</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`恭喜你成功更新了该值, 当前 deps 为: <span class="hljs-subst">$&#123;<span class="hljs-variable language_">this</span>.deps&#125;</span>, depsId 为: <span class="hljs-subst">$&#123;<span class="hljs-variable language_">this</span>.depIds&#125;</span>, 旧值为: <span class="hljs-subst">$&#123;<span class="hljs-variable language_">this</span>.value&#125;</span>, 新值为: <span class="hljs-subst">$&#123;value&#125;</span>`</span>);<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">cb</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">key</span>);<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;两次相同, 无需更改&#x27;</span>);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="具体代码">具体代码:</h2>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> wId = <span class="hljs-number">0</span>; <span class="hljs-comment">// watcher 自增 id</span><br><span class="hljs-keyword">var</span> dId = <span class="hljs-number">0</span>; <span class="hljs-comment">// dep 自增 id</span><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">  <span class="hljs-doctag">@for</span> 为了观察 data 上的属性变化</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">observe</span>(<span class="hljs-params">data</span>) &#123;<br>  <span class="hljs-keyword">var</span> propertys = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(data);<br>  <span class="hljs-keyword">var</span> dep = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Dep</span>(); <span class="hljs-comment">// 闭包 Dep 外界不可访问, 实例的 subs 放着它的 watcher</span><br>  propertys.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">property</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">var</span> val = data[property];<br>    <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">defineProperty</span>(data, property, &#123;<br>      <span class="hljs-title function_">get</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-comment">// 添加依赖到 该属性的 闭包 dep 中</span><br>        dep.<span class="hljs-title function_">depend</span>();<br>        <span class="hljs-keyword">return</span> val;<br>      &#125;,<br>      <span class="hljs-title function_">set</span>(<span class="hljs-params">newVal</span>) &#123;<br>        <span class="hljs-comment">// 先触发一次依赖, 在 watcher 中 维护一个 depId 去重</span><br>        <span class="hljs-keyword">if</span> (newVal === val) &#123;<br>          <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;值相等, 未变化, 呵呵&#x27;</span>);<br>          <span class="hljs-keyword">return</span>;<br>        &#125;<br>        val = newVal;<br>        dep.<span class="hljs-title function_">notity</span>(); <span class="hljs-comment">// 触发 值 watcher 的  update 操作</span><br>      &#125;,<br>    &#125;);<br>  &#125;);<br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">  <span class="hljs-doctag">@for</span> 收集 data 的 key 字段变化时候的响应, 并执行</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Watcher</span>(<span class="hljs-params">data, key, cb</span>) &#123;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> = data;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">key</span> = key;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">cb</span> = cb;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">depIds</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>();<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">deps</span> = [];<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">value</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">get</span>(); <span class="hljs-comment">// 触发取值操作</span><br>&#125;<br><br><span class="hljs-title class_">Watcher</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = &#123;<br>  <span class="hljs-title function_">update</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">// 触发值变化的时候, 执行该函数进行求值及更新操作</span><br>    <span class="hljs-keyword">var</span> value = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">get</span>();<br>    <span class="hljs-keyword">if</span> (value !== <span class="hljs-variable language_">this</span>.<span class="hljs-property">value</span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<br>        <span class="hljs-string">`恭喜你成功更新了该值, 当前 deps 为: <span class="hljs-subst">$&#123;<span class="hljs-variable language_">this</span>.deps&#125;</span>, depsId 为: <span class="hljs-subst">$&#123;<span class="hljs-variable language_">this</span>.depIds&#125;</span>, 旧值为: <span class="hljs-subst">$&#123;<span class="hljs-variable language_">this</span>.value&#125;</span>, 新值为: <span class="hljs-subst">$&#123;value&#125;</span>`</span><br>      );<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">cb</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">key</span>);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;两次相同, 无需更改&#x27;</span>);<br>    &#125;<br>  &#125;,<br>  <span class="hljs-title function_">get</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">var</span> val;<br>    <span class="hljs-title function_">pushTarget</span>(<span class="hljs-variable language_">this</span>); <span class="hljs-comment">// 为了方便, 设置 Dep.target 为当前 watcher 实例, 用完即删</span><br>    val = <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>[<span class="hljs-variable language_">this</span>.<span class="hljs-property">key</span>]; <span class="hljs-comment">// 触发取值操作: 触发 observe 中的 getter =&gt; 触发 key 字段的 dep.depend() =&gt; 触发 watcher 的 addDep =&gt;</span><br>    <span class="hljs-title function_">popTarget</span>(); <span class="hljs-comment">// 用完弹出 后进先出</span><br>    <span class="hljs-keyword">return</span> val;<br>  &#125;,<br>  <span class="hljs-title function_">addDep</span>(<span class="hljs-params">dep</span>) &#123;<br>    <span class="hljs-keyword">var</span> id = dep.<span class="hljs-property">id</span>;<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">depIds</span>.<span class="hljs-title function_">has</span>(id)) &#123;<br>      <span class="hljs-comment">// 一次求值时候的去重</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">deps</span>.<span class="hljs-title function_">push</span>(dep);<br>      dep.<span class="hljs-title function_">addSubs</span>(<span class="hljs-variable language_">this</span>); <span class="hljs-comment">// 再将 watcher 放到字段的 Dep 的实例 subs 中, 以供值变化的时候 执行 notity, 把 subs 中的 watcher 拉出来挨个执行一遍</span><br>    &#125;<br>  &#125;,<br>&#125;;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">  <span class="hljs-doctag">@for</span> 收集 data 的 key 字段变化时候的响应, 并执行</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Dep</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">subs</span> = [];<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">id</span> = wId++;<br>&#125;<br><span class="hljs-title class_">Dep</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = &#123;<br>  <span class="hljs-title function_">depend</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-title class_">Dep</span>.<span class="hljs-property">target</span>.<span class="hljs-title function_">addDep</span>(<span class="hljs-variable language_">this</span>); <span class="hljs-comment">// 触发 get 取值的时候, 将当前 dep 实例添加到 watcher 中</span><br>  &#125;,<br>  <span class="hljs-title function_">notity</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">subs</span>.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">watcher</span>) =&gt;</span> &#123;<br>      watcher.<span class="hljs-title function_">update</span>();<br>    &#125;);<br>  &#125;,<br>  <span class="hljs-title function_">addSubs</span>(<span class="hljs-params">watcher</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">subs</span>.<span class="hljs-title function_">push</span>(watcher);<br>  &#125;,<br>&#125;;<br><br><span class="hljs-keyword">var</span> targetList = [];<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">pushTarget</span>(<span class="hljs-params">watcher</span>) &#123;<br>  <span class="hljs-title class_">Dep</span>.<span class="hljs-property">target</span> = watcher;<br>  targetList.<span class="hljs-title function_">push</span>(watcher);<br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">popTarget</span>(<span class="hljs-params"></span>) &#123;<br>  targetList.<span class="hljs-title function_">pop</span>();<br>  <span class="hljs-title class_">Dep</span>.<span class="hljs-property">target</span> = targetList[targetList.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>];<br>&#125;<br><br><span class="hljs-comment">// 执行 watcher</span><br><span class="hljs-keyword">var</span> a = &#123;<br>  <span class="hljs-attr">b</span>: <span class="hljs-string">&#x27;c&#x27;</span>,<br>&#125;;<br><span class="hljs-title function_">observe</span>(a);<br><span class="hljs-comment">// 这个 watcher 是用户自己写的 watch</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Watcher</span>(a, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">data, key</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;watcher 回调成功执行!&#x27;</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
-<h2 id="代码执行顺序示意图">代码执行顺序示意图:</h2>
-<p><img src="https://static.xheldon.cn/img/in-post/2016/vue-reactive.png" alt="示意图" title="效果示意" /></p>
+         
+        <div class="reference-tips">
+          🔗 &nbsp;原文：<a href="https://blog.imjp.uk/fxxk-xcode" target="_blank">
+            https://blog.imjp.uk/fxxk-xcode
+          </a>
+        </div>
+          
+        <div class="callout-tips">🖥 &nbsp;说明：本文图文并茂的介绍如何使用 Cursor 来开发 iOS 应用并实现实时预览效果。</div>
+          
+        <div class="craft-tips">
+          📚 &nbsp;本文同步发布在 Notion：<a
+            href="https://xheldon.notion.site/Cusor-iOS-197800e87a6180e59fe6e6fd71d50970?pvs=4"
+            target="_blank"
+          >
+            https://xheldon.notion.site/Cusor-iOS-197800e87a6180e59fe6e6fd71d50970?pvs=4
+          </a>
+        </div>
+         <p>本文是原作者的扩展版，原作者的原文见：</p>
+<p><a class='link-bookmark' href='https://blog.imjp.uk/fxxk-xcode' target='_blank'><span data-bookmark-img='https%3A%2F%2Fi.typlog.com%2Fitsukay%2F8270139839_251618.png%3Fx-oss-process%3Dstyle%2Fl?table=block&id=197800e8-7a61-80de-b547-c5f4e4d0015d&spaceId=1e3e7c05-fc11-4038-9f76-92db32b98824&width=500&userId=0bfcee52-05b1-4d38-bf9a-26223d36426c&cache=v2' data-bookmark-title='在'><img src='https%3A%2F%2Fi.typlog.com%2Fitsukay%2F8270139839_251618.png%3Fx-oss-process%3Dstyle%2Fl?table=block&id=197800e8-7a61-80de-b547-c5f4e4d0015d&spaceId=1e3e7c05-fc11-4038-9f76-92db32b98824&width=500&userId=0bfcee52-05b1-4d38-bf9a-26223d36426c&cache=v2'/></span><span><span> 在 Cursor 打造高效 iOS 开发环境： AI 编程 + 实时预览完整指南</span><span> 本文将会介绍如何正确的配置 Curosr/VSCode，以便于在其中进行 iOS 开发。设置完成后，你将可以： 在 Cursor/VSCode 中开发 iOS 应用，脱离臃肿缓慢的 Xcode，获得好心情好脾气 使用领先的 AI 编程功能，...</span><span> https://blog.imjp.uk/fxxk-xcode</span></span></a></p>
+<p>我在这里做个额外的补充是因为在我看这个教程的时候，有些地方因为完全不懂 XCode 和 iOS 开发，因此走了一些弯路，因此在此做个记录。</p>
+<blockquote style='border-color: ;color: '><p> 本文主要对原文做一个补充，请先查看原文。</p></blockquote>
+<h3 id="对「安装-swift-插件和-codelldb-插件。」的补充：">对「安装 Swift 插件和 CodeLLDB 插件。」的补充：</h3>
+<p>这里的写的 Swift 插件已经过时了，需要用最新的插件，插件市场搜索：**Swift Programming Language **即可。</p>
+<h3 id="对「设置热加载」第二步的补充：">对「<strong>设置热加载</strong>」第二步的补充：</h3>
+<blockquote style='border-color: ;color: '><p> 打开项目对应 Target 的设置 -> Build Settings -> 搜索 Other Linker Flags，分别添加 -Xlinker 和 -interposable。</p></blockquote>
+<p>这里注意要同时添加，即复制 <code>-Xlinker -interposable</code> 粘贴到下图中：</p>
+<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/use-cursor-develop-ios/197800e8-7a61-8012-b016-c6caf5e72435.webp' alt='' title=''></p>
+<h3 id="添加新文件后，会报-source-kit-找不到文件的问题">添加新文件后，会报 Source Kit 找不到文件的问题</h3>
+<p>得用 Xcode-Build-Server 重新运行一次原文中提到的命令：</p>
+<blockquote style='border-color: ;color: '><p> 然后在项目根目录下根据你的项目文件类型执行对应的命令 :</p></blockquote>
+<h3 id="调试-swiftui-的时候修改无法实时预览的问题：">调试 SwiftUI 的时候修改无法实时预览的问题：</h3>
+<p>部分 ViewModifier 添加/修改后确实无法实时更新，但是类似于 Text 中的 String 的修改，一般就没问题。我也不知道为什么。</p>
 
         <div class="text-danger">- EOF -</div>
         <div style="font-size: 12px; color: #ccc !important">
           本文最先发布在:
           <a
             style="color: #ccc"
-            href="https://www.xheldon.com/tech/vue-reactive.html"
-            title="Vue 响应式原理及实现"
+            href="https://www.xheldon.com/tech/use-cursor-develop-ios.html"
+            title="如何使用 Cusor 开发 iOS 应用并实时预览"
           >
-            Vue 响应式原理及实现 - Xheldon Blog
+            如何使用 Cusor 开发 iOS 应用并实时预览 - Xheldon Blog
           </a>
         </div>
         <hr style="visibility: hidden" />
 
         <ul class="pager">
-          
-          <li class="previous">
-            <a
-              href="/life/the-analysis-of-dream.html"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="梦的解析之小赵"
-            >
-              上一篇<br />
-              <span>梦的解析之小赵</span>
-            </a>
-          </li>
            
           <li class="next">
             <a
-              href="/tech/softerware-i-use-usually.html"
+              href="/tech/jekyll-2-hexo.html"
               data-toggle="tooltip"
               data-placement="top"
-              title="环境配置/常用软件汇总"
+              title="Jekyll 迁移到 Hexo 问题记录"
             >
               下一篇<br />
-              <span>环境配置/常用软件汇总</span>
+              <span>Jekyll 迁移到 Hexo 问题记录</span>
             </a>
           </li>
           
@@ -669,7 +700,7 @@
         data-category="Announcements"
         data-category-id="DIC_kwDOAweTLM4B_uhM"
         data-mapping="specific"
-        data-term="Vue 响应式原理及实现"
+        data-term="如何使用 Cusor 开发 iOS 应用并实时预览"
         data-strict="0"
         data-reactions-enabled="1"
         data-emit-metadata="0"
