@@ -810,16 +810,18 @@
   </ul>
 </ul>
 
-          <p class="copyright text-muted">
-            Copyright &copy;
-            <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
-            2025
-              <br>
-              Don't Panic | Theme fork from
-              <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank">Hux</a>
-              <br>
-              
-          </p>
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2025
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
       </div>
     </div>
   </div>
@@ -882,184 +884,180 @@
 <!-- Custom Theme JavaScript -->
 <script src="/js/xblog.min.js?202405251426"></script>
 
-
 <!-- Simple Jekyll Search 复制逻辑 -->
-<script defer src='/js/simple-jekyll-search.min.js'></script>
+<script defer src="/js/simple-jekyll-search.min.js"></script>
 
-<!-- Vercel web analysis -->
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
 
-  <script defer src="/_vercel/insights/script.js"></script>
-  
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
 
-    <!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
 
-    <!-- async load function -->
-    <script>
-      function async(u, c) {
-        var d = document,
-          t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-        o.src = u;
-        if (c) {
-          o.addEventListener(
-            'load',
-            function (e) {
-              c(null, e);
-            },
-            false
-          );
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-79359216-1');
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
         }
-        s.parentNode.insertBefore(o, s);
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
       }
-    </script>
+    });
+  });
+</script>
 
-    <!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
-
-    <!-- jquery.tagcloud.js -->
-    
-
-        <!--fastClick.js -->
-        <script>
-          async('/js/fastclick.min.js', function () {
-            var $nav = document.querySelector('nav');
-            if ($nav) FastClick.attach($nav);
-          });
-        </script>
-
-        <!-- Google Analytics -->
-        
-          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"></script>
-          <script>
-            window.dataLayer = window.dataLayer || [];
-
-            function gtag() {
-              dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
-
-            gtag('config', 'UA-79359216-1');
-          </script>
-          
-
-            <!-- Side Catalog -->
-            
-              <script type="text/javascript">
-                function generateCatalog(selector) {
-                  // TODO: 多语种没有迁移过来
-                  // init
-                  var P = $('div.post-container'),
-                    a,
-                    n,
-                    t,
-                    l,
-                    i,
-                    c;
-                  a = P.find('h1,h2,h3,h4,h5,h6');
-
-                  // clean
-                  $(selector).html('');
-
-                  // appending
-                  a.each(function () {
-                    n = $(this).prop('tagName').toLowerCase();
-                    i = '#' + $(this).prop('id');
-                    t = $(this).text();
-                    c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
-                    l = $('<li class="' + n + '_nav"></li>').append(c);
-                    $(selector).append(l);
-                  });
-                  return true;
-                }
-
-                generateCatalog('.catalog-body');
-
-                // toggle side catalog
-                $('.catalog-toggle').click(function (e) {
-                  e.preventDefault();
-                  $('.side-catalog').toggleClass('fold');
-                });
-
-                /*
-                 * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-                 * Fork by Hux to support padding
-                 */
-                async('/js/jquery.nav.js',
-                  function () {
-                    $('.catalog-body').onePageNav({
-                      currentClass: 'active',
-                      changeHash: !1,
-                      easing: 'swing',
-                      filter: '',
-                      scrollSpeed: 700,
-                      scrollOffset: 0,
-                      scrollThreshold: 0.2,
-                      begin: null,
-                      end: null,
-                      scrollChange: null,
-                      padding: 80,
-                    });
-                  }
-                );
-              </script>
-              
-
-                <script>
-                  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
-                  function htmlDecode(input) {
-                    var e = document.createElement('textarea');
-                    e.innerHTML = input;
-                    // handle case of empty input
-                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-                  }
-
-
-                  $(document).ready(function () {
-                    SimpleJekyllSearch({
-                      searchInput: document.getElementById('search-input'),
-                      resultsContainer: document.getElementById('search-results'),
-                      json: '/search.json',
-                      searchResultTemplate: '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
-                      noResultsText: 'No results',
-                      limit: 50,
-                      fuzzy: false,
-                      // a hack to get escaped subtitle unescaped. for some reason, 
-                      // post.subtitle w/o escape filter nuke entire search.
-                      templateMiddleware: function (prop, value, template) {
-                        if (prop === 'subtitle' || prop === 'title') {
-                          if (value.indexOf("code")) {
-                            return htmlDecode(value);
-                          } else {
-                            return value;
-                          }
-                        }
-                      }
-                    });
-                    var $searchPage = $('.search-page');
-                    var $searchOpen = $('.search-icon');
-                    var $searchClose = $('.search-icon-close');
-                    var $searchInput = $('#search-input');
-                    var $body = $('body');
-
-                    $searchOpen.on('click', function (e) {
-                      e.preventDefault();
-                      $searchPage.toggleClass('search-active');
-                      var prevClasses = $body.attr('class') || '';
-                      setTimeout(function () {
-                        $body.addClass('no-scroll');
-                      }, 400)
-
-                      if ($searchPage.hasClass('search-active')) {
-                        $searchClose.on('click', function (e) {
-                          e.preventDefault();
-                          $searchPage.removeClass('search-active');
-                          $body.attr('class', prevClasses); // from closure 
-                        });
-                        $searchInput.focus();
-                      }
-                    });
-                  });
-                </script>
 
     <!-- Image to hack wechat -->
     <img src="/img/icon_wechat.png" width="0" height="0" />
