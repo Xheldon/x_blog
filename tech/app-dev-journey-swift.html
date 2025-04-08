@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      App 开发之旅（一）：*摩诃不思议的 *Swift - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="本系列是本人作为 Web 前端学习苹果应用开发过程中的一些记录。">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="App 开发之旅（一）：*摩诃不思议的 *Swift - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2025-3-27T12:00:00"> 
+              
+                  
+                    <meta property="article:tag" content="Apple">
+                    
+                    <meta property="article:tag" content="苹果">
+                    
+                    <meta property="article:tag" content="初体验">
+                    
+                    <meta property="article:tag" content="教程">
+                    
+                    <meta property="article:tag" content="技巧">
+                    
+                    <meta property="article:tag" content="技术">
+                    
+                    <meta property="article:tag" content="Swift">
+                    
+                    <meta property="article:tag" content="全栈">
+                    
+                      
+                          
+                            <meta name="og:description" content="本系列是本人作为 Web 前端学习苹果应用开发过程中的一些记录。">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.cn/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.cn/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.cn/tech/app-dev-journey-swift.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.cn/tech/app-dev-journey-swift.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/">主页</a>
+            </li>
+            <li>
+              <a href="/about/">关于</a>
+            </li>
+            <li>
+              <a href="/donate/">赞助</a>
+            </li>
+            <li>
+              <a href="/archive/">归档</a>
+            </li>
+            <li>
+              <a href="/feed.xml">RSS</a>
+            </li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                          <a class="tag" href="/archive/?tag=Apple"
+                            title="Apple">
+                            Apple
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                            title="苹果">
+                            苹果
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                            title="初体验">
+                            初体验
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%95%99%E7%A8%8B"
+                            title="教程">
+                            教程
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E5%B7%A7"
+                            title="技巧">
+                            技巧
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技术">
+                            技术
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=Swift"
+                            title="Swift">
+                            Swift
+                          </a>
+                          
+                          <a class="tag" href="/archive/?tag=%E5%85%A8%E6%A0%88"
+                            title="全栈">
+                            全栈
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        App 开发之旅（一）：*摩诃不思议的 *Swift
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 写于 2025年03月27日</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 更新于 2025年04月08日</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;注意：离本文创建时间已经过去了
+          <code id="from_time"></code> 天，请注意时效性
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1743033600000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+           
+        <div class="callout-tips">🖥 &nbsp;说明：本系列是本人作为 Web 前端学习苹果应用开发过程中的一些记录。</div>
+          
+        <div class="craft-tips">
+          📚 &nbsp;本文同步发布在 Notion：<a
+            href="https://xheldon.notion.site/App-Swift-1c3800e87a6180a0b1dcdc00491c3a7c"
+            target="_blank"
+          >
+            https://xheldon.notion.site/App-Swift-1c3800e87a6180a0b1dcdc00491c3a7c
+          </a>
+        </div>
+         <h2 id="说明">说明</h2>
+<blockquote style='border-color: ;color: '><p> 有人问为什么不是 JavaScript，因为它是脚本语言，没有类型系统等，完全没法儿跟 Swift 比较。</p></blockquote>
+<p>本人前端开发，对 C、Java、Python 语言仅限入门了解水平，而对 TypeScript（以下简称 TS） 的特性和使用达到了高级水平（自认），因此有些让我震惊的点，可能在各位眼中感觉「只不过是平平无奇的语言特性罢了」，亦或者「莫非设计 TypeScript 的人是天才？」。</p>
+<p>本人不一定会对所有 Swift 中与 TS 有差异的地方强行震惊，因为有些 Swift 跟 TS 的差异是因为 TS 的自身不足，且有些设计在计算机语言中司空见惯（如数字区分 Int 和 Double 而不是只有一种 Number 类型），只是 JS 的设计让人震惊（毕竟是一周内赶工设计出来的），而不是 Swift。</p>
+<blockquote style='border-color: ;color: '><p> 本人认为：如果一个语言规则太多、特例太多、保留字太多，那就不是一门好语言。</p></blockquote>
+<h2 id="前言">前言</h2>
+<p>本文按照 Swift 官方语言介绍的顺序进行有序震惊，省略了不震惊或者不懂的的内容，如 <code>附加宏</code>。</p>
+<h2 id="基础知识">基础知识</h2>
+<h3 id="注释">注释</h3>
+<blockquote style='border-color: ;color: '><p> 震惊点：XCode 没有 `/** */` 块注释，只有 `cmd + /` 的行注释。</p></blockquote>
+<p>VSCode 的块注释快捷键也比较难按，是 <code>Alt + Shift + A</code> ，难道大家都不常用这个功能？</p>
+<h3 id="可选绑定">可选绑定</h3>
+<blockquote style='border-color: ;color: '><p> 震惊点：我调试的时候想在 `if` 写一个始终为 `true` 的值测试用都不行，`if` 语句的可选绑定，必须是一个可选类型的值。</p></blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> a <span class="hljs-operator">=</span> <span class="hljs-number">2</span> &#123; &#125; <span class="hljs-comment">// 错误！</span><br></code></pre></td></tr></table></figure>
+<p>有必要这样？</p>
+<h2 id="集合类型">集合类型</h2>
+<blockquote style='border-color: ;color: '><p> 震惊点：数组方法中，有个 `sort` 表示原地排序，还有一个 `sorted` 返回新数组。</p></blockquote>
+<p>一个语言，干了框架干的活儿，很好，很符合苹果的风格，诸如此类的还有很多，就不一一震惊了。</p>
+<h2 id="控制流">控制流</h2>
+<h3 id="if-表达式">if 表达式</h3>
+<blockquote style='border-color: ;color: '><p> 震惊点：为了解决 `if-else` 给同一个变量赋值的情况，它提供了 `if` 表达式的写法，同理，`switch` 也有类似的表达式形式。</p></blockquote>
+<p>Swift 还是做的太多了：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// 平平无奇的写法</span><br><span class="hljs-keyword">let</span> a <span class="hljs-operator">=</span> <span class="hljs-number">25</span><br><span class="hljs-keyword">let</span> str: <span class="hljs-type">String</span><br><span class="hljs-keyword">if</span> a <span class="hljs-operator">&lt;=</span> <span class="hljs-number">0</span> &#123;<br>    str <span class="hljs-operator">=</span> <span class="hljs-string">&quot;小&quot;</span><br>&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> a <span class="hljs-operator">&gt;=</span> <span class="hljs-number">30</span> &#123;<br>    str <span class="hljs-operator">=</span> <span class="hljs-string">&quot;大&quot;</span><br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    str <span class="hljs-operator">=</span> <span class="hljs-string">&quot;中&quot;</span><br>&#125;<br><span class="hljs-comment">// 简写法</span><br><span class="hljs-keyword">let</span> str <span class="hljs-operator">=</span> <span class="hljs-keyword">if</span> a <span class="hljs-operator">&lt;=</span> <span class="hljs-number">0</span> &#123;<br>  <span class="hljs-string">&quot;小&quot;</span><br>&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> a <span class="hljs-operator">&gt;=</span> <span class="hljs-number">30</span> &#123;<br>  <span class="hljs-string">&quot;大&quot;</span><br>&#125; <span class="hljs-keyword">else</span> &#123;<br>  <span class="hljs-string">&quot;中&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="switch-的牛逼判断">Switch 的牛逼判断</h3>
+<blockquote style='border-color: ;color: '><p> 震惊点：switch 没有隐式贯穿</p></blockquote>
+<p>不过这倒可以理解而且更合理，正常人谁没事儿希望 case 1 如果不额外 <code>break</code> 会自动跑到 case 2 中去啊？</p>
+<blockquote style='border-color: ;color: '><p> 震惊点：switch 可以判断对象值！</p></blockquote>
+<p>这其实算是 <code>feature</code>，而且直觉上更合理，简直内行。</p>
+<p>在 TS 中，因为 <code>switch</code> 的 <code>case</code> 语句使用的是全等(===)判断，因此你的 <code>switch</code> 的括号内一般不会传入一个对象，因为对象判断的是引用，而在 TS 中很少有需要判断对象相等的情况，更别提使用 <code>switch</code> 语句来判断了。</p>
+<p>但是在 Swift 中，你可以在 <code>case</code> 语句中「捕获」判定的值（正式称呼为「模式」）：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">let</span> somePoint <span class="hljs-operator">=</span> (<span class="hljs-number">1</span>, <span class="hljs-number">1</span>) <span class="hljs-comment">// 一个平平无奇的元组罢了</span><br><span class="hljs-comment">// 我现在，开 始 判 断：</span><br><span class="hljs-keyword">switch</span> somePoint &#123;<br><span class="hljs-keyword">case</span> (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;<span class="hljs-subst">\(somePoint)</span> 在原点&quot;</span>)<br><span class="hljs-keyword">case</span> (<span class="hljs-keyword">_</span>, <span class="hljs-number">0</span>): <span class="hljs-comment">// 忽略第一个值</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;<span class="hljs-subst">\(somePoint)</span> 在 x 轴&quot;</span>)<br><span class="hljs-keyword">case</span> (<span class="hljs-number">0</span>, <span class="hljs-keyword">_</span>): <span class="hljs-comment">// 忽略第二个值</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;<span class="hljs-subst">\(somePoint)</span> 在 y 轴&quot;</span>)<br><span class="hljs-keyword">case</span> (<span class="hljs-operator">-</span><span class="hljs-number">2</span><span class="hljs-operator">...</span><span class="hljs-number">2</span>, <span class="hljs-operator">-</span><span class="hljs-number">2</span><span class="hljs-operator">...</span><span class="hljs-number">2</span>): <span class="hljs-comment">// 判断元组的两个值是否分别在给定区间，在就匹配成功</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;<span class="hljs-subst">\(somePoint)</span> 在盒子内部&quot;</span>)<br><span class="hljs-keyword">default</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;<span class="hljs-subst">\(somePoint)</span> 在盒子外部&quot;</span>)<br>&#125;<br><br><span class="hljs-comment">// 还可以值绑定！</span><br><span class="hljs-keyword">switch</span> somePoint &#123;<br><span class="hljs-keyword">case</span> (<span class="hljs-keyword">let</span> x, <span class="hljs-number">0</span>): <span class="hljs-comment">// 匹配第二个值，捕获第一个值</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;x轴值：<span class="hljs-subst">\(x)</span>&quot;</span>)<br><span class="hljs-keyword">case</span> (<span class="hljs-number">0</span>, <span class="hljs-keyword">let</span> y): <span class="hljs-comment">// 匹配第一个值，捕获第二个值</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;y 轴值：<span class="hljs-subst">\(y)</span>&quot;</span>)<br><span class="hljs-keyword">case</span> (<span class="hljs-keyword">let</span> x, <span class="hljs-keyword">let</span> y): <span class="hljs-comment">// 兜底，因为 x 和 y 都是 let，还可以写作 case let (x, y)</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;<span class="hljs-subst">\(x)</span> 和 <span class="hljs-subst">\(y)</span>&quot;</span>)<br>&#125;<br><span class="hljs-comment">// 还可以加 where 限定：</span><br><span class="hljs-keyword">case</span> <span class="hljs-keyword">let</span> (x, y) <span class="hljs-keyword">where</span> x <span class="hljs-operator">==</span> y:<br><span class="hljs-comment">//还可以多个匹配</span><br><span class="hljs-keyword">case</span> <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>:<br></code></pre></td></tr></table></figure>
+<p>需要注意的是，在 TS 中也支持「多个匹配」但跟 Swift 中的 case 多个匹配完全不同。</p>
+<p>Swift 中的多个匹配，逗号分割的内容只要有一个匹配，就会执行 case 语句，但是 TS 的逗号分割的匹配，它的本质是只匹配最后一个项，因为 TS 中的逗号分割的语句只返回最后一个值：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">var</span> a = <span class="hljs-string">&quot;d&quot;</span><br><span class="hljs-keyword">switch</span> (a) &#123;<br> <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;d&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>:<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;OK&quot;</span>)<span class="hljs-comment">// 此处不会执行，因为此 case 匹配 &quot;b&quot; </span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="函数">函数</h2>
+<h3 id="函数的标签参数">函数的标签参数</h3>
+<blockquote style='border-color: ;color: '><p> 震惊点：形参（标签参数）可以同名？？？而且规定（限制又来了，服了）：可变参数的后面的参数必须有参数标签（如果只有一个那么实参就是形参）不能省略。</p></blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// 下面两个 a 标签参数，完全合法（因为是 label 无所谓）</span><br><span class="hljs-comment">// 而且 a b 后面的参数 a c（或者单独的一个参数）必须存在，不能用 _ 省略，</span><br><span class="hljs-comment">//  也可以理解，要不咋知道是第二个参数，而不是前面的可变参数来的？</span><br><span class="hljs-keyword">func</span> <span class="hljs-title function_">a</span> (<span class="hljs-params">a</span> <span class="hljs-params">b</span>: <span class="hljs-type">Double</span>..., <span class="hljs-params">a</span> <span class="hljs-params">c</span>: <span class="hljs-type">Double</span>) -&gt; <span class="hljs-type">Double</span> &#123;<br>    <span class="hljs-keyword">return</span> b.reduce(<span class="hljs-number">0</span>, <span class="hljs-operator">+</span>) <span class="hljs-operator">+</span> c<br>&#125;<br>a(a: <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, a: <span class="hljs-number">6</span>)<br></code></pre></td></tr></table></figure>
+<h2 id="闭包">闭包</h2>
+<h3 id="闭包的n中简写形式">闭包的N中简写形式</h3>
+<blockquote style='border-color: ;color: '><p> 震惊点：闭包的语法糖太多这里就不一一列举，最离谱的是只需要一个 `>` 符号的形式。</p></blockquote>
+<p>可以这么写的本质是 String 有一个叫做 <code>&gt;</code>  的函数，是的你没有看错，符号也可以是函数！这一点下面再震惊。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">var</span> num <span class="hljs-operator">=</span> [<span class="hljs-string">&quot;9&quot;</span>, <span class="hljs-string">&quot;2&quot;</span>, <span class="hljs-string">&quot;1&quot;</span>]<br><span class="hljs-keyword">var</span> sortedNum <span class="hljs-operator">=</span> num.sroted(by: <span class="hljs-operator">&gt;</span>)<br></code></pre></td></tr></table></figure>
+<p>真的离谱。</p>
+<h3 id="省略-return-的返回">省略 return 的返回</h3>
+<blockquote style='border-color: ;color: '><p> 震惊点：也许你可以理解「单行返回可以省略 return」 ，但是你绝对无法理解「多行也可以省略 return」</p></blockquote>
+<p>TS 中的省略 return 的语句，跟 Swift 普通的写法一样，单行省略 return：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// 省略写法</span><br><span class="hljs-keyword">var</span> <span class="hljs-title function_">a</span> = (<span class="hljs-params"></span>) =&gt; <span class="hljs-number">2</span><br><span class="hljs-comment">// 正常写法是：</span><br><span class="hljs-keyword">var</span> <span class="hljs-title function_">a</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br> <span class="hljs-keyword">return</span> <span class="hljs-number">2</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>普通的 Swift 语法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">func</span> <span class="hljs-title function_">a</span>()-&gt; <span class="hljs-type">Int</span> &#123;<br> <span class="hljs-number">2</span> <span class="hljs-comment">// -&gt; 因为单行，所以省略了 return</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>但是！SwiftUI 中的写法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-type">VStack</span> &#123;<br> <span class="hljs-type">Text</span>(<span class="hljs-string">&quot;Hello&quot;</span>)<br> <span class="hljs-type">Text</span>(<span class="hljs-string">&quot;World&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>你没看错，这也是一个尾随闭包函数，其中 <code>VStack</code> 是一个函数，闭包参数作为最后且唯一的参数，可以省略 <code>VStack</code> 的括号，但是！它返回了两个 <code>Text</code> 函数调用，却没有写 <code>return</code>，为什么？</p>
+<p>因为它用了 <code>ViewBuilder</code>，这个东西跟后面的 <code>resultBuilder</code> 一样的语法糖。</p>
+<h3 id="自动闭包">自动闭包</h3>
+<blockquote style='border-color: ;color: '><p> 震惊点：本来一个平平无奇的闭包赋值没有什么，但是它的延迟计算能力让我不得不为之震惊。</p></blockquote>
+<p>刚看自动闭包的时候，是拿这个例子介绍的，说什么「延迟计算」能力：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">var</span> customersInLine <span class="hljs-operator">=</span> [<span class="hljs-string">&quot;Chris&quot;</span>, <span class="hljs-string">&quot;Alex&quot;</span>, <span class="hljs-string">&quot;Ewa&quot;</span>, <span class="hljs-string">&quot;Barry&quot;</span>, <span class="hljs-string">&quot;Daniella&quot;</span>]<br><span class="hljs-built_in">print</span>(customersInLine.count)<br><span class="hljs-comment">// 打印 “5”</span><br><span class="hljs-keyword">let</span> customerProvider <span class="hljs-operator">=</span> &#123; customersInLine.remove(at: <span class="hljs-number">0</span>) &#125;<br><span class="hljs-built_in">print</span>(customersInLine.count)<br><span class="hljs-comment">// 打印 ”5“</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Now serving <span class="hljs-subst">\(customerProvider())</span>!&quot;</span>)<br><span class="hljs-comment">// 打印 “Now serving Chris!”</span><br><span class="hljs-built_in">print</span>(customersInLine.count)<br><span class="hljs-comment">// 打印 “4”</span><br></code></pre></td></tr></table></figure>
+<p>我寻思这不就是一个平平无奇的闭包，跟 TS 一样只是 customerProvider 变量被赋值给了闭包而已，相同实现在 TS 中是这样的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> <span class="hljs-title function_">customerProvider</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br> <span class="hljs-comment">// 省略逻辑</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后当然是在它调用的时候才会执行闭包的逻辑，这算什么延迟计算！</p>
+<p>但是，它的延迟计算形式在闭包作为参数的时候才是真牛逼：</p>
+<p>平平无奇的显式闭包调用，跟 TS 调用方式基本类似，闭包作为参数，写法还是写在一个大括号中：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// customersInLine 是 [&quot;Alex&quot;, &quot;Ewa&quot;, &quot;Barry&quot;, &quot;Daniella&quot;]</span><br><span class="hljs-keyword">func</span> <span class="hljs-title function_">serve</span>(<span class="hljs-params">customer</span> <span class="hljs-params">customerProvider</span>: () -&gt; <span class="hljs-type">String</span>) &#123;<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Now serving <span class="hljs-subst">\(customerProvider())</span>!&quot;</span>)<br>&#125;<br>serve(customer: &#123; customersInLine.remove(at: <span class="hljs-number">0</span>) &#125; )<br><span class="hljs-comment">// 打印 “Now serving Alex!”</span><br></code></pre></td></tr></table></figure>
+<p>但是一旦把 <code>customerProvider</code> 标记为 <code>@autoclosuer</code> 情况就不一样了，此时你的 <code>serve</code> 函数调用可以这么写：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// customersInLine 是 [&quot;Ewa&quot;, &quot;Barry&quot;, &quot;Daniella&quot;]</span><br><span class="hljs-keyword">func</span> <span class="hljs-title function_">serve</span>(<span class="hljs-params">customer</span> <span class="hljs-params">customerProvider</span>: <span class="hljs-keyword">@autoclosure</span> () -&gt; <span class="hljs-type">String</span>) &#123;<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Now serving <span class="hljs-subst">\(customerProvider())</span>!&quot;</span>)<br>&#125;<br>serve(customer: customersInLine.remove(at: <span class="hljs-number">0</span>))<br><span class="hljs-comment">// 打印 “Now serving Ewa!”</span><br></code></pre></td></tr></table></figure>
+<p>注意最后的 <code>serve</code> 函数的调用，它的参数 customer 是一个语句 <code>customersInLine.remove(at: 0)</code> ，在 TS 中，无论什么情况，调用栈都会先求这个值然后再调用 serve 函数。但在 Swift 中，这种写法跟上面的形式仅仅是形式不同，逻辑是一样的，也就是说会先执行 <code>serve</code> 函数，然后再去内部执行这个语句（当 <code>customerProvider</code> 调用的时候）。这才是传说中的，<code>延迟计算</code>吧。</p>
+<p>这种情况如果你写多了，会遇到很多诸如下面的代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs swift">a(b.remove(<span class="hljs-number">2</span>))<br>c(d.add4())<br></code></pre></td></tr></table></figure>
+<p>此时你难以区分，是先执行括号内的语句，还是外层的函数。因此，Swift 官方文档也做了说明：</p>
+<blockquote style='border-color: ;color: '><p> 过度使用自动闭包可能会使您的代码难以理解。上下文和函数名称应明确表示计算正在被推迟。</p></blockquote>
+<p>真的离谱，既然不推荐，就不要设计出来啊喂！</p>
+<h2 id="枚举">枚举</h2>
+<blockquote style='border-color: ;color: '><p> 震惊点: 枚举在其他语言只是为了方便的一种可有可无的用来状态机判断的类型，但是在 Swift 中却是最常用的一等类型，可以在一定功能上取代 Struct 你敢信？</p></blockquote>
+<blockquote style='border-color: ;color: '><p> 震惊点2： 枚举是值类型。</p></blockquote>
+<p>枚举在 TS 就是一个平平无奇的「枚举」罢了，仅仅是把值给列出来，大多数用来在状态机中描述状态：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">enum</span> A &#123;<br> B = <span class="hljs-string">&quot;B&quot;</span><br> C = <span class="hljs-string">&quot;c&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>当然，TS 整的花活，在运行时、编译时的一些差异就不说了。在 TS 中，你完全可以使用一个对象来代替枚举：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">const</span> <span class="hljs-keyword">enum</span> A &#123;<br>  B = <span class="hljs-number">0</span>,<br>  C = <span class="hljs-number">1</span>,<br>&#125;<br><br><span class="hljs-keyword">const</span> A = &#123;<br>  <span class="hljs-attr">B</span>: <span class="hljs-number">0</span>,<br>  <span class="hljs-attr">C</span>: <span class="hljs-number">1</span>,<br>&#125; <span class="hljs-keyword">as</span> <span class="hljs-keyword">const</span>;<br></code></pre></td></tr></table></figure>
+<h3 id="关联值">关联值</h3>
+<blockquote style='border-color: ;color: '><p> 震惊点: Swift 你这么设计枚举，是要 干！什！么！</p></blockquote>
+<p>在 Swift 中，枚举的重要性是第一位的，你可以遍历它的所有 case（需要遵循 <code>CaseIterable</code> 协议）、可以将 case 视作一个函数，然后在调用的时候传值，以让枚举实例处理，此谓之「关联值」：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">enum</span> <span class="hljs-title class_">A</span> &#123;<br> <span class="hljs-keyword">case</span> b(<span class="hljs-type">Int</span>, <span class="hljs-type">Int</span>) <span class="hljs-comment">// 声明方式好像一个协议（也就是抽象类）</span><br> <span class="hljs-keyword">case</span> c(<span class="hljs-type">String</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后在用的时候可以传值：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = A.<span class="hljs-title function_">b</span>(<span class="hljs-number">1024</span>, <span class="hljs-number">9527</span>)<br></code></pre></td></tr></table></figure>
+<p>枚举最常用的就是在 switch 语句中，结合震惊的 switch 同样震惊的 case，你可以这么做：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">switch</span> a &#123;<br><span class="hljs-keyword">case</span> .<span class="hljs-title function_">b</span>(<span class="hljs-keyword">let</span> d, <span class="hljs-keyword">let</span> f):<br> <span class="hljs-title function_">print</span>(<span class="hljs-string">&quot;A.b 关联值为:\(d) 和 \(f)&quot;</span>)<br><span class="hljs-keyword">case</span> <span class="hljs-keyword">let</span> .<span class="hljs-title function_">c</span>(g): <span class="hljs-comment">// 上面提到的另一种 switch case 写法</span><br> <span class="hljs-title function_">print</span>(<span class="hljs-string">&quot;A.c:\(g)&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>第一次看反正我是觉得挺抽象的，也想不明白有什么实际使用场景（毕竟我没这么干过）。</p>
+<h3 id="隐式赋值">隐式赋值</h3>
+<blockquote style='border-color: ;color: '><p> 震惊点: 枚举的类型声明，声明的不是枚举本身的类型（键值对），而是 case 的类型。</p></blockquote>
+<p>Swift 中的隐式赋值，倒是跟 TS 中或者其他类 C 语言的一致，都是第一个数字是 n，后面的就是 n + 1。</p>
+<p>但 Swift 更近一步的，它会根据你声明的类型才隐式赋值，默认是不会的，比如：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">enum</span> <span class="hljs-title class_">A</span>: <span class="hljs-title class_">Int</span> &#123; <span class="hljs-comment">// &lt;- 声明了 Int 类型，所以隐式赋值了</span><br> <span class="hljs-keyword">case</span> b, c, d <span class="hljs-comment">// b c d 分别为 0 1 2(需要使用 A.b.rawValue 才能访问，这又是另一个震惊点了）</span><br>&#125;<br><span class="hljs-keyword">enum</span> <span class="hljs-title class_">B</span>: <span class="hljs-title class_">String</span> &#123; <span class="hljs-comment">// &lt;- 声明了 String 类型，所以隐式赋值了</span><br> <span class="hljs-keyword">case</span> bb, cc, dd <span class="hljs-comment">// bb cc dd分别为 &quot;bb&quot; &quot;cc&quot; &quot;dd&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>TS 中，你甚至不能指定 Swift 中指定的那个 Int 类型（这个类型其实指的是 case 的类型），而只能指定 enum 的类型（一般是 <code>Record</code> 别处的键值对）。</p>
+<h2 id="结构体和类">结构体和类</h2>
+<blockquote style='border-color: ;color: '><p> 震惊点：结构体居然是值类型？？？</p></blockquote>
+<p>这个浓眉大眼的结构体，居然是值类型（使用了 <code>Immutable</code> 的那一套东西来优化性能）：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">a</span> &#123;<br> <span class="hljs-keyword">var</span> b: <span class="hljs-type">Int</span><br> <span class="hljs-keyword">var</span> c: <span class="hljs-type">String</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>带着花括号的东西，怎么看也不像值啊！离谱！震惊！</p>
+<h2 id="属性">属性</h2>
+<h3 id="各种xx属性-包装器-观察器">各种xx属性/包装器/观察器</h3>
+<blockquote style='border-color: ;color: '><p> 震惊点：Swift 做的太多了，类似于计算属性、存储属性、属性包装器（TS 也有）、属性观察器（TS 也有，跟包装器一起的）这类概念，一般都是框架带的，比如 Vue 的 `computed` 、`watch` 等，Swift 自己在 Struct 和 类中实现了，离谱！</p></blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">A</span> &#123;<br> <span class="hljs-keyword">var</span> b <span class="hljs-operator">=</span> <span class="hljs-number">2</span> <span class="hljs-comment">// &lt;- 存储属性，直接有值，在 struct 实例化的时候就确定了</span><br> <span class="hljs-keyword">var</span> c: <span class="hljs-type">Int</span> &#123;<br>  <span class="hljs-keyword">return</span> b <span class="hljs-operator">*</span> <span class="hljs-number">2</span> <span class="hljs-comment">// &lt;- 一个只读计算属性，不存储值，因为单行，return 可以省略</span><br> &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>另：属性包装器对全局变量不可用。</p>
+<h2 id="下标">下标</h2>
+<blockquote style='border-color: ;color: '><p> 震惊点: 这个没什么好说的，有「下标」这个概念本身就已经让人震惊了，它提供了一种访问集合、列表、字典元素的快捷方式。甚至，下标可以传多个值，就像函数一样。</p></blockquote>
+<p>基本上，下标的调用方式可以认为是对数据结构（上述的集合、列表、字典）的函数调用来访问值，不同的是函数调用使用 <code>()</code> ，而下标使用 <code>[]</code> 。</p>
+<h2 id="继承">继承</h2>
+<blockquote style='border-color: ;color: '><p> 震惊点: 跟之前所有的震惊点都类似，Swift 为了实现各种目的、效果，似乎很随意的添加各种关键字，因此与继承相关的保留字（当然，也不能叫「保留字」，因为 Swift 中保留字都可以拿来用，使用反引号包裹即可，下面再震惊）多不胜数。如: `final`、`override`、`open`、`required`，等等。</p></blockquote>
+<h2 id="构造过程">构造过程</h2>
+<h3 id="struct-的逐一成员构造器">Struct 的逐一成员构造器</h3>
+<blockquote style='border-color: ;color: '><p> 震惊点: 因为 Struct 是值类型，所以它跟传统意义的 Class 的构造器规则在初始化的时候有所差异。</p></blockquote>
+<p>本来，Struct 和 Class 一样，都是一种平平无常的数据结构，和 TS 中的 Class 没什么不同。但是，Swift 在这里又整出幺蛾子。</p>
+<p>因为 Struct 是值类型，因此特殊一点，它有一个叫做「成员逐一构造器」的构造器形式，就是说当一个 Struct 没有任何 <code>init</code> 的时候，它就可以通过传入参数的形式来 init 它的属性，而不用显式写出来。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// 此 Struct 没有 init，因此适用逐一成员构造器</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">A</span> &#123; <br> <span class="hljs-keyword">var</span> a: <span class="hljs-type">Int</span><br> <span class="hljs-keyword">var</span> b: <span class="hljs-type">Int</span><br>&#125;<br><span class="hljs-comment">// 上述效果等同于：</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">A</span> &#123;<br> <span class="hljs-keyword">var</span> a: <span class="hljs-type">Int</span><br> <span class="hljs-keyword">var</span> b: <span class="hljs-type">Int</span><br> <span class="hljs-keyword">init</span>(<span class="hljs-params">a</span>: <span class="hljs-type">Int</span>, <span class="hljs-params">b</span>: <span class="hljs-type">Int</span>) &#123;<br>  <span class="hljs-keyword">self</span>.a <span class="hljs-operator">=</span> a<br>  <span class="hljs-keyword">self</span>.b <span class="hljs-operator">=</span> b<br> &#125;<br>&#125;<br><span class="hljs-comment">// 上面两个都可以这么用：</span><br><span class="hljs-type">A</span>(a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span>)<br><br></code></pre></td></tr></table></figure>
+<p>但是这个规则不适用于 Class，Class 必须显式的拥有 init 构造器方法来初始化属性。</p>
+<h3 id="类的指定构造器和便利构造器">类的指定构造器和便利构造器</h3>
+<blockquote style='border-color: ;color: '><p> 震惊点: 什么？构造器还分两种？？？</p></blockquote>
+<p>类的指定构造器就是跟 TS 中的普通 <code>construct</code> 一样作用的 <code>init</code> 方法。但是它的便利构造器…是在 init 前加个 <code>convenience</code> 关键字（又来！）:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">convenience</span> <span class="hljs-keyword">init</span>() &#123;&#125;<br></code></pre></td></tr></table></figure>
+<p>其实这里 Swift 文档没有明确告诉读者，为什么需要便利构造器，而是直接讲起了类的构造、继承过程和构造器代理。我在这里给小白门解释一下为什么需要存在便利构造器这个东西的存在，很简单的原因：<code>类中的多个指定构造器不允许互相调用。</code>就这么简单的原因，按耐不住想调用？想简化初始化过程？用便利构造器去吧你！</p>
+<p>常规写法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span> &#123;<br> <span class="hljs-keyword">var</span> b: <span class="hljs-type">Int</span><br> <span class="hljs-keyword">var</span> c: <span class="hljs-type">String</span><br> <span class="hljs-keyword">init</span>(<span class="hljs-params">b</span>: <span class="hljs-type">Int</span>, <span class="hljs-params">c</span>: <span class="hljs-type">String</span>) &#123;<br>  <span class="hljs-keyword">self</span>.b <span class="hljs-operator">=</span> b<br> &#125;<br> <span class="hljs-keyword">init</span>() &#123;<br>  <span class="hljs-keyword">self</span>.b <span class="hljs-operator">=</span> <span class="hljs-number">0</span><br>  <span class="hljs-keyword">self</span>.c <span class="hljs-operator">=</span> <span class="hljs-string">&quot;UnKnown&quot;</span><br> &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>以上是不是感觉 self.b 这种的写了两遍，麻烦？所以想在第二个 <code>init()</code> 中，这样干：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">init</span>() &#123;<br> <span class="hljs-keyword">self</span>.<span class="hljs-keyword">init</span>(b: <span class="hljs-number">0</span>, c: <span class="hljs-string">&quot;UnKnown&quot;</span>)	<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>抱歉，编译器报错：<code>Designated initializer for 'A' cannot delegate (with 'self.init'); did you mean this to be a convenience initializer?</code></p>
+<p>这种情况，必须使用便利构造器：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs swift">converience <span class="hljs-keyword">init</span>() &#123;<br> <span class="hljs-keyword">self</span>.<span class="hljs-keyword">init</span>(b: <span class="hljs-number">0</span>, c: <span class="hljs-string">&quot;UnKnown&quot;</span>)	<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>图的就是一个「便利」～</p>
+<h3 id="可失败构造器">可失败构造器</h3>
+<blockquote style='border-color: ;color: '><p> 震惊点: 构造器还能构造失败的？</p></blockquote>
+<p>其实所谓的可失败构造器，就是指在构造过程（init 函数调用过程）可能抛错。</p>
+<p>因此，如果构造器抛错，你不用像 TS 一样，在外层 <code>try-catch</code>，而是直接说明即可，方法就是在 <code>init</code> 后面加个问号变成 <code>init?</code>，然后在可能抛错的地方返回 <code>nil</code> ，在实例化的时候判断是否为 <code>nil</code> 即可。</p>
+<p>Swift 中正常构造器不返回值，这跟 TS 一样——但 TS 的构造器可以返回值，如果返回值是对象类型则会替代 <code>this</code> 对象，这似乎更让人震惊。</p>
+<h2 id="可选链式调用">可选链式调用</h2>
+<blockquote style='border-color: ;color: '><p> 震惊点: 问：在什么情况下，函数写了 () 但是却没有执行？答：可选链式调用的场景下。</p></blockquote>
+<p>话不多说，看例子：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">func</span> <span class="hljs-title function_">A</span>() -&gt; <span class="hljs-type">Int</span> &#123;<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;OK&quot;</span>)<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span><br>&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">B</span> &#123;<br>    <span class="hljs-keyword">var</span> c: <span class="hljs-type">C</span>?<br>&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">C</span> &#123;<br>    <span class="hljs-keyword">var</span> d: <span class="hljs-type">Int</span>?<br>&#125;<br><span class="hljs-keyword">var</span> d <span class="hljs-operator">=</span> <span class="hljs-type">B</span>()<br><span class="hljs-comment">// 震惊的事情发生了：</span><br><span class="hljs-comment">// 这里，A 函数未执行，不会打印 OK，赋值也不会成功，因为 c 是 nil，这个语句返回 nil（通常 Swift 的赋值语句都返回 Void 的，也就是空元组）</span><br><span class="hljs-comment">// 返回 nil 意味着你可以使用 if-let 语句判断</span><br>d.c<span class="hljs-operator">?</span>.d <span class="hljs-operator">=</span> <span class="hljs-type">A</span>()<br><br></code></pre></td></tr></table></figure>
+<h2 id="错误处理">错误处理</h2>
+<blockquote style='border-color: ;color: '><p> 震惊点：跟枚举一样，Swfit 的 try-catch（实际是 do-catch）设计的很复杂。</p></blockquote>
+<p>catch 语句不但可以捕获任意错误，还可以捕获特定错误类型，使用 is 或者跟 switch 一样，有多个 catch 分支进行进行匹配，离谱：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">do</span> &#123;<br> <span class="hljs-keyword">try</span> someError()<br>&#125; <span class="hljs-keyword">catch</span> <span class="hljs-keyword">is</span> <span class="hljs-type">ErrorA</span> &#123;<br> <span class="hljs-comment">// xxx</span><br>&#125; <span class="hljs-keyword">catch</span> <span class="hljs-type">ErrorB</span>, <span class="hljs-type">ErrorC</span>, <span class="hljs-type">ErrorD</span>.a &#123;<br> <span class="hljs-comment">// xxx</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="并发">并发</h2>
+<blockquote style='border-color: ;color: '><p> 震惊点：看文档的时候，我一开始并未意识到 `withTaskGroup` 是一个内置的进行 Group Task 的方法。。。</p></blockquote>
+<p>至于 <code>await</code> 跟 TS 中的 <code>await</code> 完全一样的用法，爽！</p>
+<h2 id="扩展">扩展</h2>
+<blockquote style='border-color: ;color: '><p> 震惊点：扩展应该算是 Swift 中最强的设计了，任何对象，无论内置还是三方，都可以随意的、低成本的、无需任何复杂声明任何复杂关键字的，进行扩展。</p></blockquote>
+<p>相比于 TS 中，你想扩展一个已有的类，你需要在原型链上做一些操作，然后再修改对象的 this 指向这个类。</p>
+<p>但是在 Swift 中，你只需要一个 <code>extension</code> 然后就可以肆无忌惮的写任何你想写的方法、属性，他们的 <code>this</code> 都指向实例，或者扩展类型（也就是静态）方法、属性。</p>
+<p>简直炫酷狂拽屌炸天。</p>
+<h2 id="协议">协议</h2>
+<blockquote style='border-color: ;color: '><p> 震惊点：我觉得协议的出现是为了解决 Struct 的抽象问题，因为任何语言中，类本身都是可以继承（可能说的绝对了），不需要再多余实现一个「协议」，使用抽象类即可。只是顺带的，Swift 限制了类只能继承一个父类的同时，让协议更多的在类和 Struct 和枚举上同时发挥作用。</p></blockquote>
+<p>不说了，想说的都在上面。</p>
+<h2 id="泛型">泛型</h2>
+<blockquote style='border-color: ;color: '><p> 震惊点：泛型整了个「关联类型」，其实发挥的作用就是声明的时候带的泛型，但是更强大。</p></blockquote>
+<p>Swift 的泛型关联类型是这样子的：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Container</span> &#123;<br>    <span class="hljs-keyword">associatedtype</span> <span class="hljs-type">Item</span><br>    <span class="hljs-keyword">mutating</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">append</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">item</span>: <span class="hljs-type">Item</span>)<br>    <span class="hljs-keyword">var</span> count: <span class="hljs-type">Int</span> &#123; <span class="hljs-keyword">get</span> &#125;<br>    <span class="hljs-keyword">subscript</span>(<span class="hljs-params">i</span>: <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">Item</span> &#123; <span class="hljs-keyword">get</span> &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>至于为什么不设计成这样：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Container</span>&lt;<span class="hljs-title class_">Item</span>&gt; &#123;<br>    <span class="hljs-keyword">mutating</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">append</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">item</span>: <span class="hljs-type">Item</span>)<br>    <span class="hljs-keyword">var</span> count: <span class="hljs-type">Int</span> &#123; <span class="hljs-keyword">get</span> &#125;<br>    <span class="hljs-keyword">subscript</span>(<span class="hljs-params">i</span>: <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">Item</span> &#123; <span class="hljs-keyword">get</span> &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>估计是因为这个 Item 可能会很长，不优雅吧，如：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">SuffixableContainer</span>: <span class="hljs-title class_">Container</span> &#123;<br>    <span class="hljs-keyword">associatedtype</span> <span class="hljs-type">Suffix</span>: <span class="hljs-type">SuffixableContainer</span> <span class="hljs-keyword">where</span> <span class="hljs-type">Suffix</span>.<span class="hljs-type">Item</span> <span class="hljs-operator">==</span> <span class="hljs-type">Item</span><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">suffix</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">size</span>: <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">Suffix</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>写到名字的后面的话，那么泛型声明会经常超出屏幕，难顶。</p>
+<h2 id="不透明类型和封装协议">不透明类型和封装协议</h2>
+<blockquote style='border-color: ;color: '><p> 震惊点：你可以实现一个效果，即只让编译器知道你的类型是什么，但是调用端不知道具体类型，而只知道它遵守某项协议。</p></blockquote>
+<p>基本上，不透明类型和封装协议想实现的效果是，一方面对调用者隐藏实现细节，一方面可以允许重构代码的时候不用修改太多地方，举个例子：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Shape</span> &#123;<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">area</span>() -&gt; <span class="hljs-type">Double</span><br>&#125;<br><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Circle</span>: <span class="hljs-title class_">Shape</span> &#123;<br>    <span class="hljs-keyword">var</span> radius: <span class="hljs-type">Double</span><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">area</span>() -&gt; <span class="hljs-type">Double</span> &#123;<br>        <span class="hljs-keyword">return</span> .pi <span class="hljs-operator">*</span> radius <span class="hljs-operator">*</span> radius<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">func</span> <span class="hljs-title function_">makeShape</span>() -&gt; <span class="hljs-keyword">some</span> <span class="hljs-type">Shape</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">Circle</span>(radius: <span class="hljs-number">5</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里，<code>makeShape</code> 返回的类型，只要遵守 <code>Shape</code> 协议类型的任意类型都可以，不用明确返回 <code>Circle</code> 类型。如此一来，后续添加新的遵守 <code>Shape</code> 类型的 <code>Struct</code>，该函数都可以返回（这也是 SwiftUI 中所常用的一种方式，比如 <code>some View</code>等）。</p>
+<h2 id="内存安全">内存安全</h2>
+<blockquote style='border-color: ;color: '><p> 震惊点：Swift 因为可以按引用传递值，所以会产生同时对一块内存区域的读写（这很合理对吧？）</p></blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">var</span> a <span class="hljs-operator">=</span> <span class="hljs-number">1</span><br><span class="hljs-keyword">func</span> <span class="hljs-title function_">add</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">b</span>: <span class="hljs-keyword">inout</span> <span class="hljs-type">Int</span>) &#123;<br>    b <span class="hljs-operator">+=</span> a<br>&#125;<br>add(<span class="hljs-operator">&amp;</span>a)<br></code></pre></td></tr></table></figure>
+<p>上述运行会报错，但是编译器不会有提醒。诸如此类的还有很多，在这种情况下要特别注意。因为 TS 中不存在按引用传值的情况，所以不会有这种问题，easy～</p>
+<h2 id="高级运算符">高级运算符</h2>
+<blockquote style='border-color: ;color: '><p> 震惊点：你可以重写/自定义实现一个以符号为函数名的函数，以此来实现相同类、结构体的实例之间的相互操作。</p></blockquote>
+<p>举个例子：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">A</span> &#123;<br> <span class="hljs-keyword">var</span> b <span class="hljs-operator">=</span> <span class="hljs-number">1</span><br> <span class="hljs-keyword">var</span> c <span class="hljs-operator">=</span> <span class="hljs-number">2</span><br> <span class="hljs-keyword">static</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">+</span>(<span class="hljs-params">left</span>: <span class="hljs-type">A</span>, <span class="hljs-params">right</span>: <span class="hljs-type">A</span>) -&gt; <span class="hljs-type">A</span> &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-type">A</span>(b: left.b <span class="hljs-operator">+</span> right.b, c: left.c <span class="hljs-operator">+</span> right.c)<br> &#125;<br>&#125;<br><span class="hljs-comment">// 然后你就可以</span><br><span class="hljs-keyword">let</span> a <span class="hljs-operator">=</span> <span class="hljs-type">A</span>()<br><span class="hljs-keyword">let</span> b <span class="hljs-operator">=</span> <span class="hljs-type">A</span>()<br><span class="hljs-keyword">let</span> c <span class="hljs-operator">=</span> a <span class="hljs-operator">+</span> b <span class="hljs-comment">// &lt;- 是的你没看错，struct 实例可以相加！</span><br></code></pre></td></tr></table></figure>
+<p>这个设计好，我怎么没想到呢？牛逼牛逼。</p>
+<p>需要注意的是，运算符方法是有自身属性的，如 <code>+</code> 是二元操作符也是中缀运算符，所以接受两个函数，<code>-</code> 既可以是中缀运算符（二元操作符），也可以是前缀运算符（一元操作符，<code>func</code> 前需要加 <code>prefix</code>），因此可以重载。</p>
+<p>但是 Swift 又规定了赋值运算符<code>=</code> 不能被重载，三元条件运算符（<code>a ? b : c</code>）也不能。</p>
+<p>这个运算符是如此的常见，以至于你可以在任意的 Swift 内置对象/Foundation 对象中，看到诸如 <code>==</code> 相等判断的运算符函数。</p>
+<p>你甚至可以实现自己运算符！</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// 需要先声明，这是一个操作符，因为有两个值在操作符，所以这是个中缀操作符(infix)</span><br><span class="hljs-keyword">infix</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">+++++++</span><br><span class="hljs-comment">// 然后扩展一下整数类型</span><br><span class="hljs-keyword">extension</span> <span class="hljs-title class_">Int</span> &#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">+++++++</span>(<span class="hljs-params">left</span>: <span class="hljs-type">Int</span>, <span class="hljs-params">right</span>: <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">Int</span> &#123;<br>        <span class="hljs-keyword">return</span> (left <span class="hljs-operator">+</span> right) <span class="hljs-operator">*</span> <span class="hljs-number">7</span> <span class="hljs-comment">// &lt;- 因为有 7 个 + 号，所以我写了乘以 7</span><br>    &#125;<br>&#125;<br><span class="hljs-comment">// 这么用：</span><br><span class="hljs-number">2</span> <span class="hljs-operator">+++++++</span> <span class="hljs-number">7</span> <span class="hljs-comment">// &lt;- 63</span><br><br></code></pre></td></tr></table></figure>
+<p>真牛逼。</p>
+<h3 id="结果构建器">结果构建器</h3>
+<blockquote style='border-color: ;color: '><p> 震惊点：Swift 为了「优雅」、「复用」，无所不用其极。</p></blockquote>
+<p>为了让下面这段代码看上去好看，Swfit 「发明」了 <code>@resultBuilder</code> 这个神奇的东西，如下：</p>
+<p>普通写法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">var</span> a <span class="hljs-operator">=</span> <span class="hljs-number">1</span><br><span class="hljs-keyword">var</span> b <span class="hljs-operator">=</span> <span class="hljs-number">2</span><br><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">A</span> &#123;<br> <span class="hljs-keyword">var</span> a: <span class="hljs-type">Int</span><br>&#125;<br><br><span class="hljs-comment">// 这里会有一个三元判断</span><br><span class="hljs-keyword">var</span> c <span class="hljs-operator">=</span> <span class="hljs-type">A</span>(a: a <span class="hljs-operator">&gt;</span> b <span class="hljs-operator">?</span> <span class="hljs-number">666</span> : <span class="hljs-number">999</span> )<br></code></pre></td></tr></table></figure>
+<p>Swift 说，上面的三元判断太麻烦，而且复杂判断的话会很长不好阅读，希望优雅点，于是，结果构建器诞生了（如果我没理解错的话）：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">@resultBuilder</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">BBuilder</span> &#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">buildBlock</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">b</span>: <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">Int</span> &#123; <span class="hljs-comment">// 对应 if/else 分支的执行结果</span><br>        <span class="hljs-keyword">return</span> b<br>    &#125;<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">buildEither</span>(<span class="hljs-params">aaa</span>: <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">Int</span> &#123; <span class="hljs-comment">// 对应 if 分支</span><br>        <span class="hljs-keyword">return</span> aaa<br>    &#125;<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">buildEither</span>(<span class="hljs-params">bbb</span>: <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">Int</span> &#123; <span class="hljs-comment">// 对应 else 分支</span><br>        <span class="hljs-keyword">return</span> bbb<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后在上面的 <code>c</code> 变量这么赋值：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">func</span> <span class="hljs-title function_">BB</span>(<span class="hljs-meta">@BBuilder</span> <span class="hljs-params">b</span>: () -&gt; <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">A</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">A</span>(a: b())<br>&#125;<br><span class="hljs-comment">// 终于等到 c 了，这里的 c 和最开始的 c 完全一样</span><br><span class="hljs-keyword">var</span> c <span class="hljs-operator">=</span> <span class="hljs-type">BB</span> &#123;<br>    <span class="hljs-keyword">if</span> a <span class="hljs-operator">&gt;</span> b &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">666</span><br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">999</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>复用，优雅，高效，绝！</p>
+<h2 id="词法结构">词法结构</h2>
+<blockquote style='border-color: ;color: '><p> 震惊点：尽管 Swift 中的保留字多不胜数，但是它允许你将保留字用作标识符。</p></blockquote>
+<p>方法就是，使用反引号扩住即可：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">func</span> <span class="hljs-title function_">`func`</span>() &#123;&#125; <span class="hljs-comment">// &lt;- 一个叫做 `func` 的函数</span><br><span class="hljs-comment">// 调用也是 </span><br>`func`()<br></code></pre></td></tr></table></figure>
+<p>但除了关键字外，<code>x</code> 和 x 是同一个变量。</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          本文最先发布在:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.cn/tech/app-dev-journey-swift.html"
+            title="App 开发之旅（一）：*摩诃不思议的 *Swift"
+          >
+            App 开发之旅（一）：*摩诃不思议的 *Swift - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+          <li class="next">
+            <a
+              href="/tech/use-cursor-develop-ios.html"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="如何使用 Cusor 开发 iOS 应用并实时预览"
+            >
+              下一篇<br />
+              <span>如何使用 Cusor 开发 iOS 应用并实时预览</span>
+            </a>
+          </li>
+          
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">目录</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>博主说：</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        我常常希望在面对人生中一些关键抉择的时候，有人可以告诉我最佳的做法，让我不至于白白浪费宝贵的时间。推己及人，我因此经常写博客，以期在浩渺无垠的互联网中的这个小小角落里记录下对于我来说只有一次的人生经历，希望能够帮到那些希望得到帮助的人。
+    </div>
+    <hr>
+    <h5><a href="/archive/">热门标签</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0029" 
+                href="/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技术"
+                rel="47">技术</a>
+        
+            <a data-sort="0050" 
+                href="/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="26">生活</a>
+        
+            <a data-sort="0065" 
+                href="/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="折腾"
+                rel="11">折腾</a>
+        
+            <a data-sort="0068" 
+                href="/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="技巧"
+                rel="8">技巧</a>
+        
+            <a data-sort="0068" 
+                href="/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="教程"
+                rel="8">教程</a>
+        
+            <a data-sort="0070" 
+                href="/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻译"
+                rel="6">翻译</a>
+        
+            <a data-sort="0071" 
+                href="/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="美食"
+                rel="5">美食</a>
+        
+            <a data-sort="0071" 
+                href="/archive/?tag=Apple"
+                title="Apple"
+                rel="5">Apple</a>
+        
+            <a data-sort="0071" 
+                href="/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="5">ProseMirror</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体验"
+                rel="4">初体验</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="工作流"
+                rel="4">工作流</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="插件"
+                rel="4">插件</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="经验"
+                rel="4">经验</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="网络"
+                rel="4">网络</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="苹果"
+                rel="4">苹果</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=Craft"
+                title="Craft"
+                rel="4">Craft</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="4">JavaScript</a>
+        
+            <a data-sort="0072" 
+                href="/archive/?tag=Vue"
+                title="Vue"
+                rel="4">Vue</a>
+        
+            <a data-sort="0073" 
+                href="/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用体验"
+                rel="3">使用体验</a>
+        
+            <a data-sort="0073" 
+                href="/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="服务器"
+                rel="3">服务器</a>
+        
+            <a data-sort="0073" 
+                href="/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="路由器"
+                rel="3">路由器</a>
+        
+            <a data-sort="0073" 
+                href="/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="软路由"
+                rel="3">软路由</a>
+        
+            <a data-sort="0073" 
+                href="/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="随笔"
+                rel="3">随笔</a>
+        
+            <a data-sort="0073" 
+                href="/archive/?tag=%E9%9B%86%E6%88%90"
+                title="集成"
+                rel="3">集成</a>
+        
+            <a data-sort="0073" 
+                href="/archive/?tag=Git"
+                title="Git"
+                rel="3">Git</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="2">主食</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="优化"
+                rel="2">优化</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=%E5%8D%83%E5%85%86"
+                title="千兆"
+                rel="2">千兆</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="2">大事</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="总结"
+                rel="2">总结</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="旁路由"
+                rel="2">旁路由</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="框架"
+                rel="2">框架</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="泡脚时间"
+                rel="2">泡脚时间</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="测试"
+                rel="2">测试</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="特斯拉"
+                rel="2">特斯拉</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="编辑器"
+                rel="2">编辑器</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="视频"
+                rel="2">视频</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="调试"
+                rel="2">调试</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=%E8%BD%A6"
+                title="车"
+                rel="2">车</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="迁移"
+                rel="2">迁移</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=AI"
+                title="AI"
+                rel="2">AI</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="2">AppleScript</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=CI"
+                title="CI"
+                rel="2">CI</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=GitHub"
+                title="GitHub"
+                rel="2">GitHub</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="2">Jekyll</a>
+        
+            <a data-sort="0074" 
+                href="/archive/?tag=Notion"
+                title="Notion"
+                rel="2">Notion</a>
+        
+    </div>
+    <hr>
+    <h5>专栏</h5>
+    <div class="tags">
+        <a href="/projects">开源项目</a>
+        <a href="/book-list">技术书单</a>
+        <a href="/subscribe">订阅&付费软件</a>
+        <a href="/my-food">美食推荐</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>朋友们</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+        
+          <li><a href="https://www.xheldon.com" target="_blank">国际版</a></li>
+          
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="App 开发之旅（一）：*摩诃不思议的 *Swift"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2025
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+          <a
+            style="color: #777; vertical-align: middle"
+            target="_blank"
+            href="https://beian.miit.gov.cn/"
+            >京ICP备2021031693号-1</a
+          >
+          <a
+            style="color: #777"
+            target="_blank"
+            href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502047432"
+          >
+            <img
+              style="width: 17px; height: 17px; vertical-align: middle"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKTWlDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVN3WJP3Fj7f92UPVkLY8LGXbIEAIiOsCMgQWaIQkgBhhBASQMWFiApWFBURnEhVxILVCkidiOKgKLhnQYqIWotVXDjuH9yntX167+3t+9f7vOec5/zOec8PgBESJpHmomoAOVKFPDrYH49PSMTJvYACFUjgBCAQ5svCZwXFAADwA3l4fnSwP/wBr28AAgBw1S4kEsfh/4O6UCZXACCRAOAiEucLAZBSAMguVMgUAMgYALBTs2QKAJQAAGx5fEIiAKoNAOz0ST4FANipk9wXANiiHKkIAI0BAJkoRyQCQLsAYFWBUiwCwMIAoKxAIi4EwK4BgFm2MkcCgL0FAHaOWJAPQGAAgJlCLMwAIDgCAEMeE80DIEwDoDDSv+CpX3CFuEgBAMDLlc2XS9IzFLiV0Bp38vDg4iHiwmyxQmEXKRBmCeQinJebIxNI5wNMzgwAABr50cH+OD+Q5+bk4eZm52zv9MWi/mvwbyI+IfHf/ryMAgQAEE7P79pf5eXWA3DHAbB1v2upWwDaVgBo3/ldM9sJoFoK0Hr5i3k4/EAenqFQyDwdHAoLC+0lYqG9MOOLPv8z4W/gi372/EAe/tt68ABxmkCZrcCjg/1xYW52rlKO58sEQjFu9+cj/seFf/2OKdHiNLFcLBWK8ViJuFAiTcd5uVKRRCHJleIS6X8y8R+W/QmTdw0ArIZPwE62B7XLbMB+7gECiw5Y0nYAQH7zLYwaC5EAEGc0Mnn3AACTv/mPQCsBAM2XpOMAALzoGFyolBdMxggAAESggSqwQQcMwRSswA6cwR28wBcCYQZEQAwkwDwQQgbkgBwKoRiWQRlUwDrYBLWwAxqgEZrhELTBMTgN5+ASXIHrcBcGYBiewhi8hgkEQcgIE2EhOogRYo7YIs4IF5mOBCJhSDSSgKQg6YgUUSLFyHKkAqlCapFdSCPyLXIUOY1cQPqQ28ggMor8irxHMZSBslED1AJ1QLmoHxqKxqBz0XQ0D12AlqJr0Rq0Hj2AtqKn0UvodXQAfYqOY4DRMQ5mjNlhXIyHRWCJWBomxxZj5Vg1Vo81Yx1YN3YVG8CeYe8IJAKLgBPsCF6EEMJsgpCQR1hMWEOoJewjtBK6CFcJg4Qxwicik6hPtCV6EvnEeGI6sZBYRqwm7iEeIZ4lXicOE1+TSCQOyZLkTgohJZAySQtJa0jbSC2kU6Q+0hBpnEwm65Btyd7kCLKArCCXkbeQD5BPkvvJw+S3FDrFiOJMCaIkUqSUEko1ZT/lBKWfMkKZoKpRzame1AiqiDqfWkltoHZQL1OHqRM0dZolzZsWQ8ukLaPV0JppZ2n3aC/pdLoJ3YMeRZfQl9Jr6Afp5+mD9HcMDYYNg8dIYigZaxl7GacYtxkvmUymBdOXmchUMNcyG5lnmA+Yb1VYKvYqfBWRyhKVOpVWlX6V56pUVXNVP9V5qgtUq1UPq15WfaZGVbNQ46kJ1Bar1akdVbupNq7OUndSj1DPUV+jvl/9gvpjDbKGhUaghkijVGO3xhmNIRbGMmXxWELWclYD6yxrmE1iW7L57Ex2Bfsbdi97TFNDc6pmrGaRZp3mcc0BDsax4PA52ZxKziHODc57LQMtPy2x1mqtZq1+rTfaetq+2mLtcu0W7eva73VwnUCdLJ31Om0693UJuja6UbqFutt1z+o+02PreekJ9cr1Dund0Uf1bfSj9Rfq79bv0R83MDQINpAZbDE4Y/DMkGPoa5hpuNHwhOGoEctoupHEaKPRSaMnuCbuh2fjNXgXPmasbxxirDTeZdxrPGFiaTLbpMSkxeS+Kc2Ua5pmutG003TMzMgs3KzYrMnsjjnVnGueYb7ZvNv8jYWlRZzFSos2i8eW2pZ8ywWWTZb3rJhWPlZ5VvVW16xJ1lzrLOtt1ldsUBtXmwybOpvLtqitm63Edptt3xTiFI8p0in1U27aMez87ArsmuwG7Tn2YfYl9m32zx3MHBId1jt0O3xydHXMdmxwvOuk4TTDqcSpw+lXZxtnoXOd8zUXpkuQyxKXdpcXU22niqdun3rLleUa7rrStdP1o5u7m9yt2W3U3cw9xX2r+00umxvJXcM970H08PdY4nHM452nm6fC85DnL152Xlle+70eT7OcJp7WMG3I28Rb4L3Le2A6Pj1l+s7pAz7GPgKfep+Hvqa+It89viN+1n6Zfgf8nvs7+sv9j/i/4XnyFvFOBWABwQHlAb2BGoGzA2sDHwSZBKUHNQWNBbsGLww+FUIMCQ1ZH3KTb8AX8hv5YzPcZyya0RXKCJ0VWhv6MMwmTB7WEY6GzwjfEH5vpvlM6cy2CIjgR2yIuB9pGZkX+X0UKSoyqi7qUbRTdHF09yzWrORZ+2e9jvGPqYy5O9tqtnJ2Z6xqbFJsY+ybuIC4qriBeIf4RfGXEnQTJAntieTE2MQ9ieNzAudsmjOc5JpUlnRjruXcorkX5unOy553PFk1WZB8OIWYEpeyP+WDIEJQLxhP5aduTR0T8oSbhU9FvqKNolGxt7hKPJLmnVaV9jjdO31D+miGT0Z1xjMJT1IreZEZkrkj801WRNberM/ZcdktOZSclJyjUg1plrQr1zC3KLdPZisrkw3keeZtyhuTh8r35CP5c/PbFWyFTNGjtFKuUA4WTC+oK3hbGFt4uEi9SFrUM99m/ur5IwuCFny9kLBQuLCz2Lh4WfHgIr9FuxYji1MXdy4xXVK6ZHhp8NJ9y2jLspb9UOJYUlXyannc8o5Sg9KlpUMrglc0lamUycturvRauWMVYZVkVe9ql9VbVn8qF5VfrHCsqK74sEa45uJXTl/VfPV5bdra3kq3yu3rSOuk626s91m/r0q9akHV0IbwDa0b8Y3lG19tSt50oXpq9Y7NtM3KzQM1YTXtW8y2rNvyoTaj9nqdf13LVv2tq7e+2Sba1r/dd3vzDoMdFTve75TsvLUreFdrvUV99W7S7oLdjxpiG7q/5n7duEd3T8Wej3ulewf2Re/ranRvbNyvv7+yCW1SNo0eSDpw5ZuAb9qb7Zp3tXBaKg7CQeXBJ9+mfHvjUOihzsPcw83fmX+39QjrSHkr0jq/dawto22gPaG97+iMo50dXh1Hvrf/fu8x42N1xzWPV56gnSg98fnkgpPjp2Snnp1OPz3Umdx590z8mWtdUV29Z0PPnj8XdO5Mt1/3yfPe549d8Lxw9CL3Ytslt0utPa49R35w/eFIr1tv62X3y+1XPK509E3rO9Hv03/6asDVc9f41y5dn3m978bsG7duJt0cuCW69fh29u0XdwruTNxdeo94r/y+2v3qB/oP6n+0/rFlwG3g+GDAYM/DWQ/vDgmHnv6U/9OH4dJHzEfVI0YjjY+dHx8bDRq98mTOk+GnsqcTz8p+Vv9563Or59/94vtLz1j82PAL+YvPv655qfNy76uprzrHI8cfvM55PfGm/K3O233vuO+638e9H5ko/ED+UPPR+mPHp9BP9z7nfP78L/eE8/sl0p8zAAA7SGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgICAgICAgICB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIgogICAgICAgICAgICB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoV2luZG93cyk8L3htcDpDcmVhdG9yVG9vbD4KICAgICAgICAgPHhtcDpDcmVhdGVEYXRlPjIwMTUtMTEtMTBUMTQ6MDQ6NTArMDg6MDA8L3htcDpDcmVhdGVEYXRlPgogICAgICAgICA8eG1wOk1ldGFkYXRhRGF0ZT4yMDE1LTExLTEwVDE0OjA0OjUwKzA4OjAwPC94bXA6TWV0YWRhdGFEYXRlPgogICAgICAgICA8eG1wOk1vZGlmeURhdGU+MjAxNS0xMS0xMFQxNDowNDo1MCswODowMDwveG1wOk1vZGlmeURhdGU+CiAgICAgICAgIDx4bXBNTTpJbnN0YW5jZUlEPnhtcC5paWQ6ODBiY2E5ODUtNGY5Yi02ZTRkLTlmYzktZThmNDkyNjdkZjRlPC94bXBNTTpJbnN0YW5jZUlEPgogICAgICAgICA8eG1wTU06RG9jdW1lbnRJRD5hZG9iZTpkb2NpZDpwaG90b3Nob3A6ZWRkYWU4MGMtODc3MC0xMWU1LTg0OWEtYmNmZGE2MDI4ZjJlPC94bXBNTTpEb2N1bWVudElEPgogICAgICAgICA8eG1wTU06T3JpZ2luYWxEb2N1bWVudElEPnhtcC5kaWQ6ZDAxN2I5NGUtOTRiZC0yNjQxLThmZjktYmY3YTBhMzY3N2IxPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOmQwMTdiOTRlLTk0YmQtMjY0MS04ZmY5LWJmN2EwYTM2NzdiMTwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNS0xMS0xMFQxNDowNDo1MCswODowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDo4MGJjYTk4NS00ZjliLTZlNGQtOWZjOS1lOGY0OTI2N2RmNGU8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTUtMTEtMTBUMTQ6MDQ6NTArMDg6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE0IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8cGhvdG9zaG9wOkRvY3VtZW50QW5jZXN0b3JzPgogICAgICAgICAgICA8cmRmOkJhZz4KICAgICAgICAgICAgICAgPHJkZjpsaT4zQ0I4RkVFOEMyRUJFNkU1QTREQTk3MzI4MzU0MTI0RTwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpPmFkb2JlOmRvY2lkOnBob3Rvc2hvcDpiZGRmY2Y2Zi04NzcwLTExZTUtODQ5YS1iY2ZkYTYwMjhmMmU8L3JkZjpsaT4KICAgICAgICAgICAgPC9yZGY6QmFnPgogICAgICAgICA8L3Bob3Rvc2hvcDpEb2N1bWVudEFuY2VzdG9ycz4KICAgICAgICAgPHBob3Rvc2hvcDpDb2xvck1vZGU+MzwvcGhvdG9zaG9wOkNvbG9yTW9kZT4KICAgICAgICAgPHBob3Rvc2hvcDpJQ0NQcm9maWxlPnNSR0IgSUVDNjE5NjYtMi4xPC9waG90b3Nob3A6SUNDUHJvZmlsZT4KICAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9wbmc8L2RjOmZvcm1hdD4KICAgICAgICAgPHRpZmY6T3JpZW50YXRpb24+MTwvdGlmZjpPcmllbnRhdGlvbj4KICAgICAgICAgPHRpZmY6WFJlc29sdXRpb24+NzIwMDAwLzEwMDAwPC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj43MjAwMDAvMTAwMDA8L3RpZmY6WVJlc29sdXRpb24+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDxleGlmOkNvbG9yU3BhY2U+MTwvZXhpZjpDb2xvclNwYWNlPgogICAgICAgICA8ZXhpZjpQaXhlbFhEaW1lbnNpb24+MjA8L2V4aWY6UGl4ZWxYRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpQaXhlbFlEaW1lbnNpb24+MjA8L2V4aWY6UGl4ZWxZRGltZW5zaW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAKPD94cGFja2V0IGVuZD0idyI/Pu6JurQAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAABRFJREFUeNpE1OtvW/Udx/H3ufj4+Ph2nDh2vLgrTSPaFNqGtd0Gy9LRTVymNoNM6ihCaEwdQ5sYAo0HTOwBYg/Yk0pDiG3qmLSiPtjGJERbdZSQaUArykXt1la9hDRNY6dpYsexj30uPj7ntwcVyT/w0ucrfT5fSQgBdguAEBlZhDhaiVikF2j22lfPjP77+Kc/9ZyO9p37th7s2rLlbegveZ4g6jggS4AMAKkkkhAC366DJJADgaJlgA/unTx+4qmT/7oyKpxJfdYzUDIma7M6TsXoDH+3/8jgnrG/iOC2o8JrIiQJECjpvlt0Q7JoimWEkQHN1Sf+8MbE40+O7226M/rtCYX9+k2e0me55+48XXfn1f1PvvfwiVdfOSLFlKitSbh8hq9+DitZFRlZSaHK1aJ35uV3f3+4zr79/fy42CD9pwtULwdUpwLqu//ID4JzPHPoEQ7+00dc/vM/Eoary3oCPR5dBROeRTxaH7x+9MWpkd3nRsyBPL/InmP6cAN5jUlgtcELkXpMTj19kr3GGfLfuovv7T62Z/GjN67aM2c3XHz/nVUw6jmo7ruJI5eT2idz23lwu0XzbAP5eh3JjBJdCnBP3iSyrhu96VD562nG7m8z8cUm3vwwKCSkVgx5aBWsL1aK4cfvHwilGKg2KWuOxjxEAh+WXKT1Bto2E/lGC42QyrRDX5cHkkStKRPtUQ9sHB5btwLOXHrvh+1yeTiT0KATRRQKZId7aSKw7ukm2Fck8dIQxjNbkHsMctuytOw2CEEhZ0Dp7L1Ls6d+sgIaicxgw/Lp73FB7+bEaQN1V4rqnrUEZQvpfy3sYzfxp5fRnh+m69mtvHWoBsQZ2qzSmlrALU0VV8BwaW5Po6ZyZ9Gi+HWN19+M859XSgztKJA2ktgXaoQLHu65GsnyMudfvsKrh6Lkh0w299WplD38pUvDK6CstkyrIZNavMLe+wM6fgL/6Dzdf/scuS9Cu0chzKlkdxUoTFylcvA8rbbC2GiEZHUSq6GiJuUIgAoQM746Lm+4Nhrk+3jiGxYH+np4vTyIP3uB7uokcjqGc6GGNZCjnCnwdzkGKZMnvrlAJ1nEvEPCyKw5tgKCnBMNwdyUxZ2D0/z2V9t48fkRjlqboeEzalfpMmXeOpakiQFkeO7nOjsGJpmbBFybsGNtXQFVs729k8zjz/uUFi7yy+EoY+NxJo7bXJK38MCmLyjEKnSO9NGuOazZaPDrB65x89Q1bF9Hz2qoprYRuPUcvOYnj1ZP/+6wM9/Gq/hQmmH9Q0NE8zoEVYKqSnPBIb2uC9Z2Q6nC9NuXcZJZEv0JYr0G6YF9O7XM9z+QhBAAdFr/fWzp/IHXAtdJVz6cR40LencOEiw5+HYL2dDRu+JIWoTqqSk6gUp6+3p8l2p6w8gjcTM1Lmn33TrZd2ZwFp2yOx9z9HyYzu8aIKi3CKwGGBqKZqLFoL3cpFWqoa/tRi/m8ZZt3LIlYmuaKKkUsS9rI9pXUfjohdzXkr2RTAGvHhIGKmGg4C5aIELa1TrNyUUkJQKShHujQiQmk/92IasZ1s9Ch9Uta0qKaPeOhyw7/ZpdKrU0ZZlUrkNEstEkH8VbRjgOyY1ZUgMpZK2JmtaQMr3XO+pdv1GN23+kaIus1kb4SBHVblTjTzsX8y859cUHPX9251c29WwKLSmhm3KXGkti3eB6rMe01dzI2aWphXFnpnaib2culBQFEbgA/H8ALiI3EysggNoAAAAASUVORK5CYII="
+            />
+            <span style="vertical-align: middle"
+              >京公网安备 11010502047432号</span
+            >
+          </a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=UA-79359216-1"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-79359216-1');
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>
