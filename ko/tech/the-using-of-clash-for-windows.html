@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      Clash 사용에 관한 간단한 기록 - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="Clash For Windows For Mac 간단 사용 시나리오.">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="Clash 사용에 관한 간단한 기록 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2022-10-8T10:52:22"> 
+              
+                  
+                    <meta property="article:tag" content="Clash">
+                    
+                    <meta property="article:tag" content="부강">
+                    
+                    <meta property="article:tag" content="기술">
+                    
+                    <meta property="article:tag" content="튜토리얼">
+                    
+                      
+                          
+                            <meta name="og:description" content="Clash For Windows For Mac 간단 사용 시나리오.">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ko/tech/the-using-of-clash-for-windows.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ko_KR">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ko/tech/the-using-of-clash-for-windows.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/the-using-of-clash-for-windows.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/the-using-of-clash-for-windows.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/the-using-of-clash-for-windows.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/the-using-of-clash-for-windows.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/the-using-of-clash-for-windows.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ko/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ko/">홈</a>
+            </li>
+            <li>
+              <a href="/ko/about/">소개</a>
+            </li>
+            <li>
+              <a href="/ko/donate/">후원</a>
+            </li>
+            <li>
+              <a href="/ko/archive/">아카이브</a>
+            </li>
+            <li>
+              <a href="/ko/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">한국어</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/the-using-of-clash-for-windows.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/the-using-of-clash-for-windows.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/the-using-of-clash-for-windows.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item active"><a href="/ko/tech/the-using-of-clash-for-windows.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ko/archive/?tag=Clash"
+                            title="Clash">
+                            Clash
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                            title="부강">
+                            부강
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="기술">
+                            기술
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E6%95%99%E7%A8%8B"
+                            title="튜토리얼">
+                            튜토리얼
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        Clash 사용에 관한 간단한 기록
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 작성일 2022년 10월 08일</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 수정일 2023년 01월 05일</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;참고: 이 글이 작성된 지 이미
+          <code id="from_time"></code> 일이 지났습니다. 시의성에 유의하세요
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1665226342000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+           
+        <div class="callout-tips">🖥 &nbsp;설명：Clash For Windows For Mac 간단 사용 시나리오.</div>
+         
+        <div class="craft-tips">
+          📚 &nbsp;Craft에도 게시：<a
+            href="https://www.craft.do/s/LUmvgdChQqG364"
+            target="_blank"
+          >
+            https://www.craft.do/s/LUmvgdChQqG364
+          </a>
+        </div>
+          <blockquote>
+<p>⚠️ 본문에 언급된 노드 및 공항 구독 서비스는 모두 허구이며 실제로 존재하지 않습니다. 여기서는 데모 예시일 뿐이니 참고 바랍니다.</p>
+</blockquote>
+<h2 id="서문">서문</h2>
+<p>Clash는 유용한 프록시 도구로, 본질은 Clash core라는 커맨드라인 도구입니다(어떤 소프트웨어든 본질은 커맨드라인이 아니겠습니까?). 개발자들은 이를 기반으로 다양한 GUI 인터페이스를 개발하여 설정과 사용을 편리하게 했습니다. 저는 Mac에서 ClashX와 Clash For Windows For Mac(놀랍게도 정확한 이름입니다), 일명 CFW를 사용해 본 적이 있습니다. 개발 편의성을 위해 Electron 아키텍처로 구현된 GUI라서 Mac과 Windows 버전으로 패키징할 수 있어 매우 편리했습니다.</p>
+<p>현재는 Clash For Windows를 사용 중입니다.</p>
+<p caption='Clash for Windows For Mac 界面'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/958140EE-7CCB-4D5B-8CAD-1B6358AAAB57_2.webp' alt='Clash for Windows For Mac 界面' title='Clash for Windows For Mac 界面'></p>
+<p>물론, 국제적인 관례에 따라 이 글에서는 일반적인 설정의 용도 설명 외에도 구독 링크 업데이트와 노드 전환 방법을 간단히 소개합니다. “왜 behance가 또 안 열리냐!”, “프록시 설정이 왜 이렇게 복잡하냐!”, “이렇게 비싼 VPN을 샀는데 왜 이렇게 안 좋냐!” 같은 질문을 받을 때 이 글을 던져주고 게임을 계속할 수 있도록요.</p>
+<blockquote>
+<p>⚠️ 용어 설명: 프록시 = VPN</p>
+</blockquote>
+<h2 id="주요-설정의-용도">주요 설정의 용도</h2>
+<blockquote>
+<p>이 설명들은 대부분 공식 문서에 있지만, 제 실제 사용 사례와 함께 소개합니다.</p>
+</blockquote>
+<h3 id="geoip-database">GeoIP Database</h3>
+<p>IP의 지리적 위치를 기반으로 프록시 사용 여부를 판단하는 기능입니다. 로컬에 데이터베이스를 유지하며 IP 주소를 조회하는 방식입니다. IP 주소는 지속적으로 업데이트되므로 이 데이터베이스도 가끔 업데이트해야 합니다(자주는 아님).</p>
+<p caption='GeoIP 数据库下载'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/F70734A2-11A9-43F7-BA74-BE599A4B4632_2.webp' alt='GeoIP 数据库下载' title='GeoIP 数据库下载'></p>
+<h3 id="tun-mode">TUN Mode</h3>
+<p>터미널, iTerm, Infuse 등 시스템 프록시를 따르지 않는 소프트웨어를 위해 설계된 모드입니다. 이 모드는 시스템 프록시를 무시하는 트래픽을 가로채 CFW가 처리할 수 있게 합니다.</p>
+<p>제 경우 Infuse의 Emby 시청에 사용합니다. 제 Emby 서비스는 특정 공항 노드가 필요한데, Infuse는 (아마도) 자체 요청 도구를 사용해 시스템 프록시를 무시합니다. 따라서 CFW를 시스템 프록시로 설정하고 올바른 노드를 지정해도 공항의 Emby 서비스에 접속할 수 없었습니다. TUN 모드를 활성화하면 이 문제가 해결됩니다.</p>
+<p>또 다른 사용 사례는 iTerm 터미널 명령어도 프록시 트래픽을 타게 되는 점입니다. TUN 모드를 끄면 git clone 등이 프록시를 거치지 않아, 이전에는 수동으로 alias 명령어를 생성해 터미널 프록시를 지정했습니다. 필요할 때 <code>ppp</code> 엔터, 불필요할 때 <code>sss</code> 엔터를 눌렀습니다(제 프록시 포트는 7890):</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs Bash"><span class="hljs-built_in">alias</span> ppp=<span class="hljs-string">&quot;export https_proxy=http://127.0.0.1:7890;export http_proxy=http://127.0.0.1:7890;export all_proxy=socks5://127.0.0.1:7890&quot;</span><br><span class="hljs-built_in">alias</span> sss=<span class="hljs-string">&quot;unset all_proxy;unset https_proxy;unset http_proxy&quot;</span><br></code></pre></td></tr></table></figure>
+<p>TUN 모드 사용에는 Service Mode가 필요하며, 자세한 내용은 문서를 참조하세요:</p>
+<p><a class='link-bookmark' href='https://docs.cfw.lbyczf.com/contents/tun.html#macos' target='_blank'><span data-bookmark-img='https://docs.cfw.lbyczf.com/favicon.ico' data-bookmark-title='T'><img src='https://docs.cfw.lbyczf.com/favicon.ico'/></span><span><span> TUN 模式 | Clash for Windows</span><span> "by Fndroid"</span><span> https://docs.cfw.lbyczf.com/contents/tun.html#macos</span></span></a></p>
+<p>하지만 제 경험상 CFW가 Service Mode가 활성화되었다고 알려도 지구본 아이콘이 빨간색인 경우가 있었습니다. Service Mode를 껐다가 다시 활성화하면 install과 uninstall 버튼만 보였고, install을 클릭해도 여전히 빨간색 아이콘이었습니다. uninstall 후 다시 install하면 CFW가 재시작되며 녹색 아이콘으로 변경되었습니다. GUI에 버그가 있을 수 있으니 문제 발생 시 다양한 방법을 시도해 보는 것이 좋습니다.</p>
+<blockquote>
+<p>💡 TUN 모드를 정상 사용하려면 소프트웨어의 보안 DNS 기능을 꺼야 합니다. TUN 모드에서 작동하지 않는다면 이 기능 때문일 수 있습니다.</p>
+</blockquote>
+<p caption='Chrome 关闭安全 DNS'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/F81A0395-B1AE-40AC-B414-15EB8E5714DE_2.webp' alt='Chrome 关闭安全 DNS' title='Chrome 关闭安全 DNS'></p>
+<h3 id="parser">Parser</h3>
+<p>즉 &quot;프로필 전처리 설정&quot;입니다.</p>
+<p>CFW의 분류 규칙이 적용되기 전에 사용자 정의 규칙을 설정할 수 있습니다. 대부분의 사용자는 공항 구독 링크를 사용하는데, 이러한 링크에는 자체 분류 규칙(예: 글로벌 직연, 글로벌 차단, 우회 규칙 등)이 포함되어 있습니다:</p>
+<p caption='机场的内置分流规则'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/A4BA694C-B4B1-4964-9D6C-EFB8E3C12184_2.webp' alt='机场的内置分流规则' title='机场的内置分流规则'></p>
+<p>사용자가 특정 링크에 대한 프록시 규칙을 직접 설정하려면, 구독 링크에서 다운로드한 설정 파일을 수정하면 다음 업데이트 시 <strong>변경 사항이 덮어씌워집니다</strong>. 이 문제를 해결하기 위해 Parser가 등장했습니다.</p>
+<p>간단히 말해, Parser는 공항 구독 규칙 적용 전에 사용자 규칙을 먼저 적용하고 최종 규칙에 병합합니다. 예를 들어, 제가 자주 방문하는 웹사이트는 두 가지 도메인을 가지고 있습니다. 중국 대륙 사용자에게는 대륙 콘텐츠를 반환하고, 해외 IP로 접속하면 해외 주소로 리디렉션됩니다.</p>
+<p>TUN 모드를 활성화하면 이 사이트는 해외 사용자로 인식되어 대륙 계정으로 접속할 수 없게 됩니다(계정이 분리됨). Parser 기능을 사용해 이 사이트의 대륙 버전 주소를 직연 규칙에 추가하면 됩니다:</p>
+<p caption='只支持针对特定节点列表配置文件进行预处理'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/8B575173-C01D-4E41-8213-1540979CC691_2.webp' alt='只支持针对特定节点列表配置文件进行预处理' title='只支持针对特定节点列表配置文件进行预处理'></p>
+<p>하지만, 비교적 난감한 점은 이 기능이 특정 yaml(즉 아래에서 말하는 구독 노드 목록)에만 적용된다는 것입니다. 따라서 여러 개의 구독 노드 목록(에어포트)을 가지고 있다면, 여러 개의 url을 작성해야 합니다.</p>
+<p>업데이트: 좋은 소식은 CFW가 이제 하나의 규칙으로 여러 구독 노드 목록을 매칭할 수 있게 되었습니다. <code>reg</code> 필드에 정규 표현식을 사용하면 됩니다. 아래는 모든 프로필 파일을 매칭하는 예시입니다:</p>
+<p caption='reg 匹配多个 yaml 配置文件'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/01CDE02A-C3F4-48D1-B4D0-53E6A7C57D84_2.webp' alt='reg 匹配多个 yaml 配置文件' title='reg 匹配多个 yaml 配置文件'></p>
+<p caption='点击查看配置文件的Parser'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/71687212-4376-4A13-B7C6-304066D33D6F_2.webp' alt='点击查看配置文件的Parser' title='点击查看配置文件的Parser'></p>
+<p>구독 노드 목록을 클릭하여 해당 설정에 대응하는 Parser를 확인하세요.</p>
+<p caption='该 Parser 能匹配上配置文件'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/499B32EF-5C31-4E35-A0D4-B61198B8578C_2.webp' alt='该 Parser 能匹配上配置文件' title='该 Parser 能匹配上配置文件'></p>
+<blockquote>
+<p>주의: 구독 변환 서비스는 Parser를 무효화할 수 있습니다.</p>
+</blockquote>
+<blockquote>
+<p>주의: Parser 설정을 완료한 후에는 현재 프록시의 업데이트 버튼을 클릭해야 적용됩니다.</p>
+</blockquote>
+<h3 id="diff">Diff</h3>
+<p>이 기능은 위의 Parser와 유사하게 작동하지만, Parser 이후에 적용됩니다. 원리는 수동으로 하나의 파일(git의 base 버전과 유사)을 생성하는 것입니다. 이 파일은 현재 구독 설정 파일을 기반으로 수정한 파일일 수 있습니다. 그런 다음 구독 설정 파일이 업데이트될 때마다 새로운 파일과 이전 파일을 diff하여 비교합니다. 문제가 발견되면 수동으로 충돌을 해결해야 합니다.</p>
+<p>이 기능의 목적도 매번 업데이트할 때 현재 설정 파일의 수정 사항이 덮어쓰이지 않도록 보장하기 위함입니다.</p>
+<h3 id="mixin">Mixin</h3>
+<blockquote>
+<p>⚠️ **주의: 이 기능은 '***<strong>기능 속성’</strong>*<strong>을 주입하는 데만 적합하며, mixin의 규칙은 에어포트 구독 목록의 다른 규칙을 덮어씁니다! 따라서 mixin에서는 dns 등의 정보를 주입하는 설정만 해야 하며, rules 등의 정보는 설정하지 말아야 합니다. 그렇지 않으면 에어포트 구독의 노드가 무효화될 수 있습니다.</strong></p>
+</blockquote>
+<p caption='Mixin 设置'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/5BD8837D-D779-462F-8C7A-4E4AEC024B8B_2.webp' alt='Mixin 设置' title='Mixin 设置'></p>
+<p>Setting 메뉴에도 설정入口가 있습니다. 여기서는 JavaScript 형식의 Mixin 설정을 선택할 수 있으며, 자세한 내용은 문서를 참조하세요:</p>
+<p caption='Mixin 总设置'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/D1C4A8E9-A706-4CF1-A19F-FBD2DD439A34_2.webp' alt='Mixin 总设置' title='Mixin 总设置'></p>
+<h3 id="system-proxy">System Proxy</h3>
+<p>이름 그대로 Clash를 시스템 프록시로 설정하는 기능입니다. 이 기능을 끄면 Safari와 같이 시스템 프록시에 의존하는 소프트웨어는 더 이상 프록시를 사용할 수 없습니다. 따라서 Safari가 프록시를 사용하도록 하려면 반드시 System Proxy를 켜야 합니다.</p>
+<h2 id="프록시가-정상적으로-작동하지-않을-때의-문제-해결-방법">프록시가 정상적으로 작동하지 않을 때의 문제 해결 방법</h2>
+<p>프록시가 필요한 웹사이트에 접속할 수 없을 때는 아래 몇 가지를 간단히 확인해 볼 수 있습니다:</p>
+<h3 id="1단계-proxies-확인">1단계: Proxies 확인</h3>
+<p>메뉴 바의 작은 고양이 아이콘을 클릭하세요.</p>
+<p caption='小猫咪被点击啦'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/FB1C6B63-F79E-424B-87E7-E3909A39697E_2.webp' alt='小猫咪被点击啦' title='小猫咪被点击啦'></p>
+<p>열린 화면에서 <code>Proxies</code> 탭을 클릭한 후 노드를 선택하세요:</p>
+<p caption='点击节点选择会展开节点'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/3814EF32-EA61-4D8E-BB07-2414E4CF55AD_2.webp' alt='点击节点选择会展开节点' title='点击节点选择会展开节点'></p>
+<blockquote>
+<p>💡 자동 선택: CFW가 사용 가능한 노드를 자동으로 선택합니다.</p>
+</blockquote>
+<p>이때 노드 선택 뒤의 텍스트가 '자동 선택’인지 확인하세요(기본값이며 이 설정을 변경해서는 안 됩니다). 자동 선택인지 확인한 후 속도 테스트를 클릭하여 현재 자동 선택된 노드의 속도를 확인하세요:</p>
+<p caption='测速结果在右侧'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/F9BC2145-EE96-43CD-BABF-EE31506E35AE_2.webp' alt='测速结果在右侧' title='测速结果在右侧'></p>
+<p>여기서 노드가 사용 불가능한 경우 <code>Timeout</code> 시간 초과로 표시됩니다. 지연 시간이 1000+와 같이 너무 높으면 빨간색 숫자로 표시되며, 프록시 속도가 느리다는 것을 의미합니다.</p>
+<h3 id="2단계-profiles-확인">2단계: Profiles 확인</h3>
+<p>일반적으로 Profiles에는 여러 항목이 있을 것입니다. 예를 들면 다음과 같습니다:</p>
+<p caption='在多个节点列表中切换'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/0B0E0986-FEC8-4233-B5AB-8FB688E90654_2.webp' alt='在多个节点列表中切换' title='在多个节点列表中切换'></p>
+<p>1단계에서 노드 속도 테스트 결과가 모두 <code>Timeout</code>로 표시된다면, 노드 목록을 변경해 볼 수 있습니다. 위 그림에서 새로운 block을 클릭하면 왼쪽이 녹색으로 변하며, 현재 block의 노드 목록으로 전환되었음을 나타냅니다. 그런 다음 다시 1단계를 실행하여 노드 속도가 정상인지 확인하세요.</p>
+<p>또한 위 그림의 노드 목록이 오랫동안 업데이트되지 않은 경우(괄호 안에 업데이트 시간이 표시됨), 위의 <code>Update All</code>을 클릭하여 업데이트를 시도하세요. 업데이트가 실패할 경우 다른 block을 클릭한 후 다시 <code>Update All</code>을 클릭하여 업데이트를 시도하세요:</p>
+<p caption='更新节点列表'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/22A4E748-9C2C-4DC2-8641-EEC3BD0D6F7A_2.webp' alt='更新节点列表' title='更新节点列表'></p>
+<blockquote>
+<p>주의: 여러 노드 목록 사이를 너무 빠르게 전환하지 마세요. 오류가 발생할 수 있습니다. 하나를 전환한 후 3~4초 정도 기다린 후 다른 것으로 전환하세요(필요한 경우).</p>
+</blockquote>
+<h3 id="3단계-모든-연결-끊기">3단계: 모든 연결 끊기</h3>
+<p>위 두 단계를 실행한 후에도 문제가 없는데 페이지를 열 수 없다면, 브라우저가 이전 연결을 유지하고 있어 프록시를 통해 새로운 연결을 맺지 못할 수 있습니다. 이 경우 CFW의 <code>Connections</code> 탭에서 '모든 연결 끊기’를 클릭한 후 열리지 않는 페이지를 새로고침하세요:</p>
+<p caption='断开全部连接'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/FC7E6C7A-35B6-4004-92C6-E9ABE547CF7A_2.webp' alt='断开全部连接' title='断开全部连接'></p>
+<h2 id="새로운-에어포트-구독-추가">새로운 에어포트 구독 추가</h2>
+<p>새로운 에어포트 구독은 위에서 언급한 '노드 목록’입니다.</p>
+<p><code>Profiles</code> 탭에서 받은 링크를 유일한 입력란에 붙여넣은 후 <code>Download</code>을 클릭하세요. 다운로드가 성공하면 알림이 표시됩니다:</p>
+<p caption='添加新的节点列表'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/3F3F03C3-CE8A-4D96-9EA8-9237D4C55A35_2.webp' alt='添加新的节点列表' title='添加新的节点列表'></p>
+<h2 id="기타">기타</h2>
+<h3 id="프록시-모드">프록시 모드</h3>
+<p>Clash에는 다양한 프록시 모드가 있습니다. 예를 들어, 글로벌(Global) 모드는 모든 네트워크 연결이 프록시를 거치도록 합니다. 룰(Rule) 모드는 사용자가 설정한 규칙에 따라 일부 연결은 프록시를, 다른 연결은 직접 연결을 사용합니다. 다이렉트(Direct) 모드는 모든 네트워크 연결이 직접 연결되며, Clash 프록시를 사용하지 않은 것과 같은 효과를 냅니다. 스크립트(Script) 모드는 JavaScript 스크립트를 작성하여 사용자 정의 스크립트가 어떤 연결을 프록시로, 어떤 연결을 직접 연결로 처리할지 결정할 수 있습니다. 이러한 설정은 여기서 전환할 수 있습니다:</p>
+<p caption='切换富强方式'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/DC0BF45B-91D3-45DF-B230-254A2648EDD6_2.webp' alt='切换富强方式' title='切换富强方式'></p>
+<h3 id="로컬-네트워크의-다른-기기-프록시-설정">로컬 네트워크의 다른 기기 프록시 설정</h3>
+<p>Clash는 동일한 로컬 네트워크 세그먼트에 있는 다른 기기의 네트워크 연결을 프록시할 수 있어, 프록시 기능이 없는 기기도 프록시를 사용할 수 있게 합니다. 가장 대표적인 사용 사례는 Apple TV를 프록시하는 것입니다. Apple TV 시스템은 관련 프록시 인터페이스를 개방하지 않아, 휴대폰처럼 직접 프록시 소프트웨어를 설치할 수 없습니다. 따라서 라우터를 통해 프록시를 설정하거나, Apple TV의 프록시 서버를 Clash가 실행 중인 기기로 설정한 후 Clash에서 'Allow LAN’을 활성화하면 됩니다:</p>
+<p caption='允许本地局域网连接'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/C48B8690-F44B-4465-9BF7-8A2F4960F904_2.webp' alt='允许本地局域网连接' title='允许本地局域网连接'></p>
+<h3 id="프록시-서비스-구독-링크란-무엇인가요">프록시 서비스 구독 링크란 무엇인가요?</h3>
+<p>프록시 서비스 구독 링크는 프록시 서비스 제공자가 사용자에게 제공하는 링크로, Clash가 이 링크를 해석하여 yaml 형식의 설정 파일을 다운로드하도록 합니다. 이 파일은 Clash가 어떻게 작동해야 하는지 지시하는 역할을 합니다.</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          이 글의 최초 게시:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/the-using-of-clash-for-windows.ko.html"
+            title="Clash 사용에 관한 간단한 기록"
+          >
+            Clash 사용에 관한 간단한 기록 - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">목차</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>블로거의 말:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        저는 인생의 중요한 선택의 기로에 섰을 때, 누군가 최선의 방법을 알려주어 소중한 시간을 헛되이 보내지 않기를 바라곤 합니다. 그런 마음으로 저는 자주 블로그를 쓰며, 광활한 인터넷의 이 작은 구석에 제게는 단 한 번뿐인 인생 경험을 기록하여 도움이 필요한 분들에게 도움이 되기를 바랍니다.
+    </div>
+    <hr>
+    
+    <h5><a href="/ko/archive/">인기 태그</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="기술"
+                rel="188">기술</a>
+        
+            <a data-sort="0200"
+                href="/ko/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="생활"
+                rel="108">생활</a>
+        
+            <a data-sort="0264"
+                href="/ko/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="삽질"
+                rel="44">삽질</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="팁"
+                rel="32">팁</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="튜토리얼"
+                rel="32">튜토리얼</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="번역"
+                rel="24">번역</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="경험"
+                rel="20">경험</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="미식"
+                rel="20">미식</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="첫인상"
+                rel="16">첫인상</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="워크플로"
+                rel="16">워크플로</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="플러그인"
+                rel="16">플러그인</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="네트워크"
+                rel="16">네트워크</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="사용 경험"
+                rel="12">사용 경험</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="정리"
+                rel="12">정리</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="서버"
+                rel="12">서버</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="라우터"
+                rel="12">라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="소프트 라우터"
+                rel="12">소프트 라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="에세이"
+                rel="12">에세이</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9B%86%E6%88%90"
+                title="통합"
+                rel="12">통합</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="주식"
+                rel="8">주식</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="최적화"
+                rel="8">최적화</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%8D%83%E5%85%86"
+                title="기가비트"
+                rel="8">기가비트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="큰일"
+                rel="8">큰일</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="도구"
+                rel="8">도구</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="바이패스 라우터"
+                rel="8">바이패스 라우터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="프레임워크"
+                rel="8">프레임워크</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="족욕 시간"
+                rel="8">족욕 시간</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="테스트"
+                rel="8">테스트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="테슬라"
+                rel="8">테슬라</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="에디터"
+                rel="8">에디터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="영상"
+                rel="8">영상</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="디버깅"
+                rel="8">디버깅</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BD%A6"
+                title="자동차"
+                rel="8">자동차</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="마이그레이션"
+                rel="8">마이그레이션</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="둥베이 요리"
+                rel="4">둥베이 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="집 사기"
+                rel="4">집 사기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="프록시"
+                rel="4">프록시</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="풀스택"
+                rel="4">풀스택</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="북유럽 신화"
+                rel="4">북유럽 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="협업"
+                rel="4">협업</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="압축"
+                rel="4">압축</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="크레토스"
+                rel="4">크레토스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="가정식"
+                rel="4">가정식</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="부강"
+                rel="4">부강</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="비교"
+                rel="4">비교</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="쓰촨 요리"
+                rel="4">쓰촨 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="업무 경험"
+                rel="4">업무 경험</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="그리스 신화"
+                rel="4">그리스 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="자주 쓰는 앱"
+                rel="4">자주 쓰는 앱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="오픈소스"
+                rel="4">오픈소스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="언박싱"
+                rel="4">언박싱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="갓 오브 워"
+                rel="4">갓 오브 워</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="유심"
+                rel="4">유심</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%8B%93%E6%89%91"
+                title="토폴로지"
+                rel="4">토폴로지</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="이야기"
+                rel="4">이야기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="자료구조"
+                rel="4">자료구조</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="여행"
+                rel="4">여행</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="일상"
+                rel="4">일상</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="일본"
+                rel="4">일본</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="서비스"
+                rel="4">서비스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="포맷"
+                rel="4">포맷</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A2%A6"
+                title="꿈"
+                rel="4">꿈</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="브라우저"
+                rel="4">브라우저</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="게임"
+                rel="4">게임</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="푸념"
+                rel="4">푸념</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="사용자 개인정보"
+                rel="4">사용자 개인정보</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="알고리즘"
+                rel="4">알고리즘</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="디테일"
+                rel="4">디테일</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="이어폰"
+                rel="4">이어폰</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="자유"
+                rel="4">자유</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="계획"
+                rel="4">계획</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="설정"
+                rel="4">설정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="함정"
+                rel="4">함정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="변환"
+                rel="4">변환</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="기술 선정"
+                rel="4">기술 선정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="면접"
+                rel="4">면접</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>칼럼</h5>
+    <div class="tags">
+        <a href="/projects">오픈 소스</a>
+        <a href="/book-list">기술 도서 목록</a>
+        <a href="/subscribe">구독 & 유료 앱</a>
+        <a href="/my-food">맛집 추천</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>친구들</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">중국판</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="Clash 사용에 관한 간단한 기록"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ko"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ko/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

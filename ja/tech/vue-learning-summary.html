@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      Vue学習まとめ - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="Vue学習まとめ - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2016-6-1T1:22:21"> 
+              
+                  
+                    <meta property="article:tag" content="Vue">
+                    
+                    <meta property="article:tag" content="技術">
+                    
+                      
+                          
+                            <meta name="og:description" content="">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ja/tech/vue-learning-summary.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ja_JP">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ja/tech/vue-learning-summary.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/vue-learning-summary.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/vue-learning-summary.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/vue-learning-summary.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/vue-learning-summary.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/vue-learning-summary.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ja/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ja/">ホーム</a>
+            </li>
+            <li>
+              <a href="/ja/about/">概要</a>
+            </li>
+            <li>
+              <a href="/ja/donate/">寄付</a>
+            </li>
+            <li>
+              <a href="/ja/archive/">アーカイブ</a>
+            </li>
+            <li>
+              <a href="/ja/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">日本語</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/vue-learning-summary.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/vue-learning-summary.html" hreflang="en">English</a></li>
+        <li class="lang-item active"><a href="/ja/tech/vue-learning-summary.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/vue-learning-summary.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ja/archive/?tag=Vue"
+                            title="Vue">
+                            Vue
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技術">
+                            技術
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        Vue学習まとめ
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 作成日 2016年06月01日</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;注意：この記事が作成されてから既に
+          <code id="from_time"></code> 日が経過しています。情報の鮮度にご注意ください
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1464787341000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+              <h2 id="はじめに">はじめに</h2>
+<p>この記事は <a href="https://cn.vuejs.org/v2/guide/instance.html"><code>Vue 2.0公式ドキュメント</code></a> の「インスタンス」セクションから始め、いくつかの <code>Vue API</code> の使用方法や <code>Vue</code> が特定の機能を実装する原理について考察します。さらに、私自身の使用感や浅はかな視点から <code>Vue</code> の設計意図を分析する不遜な試みも含まれています。不適切な点があればご容赦ください。<code>Vue</code> に触れて間もないため、誤りがありましたら指摘していただけると幸いです。あらかじめお礼申し上げます。</p>
+<blockquote>
+<p>注意: 基礎知識は省略し、私が説明が必要と考える点のみを述べます。</p>
+</blockquote>
+<h2 id="vue-インスタンス">Vue インスタンス</h2>
+<p>すべての <code>Vue.js</code> アプリケーションは、コンストラクタを使って <code>Vue</code> のルートインスタンスを作成することで起動します。つまり、各ページのデータはこの1つのインスタンスによって管理されるべきであり、元データの送受信はすべてルートインスタンスを通じて一元管理され、ルートインスタンスは <code>props</code> でデータを配布したり、<code>events</code> でデータを監視したりします。子コンポーネントは <code>watch/computed</code> でデータの変化を監視し、適時更新すればよいのです。</p>
+<p>ドキュメントには「<code>すべての Vue.js コンポーネントは実際には拡張された Vue インスタンスである</code>」と書かれています。この文を正しく理解するならば、コンポーネントでもインスタンスと同じメソッドやライフサイクルフックが使える（ただし <code>data</code> を除く）ということです。</p>
+<p>コンポーネントの <code>data</code> は関数でなければなりません。コンポーネントは再利用されるため、毎回コンポーネントを呼び出すたびに新しいデータを生成する必要があるからです。</p>
+<p>データプロキシ(proxy)とは、<code>Vue</code> インスタンスがその <code>data</code> オブジェクト内のすべての属性を代理することを指します。一方、インスタンスプロパティ <code>$data</code> は <code>data</code> 属性そのものを表し、プロキシされた <code>data</code> と区別されます。</p>
+<p>つまり、<code>vm</code> の <code>data</code> 属性が <code>&#123;a: 'xheldon'&#125;</code> の場合、<code>vm.a</code> は <code>'xheldon'</code> となり、<code>vm.$data</code> は <code>&#123;a: 'xheldon'&#125;</code> となります。</p>
+<p>コンポーネントも実際には（拡張された）<code>Vue</code> インスタンスです。以下は簡単な検証です：</p>
+<p><code>list.vue</code> コンポーネント（<code>template</code> と <code>style</code> は省略）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Vue</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span>&#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Vue</span>);<span class="hljs-comment">//true</span><br>    <span class="hljs-keyword">return</span> &#123;&#125;<br>  &#125;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="props-vs-data">props vs data</h2>
+<p>コンポーネントを初期化する際、<code>prop</code> の属性と <code>data</code> の属性、そして <code>computed</code> のメソッドはすべて <code>Vue</code> インスタンスにバインドされます。しかし、<code>props</code> の属性は <code>data</code> の同名属性よりも優先度が高くなります。以下はその検証です：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;first:&#x27;</span>, <span class="hljs-variable language_">this</span>); <span class="hljs-comment">//list 的实例</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">a</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-comment">//属性 a 代表的值挂在 data 上, 但是被下面的 prop 属性同名覆盖(查看上面控制台输出的内容即可)</span><br>      <span class="hljs-attr">d</span>: <span class="hljs-string">&#x27;d&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">props</span>: [<span class="hljs-string">&#x27;a&#x27;</span>], <span class="hljs-comment">//和 data 中的 a 属性同名, 因此来自父级的数据将 data 中的同名属性 a 上的数据覆盖.(注:父级是根组件, 挂载在一个实例上)</span><br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>結果として警告が表示されます（エラーではなく、レンダリングには影響しません）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">[<span class="hljs-title class_">Vue</span> warn]: <span class="hljs-title class_">The</span> data property <span class="hljs-string">&quot;a&quot;</span> is already declared <span class="hljs-keyword">as</span> a prop. <span class="hljs-title class_">Use</span> prop <span class="hljs-keyword">default</span> value instead.<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/propsVSdata.png" alt="props VS data" title="props VS data" /></p>
+<p>一方、<code>computed</code> で返される関数名と <code>data</code> の属性名は重複可能で、何の警告も出ません。しかし、同名で上書きされた後、初期化時にコンソールで確認すると、<code>_data</code> が <code>_computedWatcher</code> より後にこの重複属性の <code>getter</code> と <code>setter</code> を設定しているようです（これが原因かどうかは不明で、詳細に調査した後でこの記事を修正する予定です）。そのため、上書きが発生します。関連する原理は <a href="https://juejin.im/entry/577639de165abd00547b0924">この紹介記事</a> で確認できます。</p>
+<p>これらはすべて初期化時にインスタンスの<code>属性</code>にバインドされ、同名の <code>computed</code> 属性は上書きされますが、<code>Vue devtool</code> には正しく表示されます）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;first:&#x27;</span>, <span class="hljs-variable language_">this</span>); <span class="hljs-comment">//list 的实例</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">ab</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-comment">//属性 a 代表的值挂在 data 上, 但是被下面的 prop 属性同名覆盖(查看上面控制台输出的内容即可)</span><br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">computed</span>: &#123;<br>    <span class="hljs-title function_">ab</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed a&#x27;</span>; <span class="hljs-comment">//方法名跟 data 上的 a 属性同名, 因此console 出来的 this 不会出现它的值, 用花括号输出的时候也是输出的 data 上的同名属性</span><br>    &#125;,<br>    <span class="hljs-title function_">f</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed f&#x27;</span>; <span class="hljs-comment">//方法名没有重复的, 因此 console 出来的 this 会有它的同名属性, 且值为 &#x27;computed f&#x27;, 我们提供的 function 被作为该属性的 getter(计算属性默认只有 getter, 可以手动添加 setter)</span><br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/computedVSdata1.png" alt="computed VS data" title="computed VS data" /></p>
+<p><code>Vue devtool</code> には正しく表示されます：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/computedVSdata3.png" alt="computed VS data" title="computed VS data" /></p>
+<p>もし <code>computed</code> のメソッド名と <code>data</code> の属性名が重複しない場合：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;first:&#x27;</span>, <span class="hljs-variable language_">this</span>); <span class="hljs-comment">//list 的实例</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">a</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-comment">//属性 a 代表的值挂在 data 上, 但是被下面的 prop 属性同名覆盖(查看上面控制台输出的内容即可)</span><br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">computed</span>: &#123;<br>    <span class="hljs-title function_">ab</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed a&#x27;</span>; <span class="hljs-comment">//方法名跟 data 上的 a 属性同名, 因此 console 出来的 this 不会出现它的值, 但 Vue devtool 控制台正确显示了出来, 用花括号输出的时候也是其返回值 computed a.</span><br>    &#125;,<br>    <span class="hljs-title function_">f</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed f&#x27;</span>; <span class="hljs-comment">//方法名没有重复的, 因此 console 出来的 this 会有它的同名属性, 且值为 &#x27;computed f&#x27;, 我们提供的 function 被作为该属性的 getter</span><br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/computedVSdata2.png" alt="computed VS data" title="computed VS data" /></p>
+<p>さらに、<code>methods</code>と<code>computed</code>メソッドの違いは、後者がキャッシュを持つ（つまり、依存するリアクティブデータが変更されない限り再計算されない）こと以外に、両方が補間値を返すことを目的としている場合、<code>methods</code>のメソッドは<code>functionName()</code>として使用され、<code>computed</code>のメソッドは<code>functionName</code>として参照されます。つまり、前者は関数を実行する必要があり、後者は実行する必要がありません。</p>
+<p>その理由は、<code>computed</code>プロパティに記述したメソッドがプロパティとして<code>Vue</code>インスタンスにマウントされ、提供した関数がこのメソッドの<code>getter</code>として扱われるためです。</p>
+<p>一方、<code>methods</code>は単なる関数であるため、補間参照であれイベントメソッドであれ、<code>()</code>を使用して呼び出す必要があります。</p>
+<p>このため、本当の関数が必要な場合（ここで関数呼び出しを使用する場合、<code>computed</code>は単に値を返すだけでなく、パラメータを渡す必要がある関数を返す必要があります）、<code>methods</code>が最適です。</p>
+<p>以下は、公式サイトとは異なる別バージョンの<code>todo list</code>です:</p>
+<p>テンプレート:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> @<span class="hljs-attr">keyup.enter</span>=<span class="hljs-string">&quot;addToList&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;todotext&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span><br>      &#123;% raw %&#125;<br>      <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span>&gt;</span><br>        &#123;&#123;key&#125;&#125;:&#123;&#123;value&#125;&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span>&gt;</span>X<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>      &#123;% endraw %&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>ロジック:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">todolist</span>: [],<br>      <span class="hljs-attr">todotext</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-title function_">addToList</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">push</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">todotext</span>);<br>    &#125;,<br>    <span class="hljs-title function_">deletetodo</span>(<span class="hljs-params">key</span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">splice</span>(key, <span class="hljs-number">1</span>);<br>    &#125;,<br>  &#125; <span class="hljs-comment">/*,</span><br><span class="hljs-comment">  computed:&#123;</span><br><span class="hljs-comment">    deletetodo(key)&#123;//不接收参数</span><br><span class="hljs-comment">      console.log(arguments);</span><br><span class="hljs-comment">      this.todolist.splice(key, 1);</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">  &#125;*/</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>この例では、このようなテンプレートを使用する場合、<code>button</code>をクリックしたときに現在の<code>li</code>を削除するためにパラメータを渡す必要があるため、この状況では<code>methods</code>を使用する必要があります。</p>
+<p><code>computed</code>を使用する場合、パラメータを受け入れません（<code>getter</code>であるため）](<a href="http://whereswalden.com/2010/08/22/incompatible-es5-change-literal-getter-and-setter-functions-must-now-have-exactly-zero-or-one-arguments">http://whereswalden.com/2010/08/22/incompatible-es5-change-literal-getter-and-setter-functions-must-now-have-exactly-zero-or-one-arguments</a>)、たとえ関数を返したとしても:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">computed</span>:&#123;<br>  <span class="hljs-title function_">deletetodo</span>(<span class="hljs-params">key</span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//控制台输出当前组件实例</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">splice</span>(key, <span class="hljs-number">1</span>);<span class="hljs-comment">//报错</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>注意: 両方に同名の関数が存在する場合、<code>computed</code>の関数が<code>methods</code>よりも優先されます（<code>getter</code>と<code>setter</code>の処理順序の問題で、詳細はソースコードを参照してください）。この状況は補間参照とイベントバインディングの両方に適用されます。以下は検証です:</p>
+<p>補間参照テスト:</p>
+<p>テンプレート:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;%raw%&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;&#123;a()&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>&#123;% endraw%&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;im from methods&#x27;</span><br>  &#125;<br>&#125;,<br><span class="hljs-attr">computed</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;im from computed&#x27;</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>関数<code>im from computed</code>が出力されます。<code>computed</code>が関数を返さない場合、補間参照で<code>{{a}}</code>のみを使用すると、明らかに<code>computed</code>の値が出力されます。検証はここでは省略します。</p>
+<p>イベントバインディングの場合:</p>
+<p>呼び出し時に<a href="https://cn.vuejs.org/v2/guide/events.html#%E5%86%85%E8%81%94%E5%A4%84%E7%90%86%E5%99%A8%E6%96%B9%E6%B3%95">インラインハンドラメソッド</a>を使用:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;%raw%&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;a()&quot;</span>&gt;</span>click me<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>&#123;% endraw%&#125;<br></code></pre></td></tr></table></figure>
+<p>ロジック:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;methods&#x27;</span>)<br>  &#125;<br>&#125;,<br><span class="hljs-attr">computed</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-comment">//computed 返回一个函数</span><br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;computed&#x27;</span>)<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>computed</code>が出力されます。</p>
+<p><a href="https://cn.vuejs.org/v2/guide/events.html#%E6%96%B9%E6%B3%95%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A8">メソッドイベントハンドラ</a>を使用しても結果は同じです:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;%raw%&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;a&quot;</span>&gt;</span>click me<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>//注意此处不带括号 &#123;% endraw%&#125;<br></code></pre></td></tr></table></figure>
+<p>ロジック:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;methods&#x27;</span>)<br>  &#125;<br>&#125;,<br><span class="hljs-attr">computed</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-comment">//computed 返回一个函数</span><br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;computed&#x27;</span>)<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>computed</code>が出力されます。</p>
+<p>イベントバインディングの場合、<code>computed</code>は常に関数を返す必要があります。</p>
+<p>したがって、優先順位は次のとおりです:</p>
+<p><code>props &gt; data &gt; computed &gt; methods</code></p>
+<p><code>computed</code>と<code>methods</code>の<code>this.xxx</code>内の参照優先順位も同じであると推測されます。詳細を確認したい場合は検証してください。</p>
+<p>また、どちらの場合も<code>method</code>は関数を返す必要がありませんが、<code>computed</code>は常に関数を返す必要があり、どちらの場合もパラメータを受け入れません（<code>getter</code>であるため）。以上のことから、イベント処理には<code>methods</code>を使用し、データバインディング/補間処理には<code>computed</code>（キャッシュがあるため）を使用するのが最適です。</p>
+<p>さらに、<code>method</code>でイベントをバインドする場合、<code>()</code>を付けるか付けないかは同じ効果を持ち、どちらも関数を実行します。違いは次のとおりです:</p>
+<ol>
+<li>
+<p><code>()</code>付きのものをインラインステートメントと呼び、ネイティブイベントとカスタムイベントの2つのケースに分けられます。どちらの場合も引数を渡すことができ、引数リストが空の場合、デフォルト引数 <code>arguments</code> も空となり、デフォルト引数は存在しません。<code>input/click</code> のようなネイティブイベントによってトリガーされる場合、特別な <code>$event</code> パラメータをネイティブの <code>event</code> イベントハンドラとして渡すことができます。一方、カスタムイベントによってトリガーされる場合、イベントハンドラ関数の引数は実際に渡される値に依存し、カスタム関数には特別な <code>$event</code> オブジェクトは使用できません。<code>$emit</code> でカスタムイベントをトリガーする際に渡される引数は無視されます。</p>
+</li>
+<li>
+<p><code>()</code>なしのものをメソッドイベントと呼び、これも2つのケースに分けられます：ネイティブイベントの場合、ネイティブの <code>event</code> イベントが唯一のデフォルト引数として渡されます。カスタムイベントの場合、<code>$emit</code> イベント時にイベント名以外の第2引数から最後の引数まで任意の数の引数が渡されます。</p>
+</li>
+</ol>
+<blockquote>
+<p>言葉だけでは不十分、コードを見せてください</p>
+</blockquote>
+<p>上記は4つのケースを指しています：</p>
+<ol>
+<li><code>()</code>付きのネイティブイベント</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;input type=<span class="hljs-string">&quot;text&quot;</span> @click=<span class="hljs-string">&quot;test1()&quot;</span>&gt;<span class="hljs-comment">//模板里面传参为空</span><br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">test1</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//则逻辑中的参数也为空;</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li><code>()</code>付きのカスタムイベント</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//子模板</span><br>&lt;input type=<span class="hljs-string">&quot;text&quot;</span> @input=<span class="hljs-string">&quot;shuru($event)&quot;</span>/&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;&#123;xheldon&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="hljs-comment">//子逻辑:</span><br><span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;child&#x27;</span>,<br><span class="hljs-attr">props</span>:[<span class="hljs-string">&#x27;xheldon&#x27;</span>],<br><span class="hljs-attr">method</span>:&#123;<br>  <span class="hljs-title function_">shuru</span>(<span class="hljs-params">e</span>)&#123;<br>    <span class="hljs-variable language_">this</span>.$emit(<span class="hljs-string">&#x27;haha&#x27;</span>, e.<span class="hljs-property">target</span>.<span class="hljs-property">value</span>,<span class="hljs-string">&#x27;其他参数&#x27;</span>);<br>  &#125;<br>&#125;<br><span class="hljs-comment">//父模板</span><br>&lt;child :xheldon=<span class="hljs-string">&quot;blob&quot;</span> @haha=<span class="hljs-string">&quot;something()&quot;</span>&gt;&lt;/child&gt;<br><span class="hljs-comment">//父逻辑:</span><br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">something</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;parent:&#x27;</span>,...<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//上面 something() 中传 xxx, 则输出 &#x27;parent:xxx&#x27;, 即忽略了子组件 $emit 事件时候传递的参数.</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">blob</span> = <span class="hljs-variable language_">arguments</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li><code>()</code>なしのネイティブイベント</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;input type=<span class="hljs-string">&quot;text&quot;</span> @click=<span class="hljs-string">&quot;test1&quot;</span>&gt;<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">test1</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//结果: 输出原生的 MouseEvent 事件</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="4">
+<li><code>()</code>なしのカスタムイベント</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//子模板</span><br>&lt;input type=<span class="hljs-string">&quot;text&quot;</span> @input=<span class="hljs-string">&quot;shuru($event)&quot;</span>/&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;&#123;xheldon&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="hljs-comment">//子逻辑:</span><br><span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;child&#x27;</span>,<br><span class="hljs-attr">props</span>:[<span class="hljs-string">&#x27;xheldon&#x27;</span>],<br><span class="hljs-attr">method</span>:&#123;<br>  <span class="hljs-title function_">shuru</span>(<span class="hljs-params">e</span>)&#123;<br>    <span class="hljs-variable language_">this</span>.$emit(<span class="hljs-string">&#x27;haha&#x27;</span>, e.<span class="hljs-property">target</span>.<span class="hljs-property">value</span>,<span class="hljs-string">&#x27;其他参数&#x27;</span>);<br>  &#125;<br>&#125;<br><span class="hljs-comment">//父模板</span><br>&lt;child :xheldon=<span class="hljs-string">&quot;blob&quot;</span> @haha=<span class="hljs-string">&quot;something&quot;</span>&gt;&lt;/child&gt;<br><span class="hljs-comment">//父逻辑:</span><br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">something</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;parent:&#x27;</span>,...<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//input 输入 xxx, 则输出 &#x27;parent: xxx 其他参数&#x27;, 即与子组件 $emit 时候传递的参数相关.</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">blob</span> = <span class="hljs-variable language_">arguments</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="ディレクティブとパラメータ（属性）">ディレクティブとパラメータ（属性）</h2>
+<p>基本的な使い方：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">v-directive:propNamed.modifiers</span>=<span class="hljs-string">&quot;value&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>ここで、<code>directive</code> はディレクティブと呼ばれ、<code>propName</code> はディレクティブの「パラメータ」と呼ばれます。実際、パラメータの具体的な表現は <code>html</code> 上の属性です（<code>Vue</code> にはいくつかの組み込みパラメータ/属性があります。例えば <code>v-bind:click=&quot;method&quot;</code> の <code>click</code>、<code>v-bind:href=&quot;/img/in-post/x.png&quot;</code> の <code>href</code> など。前者はインラインに表示されませんが、後者は必須であるためインライン属性に表示されます。一方、自分で定義したパラメータ/属性は必ずインライン属性に表示されます）。<code>value</code> は変数（ダブルクォーテーション内に書かれていますが）で、ほとんどの場合、親テンプレートから来ます。</p>
+<p><code>propName</code> には修飾子を付けることができ、<code>.prevent</code> のようにデフォルトイベントを禁止するなどの動作を簡単に操作できます。</p>
+<p>一部のディレクティブは <code>v-if</code> のように直接使用できますが、<code>v-bind:href/v-on:click</code> のようにパラメータを追加する必要があるものもあります。</p>
+<p>注意点として、<code>value</code> にダブルクォーテーションを付けるかどうかは結果に影響しません。つまり、<code>:propName=&quot;value&quot;</code> と <code>:propName=value</code> は同じです。特に断りのない限り、以下のすべてのケースに適用されます。</p>
+<p><code>value</code> がブール値に変換された後に <code>false</code> の場合、<code>propName</code> は削除されます。<code>true</code> の場合、<code>propName</code> が表示されます。実際、これは以下のルールに従います（カスタム属性に限ります）：</p>
+<ol>
+<li><code>null</code>、<code>undefined</code>、<code>false</code> のリテラルの場合、<code>propName</code> 属性は削除されます。</li>
+<li><code>value</code> が未定義の変数の場合、例えば <code>:propName=&quot;wxd&quot;</code> の場合、<code>propName</code> は削除され、警告が表示されます：</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">[<span class="hljs-title class_">Vue</span> warn]: <span class="hljs-title class_">Property</span> or method <span class="hljs-string">&quot;s&quot;</span> is not defined on the instance but referenced during render. <span class="hljs-title class_">Make</span> sure to declare reactive data properties <span class="hljs-keyword">in</span> the data option.<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li>
+<p><code>value</code> が配列の場合、配列はオブジェクトであるため、<code>propName</code> は以下の2番目のケースを除いて常に存在します。<code>value</code> は以下のケースに分けられます：</p>
+</li>
+<li>
+<p><code>:propName =[]</code>、<code>:propName =&quot;[]&quot;</code>、<code>:propName =&quot;['']&quot;</code> の場合、<code>value</code> は削除され、属性のみが残ります。</p>
+</li>
+<li>
+<p><code>:propName =[&quot;&quot;]</code> の場合、構造が崩れます。</p>
+</li>
+<li>
+<p><code>:propName =[&quot;&quot;,&quot;&quot;]</code> または <code>:propName ='[&quot;&quot;,&quot;&quot;]'</code> の場合、<code>value</code> の値は <code>&quot;,&quot;</code> となります。</p>
+</li>
+<li>
+<p><code>value</code> がネストされた配列の場合、その値が一次元化された後、<code>value</code> またはその再帰的な子要素に <code>undefined</code> または <code>null</code> リテラル（文字列内に記述されたものではない）が含まれている場合、その値は空になります。<code>value</code> またはその再帰的な子要素に <code>Object</code> が含まれている場合、その値は <code>[object Object]</code> になります。</p>
+</li>
+<li>
+<p><code>value</code> がオブジェクトの場合、<code>propName</code> は保持され、値は <code>[object Object]</code> になります。</p>
+</li>
+<li>
+<p><code>value</code> が数値または文字列の場合（例: <code>:propName = &quot;'fff'&quot;</code>）、<code>propName</code> は保持され、<code>value</code> は文字列または数値の値になります。</p>
+</li>
+</ol>
+<p>ソースコードを確認したところ、実際にこのようなロジックになっています：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">setAttr</span>(<span class="hljs-params">el, key, value</span>) &#123;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isBooleanAttr</span>(key)) &#123;<br>    <span class="hljs-comment">// set attribute for blank value</span><br>    <span class="hljs-comment">// e.g. &lt;option disabled&gt;Select one&lt;/option&gt;</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isFalsyAttrValue</span>(value)) &#123;<br>      el.<span class="hljs-title function_">removeAttribute</span>(key);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      el.<span class="hljs-title function_">setAttribute</span>(key, key);<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isEnumeratedAttr</span>(key)) &#123;<br>    el.<span class="hljs-title function_">setAttribute</span>(<br>      key,<br>      <span class="hljs-title function_">isFalsyAttrValue</span>(value) || value === <span class="hljs-string">&#x27;false&#x27;</span> ? <span class="hljs-string">&#x27;false&#x27;</span> : <span class="hljs-string">&#x27;true&#x27;</span><br>    );<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isXlink</span>(key)) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isFalsyAttrValue</span>(value)) &#123;<br>      el.<span class="hljs-title function_">removeAttributeNS</span>(xlinkNS, <span class="hljs-title function_">getXlinkProp</span>(key));<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      el.<span class="hljs-title function_">setAttributeNS</span>(xlinkNS, key, value);<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isFalsyAttrValue</span>(value)) &#123;<br>      el.<span class="hljs-title function_">removeAttribute</span>(key);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      el.<span class="hljs-title function_">setAttribute</span>(key, value);<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>これらのルールはカスタム属性に限定されます。組み込み属性の場合は異なります。例えば <code>class</code> 属性をバインドする場合：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">v-<span class="hljs-attr">bind</span>:<span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;&#123;active: isActive&#125;&quot;</span><br></code></pre></td></tr></table></figure>
+<p>これは、<code>isActive</code> の値が <code>false</code> またはブール値 <code>false</code> に変換可能な他の値の場合、<code>active</code> というクラス名が適用されず、それ以外の場合はクラス名が適用されることを意味します（if文の真偽判定と同じです）。</p>
+<h2 id="フィルター">フィルター</h2>
+<p>フィルターを連結する場合、最初のフィルターのパラメータは初期値であり、以降のフィルターの最初のパラメータは前のフィルターの戻り値になります。戻り値がない場合は <code>undefined</code> になります。</p>
+<p>テンプレート：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">v-bind:prop</span>=<span class="hljs-string">&quot;rawProp | filterOne | filterTwo&quot;</span>&gt;</span><br>  控制台查看 filter 函数的参数<br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>ロジック：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">rawProp</span>: <span class="hljs-string">&#x27;this is raw prop&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">filters</span>: &#123;<br>    <span class="hljs-title function_">filterOne</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;this param is pass to next filter&#x27;</span>;<br>    &#125;,<br>    <span class="hljs-title function_">filterTwo</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-header&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>最初の <code>filter</code> を除き、後続の <code>filter</code> は初期値を取得できません。ただし、パラメータを渡したい場合、最初の <code>filter</code> が配列を返すなど、方法はいくらでもあります。</p>
+<h2 id="リストレンダリング">リストレンダリング</h2>
+<p><code>v-for</code> でパラメータが2つの場合、ネイティブ <code>js</code> の <code>forEach</code> パラメータと一致し、<code>value, key</code> の順になります。<code>of</code> 演算子と <code>in</code> 演算子の効果は完全に同じです（ネイティブ <code>js</code> では異なりますが）。</p>
+<p>もう一つ注意が必要な点は、コンポーネントで <code>v-for</code> を使用する場合、親からコンポーネントにデータが自動的に渡されないことです。コンポーネントには独自のスコープがあるためです。そのため、子コンポーネントにデータを渡すには、<code>props</code> プロパティを使用して少し手間をかける必要があります：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">my-component</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(item, index) in items&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-bind:item</span>=<span class="hljs-string">&quot;item&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-bind:index</span>=<span class="hljs-string">&quot;index&quot;</span></span><br><span class="hljs-tag">&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">my-component</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>また、<code>v-for</code> をオブジェクトに使用する場合、反復値はオブジェクトの値であり、キーではありません。これはネイティブ <code>js</code> とは異なります。ネイティブ <code>js</code> の <code>for in</code> ループで値を出力するには、手動で <code>obj['i']</code> を反復処理する必要があり、キーを出力するには2番目のパラメータ <code>(value, key)</code> を記述する必要があります：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">obj</span>:&#123;<br>  <span class="hljs-attr">first</span>: <span class="hljs-string">&#x27;xheldon&#x27;</span>,<br>  <span class="hljs-attr">last</span>: <span class="hljs-string">&#x27;cao&#x27;</span>,<br>  <span class="hljs-attr">age</span>: <span class="hljs-string">&#x27;25&#x27;</span><br>&#125;<br>&lt;div v-<span class="hljs-keyword">for</span>=<span class="hljs-string">&quot;(value, key) in obj&quot;</span>&gt;&#123;% raw %&#125;&#123;&#123;value&#125;&#125;-&#123;&#123;key&#125;&#125;&#123;% endraw %&#125;&lt;<span class="hljs-regexp">/div&gt;/</span>/ 输出 xheldon cao <span class="hljs-number">25</span><br></code></pre></td></tr></table></figure>
+<p>注意：ネイティブ <code>js</code> では、<code>Symbol.iterator</code> を手動で実装しない限り、<code>for of</code> ループを使用できませんが、<code>Vue</code> では可能です（ただし効果は <code>for in</code> と完全に同じです）。</p>
+<p>リストレンダリングには「就地复用原则」（その場での再利用原則）という小さな <code>tips</code> があります。これはどういう意味でしょうか？ 前述の <code>tololist</code> の例で説明すると、各要素に一意の <code>key</code> 値を指定しない場合（以下のように）：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span>&gt;</span><br>  &#123;%raw%&#125;&#123;&#123;value.key&#125;&#125;:&#123;&#123;value.value&#125;&#125;&#123;%endraw%&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span></span><br><span class="hljs-tag">    @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    X<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>この場合、×ボタンをクリックして現在の <code>li</code> を削除するたびに、<code>Vue</code> はその場で現在の要素を再利用し、データを正しい位置に直接移動します。<code>remove</code> でDOM要素を削除せず、<code>reflow</code> を回避します。以下は、×ボタンをクリックして要素を削除するときのページの <code>render</code> 状況を <code>chrome</code> の <code>devtool</code> で表示したものです：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/nokey.png" alt="没有key" title="没有key" /></p>
+<p><code>reflow</code> の部分は最下部のわずかな部分だけであることがわかります。</p>
+<p>一方、<code>key</code> を追加すると：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span> <span class="hljs-attr">:key</span>=<span class="hljs-string">&quot;value.key&quot;</span>&gt;</span><br>  &#123;% raw %&#125;&#123;&#123;value.key&#125;&#125;:&#123;&#123;value.value&#125;&#125;&#123;% endraw%&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span></span><br><span class="hljs-tag">    @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    X<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>「×」をクリックした後のブラウザの <code>render</code> の状況を見てみましょう:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/key.png" alt="有key" title="有key" /></p>
+<p>ここで疑問に思うかもしれません。なぜこの部分で <code>Vue</code> が提供する <code>(value, key)</code> の <code>key</code> を使わず、自分で <code>value</code> 上に <code>value.key</code> を実装する必要があるのでしょうか？:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;% raw %&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span> <span class="hljs-attr">:key</span>=<span class="hljs-string">&quot;key&quot;</span>&gt;</span><br>  &#123;&#123;value.key&#125;&#125;:&#123;&#123;value.value&#125;&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span>&gt;</span>X<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>&#123;% endraw %&#125;<br></code></pre></td></tr></table></figure>
+<p>答えは、<code>Vue</code> が提供する <code>key</code> は一見 <code>key</code> のように見えますが、実際には現在のデータとは無関係なものです。そのため、<code>li</code> を削除する際に、<code>key</code> は単に再計算されるだけで、削除された要素や残された要素に伴って移動したり削除されたりしません。上記の書き方を使用すると、効果は最初の <code>key</code> なしの場合と同じで、依然として就地再利用戦略が使われ、変更されるのはデータだけで、<code>dom</code> 構造は変わりません。したがって、自分で <code>key</code> を実装する必要があります。おおよそ以下のようになります:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span>&#123;<br>    <span class="hljs-attr">toolist</span>:[],<br>    <span class="hljs-attr">truekey</span>: <span class="hljs-number">0</span>,<span class="hljs-comment">//手动实现一个 key</span><br>    <span class="hljs-attr">todotext</span>: <span class="hljs-string">&#x27;&#x27;</span><br>  &#125;<br>&#125;,<br><span class="hljs-attr">methods</span>: &#123;<br>  <span class="hljs-title function_">addTolist</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">push</span>(&#123;<span class="hljs-attr">value</span>:<span class="hljs-variable language_">this</span>.<span class="hljs-property">todotext</span>, <span class="hljs-attr">key</span>: ++<span class="hljs-variable language_">this</span>.<span class="hljs-property">truekey</span>&#125;);<span class="hljs-comment">// 把 key 放到 data 上</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="イベントハンドラ">イベントハンドラ</h2>
+<p>イベントハンドラはチェーンできますが、一部の要素はそもそもサポートしていないため、バインドしても意味がありません。例えば <code>div</code> に <code>keyup</code> イベントをバインドする場合:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;div @keyup.<span class="hljs-property">alt</span>=<span class="hljs-string">&quot;pressalt&quot;</span>&gt;div alt 按键测试&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+<p>そのため、一般的には <code>div</code> でイベントをバブリング処理し、<code>input</code> に <code>alt+ctrl</code> イベントをバインドします:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;div @keyup.<span class="hljs-property">alt</span>=<span class="hljs-string">&quot;presskey&quot;</span>&gt;div冒泡按键测试<br>  &lt;input type=<span class="hljs-string">&quot;text&quot;</span>&gt;<br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+<p>ここで私が懸念しているのは、<code>input</code> が <code>@keyup.space</code> のリスナーを使用している場合、中国語入力法ではスペースは通常単語を選択するために使われるため、実際に出力されるのはまだ選択されていないピンイン文字なのか、それともスペースを押した後の候補リストの最初の単語なのかということです（これは <code>Vue</code> の問題ではないかもしれませんが、ここで提起しておきます）。</p>
+<p>答えは、ほとんどの場合、スペースを押した後の最初の単語が出力されます。ただし、一文が長い場合、2回スペースを押して文を出力する必要がある場合、最初に押した時には何も出力されず、空になり、2回目にスペースを押した時に初めてすべての語彙が出力されます。これはテストの極端なケースを想定しているため、基本的にはスペースを押した後の最初の単語が出力され、空白やピンイン文字ではないと考えてよいでしょう。私は搜狗 <code>mac</code> 入力法の単行候補モードを使用しており、上記の <code>todolist</code> でテストできます（省略）。</p>
+<p>注: 公式ドキュメントで <code>v-model</code> について説明する際に <code>IME</code> について触れていますが、これがまさにこの問題です。入力法を使用している際に <code>v-model</code> も即座に反応させたい場合は、<code>input</code> イベントをバインドすることができます。</p>
+<h2 id="フォームコントロール">フォームコントロール</h2>
+<p><code>v-model</code> は一般的に <code>input</code> に使用され、テンプレート内の <code>input</code> の <code>value</code> 値は無視されます。<code>v-model</code> は <code>js</code> 内の初期値のみを認識し、それにバインドします。そのため、<code>v-model</code> を記述し、さらに <code>value</code> 属性も記述した場合、後者は <code>dom</code> 構造には現れますが、<code>js</code> がその値を取得する際には無視され、<code>v-model</code> がバインドした値が取得されます:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span></span><br><span class="hljs-tag">  <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;我出现在 dom 结构的 value 属性中, 但是只能通过 getAttribute 获取到我, .value 并不能获取到, 伤心~&quot;</span></span><br><span class="hljs-tag">/&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span>&#123;<br>    <span class="hljs-attr">todotext</span>:<span class="hljs-string">&#x27;我是真正的初始值, js 获取的是我, 虽然我并不出现在 dom 中的 value 属性中~&#x27;</span>,<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>両者の違いは、<code>jQuery</code>における<code>.data</code>と<code>.attr</code>の違いに似ています------インラインで記述されたものは<code>attr('data','xxx')</code>の値であり、<code>DOM</code>構造を確認しても<code>xxx</code>の値が表示されますが、<code>js</code>で実際に取得される値は<code>js</code>でバインドされた<code>.data('yyy')</code>の値です------もちろん、<code>attr</code>を使用して<code>DOM</code>構造を読み取る場合を除きます。（注：インスタンス化後に<code>attr</code>の値を変更すると、<code>js</code>で取得されるのは<code>attr</code>の値になります。ここでの初期値の無視は、あくまで初期値のみを無視するものです。例を挙げると、初期化後の<code>v-model</code>が<code>value</code>にバインドされた後、手動で<code>DOM</code>構造の<code>value</code>値を変更すると、<code>v-model</code>がその要素の<code>value</code>値を取得する際には、変更後の<code>attr</code>属性値が使用され、<code>data</code>上の値ではありません）。</p>
+<p>もし要件が特殊で、<code>v-model</code>を使用せずに<code>input</code>の値を取得してリアルタイムで更新したくない場合、または<code>input</code>の値を処理してから更新したい場合、<code>$ref</code>を試してみてください（<code>e.target.value</code>も使用可能です）：</p>
+<p>テンプレート:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> @<span class="hljs-attr">input</span>=<span class="hljs-string">&quot;input&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;inputvalue&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>ロジック:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;&#x27;</span><br>&#125;,<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">input</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">message</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">$refs</span>.<span class="hljs-property">inputvalue</span>.<span class="hljs-property">value</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>公式ドキュメントにも記載されているように、<code>v-model</code>は双方向データバインディングを実現するためのシンタックスシュガーに過ぎません:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-bind:value</span>=<span class="hljs-string">&quot;something&quot;</span> <span class="hljs-attr">v-on:input</span>=<span class="hljs-string">&quot;something = $event.target.value&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>ただし、<code>input</code>イベントを監視すると、入力法を使用している際にスペースを押して単語を選択する前にも入力イベントがトリガーされるため、この要件がない場合は、素直に<code>v-model</code>を使用するのが良いでしょう。</p>
+<p>複数の要素に同じ値をバインドして出力する必要がある場合、一般的な要件は一連の<code>checkbox</code>です。この場合、配列を使用する必要があります:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;messages&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;xheldon&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;messages&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;xiaodan&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123;messages&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span>&#123;<br>    <span class="hljs-attr">messages</span>: []<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>（私が発見した限りでは）このように簡潔な配列の使用方法は、複数の<code>checkbox</code>タイプの<code>input</code>に対してのみ有効です------つまり、複数の要素が同じ<code>v-model</code>にバインドされていても、これらの要素の状態は同期されず、対応する<code>value</code>が配列に格納されます。もちろん、<code>methods</code>を使用して任意の入力タイプの要素で同様の効果を実現できると強く主張する場合は------それについては触れません。</p>
+<p>単一の<code>checkbox</code>の場合、<code>v-model</code>は<code>value</code>値にバインドされ、<code>true</code>または<code>false</code>になります。<code>:true-value</code>と<code>:false-value</code>を使用して、選択時の値と非選択時の値をカスタマイズできます。</p>
+<p>一方、複数のラジオボタン<code>radio</code>の場合、<code>v-model</code>は<code>name</code>と同様の役割を果たします------つまりグループ化に使用されるため、<code>radio</code>タイプの<code>input</code>で<code>v-model</code>を使用する場合、<code>name</code>属性を記述する必要はありません。</p>
+<p><code>select</code>タイプの場合、各<code>option</code>に<code>value</code>属性が指定されていない場合、バインドされるのは<code>option</code>内の値です。指定されている場合は<code>value</code>属性の値になります。<code>select</code>タイプの複数選択ボックスで<code>v-model</code>にバインドする<code>data</code>は配列型でなければなりません。そうでない場合、警告が表示されます（エラーにはなりませんが、<code>Vue</code>が自動的に変換し、正常に動作します）:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span> warn]: <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">multiple</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;selectM&quot;</span>&gt;</span> expects an Array value for its binding, but got String</span><br></code></pre></td></tr></table></figure>
+<p>注意：上記のすべてのタイプで<code>v-model</code>と<code>value</code>をバインドする際に、<code>value</code>属性が動的（<code>:value=&quot;xxx&quot;</code>）に<code>data</code>上の他の属性（<code>xxx</code>）にバインドされている場合、<code>v-model</code>に対応する属性と<code>:value</code>に対応する属性は同一（厳密に等しい）です。</p>
+<h2 id="コンポーネント">コンポーネント</h2>
+<p>まず区別すべきは、<code>DOM</code>テンプレートと文字列テンプレートの違いです。</p>
+<p><code>HTML</code>テンプレートとは、通常の<code>html</code>要素を指し、これらの要素は<code>Vue</code>インスタンスの<code>el</code>オプションによってバインドされます：<br />
+文字列テンプレートの部分：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;div id=<span class="hljs-string">&#x27;tpl&#x27;</span>&gt;<br>  &#123;<span class="hljs-string">&#x27; &#x27;</span>&#125;<br>  实例挂载元素 html 自有组件:<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br>  自定义组件:<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">my-component</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-component</span>&gt;</span></span><br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+<p>文字列テンプレートとは：</p>
+<ol>
+<li><code>js</code>内で<code>template</code>によって登録されるテンプレート、例えば：</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">component</span>(<span class="hljs-string">&#x27;my-component&#x27;</span>, &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;span&gt;&#123;&#123;message&#125;&#125;&lt;/span&gt;&#x27;</span>,<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;hello, xheldon&#x27;</span>;<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>または：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> <span class="hljs-title class_">Child</span> = &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;div&gt;&#x27;</span>hello, xheldon<span class="hljs-string">&#x27;&lt;/div&gt;&#x27;</span><br>&#125;<br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>(&#123;<br>  <span class="hljs-attr">components</span>: &#123;<br>    <span class="hljs-string">&#x27;my-component&#x27;</span>: <span class="hljs-title class_">Child</span><br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>
+<p><code>&lt;script type=&quot;text/x-tempalge&quot;&gt;&lt;/script&gt;</code>によって登録されるテンプレート（<code>Handlebar</code>と同じ）</p>
+</li>
+<li>
+<p><code>.vue</code>コンポーネント内の<code>&lt;template&gt;</code>タグの内容。</p>
+</li>
+</ol>
+<p><code>Vue</code>はブラウザが解析を完了した後に<code>DOM</code>テンプレートの解析を開始するため、<code>DOM</code>テンプレートは特定の子要素を必要とするタグではコンポーネントを使用できません。例えば、<code>select</code>タグの子要素は<code>option</code>でなければならず、カスタムタグ<code>com-option</code>は認識されません。そのため、<code>is=&quot;component-name&quot;</code>属性を追加して、そのタグが使用するテンプレート名を指定します。</p>
+<h2 id="リテラル構文-vs-動的構文">リテラル構文 VS 動的構文</h2>
+<p>ここで注意すべき問題は、ネイティブの<code>js</code>ではオブジェクトのプロパティに数字を使用できますが、それは文字列として扱われます（<code>ES5</code>のみ、<code>ES6</code>ではオブジェクトのプロパティは任意の値にできますが、これ以降の説明と矛盾しません）。しかし、<code>Vue</code>では、<code>data</code>プロパティに数字を属性として使用できません。リテラル構文の場合、数字を渡すと先に<code>toString</code>処理されますが、動的構文の場合は直接数字として処理され、<code>data</code>にバインドされたプロパティ値は検索されません：</p>
+<p>子コンポーネントテンプレート：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;%raw%&#125;&#123;&#123;dynamic&#125;&#125;&#123;%endraw%&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;alertProp&quot;</span>&gt;</span>点我看上面 props 传参的类型<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>子コンポーネントロジック：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">props</span>:[<span class="hljs-string">&#x27;dynamic&#x27;</span>],<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">alertProp</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-title function_">alert</span>(<span class="hljs-keyword">typeof</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">dynamic</span>)<span class="hljs-comment">//上面说过了, props 属性也是绑定到 Vue 实例上的, 因此可以直接使用 this</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>親コンポーネント-リテラル構文：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">com-child</span> <span class="hljs-attr">dynamic</span>=<span class="hljs-string">&quot;11&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">com-todolist</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>親コンポーネント-動的構文：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">com-child</span> <span class="hljs-attr">:dynamic</span>=<span class="hljs-string">&quot;11&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">com-todolist</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>上記の両方の構文における親コンポーネントのロジックは同じ：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-number">11</span>:<span class="hljs-string">&#x27;属性-动态语法&#x27;</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>結果として、親コンポーネントのリテラル構文を使用した場合、<code>button</code>をクリックすると子コンポーネントに<code>1</code>が渡され、ドキュメントにもある通り、文字列の<code>1</code>であるため、<code>alert</code>で表示されるのは<code>string</code>です。一方、親コンポーネントの動的構文で<code>v-bind</code>を使用して親コンポーネントの<code>data</code>の<code>1</code>プロパティをバインドしても、子コンポーネントは<code>1</code>プロパティに対応する<code>属性-動的構文</code>の値を受け取らず、依然として<code>1</code>という値であるため、<code>button</code>をクリックしたときに<code>alert</code>で表示されるのは<code>number</code>です。</p>
+<p>結論：<code>data</code>オブジェクトの属性として数字を使用しない方が良いです。</p>
+<p>注意：子コンポーネントに渡される属性が配列またはオブジェクトの場合、子コンポーネントでこの属性値を変更すると、親コンポーネントに反映されます------これは通常すべきではありません。なぜなら、よく言われるように：<code>props down, events up</code>（例は省略）、ベストプラクティスは親コンポーネントから渡される参照型のディープコピーを使用することです------ただし、子コンポーネントが親コンポーネントの状態に影響を与える必要がある場合は、幸運を祈ります。</p>
+<p><code>events up</code>の際、子コンポーネントが<code>$emit</code>するときにイベント名以外のパラメータを渡すと、これらのパラメータは親コンポーネントのイベントリスナー関数に渡されます：</p>
+<p>子コンポーネントテンプレート：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;input type=<span class="hljs-string">&quot;text&quot;</span> @input=<span class="hljs-string">&quot;someEventHandlerForOriginalEventLikeClickOrInput($event)&quot;</span>/&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>&#123;&#123;data&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<p>子コンポーネントロジック：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">props</span>:[<span class="hljs-string">&#x27;data&#x27;</span>],<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">someEventHandlerForOriginalEventLikeClickOrInput</span>(<span class="hljs-params">e</span>)&#123;<br>    <span class="hljs-variable language_">this</span>.$emit(<span class="hljs-string">&#x27;eventPasstoParent&#x27;</span>, e.<span class="hljs-property">target</span>.<span class="hljs-property">value</span>, <span class="hljs-string">&#x27;someOtherArgus&#x27;</span>);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>親テンプレート：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">com-todolist</span></span><br><span class="hljs-tag">  <span class="hljs-attr">:data</span>=<span class="hljs-string">&quot;someParentData&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">eventPasstoParent</span>=<span class="hljs-string">&quot;someParentEventHandler&quot;</span></span><br><span class="hljs-tag">&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">com-todolist</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>親ロジック：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">someParentData</span>: <span class="hljs-string">&#x27;&#x27;</span><br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">someParentEventHandler</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">someParentData</span> = [...<span class="hljs-variable language_">arguments</span>];<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="非同期更新キュー">非同期更新キュー</h2>
+<p><code>Vue</code>があれば、もはや<code>jQuery</code>は必要ありません。フレームワークの最大の利点は、同じ操作に対して繰り返しコードを書く必要がなくなることです。双方向データバインディングは多くの<code>DOM</code>操作問題を解決してくれますが、場合によっては<code>jQuery</code>がより優れていることもあります。例えば<code>DOM</code>を操作する際、<code>jQuery</code>はコールバック関数として関数を受け取り、アニメーションの実行完了時にトリガーされます。一方、私たちが使用する双方向データバインディングでは、データを設定した後、<code>DOM</code>がいつ更新されたかをどうやって知るのでしょうか？答えは<code>jQuery</code>と同じで、非同期更新キューです。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> vm = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>(&#123;<br>  <span class="hljs-attr">el</span>: <span class="hljs-string">&#x27;#example&#x27;</span>,<br>  <span class="hljs-attr">data</span>: &#123;<br>    <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;123&#x27;</span>,<br>  &#125;,<br>&#125;);<br>vm.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;new message&#x27;</span>; <span class="hljs-comment">// 更改数据</span><br>vm.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span> === <span class="hljs-string">&#x27;new message&#x27;</span>; <span class="hljs-comment">// false</span><br><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">nextTick</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  vm.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span> === <span class="hljs-string">&#x27;new message&#x27;</span>; <span class="hljs-comment">// true</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>この書き方は個人的にはお勧めしません。なぜなら、最良のロジックはインスタンスのプロパティ/メソッド内に記述すべきで、インスタンスの外側に書くべきではないと考えるからです。幸い<code>Vue</code>はこれを実現する方法を提供してくれています：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">component</span>(<span class="hljs-string">&#x27;example&#x27;</span>, &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;span&gt;&#123;&#123; message &#125;&#125;&lt;/span&gt;&#x27;</span>,<br>  <span class="hljs-attr">data</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;not updated&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-attr">updateMessage</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;updated&#x27;</span>;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>); <span class="hljs-comment">// =&gt; &#x27;没有更新&#x27;</span><br>      <span class="hljs-variable language_">this</span>.$nextTick(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>); <span class="hljs-comment">// =&gt; &#x27;更新完成&#x27;</span><br>      &#125;);<br>    &#125;,<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<h2 id="アニメーション">アニメーション</h2>
+<p>アニメーションについては特に言うことはありませんが、<code>JavaScript</code>フック関数の中の2つのフックについて説明が必要です。それは<code>enterCanceled</code>と<code>leaveCancelled</code>です。<code>enterCancelled</code>は<code>v-if</code>と<code>v-show</code>の両方で使用され、どちらでもトリガーされる可能性があります。トリガーのタイミングは、<code>enter</code>イベントが発生した後、アニメーションがまだ完了していない過程で、他のアニメーションを実行する必要があるときです。一方、<code>leaveCancelled</code>は<code>v-show</code>でのみ使用され、<code>v-if</code>で使用した場合は無効で、決してトリガーされません。そのトリガーのタイミングは、離脱アニメーション（つまり<code>xxx-leave-active</code>アニメーション）が再生中でまだ完了していないときに、他のアニメーションを実行したときです。</p>
+<p>テストコード：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;show=!show&quot;</span>&gt;</span>点击我切换状态<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">transition</span></span><br><span class="hljs-tag">  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;go&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">before-enter</span>=<span class="hljs-string">&quot;beforeEnter&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">enter</span>=<span class="hljs-string">&quot;enter&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">after-enter</span>=<span class="hljs-string">&quot;afterEnter&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">enter-cancelled</span>=<span class="hljs-string">&quot;enterCancelled&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">before-leave</span>=<span class="hljs-string">&quot;beforeLeave&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">leave</span>=<span class="hljs-string">&quot;leave&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">after-leave</span>=<span class="hljs-string">&quot;afterLeave&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">leave-cancelled</span>=<span class="hljs-string">&quot;leaveCancelled&quot;</span></span><br><span class="hljs-tag">&gt;</span><br>  此处使用 v-show, 修改成 v-if 的时候发现, leave-cancelled 不会触发.<br>  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-show</span>=<span class="hljs-string">&quot;show&quot;</span>&gt;</span>点击展示我, 再点击一下隐藏我.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">transition</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>ロジック：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span>&#123;<br>    <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span><br>  &#125;<br>&#125;,<br><span class="hljs-attr">methods</span>: &#123;<br>  <span class="hljs-title function_">beforeEnter</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-title function_">alert</span>(<span class="hljs-number">1</span>);&#125;,<br>  <span class="hljs-title function_">enter</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">2</span>);&#125;,<br>  <span class="hljs-title function_">afterEnter</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">3</span>);&#125;,<br>  <span class="hljs-title function_">enterCancelled</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">4</span>);&#125;,<br>  <span class="hljs-title function_">beforeLeave</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">5</span>);&#125;,<br>  <span class="hljs-title function_">leave</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-title function_">alert</span>(<span class="hljs-number">6</span>);&#125;,<br>  <span class="hljs-title function_">afterLeave</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">7</span>);&#125;,<br>  <span class="hljs-title function_">leaveCancelled</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">8</span>);&#125;<br>&#125;,<br></code></pre></td></tr></table></figure>
+<p>スタイル：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">5s</span> ease;<br>&#125;<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">5s</span> <span class="hljs-built_in">cubic-bezier</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">0.8</span>, <span class="hljs-number">1</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter</span>,<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">10px</span>);<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>フックのパラメータは、<code>enter</code>と<code>leave</code>が<code>el</code>要素自体（ネイティブの<code>Element</code>型要素）と<code>done</code>コールバック関数であるのに対し、他のフックのパラメータはすべて<code>el</code>要素自体です。</p>
+<p>要素のトランジションでは、各要素に<code>key</code>を追加するのが最善です。なぜなら、前述の就地再利用戦略により、切り替え時にデータを直接置き換えてしまい、アニメーション効果が得られない可能性があるからです。</p>
+<p>公式ドキュメントで全く説明されていない点の1つは、<code>Vue transition</code>のアニメーションクラス名<code>css</code>の書き方には順序制限があることです。<code>v-enter</code>と<code>v-leave</code>は<code>v-enter-active</code>と<code>v-leave-active</code>の後ろに書かなければならず、そうでないと無効になります。例えば、ボタンをクリックしたときのフェードイン/フェードアウト効果を作りたい場合、ボタンをクリックすると左から右へボタンがフェードインし、同時に現在クリックしたボタンが左から右へフェードアウトするようにしたいとします：<br />
+ロジック：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">data</span>:&#123;<br>  <span class="hljs-attr">isShow</span>: <span class="hljs-literal">true</span><br>&#125;,<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">animakkey</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">isShow</span> = !<span class="hljs-variable language_">this</span>.<span class="hljs-property">isShow</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>構造：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;button-animate&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">transition</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;go&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;a&quot;</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;isShow&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>on<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;b&quot;</span> <span class="hljs-attr">v-else</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>off<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">transition</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>もしあなたのスタイルがこうなっている場合：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>&#125;<br><span class="hljs-selector-class">.go-enter</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">0px</span>);<br>&#125;<br><br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>アニメーション効果が期待通りでないことに気付くでしょう：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/animateBad.gif" alt="animate" title="animate" /></p>
+<p>しかし、<code>enter</code>を<code>enter-active</code>の後ろに移動すると：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">0px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">25px</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>完璧に動作します：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/animateGood.gif" alt="animate" title="animate" /></p>
+<p>これら4つの<code>css</code>クラス名の可能な順序を比較した後、<code>v-enter</code>を<code>v-enter-active</code>の後ろに置くだけで効果が得られることがわかりました。他のクラス名は任意です。</p>
+<p><code>transition</code>タグ内にはアニメーションが必要な要素だけを配置でき、他の要素を入れることはできません。もし上記の例の構造がこのようになっている場合：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">transition</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;go&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;button-animate&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;a&quot;</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;isShow&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>on<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;b&quot;</span> <span class="hljs-attr">v-else</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>off<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">transition</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>アニメーション効果は全く得られません。また、通常の<code>css</code>クラス名でいくつかの<code>css</code>プロパティを使用して要素のスタイルを規定し、<code>v-enter</code>のようなアニメーションクラス名で同じプロパティを使用した場合も効果がありません。<a href="https://cn.vuejs.org/v2/guide/transitions.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%87%E6%B8%A1%E7%B1%BB%E5%90%8D">ドキュメント</a>は「それらの優先度は通常のクラス名よりも高い」と述べていますが、実際にはそうではありません（私の理解が間違っているのでしょうか？ご指摘をお待ちしています）。前の例で、スタイルの中で<code>button</code>の通常の<code>css</code>プロパティを設定すると：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">0px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">25px</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>結果：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/animateWithout.gif" alt="animate" title="animate" /></p>
+<p>見ての通り、<code>opacity</code> だけがアニメーションし、<code>transform</code> はアニメーションしません！（皆さんも試してみてください。<code>animate.css</code> を使用する際に、<code>Animate.css</code> と同じプロパティを事前に要素に設定した場合、アニメーション効果がまだあるかどうか、ぜひ <code>issue</code> を提出してください。）</p>
+<p><code>transition-group</code> は <code>transition</code> と少し異なります。見た目上、<code>transition</code> 自体は単なるラッパーコンテナで、ページ構成には関与しませんが、<code>transition-group</code> は <code>Vue</code> によってタグ（デフォルトでは <code>span</code> タグ）に置き換えられます。また、置き換えるタグ名をカスタマイズすることも可能です。</p>
+<h2 id="render-関数"><code>render</code> 関数</h2>
+<p><code>render</code> 関数を使用すると、テンプレートを書く代わりになります。その引数 <code>createElement</code> は一般的に <code>h</code> と記述されます。コンポーネントやタグ内の各種バインディングや属性などは、<code>createElement</code> 内で対応する <code>JavaScript</code> の書き方を見つけることができます。もし見つからない場合は、ネイティブの書き方を使用できます。例えば、<code>.stop</code> や <code>.prevent</code> などは、直接 <code>event.stopPropagation()</code> や <code>event.preventDefault()</code> を使用すればよいです。</p>
+<h2 id="その他">その他</h2>
+<p>ミックスイン（<code>mixin</code>）とは、通常のコンポーネント作成プロセス（つまりコンポーネントのライフサイクル内）で、追加の機能を修正または追加することを指します。</p>
+<p>一部の <code>プラグイン</code> は上記の <code>mixin</code> に基づいて書かれています。それ以外のプラグインとしては、<code>Vue.prototype</code> にメソッドを追加したり、<code>config</code> を通じてグローバルなメソッドやプロパティを追加するものがあります。</p>
+<p><code>ルーティング</code> は、<code>component</code> の <code>is</code> 属性を使用して簡単に実装できます。また、<code>render</code> 関数を直接書いて、異なるパスに応じて異なるテンプレートをレンダリングすることも可能です。もちろん、より複雑な場合はサードパーティライブラリが必要になります。</p>
+<p><code>状態管理</code> については、サンプルを見ると、各状態変更のプロセスを記録するために <code>wrap</code> を追加する必要があるようです。公式が推奨するベストプラクティスは、直接インスタンスプロパティに代入できる場合でも、関数を通じて状態を変更することです。これにより、状態の追跡が可能になります。</p>
+<p><code>ユニットテスト</code> は、通常のユニットテストであり、特に説明する必要はありません。</p>
+<h2 id="サーバーサイドレンダリング（server-side-render）">サーバーサイドレンダリング（<code>Server Side Render</code>）</h2>
+<p>考え方を確認すると、基本的に非常にシンプルです。まず、<code>app.js</code> で <code>Vue</code> インスタンスを <code>exports</code> し、次に新しいページテンプレートファイル <code>index.html</code>（<code>Vue.js</code> をインポートし、<code>Vue</code> インスタンスをマウントするメソッド <code>$mount</code> を含む。公式サイトでは <code>app.js</code> もインポートしていますが、必要かどうかは私が検証してから説明します）を作成します。このテンプレートにはインスタンスのマウントポイント（<code>id</code> 属性を持つ空でない要素）が含まれています。その後、サーバー側の <code>server.js</code> でこれらをすべて <code>require</code> し、<code>vue-server-renderer</code> を使用して、<code>app.js</code> から <code>exports</code> された <code>Vue</code> インスタンスをレンダリングし、クライアントに返す際にマウントポイント（<code>id</code> 属性を持つ空でない要素、<code>app.js</code> 内のテンプレートが既に存在するため）を置き換えます。</p>
+<p>サーバーサイドレンダリングの結果、上記のマウントポイント（<code>id</code> 属性を持つ空でない要素）に <code>server-rendered=&quot;true&quot;</code> 属性が追加されます（ページソースを右クリックして確認すると存在することがわかります。これは <code>js</code> で動的に追加されたものではないことを示しています）。</p>
+<p>サーバーサイドもストリーミングレンダリングをサポートしています。まず、<code>html</code>をマウントポイント（<code>id</code>属性を持つ空でない要素、例えば<code>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</code>）で分割点として<code>split</code>し、<code>a</code>と<code>b</code>の2つの部分に分けます。先ほど使用した<code>vue-server-renderer</code>は<code>app.js</code>を<code>renderToString</code>していましたが、ストリーミングレンダリングをサポートするためには、<code>renderToStream</code>という別のメソッドを使用する必要があります。その後、<code>data</code>イベントを監視し、<code>html</code>の<code>a</code>部分の後ろに追加します。<code>end</code>イベントの後、<code>html</code>の<code>b</code>部分を連結し、最終的に<code>res.send</code>で送信します。</p>
+<h2 id="後記">後記</h2>
+<p>帝都所在、<code>cn.vuejs.org</code>を<code>ping</code>:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/ping1.png" alt="ping" title="ping" /></p>
+<p>自社の<code>FQ</code> <code>VPS</code>を<code>ping</code>:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/ping2.png" alt="ping" title="ping" /></p>
+<p><code>dig</code>を実行:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/dig1.png" alt="dig" title="dig" /></p>
+<p><code>cloudflare</code>のサービスを使用していることが確認できます。国際的なウェブサイトは難しいですね、はは。</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          この記事の初出:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/vue-learning-summary.ja.html"
+            title="Vue学習まとめ"
+          >
+            Vue学習まとめ - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">目次</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>ブログ主より：</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        人生の重要な選択に直面したとき、最善の方法を誰かが教えてくれて、貴重な時間を無駄にせずに済めばと、私はよく願っています。だからこそ、自分の経験を踏まえて頻繁にブログを書き、広大なインターネットのこの小さな片隅に、私にとって一度きりの人生経験を記録し、助けを求める人々の力になれればと思っています。
+    </div>
+    <hr>
+    
+    <h5><a href="/ja/archive/">人気のタグ</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技術"
+                rel="188">技術</a>
+        
+            <a data-sort="0200"
+                href="/ja/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="108">生活</a>
+        
+            <a data-sort="0264"
+                href="/ja/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="いじり"
+                rel="44">いじり</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="コツ"
+                rel="32">コツ</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="チュートリアル"
+                rel="32">チュートリアル</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻訳"
+                rel="24">翻訳</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="経験"
+                rel="20">経験</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="グルメ"
+                rel="20">グルメ</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体験"
+                rel="16">初体験</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="ワークフロー"
+                rel="16">ワークフロー</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="プラグイン"
+                rel="16">プラグイン</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="ネットワーク"
+                rel="16">ネットワーク</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用感"
+                rel="12">使用感</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="まとめ"
+                rel="12">まとめ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="サーバー"
+                rel="12">サーバー</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="ルーター"
+                rel="12">ルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="ソフトルーター"
+                rel="12">ソフトルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="エッセイ"
+                rel="12">エッセイ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9B%86%E6%88%90"
+                title="統合"
+                rel="12">統合</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="8">主食</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="最適化"
+                rel="8">最適化</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%8D%83%E5%85%86"
+                title="ギガビット"
+                rel="8">ギガビット</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="8">大事</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="ツール"
+                rel="8">ツール</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="バイパスルーター"
+                rel="8">バイパスルーター</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="フレームワーク"
+                rel="8">フレームワーク</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="足湯タイム"
+                rel="8">足湯タイム</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="テスト"
+                rel="8">テスト</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="テスラ"
+                rel="8">テスラ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="エディタ"
+                rel="8">エディタ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="動画"
+                rel="8">動画</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="デバッグ"
+                rel="8">デバッグ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BD%A6"
+                title="車"
+                rel="8">車</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="移行"
+                rel="8">移行</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="東北料理"
+                rel="4">東北料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="住宅購入"
+                rel="4">住宅購入</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="プロキシ"
+                rel="4">プロキシ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="フルスタック"
+                rel="4">フルスタック</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="北欧神話"
+                rel="4">北欧神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="共同編集"
+                rel="4">共同編集</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="圧縮"
+                rel="4">圧縮</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="クレイトス"
+                rel="4">クレイトス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="家庭料理"
+                rel="4">家庭料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="富強"
+                rel="4">富強</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="比較"
+                rel="4">比較</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="四川料理"
+                rel="4">四川料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="仕事の経験"
+                rel="4">仕事の経験</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="ギリシャ神話"
+                rel="4">ギリシャ神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="定番ソフト"
+                rel="4">定番ソフト</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="オープンソース"
+                rel="4">オープンソース</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="開封"
+                rel="4">開封</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="ゴッド・オブ・ウォー"
+                rel="4">ゴッド・オブ・ウォー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIMカード"
+                rel="4">SIMカード</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%8B%93%E6%89%91"
+                title="トポロジー"
+                rel="4">トポロジー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="物語"
+                rel="4">物語</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="データ構造"
+                rel="4">データ構造</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="旅行"
+                rel="4">旅行</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="日常"
+                rel="4">日常</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="日本"
+                rel="4">日本</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="サービス"
+                rel="4">サービス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="フォーマット"
+                rel="4">フォーマット</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A2%A6"
+                title="夢"
+                rel="4">夢</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="ブラウザ"
+                rel="4">ブラウザ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="ゲーム"
+                rel="4">ゲーム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="愚痴"
+                rel="4">愚痴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="ユーザープライバシー"
+                rel="4">ユーザープライバシー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="アルゴリズム"
+                rel="4">アルゴリズム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="詳細"
+                rel="4">詳細</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="イヤホン"
+                rel="4">イヤホン</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="自由"
+                rel="4">自由</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="計画"
+                rel="4">計画</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="設定"
+                rel="4">設定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="落とし穴"
+                rel="4">落とし穴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="変換"
+                rel="4">変換</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="技術選定"
+                rel="4">技術選定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="面接"
+                rel="4">面接</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>コラム</h5>
+    <div class="tags">
+        <a href="/projects">オープンソース</a>
+        <a href="/book-list">技術書リスト</a>
+        <a href="/subscribe">サブスク＆有料アプリ</a>
+        <a href="/my-food">グルメのおすすめ</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>友達</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">中国版</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="Vue学習まとめ"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ja"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ja/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

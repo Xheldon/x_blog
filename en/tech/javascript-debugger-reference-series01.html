@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      &#34;Translation&#34; Official Guide Series: JavaScript Debugging Guide (Part 1) - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="Official Guide Series Part 1">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="&#34;Translation&#34; Official Guide Series: JavaScript Debugging Guide (Part 1) - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2022-9-13T1:29:30"> 
+              
+                  
+                    <meta property="article:tag" content="JavaScript">
+                    
+                    <meta property="article:tag" content="Tips">
+                    
+                    <meta property="article:tag" content="Technology">
+                    
+                    <meta property="article:tag" content="Debugging">
+                    
+                      
+                          
+                            <meta name="og:description" content="Official Guide Series Part 1">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/en/tech/javascript-debugger-reference-series01.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="en_US">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/en/tech/javascript-debugger-reference-series01.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/javascript-debugger-reference-series01.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/javascript-debugger-reference-series01.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/javascript-debugger-reference-series01.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/javascript-debugger-reference-series01.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/javascript-debugger-reference-series01.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/en/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/en/">Home</a>
+            </li>
+            <li>
+              <a href="/en/about/">About</a>
+            </li>
+            <li>
+              <a href="/en/donate/">Donate</a>
+            </li>
+            <li>
+              <a href="/en/archive/">Archive</a>
+            </li>
+            <li>
+              <a href="/en/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">English</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/javascript-debugger-reference-series01.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item active"><a href="/en/tech/javascript-debugger-reference-series01.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/javascript-debugger-reference-series01.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/javascript-debugger-reference-series01.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/en/archive/?tag=JavaScript"
+                            title="JavaScript">
+                            JavaScript
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E6%8A%80%E5%B7%A7"
+                            title="Tips">
+                            Tips
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="Technology">
+                            Technology
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E8%B0%83%E8%AF%95"
+                            title="Debugging">
+                            Debugging
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        &#34;Translation&#34; Official Guide Series: JavaScript Debugging Guide (Part 1)
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 Written on Sep 13, 2022</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 Updated on Sep 13, 2022</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;Note: it has been
+          <code id="from_time"></code> days since this article was written, please be aware of its timeliness
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1663032570000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+         
+        <div class="reference-tips">
+          🔗 &nbsp;Source：<a href="https://developer.chrome.com/docs/devtools/javascript/reference/" target="_blank">
+            https://developer.chrome.com/docs/devtools/javascript/reference/
+          </a>
+        </div>
+          
+        <div class="callout-tips">🖥 &nbsp;Note：Official Guide Series Part 1</div>
+         
+        <div class="craft-tips">
+          📚 &nbsp;Also published on Craft：<a
+            href="https://www.craft.do/s/kyKcQKCEQjAksv"
+            target="_blank"
+          >
+            https://www.craft.do/s/kyKcQKCEQjAksv
+          </a>
+        </div>
+          <p>Through this comprehensive introduction to Chrome DevTools debugging features, we hope to elevate your debugging process to the next level.</p>
+<p>First, you may need to learn basic debugging techniques <a href="https://developer.chrome.com/docs/devtools/javascript/">here</a> (English, pending translation).</p>
+<h2 id="pausing-code-with-breakpoints">Pausing Code with Breakpoints</h2>
+<p>By setting a breakpoint, you can pause code execution midway.</p>
+<p>Check <a href="https://developer.chrome.com/docs/devtools/javascript/breakpoints/">here</a> (English, pending translation) to learn how to set a breakpoint.</p>
+<h3 id="previewing-class-function-properties-on-hover">Previewing Class/Function Properties on Hover</h3>
+<p>When code execution is paused, hovering over a class or function name allows you to preview its properties.</p>
+<p caption='1'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/EA456FA6-9331-41E3-96DC-3FCCFFA82C2E_2.png' alt='1' title='1'></p>
+<h2 id="step-through-code-execution">Step Through Code Execution</h2>
+<p>When your code is paused, you can execute it line by line to understand the call stack and related property values.</p>
+<h3 id="step-over-the-current-line-of-code">Step Over the Current Line of Code</h3>
+<p>When your breakpoint pauses on a line of code that contains a function but is unrelated to your current investigation, you can click <code>Step Over</code> to continue execution without entering that function.</p>
+<p caption='step_over'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/63AE5442-D0AD-46C5-8DB0-36452E2842D2_2.png' alt='step_over' title='step_over'></p>
+<p>Figure 1 👆🏻, the explanation of the meaning of <code>Step Over</code> in the blue box in the image above:</p>
+<p>For example, suppose you are debugging the following code:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">updateName</span>(name); <span class="hljs-comment">// D</span><br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// B</span><br>  <span class="hljs-keyword">return</span> name; <span class="hljs-comment">// C</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>At this point, your breakpoint is paused at position <code>A</code>. By clicking <strong>Step over</strong>, DevTools will execute all the code within the scope you “Step over”—in the example above, it steps over positions <code>B</code> and <code>C</code> inside the <code>getName</code> function at position <code>A</code>, causing DevTools to pause the code at position <code>D</code>.</p>
+<h3 id="step-into-the-current-line-of-code">Step Into the Current Line of Code</h3>
+<p>If the breakpoint pauses at a location relevant to the issue you’re investigating, and that location contains a function call, clicking <code>Step into</code> allows you to further inspect that function.</p>
+<p caption='step_into'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/0B7F9CB7-7EA3-44A2-8808-8E23F9E0D786_2.png' alt='step_into' title='step_into'></p>
+<p>Figure 2 👆🏻, the explanation of the meaning of <code>Step into</code> in the blue box above:</p>
+<p>For example, suppose you are debugging the following code:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">updateName</span>(name);<br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// B</span><br>  <span class="hljs-keyword">return</span> name;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Your breakpoint is paused at position <code>A</code>. At this point, clicking <strong>Step into</strong> will execute this line of code and then pause at position <code>B</code>.</p>
+<h3 id="step-out-of-the-current-line-of-code">Step Out of the Current Line of Code</h3>
+<p>When the breakpoint pauses inside a function unrelated to the issue you’re investigating, you can click <strong>Step out</strong> to execute the remaining code in that function.</p>
+<p caption='step_out'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6E97FB74-E73D-4189-9A21-3771A1DF27AF_2.png' alt='step_out' title='step_out'></p>
+<p>Figure 3 👆🏻, the explanation of the meaning of <code>Step out</code> in the blue box in the image above:</p>
+<p>For example, suppose you are debugging the following code:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>();<br>  <span class="hljs-title function_">updateName</span>(name); <span class="hljs-comment">// C</span><br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// A</span><br>  <span class="hljs-keyword">return</span> name; <span class="hljs-comment">// B</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Your breakpoint is currently paused at position <code>A</code>. At this point, clicking <strong>Step out</strong> will cause DevTools to execute the remaining code in the <code>getName()</code> function, specifically the code at position B, and then pause the breakpoint at position <code>C</code>.</p>
+<h3 id="continue-execution-to-a-specific-line">Continue Execution to a Specific Line</h3>
+<p>When debugging a long function, there may be many lines of code unrelated to the issue you’re investigating.</p>
+<p>You could choose to step through these irrelevant lines one by one, but this process can be tedious. Alternatively, you could set a breakpoint on the desired line of code and press <code>Resume Script Execution</code>, but there’s an even faster method.</p>
+<p>Right-click on the line where you want the breakpoint and select <strong>Continue to here</strong>. DevTools will resume execution until it reaches that line and then pause there.</p>
+<p caption='continue_to_here'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/01C96466-2B8C-4088-9E66-7408708B0401_2.png' alt='continue_to_here' title='continue_to_here'></p>
+<p>Figure 4 👆🏻, select <strong>Continue to here</strong>.</p>
+<h3 id="resume-script-execution">Resume Script Execution</h3>
+<p>You can click <strong>Resume Script Execution</strong> to continue running the code from where it was paused at the breakpoint. DevTools will execute the code until it encounters the next breakpoint (if any).</p>
+<p caption='resume_script_execution'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/E67463E2-9D01-48BB-A743-28A189DF68CD_2.png' alt='resume_script_execution' title='resume_script_execution'></p>
+<p>Figure 5 👆🏻, <strong>Resume Script Execution</strong>, highlighted in the blue box.</p>
+<h4 id="forced-execution">Forced Execution</h4>
+<p>You can long-press <strong>Resume Script Execution</strong> and select <strong>Force Script Execution</strong> to ignore all remaining breakpoints and execute the entire code directly.</p>
+<p caption='force_script_execution'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DAB9BD94-70F7-4464-8609-3016E8B40A44_2.png' alt='force_script_execution' title='force_script_execution'></p>
+<p>Figure 6 👆🏻, select <strong>Force Script Execution</strong>.</p>
+<h3 id="changing-the-current-thread’s-context">Changing the Current Thread’s Context</h3>
+<p>When debugging involves Web Worker or Service Worker, you can switch contexts by clicking on the items in the <strong>Threads</strong> panel’s context list. The blue arrow indicates the currently selected context.</p>
+<p caption='change_threads_context'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1474933D-3F44-4D93-9909-FF4245545704_2.png' alt='change_threads_context' title='change_threads_context'></p>
+<p>Figure 7 👆🏻, in the <strong>Threads</strong> panel, at the position marked by the blue box.</p>
+<p>For example, imagine a scenario where your breakpoints exist simultaneously in your main script and your service worker script. You want to inspect local and global variables in the service worker, but the <strong>Source</strong> panel is currently displaying the context of your main script. In this case, you can click the service worker entry in the <strong>Threads</strong> panel to switch contexts and view the variables you’re interested in.</p>
+<h2 id="viewing-and-editing-variables-properties-in-local-closure-and-global-scopes">Viewing and Editing Variables/Properties in Local, Closure, and Global Scopes</h2>
+<p>When paused at a specific line, use the Scope panel to inspect and modify variables in local, closure, and global scopes.</p>
+<ul>
+<li>
+<p>Double-click a property value to edit it.</p>
+</li>
+<li>
+<p>Non-enumerable properties are highlighted in gray.</p>
+</li>
+</ul>
+<p caption='查看和修改变量'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/40A93D0F-ACA8-4128-A695-E502565253AD_2.png' alt='查看和修改变量' title='查看和修改变量'></p>
+<p>Figure 8 👆🏻, in the <strong>Scope</strong> panel, the location marked by the blue box.</p>
+<h2 id="viewing-the-current-call-stack">Viewing the Current Call Stack</h2>
+<p>When paused at a specific line, use the <strong>Call Stack</strong> panel to examine the sequence of function calls from the start of code execution up to your current breakpoint.</p>
+<p>If your code contains asynchronous operations, you can check the <strong>Async</strong> checkbox to enable the asynchronous call stack.</p>
+<p>Click on any entry to jump to the calling location of that function. The blue arrow icon indicates the currently highlighted function.</p>
+<p caption='查看函数调用栈'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1168318B-1CFA-493D-9AE6-2CF79930C58C_2.png' alt='查看函数调用栈' title='查看函数调用栈'></p>
+<p>Figure 9 👆🏻, in the <strong>Call Stack</strong> panel, the position marked by the blue box.</p>
+<blockquote>
+<p>Note: If the code is not paused on a specific line, the Call Stack panel will be empty.</p>
+</blockquote>
+<h3 id="re-executing-functions-in-the-call-stack">Re-executing Functions in the Call Stack</h3>
+<p>Sometimes you may want to observe the execution of a particular function without restarting the entire debugging process. When the breakpoint pauses inside the function, you can re-execute that function alone—in other words, you can reintroduce the function’s call context into the call stack.</p>
+<blockquote>
+<p>Note: You can restart any function in the <strong>Call Stack</strong>, except for WebAssembly, async, and generator functions.</p>
+</blockquote>
+<p>To re-execute a function:</p>
+<ol>
+<li>
+<p>Use a breakpoint to pause the function. The <strong>Call Stack</strong> panel will record the sequence of function calls.</p>
+</li>
+<li>
+<p>In the <strong>Call Stack</strong> panel, right-click a function and select <strong>Restart frame</strong> from the context menu.</p>
+</li>
+</ol>
+<p caption='重新执行断点所在的函数'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DFF3FAC8-B00F-415A-A581-50A299F1884D_2.png' alt='重新执行断点所在的函数' title='重新执行断点所在的函数'></p>
+<p>To understand how Restart frame executes, let’s assume the following code:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">value</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>  <span class="hljs-title function_">bar</span>(value);<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params">value</span>) &#123;<br>  value++;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>  <span class="hljs-keyword">debugger</span>;<br>&#125;<br><br><span class="hljs-title function_">foo</span>(<span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+<p>The <code>foo</code> function takes <code>0</code> as a parameter, logs it to the console, and then calls the <code>bar()</code> function. Correspondingly, the <code>bar</code> function increments this value by 1.</p>
+<p>Try executing these two functions from the beginning in the following way:</p>
+<ul>
+<li>
+<p>Copy the above code into a <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/#createsources">snippet</a>, then <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/#runsources">run</a> it. The breakpoint will stop at the <a href="https://developer.chrome.com/docs/devtools/javascript/breakpoints/#debugger">line of code</a> where <code>debugger</code> is located.</p>
+<blockquote>
+<p>⚠️ Note: When code execution is paused, do not execute functions in the current call stack within the console, as this may cause unexpected errors.</p>
+</blockquote>
+</li>
+<li>
+<p>You’ll notice that the current debugger displays the value next to the function declaration where it’s located: <code>value = 1</code>.</p>
+</li>
+</ul>
+<p caption='注意函数声明处右侧的值'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9111BA1D-AA80-4C2F-B54E-123FC66A5C17_2.png' alt='注意函数声明处右侧的值' title='注意函数声明处右侧的值'></p>
+<ul>
+<li>Re-execute the <code>bar()</code> function.</li>
+</ul>
+<p caption='重头执行bar'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/036AAE1B-CA41-4627-A9D6-A4F7E6302C0C_2.png' alt='重头执行bar' title='重头执行bar'></p>
+<ul>
+<li>
+<p>Press <code>F9</code>, then the code will execute past the line with the value increment, and break again at the debugger.</p>
+<p>Note that the value has changed to 2: <code>value = 2</code>.</p>
+</li>
+</ul>
+<p caption='重头执行debugger'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/09D36505-821B-4392-8DD3-BDE9D05F0210_2.png' alt='重头执行debugger' title='重头执行debugger'></p>
+<ul>
+<li>Additionally, you can double-click the <code>value</code> in the Scope column to edit and set it to your desired value.</li>
+</ul>
+<p caption='双击编辑值'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9481CF99-8735-43A4-8A57-D2F953C289BC_2.png' alt='双击编辑值' title='双击编辑值'></p>
+<ul>
+<li>Try executing the <code>bar()</code> function multiple times, and you’ll notice the value keeps increasing.</li>
+</ul>
+<p caption='多次重复执行后值会一直增加'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/AEE7EEA3-2150-431B-980C-6FCF03527DC7_2.png' alt='多次重复执行后值会一直增加' title='多次重复执行后值会一直增加'></p>
+<blockquote>
+<p>💡 Shocking! Why doesn’t <code>value</code> reset to <code>0</code>?</p>
+</blockquote>
+<blockquote>
+<p>When a function restarts execution, it does not reset its parameters. In other words, restarting does not restore the initial state when the function was first called. Therefore, it simply moves the current call pointer in the call stack back to the start of the function.</p>
+</blockquote>
+<blockquote>
+<p>As a result, the current parameter value <code>value</code> persists in memory throughout repeated executions of the same function.</p>
+</blockquote>
+<ul>
+<li>Now, restart the execution of the <code>foo()</code> function in the <strong>Call Stack</strong>.</li>
+</ul>
+<p caption='重头执行foo函数'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/11D4B549-3006-4564-B92D-4D1727913D74_2.png' alt='重头执行foo函数' title='重头执行foo函数'></p>
+<p>Look closely—the <code>value</code> has reverted back to <code>0</code>.</p>
+<p caption='value重新变为0'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9F706F35-0041-41E3-BB4A-70A5BFFEFE06_2.png' alt='value重新变为0' title='value重新变为0'></p>
+<blockquote>
+<p>💡 Shocked again! Why was <code>value</code> reset to <code>0</code> this time?</p>
+</blockquote>
+<blockquote>
+<p>It’s simple (paraphrased here): In JavaScript, parameters are passed by value. Since <code>value</code> is a primitive, modifying its value inside the function won’t affect its value outside the function.</p>
+</blockquote>
+<h3 id="copying-call-stack-execution-path">Copying Call Stack Execution Path</h3>
+<p>Right-click anywhere in the <strong>Call Stack</strong> panel and select <strong>Copy Stack Trace</strong> to copy the current call stack to your clipboard.</p>
+<p caption='复制调用栈'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/7EF33B00-5F90-4D0D-8979-B18ED3CD1527_2.png' alt='复制调用栈' title='复制调用栈'></p>
+<p>Image 10 👆🏻, select <strong>Copy Stack Trace</strong>.</p>
+<p>The copied content will roughly look like this:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs other">getNumber1 (get-started.js:35)<br>inputsAreEmpty (get-started.js:22)<br>onClick (get-started.js:15)<br></code></pre></td></tr></table></figure>
+<h2 id="ignoring-a-specific-script-or-scripts-meeting-certain-conditions">Ignoring a Specific Script or Scripts Meeting Certain Conditions</h2>
+<p>When debugging, you can ignore a script to skip over it. You would typically choose to ignore a script when its functions are complex and difficult to understand, and unrelated to your current debugging task.</p>
+<p>For example, suppose you are debugging the following code:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">animate</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-title function_">prepare</span>();<br>  lib.<span class="hljs-title function_">doFancyStuff</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">render</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>A</code> is a third-party library you trust. If you’re absolutely certain that the issue you’re investigating has nothing to do with this third-party library, then ignoring it is a wise decision.</p>
+<h3 id="ignoring-a-script-from-the-source-editor-panel">Ignoring a Script from the Source Editor Panel</h3>
+<ol>
+<li>
+<p>Open the file</p>
+</li>
+<li>
+<p>Right-click anywhere</p>
+</li>
+<li>
+<p>Select <strong>Add script to ignore list</strong>.</p>
+</li>
+</ol>
+<p caption='忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/39DA9D92-C270-4705-8920-7BC248703936_2.png' alt='忽略脚本' title='忽略脚本'></p>
+<p>Figure 11 👆🏻, ignoring a script from the editor panel.</p>
+<h3 id="ignoring-a-script-from-the-call-stack-panel">Ignoring a Script from the Call Stack Panel</h3>
+<p>To ignore a script from the call stack, you need to:</p>
+<ol>
+<li>
+<p>Right-click on a function within the call stack.</p>
+</li>
+<li>
+<p>Select <strong>Add script to ignore list</strong>.</p>
+</li>
+</ol>
+<p caption='从调用栈中忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/73837AF8-CB34-4B72-AE5C-1B266E15B8EB_2.png' alt='从调用栈中忽略脚本' title='从调用栈中忽略脚本'></p>
+<p>Figure 12 👆🏻, ignoring a script from the Call Stack.</p>
+<h3 id="ignoring-a-script-from-settings">Ignoring a Script from Settings</h3>
+<blockquote>
+<p>Translator’s Note: The settings referred to here are Devtools settings, not browser settings.</p>
+</blockquote>
+<p>If you want to ignore a specific script or scripts matching certain conditions from the settings, you need to:</p>
+<ol>
+<li>
+<p>Open Settings:</p>
+</li>
+<li>
+<p>Click the <strong>Ignore List</strong> tab.</p>
+</li>
+<li>
+<p>Click <strong>Add pattern</strong>.</p>
+</li>
+<li>
+<p>Enter the script name or a regular expression to match the script names you want to ignore.</p>
+</li>
+<li>
+<p>Click <strong>Add</strong>.</p>
+</li>
+</ol>
+<p caption='devoools设置界面'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/54F9290D-CE6A-4630-9387-34DE7EA6266F_2.png' alt='devoools设置界面' title='devoools设置界面'></p>
+<p caption='devtools忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/65A0FE7C-D5BB-4329-B978-1C7184F6C1B6_2.png' alt='devtools忽略脚本' title='devtools忽略脚本'></p>
+<p>Figure 13 👆🏻, ignore scripts from Settings.</p>
+<h2 id="run-debug-code-snippets-from-any-page">Run debug code Snippets from any page</h2>
+<p>If you find yourself repeatedly running certain debug code in the Console, consider using Snippets. Snippets are scripts you can store in DevTools and execute as needed.</p>
+<p>Refer to <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/">https://developer.chrome.com/docs/devtools/javascript/snippets/</a> (untranslated) to learn more.</p>
+<blockquote>
+<p>Translator’s note: Snippets execute with the current context. For example, if you pause during debugging and then run a Snippet, the code will have access to variables in the current context.</p>
+</blockquote>
+<h2 id="watch-the-value-of-custom-javascript-expressions">Watch the value of custom JavaScript expressions</h2>
+<p>Use the Watch panel to monitor the value of custom expressions. You can watch any valid JavaScript expression.</p>
+<p caption='监听JavaScript表达式'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/02D81797-A39F-4837-B402-648AA39E5C21_2.png' alt='监听JavaScript表达式' title='监听JavaScript表达式'></p>
+<p>Figure 14 👆🏻, the area circled in blue is the Watch panel.</p>
+<ul>
+<li>
+<p>Click “Add Expression” to create a new watch expression.</p>
+</li>
+<li>
+<p>Click “Refresh” to update all existing expressions. Values are automatically updated when code executes.</p>
+</li>
+<li>
+<p>Hover over an expression and click “Delete Expression” to remove it.</p>
+</li>
+</ul>
+<h2 id="formatting-minified-code-for-readability">Formatting Minified Code for Readability</h2>
+<p>Click <code>Format &#123;&#125;</code> to transform minified code into a human-readable format.</p>
+<p caption='格式化压缩后的文件'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/572D9BCF-DC18-460E-8B23-62398391ED92_2.png' alt='格式化压缩后的文件' title='格式化压缩后的文件'></p>
+<h2 id="editing-a-script">Editing a Script</h2>
+<p>When fixing a bug, you often need to test the effects of your JavaScript code modifications. Instead of editing the JavaScript code in an external editor and then refreshing the current page to see the results, you can directly edit your JavaScript code in DevTools.</p>
+<p>To edit a script, you need to:</p>
+<ol>
+<li>
+<p>Open the file you want to edit in the Sources panel (it will appear in the Editor pane).</p>
+</li>
+<li>
+<p>Make your changes in the Editor pane.</p>
+</li>
+<li>
+<p>Press <code>Command + S</code> (Mac) or <code>Ctrl + S</code> (Windows, Linux) to save the changes. DevTools will patch the entire JS file into Chrome’s JavaScript engine.</p>
+</li>
+</ol>
+<p caption='直接编辑js文件'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6DC1E149-D2D2-4005-A2B9-451CF0456112_2.png' alt='直接编辑js文件' title='直接编辑js文件'></p>
+<p>The blue box in the image above highlights the editor toolbar.</p>
+<h2 id="live-editing-a-paused-function">Live Editing a Paused Function</h2>
+<blockquote>
+<p>Note: This feature is available starting from Chrome 105 and above.</p>
+</blockquote>
+<p>When the code is paused, you can edit the current function and apply the changes in real time, with the following limitations:</p>
+<ul>
+<li>
+<p>You can only edit the function at the <strong>top of the Call Stack</strong> (i.e., the function where the current breakpoint is located).</p>
+</li>
+<li>
+<p>There must be no recursive calls to the same function in the call stack (otherwise, it would effectively modify functions outside the current call stack).</p>
+</li>
+</ul>
+<blockquote>
+<p>💡 The truth about live editing a paused function…<br />
+When you apply a change, the debugger automatically re-executes the function (similar to the “Re-execute function in the stack” feature mentioned earlier). Therefore, the restrictions on re-executing functions are the same as those for live editing a paused function to take effect. You cannot re-execute WebAssembly, async, or generator (iterator) functions from scratch.</p>
+</blockquote>
+<p>To live edit a function, you need to:</p>
+<ol>
+<li>
+<p>Pause execution using a breakpoint.</p>
+</li>
+<li>
+<p>Edit the currently paused function where the breakpoint is located.</p>
+</li>
+<li>
+<p>Press <code>Command/Control+S</code> to apply the changes, and the debugger will automatically re-execute the function.</p>
+</li>
+<li>
+<p>Resume execution.</p>
+</li>
+</ol>
+<p caption='实时重新执行函数'><video controls muted><source src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/37CA2680-5D00-477F-A1CF-161AD18F2A5E_2.mp4' type='video/mp4' /></video></p>
+<p>In this example, the variables <code>addend1</code> and <code>addend2</code> initially have an incorrect <code>string</code> type. As a result, the strings are mistakenly concatenated instead of being numerically added. To fix this issue, the <code>parseInt()</code> function was added during real-time editing.</p>
+<h2 id="searching-and-replacing-text-in-scripts">Searching and Replacing Text in Scripts</h2>
+<p>If you want to search for a piece of text in a script, you need to:</p>
+<ol>
+<li>
+<p>Open the file in the Sources - Editor panel.</p>
+</li>
+<li>
+<p>Press <strong>Command+F</strong> (Mac) or <strong>Ctrl+F</strong> (Windows, Linux) to open the built-in search bar.</p>
+</li>
+<li>
+<p>In the search bar, enter the string you want to query:</p>
+<p>Additionally, you can:</p>
+<ul>
+<li>
+<p>Click <code>Aa</code> to enable case sensitivity for case-sensitive searches.</p>
+</li>
+<li>
+<p>Click <code>.*</code> to use regex matching.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Press <code>Enter</code> to execute the search. Use the up/down arrows to navigate to the next/previous search result.</p>
+</li>
+</ol>
+<p caption='搜索字符'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6D3D4E4D-22CD-4095-8773-1DFD4F3089A5_2.png' alt='搜索字符' title='搜索字符'></p>
+<p>To replace the search results you’ve found, you need to:</p>
+<ol>
+<li>
+<p>Open the search bar and click the <code>A→B</code> (manually typed for illustration—see the image below) button, which is the replace function, to substitute the text.</p>
+</li>
+<li>
+<p>Enter the text you want to replace with, then click <strong>Replace</strong> or <strong>Replace all</strong> to proceed.</p>
+</li>
+</ol>
+<p caption='按下替换按钮'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/4CFF9F79-2118-4DA6-AF12-1440A520C6F8_2.png' alt='按下替换按钮' title='按下替换按钮'></p>
+<h2 id="disable-javascript">Disable JavaScript</h2>
+<p>For details, refer to: <a href="https://developer.chrome.com/docs/devtools/javascript/disable/">Disable JavaScript With Chrome DevTools</a> (untranslated).</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          Originally published at:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/javascript-debugger-reference-series01.en.html"
+            title="&#34;Translation&#34; Official Guide Series: JavaScript Debugging Guide (Part 1)"
+          >
+            &#34;Translation&#34; Official Guide Series: JavaScript Debugging Guide (Part 1) - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">Contents</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>From the author:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        I often wish that when facing some key decisions in life, someone could tell me the best course of action so that I would not waste my precious time. Putting myself in others&#39; shoes, I therefore write blogs often, hoping to record in this tiny corner of the vast Internet the once-in-a-lifetime experiences that matter to me, and to help those who seek help.
+    </div>
+    <hr>
+    
+    <h5><a href="/en/archive/">Popular Tags</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/en/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="Technology"
+                rel="188">Technology</a>
+        
+            <a data-sort="0200"
+                href="/en/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="Life"
+                rel="108">Life</a>
+        
+            <a data-sort="0264"
+                href="/en/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="Tinkering"
+                rel="44">Tinkering</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="Tips"
+                rel="32">Tips</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="Tutorial"
+                rel="32">Tutorial</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="Translation"
+                rel="24">Translation</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="Experience"
+                rel="20">Experience</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="Food"
+                rel="20">Food</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="First Impressions"
+                rel="16">First Impressions</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="Workflow"
+                rel="16">Workflow</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="Plugin"
+                rel="16">Plugin</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="Network"
+                rel="16">Network</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="User Experience"
+                rel="12">User Experience</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="Summary"
+                rel="12">Summary</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="Server"
+                rel="12">Server</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="Router"
+                rel="12">Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="Soft Router"
+                rel="12">Soft Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="Essay"
+                rel="12">Essay</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9B%86%E6%88%90"
+                title="Integration"
+                rel="12">Integration</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="Staple Food"
+                rel="8">Staple Food</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="Optimization"
+                rel="8">Optimization</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%8D%83%E5%85%86"
+                title="Gigabit"
+                rel="8">Gigabit</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="Big Event"
+                rel="8">Big Event</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="Tools"
+                rel="8">Tools</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="Bypass Router"
+                rel="8">Bypass Router</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="Framework"
+                rel="8">Framework</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="Foot Bath Time"
+                rel="8">Foot Bath Time</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="Testing"
+                rel="8">Testing</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="Tesla"
+                rel="8">Tesla</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="Editor"
+                rel="8">Editor</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="Video"
+                rel="8">Video</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="Debugging"
+                rel="8">Debugging</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BD%A6"
+                title="Car"
+                rel="8">Car</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="Migration"
+                rel="8">Migration</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="Northeastern Cuisine"
+                rel="4">Northeastern Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="Buying a House"
+                rel="4">Buying a House</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="Proxy"
+                rel="4">Proxy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="Full Stack"
+                rel="4">Full Stack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="Norse Mythology"
+                rel="4">Norse Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="Collaboration"
+                rel="4">Collaboration</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="Compression"
+                rel="4">Compression</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="Kratos"
+                rel="4">Kratos</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="Home Cooking"
+                rel="4">Home Cooking</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="Prosperity"
+                rel="4">Prosperity</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="Comparison"
+                rel="4">Comparison</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="Sichuan Cuisine"
+                rel="4">Sichuan Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="Work Experience"
+                rel="4">Work Experience</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="Greek Mythology"
+                rel="4">Greek Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="Essential Apps"
+                rel="4">Essential Apps</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="Open Source"
+                rel="4">Open Source</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="Unboxing"
+                rel="4">Unboxing</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="God of War"
+                rel="4">God of War</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIM Card"
+                rel="4">SIM Card</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%8B%93%E6%89%91"
+                title="Topology"
+                rel="4">Topology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="Story"
+                rel="4">Story</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="Data Structure"
+                rel="4">Data Structure</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="Travel"
+                rel="4">Travel</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="Daily Life"
+                rel="4">Daily Life</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="Japan"
+                rel="4">Japan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="Service"
+                rel="4">Service</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="Format"
+                rel="4">Format</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A2%A6"
+                title="Dream"
+                rel="4">Dream</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="Browser"
+                rel="4">Browser</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="Gaming"
+                rel="4">Gaming</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="Rant"
+                rel="4">Rant</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="User Privacy"
+                rel="4">User Privacy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="Algorithm"
+                rel="4">Algorithm</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="Details"
+                rel="4">Details</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="Headphones"
+                rel="4">Headphones</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="Freedom"
+                rel="4">Freedom</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="Plan"
+                rel="4">Plan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="Settings"
+                rel="4">Settings</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="Pitfalls"
+                rel="4">Pitfalls</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="Conversion"
+                rel="4">Conversion</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="Selection"
+                rel="4">Selection</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="Interview"
+                rel="4">Interview</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>Columns</h5>
+    <div class="tags">
+        <a href="/projects">Open Source</a>
+        <a href="/book-list">Book List</a>
+        <a href="/subscribe">Subscriptions & Paid Apps</a>
+        <a href="/my-food">Food Recommendations</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>Friends</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">China</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="&#34;Translation&#34; Official Guide Series: JavaScript Debugging Guide (Part 1)"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/en/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      git 자주 사용하는 명령어 정리 - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="git 자주 사용하는 명령어 정리 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2016-4-21T5:34:23"> 
+              
+                  
+                    <meta property="article:tag" content="Git">
+                    
+                    <meta property="article:tag" content="기술">
+                    
+                      
+                          
+                            <meta name="og:description" content="">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ko/tech/git-command.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ko_KR">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ko/tech/git-command.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/git-command.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/git-command.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/git-command.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/git-command.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/git-command.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ko/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ko/">홈</a>
+            </li>
+            <li>
+              <a href="/ko/about/">소개</a>
+            </li>
+            <li>
+              <a href="/ko/donate/">후원</a>
+            </li>
+            <li>
+              <a href="/ko/archive/">아카이브</a>
+            </li>
+            <li>
+              <a href="/ko/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">한국어</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/git-command.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/git-command.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/git-command.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item active"><a href="/ko/tech/git-command.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ko/archive/?tag=Git"
+                            title="Git">
+                            Git
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="기술">
+                            기술
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        git 자주 사용하는 명령어 정리
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 작성일 2016년 04월 21일</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;참고: 이 글이 작성된 지 이미
+          <code id="from_time"></code> 일이 지났습니다. 시의성에 유의하세요
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1461216863000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+              <h2 id="서문">서문</h2>
+<p>자주 git을 사용하지만, 항상 시간이 없어서 작성하지 못했는데 이제야 시간이 생겨서 자주 사용하는 명령어를 정리해보려고 합니다.</p>
+<h2 id="본문">본문</h2>
+<p>새로운 브랜치를 생성하고 해당 브랜치로 전환하기:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git checkout -b branch_name<br></code></pre></td></tr></table></figure>
+<p>브랜치 전환:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git checkout branch_name<br></code></pre></td></tr></table></figure>
+<p>브랜치 삭제 (먼저 <code>checkout</code> 다른 브랜치로 이동해야 함):</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git branch -d branch_name<br></code></pre></td></tr></table></figure>
+<p>주의: 로컬에서 새 브랜치를 생성하고 <code>git push</code>하지 않은 경우, 다음 명령어로 브랜치를 삭제하려고 하면 경고가 표시됩니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">error</span>: <span class="hljs-title class_">The</span> branch <span class="hljs-string">&#x27;test&#x27;</span> is not fully merged.<br><span class="hljs-title class_">If</span> you are sure you want to <span class="hljs-keyword">delete</span> it, run <span class="hljs-string">&#x27;git branch -D test&#x27;</span>.<br></code></pre></td></tr></table></figure>
+<p>정말 삭제하려면 설명에 따라 강제 삭제하면 됩니다.</p>
+<p>파일 제출(commit) 절차는 다음과 같습니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git add ==&gt; git commit ==&gt; git push<br></code></pre></td></tr></table></figure>
+<p><code>git add</code>에는 주로 세 가지 매개변수가 사용됩니다:</p>
+<ol>
+<li><code>git add -A</code> 모든 변경 사항(추가, 삭제, 수정)을 스테이징 영역에 추가합니다.</li>
+<li><code>git add .</code> 파일 추가 및 수정 사항을 스테이징 영역에 추가하지만, 삭제된 파일은 포함하지 않습니다.</li>
+<li><code>git add -u</code> 파일 삭제 및 수정 사항을 스테이징 영역에 추가하지만, 새로 추가된 파일은 포함하지 않습니다.</li>
+</ol>
+<p>인생에는 후회약이 없지만 <code>git</code>은 있습니다. 실수로 잘못된 파일을 제출했거나 커밋 메시지를 잘못 작성한 경우, 다음 명령어를 상황에 따라 실행할 수 있습니다.</p>
+<p>먼저 <code>git status</code>로 버전 상태를 확인합니다. (저는 <code>zsh</code>를 사용합니다.) 빨간색 파일은 아직 스테이징 영역에 <code>git add</code>되지 않은 상태이고, 녹색 파일은 이미 <code>git add</code> 스테이징 영역에 추가되어 <code>git commit</code>을 기다리는 상태입니다.</p>
+<p>이때 스테이징 영역에 <code>git add</code>하고 싶지 않다면, <code>git reset HEAD</code>을 사용하여 모든 파일을 원래의 <code>git add</code>되지 않은 상태로 되돌릴 수 있습니다. 특정 파일만 스테이징 영역에 <code>git add</code>하지 않으려면 파일 이름을 지정해야 합니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git reset <span class="hljs-variable constant_">HEAD</span> filename<br></code></pre></td></tr></table></figure>
+<p>때로는 수정된 파일을 스테이징 영역에 <code>git add</code>하지 않을 뿐만 아니라, 해당 파일의 모든 수정 사항을 무시하고 원래 상태로 되돌리고 싶을 때가 있습니다. 이 경우 파일을 다시 체크아웃하면 됩니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git checkout -- filename<br></code></pre></td></tr></table></figure>
+<p>여기서 철자 오류가 아님에 유의하세요. <code>checkout</code>와 <code>filename</code> 사이에는 양쪽에 공백이 있는 하이픈이 있습니다.</p>
+<p><code>git add</code> 이후에는 <code>git commit</code>이(가) 옵니다. <code>-m</code> 매개변수를 사용하여 커밋 메시지를 작성할 수 있는데, 이는 좋은 습관이며 강제됩니다. <code>-m</code> 매개변수가 없으면 <code>vim</code> 편집 상태로 들어가 메시지를 추가하라는 프롬프트가 표시됩니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git commit -m <span class="hljs-string">&#x27;这是一个提交说明&#x27;</span><br></code></pre></td></tr></table></figure>
+<p>이때 커밋 메시지를 잘못 작성했고, <code>commit</code>을(를) 원하지 않는 경우(<code>HEAD</code>이(가) 이미 변경된 상태), 두 가지 방법이 있습니다:</p>
+<p>하나는 <code>commit</code>을(를) 제거하는 것입니다. (아직 <code>push</code>되지 않았고, 로컬 저장소에만 <code>commit</code>된 상태이기 때문입니다.)</p>
+<p>먼저 <code>git log</code>을(를) 실행하고, 실수로 <code>commit</code>하기 전의 <code>commit id</code>을(를) 기억해 둡니다. 이는 <code>hash(SHA)</code>입니다. 예를 들어: <code>73cf3bfc3419a85e959d7ecfcb917d9cdc24b3c9</code> 또는 최근 <code>push</code>의 <code>HEAD</code>을(를) 직접 사용해도 됩니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git reset 73cf3bfc3419a85e959d7ecfcb917d9cdc24b3c9<br></code></pre></td></tr></table></figure>
+<p>(이때는 <code>git add</code> 때처럼 <code>git reset HEAD</code>을(를) 사용할 수 없습니다. <code>git commit</code> 이후 <code>HEAD</code>이(가) 이미 변경되었기 때문입니다(즉, <code>git log</code>을(를) 통해 커밋 기록을 확인할 수 있는 상태입니다).)</p>
+<p>여기서 <code>git reset</code> 명령어의 세 가지 매개변수인 <code>--mixed</code>, <code>--soft</code>, <code>--hard</code>에 대해 잠시 설명하겠습니다:</p>
+<p>인터넷에는 다양한 튜토리얼이 있고, 그림 설명이나 공식 브랜치 설명을 인용한 것도 많지만 복잡합니다. 제가 간단히 설명하겠습니다.</p>
+<blockquote>
+<p>간단하게, 예를 들어 설명하는 방식이 더 쉽습니다. —Xheldon</p>
+</blockquote>
+<p><code>git reset</code>의 기본값은 <code>mixed</code> 매개변수입니다. 즉, <code>git reset xxxx</code>을(를) 실행하면(xxx는 <code>SHA</code> 또는 <code>commit</code>되지 않은 상태일 때 <code>HEAD</code>임) <code>git reset --mixed xxxx</code>이(가) 실행됩니다. 이 명령어는 파일을 수정한 후 아무 <code>git</code> 명령어도 실행하지 않은 상태(파일이 빨간색 상태)로 복원합니다.</p>
+<p><code>--soft</code> 매개변수는 파일을 커밋되지 않은 상태로만 복원하며, 파일은 여전히 <code>git add</code>된 상태(녹색 상태)로 유지됩니다.</p>
+<p><code>--hard</code>은(는) 더 강력합니다. 지정한 커밋 기록의 상태로 파일을 완전히 복원하며, <code>add</code>했는지, <code>commit</code>했는지, 파일을 수정했는지 여부를 전혀 고려하지 않습니다. <code>git reset --hard xxx</code>을(를) 실행하는 것은 위험할 수 있으며, 현재의 모든 수정 사항을 로컬에서 삭제합니다.</p>
+<p><code>git reset --hard xxx</code> 이후에는 파일이 로컬에서 삭제되고 모든 수정 사항도 삭제되었습니다. 하지만 <code>hard</code> 삭제된 파일의 수정 기록을 복구하려면 어떻게 해야 할까요? <code>git reflog</code>을(를) 사용하세요.</p>
+<p>당신의 모든 <code>commit</code> 및 <code>reset</code> 작업은 <code>git</code>이(가) 기록을 생성합니다. 이 기록은 <code>git reflog</code>을(를) 통해 찾을 수 있으며, 각 기록 앞에는 짧은 <code>hash</code>이(가) 있습니다. 이 짧은 <code>hash</code>을(를) 복사하여 <code>git reset --hard short_hash</code>을(를) 다시 실행하면 됩니다.</p>
+<p>주의: <code>git commit</code>을(를) 실행한 후에는 <code>HEAD</code>이(가) 이미 제출된 파일의 변경 상태로 바뀝니다. 이때 <code>git reset --mixed HEAD</code> 또는 <code>git  reset --soft HEAD</code>을(를) 실행해도 효과가 없습니다(현재의 <code>HEAD</code>이(가) 당신이 <code>commit</code>한 시점이기 때문입니다(심지어 <code>push</code>하지 않았더라도)). <code>git add</code> 이후, <code>git commit</code> 이전의 상태로 돌아가려면 <code>git reset --soft commit_id</code>이(가) 필요합니다. <code>git add</code> 이전의 상태로 돌아가려면 <code>git reset --mixed commit_id</code>이(가) 필요하거나, 직접 <code>git reset commit_id</code>을(를) 실행하면 됩니다.</p>
+<p><code>git commit</code> 후회약의 다른 이름은 <code>--amend</code>입니다. 커밋한 후 후회하고, 메시지를 잘못 작성했거나 파일을 또 수정했을 때, <code>commit</code> 기록을 또 생성하기 싫다면(보기 흉하고 당신이 커밋 메시지를 잘못 작성하는 초보 같은 실수를 했다는 인상을 주기 때문입니다), 다음을 실행하세요:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git commit --amend change_file_name_after_commit -m <span class="hljs-string">&quot;新的msg&quot;</span><br></code></pre></td></tr></table></figure>
+<p>그러면 됩니다.</p>
+<p>후회약을 먹고 <code>git commit</code> 이후 문제가 없음을 확인했다면 <code>git push</code>을(를) 할 수 있습니다. 이때 현재 브랜치에서 분기된 원격 브랜치에 다른 사람이 업데이트를 제출하지 않았다면 <code>fast forward</code> 모드(한국어로는 '빠른 전진 모드’라고 번역됨)를 사용하여 직접 병합할 수 있습니다. 병합 상황을 시각적으로 확인하려면 다음을 사용하세요:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git log --graph --pretty=oneline<br></code></pre></td></tr></table></figure>
+<p>만약 당신이 브랜치를 분리하는 동안 다른 사람도 브랜치를 커밋했다면, 충돌이 없다면 바로 병합할 수 있습니다. 먼저 <code>git pull</code>을 수행한 후 <code>git push</code>을 실행해야 합니다.<br />
+충돌이 있는 경우 다른 사람의 수정과 당신의 수정 사이에 어떤 충돌이 있는지 알려줄 것입니다. 이 경우 수동으로 해결해야 하며, 해결 후에는 <code>git add</code>, <code>git commit</code>을 수행하면 됩니다.</p>
+<p>브랜치 병합:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git merge another_branch_name<br></code></pre></td></tr></table></figure>
+<p>여기서의 상황은 <code>非fast forward</code> 모드입니다. 즉, 브랜치 B가 브랜치 A에서 분리된 후, 부모 브랜치인 A가 변경되었고, 브랜치 B도 일부 내용을 수정한 상태에서 다시 브랜치 A로 병합하려 할 때 발생하는 상황입니다:<br />
+주의할 점은, 당신이 브랜치 A에 있다면 <code>merge</code>해야 하는 것은 브랜치 B이며, <code>merg</code>된 브랜치 B는 반드시 <code>git push</code>되어 있어야 합니다. 브랜치 B가 단순히 <code>git commit</code>된 상태라면 병합되지 않습니다. 왜냐하면 <code>git merge branch_name</code>의 <code>branch_name</code>는 <code>branch_name</code>의 원격 <code>origin</code>에서 <code>merge</code>된 것이며, <code>commit</code>은 로컬 <code>HEAD</code>만 수정했고, <code>push</code>이 없으면 원격 <code>origin</code>은 수정되지 않기 때문입니다.<br />
+브랜치 B가 이미 자신의 변경 사항을 원격에 <code>git push</code>했고, 로컬 A도 자신의 변경 사항을 로컬 저장소에 <code>git add</code>했다면, 브랜치 A에서 <code>git merge B</code>를 실행할 때 (변경된 파일이 <code>config.js</code>이라고 가정) 다음과 같은 상황이 발생합니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Updating</span> 474cfbf..9c94d0c<br><span class="hljs-attr">error</span>: <span class="hljs-title class_">Your</span> local changes to the following files would be overwritten by <span class="hljs-attr">merge</span>:config.<span class="hljs-property">js</span><br><span class="hljs-title class_">Please</span> commit your changes or stash them before you merge.<br><span class="hljs-title class_">Aborting</span><br></code></pre></td></tr></table></figure>
+<p>이는 두 브랜치를 병합할 때 오류가 발생하여 중단되었다는 의미입니다. 현재 브랜치의 변경 사항을 임시 저장(<code>git stash</code>)하거나 변경 사항을 커밋(<code>git commit</code>)하라는 메시지가 표시됩니다. 이후 <code>git merge</code>을 수행한 후 충돌이 발생하면 수동으로 수정하고 다시 커밋합니다.<br />
+OK, 먼저 현재 변경 사항을 <code>git commit</code>한 후 다시 <code>git merge B</code>을 실행하면 (충돌 파일이 <code>config.js</code>라고 가정) 다음과 같이 표시됩니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Auto</span>-merging config.<span class="hljs-property">js</span><br><span class="hljs-variable constant_">CONFLICT</span> (content): <span class="hljs-title class_">Merge</span> conflict <span class="hljs-keyword">in</span> config.<span class="hljs-property">js</span><br><span class="hljs-title class_">Automatic</span> merge failed; fix conflicts and then commit the result.<br></code></pre></td></tr></table></figure>
+<p>수동으로 해결한 후 다시 <code>git add</code>을 수행하고 <code>git commit</code>을 실행하면 됩니다.</p>
+<p>주의할 점은, 한 브랜치에서 파일을 수정한 후 <code>checkout</code>를 다른 브랜치로 수행할 때 충돌이 발생하지 않으면 아무런 메시지가 표시되지 않으며, 파일 변경 사항은 그대로 유지됩니다. 따라서 파일을 한 브랜치에서 수정한 후 다른 브랜치에 커밋할 수 있습니다. 그러나 한 브랜치에서 파일을 수정한 후 <code>checkout</code>을 다른 브랜치로 수행할 때 충돌이 발생하면 (예: 다른 브랜치가 <code>git pull</code>되었거나 다른 브랜치가 동일한 파일의 동일한 부분을 <code>git commit</code>한 경우):</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">error</span>: <span class="hljs-title class_">Your</span> local changes to the following files would be overwritten by <span class="hljs-attr">checkout</span>:<br> config.<span class="hljs-property">js</span><br><span class="hljs-title class_">Please</span> commit your changes or stash them before you <span class="hljs-keyword">switch</span> branches.<br><span class="hljs-title class_">Aborting</span><br></code></pre></td></tr></table></figure>
+<p>이 경우 먼저 <code>git stash</code>을 사용하여 변경 사항을 저장해야 합니다 (이 <code>stash储藏</code>은 <code>git add暂存</code>이 아닙니다. <code>stash</code>은 파일을 특정 영역에 저장한 후 브랜치를 전환한 다음, 패치처럼 이 <code>stash</code>을 전환된 <code>checkout</code> 브랜치에 적용하거나, <code>stash</code>을 적용하지 않고 전환한 브랜치에서 작업을 완료한 후 다시 돌아와서 이 <code>stash</code>을 적용할 수 있습니다. 물론 <code>stash</code>을 계속 적용하지 않으려면 영원히 적용하지 않아도 됩니다).<br />
+여기서 <code>git stash</code>에 대해 언급되었습니다. 이 명령은 두 브랜치의 수정이 동시에 필요한 경우에 사용됩니다. 한 브랜치에서 작업을 반쯤 완료한 상태에서 다른 브랜치도 수정해야 할 때, 반쯤 완료된 내용을 버릴 수 없고 <code>commit</code>할 수도 없습니다. 왜냐하면 <code>checkout</code>을 통해 전달할 때 <code>conflict</code>을 초래할 수 있기 때문입니다. 따라서 <code>stash</code>을 저장해야 합니다:<br />
+먼저 현재 상태를 확인합니다. <code>git status</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">On</span> branch optimize<br><span class="hljs-title class_">Your</span> branch is up-to-date <span class="hljs-keyword">with</span> <span class="hljs-string">&#x27;origin/optimize&#x27;</span>.<br><span class="hljs-title class_">Changes</span> not staged <span class="hljs-keyword">for</span> <span class="hljs-attr">commit</span>:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)<br>  (use <span class="hljs-string">&quot;git checkout -- &lt;file&gt;...&quot;</span> to discard changes <span class="hljs-keyword">in</span> working directory)<br><br> <span class="hljs-attr">modified</span>:   config.<span class="hljs-property">js</span><br><br>no changes added to commit (use <span class="hljs-string">&quot;git add&quot;</span> and/or <span class="hljs-string">&quot;git commit -a&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>변경 사항을 저장합니다. <code>git stash</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Saved</span> working directory and index state <span class="hljs-variable constant_">WIP</span> on <span class="hljs-attr">optimize</span>: 24bf0e1 test add<br><span class="hljs-variable constant_">HEAD</span> is now at 24bf0e1 这是一个提交<br></code></pre></td></tr></table></figure>
+<p>다시 <code>git status</code>을 확인합니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">On</span> branch optimize<br><span class="hljs-title class_">Your</span> branch is up-to-date <span class="hljs-keyword">with</span> <span class="hljs-string">&#x27;origin/optimize&#x27;</span>.<br>nothing to commit, working tree clean<br></code></pre></td></tr></table></figure>
+<p>이제 안심하고 다른 브랜치로 전환할 수 있습니다. 여기서 주의할 점은, 다른 브랜치로 전환할 때 저장된 브랜치를 현재 브랜치에 적용할 수도 있습니다 (충돌을 걱정하지 않는다면). 저장 목록을 확인하려면 <code>git stash list</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">stash@&#123;<span class="hljs-number">0</span>&#125;: <span class="hljs-variable constant_">WIP</span> on <span class="hljs-attr">optimize</span>: 24bf0e1 test add<br></code></pre></td></tr></table></figure>
+<p>이것은 방금 <code>stash</code>된 변경 사항입니다. <code>git stash apply</code>을 사용하여 가장 최근의 변경 사항을 적용할 수 있습니다. <code>stash</code>의 변경 사항이 여러 개라면 <code>stash</code>의 이름을 지정합니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git stash apply stash@&#123;<span class="hljs-number">0</span>&#125;<br></code></pre></td></tr></table></figure>
+<p>적용 후에는 이 <code>stash</code>이 저장 영역에서 삭제됩니다. 삭제하지 않으려면:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git stash apply stash_name --index<br></code></pre></td></tr></table></figure>
+<p>나중에 삭제하려면:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git stash drop stash_name<br></code></pre></td></tr></table></figure>
+<p>위의 두 명령에 <code>stash_name</code>을 포함하지 않으면 기본적으로 가장 최근의 <code>stash</code>이 삭제됩니다.</p>
+<p>지금 당장 생각나는 것은 이 정도입니다. 익숙하지 않다면 <code>Sourcetree</code>을 사용하세요.</p>
+<h2 id="업데이트">업데이트</h2>
+<p><code>git revert/reset/rebase</code>은 설명만으로는 이해하기 어렵습니다. 직접 명령을 입력해 테스트해 보아야 합니다.</p>
+<p>나는 깔끔한 커밋 기록을 위해 <code>git rebase</code>을 사용하는 것을 좋아합니다. 하지만 이 명령은 위험하며, 몇 가지 사용 시나리오에 주의해야 합니다. <code>git rebase</code>보다 더 위험한 것은 <code>git reset</code>입니다. 이 명령은 현재 프로젝트를 특정 커밋으로 재설정합니다. <code>git revert</code>은 상대적으로 안전하지만, <code>revert</code>을 이전 커밋에 수행하려면 캐시 영역이 비어 있는지 확인해야 합니다. 그렇지 않으면 오류 메시지가 표시될 수 있습니다.</p>
+<p>물론, <code>git</code> 명령은 수없이 많습니다(과장). 일부 명령은 특정 시나리오를 위해 설계되었으며, 경험해 보기 전에는 그 용도를 이해하기 어려울 수 있습니다. 이는 정상적인 현상입니다.</p>
+<p>예를 들어, <code>git reset commitId</code>은 <code>HEAD</code>을 <code>commitId</code>이 있는 위치로 이동시킵니다. 당신은 혼란스러울 수 있습니다. <code>HEAD</code>을 이동시키는 것이 무슨 의미가 있을까? 이 명령의 목적은 무엇일까? 또 다른 예로, <code>git revert commitId</code>은 <code>commitId</code>의 커밋을 제거하지만 <code>HEAD</code>의 포인터는 이동시키지 않습니다.</p>
+<p>코드 확인하기(<code>d0b9def</code>은 <code>commit -m 'reset/revert test 3'</code> 커밋에 해당하며, 현재 <code>HEAD</code>은 <code>'reset/revert test 4'</code>에 있음):</p>
+<p><code>git revert d0b9def</code> 이후에 여러분의 코드는 다음과 같이 보일 수 있습니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js">reset/revert test <span class="hljs-number">1</span><br>reset/revert test <span class="hljs-number">2</span><br>&lt;&lt;&lt;&lt;&lt;&lt;&lt; <span class="hljs-variable constant_">HEAD</span><br>reset/revert test <span class="hljs-number">3</span><br>reset/revert test <span class="hljs-number">4</span><br>=======<br>&gt;&gt;&gt;&gt;&gt;&gt;&gt; parent <span class="hljs-keyword">of</span> d0b9def... reset/revert test<br></code></pre></td></tr></table></figure>
+<p>동일한 <code>HEAD</code>에서 <code>git reset d0b9def</code>를 실행한 후, 작업 공간은 다음과 같이 보일 수 있습니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"> reset/revert test <span class="hljs-number">1</span><br> reset/revert test <span class="hljs-number">2</span><br> reset/revert test <span class="hljs-number">3</span><br>+reset/revert test <span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
+<p><code>HEAD</code> 이동 여부의 차이점을 보셨나요? <code>revert</code>는 반드시 수동으로 충돌을 해결하도록 요구할 것입니다. 왜냐하면 이 명령은 <code>commitId</code> 이전의 부모 <code>commit</code>부터 현재 <code>HEAD</code>까지의 모든 변경 사항 중 <code>d0b9def</code>을 제외하고 보존하기 때문입니다. 반면 <code>reset</code>는 충돌 해결을 요구하지 않고 조용히 <code>HEAD</code>를 이동시켜 <code>d0b9def</code> 이후의 모든 변경 사항을 파일 수정으로 표시하며, 수동으로 <code>git add/commit</code>를 수행해야 합니다. 물론 <code>push --force</code>도 빠지지 않습니다.</p>
+<p>따라서 <code>revert</code>는 <code>公开</code> 커밋을 안전하게 되돌리기 위해 설계되었으며, <code>reset</code>은 <code>本地</code> 변경 사항을 재설정하기 위해 설계되었습니다. 두 명령어의 목적이 다르기 때문에 구현 방식도 다릅니다: 재설정은 변경 사항 집합을 완전히 제거하는 반면, 되돌리기는 원래 변경 사항을 보존하면서 새로운 커밋으로 되돌리는 방식을 사용합니다.</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          이 글의 최초 게시:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/git-command.ko.html"
+            title="git 자주 사용하는 명령어 정리"
+          >
+            git 자주 사용하는 명령어 정리 - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">목차</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>블로거의 말:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        저는 인생의 중요한 선택의 기로에 섰을 때, 누군가 최선의 방법을 알려주어 소중한 시간을 헛되이 보내지 않기를 바라곤 합니다. 그런 마음으로 저는 자주 블로그를 쓰며, 광활한 인터넷의 이 작은 구석에 제게는 단 한 번뿐인 인생 경험을 기록하여 도움이 필요한 분들에게 도움이 되기를 바랍니다.
+    </div>
+    <hr>
+    
+    <h5><a href="/ko/archive/">인기 태그</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="기술"
+                rel="188">기술</a>
+        
+            <a data-sort="0200"
+                href="/ko/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="생활"
+                rel="108">생활</a>
+        
+            <a data-sort="0264"
+                href="/ko/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="삽질"
+                rel="44">삽질</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="팁"
+                rel="32">팁</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="튜토리얼"
+                rel="32">튜토리얼</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="번역"
+                rel="24">번역</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="경험"
+                rel="20">경험</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="미식"
+                rel="20">미식</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="첫인상"
+                rel="16">첫인상</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="워크플로"
+                rel="16">워크플로</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="플러그인"
+                rel="16">플러그인</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="네트워크"
+                rel="16">네트워크</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="사용 경험"
+                rel="12">사용 경험</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="정리"
+                rel="12">정리</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="서버"
+                rel="12">서버</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="라우터"
+                rel="12">라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="소프트 라우터"
+                rel="12">소프트 라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="에세이"
+                rel="12">에세이</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9B%86%E6%88%90"
+                title="통합"
+                rel="12">통합</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="주식"
+                rel="8">주식</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="최적화"
+                rel="8">최적화</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%8D%83%E5%85%86"
+                title="기가비트"
+                rel="8">기가비트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="큰일"
+                rel="8">큰일</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="도구"
+                rel="8">도구</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="바이패스 라우터"
+                rel="8">바이패스 라우터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="프레임워크"
+                rel="8">프레임워크</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="족욕 시간"
+                rel="8">족욕 시간</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="테스트"
+                rel="8">테스트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="테슬라"
+                rel="8">테슬라</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="에디터"
+                rel="8">에디터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="영상"
+                rel="8">영상</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="디버깅"
+                rel="8">디버깅</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BD%A6"
+                title="자동차"
+                rel="8">자동차</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="마이그레이션"
+                rel="8">마이그레이션</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="둥베이 요리"
+                rel="4">둥베이 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="집 사기"
+                rel="4">집 사기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="프록시"
+                rel="4">프록시</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="풀스택"
+                rel="4">풀스택</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="북유럽 신화"
+                rel="4">북유럽 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="협업"
+                rel="4">협업</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="압축"
+                rel="4">압축</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="크레토스"
+                rel="4">크레토스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="가정식"
+                rel="4">가정식</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="부강"
+                rel="4">부강</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="비교"
+                rel="4">비교</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="쓰촨 요리"
+                rel="4">쓰촨 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="업무 경험"
+                rel="4">업무 경험</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="그리스 신화"
+                rel="4">그리스 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="자주 쓰는 앱"
+                rel="4">자주 쓰는 앱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="오픈소스"
+                rel="4">오픈소스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="언박싱"
+                rel="4">언박싱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="갓 오브 워"
+                rel="4">갓 오브 워</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="유심"
+                rel="4">유심</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%8B%93%E6%89%91"
+                title="토폴로지"
+                rel="4">토폴로지</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="이야기"
+                rel="4">이야기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="자료구조"
+                rel="4">자료구조</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="여행"
+                rel="4">여행</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="일상"
+                rel="4">일상</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="일본"
+                rel="4">일본</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="서비스"
+                rel="4">서비스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="포맷"
+                rel="4">포맷</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A2%A6"
+                title="꿈"
+                rel="4">꿈</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="브라우저"
+                rel="4">브라우저</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="게임"
+                rel="4">게임</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="푸념"
+                rel="4">푸념</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="사용자 개인정보"
+                rel="4">사용자 개인정보</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="알고리즘"
+                rel="4">알고리즘</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="디테일"
+                rel="4">디테일</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="이어폰"
+                rel="4">이어폰</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="자유"
+                rel="4">자유</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="계획"
+                rel="4">계획</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="설정"
+                rel="4">설정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="함정"
+                rel="4">함정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="변환"
+                rel="4">변환</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="기술 선정"
+                rel="4">기술 선정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="면접"
+                rel="4">면접</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>칼럼</h5>
+    <div class="tags">
+        <a href="/projects">오픈 소스</a>
+        <a href="/book-list">기술 도서 목록</a>
+        <a href="/subscribe">구독 & 유료 앱</a>
+        <a href="/my-food">맛집 추천</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>친구들</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">중국판</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="git 자주 사용하는 명령어 정리"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ko"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ko/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

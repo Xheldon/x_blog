@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      &#34;Cooperative Editing Implementation in ProseMirror&#34; - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="When encountering parts I don&#39;t fully understand during translation, I&#39;ll keep the original text rather than attempting an inaccurate translation, to avoid misleading readers and becoming a laughingstock. I&#39;ll revisit those sections once I&#39;ve gained proper understanding.">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="&#34;Cooperative Editing Implementation in ProseMirror&#34; - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2020-8-2T8:05:56"> 
+              
+                  
+                    <meta property="article:tag" content="ProseMirror">
+                    
+                    <meta property="article:tag" content="Collaboration">
+                    
+                    <meta property="article:tag" content="Technology">
+                    
+                    <meta property="article:tag" content="Translation">
+                    
+                      
+                          
+                            <meta name="og:description" content="When encountering parts I don&#39;t fully understand during translation, I&#39;ll keep the original text rather than attempting an inaccurate translation, to avoid misleading readers and becoming a laughingstock. I&#39;ll revisit those sections once I&#39;ve gained proper understanding.">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/en/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="en_US">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/en/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/Collaborative-Editing-in-ProseMirror.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/en/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/en/">Home</a>
+            </li>
+            <li>
+              <a href="/en/about/">About</a>
+            </li>
+            <li>
+              <a href="/en/donate/">Donate</a>
+            </li>
+            <li>
+              <a href="/en/archive/">Archive</a>
+            </li>
+            <li>
+              <a href="/en/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">English</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/Collaborative-Editing-in-ProseMirror.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item active"><a href="/en/tech/Collaborative-Editing-in-ProseMirror.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/Collaborative-Editing-in-ProseMirror.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/Collaborative-Editing-in-ProseMirror.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/en/archive/?tag=ProseMirror"
+                            title="ProseMirror">
+                            ProseMirror
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E5%8D%8F%E5%90%8C"
+                            title="Collaboration">
+                            Collaboration
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="Technology">
+                            Technology
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E7%BF%BB%E8%AF%91"
+                            title="Translation">
+                            Translation
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        &#34;Cooperative Editing Implementation in ProseMirror&#34;
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 Written on Aug 2, 2020</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;Note: it has been
+          <code id="from_time"></code> days since this article was written, please be aware of its timeliness
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1596355556000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+         
+        <div class="reference-tips">
+          🔗 &nbsp;Source：<a href="https://marijnhaverbeke.nl/blog/collaborative-editing.html" target="_blank">
+            https://marijnhaverbeke.nl/blog/collaborative-editing.html
+          </a>
+        </div>
+          
+        <div class="callout-tips">🖥 &nbsp;Note：When encountering parts I don&#39;t fully understand during translation, I&#39;ll keep the original text rather than attempting an inaccurate translation, to avoid misleading readers and becoming a laughingstock. I&#39;ll revisit those sections once I&#39;ve gained proper understanding.</div>
+           <p>This blog post describes the collaborative editing technology used in <a href="https://prosemirror.xheldon.com">ProseMirror</a>]. For an introduction to ProseMirror, you can <a href="https://marijnhaverbeke.nl/blog/prosemirror.html">check here</a>.</p>
+<h2 id="the-problem-of-collaborative-editing">The Problem of Collaborative Editing</h2>
+<p>A real-time collaborative editing system means multiple people may edit the same document simultaneously. The system ensures the document remains synchronized—changes made by one user are sent to others and displayed in their documents.</p>
+<p>Since transmitting these changes over any network takes time, the complexity of such systems lies in how they handle concurrent updates. One solution is to allow users to lock the document (or part of it), preventing others from making changes at the same time. However, this forces users to think about locks and wait when they don’t hold them (i.e., while others are editing). We don’t want that.</p>
+<p>If we allow concurrent updates, we encounter a scenario where users A and B modify the document simultaneously without being aware of each other’s changes, requiring them to negotiate how to update the document. Their actions might not interfere—e.g., editing different parts—or they might conflict—e.g., attempting to modify the same word.</p>
+<h2 id="operational-transformation-ot">Operational Transformation (OT)</h2>
+<p>There’s a lot of research on this problem. I must admit that despite reading many papers, I don’t fully grasp the field, and if you spot any misunderstandings or missing references, I’d be happy if you emailed me about it.</p>
+<p>Much of the research actually focuses on distributed systems, where nodes exchange messages without a central authority. The classic solution is called “<a href="https://en.wikipedia.org/wiki/Operational_transformation">Operational Transformation</a>,” a distributed algorithm defining a way to describe changes with two properties:</p>
+<ol>
+<li>
+<p>You can transform changes relative to others. For example, if user A inserts an “O” at position 1 and user B inserts a “T” at position 10, A can transform B’s change relative to their own, inserting “T” at position 11, because an extra character was added before B’s offset.</p>
+</li>
+<li>
+<p>Regardless of the order concurrent changes are applied, everyone ends up with the same document. This allows A to transform B’s changes relative to their own, and B to do the same for A’s changes, ensuring both users don’t end up with divergent documents.</p>
+</li>
+</ol>
+<p>An OT system applies local changes immediately to the local document, then broadcasts them to other users, who transform and apply the changes. To accurately determine which local changes remote ones should be transformed against, the system must also include a representation of the document state when broadcasting changes.</p>
+<p>This process sounds simple but is a nightmare to implement. Once you support multiple trivial changes (e.g., “insert” and “delete”), ensuring the same document results from any order of operations becomes extremely difficult.</p>
+<p>Joseph Gentle, an engineer who worked on Google Wave, <a href="http://sharejs.org/#body">said</a>…</p>
+<blockquote>
+<p>Unfortunately, implementing OT sucks. There are a million algorithms with different trade-offs, mostly locked up in academic papers. Getting it right is very hard and time-consuming.</p>
+</blockquote>
+<h2 id="centralization">Centralization</h2>
+<p>The complexity of OT largely stems from its need to distribute changes. Distributed systems have great practical and strategic properties and are often fun to develop.</p>
+<p>However, you can significantly reduce complexity by introducing a “central authority for processing changes.” Honestly, I’m puzzled that Google used OT in Google Docs (a centralized system).</p>
+<p>ProseMirror’s algorithm is centralized, with a single authority (to which all users connect) deciding the order of changes. This makes implementing a collaborative editing system relatively easy and understandable.</p>
+<p>I don’t think this “centralized” nature is a major obstacle to running OT in a distributed way. You could use consensus algorithms like [Raft](<a href="https://en.wikipedia.org/wiki/Raft_(computer_science)">https://en.wikipedia.org/wiki/Raft_(computer_science)</a> to elect an arbiter instead of relying on a central service. (Note: I haven’t actually tried this.)</p>
+<h2 id="prosemirror’s-collaborative-algorithm">ProseMirror’s Collaborative Algorithm</h2>
+<p>Like OT, ProseMirror uses a vocabulary of changes (e.g., delete, insert) and transforms them against each other. Unlike OT, however, it doesn’t guarantee that applying changes in different orders will produce the same document.</p>
+<p>By using a centralized service, it can even be made easy for all clients to apply changes in the same order. You can employ a mechanism similar to that used in code version control systems. When a client has a change, they attempt to <em>push</em> it to the server. If the server determines that the change is based on the latest version, the change is accepted. If not, the client must first <em>pull</em> changes from other clients, then <em>rebase</em> their own changes before retrying the push to the server.</p>
+<p>Unlike Git, the document’s history in this model is linear, and a given version of the document can be represented simply using an integer.</p>
+<p>Also differing from Git, all clients continuously pull (or push and listen for) new changes to the document and track the server’s state as quickly as the network allows.</p>
+<p>The only challenging part is rebasing others’ changes onto your own. This is very similar to the transformations performed by OT. However, it is done with the client’s <em>own</em> changes rather than remote server changes.</p>
+<h2 id="position-mapping">Position Mapping</h2>
+<p>While OT transforms changes relative to <em>others’ changes</em>, ProseMirror uses a derived data structure called a <em>position map</em> to handle this transformation. Whenever you apply a change to a document, you obtain a new document and the aforementioned map, which can be used to translate positions from the old document to their corresponding positions in the new document. The most notable use of the map is to adjust cursor positions so they remain at the same “conceptual” location—if a character is inserted before the cursor, the cursor should move forward (to the right) by one position along with the surrounding text.</p>
+<p>The transformation of changes is entirely based on position mapping. This is actually quite good, as it means we don’t need to write transformation code specific to change types. Each change has one to three position-related pieces of information, represented as <code>from</code>, <code>to</code>, and <code>at</code>. When transforming a change relative to another given change, these positions are mapped through the other change’s position map.</p>
+<p>For example, if a character is inserted at position 5, then when transforming the change “delete positions 10 to 14” relative to this insertion, it would become “delete positions 11 to 15.”</p>
+<p>The positions of each change only make sense when the initial document version they were applied to is the same. A position map defines the mapping between positions in two document versions before and after a change. To apply a change to a different version, it must be mapped step by step through the changes between its own version and the target version.</p>
+<p>(For simplicity, examples will use integers to represent positions. Actual positions in ProseMirror consist of an integer offset within a paragraph plus the path of that paragraph in the document tree.)</p>
+<h2 id="rebasing-positions">Rebasing Positions</h2>
+<p>Things get interesting when a client has multiple local changes that haven’t been pushed to the remote server. If changes from others arrive at this point, all local uncommitted changes need to be transformed based on these changes. Suppose we have local changes <em>L1</em> and <em>L2</em> and want to rebase them onto remote changes <em>R1</em> and <em>R2</em>, where <em>L1</em> and <em>R1</em> are based on the same document version.</p>
+<p>First, we apply <em>R1</em> and <em>R2</em> to our original document version (the client must track the document version they are currently displaying—including un-pushed changes—and the original version that doesn’t yet include these changes). This operation creates two maps, <em>mR1</em> and <em>mR2</em>.</p>
+<blockquote>
+<p>Translator’s note: The following paragraph is somewhat difficult to understand and may require visualization. In simple terms, <em>L2</em> is a modification of the document based on the position mapping (position adjustments) made by <em>L1</em>. To correctly rebase <em>L2</em>, we must first map (adjust) the positions affected by <em>L1</em> and all changes before it (i.e., <em>R1</em> and <em>R2</em>). This ensures <em>L2</em> obtains the correct position mapping and can then modify the document at the correct positions.</p>
+</blockquote>
+<p>We can straightforwardly map <em>L1</em> forward to <em>L1</em>*, where <em>L1</em>* is the version of <em>L1</em> mapped through <em>mR1</em> and <em>mR2</em>. However, <em>L2</em> is based on the document modified by <em>L1</em> from the initial version, so for <em>L2</em> (note: here, <em>L1</em> can be simply mapped as described earlier, but handling <em>L2</em> requires the following steps), we must first <em>map backward</em> <em>L2</em> through <em>mL1</em> (the map created by applying <em>L1</em>, i.e., the inverse operation of <em>mL1</em>—rolling back history). At this point, the document is the same as when <em>R1</em> began, so we can map <em>L2</em> through <em>mR1</em> and <em>mR2</em>, and finally through <em>mL1</em>*—the map produced by simply applying <em>L1</em>*. Now we have <em>L2</em>*, which can be applied to the document after <em>L1</em>* has been applied. Voilà, we’ve rebased two changes onto two others.</p>
+<blockquote>
+<p>Translator’s Note: In the following passage, “inserting two characters at position 5” corresponds to L1 above, while “inserting between two characters (position 6)” corresponds to L2 above. Therefore, when rebasing L2, it is necessary to first roll back L2’s insertion position to the initial document via mL1, but at this point, the document does not have a mappable position for L2 because the position does not yet exist.</p>
+</blockquote>
+<p>Mapping deletion operations and backward-mapping (historical rollback—Translator’s Note) insertion operations lose information. If you insert two characters at position 5, and then another person inserts at position 6 (between the previously inserted characters), backward-mapping (historical rollback, as mentioned earlier for L2—Translator’s Note) and then forward-mapping through the initial insertion operation will place you (after inserting these two characters) either before or after the inserted characters, because the position between these two characters cannot be represented in a document that does not yet have them (how to represent the exact position of a character that is about to be inserted but has not yet been inserted?—Translator’s Note).</p>
+<blockquote>
+<p>Translator’s Note: The following passage is the core of this article. By providing additional inverse mapping information during mapping, when backward-mapping (historical rollback) encounters a position that needs to be mapped to a non-existent location, the system first restores the content of that position (using the mirror of the mapping) and then performs the mapping. After the preceding mappings are completed, this mapping is skipped directly (because it has already been completed during the content restoration). Note that the mirror of the mapping must maintain the same size as the mapping content (obviously, otherwise the position calculation would be incorrect).</p>
+</blockquote>
+<p>To fix this issue, the ProseMirror collaborative system uses mapping pipelines, which are not just a series of mappings but also store information about which mappings are mirrors of each other. When a position passes through these pipelines and encounters a mapping that deletes the content around that position, the system scans the pipeline forward (i.e., toward earlier mappings that have not yet encountered this position—Translator’s Note) to find the mirror of that mapping. If such a mapping is found, we will forward-map (i.e., normal position adjustment—Translator’s Note) to its position and use the relative offset of this position in the deleted content to restore the position in the inserted content of the mapping. The mirror of a deletion operation’s mapping must maintain the same content size as the mirror of an insertion operation’s mapping.</p>
+<h2 id="direction-of-mapping">Direction of Mapping</h2>
+<p>Whenever content is inserted, this explicit insertion point can be mapped to two different positions (both of which are meaningful): before the inserted content or after it. Sometimes the former is appropriate, and sometimes the latter is. ProseMirror’s position mapping system allows developers to choose their preferred direction.</p>
+<blockquote>
+<p>Translator’s Note: The following passage explains that if the document is <code>abc</code>, and the letter x is inserted after a and before b, then the changes <code>from</code> and <code>to</code> are both 1; after the content is inserted, <code>from</code> forward-maps (leftward) and remains 1 unchanged, while <code>to</code> backward-maps (rightward) and becomes 2.</p>
+</blockquote>
+<p>This is also why a change-related position contains several different pieces of position information. If a change has position information such as <code>from</code> and <code>to</code>, such as deleting or styling a part of the document, and there is content before or after this position, that content should not be included in this change (this content only needs to have its position mapped after the change occurs—Translator’s Note). Therefore, the <code>from</code> position should forward-map (leftward), while the <code>to</code> position should backward-map (rightward).</p>
+<p>When a change is mapped through a mapping that completely contains it—for example, inserting a character at position 5 and then mapping this position through a change created by deleting positions 2 to 10—the entire operation of inserting a character at position 5 will simply be discarded because its context no longer exists.</p>
+<h2 id="types-of-changes">Types of Changes</h2>
+<p>An atomic change in ProseMirror is called a <em>step</em>. Some changes that appear as a single action to the user are actually decomposed into several steps. For example, if you select text and press the Enter key, the editor will generate a <em>delete</em> step to remove the selected text, followed by a <em>split</em> step to divide the current paragraph.</p>
+<p>Here are the types of steps that exist in ProseMirror:</p>
+<ul>
+<li><code>addStyle</code> and <code>removeStyle</code> add or remove inline styles from the document.</li>
+<li><code>split</code> splits a node into two. For instance, it can be used to divide a paragraph when the user presses the enter key. It only requires a single <code>at</code> position.</li>
+<li><code>join</code> merges two adjacent nodes. This operation is only valid for nodes containing content of the same type. It requires <code>from</code> and <code>to</code> positions to specify the end of the first node and the start of the second node (this ensures the correct nodes are merged. If content is inserted between the nodes during this process, the merge is ignored).</li>
+<li><code>ancestor</code> modifies a node’s type and adds or removes its ancestors. It can be used to wrap a list or convert a paragraph into a heading. It requires <code>from</code> and <code>to</code> positions to mark the node’s start and end.</li>
+<li><code>replace</code> replaces a portion of the document with zero or more nodes, optionally stitching compatible nodes at the cut edges. Its <code>from</code> and <code>to</code> positions define the range to be deleted, while <code>at</code> specifies where the new nodes should be inserted.</li>
+</ul>
+<p>Among these types, the last one is the most complex. My initial impulse was to split it into separate removal and insertion steps. However, since the position mapping for replacement steps requires treating the step as atomic (positions must be derived from <em>all</em> replacement content), I achieved better results by treating it as a single step.</p>
+<h2 id="intent-of-operations">Intent of Operations</h2>
+<p>A crucial property of real-time collaborative editing systems is that they must strive to preserve the <em>intent</em> of changes. Since merging changes happens automatically without user intervention, it can be frustrating when your edits are rebased into something unintended.</p>
+<p>I designed these step types and their rebasing behavior to minimize odd outcomes. Most of the time, changes don’t overlap and require no interaction. But when they do overlap, we must ensure the merged result makes sense.</p>
+<p>Sometimes, changes must simply be discarded. If you type into a paragraph that another user deletes before your changes reach the server, your input loses its context, and inserting it would create a meaningless fragment.</p>
+<p>If you attempt to merge two lists, but someone inserts a paragraph between them, the operation becomes impossible (you can’t merge non-adjacent nodes), so your change is discarded.</p>
+<p>In other cases, modified changes remain meaningful. If you bold characters at positions 5–10 while another user inserts a character at position 7, the result is bolding positions 5–11.</p>
+<p>Finally, some changes can overlap without conflict. For example, if you turn a word into a hyperlink while another user bolds it, both changes are applied.</p>
+<h2 id="offline-editing">Offline Editing</h2>
+<p>For real-time collaboration, silently modifying or dropping changes isn’t a major issue—feedback is nearly instant. You see the paragraph you’re editing disappear, so you know your changes are lost.</p>
+<p>But for offline editing (where you edit without connecting to a central server) or branching workflows—where you make extensive edits and <em>later</em> merge them into a document others have modified in the meantime (regardless of how much they’ve added, deleted, or rearranged)—this model (and OT) falls short. It might silently discard large amounts of editing work (if the context is gone) or produce bizarre text combinations when users edit the same sentence differently.</p>
+<p>In such cases, a diff-based approach may be better. Automatic merging might not be possible—conflicts must be identified and resolved by the user, as Git does.</p>
+<h2 id="undo-history">Undo History</h2>
+<p>How should undo history work in collaborative systems? The widely accepted answer is that it should <em>never</em> use a single, shared history. Undoing should reverse <em>your</em> last edit, not the document’s last edit.</p>
+<p>This means simple rollback to a prior state won’t work. Reverting your changes (while others have also edited) creates a new state not present in the document’s history.</p>
+<p>To support this, I defined reversible changes (sequences of steps) where inversion produces a new step that counteracts the original.</p>
+<p>ProseMirror’s undo history accumulates inverse steps and tracks their position mappings to the current document version—essential for reverse-mapping to the latest state.</p>
+<p>However, the downside is that if a user makes changes and then becomes idle, while others modify the document during this period, the positional mappings for converting this user’s changes to the current version of the document will accumulate indefinitely. To address this issue, the history is periodically <em>compressed</em> by forward-mapping the reversed changes so they can once again start editing from the current document. This discards the intermediate positional mappings.</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          Originally published at:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/Collaborative-Editing-in-ProseMirror.en.html"
+            title="&#34;Cooperative Editing Implementation in ProseMirror&#34;"
+          >
+            &#34;Cooperative Editing Implementation in ProseMirror&#34; - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">Contents</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>From the author:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        I often wish that when facing some key decisions in life, someone could tell me the best course of action so that I would not waste my precious time. Putting myself in others&#39; shoes, I therefore write blogs often, hoping to record in this tiny corner of the vast Internet the once-in-a-lifetime experiences that matter to me, and to help those who seek help.
+    </div>
+    <hr>
+    
+    <h5><a href="/en/archive/">Popular Tags</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/en/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="Technology"
+                rel="188">Technology</a>
+        
+            <a data-sort="0200"
+                href="/en/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="Life"
+                rel="108">Life</a>
+        
+            <a data-sort="0264"
+                href="/en/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="Tinkering"
+                rel="44">Tinkering</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="Tips"
+                rel="32">Tips</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="Tutorial"
+                rel="32">Tutorial</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="Translation"
+                rel="24">Translation</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="Experience"
+                rel="20">Experience</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="Food"
+                rel="20">Food</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="First Impressions"
+                rel="16">First Impressions</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="Workflow"
+                rel="16">Workflow</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="Plugin"
+                rel="16">Plugin</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="Network"
+                rel="16">Network</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="User Experience"
+                rel="12">User Experience</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="Summary"
+                rel="12">Summary</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="Server"
+                rel="12">Server</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="Router"
+                rel="12">Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="Soft Router"
+                rel="12">Soft Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="Essay"
+                rel="12">Essay</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9B%86%E6%88%90"
+                title="Integration"
+                rel="12">Integration</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="Staple Food"
+                rel="8">Staple Food</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="Optimization"
+                rel="8">Optimization</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%8D%83%E5%85%86"
+                title="Gigabit"
+                rel="8">Gigabit</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="Big Event"
+                rel="8">Big Event</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="Tools"
+                rel="8">Tools</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="Bypass Router"
+                rel="8">Bypass Router</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="Framework"
+                rel="8">Framework</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="Foot Bath Time"
+                rel="8">Foot Bath Time</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="Testing"
+                rel="8">Testing</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="Tesla"
+                rel="8">Tesla</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="Editor"
+                rel="8">Editor</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="Video"
+                rel="8">Video</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="Debugging"
+                rel="8">Debugging</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BD%A6"
+                title="Car"
+                rel="8">Car</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="Migration"
+                rel="8">Migration</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="Northeastern Cuisine"
+                rel="4">Northeastern Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="Buying a House"
+                rel="4">Buying a House</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="Proxy"
+                rel="4">Proxy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="Full Stack"
+                rel="4">Full Stack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="Norse Mythology"
+                rel="4">Norse Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="Collaboration"
+                rel="4">Collaboration</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="Compression"
+                rel="4">Compression</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="Kratos"
+                rel="4">Kratos</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="Home Cooking"
+                rel="4">Home Cooking</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="Prosperity"
+                rel="4">Prosperity</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="Comparison"
+                rel="4">Comparison</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="Sichuan Cuisine"
+                rel="4">Sichuan Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="Work Experience"
+                rel="4">Work Experience</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="Greek Mythology"
+                rel="4">Greek Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="Essential Apps"
+                rel="4">Essential Apps</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="Open Source"
+                rel="4">Open Source</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="Unboxing"
+                rel="4">Unboxing</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="God of War"
+                rel="4">God of War</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIM Card"
+                rel="4">SIM Card</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%8B%93%E6%89%91"
+                title="Topology"
+                rel="4">Topology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="Story"
+                rel="4">Story</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="Data Structure"
+                rel="4">Data Structure</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="Travel"
+                rel="4">Travel</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="Daily Life"
+                rel="4">Daily Life</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="Japan"
+                rel="4">Japan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="Service"
+                rel="4">Service</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="Format"
+                rel="4">Format</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A2%A6"
+                title="Dream"
+                rel="4">Dream</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="Browser"
+                rel="4">Browser</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="Gaming"
+                rel="4">Gaming</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="Rant"
+                rel="4">Rant</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="User Privacy"
+                rel="4">User Privacy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="Algorithm"
+                rel="4">Algorithm</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="Details"
+                rel="4">Details</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="Headphones"
+                rel="4">Headphones</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="Freedom"
+                rel="4">Freedom</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="Plan"
+                rel="4">Plan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="Settings"
+                rel="4">Settings</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="Pitfalls"
+                rel="4">Pitfalls</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="Conversion"
+                rel="4">Conversion</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="Selection"
+                rel="4">Selection</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="Interview"
+                rel="4">Interview</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>Columns</h5>
+    <div class="tags">
+        <a href="/projects">Open Source</a>
+        <a href="/book-list">Book List</a>
+        <a href="/subscribe">Subscriptions & Paid Apps</a>
+        <a href="/my-food">Food Recommendations</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>Friends</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">China</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="&#34;Cooperative Editing Implementation in ProseMirror&#34;"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/en/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

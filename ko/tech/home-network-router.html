@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      가정용 네트워크 개조 여정 - 라우터 편 - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="가정용 네트워크 장비 초보자를 위한 가이드">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="가정용 네트워크 개조 여정 - 라우터 편 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2022-11-15T3:38:20"> 
+              
+                  
+                    <meta property="article:tag" content="기가비트">
+                    
+                    <meta property="article:tag" content="기술">
+                    
+                    <meta property="article:tag" content="삽질">
+                    
+                    <meta property="article:tag" content="네트워크">
+                    
+                    <meta property="article:tag" content="라우터">
+                    
+                      
+                          
+                            <meta name="og:description" content="가정용 네트워크 장비 초보자를 위한 가이드">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ko/tech/home-network-router.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ko_KR">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ko/tech/home-network-router.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/home-network-router.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/home-network-router.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/home-network-router.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/home-network-router.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/home-network-router.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ko/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ko/">홈</a>
+            </li>
+            <li>
+              <a href="/ko/about/">소개</a>
+            </li>
+            <li>
+              <a href="/ko/donate/">후원</a>
+            </li>
+            <li>
+              <a href="/ko/archive/">아카이브</a>
+            </li>
+            <li>
+              <a href="/ko/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">한국어</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/home-network-router.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/home-network-router.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/home-network-router.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item active"><a href="/ko/tech/home-network-router.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ko/archive/?tag=%E5%8D%83%E5%85%86"
+                            title="기가비트">
+                            기가비트
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="기술">
+                            기술
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E6%8A%98%E8%85%BE"
+                            title="삽질">
+                            삽질
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E7%BD%91%E7%BB%9C"
+                            title="네트워크">
+                            네트워크
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                            title="라우터">
+                            라우터
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        가정용 네트워크 개조 여정 - 라우터 편
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 작성일 2022년 11월 15일</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 수정일 2023년 03월 05일</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;참고: 이 글이 작성된 지 이미
+          <code id="from_time"></code> 일이 지났습니다. 시의성에 유의하세요
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1668526700000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+           
+        <div class="callout-tips">🖥 &nbsp;설명：가정용 네트워크 장비 초보자를 위한 가이드</div>
+         
+        <div class="craft-tips">
+          📚 &nbsp;Craft에도 게시：<a
+            href="https://www.craft.do/s/fqHF0RDZDOMCSS"
+            target="_blank"
+          >
+            https://www.craft.do/s/fqHF0RDZDOMCSS
+          </a>
+        </div>
+          <h2 id="서문">서문</h2>
+<p>라우터를 연구하는 데 일주일을 보냈는데, 기록하지 않으면 그 시간이 허비될 것 같아 이 글을 작성하게 되었습니다.</p>
+<p>이전에 <a href="/tech/my-home-network-2022.html">나의 가정 네트워크 토폴로지</a>]를 작성한 적이 있는데, 당시 사용한 라우터는 중국통신(联通) 광대역에서 제공한 ZTE(중흥) WiFi6 듀얼 밴드 라우터였습니다. 속도는 솔직히 괜찮았는데, 유선으로는 약 500Mbps까지 나왔지만 무선은 상대적으로 떨어졌습니다. 라우터를 거실에 놓았을 때 침실에서는 신호가 풀 강도가 아니었고, 화장실은 아예 신호가 없었습니다. 게다가 아내가 자주 타오바오나 틱톡을 사용하다가 갑자기 연결이 끊긴다고 불평하곤 했습니다(단절 현상?). 그래서 더블 11(광군제)을 맞아 새 라우터를 구입할 계획을 세우게 되었습니다.</p>
+<h2 id="나의-요구-사항">나의 요구 사항</h2>
+<p>의향이 생기면 첫 번째 단계는 명확한 요구 사항을 정하는 것입니다. 새 라우터가 반드시 충족해야 할 조건을 정리해 보았습니다:</p>
+<ol>
+<li>
+<p><strong>강한 신호</strong>. 이번에 라우터를 교체하는 이유이기도 합니다.</p>
+</li>
+<li>
+<p><strong>5개의 네트워크 포트, 모두 기가비트 이상</strong>. 집에서 네트워크 속도가 필요한 기기로는 Mac, PS, Switch가 있으며, 모두 유선 연결이 필요합니다. 여기에 R4S 소프트라우터까지 포함하면 총 4개의 포트가 필요합니다. 따라서 라우터에는 광모뎀을 연결할 수 있는 5번째 포트가 반드시 있어야 합니다.</p>
+</li>
+<li>
+<p><strong>안정성(낮은 확장성)</strong>. 이미 R4S 소프트라우터가 있기 때문에 UU 가속기 내장이나 Openwrt 플래시 가능 같은 화려한 기능은 필수적이지 않습니다. 오히려 확장성이 높다는 것은 가격이 비싸고 불안정할 수 있다는 의미입니다.</p>
+</li>
+<li>
+<p><strong>WiFi 6</strong>. 이것은 대세이니 더 설명할 필요가 없습니다.</p>
+</li>
+<li>
+<p><strong>500 위안(약 9만 원) 이하의 예산</strong>.</p>
+</li>
+</ol>
+<h2 id="기술-조사">기술 조사</h2>
+<p>위의 요구 사항을 바탕으로 라우터 연구를 시작했습니다.</p>
+<p>저는 기술 직종에 종사하지만 네트워크 하드웨어에 대해 잘 알지는 못합니다. 그래서 간단하게 처리하려고 했고, 동료가 AX3000을 구입한 것을 보고 저도 샤오미(小米) 라우터를 사려고 했습니다. 징동(京东)의 다양한 광고와 포럼, 백과사전을 살펴보면서 몇 가지 기본 개념을 이해하게 되었습니다. 아래에 쉬운 말로 설명해 보겠습니다:</p>
+<ul>
+<li><strong>AX NNNN</strong>: &quot;NNNN&quot;은 무선 속도를 나타냅니다. 따라서 AX3000, AX5400, AX6000 등으로 검색하면 다양한 브랜드의 제품이 나옵니다. 이는 특정 라우터 모델이 아니라 속도 등급을 나타내며, 숫자가 클수록 가격이 비쌉니다. 또한 AX는 IEEE 802.11AX 기술을 사용하는 라우터, 즉 WiFi6 라우터를 의미합니다. AC는 IEEE 802.11AC 기술을 사용하는 라우터, 즉 WiFi5 라우터를 의미합니다.</li>
+</ul>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/DF84BD30-BBB9-4AD0-B78B-1F476F90E478_2.webp' alt='Image' title='Image'></p>
+<ul>
+<li>
+<p><strong>메시(Mesh) 네트워킹</strong>: 기본적으로 로밍 기능을 의미합니다. 집이 크다면(300평은 과장이지만 100평 이상이라도) 한 대의 라우터로는 커버리지가 부족할 수 있습니다. 이때 여러 대의 라우터가 필요하지만, 라우터 간 전환 시 연결이 끊어졌다가 다시 연결되어야 합니다. 메시 네트워킹은 이 문제를 해결합니다. 여러 라우터가 서로 연결되어 데이터를 공유하고 신호를 균일하게 제공하기 때문에, 처음 연결한 라우터에서 다른 라우터로 이동해도 네트워크가 끊기지 않습니다.</p>
+</li>
+<li>
+<p><strong>2.5G/1G 네트워크 포트</strong>: 1G는 1기가비트를 의미하며, 해당 포트가 전송할 수 있는 최대 대역폭을 나타냅니다. 현재 가정용 인터넷 속도는 대부분 500~1000Mbps 이내이기 때문에, 10G 포트는 NAS 같은 로컬 네트워크 전송에만 필요합니다. 가정용 미디어 서버 등이 없다면 필요 없습니다.</p>
+</li>
+<li>
+<p><strong>링크 애그리게이션(Link Aggregation)</strong>: WAN 포트 링크 애그리게이션은 두 개의 네트워크 케이블을 동시에 연결할 수 있습니다. 예를 들어 500Mbps 대역폭의 두 개의 중국통신(联通) 광대역을 연결하면 속도가 합쳐질 수 있습니다. LAN 포트 링크 애그리게이션도 비슷한 원리지만, 저는 이 기능이 필요 없어서 조사하지 않았습니다.</p>
+</li>
+</ul>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/1F612049-D1F1-4678-B7F3-A57C939B0CF8_2.webp' alt='Image' title='Image'></p>
+<ul>
+<li>
+<p><strong>듀얼 밴드</strong>: 2.4G와 5G 대역이 동시에 존재합니다. 5G가 빠른데 왜 2.4G가 필요할까요? 일부 구형 기기와 스마트 홈 기기가 2.4G만 지원하기 때문입니다.</p>
+</li>
+<li>
+<p><strong>160MHz 채널 폭</strong>: WiFi6에서 도입된 기능으로, 더 빠른 속도를 제공합니다. 이전에는 80MHz가 일반적이었습니다. ZTE 라우터를 확인해 보니 5G 대역도 80MHz에 불과했습니다. 숫자가 클수록 좋습니다.</p>
+</li>
+</ul>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/86D19FCB-F1F2-4F41-801A-39376CEA0F8C_2.webp' alt='Image' title='Image'></p>
+<ul>
+<li><strong>4K QAM</strong>: 무엇인지 정확히 이해하지 못했지만, 다운로드 속도를 높인다고 합니다. 현재는 샤오미 스마트폰에서만 20% 정도 향상이 있고, 다른 스마트폰은 지원하지 않는다고 합니다.</li>
+</ul>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/557A4571-8D26-4562-9EBD-8DA7A2F3E560_2.webp' alt='Image' title='Image'></p>
+<ul>
+<li><strong>OFDMA와 MU-MIMO</strong>: 정확히 무엇인지 모르겠지만, 다중 기기에서 게임을 할 때 지연을 줄인다고 합니다. 이상하게도 TP-Link에서는 이 기능이 기본적으로 꺼져 있습니다.</li>
+</ul>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/E6B29FAB-C3A7-4930-A5C1-A3FDBCE0329D_2.webp' alt='Image' title='Image'></p>
+<ul>
+<li>
+<p><strong>멀티 코어</strong>: 코어가 많을수록 좋습니다(당연한 소리). 암호화 및 복호화 속도를 높인다고 합니다. 전문가의 의견을 들어보니 퀄컴(高通) 칩셋 솔루션이 가장 안정적이고, 브로드컴(博通)이나 미디어텍(联发科) 솔루션은 쓰레기라고 합니다.</p>
+</li>
+<li>
+<p><strong>신호 증폭기</strong>: 말 그대로 신호를 증폭하는 데 사용됩니다.</p>
+</li>
+<li>
+<p><strong>1G 대용량 메모리</strong>: 메모리가 크면 확장성이 높아집니다. 메모리가 크면 Openwrt 같은 것을 플래시해서 다양하게 활용할 수 있습니다. 일부 라우터는 16M 메모리만 있어 확장성이 전혀 없습니다(XDR5480이 대표적입니다).</p>
+</li>
+<li>
+<p><strong>USB 3.0 포트</strong>: 외장 하드 드라이브를 연결해 가정 내 파일 전송을 할 수 있습니다.</p>
+</li>
+<li>
+<p><strong>내장 게임 가속기</strong>: 대부분 네티즈(网易) UU와 협력하여 내장된 게임 가속 플러그인을 제공합니다. Switch나 PS5에서 온라인 게임을 할 때 가속을 제공하며, 별도의 소프트라우터로 가속기를 설정할 필요가 없습니다. 본질적으로 VPN입니다.</p>
+</li>
+<li>
+<p><strong>능동적 냉각</strong>: 팬이 추가된 것입니다. 수동적 냉각은 아무것도 없이 자연 냉각에 의존합니다.</p>
+</li>
+<li>
+<p>IPv6, 거의 사용되지 않으며, 라우터에 이 기능이 있어도 비활성화하는 것이 좋습니다. 보급되지 않은 기술은 없는 것과 마찬가지입니다.</p>
+</li>
+<li>
+<p>백홀(Backhaul), 유선 백홀과 무선 백홀로 나뉘며, 메시 네트워킹에 필요한 요소로 전송 효율과 안정성을 높인다고 합니다. 잘 모르겠습니다.</p>
+</li>
+</ul>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/07ECFB04-C903-48AA-99D2-8835968488D2_2.webp' alt='Image' title='Image'></p>
+<ul>
+<li>다중 밴드 통합, 즉 2.4GHz와 5GHz를 하나의 네트워크 신호로 합치는 기능입니다. 장치 연결 시 5GHz 지원 여부를 먼저 확인하고, 지원하지 않으면 2.4GHz에 연결시킵니다. 이 기능은 여러 리뷰를 살펴본 결과 대부분 비활성화할 것을 권장하며, 활성화하면 일부 스마트 홈 기기가 작동하지 않을 수 있습니다.</li>
+</ul>
+<h2 id="기술-선택">기술 선택</h2>
+<p>위는 라우터 구매 시 판매사가 홍보하는 내용들입니다. 실제로는 제 필요에 맞춰 구매했으며, 다른 라우터들과 비교한 끝에 TP-Link XDR5480을 구입했습니다. 구매 결정 이유는 다음과 같습니다:</p>
+<ul>
+<li>
+<p>처음에는 샤오미 제품을 구매하려고 했습니다. 동일한 가격대에서 사양이 가장 뛰어나고, 동일한 사양에서 가격이 가장 저렴한 제품들이었기 때문입니다. 그러나 최종적으로 구매하지 않은 이유는:</p>
+<ul>
+<li>
+<p>교묘한 전략: 이전 모델인 AX3600을 단종시키고 AX6000이라는 업그레이드 버전을 출시했지만, 분해 결과 사양이 AX3600보다 떨어진다는 사실이 밝혀졌습니다.</p>
+</li>
+<li>
+<p>LAN 포트가 4개뿐이며, 이 4개 포트가 공유 기가비트로 구성되어 있어 터무니없습니다. 또한 샤오미 제품의 다른 문제점들을 고려해 당장 포기했습니다.</p>
+</li>
+<li>
+<p>판매량이 너무 많아서인지, 주요 플랫폼에서 끊김 현상 등의 불만이 많았습니다. 동료가 구입한 AX3000도 같은 현상이 있다고 했지만, 집 네트워크 문제인지 라우터 문제인지 확실하지 않아서 &quot;구매하지 않는 것이 잘못 구매하는 것보다 낫다&quot;는 원칙에 따라 구매를 포기했습니다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p caption='对比上一代同定位机型硬件'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/6AEAAF56-6280-4259-9379-766209C1DF02_2.webp' alt='对比上一代同定位机型硬件' title='对比上一代同定位机型硬件'></p>
+<ul>
+<li>
+<p>다음으로 동료에게 물어보니, 그는 전설적인 ASUS AC86U를 사용하고 있었습니다. WiFi5 시대에 강력한 성능으로 명성이 높았는데, 그 이유는 ASUS가 전문 라우터 제조사이며, 일부 브랜드처럼 OEM 생산을 하지 않기 때문입니다. 또한 ASUS는 일반적으로 고가 라우터(수천 원대)를 출시하기 때문에 인상이 강렬합니다. 게다가 Merlin 펌웨어나 OpenWrt를 설치할 수 있어 커스터마이징 가능성이 높아 전문가 사이에서도 평판이 좋았습니다. 그러나 최종적으로 구매하지 않은 이유는:</p>
+<ul>
+<li>
+<p>가격이 비쌉니다.</p>
+</li>
+<li>
+<p>커스터마이징 가능성이 너무 높아서, 저는 이런 기능이 필요 없습니다. 따라서 &quot;커스터마이징 가능성&quot;으로 인한 부작용인 &quot;고가&quot;가 가장 큰 장애물이 되었습니다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p caption='华硕'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/EE73309D-B6BE-4E40-ACD5-4742D1EAD1A4_2.webp' alt='华硕' title='华硕'></p>
+<ul>
+<li>
+<p>이후 V2EX, acwifi 등의 포럼을 돌아다니며 XDR5480을 추천하는 글을 자주 보았고, 연구 끝에 구매를 결정했습니다. 이유는 다음과 같습니다:</p>
+<ul>
+<li>
+<p>특별히 검색해봤지만 문제 제기가 거의 없었습니다.</p>
+</li>
+<li>
+<p>TP-Link는 오랜 브랜드로, 이전에는 저가 시장을 주로 했지만 5480으로 반전을 노리고 있습니다. 이 제품의 CPU는 일반적으로 수천 원대 모델에나 탑재되는 강력한 성능을 자랑하며, 5G 신호도 매우 강력합니다.</p>
+</li>
+<li>
+<p>커스터마이징 가능성이 낮아 안정적입니다. 제가 필요한 것은 바로 안정성입니다.</p>
+</li>
+<li>
+<p>4개의 기가비트 LAN 포트 외에 SFP 인터페이스가 추가되어 광모뎀 스틱을 직접 연결하거나 2.5G 네트워크 포트로 사용할 수 있습니다.</p>
+</li>
+<li>
+<p>500원 미만의 가격으로 예산 범위 내입니다.</p>
+</li>
+<li>
+<p>LAN 포트를 IPTV 포트로 사용할 수 있어 광모뎀을 완전히 제거할 수 있습니다(물론 저는 하지 않았습니다).</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>구매!</p>
+<p caption='买贵了，后来价格保护了 60块'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/FB076D86-7E45-49B9-83BB-6930571BD834_2.webp' alt='买贵了，后来价格保护了 60块' title='买贵了，后来价格保护了 60块'></p>
+<h2 id="계속된-설정">계속된 설정</h2>
+<p>라우터를 받아서 인터페이스를 열어보니 정말 설정할 것이 없었습니다. 그러나 이렇게 강력한 라우터로 아무것도 하지 않기에는 아쉬워서 다시 설정을 시작했습니다.</p>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/210C2B71-DA81-4D73-A064-21F90B814979_2.webp' alt='Image' title='Image'></p>
+<p>현재 제 네트워크 토폴로지는 다음과 같습니다: 광케이블이 광모뎀에 연결되고, 광모뎀이 1차 라우터 역할을 합니다. 그다음 TP-Link 라우터(2차 라우터)가 연결되어 있으며, 집안 모든 기기는 TP-Link의 무선/유선에 연결되어 있습니다. 그러나 네트워크 문제 발생 시 진단을 위해 광모뎀의 WiFi 기능은 계속 활성화해 두었습니다.</p>
+<p>또한 저는 라우터를 통해 해외 접속이 필요 없기 때문에, 광모뎀의 다른 기가비트 포트(광모뎀에는 유선 포트가 2개 있으며, 하나는 2차 라우터에 연결됨)에 Sony TV를 연결하고 Android TV 버전의 Clash를 설치해 YouTube를 시청했습니다. 이 설정은 나중에 증명되듯이 현명한 선택이었습니다. 라우터 설정을 변경할 때도 TV는 계속 사용할 수 있었기 때문입니다.</p>
+<h2 id="광모뎀-라우터-연결-방식">광모뎀-라우터 연결 방식</h2>
+<h3 id="용어-설명">용어 설명</h3>
+<h4 id="nat-주소-변환">NAT 주소 변환</h4>
+<p>장치가 직접 공인 네트워크에 연결할 수 없을까요? 왜 NAT 주소 변환이 필요할까요? 간단히 말해, IPv4 주소가 부족하기 때문에 통신사는 각 가정에 IPv4 주소를 할당하지 않습니다. 따라서 가정의 상위 네트워크는 사실 통신사의 로컬 네트워크입니다. 장치에서 요청을 보내면 라우터를 거쳐 광모뎀으로 전달되며, 이 과정에서 NAT 주소 변환이 한 번 발생합니다. 그다음 광모뎀에서 통신사 서버로 전달될 때 또 한 번 NAT 변환이 발생합니다. 그러나 라우터에서 광모뎀로의 변환 과정은 사실 불필요합니다. 아래에서 설명드리겠습니다.</p>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/AB32DBA7-416B-4D17-B135-C603F6879C2D_2.webp' alt='Image' title='Image'></p>
+<h4 id="네트워크-세그먼트">네트워크 세그먼트</h4>
+<p>IPv4에는 4개의 옥텟이 있습니다(그래서 v4라고 부름). 마지막에서 두 번째 옥텟이 다르면 다른 네트워크 세그먼트로 간주됩니다. 예를 들어 <code>192.168.1.1</code>과 <code>192.168.0.1</code>은 마지막에서 두 번째 옥텟이 각각 1과 2로 다르기 때문에 다른 세그먼트이며, 서로 직접 접근할 수 없습니다.</p>
+<h4 id="dhcp">DHCP</h4>
+<p>동적 IP 할당 서비스입니다. 하나의 네트워크 세그먼트에는 이 서비스가 하나만 있어야 합니다. 그렇지 않으면 충돌이 발생해 인터넷에 연결할 수 없게 됩니다.</p>
+<h3 id="광모뎀-라우팅-라우터-라우팅">광모뎀 라우팅 - 라우터 라우팅</h3>
+<p>이것은 일반적인 기본 모드로, 광케이블을 광모뎀에 연결하고 광모뎀의 LAN 포트에서 나온 케이블을 라우터의 WLAN 포트에 연결하여 1차 및 2차 라우팅을 구성합니다.</p>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/E0465A42-43AC-4158-8D21-FDDD9A007089_2.webp' alt='Image' title='Image'></p>
+<p>장점:</p>
+<ul>
+<li>간단하며, 별도의 설정이 필요 없습니다.</li>
+</ul>
+<p>단점:</p>
+<ul>
+<li>장치가 공인 네트워크에 접근하기 위해 두 번의 NAT 주소 변환을 거쳐야 하므로 불필요한 지연이 발생할 수 있습니다.</li>
+</ul>
+<h3 id="광모뎀-라우팅-라우터-ap">광모뎀 라우팅 - 라우터 AP</h3>
+<p>라우터를 광모뎀의 신호 증폭기로 사용하는 방식으로, 여러 네트워크를 연결할 수 있으며, 서로 연결이 가능합니다.</p>
+<p>장점:</p>
+<ul>
+<li>간단하며, 약간의 설정만으로 사용할 수 있습니다.</li>
+</ul>
+<p>단점:</p>
+<ul>
+<li>광모뎀의 부하가 커지며, PPPoE, DHCP, NAT 등의 기능을 수행해야 하므로 라우터의 성능이 낭비됩니다.</li>
+</ul>
+<h3 id="광모뎀-라우팅-라우터-브리지">광모뎀 라우팅 - 라우터 브리지</h3>
+<p>AP 모드와 유사하게 광모뎀의 신호를 증폭하는 방식이지만, 여러 네트워크를 연결할 수는 있으나 서로 연결은 불가능합니다. 장단점은 위와 동일합니다.</p>
+<h3 id="광모뎀-브리지-라우터-pppoe">광모뎀 브리지 - 라우터 PPPoE</h3>
+<p>광모뎀은 광신호를 전기신호로 변환하는 장치로만 사용하고, 나머지 모든 작업은 성능이 더 뛰어난 라우터가 처리하는 방식입니다. 현재 제가 사용 중인 방식입니다.</p>
+<p>장점:</p>
+<ul>
+<li>
+<p>성능이 낮은 광모뎀은 광전 변환만 담당하며(SFP 모뎀 스틱의 역할), 다른 작업을 하지 않습니다.</p>
+</li>
+<li>
+<p>가정 내 네트워크가 단일 서브넷으로 구성되어 관리가 용이합니다.</p>
+</li>
+<li>
+<p>공인 IP를 신청하고 라우터의 포트 포워딩 기능(일반적으로 라우터에 기본 탑재)을 활용하면 외부에서 내부 네트워크 장치 및 소프트웨어 라우팅 애플리케이션을 관리하기 쉽습니다.</p>
+</li>
+<li>
+<p>라우터에서 한 번의 NAT 주소 변환만 이루어지므로 지연이 줄어들고 대역폭을 최대한 활용할 수 있습니다.</p>
+</li>
+</ul>
+<p>단점:</p>
+<ul>
+<li>약간 번거로우며, ISP에 광모뎀 설정 변경을 요청해야 합니다. 인터넷에서처럼 직접 변경하면 ISP가 자동으로 설정을 재적용할 수 있으므로 약간의 네트워크 지식이 필요합니다.</li>
+</ul>
+<h3 id="라우터에-직접-광케이블-연결">라우터에 직접 광케이블 연결</h3>
+<p>이 경우 위에서 언급한 SFP 모뎀 스틱이 필요합니다. 모뎀 스틱을 라우터의 SFP 포트에 삽입하면 라우터가 광전 변환과 PPPoE를 모두 처리합니다. 하지만 이 방식은 SFP 모뎀 스틱이 과열될 수 있으며, 모든 위험을 단일 장치에 집중시키는 것은 비합리적이므로 저는 이 방식을 사용하지 않았습니다. 가능하지만 필요하지 않기 때문입니다. 또한, XDR 5480 장치는 TP-Link에서 제조한 모뎀 스틱만 사용할 수 있다는 소문이 있으며, 온라인에서 구매한 Huawei 모뎀 스틱은 사용할 수 없다고 합니다. 모뎀 스틱은 2.5G와 10G(10기가비트)로 구분되며, 속도가 높을수록 가격도 비쌉니다.</p>
+<p caption='SFP 光口（猫棒）'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/7E5DC73E-42DB-40C0-992E-3252AB123DDB_2.webp' alt='SFP 光口（猫棒）' title='SFP 光口（猫棒）'></p>
+<p caption='SFP 电口'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/C043F804-0595-4202-8BC1-72B5CE413FE1_2.webp' alt='SFP 电口' title='SFP 电口'></p>
+<h3 id="라우터로-pppoe-연결하는-방법">라우터로 PPPoE 연결하는 방법</h3>
+<p>저는 Beijing Unicom을 사용 중입니다. 온라인에서 여러 글을 검색했지만 대부분 오래된 내용이었고, 당시에는 Unicom 기술자에게 광모뎀의 슈퍼 비밀번호를 요청하여 광모뎀을 라우팅 모드에서 브리지 모드로 변경할 수 있었습니다.</p>
+<p>일부 지역에서는 광모뎀 브리지를 절대 허용하지 않습니다.</p>
+<p>하지만 이제 2022년이므로 Unicom에 전화를 걸었고, 대화 내용은 다음과 같습니다.</p>
+<blockquote>
+<p>나: 안녕하세요, 저희 집 인터넷에 공인 IP가 필요합니다. <br><br />
+고객 서비스: 알겠습니다. 잠시만 기다려 주세요, 기술 전문가에게 연결해 드리겠습니다. <br><br />
+기술 전문가: 공인 IP를 원하시는 건가요? <br><br />
+나: 네. <br><br />
+기술 전문가: 알겠습니다. 제가 백엔드에서 변경해 드리겠습니다. 10분 후에 광모뎀을 재시작해 주세요. <br><br />
+나: 알겠습니다. 감사합니다.</p>
+</blockquote>
+<p>끝났습니다.</p>
+<p>공인 IP 변경 후 광모뎀을 브리지 모드로 변경해야 했는데(한 번에 말하는 걸 깜빡했음), 다시 고객 서비스에 전화를 걸었습니다.</p>
+<blockquote>
+<p>나: 안녕하세요, 저희 집 광모뎀을 브리지 모드로 변경하고 싶은데 어떻게 해야 하나요? <br><br />
+고객 서비스: 수리 기술자를 예약해 드리겠습니다. 내일 8시 30분 전에 연락드리겠습니다. <br><br />
+나: 백엔드에서 직접 설정해 주시고 제가 설정할 수는 없나요? 꼭 기술자가 방문해야 하나요? <br><br />
+고객 서비스: 네. <br><br />
+나: 알겠습니다.</p>
+</blockquote>
+<p>다음 날, 기술자가 연락했습니다.</p>
+<blockquote>
+<p>기술자: 브리지 모드로 변경하시려는 거죠? <br><br />
+나: 네, 외부에서 내부 네트워크 장치와 서비스에 접근하려고 합니다. <br><br />
+기술자: 알겠습니다. 잠시만 기다려 주세요. 5분 후에 백엔드에서 변경하고 설정을 적용하겠습니다. <br><br />
+나: 기술자님께서 오실 필요는 없나요? <br><br />
+기술자: 아니요, 방문이 필요한 게 있나요? 브리지 모드를 설정하시려면 아시는 거겠죠? 직접 설정하시면 됩니다. <br><br />
+나: 저는 아는데, 광모뎀 설정을 기술자님께서 해주셔야 하는 거 아닌가요? <br><br />
+기술자: 아니요, 백엔드에서 설정을 적용하면 됩니다. 광모뎀도 재시작할 필요 없고, 라우터에서 광모뎀의 PPPoE 계정과 비밀번호를 입력하시기만 하면 됩니다. 제가 설정을 변경한 후 다시 연락드리겠습니다. <br><br />
+나: 알겠습니다.</p>
+</blockquote>
+<p>2분 후, 기술자가 연락하여 설정이 완료되었다고 알려주었고, 저는 TP-Link의 인터넷 연결 방식에서 PPPoE를 선택하고 PPPoE 계정과 비밀번호를 입력하여 연결했습니다. PPPoE 계정과 비밀번호를 모르시는 경우 Unicom 기술자에게 문의하거나 광모뎀 설정 페이지에서 확인할 수 있습니다. 비밀번호는 암호화되어 있지만 F12를 사용하여 input 요소의 type을 변경하면 확인할 수 있습니다.</p>
+<p caption='配置界面'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/ACC3C6BD-1248-48E4-A418-CE9EDAB86924_2.webp' alt='配置界面' title='配置界面'></p>
+<h2 id="tp-link의-간단한-활용">TP-Link의 간단한 활용</h2>
+<p>DDNS + 포트 포워딩이 유일하게 활용할 수 있는 기능이지만, 저에게는 충분합니다. R4S가 있어 외부에서 TP-Link의 DDNS 서비스와 포트 포워딩을 통해 R4S의 인터페이스와 다양한 서비스에 접근할 수 있어 매우 편리합니다. 아래는 TP-Link의 설정 방법입니다.</p>
+<h3 id="ddns">DDNS</h3>
+<p>원리 설명도:</p>
+<p caption='示意图'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/6EF8D96C-F524-4208-9C6D-654ED16C6E5B_2.webp' alt='示意图' title='示意图'></p>
+<p>공인 IP는 있지만, 인터넷 서비스 제공업체(ISP)가 제공하는 가정용 광대역 IP 주소는 고정되어 있지 않아 매번 접속할 때마다 IP를 확인해야 합니다. 어떻게 편리하게 접근할 수 있을까요? 답은 DDNS(Dynamic DNS)입니다. 라우터는 당신의 공인 IP 주소를 알고 있으며, 라우터 내에서 도메인 이름을 이 주소와 바인딩합니다. 이 도메인 이름에 접속하면 항상 최신의 가정용 광대역 공인 IP 주소로 연결됩니다.</p>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/C0057015-EBE9-4C59-A281-BFDE21E4FB28_2.webp' alt='Image' title='Image'></p>
+<p>참고:</p>
+<p><a class='link-bookmark' href='https://service.tp-link.com.cn/detail_article_2444.html' target='_blank'><span data-bookmark-img='https://service.tp-link.com.cn/favicon.ico' data-bookmark-title='['><img src='https://service.tp-link.com.cn/favicon.ico'/></span><span><span> [云路由器] TP-LINK DDNS动态域名的使用方法 - TP-LINK 服务支持</span><span> https://service.tp-link.com.cn/detail_article_2444.html</span><span> https://service.tp-link.com.cn/detail_article_2444.html</span></span></a></p>
+<h3 id="가상-포트-매핑">가상 포트 매핑</h3>
+<p>개략도:</p>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/A55C6EDD-239D-4B07-9B1D-2F1255FB42FF_2.webp' alt='Image' title='Image'></p>
+<p>보안을 위해 ISP가 제공하는 공인 IP는 일반적으로 웹 서비스에 흔히 사용되는 80, 8080 포트를 차단합니다. 또한 내부 네트워크에는 여러 서비스가 서로 다른 포트에 분산되어 있으므로 포트 매핑이 필요합니다. 즉, 외부에서 접속하는 포트를 내부 네트워크의 포트로 매핑하는 것입니다. 설정은 다음과 같습니다:</p>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/F9B87721-ED75-4A54-8BDC-E97D98C27373_2.webp' alt='Image' title='Image'></p>
+<p>참고:</p>
+<p><a class='link-bookmark' href='https://service.tp-link.com.cn/detail_article_2441.html' target='_blank'><span data-bookmark-img='https://service.tp-link.com.cn/favicon.ico' data-bookmark-title='['><img src='https://service.tp-link.com.cn/favicon.ico'/></span><span><span> [云路由器] 如何映射服务器到外网 - TP-LINK 服务支持</span><span> https://service.tp-link.com.cn/detail_article_2441.html</span><span> https://service.tp-link.com.cn/detail_article_2441.html</span></span></a></p>
+<p>효과:</p>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/E071C9FF-3F98-4883-9E58-C137BD1A916C_2.webp' alt='Image' title='Image'></p>
+<h2 id="실제-적용-사례">실제 적용 사례</h2>
+<p>현재 사용 중인 서비스로는 qBittorrent 다운로드, FileBrowser 파일 관리, Aria2 다운로드가 있습니다. 알리 클라우드 드라이브는 내부 네트워크에서만 접근이 필요하기 때문에 포트를 개방하지 않았습니다:</p>
+<p caption='qBittorrent用来bt下载'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/3484C433-2CA9-471C-9DBC-84A2B124DCA6_2.webp' alt='qBittorrent用来bt下载' title='qBittorrent用来bt下载'></p>
+<p caption='有了FileBrowser可以抛弃网盘了'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/57B2FF81-7BEA-414B-B72F-12E30F4692C1_2.webp' alt='有了FileBrowser可以抛弃网盘了' title='有了FileBrowser可以抛弃网盘了'></p>
+<p caption='Aria2下载工具'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/DAB8FBBA-A635-45AD-AA0E-B8DE4F132D71_2.webp' alt='Aria2下载工具' title='Aria2下载工具'></p>
+<p>Aria2는 일반 다운로드에 사용되며, Chrome 브라우저의 기본 다운로드 도구를 대체할 수 있습니다. 멀티스레드 다운로드로 속도가 훨씬 빠릅니다. 동일한 리소스 비교:</p>
+<p caption='Aria2下载速度'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/8B1970F4-35B8-44A3-90A6-F9D94BA3A977_2.webp' alt='Aria2下载速度' title='Aria2下载速度'></p>
+<p caption='浏览器下载速度'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/E8B6B0AE-F316-4E7C-B0F6-45E68EFC02E0_2.webp' alt='浏览器下载速度' title='浏览器下载速度'></p>
+<p>일상적인 사용 시나리오는 아내가 다운로드해 달라고 한 파일을 다운로드한 후 FileBrowser의 공유 기능을 통해 전달하는 것입니다. 공유 링크의 유효 기간도 설정할 수 있어 매우 편리합니다:</p>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/home-network-router/D2560A89-D1C2-4208-AB08-D63DB4FC2492_2.webp' alt='Image' title='Image'></p>
+<h2 id="마치며">마치며</h2>
+<p>네트워크 토폴로지 지식은 정말 흥미롭습니다. 인터넷이 막 태동하던 시절에는 누구도 인터넷이 현재와 같은 모습으로 발전할 것이라고 상상하지 못했습니다. 모든 시스템은 단순함에서 복잡함으로, 저수준에서 고수준으로 단계적으로 발전해 왔습니다. 따라서 간단한 장치에서도 인터넷 설계 초기에 설계자들이 어떻게 생각했는지, 어떤 문제(예: IPv4 고갈과 이를 해결하기 위한 NAT 주소 변환 기술)를 마주했는지, 그리고 어떻게 해결했는지를 발견할 수 있습니다. 만약 여러분이라면 어떻게 해결하겠습니까? 매우 흥미로운 주제입니다.</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          이 글의 최초 게시:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/home-network-router.ko.html"
+            title="가정용 네트워크 개조 여정 - 라우터 편"
+          >
+            가정용 네트워크 개조 여정 - 라우터 편 - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">목차</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>블로거의 말:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        저는 인생의 중요한 선택의 기로에 섰을 때, 누군가 최선의 방법을 알려주어 소중한 시간을 헛되이 보내지 않기를 바라곤 합니다. 그런 마음으로 저는 자주 블로그를 쓰며, 광활한 인터넷의 이 작은 구석에 제게는 단 한 번뿐인 인생 경험을 기록하여 도움이 필요한 분들에게 도움이 되기를 바랍니다.
+    </div>
+    <hr>
+    
+    <h5><a href="/ko/archive/">인기 태그</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="기술"
+                rel="188">기술</a>
+        
+            <a data-sort="0200"
+                href="/ko/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="생활"
+                rel="108">생활</a>
+        
+            <a data-sort="0264"
+                href="/ko/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="삽질"
+                rel="44">삽질</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="팁"
+                rel="32">팁</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="튜토리얼"
+                rel="32">튜토리얼</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="번역"
+                rel="24">번역</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="경험"
+                rel="20">경험</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="미식"
+                rel="20">미식</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="첫인상"
+                rel="16">첫인상</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="워크플로"
+                rel="16">워크플로</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="플러그인"
+                rel="16">플러그인</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="네트워크"
+                rel="16">네트워크</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="사용 경험"
+                rel="12">사용 경험</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="정리"
+                rel="12">정리</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="서버"
+                rel="12">서버</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="라우터"
+                rel="12">라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="소프트 라우터"
+                rel="12">소프트 라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="에세이"
+                rel="12">에세이</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9B%86%E6%88%90"
+                title="통합"
+                rel="12">통합</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="주식"
+                rel="8">주식</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="최적화"
+                rel="8">최적화</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%8D%83%E5%85%86"
+                title="기가비트"
+                rel="8">기가비트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="큰일"
+                rel="8">큰일</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="도구"
+                rel="8">도구</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="바이패스 라우터"
+                rel="8">바이패스 라우터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="프레임워크"
+                rel="8">프레임워크</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="족욕 시간"
+                rel="8">족욕 시간</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="테스트"
+                rel="8">테스트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="테슬라"
+                rel="8">테슬라</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="에디터"
+                rel="8">에디터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="영상"
+                rel="8">영상</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="디버깅"
+                rel="8">디버깅</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BD%A6"
+                title="자동차"
+                rel="8">자동차</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="마이그레이션"
+                rel="8">마이그레이션</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="둥베이 요리"
+                rel="4">둥베이 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="집 사기"
+                rel="4">집 사기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="프록시"
+                rel="4">프록시</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="풀스택"
+                rel="4">풀스택</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="북유럽 신화"
+                rel="4">북유럽 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="협업"
+                rel="4">협업</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="압축"
+                rel="4">압축</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="크레토스"
+                rel="4">크레토스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="가정식"
+                rel="4">가정식</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="부강"
+                rel="4">부강</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="비교"
+                rel="4">비교</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="쓰촨 요리"
+                rel="4">쓰촨 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="업무 경험"
+                rel="4">업무 경험</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="그리스 신화"
+                rel="4">그리스 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="자주 쓰는 앱"
+                rel="4">자주 쓰는 앱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="오픈소스"
+                rel="4">오픈소스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="언박싱"
+                rel="4">언박싱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="갓 오브 워"
+                rel="4">갓 오브 워</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="유심"
+                rel="4">유심</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%8B%93%E6%89%91"
+                title="토폴로지"
+                rel="4">토폴로지</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="이야기"
+                rel="4">이야기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="자료구조"
+                rel="4">자료구조</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="여행"
+                rel="4">여행</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="일상"
+                rel="4">일상</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="일본"
+                rel="4">일본</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="서비스"
+                rel="4">서비스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="포맷"
+                rel="4">포맷</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A2%A6"
+                title="꿈"
+                rel="4">꿈</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="브라우저"
+                rel="4">브라우저</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="게임"
+                rel="4">게임</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="푸념"
+                rel="4">푸념</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="사용자 개인정보"
+                rel="4">사용자 개인정보</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="알고리즘"
+                rel="4">알고리즘</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="디테일"
+                rel="4">디테일</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="이어폰"
+                rel="4">이어폰</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="자유"
+                rel="4">자유</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="계획"
+                rel="4">계획</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="설정"
+                rel="4">설정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="함정"
+                rel="4">함정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="변환"
+                rel="4">변환</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="기술 선정"
+                rel="4">기술 선정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="면접"
+                rel="4">면접</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>칼럼</h5>
+    <div class="tags">
+        <a href="/projects">오픈 소스</a>
+        <a href="/book-list">기술 도서 목록</a>
+        <a href="/subscribe">구독 & 유료 앱</a>
+        <a href="/my-food">맛집 추천</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>친구들</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">중국판</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="가정용 네트워크 개조 여정 - 라우터 편"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ko"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ko/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

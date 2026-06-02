@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      Git よく使うコマンドまとめ - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="Git よく使うコマンドまとめ - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2016-4-21T5:34:23"> 
+              
+                  
+                    <meta property="article:tag" content="Git">
+                    
+                    <meta property="article:tag" content="技術">
+                    
+                      
+                          
+                            <meta name="og:description" content="">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ja/tech/git-command.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ja_JP">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ja/tech/git-command.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/git-command.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/git-command.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/git-command.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/git-command.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/git-command.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ja/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ja/">ホーム</a>
+            </li>
+            <li>
+              <a href="/ja/about/">概要</a>
+            </li>
+            <li>
+              <a href="/ja/donate/">寄付</a>
+            </li>
+            <li>
+              <a href="/ja/archive/">アーカイブ</a>
+            </li>
+            <li>
+              <a href="/ja/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">日本語</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/git-command.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/git-command.html" hreflang="en">English</a></li>
+        <li class="lang-item active"><a href="/ja/tech/git-command.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/git-command.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ja/archive/?tag=Git"
+                            title="Git">
+                            Git
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技術">
+                            技術
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        Git よく使うコマンドまとめ
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 作成日 2016年04月21日</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;注意：この記事が作成されてから既に
+          <code id="from_time"></code> 日が経過しています。情報の鮮度にご注意ください
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1461216863000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+              <h2 id="はじめに">はじめに</h2>
+<p>Gitを頻繁に使っていますが、ずっと書く時間がありませんでした。今やっと時間ができたので、よく使うコマンドをまとめてみます。</p>
+<h2 id="本文">本文</h2>
+<p>新しいブランチを作成し、そのブランチに切り替える:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git checkout -b branch_name<br></code></pre></td></tr></table></figure>
+<p>ブランチを切り替える:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git checkout branch_name<br></code></pre></td></tr></table></figure>
+<p>ブランチを削除する（先に別のブランチに<code>checkout</code>する必要がある）:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git branch -d branch_name<br></code></pre></td></tr></table></figure>
+<p>注意：ローカルで新しいブランチを作成したが、<code>git push</code>していない場合、以下のコマンドでブランチを削除しようとすると警告が表示されます</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">error</span>: <span class="hljs-title class_">The</span> branch <span class="hljs-string">&#x27;test&#x27;</span> is not fully merged.<br><span class="hljs-title class_">If</span> you are sure you want to <span class="hljs-keyword">delete</span> it, run <span class="hljs-string">&#x27;git branch -D test&#x27;</span>.<br></code></pre></td></tr></table></figure>
+<p>本当に不要な場合は、指示に従って強制削除してください。</p>
+<p>ファイルをコミットする流れは:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git add ==&gt; git commit ==&gt; git push<br></code></pre></td></tr></table></figure>
+<p><code>git add</code>でよく使うパラメータは3つあります:</p>
+<ol>
+<li><code>git add -A</code> すべての変更記録（新規追加、削除、変更）をステージングエリアに追加します。</li>
+<li><code>git add .</code> ファイルの追加記録と変更をステージングエリアに追加しますが、削除されたファイルは含まれません。</li>
+<li><code>git add -u</code> ファイルの削除と変更記録をステージングエリアに追加しますが、新規追加されたファイルは含まれません。</li>
+</ol>
+<p>人生に後悔薬はありませんが、<code>git</code>にはあります。誤ったファイルをコミットしてしまった場合やコミットメッセージを間違えた場合は、状況に応じて以下のコマンドを実行できます。</p>
+<p>まず<code>git status</code>でバージョン状態を確認します（私は<code>zsh</code>を使っています）。赤いファイルはステージングエリアに<code>git add</code>されていない状態、緑のファイルはすでに<code>git add</code>されており、<code>git commit</code>を待っている状態です。</p>
+<p>この時、<code>git add</code>をキャッシュエリアに行きたくない場合は、<code>git reset HEAD</code>ですべてのファイルを未<code>git add</code>の元の状態に戻せます。特定のファイルだけ<code>git add</code>をキャッシュエリアに行きたくない場合は、ファイル名を指定します:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git reset <span class="hljs-variable constant_">HEAD</span> filename<br></code></pre></td></tr></table></figure>
+<p>時には、変更したファイルを<code>git add</code>キャッシュエリアに移動したくないだけでなく、そのファイルに行ったすべての変更を無視したい（つまり未変更状態に戻したい）場合もあります。その場合は再チェックアウトすればよいです:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git checkout -- filename<br></code></pre></td></tr></table></figure>
+<p>ここでスペルミスがないことに注意してください。<code>checkout</code>と<code>filename</code>の間には左右にスペースを挟んだハイフンがあります。</p>
+<p><code>git add</code>の後は<code>git commit</code>です。<code>-m</code>パラメータを付けてコミットメッセージを書くことができます。これは良い習慣であり、強制されています。<code>-m</code>パラメータがない場合は、<code>vim</code>編集モードに入り、メッセージを追加するよう促されます:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git commit -m <span class="hljs-string">&#x27;这是一个提交说明&#x27;</span><br></code></pre></td></tr></table></figure>
+<p>この時、コミットメッセージを間違えたことに気づき、<code>commit</code>したくない場合（<code>HEAD</code>はすでに変更されています）、2つの方法があります:</p>
+<p>1つは<code>commit</code>を削除することです（これはまだ<code>push</code>されておらず、ローカルリポジトリに<code>commit</code>されているだけです）:</p>
+<p>まず<code>git log</code>し、誤って<code>commit</code>する前の<code>commit id</code>をメモします。これは<code>hash(SHA)</code>で、例えば<code>73cf3bfc3419a85e959d7ecfcb917d9cdc24b3c9</code>、または直近の<code>push</code>の<code>HEAD</code>でも構いません:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git reset 73cf3bfc3419a85e959d7ecfcb917d9cdc24b3c9<br></code></pre></td></tr></table></figure>
+<p>（この時は<code>git add</code>の時に<code>git reset HEAD</code>を使うことができません。<code>git commit</code>の後<code>HEAD</code>はすでに変更されているため（つまり<code>git log</code>でコミット履歴を確認できる状態になっているため）です）</p>
+<p>ここで<code>git reset</code>コマンドの3つのパラメータについて補足します:<code>--mixed</code>,<code>--soft</code>,<code>--hard</code>:</p>
+<p>ネット上には多くのチュートリアルがあり、図解や公式ブランチ説明の引用などがありますが、複雑です。私は簡単に説明します。</p>
+<blockquote>
+<p>シンプルに、例を挙げて簡単に説明しましょう。 —Xheldon</p>
+</blockquote>
+<p><code>git reset</code>のデフォルトは<code>mixed</code>パラメータで、<code>git reset xxxx</code>を実行します（xxxは<code>SHA</code>または未<code>commit</code>の場合は<code>HEAD</code>を表します）。これは<code>git reset --mixed xxxx</code>を実行するのと同じで、ファイルを変更した後、<code>git</code>コマンドを実行していない状態（ファイルが赤い状態）に戻します。</p>
+<p><code>--soft</code>パラメータは、ファイルを単にコミット前の状態に戻すだけで、ファイルはまだ<code>git add</code>されています（緑のままです）。</p>
+<p><code>--hard</code>はより強力で、指定したコミット記録の状態に完全にファイルを復元します。<code>add</code>したか<code>commit</code>したか、ファイルを変更したかに関係なく、すべて無視します。<code>git reset --hard xxx</code>を実行するのはある程度危険で、現在の変更がローカルから削除されることに注意してください。</p>
+<p><code>git reset --hard xxx</code>の後、ファイルはローカルから削除され、すべての変更も削除されていますが、<code>hard</code>で削除したファイルの変更記録を復元したい場合はどうすればよいでしょうか？<code>git reflog</code>を使います</p>
+<p>あなたが行ったすべての<code>commit</code>と<code>reset</code>操作は、<code>git</code>によって記録が生成されます。この記録は<code>git reflog</code>で見つけることができ、各記録の前に短い<code>hash</code>があります。この短い<code>hash</code>をコピーして、<code>git reset --hard short_hash</code>を再度実行すればよいです。</p>
+<p>注意：<code>git commit</code>を実行した後、<code>HEAD</code>はすでにコミットしたファイルの変更状態になっています。そのため、<code>git reset --mixed HEAD</code>や<code>git  reset --soft HEAD</code>を実行しても効果がありません（現在の<code>HEAD</code>は<code>commit</code>後のポイントだからです（<code>push</code>していなくても））。<code>git add</code>後の状態に戻りたい場合、<code>git commit</code>前の状態に戻るには<code>git reset --soft commit_id</code>が必要です。<code>git add</code>前の状態に戻るには<code>git reset --mixed commit_id</code>、または直接<code>git reset commit_id</code>します。</p>
+<p><code>git commit</code>後悔薬の別名は<code>--amend</code>です。コミット後に後悔し、メッセージを間違えたことに気づいた、またはファイルをさらに変更した場合、<code>commit</code>記録を生成したくない（見た目が悪く、あなたがコミットメッセージを間違えるような初心者に見えるため）、次のコマンドを実行します:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git commit --amend change_file_name_after_commit -m <span class="hljs-string">&quot;新的msg&quot;</span><br></code></pre></td></tr></table></figure>
+<p>これで完了です。</p>
+<p>後悔薬を飲んだ後、<code>git commit</code>して問題がなければ<code>git push</code>できます。この時、現在のブランチから分岐したリモートブランチに他の人が更新をコミットしていない場合は、<code>fast forward</code>モード（ファストフォワードモード）を使用して直接マージできます。マージ状況を視覚的に確認するには:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git log --graph --pretty=oneline<br></code></pre></td></tr></table></figure>
+<p>ブランチを分岐している間に他の誰かもブランチをコミットした場合、衝突がなければそのままマージできます。まず<code>git pull</code>を行い、その後<code>git push</code>を実行する必要があります。<br />
+衝突がある場合、他の人の変更とあなたの変更の間にどのような衝突があるかが通知されます。これは手動で解決する必要があり、解決後は<code>git add</code>、<code>git commit</code>を行います。</p>
+<p>ブランチのマージ：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git merge another_branch_name<br></code></pre></td></tr></table></figure>
+<p>ここでの状況は<code>非fast forward</code>モードです。つまり、ブランチBがブランチAから分岐した後、親ブランチであるAブランチが変更され、ブランチBも何らかの変更を加えた状態で、再度Aブランチにマージしようとした場合に現在の状況が発生します。<br />
+注意：あなたがブランチAにいる場合、<code>merge</code>する必要があるのはブランチBです。この場合、<code>merg</code>されるブランチBは<code>git push</code>されている必要があります。ブランチBが単に<code>git commit</code>されているだけではマージされません。なぜなら、<code>git merge branch_name</code>の<code>branch_name</code>は<code>branch_name</code>のリモート<code>origin</code>から<code>merge</code>されており、<code>commit</code>はローカルの<code>HEAD</code>のみを変更し、<code>push</code>がないためリモート<code>origin</code>は変更されていないからです。<br />
+ブランチBがすでに<code>git push</code>をリモートにプッシュし、ローカルのブランチAも<code>git add</code>をローカルリポジトリにコミットしている場合、ブランチAで<code>git merge B</code>を実行すると（変更されたファイルが<code>config.js</code>だと仮定して）以下のようになります：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Updating</span> 474cfbf..9c94d0c<br><span class="hljs-attr">error</span>: <span class="hljs-title class_">Your</span> local changes to the following files would be overwritten by <span class="hljs-attr">merge</span>:config.<span class="hljs-property">js</span><br><span class="hljs-title class_">Please</span> commit your changes or stash them before you merge.<br><span class="hljs-title class_">Aborting</span><br></code></pre></td></tr></table></figure>
+<p>これは、2つのブランチをマージする際にエラーが発生して中断されたことを意味します。現在のブランチの変更を一時保存（<code>git stash</code>）するか、変更をコミット（<code>git commit</code>）するように促されます。その後、<code>git merge</code>を行い、衝突が発生したら手動で修正して再度コミットします。<br />
+では、まず現在の変更を<code>git commit</code>し、再度<code>git merge B</code>を実行します。この時（衝突ファイルが<code>config.js</code>だと仮定して）以下のようになります：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Auto</span>-merging config.<span class="hljs-property">js</span><br><span class="hljs-variable constant_">CONFLICT</span> (content): <span class="hljs-title class_">Merge</span> conflict <span class="hljs-keyword">in</span> config.<span class="hljs-property">js</span><br><span class="hljs-title class_">Automatic</span> merge failed; fix conflicts and then commit the result.<br></code></pre></td></tr></table></figure>
+<p>手動で解決した後、再度<code>git add</code>、<code>git commit</code>を行います。</p>
+<p>注意：あるブランチでファイルを変更し、<code>checkout</code>で別のブランチに移動する際に衝突が発生しなかった場合、何の通知もなくファイルの変更は保持されます。したがって、ファイルを1つのブランチで変更した後、別のブランチにコミットすることができます。しかし、1つのブランチでファイルを変更した後、<code>checkout</code>で他のブランチに移動する際に衝突が発生した場合（例えば他のブランチが<code>git pull</code>された、または他のブランチが同じファイルの同じ部分を<code>git commit</code>した場合）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">error</span>: <span class="hljs-title class_">Your</span> local changes to the following files would be overwritten by <span class="hljs-attr">checkout</span>:<br> config.<span class="hljs-property">js</span><br><span class="hljs-title class_">Please</span> commit your changes or stash them before you <span class="hljs-keyword">switch</span> branches.<br><span class="hljs-title class_">Aborting</span><br></code></pre></td></tr></table></figure>
+<p>この場合、まず<code>git stash</code>で変更を一時保存（この<code>stash储藏</code>は<code>git add暂存</code>ではありません。<code>stash</code>はファイルを特定の領域に保存し、ブランチを切り替えた後、パッチのようにこの<code>stash</code>を切り替えた<code>checkout</code>ブランチに適用するか、または<code>stash</code>を適用せず、切り替えたブランチでの作業が終わってから再度この<code>stash</code>を適用することができます。もちろん、<code>stash</code>をずっと適用したくない場合は適用しなくても問題ありません）。<br />
+ここで<code>git stash</code>について説明します。このコマンドは、2つのブランチの変更を同時に行う必要がある場合に使用されます。1つのブランチで作業を途中まで進めた状態で、別のブランチも変更する必要がある場合、途中までの作業を破棄することはできず、また<code>commit</code>することもできません。なぜなら、<code>checkout</code>すると<code>conflict</code>が発生する可能性があるため、<code>stash</code>を一時保存する必要があります。<br />
+まず現在の状態を確認します。<code>git status</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">On</span> branch optimize<br><span class="hljs-title class_">Your</span> branch is up-to-date <span class="hljs-keyword">with</span> <span class="hljs-string">&#x27;origin/optimize&#x27;</span>.<br><span class="hljs-title class_">Changes</span> not staged <span class="hljs-keyword">for</span> <span class="hljs-attr">commit</span>:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)<br>  (use <span class="hljs-string">&quot;git checkout -- &lt;file&gt;...&quot;</span> to discard changes <span class="hljs-keyword">in</span> working directory)<br><br> <span class="hljs-attr">modified</span>:   config.<span class="hljs-property">js</span><br><br>no changes added to commit (use <span class="hljs-string">&quot;git add&quot;</span> and/or <span class="hljs-string">&quot;git commit -a&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>変更を一時保存します。<code>git stash</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Saved</span> working directory and index state <span class="hljs-variable constant_">WIP</span> on <span class="hljs-attr">optimize</span>: 24bf0e1 test add<br><span class="hljs-variable constant_">HEAD</span> is now at 24bf0e1 这是一个提交<br></code></pre></td></tr></table></figure>
+<p>その後、再度<code>git status</code>を確認します：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">On</span> branch optimize<br><span class="hljs-title class_">Your</span> branch is up-to-date <span class="hljs-keyword">with</span> <span class="hljs-string">&#x27;origin/optimize&#x27;</span>.<br>nothing to commit, working tree clean<br></code></pre></td></tr></table></figure>
+<p>これで安心して他のブランチに切り替えることができます。ここで注意すべきは、他のブランチに切り替える際に、保存したブランチの変更を現在のブランチに適用することもできるということです（衝突を恐れなければ）。保存リストを確認します。<code>git stash list</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">stash@&#123;<span class="hljs-number">0</span>&#125;: <span class="hljs-variable constant_">WIP</span> on <span class="hljs-attr">optimize</span>: 24bf0e1 test add<br></code></pre></td></tr></table></figure>
+<p>これは先ほど<code>stash</code>した変更です。<code>git stash apply</code>を使用してこの最新の変更を適用できます。<code>stash</code>の変更が複数ある場合は、<code>stash</code>の名前を指定します：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git stash apply stash@&#123;<span class="hljs-number">0</span>&#125;<br></code></pre></td></tr></table></figure>
+<p>適用後、この<code>stash</code>は保存領域から削除されます。削除したくない場合は：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git stash apply stash_name --index<br></code></pre></td></tr></table></figure>
+<p>後で削除したい場合は：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">git stash drop stash_name<br></code></pre></td></tr></table></figure>
+<p>上記の2つのコマンドで<code>stash_name</code>を指定しない場合、デフォルトで最新の<code>stash</code>が削除されます。</p>
+<p>とりあえず思いつくのはこれくらいです。慣れていない場合は、<code>Sourcetree</code>を使用することをお勧めします。</p>
+<h2 id="更新">更新</h2>
+<p><code>git revert/reset/rebase</code> 説明を読むだけでは理解できません。自分でコマンドを入力してテストする必要があります。</p>
+<p>私はクリーンで整理されたコミット履歴のために<code>git rebase</code>を使用するのが好きですが、このコマンドは危険で、いくつかの使用シナリオに注意が必要です。<code>git rebase</code>よりもさらに危険なのは<code>git reset</code>で、これは現在のプロジェクトを特定のコミットにリセットします。<code>git revert</code>は比較的安全ですが、<code>revert</code>する前にキャッシュ領域が空であることを確認する必要があります。そうでないとエラーメッセージが表示されます。</p>
+<p>もちろん、<code>git</code>コマンドは数え切れないほどあります（誇張）。いくつかのコマンドは特定のシナリオ向けであり、遭遇するまでその使用方法を理解できないこともあります。これは正常です。</p>
+<p>例えば、<code>git reset commitId</code>は<code>HEAD</code>を<code>commitId</code>の場所に移動します。これを見て「<code>HEAD</code>を移動して何の意味があるのか？このコマンドの目的は何か？」と疑問に思うかもしれません。また、<code>git revert commitId</code>は<code>commitId</code>のコミットを削除しますが、<code>HEAD</code>のポインタは移動しません。</p>
+<p>コードを見る(<code>d0b9def</code> は <code>commit -m 'reset/revert test 3'</code> のコミットに対応、現在 <code>HEAD</code> は <code>'reset/revert test 4'</code> 上):</p>
+<p><code>git revert d0b9def</code> の後、あなたのコードはこのようになっているかもしれません:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js">reset/revert test <span class="hljs-number">1</span><br>reset/revert test <span class="hljs-number">2</span><br>&lt;&lt;&lt;&lt;&lt;&lt;&lt; <span class="hljs-variable constant_">HEAD</span><br>reset/revert test <span class="hljs-number">3</span><br>reset/revert test <span class="hljs-number">4</span><br>=======<br>&gt;&gt;&gt;&gt;&gt;&gt;&gt; parent <span class="hljs-keyword">of</span> d0b9def... reset/revert test<br></code></pre></td></tr></table></figure>
+<p>同じ <code>HEAD</code> 上で <code>git reset d0b9def</code> を実行した後、あなたのワークスペースはこのようになっているかもしれません:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"> reset/revert test <span class="hljs-number">1</span><br> reset/revert test <span class="hljs-number">2</span><br> reset/revert test <span class="hljs-number">3</span><br>+reset/revert test <span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
+<p><code>HEAD</code> を移動させるかどうかの違いが分かりましたか？ <code>revert</code> は必ず手動でコンフリクトを解決させるよう要求します。なぜなら、それは <code>commitId</code> 前の親 <code>commit</code> から現在の <code>HEAD</code> までの、<code>d0b9def</code> を除くすべての変更を保持するからです。一方 <code>reset</code> はコンフリクトを解決させず、黙って <code>HEAD</code> を移動させ、<code>d0b9def</code> 以降のすべての変更をファイル変更として表示し、手動で <code>git add/commit</code> する必要があります。もちろん <code>push --force</code> も欠かせません。</p>
+<p>したがって、<code>revert</code> は <code>公开</code> のコミットを安全に取り消すように設計されており、<code>reset</code> は <code>本地</code> の変更をリセットするように設計されています。両コマンドの目的が異なるため、実装も異なります: リセットは一連の変更を完全に削除しますが、取り消しは元の変更を保持し、新しいコミットで取り消しを実現します。</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          この記事の初出:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/git-command.ja.html"
+            title="Git よく使うコマンドまとめ"
+          >
+            Git よく使うコマンドまとめ - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">目次</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>ブログ主より：</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        人生の重要な選択に直面したとき、最善の方法を誰かが教えてくれて、貴重な時間を無駄にせずに済めばと、私はよく願っています。だからこそ、自分の経験を踏まえて頻繁にブログを書き、広大なインターネットのこの小さな片隅に、私にとって一度きりの人生経験を記録し、助けを求める人々の力になれればと思っています。
+    </div>
+    <hr>
+    
+    <h5><a href="/ja/archive/">人気のタグ</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技術"
+                rel="188">技術</a>
+        
+            <a data-sort="0200"
+                href="/ja/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="108">生活</a>
+        
+            <a data-sort="0264"
+                href="/ja/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="いじり"
+                rel="44">いじり</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="コツ"
+                rel="32">コツ</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="チュートリアル"
+                rel="32">チュートリアル</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻訳"
+                rel="24">翻訳</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="経験"
+                rel="20">経験</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="グルメ"
+                rel="20">グルメ</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体験"
+                rel="16">初体験</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="ワークフロー"
+                rel="16">ワークフロー</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="プラグイン"
+                rel="16">プラグイン</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="ネットワーク"
+                rel="16">ネットワーク</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用感"
+                rel="12">使用感</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="まとめ"
+                rel="12">まとめ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="サーバー"
+                rel="12">サーバー</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="ルーター"
+                rel="12">ルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="ソフトルーター"
+                rel="12">ソフトルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="エッセイ"
+                rel="12">エッセイ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9B%86%E6%88%90"
+                title="統合"
+                rel="12">統合</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="8">主食</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="最適化"
+                rel="8">最適化</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%8D%83%E5%85%86"
+                title="ギガビット"
+                rel="8">ギガビット</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="8">大事</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="ツール"
+                rel="8">ツール</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="バイパスルーター"
+                rel="8">バイパスルーター</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="フレームワーク"
+                rel="8">フレームワーク</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="足湯タイム"
+                rel="8">足湯タイム</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="テスト"
+                rel="8">テスト</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="テスラ"
+                rel="8">テスラ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="エディタ"
+                rel="8">エディタ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="動画"
+                rel="8">動画</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="デバッグ"
+                rel="8">デバッグ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BD%A6"
+                title="車"
+                rel="8">車</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="移行"
+                rel="8">移行</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="東北料理"
+                rel="4">東北料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="住宅購入"
+                rel="4">住宅購入</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="プロキシ"
+                rel="4">プロキシ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="フルスタック"
+                rel="4">フルスタック</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="北欧神話"
+                rel="4">北欧神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="共同編集"
+                rel="4">共同編集</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="圧縮"
+                rel="4">圧縮</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="クレイトス"
+                rel="4">クレイトス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="家庭料理"
+                rel="4">家庭料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="富強"
+                rel="4">富強</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="比較"
+                rel="4">比較</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="四川料理"
+                rel="4">四川料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="仕事の経験"
+                rel="4">仕事の経験</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="ギリシャ神話"
+                rel="4">ギリシャ神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="定番ソフト"
+                rel="4">定番ソフト</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="オープンソース"
+                rel="4">オープンソース</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="開封"
+                rel="4">開封</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="ゴッド・オブ・ウォー"
+                rel="4">ゴッド・オブ・ウォー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIMカード"
+                rel="4">SIMカード</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%8B%93%E6%89%91"
+                title="トポロジー"
+                rel="4">トポロジー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="物語"
+                rel="4">物語</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="データ構造"
+                rel="4">データ構造</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="旅行"
+                rel="4">旅行</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="日常"
+                rel="4">日常</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="日本"
+                rel="4">日本</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="サービス"
+                rel="4">サービス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="フォーマット"
+                rel="4">フォーマット</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A2%A6"
+                title="夢"
+                rel="4">夢</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="ブラウザ"
+                rel="4">ブラウザ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="ゲーム"
+                rel="4">ゲーム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="愚痴"
+                rel="4">愚痴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="ユーザープライバシー"
+                rel="4">ユーザープライバシー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="アルゴリズム"
+                rel="4">アルゴリズム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="詳細"
+                rel="4">詳細</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="イヤホン"
+                rel="4">イヤホン</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="自由"
+                rel="4">自由</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="計画"
+                rel="4">計画</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="設定"
+                rel="4">設定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="落とし穴"
+                rel="4">落とし穴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="変換"
+                rel="4">変換</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="技術選定"
+                rel="4">技術選定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="面接"
+                rel="4">面接</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>コラム</h5>
+    <div class="tags">
+        <a href="/projects">オープンソース</a>
+        <a href="/book-list">技術書リスト</a>
+        <a href="/subscribe">サブスク＆有料アプリ</a>
+        <a href="/my-food">グルメのおすすめ</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>友達</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">中国版</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="Git よく使うコマンドまとめ"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ja"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ja/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

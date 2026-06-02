@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      「訳」ProseMirrorにおける共同編集の実装 - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="翻訳内容が理解できない部分は、該当する原文をそのまま記載し、後で理解できた時点で翻訳するようにします。誤った情報を広めたり、笑いものになるのを避けるためです。">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="「訳」ProseMirrorにおける共同編集の実装 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2020-8-2T8:05:56"> 
+              
+                  
+                    <meta property="article:tag" content="ProseMirror">
+                    
+                    <meta property="article:tag" content="共同編集">
+                    
+                    <meta property="article:tag" content="技術">
+                    
+                    <meta property="article:tag" content="翻訳">
+                    
+                      
+                          
+                            <meta name="og:description" content="翻訳内容が理解できない部分は、該当する原文をそのまま記載し、後で理解できた時点で翻訳するようにします。誤った情報を広めたり、笑いものになるのを避けるためです。">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ja/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ja_JP">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ja/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/Collaborative-Editing-in-ProseMirror.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ja/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ja/">ホーム</a>
+            </li>
+            <li>
+              <a href="/ja/about/">概要</a>
+            </li>
+            <li>
+              <a href="/ja/donate/">寄付</a>
+            </li>
+            <li>
+              <a href="/ja/archive/">アーカイブ</a>
+            </li>
+            <li>
+              <a href="/ja/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">日本語</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/Collaborative-Editing-in-ProseMirror.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/Collaborative-Editing-in-ProseMirror.html" hreflang="en">English</a></li>
+        <li class="lang-item active"><a href="/ja/tech/Collaborative-Editing-in-ProseMirror.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/Collaborative-Editing-in-ProseMirror.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ja/archive/?tag=ProseMirror"
+                            title="ProseMirror">
+                            ProseMirror
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E5%8D%8F%E5%90%8C"
+                            title="共同編集">
+                            共同編集
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技術">
+                            技術
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E7%BF%BB%E8%AF%91"
+                            title="翻訳">
+                            翻訳
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        「訳」ProseMirrorにおける共同編集の実装
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 作成日 2020年08月02日</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;注意：この記事が作成されてから既に
+          <code id="from_time"></code> 日が経過しています。情報の鮮度にご注意ください
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1596355556000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+         
+        <div class="reference-tips">
+          🔗 &nbsp;原文：<a href="https://marijnhaverbeke.nl/blog/collaborative-editing.html" target="_blank">
+            https://marijnhaverbeke.nl/blog/collaborative-editing.html
+          </a>
+        </div>
+          
+        <div class="callout-tips">🖥 &nbsp;説明：翻訳内容が理解できない部分は、該当する原文をそのまま記載し、後で理解できた時点で翻訳するようにします。誤った情報を広めたり、笑いものになるのを避けるためです。</div>
+           <p>このブログ記事では、<a href="https://prosemirror.xheldon.com">ProseMirror</a>で使用されている共同編集技術について説明します。ProseMirrorの紹介については、<a href="https://marijnhaverbeke.nl/blog/prosemirror.html">こちら</a>をご覧ください。</p>
+<h2 id="共同編集の問題点">共同編集の問題点</h2>
+<p>リアルタイム共同編集システムでは、複数のユーザーが同時に同じドキュメントを編集する可能性があります。このシステムは、ドキュメントが同期状態を保つことを保証します。つまり、あるユーザーが行った変更が他のユーザーに送信され、彼らのドキュメントに反映されます。</p>
+<p>ネットワークを介した変更の伝送には時間がかかるため、この種のシステムの複雑さは、同時発生する更新をどのように処理するかにあります。一つの解決策は、ユーザーがドキュメント（またはその一部）をロックして、他のユーザーが同時に編集できないようにすることです。しかし、このメカニズムではユーザーはロックについて常に意識する必要があり、ロックを取得できない場合（他のユーザーが編集中の場合）は待機しなければなりません。私たちはこれを望んでいません。</p>
+<p>同時更新を許可すると、ユーザーAとユーザーBが同時にドキュメントを変更し、互いの変更を認識しない状況が発生します。この場合、最終的なドキュメントの更新方法を調整する必要があります。AとBの行動は互いに影響しない場合（例えばドキュメントの異なる部分を編集する場合）もあれば、相互に影響する場合（同じ単語を変更しようとする場合）もあります。</p>
+<h2 id="操作変換（ot-operational-transformation）">操作変換（OT: Operational Transformation）</h2>
+<p>この問題に関する研究は数多く存在します。私は多くの論文を読みましたが、この研究を完全に理解しているとは言えず、もし誤解や興味深い参考文献の欠落に気づかれた場合は、ぜひメールでお知らせください。</p>
+<p>この問題に関する研究の多くは、実際には分散システムに関するものです。つまり、中央制御ノードを持たず、ノード同士がメッセージを交換するシステムです。この問題を解決する古典的な方法は「<a href="https://en.wikipedia.org/wiki/Operational_transformation">操作変換</a>」と呼ばれる分散アルゴリズムです。これは変更を記述する方法を定義し、次の2つの特性を持ちます：</p>
+<ol>
+<li>
+<p>他の変更に対して変更を変換できる。例えば、ユーザーAが親要素のオフセット1に文字「O」を挿入し、同時にユーザーBがオフセット10に文字「T」を挿入した場合、ユーザーAはBの変更を自分の変更に対して変換でき、結果として「T」はオフセット11に挿入されます。これはBの変更位置の前に追加の文字が挿入されたためです。</p>
+</li>
+<li>
+<p>変更がドキュメントに適用される順序に関わらず、最終的に全員が同じドキュメントを持つ。これにより、Aは自分の変更に対してBの変更を変換でき、Bも同様にAの変更を変換できるため、両ユーザーが異なるドキュメントを得ることはありません。</p>
+</li>
+</ol>
+<p>OTシステムは、ローカルの変更を即座にローカルドキュメントに適用し、その後変更を他のユーザーにブロードキャストします。他のユーザーは、ブロードキャストされた変更を受信し、変換して適用します。リモートの変更をどのローカル変更に対して変換すべきかを正確に知るために、システムは変更をブロードキャストする際にドキュメント状態の表現も送信する必要があります。</p>
+<p>このプロセスは一見単純に聞こえますが、実装は悪夢です。一度「挿入」や「削除」のような複数の基本的な変更をサポートすると、どの順序で変更を適用しても同じドキュメントが生成されることを保証することが極めて困難になります。</p>
+<p>Google Waveで働いていたエンジニア、Joseph Gentleは<a href="http://sharejs.org/#body">こう述べています</a>…</p>
+<blockquote>
+<p>残念ながら、OTを実装するのは非常に厄介です。何百万ものアルゴリズムがあり、それらのほとんどは学術論文にしか存在しません。これらのアルゴリズムを正しく実装するのは非常に困難で時間がかかります。</p>
+</blockquote>
+<h2 id="集中化">集中化</h2>
+<p>OTメカニズムの設計上の複雑さの多くは、変更をどのように配布するかという要件に由来します。分散システムは、実際的にも理論的にも素晴らしい特性を持ち、開発において非常に興味深いものです。</p>
+<p>しかし、「変更を処理する中心」を導入することで、複雑さを大幅に減らすことができます。正直なところ、GoogleがGoogle Docs（集中型システム）でOTを使用していることは、私には非常に不思議です。</p>
+<p>ProseMirrorのアルゴリズムは集中型です。すべてのユーザーが接続する単一の変更処理センターが、変更を適用する順序を決定します。これにより、共同編集システムの実装が比較的容易で理解しやすくなります。</p>
+<p>実際、この「集中化」特性がOTアルゴリズムを分散的に実行する上で非常に大きな障害になると私は考えていません。[Raft](<a href="https://en.wikipedia.org/wiki/Raft_(computer_science)">https://en.wikipedia.org/wiki/Raft_(computer_science)</a>のような合意アルゴリズムを使用して、中央集権的なサービスではなくアービターを選出することもできます（ただし、私は実際にこの方法を試したことはありません）。</p>
+<h2 id="prosemirrorの共同編集アルゴリズム">ProseMirrorの共同編集アルゴリズム</h2>
+<p>OTと同様に、ProseMirrorも変更ベースの語彙を使用し、変更を相互に変換します。ただしOTとは異なり、異なる順序で変更を適用しても同じドキュメントが生成されることを保証しようとはしません。</p>
+<p>集中化されたサービスを利用することで、すべてのクライアントが同じ順序で変更を適用することも容易に実現できます。コードのバージョン管理システムで使用されるメカニズムと同様の仕組みを採用できます。クライアントが変更を持っている場合、その変更をサーバーに <em>push</em> しようと試みます。サーバーがその変更が最新バージョンに基づいていると判断した場合、変更は受け入れられます。そうでない場合、クライアントはまず他のクライアントの変更を <em>pull</em> し、サーバーへのプッシュを再試行する前に自分の変更を <em>rebase</em> する必要があります。</p>
+<p>gitとは異なり、このモデルではドキュメントの履歴は線形であり、ドキュメントの特定のバージョンは単純に整数を使用して表現できます。</p>
+<p>さらにgitと異なる点は、すべてのクライアントが常にドキュメントの新しい変更をプル（またはプッシュして監視）し、ネットワークが許す限り迅速にサーバーの状態を追跡することです。</p>
+<p>唯一難しい部分は、他の人の変更を自分の変更にrebaseすることです。これはOTが行う変換と非常に似ています。ただし、これはクライアント自身の変更に対して行われ、リモートサーバーの変更に対してではありません。</p>
+<h2 id="位置マッピング">位置マッピング</h2>
+<p>しかし、OTは他人の変更に対して変換を行うのに対し、ProseMirrorは_position map_（位置マッピング）と呼ばれる派生データ構造を使用して変換を行います。ドキュメントに変更を適用するたびに、新しいドキュメントと前述のマッピングが得られ、これを使用して古いドキュメントの位置を新しいドキュメントの対応する位置に変換できます。マッピングの最も顕著な使用例は、カーソル位置を調整して同じ「概念的」位置に留めることです。もしカーソルの前に文字が挿入された場合、カーソルは周囲のテキストとともに1つ前（右）に移動する必要があります。</p>
+<p>変更の変換は完全に位置マッピングに基づいて行われます。これは実際に良いことであり、特定の変更タイプの変換コードを書く必要がないことを意味します。各変更には、<code>from</code>、<code>to</code>、<code>at</code>として表現される1つから3つの位置情報が関連付けられています。与えられた他の変更に対して変更を変換する場合、これらの位置は他の変更の位置マッピングを通じてマッピングされます。</p>
+<p>たとえば、位置5に文字が挿入された場合、その挿入に対して変換を行うと、「位置10から14を削除」する変更は「位置11から15を削除」する変更に変わります。</p>
+<p>各変更の位置は、最初に適用されたドキュメントバージョンが同じ場合にのみ意味を持ちます。位置マッピングは、変更前後の2つのドキュメントバージョン間の位置のマッピングを定義します。異なるバージョンに変更を適用するためには、自身のバージョンとターゲットバージョン間の変更を通じて段階的にマッピングする必要があります。</p>
+<p>（簡単にするため、例では位置表現として整数を使用します。ProseMirrorの実際の位置は、段落内の整数オフセットに加えて、ドキュメントツリー内のその段落のパスで構成されます）</p>
+<h2 id="位置のリベース">位置のリベース</h2>
+<p>クライアントがリモートにプッシュされていない複数のローカル変更を持っている場合、興味深いことが起こります（朱一旦風に）。この時点で他の人の変更が入ってくると、すべての未送信のローカル変更をこれらの変更に基づいて変換する必要があります。ローカル変更_L1_と_L2_を持ち、それらをリモート変更_R1_と_R2_にリベースすると仮定します。ここで_L1_と_R1_は同じドキュメントバージョンからの変更です。</p>
+<p>まず、R1とR2を元のバージョンのドキュメントに適用します（クライアントは、現在表示しているドキュメントバージョン（未プッシュの変更を含む）と、これらの変更がまだ含まれていない元のバージョンを追跡する必要があります）。この操作により、2つのマッピング_mR1_と_mR2_が作成されます。</p>
+<blockquote>
+<p>訳者注：以下の部分は理解が難しいため、図を描くとより直感的かもしれません。簡単に言えば、L2はL1によるドキュメントの変更を位置マッピング（位置調整）した後にドキュメントを変更したものです。L2を正しくリベースするためには、まずL1およびL1以前（つまりR1とR2）のドキュメントへの変更を影響を受ける位置にすべてマッピング（調整）する必要があります。これによりL2は正しい位置マッピングを取得し、正しい位置でドキュメントの変更を開始できます。</p>
+</blockquote>
+<p><em>L1_を_mR1_と_mR2_を通じてマッピングしたバージョンである*L1*<em>に単純に前方マッピングできます。しかし、<em>L2</em>は初期ドキュメントバージョンに_L1_を適用した後のドキュメントに基づいて変更されているため、<em>L2</em>に対しては（注：ここで_L1_に対しては前述の単純なマッピングで十分ですが、_L2_の処理には以下の手順が必要です）、まず</em>L2*を_mL1</em>（_L1_を適用して作成されたマッピング）で<em>後方マッピング</em>（つまり履歴をロールバックし、_mL1_の逆操作を行います）する必要があります。これによりドキュメントは_R1_開始時のドキュメントと同じになり、<em>mR1_と_mR2_を通じて_L2_をマッピングし、最後に_mL1**</em>（前述の単純な_L1*<em>_適用によって生成されたマッピング）を通じてマッピングできます。これで</em>L2*<em>が得られ、_L1*</em>_を適用した後のドキュメントに適用できます。これで、2つの変更を他の2つの変更にリベースできました。</p>
+<blockquote>
+<p>訳者注：以下の段落において、「位置5に2文字を挿入」は前述のL1に相当し、「2文字の間（位置6）にさらに挿入」はL2に相当します。したがって、L2をリベースする際には、まずmL1を通じてL2の挿入位置を元のドキュメントにロールバックする必要がありますが、この時点ではドキュメントにL2がマッピングできる位置が存在しません。なぜなら、その位置はまだ存在していないからです。</p>
+</blockquote>
+<p>削除操作のマッピングと後方マッピング（履歴ロールバック–訳者注）による挿入操作は情報を失います。位置5に2文字を挿入し、その後別の人物が位置6（先に挿入された文字の間）に挿入した場合、後方マッピング（履歴ロールバック、前述のL2–訳者注）を行い、その後最初の挿入操作を通じて前方マッピングすると、挿入した2文字の前または後の位置に移動することになります。なぜなら、これらの2文字の間の位置は、まだそれらが存在しないドキュメントでは表現できないからです（まだ挿入されていない文字の正確な位置をどのように表現するか？–訳者注）。</p>
+<blockquote>
+<p>訳者注：以下の段落は本記事の核心部分です。マッピング時に追加の逆マッピング情報を提供することで、後方マッピング（履歴ロールバック）時に存在しない位置にマッピングする必要が生じた場合、まずその位置の内容を復元し（そのマッピングのミラーを使用）、マッピングを行います。それ以前のマッピングが完了した後、このマッピングをスキップします（内容の復元時にマッピングが既に完了しているため）。マッピングのミラーとマッピング内容が同じサイズを維持していることが必須です（当然ですが、そうでないと位置計算が誤ります）。</p>
+</blockquote>
+<p>この問題を修正するため、ProseMirrorの協調編集システムはマッピングパイプラインを使用します。これらは単なる一連のマッピングではなく、どのマッピングが互いのミラーであるかという情報も保持しています。ある位置がこれらのパイプラインを通過する際に、その位置周辺の内容を削除するマッピングに遭遇した場合、システムはパイプラインを前方（つまり、その位置にまだ遭遇していない以前のマッピング–訳者注）にスキャンし、そのマッピングのミラーを探します。そのようなマッピングが見つかった場合、その位置に前方マッピングジャンプ（通常の位置調整–訳者注）を行い、削除された内容内の相対オフセットを使用して、そのマッピングが挿入した内容内の位置を復元します。削除操作のマッピングミラーは、挿入操作のマッピングミラーと同じ内容サイズを維持する必要があります。</p>
+<h2 id="マッピングの方向">マッピングの方向</h2>
+<p>内容が挿入されるたびに、この明確な挿入点を2つの異なる位置（どちらも意味のある位置）にマッピングできます：挿入内容の前、または後です。前者が適切な場合もあれば、後者が適切な場合もあります。ProseMirrorの位置マッピングシステムは、開発者が好みの方向を選択できるようにしています。</p>
+<blockquote>
+<p>訳者注：以下の説明では、ドキュメントが<code>abc</code>で、aの後、bの前の位置に文字xを挿入すると仮定しています。この場合、変更された<code>from</code>と<code>to</code>はどちらも1になります。挿入内容の後、<code>from</code>は前方（左方向）にマッピングされても1のまま変わらず、<code>to</code>は後方（右方向）にマッピングされると2になります。</p>
+</blockquote>
+<p>これが、変更に関連する位置に複数の異なる位置情報が含まれる理由です。変更が<code>from</code>と<code>to</code>の位置情報を持つ場合、例えばドキュメントの内容を削除したりスタイルを設定したりする場合、その位置の前または後に内容がある場合、それらの内容は変更に含まれないべきです（これらの内容は変更発生後に位置をマッピングするだけでよい–訳者注）。したがって、<code>from</code>位置は前方（左方向）にマッピングされるべきであり、<code>to</code>位置は後方（右方向）にマッピングされるべきです）。</p>
+<p>変更がそれを完全に含むマッピングを通じてマッピングされるとき、例えば位置5に文字を挿入し、その後その位置が2から10を削除して作成された変更を通じてマッピングされると、位置5に文字を挿入するという操作全体が単純に破棄されます。そのコンテキストが存在しなくなるからです。</p>
+<h2 id="変更のタイプ">変更のタイプ</h2>
+<p>ProseMirrorにおいて、原子的な変更は_step_（ステップ）と呼ばれます。ユーザーの視点では単一の変更に見えるものでも、実際には複数のステップに分解される場合があります。例えば、テキストを選択してEnterキーを押すと、エディタは選択テキストを削除する_delete_ステップを生成し、その後現在の段落を分割する_split_ステップを生成します。</p>
+<p>以下はProseMirrorに存在するステップのタイプです：</p>
+<ul>
+<li><code>addStyle</code> と <code>removeStyle</code> はドキュメントにインラインスタイルを追加または削除します。</li>
+<li><code>split</code> はノードを2つに分割します。例えば、ユーザーがEnterキーを押したときに段落を分割するために使用できます。単一の <code>at</code> 位置情報のみが必要です。</li>
+<li><code>join</code> は隣接する2つのノードを結合します。この操作は同じタイプのコンテンツを含むノードに対してのみ有効です。結合する2つのノードの末尾と開始位置を指すために、<code>from</code> と <code>to</code> の位置情報が必要です（これは意図したノードを正しく結合するためです。もし同時にこれらのノードにコンテンツが挿入された場合、結合操作は無視されます）。</li>
+<li><code>ancestor</code> はノードのタイプを変更したり、祖先を追加/削除するために使用されます。リストをラップしたり、段落を見出しに変換する場合などに使われます。ノードの開始位置と終了位置を指す <code>from</code> と <code>to</code> の位置が必要です。</li>
+<li><code>replace</code> はドキュメントの一部を0個以上のノードで置き換え、必要に応じて互換性のあるノードを切り口で縫合します。削除範囲を定義する <code>from</code> と <code>to</code> の位置、および新しいノードを挿入する位置を指定する <code>at</code> の位置が必要です。</li>
+</ul>
+<p>上記のタイプの中で、最後のものが最も複雑です。当初はこれを削除と挿入の2つのステップタイプに分割しようと考えました。しかし、置換ステップで作成される位置マッピングはステップをアトミックに扱う必要があるため（位置は_すべて_の置換コンテンツから導出されなければなりません）、単一のステップとして扱うことでより良い結果を得ました。</p>
+<h2 id="操作の意図">操作の意図</h2>
+<p>リアルタイム共同編集システムの必須特性は、変更の_意図_を保持しようとすることです。変更の「マージ」はユーザーの介入なしに自動的に行われるため、ドキュメントへの変更がリベースされて意図しない結果になることは非常に煩わしいものです。</p>
+<p>これらの編集ステップとそのリベース方法を定義する際、リベース時に不自然にならないように努めました。ほとんどの場合、変更は互いに上書きされず、介入も不要です。しかし、変更が重複する場合、マージ結果が適切であることを保証しなければなりません。</p>
+<p>時には、変更を単純に破棄しなければならない場合もあります。段落に入力している間に他のユーザーがその段落を削除した場合、入力の意味のあるコンテキストが失われ、その位置への挿入は無意味なドキュメントフラグメントを作成します。</p>
+<p>2つのリストを結合しようとしても、他のユーザーがリストの間に段落を挿入した場合、操作は実行不可能（隣接していないノードは結合できません）なので破棄されます。</p>
+<p>他のシナリオでは、変更が修正されても意味を保つ場合があります。位置5から10の文字を太字にし、他のユーザーが位置7に文字を挿入した場合、最終的には位置5から11が太字になります。</p>
+<p>最後に、変更が重複しても互いに影響しない場合があります。単語をハイパーリンクに設定し、他のユーザーが同じ単語を太字にした場合、両方の変更が元のドキュメントに適用されます。</p>
+<h2 id="オフライン編集">オフライン編集</h2>
+<p>リアルタイム共同編集では、変更を静かに修正したり破棄したりすることは問題ありません。この場合、フィードバックはほぼ即時です——編集している段落が消えたのを見れば、誰かが削除したことが分かり、自分の変更も消えたとわかります。</p>
+<p>オフライン編集（中央サーバーに接続せずに編集を続ける場合）やブランチワークフローの場合、大量の編集を行った_後で_、その間に他のユーザーが編集したドキュメントにマージする場合（他のユーザーがどのように編集、削除、大量のコンテンツを挿入し、その後最初のコンテンツを削除したかなど）、ここで説明したモデルは役に立ちません（OTも同様です）。このシナリオでは、（このモデルとOTは同様に）編集のコンテキストが既に削除されている場合、多くの編集作業が静かに削除されるか、2人のユーザーが同じ文を異なる方法で編集した場合に奇妙なテキストの組み合わせが作成される可能性があります。</p>
+<p>このような場合、差分ベースの実装の方が適しているかもしれません。自動マージはできない可能性があります——衝突を識別し、ユーザーに解決を任せる必要があります。例えば、gitがユーザーに行わせるように。</p>
+<h2 id="取り消し履歴">取り消し履歴</h2>
+<p>共同編集システムでは、取り消し履歴をどのように実装すべきでしょうか？広く受け入れられている答えは、単一の共有履歴を_決して_使用すべきではないということです。編集を取り消す場合、ドキュメントの最後の編集ではなく、_あなた_が行った最後の編集操作を取り消すべきです。</p>
+<p>これは、単純に以前の状態にロールバックしてドキュメント履歴を実装する方法が機能しないことを意味します。変更を取り消す（その間に他のユーザーも変更を加えている場合）ことは、これまでに見たことのない新しい状態を生み出します（つまり、ドキュメント履歴のどの状態でもありません）。</p>
+<p>これを実現するためには、反転可能な変更（複数のステップ）を定義する必要があり、その反転は元のステップを打ち消す変更を表す新しいステップを生成します。</p>
+<p>ProseMirrorの取り消し履歴は、反対のステップを蓄積し、現在のドキュメントバージョンとの間のすべての位置マッピングも追跡します。現在のドキュメントバージョンに逆マッピングするためには、これが必要です。</p>
+<p>しかし、不利な点として、ユーザーが変更を加えた後に操作を中断し、その間に他の人がドキュメントを変更した場合、そのユーザーの変更を現在のバージョンのドキュメントにマッピングする位置情報が無制限に蓄積されてしまいます。この問題を解決するため、履歴は定期的に_圧縮_され、逆方向の変更を前方にマッピングして、再度現在のドキュメントから編集を開始できるようにします。これにより、中間過程の位置マッピングは破棄されます。</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          この記事の初出:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/Collaborative-Editing-in-ProseMirror.ja.html"
+            title="「訳」ProseMirrorにおける共同編集の実装"
+          >
+            「訳」ProseMirrorにおける共同編集の実装 - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">目次</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>ブログ主より：</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        人生の重要な選択に直面したとき、最善の方法を誰かが教えてくれて、貴重な時間を無駄にせずに済めばと、私はよく願っています。だからこそ、自分の経験を踏まえて頻繁にブログを書き、広大なインターネットのこの小さな片隅に、私にとって一度きりの人生経験を記録し、助けを求める人々の力になれればと思っています。
+    </div>
+    <hr>
+    
+    <h5><a href="/ja/archive/">人気のタグ</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技術"
+                rel="188">技術</a>
+        
+            <a data-sort="0200"
+                href="/ja/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="108">生活</a>
+        
+            <a data-sort="0264"
+                href="/ja/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="いじり"
+                rel="44">いじり</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="コツ"
+                rel="32">コツ</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="チュートリアル"
+                rel="32">チュートリアル</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻訳"
+                rel="24">翻訳</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="経験"
+                rel="20">経験</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="グルメ"
+                rel="20">グルメ</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体験"
+                rel="16">初体験</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="ワークフロー"
+                rel="16">ワークフロー</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="プラグイン"
+                rel="16">プラグイン</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="ネットワーク"
+                rel="16">ネットワーク</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用感"
+                rel="12">使用感</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="まとめ"
+                rel="12">まとめ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="サーバー"
+                rel="12">サーバー</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="ルーター"
+                rel="12">ルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="ソフトルーター"
+                rel="12">ソフトルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="エッセイ"
+                rel="12">エッセイ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9B%86%E6%88%90"
+                title="統合"
+                rel="12">統合</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="8">主食</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="最適化"
+                rel="8">最適化</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%8D%83%E5%85%86"
+                title="ギガビット"
+                rel="8">ギガビット</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="8">大事</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="ツール"
+                rel="8">ツール</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="バイパスルーター"
+                rel="8">バイパスルーター</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="フレームワーク"
+                rel="8">フレームワーク</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="足湯タイム"
+                rel="8">足湯タイム</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="テスト"
+                rel="8">テスト</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="テスラ"
+                rel="8">テスラ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="エディタ"
+                rel="8">エディタ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="動画"
+                rel="8">動画</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="デバッグ"
+                rel="8">デバッグ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BD%A6"
+                title="車"
+                rel="8">車</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="移行"
+                rel="8">移行</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="東北料理"
+                rel="4">東北料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="住宅購入"
+                rel="4">住宅購入</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="プロキシ"
+                rel="4">プロキシ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="フルスタック"
+                rel="4">フルスタック</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="北欧神話"
+                rel="4">北欧神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="共同編集"
+                rel="4">共同編集</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="圧縮"
+                rel="4">圧縮</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="クレイトス"
+                rel="4">クレイトス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="家庭料理"
+                rel="4">家庭料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="富強"
+                rel="4">富強</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="比較"
+                rel="4">比較</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="四川料理"
+                rel="4">四川料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="仕事の経験"
+                rel="4">仕事の経験</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="ギリシャ神話"
+                rel="4">ギリシャ神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="定番ソフト"
+                rel="4">定番ソフト</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="オープンソース"
+                rel="4">オープンソース</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="開封"
+                rel="4">開封</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="ゴッド・オブ・ウォー"
+                rel="4">ゴッド・オブ・ウォー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIMカード"
+                rel="4">SIMカード</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%8B%93%E6%89%91"
+                title="トポロジー"
+                rel="4">トポロジー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="物語"
+                rel="4">物語</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="データ構造"
+                rel="4">データ構造</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="旅行"
+                rel="4">旅行</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="日常"
+                rel="4">日常</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="日本"
+                rel="4">日本</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="サービス"
+                rel="4">サービス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="フォーマット"
+                rel="4">フォーマット</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A2%A6"
+                title="夢"
+                rel="4">夢</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="ブラウザ"
+                rel="4">ブラウザ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="ゲーム"
+                rel="4">ゲーム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="愚痴"
+                rel="4">愚痴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="ユーザープライバシー"
+                rel="4">ユーザープライバシー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="アルゴリズム"
+                rel="4">アルゴリズム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="詳細"
+                rel="4">詳細</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="イヤホン"
+                rel="4">イヤホン</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="自由"
+                rel="4">自由</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="計画"
+                rel="4">計画</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="設定"
+                rel="4">設定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="落とし穴"
+                rel="4">落とし穴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="変換"
+                rel="4">変換</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="技術選定"
+                rel="4">技術選定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="面接"
+                rel="4">面接</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>コラム</h5>
+    <div class="tags">
+        <a href="/projects">オープンソース</a>
+        <a href="/book-list">技術書リスト</a>
+        <a href="/subscribe">サブスク＆有料アプリ</a>
+        <a href="/my-food">グルメのおすすめ</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>友達</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">中国版</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="「訳」ProseMirrorにおける共同編集の実装"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ja"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ja/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

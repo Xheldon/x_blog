@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      This article was sent via Craft Extension - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="This article was sent via Craft Extension - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2021-12-8T4:28:30"> 
+              
+                  
+                    <meta property="article:tag" content="Craft">
+                    
+                    <meta property="article:tag" content="Plugin">
+                    
+                    <meta property="article:tag" content="Integration">
+                    
+                      
+                          
+                            <meta name="og:description" content="">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/en/tech/use-craft-extension-to-write-blog.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="en_US">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/en/tech/use-craft-extension-to-write-blog.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/use-craft-extension-to-write-blog.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/use-craft-extension-to-write-blog.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/use-craft-extension-to-write-blog.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/use-craft-extension-to-write-blog.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/use-craft-extension-to-write-blog.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/en/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/en/">Home</a>
+            </li>
+            <li>
+              <a href="/en/about/">About</a>
+            </li>
+            <li>
+              <a href="/en/donate/">Donate</a>
+            </li>
+            <li>
+              <a href="/en/archive/">Archive</a>
+            </li>
+            <li>
+              <a href="/en/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">English</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/use-craft-extension-to-write-blog.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item active"><a href="/en/tech/use-craft-extension-to-write-blog.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/use-craft-extension-to-write-blog.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/use-craft-extension-to-write-blog.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/en/archive/?tag=Craft"
+                            title="Craft">
+                            Craft
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E6%8F%92%E4%BB%B6"
+                            title="Plugin">
+                            Plugin
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E9%9B%86%E6%88%90"
+                            title="Integration">
+                            Integration
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        This article was sent via Craft Extension
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 Written on Dec 8, 2021</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 Updated on Feb 28, 2022</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;Note: it has been
+          <code id="from_time"></code> days since this article was written, please be aware of its timeliness
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1638980910000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+              <blockquote>
+<p>Some of the workflow solutions described in this article are outdated. The new workflow logic can be found here: <a href="https://www.xheldon.com/tech/my-blog-ci-in-2022.html">https://www.xheldon.com/tech/my-blog-ci-in-2022.html</a></p>
+</blockquote>
+<p>Spent two days figuring out a simple way to write content in Craft, sync it to a Github repository via a custom plugin, and have the Github repository automatically build and deploy to Github Pages.</p>
+<p>Repository address: <a href="https://github.com/craft-extension/craft-github-extension">https://github.com/craft-extension/craft-github-extension</a></p>
+<h2 id="changes-to-the-blog-update-process">Changes to the Blog Update Process</h2>
+<h3 id="previous-workflow">Previous Workflow</h3>
+<p>Write in VSCode → Commit to x_blog_src repository → Trigger Github Action → Build and commit to x_blog repository → Success</p>
+<p>However, this process had some pain points:</p>
+<ol>
+<li>
+<p>You might not finish an article in one sitting but write intermittently. If you wrote part of it on your work computer, you’d need to commit to Github first, then continue writing on your home computer. Each commit would trigger the Github Action. My solution was to check the commit message for a specific prefix—commits with the prefix would trigger a build, while those without would be ignored. Still, this wasn’t very elegant.</p>
+</li>
+<li>
+<p>Another approach was to write in the _draft directory first, allowing free commits, and then move the article to _post once finished. But as mentioned earlier, this still wasn’t elegant.</p>
+</li>
+<li>
+<p>A third option was to configure Jekyll to exclude future-dated posts. You could set the meta date to something like 2099 while drafting, and Jekyll wouldn’t build it. However, this would still trigger the Github Action and update files—again, not elegant.</p>
+</li>
+<li>
+<p>Sometimes, I was tempted by Craft’s beauty (great aesthetics) and functionality (editing anytime, anywhere, and multi-device sync). I’d write articles in Craft first, export them as Markdown, manually upload images to the x_blog-static repository, update the image links in the Markdown, and then commit to Github. This process was way too long.</p>
+</li>
+</ol>
+<h3 id="current-workflow">Current Workflow</h3>
+<p>Write in Craft → Commit to x_blog_src repository → Trigger Github Action → Build and commit to x_blog repository → Success</p>
+<p>The key difference from before is switching from writing in VSCode to writing directly in Craft. As mentioned in the fourth point of the previous workflow, this lets me enjoy Craft’s benefits while eliminating the hassle of syncing to Github. Aside from images (more on that below), syncing text content alone is a perfect solution. Now, I might update the blog more frequently (previously, the complexity slowed me down) and focus more on content. Awesome!</p>
+<h2 id="notes">Notes</h2>
+<p>Here are the usage settings:</p>
+<ol>
+<li>
+<p>This plugin is currently for personal use only, so some configurations are hardcoded for individual needs. For example, it only supports uploading files to the <code>_posts</code> directory. If there are more users, we may invest more time to make it more generic. For now, since it’s just for personal use, it’s not as refined.</p>
+</li>
+<li>
+<p>A <a href="https://github.com/settings/tokens/new">Github Personal Token</a> is required to sync Markdown content to a specified Github repository via Github’s Rest API.</p>
+</li>
+<li>
+<p>When sending content to the repository, the Github API compares the SHA values of the source and target repositories. If they are identical, the updated file won’t display commit information, and checking the commit log will show “0 files changed.”</p>
+</li>
+<li>
+<p>The first block of an article must be a two-column table serving as Jekyll’s meta information. Currently, the meta includes all content except the path.</p>
+</li>
+<li>
+<p>The article title serves as the blog post title and doesn’t need to be included in the meta.</p>
+</li>
+<li>
+<p>As of December 9, 2021, testing shows that the Markdown output from Craft’s API <code>craftBlockToMarkdown</code> fails to render Blockquote styles (called “Focus” under Decorations in Craft Blocks—<a href="https://forum.developer.craft.do/t/wrong-render-of-markdown-with-decoration-focus-and-image-question/235/6">officially acknowledged as a bug</a> to be fixed in a later version). If you want custom Markdown, you’ll need to traverse the Blocks yourself. Other features remain untested.</p>
+</li>
+<li>
+<p>Currently, the plugin’s configuration options aren’t very user-friendly and will be optimized later.</p>
+</li>
+<li>
+<p>Craft’s Markdown formatting is visually appealing—for example, you can embed a paragraph or image under a list to align with the list content. However, standard Markdown doesn’t support this, so the output styling may look less polished.</p>
+</li>
+<li>
+<p>If meta contains multi-line information like tags, you can separate them with <code>-:</code>, e.g., <code>-:test-:server</code>.</p>
+</li>
+<li>
+<p>For Craft’s Markdown API, it’s recommended to use the <code>common</code> format (default, currently non-configurable in this plugin). If you use the <code>bear</code> format, images won’t be prefixed with <code>!</code>, causing Github to treat them as links instead of images.</p>
+</li>
+<li>
+<p>Some Craft features like “Deep Markdown Links” aren’t part of standard Markdown syntax, so support for them hasn’t been tested here.</p>
+</li>
+<li>
+<p>According to the official documentation, the storageApi is not encrypted on the Web side, so users should be reminded to be cautious when storing data. See <a href="https://documentation.developer.craft.do/extensions/craft-api/storageapi">here</a>. This issue does not exist on Mac. <del>Analysis revealed that the storageApi on the Web was stored in SessionStorage</del>. Upon further review, it was later changed to IndexedDB (after all, it’s a developer preview version, and changes are made quickly…), specifically in a DB named <code>plugindata-storage</code>. As for the Mac version, because I switched the user workspace, the Storage was also lost. <a href="https://forum.developer.craft.do/t/wrong-render-of-markdown-with-decoration-focus-and-image-question/235">I reported this issue</a>, but the official team has not responded yet :-(.</p>
+</li>
+<li>
+<p>The storageApi on Mac has a race condition issue. Therefore, if you attempt to read data using storageApi immediately upon loading, it will fail. To address this, the logic in my plugin is to delay plugin initialization by 3 seconds for Mac, while the Web version has no such restriction.</p>
+</li>
+<li>
+<p>More configuration support coming soon…</p>
+</li>
+</ol>
+<h2 id="about-image-issues">About Image Issues</h2>
+<ol>
+<li>
+<p>Whether on the Web or desktop, images uploaded to Craft are displayed in <code>.jpg</code> format when inspected via element inspection on the Web side. However, after generating the content using Craft’s Markdown API, <del>it was mistakenly thought to change to <code>.png</code> format</del>. This was a misunderstanding—the image extension remains consistent with the format at upload time; Craft does not convert the format.</p>
+</li>
+<li>
+<p>Although the image URLs displayed in the documentation’s element inspection use the domain <code>res.craft.do</code>, and the source files in the Github repository also show this address, when previewing images in Github (i.e., directly opening the repository’s md file), the address changes to <code>https://camo.githubusercontent.com</code>. Initially, it might seem that Github kindly hosts your md images on its servers, but in reality, Github temporarily caches third-party images for security reasons during rendering.</p>
+</li>
+<li>
+<p>Without relying on a server, images uploaded to Craft cannot be fetched using frontend methods like <code>fetch</code> when retrieved via the Craft API, as it will result in CORS errors. Therefore, if you want to extract images from an article when uploading it to Github and host them on your own image bed/COS/Github repository, a pure frontend solution is insufficient. You need to use a server to pull and rehost the images. Additionally, Craft imageBlock image URLs are hosted on AWS S3. Pulling them from domestic servers like Tencent Cloud may time out or be slow, but pushing from overseas servers to domestic ones seems relatively fast. Thus, it’s recommended to use AWS services for image rehosting (Update: I currently use Vercel; details can be found in <a href="https://www.xheldon.com/tech/my-blog-ci-in-2022.html">this article</a>).</p>
+</li>
+</ol>
+<hr />
+<p>Here’s an image to test the speed:</p>
+<p><img src="https://res.craft.do/user/full/747e0824-8866-cf67-b3ae-2e207380d1f9/doc/5e3fe16f-07e2-4cbd-ace8-ad4d882ac82d/F2F19143-AA3B-4849-9979-31FB8DC06FF0_2/3.jpeg.jpeg" alt="Image" /></p>
+<h2 id="more">More</h2>
+<ol>
+<li>
+<p>Planning to develop a template plugin, available at: <a href="https://github.com/craft-extension/craft-template-extension">https://github.com/craft-extension/craft-template-extension</a></p>
+</li>
+<li>
+<p>All plugins are developed based on this tool: <a href="https://github.com/craft-extension/craft-dev-toolkit">https://github.com/craft-extension/craft-dev-toolkit</a> Added some configurations like using antd for UI on top of the official examples. If there are users in the future, I’ll consider adding more configurations, such as supporting scaffold generation for plugin development environments.</p>
+</li>
+<li>
+<p>Stay tuned for more plugins…</p>
+</li>
+</ol>
+<h2 id="update-2022-01-24">Update 2022.01.24</h2>
+<p>Regarding the image issue, one idea is to stop backing up images on Github (since images in Craft essentially serve as backups) and directly upload them to Tencent Cloud COS. However, Tencent Cloud COS requires sending requests using the request library, which is wrapped with additional layers to include signatures and other information. After examining the COS source code, I found it allows configuration of the request tool. Currently, I have two approaches to achieve this:</p>
+<ol>
+<li>
+<p>Override the request library methods used by COS.</p>
+</li>
+<li>
+<p>Rewrite the request code within COS.</p>
+</li>
+<li>
+<p>Construct signatures manually according to the documented examples to make requests.</p>
+</li>
+</ol>
+<p>Obviously, the third method was ultimately chosen for its simplicity.</p>
+<h2 id="update-2022-02-28">Update 2022.02.28</h2>
+<p>The 01.24 solution has been abandoned due to high costs. The final approach is to stop uploading images to Github and instead use Vercel’s service to store them on Tencent Cloud. This resolves the image issue, allowing for seamless article writing in Craft.</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          Originally published at:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/use-craft-extension-to-write-blog.en.html"
+            title="This article was sent via Craft Extension"
+          >
+            This article was sent via Craft Extension - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">Contents</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>From the author:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        I often wish that when facing some key decisions in life, someone could tell me the best course of action so that I would not waste my precious time. Putting myself in others&#39; shoes, I therefore write blogs often, hoping to record in this tiny corner of the vast Internet the once-in-a-lifetime experiences that matter to me, and to help those who seek help.
+    </div>
+    <hr>
+    
+    <h5><a href="/en/archive/">Popular Tags</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/en/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="Technology"
+                rel="188">Technology</a>
+        
+            <a data-sort="0200"
+                href="/en/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="Life"
+                rel="108">Life</a>
+        
+            <a data-sort="0264"
+                href="/en/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="Tinkering"
+                rel="44">Tinkering</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="Tips"
+                rel="32">Tips</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="Tutorial"
+                rel="32">Tutorial</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="Translation"
+                rel="24">Translation</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="Experience"
+                rel="20">Experience</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="Food"
+                rel="20">Food</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="First Impressions"
+                rel="16">First Impressions</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="Workflow"
+                rel="16">Workflow</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="Plugin"
+                rel="16">Plugin</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="Network"
+                rel="16">Network</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="User Experience"
+                rel="12">User Experience</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="Summary"
+                rel="12">Summary</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="Server"
+                rel="12">Server</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="Router"
+                rel="12">Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="Soft Router"
+                rel="12">Soft Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="Essay"
+                rel="12">Essay</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9B%86%E6%88%90"
+                title="Integration"
+                rel="12">Integration</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="Staple Food"
+                rel="8">Staple Food</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="Optimization"
+                rel="8">Optimization</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%8D%83%E5%85%86"
+                title="Gigabit"
+                rel="8">Gigabit</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="Big Event"
+                rel="8">Big Event</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="Tools"
+                rel="8">Tools</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="Bypass Router"
+                rel="8">Bypass Router</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="Framework"
+                rel="8">Framework</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="Foot Bath Time"
+                rel="8">Foot Bath Time</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="Testing"
+                rel="8">Testing</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="Tesla"
+                rel="8">Tesla</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="Editor"
+                rel="8">Editor</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="Video"
+                rel="8">Video</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="Debugging"
+                rel="8">Debugging</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BD%A6"
+                title="Car"
+                rel="8">Car</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="Migration"
+                rel="8">Migration</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="Northeastern Cuisine"
+                rel="4">Northeastern Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="Buying a House"
+                rel="4">Buying a House</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="Proxy"
+                rel="4">Proxy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="Full Stack"
+                rel="4">Full Stack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="Norse Mythology"
+                rel="4">Norse Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="Collaboration"
+                rel="4">Collaboration</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="Compression"
+                rel="4">Compression</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="Kratos"
+                rel="4">Kratos</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="Home Cooking"
+                rel="4">Home Cooking</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="Prosperity"
+                rel="4">Prosperity</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="Comparison"
+                rel="4">Comparison</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="Sichuan Cuisine"
+                rel="4">Sichuan Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="Work Experience"
+                rel="4">Work Experience</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="Greek Mythology"
+                rel="4">Greek Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="Essential Apps"
+                rel="4">Essential Apps</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="Open Source"
+                rel="4">Open Source</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="Unboxing"
+                rel="4">Unboxing</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="God of War"
+                rel="4">God of War</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIM Card"
+                rel="4">SIM Card</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%8B%93%E6%89%91"
+                title="Topology"
+                rel="4">Topology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="Story"
+                rel="4">Story</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="Data Structure"
+                rel="4">Data Structure</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="Travel"
+                rel="4">Travel</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="Daily Life"
+                rel="4">Daily Life</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="Japan"
+                rel="4">Japan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="Service"
+                rel="4">Service</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="Format"
+                rel="4">Format</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A2%A6"
+                title="Dream"
+                rel="4">Dream</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="Browser"
+                rel="4">Browser</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="Gaming"
+                rel="4">Gaming</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="Rant"
+                rel="4">Rant</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="User Privacy"
+                rel="4">User Privacy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="Algorithm"
+                rel="4">Algorithm</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="Details"
+                rel="4">Details</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="Headphones"
+                rel="4">Headphones</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="Freedom"
+                rel="4">Freedom</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="Plan"
+                rel="4">Plan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="Settings"
+                rel="4">Settings</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="Pitfalls"
+                rel="4">Pitfalls</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="Conversion"
+                rel="4">Conversion</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="Selection"
+                rel="4">Selection</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="Interview"
+                rel="4">Interview</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>Columns</h5>
+    <div class="tags">
+        <a href="/projects">Open Source</a>
+        <a href="/book-list">Book List</a>
+        <a href="/subscribe">Subscriptions & Paid Apps</a>
+        <a href="/my-food">Food Recommendations</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>Friends</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">China</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="This article was sent via Craft Extension"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/en/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

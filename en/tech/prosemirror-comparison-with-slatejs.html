@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      A Simple Comparison Between Slate and ProseMirror - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="A Brief Comparison Summary After Two Years of Using Both Slate and ProseMirror">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="A Simple Comparison Between Slate and ProseMirror - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2023-1-6T4:14:58"> 
+              
+                  
+                    <meta property="article:tag" content="ProseMirror">
+                    
+                    <meta property="article:tag" content="SlateJS">
+                    
+                    <meta property="article:tag" content="Comparison">
+                    
+                    <meta property="article:tag" content="Technology">
+                    
+                    <meta property="article:tag" content="Framework">
+                    
+                    <meta property="article:tag" content="Editor">
+                    
+                    <meta property="article:tag" content="Selection">
+                    
+                      
+                          
+                            <meta name="og:description" content="A Brief Comparison Summary After Two Years of Using Both Slate and ProseMirror">
+                            
+                                
+                                  <meta property="twitter:image"
+                                    content="https://static.xheldon.cn/img/in-post/2023/prosemirror-comparison-with-slatejs/photo-1546900703-cf06143d1239.webp">
+                                  <meta property="og:image"
+                                    content="https://static.xheldon.cn/img/in-post/2023/prosemirror-comparison-with-slatejs/photo-1546900703-cf06143d1239.webp">
+                                  
+                                      <meta property="og:url" content="https://www.xheldon.com/en/tech/prosemirror-comparison-with-slatejs.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="en_US">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/en/tech/prosemirror-comparison-with-slatejs.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/prosemirror-comparison-with-slatejs.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/prosemirror-comparison-with-slatejs.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/prosemirror-comparison-with-slatejs.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/prosemirror-comparison-with-slatejs.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/prosemirror-comparison-with-slatejs.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+  <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/en/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/en/">Home</a>
+            </li>
+            <li>
+              <a href="/en/about/">About</a>
+            </li>
+            <li>
+              <a href="/en/donate/">Donate</a>
+            </li>
+            <li>
+              <a href="/en/archive/">Archive</a>
+            </li>
+            <li>
+              <a href="/en/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">English</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/prosemirror-comparison-with-slatejs.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item active"><a href="/en/tech/prosemirror-comparison-with-slatejs.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/prosemirror-comparison-with-slatejs.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/prosemirror-comparison-with-slatejs.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="https://static.xheldon.cn/img/in-post/2023/prosemirror-comparison-with-slatejs/photo-1546900703-cf06143d1239.webp" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn/img/in-post/2023/prosemirror-comparison-with-slatejs/photo-1546900703-cf06143d1239.webp");
+
+    
+  }
+
+  header.intro-header .headerMask {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    
+</style>
+
+      <header class="intro-header">
+        
+          <div class="headerMask"></div>
+          
+            <div class="header-img-credit">
+              Image by <a href="https://unsplash.com/@goshua13?utm_source=xheldon_blog&amp;utm_medium=referral" target="_blank">
+                Joshua Aragon / Unsplash
+              </a>
+            </div>
+            
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/en/archive/?tag=ProseMirror"
+                            title="ProseMirror">
+                            ProseMirror
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=SlateJS"
+                            title="SlateJS">
+                            SlateJS
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E5%AF%B9%E6%AF%94"
+                            title="Comparison">
+                            Comparison
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="Technology">
+                            Technology
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E6%A1%86%E6%9E%B6"
+                            title="Framework">
+                            Framework
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                            title="Editor">
+                            Editor
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E9%80%89%E5%9E%8B"
+                            title="Selection">
+                            Selection
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        A Simple Comparison Between Slate and ProseMirror
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 Written on Jan 6, 2023</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 Updated on Jan 9, 2023</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;Note: it has been
+          <code id="from_time"></code> days since this article was written, please be aware of its timeliness
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1672978498000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+           
+        <div class="callout-tips">🖥 &nbsp;Note：A Brief Comparison Summary After Two Years of Using Both Slate and ProseMirror</div>
+         
+        <div class="craft-tips">
+          📚 &nbsp;Also published on Craft：<a
+            href="https://www.craft.do/s/WCeEgxNhxwF2cu"
+            target="_blank"
+          >
+            https://www.craft.do/s/WCeEgxNhxwF2cu
+          </a>
+        </div>
+          <p>Having used PM for less than two years, I’ve developed large modules like smart tables; and having used Slate to this day, I’ve gone through major version upgrades from 0.47 to 0.5+, so I feel somewhat qualified to speak on the topic. Since many in the community often ask me about the differences between the two, I decided to write a blog post to briefly summarize them.</p>
+<h2 id="slate-pros">Slate Pros:</h2>
+<ol>
+<li>
+<p>Quick to learn, works out of the box, with easy-to-grasp concepts and readable code, especially for those familiar with React. Its view layer is entirely React-based, making it possible to get up to speed within a week.</p>
+</li>
+<li>
+<p>Highly customizable. You can modify core modules like <code>slate</code> and <code>slate-react</code> to extend plugins and architecture according to your business needs. Modifying the underlying code is relatively easier compared to PM.</p>
+</li>
+<li>
+<p>Well-suited for collaborative scenarios like Sharedb. Its JSON-based design seems almost tailor-made for Slate.</p>
+</li>
+</ol>
+<h2 id="slate-cons">Slate Cons:</h2>
+<ol>
+<li>
+<p>The author is slow to fix bugs, as he doesn’t work on it full-time. Maintenance largely depends on the community. Some APIs are clearly flawed (e.g., <code>.include</code>, which has tripped me up), while others throw exceptions or return <code>null</code> inconsistently. The author often asks for PRs instead of fixing issues himself.</p>
+</li>
+<li>
+<p>Unstable APIs. It’s still in the 0.x version and hasn’t reached a stable release, so future architectural changes could be significant.</p>
+</li>
+<li>
+<p>The official version is practically unusable, especially for CJK language users dealing with input method events. You’ll need to download and modify it yourself.</p>
+</li>
+<li>
+<p>Performance optimization is challenging. Since the view layer is entirely React-based, optimizing it largely depends on optimizing React, which isn’t inherently fast.</p>
+</li>
+<li>
+<p>Poorly written code can easily crash the editor, leaving it unusable. There’s no robust error-handling mechanism beyond modifying the framework code.</p>
+</li>
+<li>
+<p>Unclear data flow can lead to bugs. For example, you can directly assign <code>editor.children</code>, overwriting existing editor content without any warnings.</p>
+</li>
+<li>
+<p>Cursor and Mark issues are hard to hack. The code feels beginner-level (in my opinion).</p>
+</li>
+<li>
+<p>Poor documentation, with some parts inconsistent with actual API behavior.</p>
+</li>
+<li>
+<p>Tightly coupled with React.</p>
+</li>
+<li>
+<p>Mobile support isn’t great and requires modifications.</p>
+</li>
+</ol>
+<h2 id="prosemirror-pros">ProseMirror Pros:</h2>
+<ol>
+<li>
+<p>The author maintains it full-time and is very responsive to community questions.</p>
+</li>
+<li>
+<p>It’s been in stable release for over three years, with consistently stable APIs.</p>
+</li>
+<li>
+<p>Backed by big companies—Google uses the author’s other project, CodeMirror (e.g., in Chrome DevTools’ Elements tab)—so it’s highly credible.</p>
+</li>
+<li>
+<p>Clear data flow (though hard to understand at first).</p>
+</li>
+<li>
+<p>Less prone to crashes than Slate. Errors won’t render the entire editor unusable, making it more stable.</p>
+</li>
+<li>
+<p>The author is a freelancer who accepts paid bug fixes, charging €200 per hour (I emailed him; that’s the rate if I recall correctly).</p>
+</li>
+<li>
+<p>The document tree model is very useful. Its strict Schema constraints and text/token-based positioning system are brilliant, though they make collaboration tricky.</p>
+</li>
+<li>
+<p>Not tied to any view framework. You can use React, Vue, or Angular for the view layer, though custom components are rarely needed. For basic elements like paragraphs, headings, and lists, you only need to describe the DOM structure via the API.</p>
+</li>
+<li>
+<p>Good mobile support.</p>
+</li>
+</ol>
+<h2 id="prosemirror-cons">ProseMirror Cons:</h2>
+<ol>
+<li>
+<p>Some concepts and code are hard to grasp (the author’s technical depth feels unfathomable).</p>
+</li>
+<li>
+<p>Modular and not out-of-the-box, requiring some setup effort to get running.</p>
+</li>
+<li>
+<p>Implementing collaborative solutions is harder compared to Slate. The author opened an issue in 2017 promising a collaboration demo but still hasn’t delivered.</p>
+</li>
+<li>
+<p>Steeper learning curve, often taking two weeks or even a month to start developing basic features.</p>
+</li>
+<li>
+<p>Since it implements its own view layer (though developers can use APIs to render custom components like React), debugging framework-level view issues is tricky.</p>
+</li>
+<li>
+<p>Modifying the source code is nearly impossible due to high costs, so fixes usually depend on the author.</p>
+</li>
+</ol>
+<p>For a more detailed comparison, check out this answer, which is mostly accurate:</p>
+<p><a class='link-bookmark' href='https://www.zhihu.com/question/404836496/answer/1323431059' target='_blank'><span data-bookmark-img='https://static.zhihu.com/heifetz/assets/apple-touch-icon-60.362a8eac.png' data-bookmark-title='主'><img src='https://static.zhihu.com/heifetz/assets/apple-touch-icon-60.362a8eac.png'/></span><span><span> 主流的开源「富文本编辑器」都有什么缺陷？ - 知乎</span><span> Saving this spot for later... How to implement a rich-text editor without `contentEditable`? Linking to my earlier answer on a similar topic, where I mainly researched...</span><span> https://www.zhihu.com/question/404836496/answer/1323431059</span></span></a></p>
+<p>Meituan’s Xuecheng uses PM:</p>
+<p><a class='link-bookmark' href='https://www.zhihu.com/question/404836496/answer/1326453810' target='_blank'><span data-bookmark-img='https://static.zhihu.com/heifetz/assets/apple-touch-icon-60.362a8eac.png' data-bookmark-title='主'><img src='https://static.zhihu.com/heifetz/assets/apple-touch-icon-60.362a8eac.png'/></span><span><span> 主流的开源「富文本编辑器」都有什么缺陷？ - 知乎</span><span> Meituan’s knowledge management system, Xuecheng, implements its rich-text editor using ProseMirror. I developed the internal team integration version and...</span><span> https://www.zhihu.com/question/404836496/answer/1326453810</span></span></a></p>
+<h2 id="summary">Summary</h2>
+<p>Slate is suitable for large companies because it’s quick to get started (large companies rely on input-output ratios—otherwise projects can’t secure resources. How do you explain to leadership if after two months it’s still just a demo?). Thus, results can be delivered rapidly, but refining it to perfection requires significant manpower for deep customization, making it ideal for large companies: quick adoption early on, followed by adding personnel for heavy modifications. Additionally, its extensibility is exceptional—after customization, it can meet almost any requirement (for example, we’ve implemented various modules and features like inline comments, hierarchical heading folding, embedding third-party modules, etc.).</p>
+<p>Prosemirror is better suited for small and medium-sized companies. It has decent cross-platform support, and if bugs arise, you can confidently rely on the author to fix them—or even pay them to resolve issues if absolutely necessary. Although the learning curve is steeper, a core developer at a small or medium-sized company should be able to produce a demo after about two weeks of exploration.</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          Originally published at:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/prosemirror-comparison-with-slatejs.en.html"
+            title="A Simple Comparison Between Slate and ProseMirror"
+          >
+            A Simple Comparison Between Slate and ProseMirror - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>From the author:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        I often wish that when facing some key decisions in life, someone could tell me the best course of action so that I would not waste my precious time. Putting myself in others&#39; shoes, I therefore write blogs often, hoping to record in this tiny corner of the vast Internet the once-in-a-lifetime experiences that matter to me, and to help those who seek help.
+    </div>
+    <hr>
+    
+    <h5><a href="/en/archive/">Popular Tags</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/en/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="Technology"
+                rel="188">Technology</a>
+        
+            <a data-sort="0200"
+                href="/en/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="Life"
+                rel="108">Life</a>
+        
+            <a data-sort="0264"
+                href="/en/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="Tinkering"
+                rel="44">Tinkering</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="Tips"
+                rel="32">Tips</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="Tutorial"
+                rel="32">Tutorial</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="Translation"
+                rel="24">Translation</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="Experience"
+                rel="20">Experience</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="Food"
+                rel="20">Food</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="First Impressions"
+                rel="16">First Impressions</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="Workflow"
+                rel="16">Workflow</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="Plugin"
+                rel="16">Plugin</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="Network"
+                rel="16">Network</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="User Experience"
+                rel="12">User Experience</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="Summary"
+                rel="12">Summary</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="Server"
+                rel="12">Server</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="Router"
+                rel="12">Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="Soft Router"
+                rel="12">Soft Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="Essay"
+                rel="12">Essay</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9B%86%E6%88%90"
+                title="Integration"
+                rel="12">Integration</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="Staple Food"
+                rel="8">Staple Food</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="Optimization"
+                rel="8">Optimization</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%8D%83%E5%85%86"
+                title="Gigabit"
+                rel="8">Gigabit</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="Big Event"
+                rel="8">Big Event</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="Tools"
+                rel="8">Tools</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="Bypass Router"
+                rel="8">Bypass Router</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="Framework"
+                rel="8">Framework</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="Foot Bath Time"
+                rel="8">Foot Bath Time</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="Testing"
+                rel="8">Testing</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="Tesla"
+                rel="8">Tesla</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="Editor"
+                rel="8">Editor</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="Video"
+                rel="8">Video</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="Debugging"
+                rel="8">Debugging</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BD%A6"
+                title="Car"
+                rel="8">Car</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="Migration"
+                rel="8">Migration</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="Northeastern Cuisine"
+                rel="4">Northeastern Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="Buying a House"
+                rel="4">Buying a House</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="Proxy"
+                rel="4">Proxy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="Full Stack"
+                rel="4">Full Stack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="Norse Mythology"
+                rel="4">Norse Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="Collaboration"
+                rel="4">Collaboration</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="Compression"
+                rel="4">Compression</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="Kratos"
+                rel="4">Kratos</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="Home Cooking"
+                rel="4">Home Cooking</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="Prosperity"
+                rel="4">Prosperity</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="Comparison"
+                rel="4">Comparison</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="Sichuan Cuisine"
+                rel="4">Sichuan Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="Work Experience"
+                rel="4">Work Experience</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="Greek Mythology"
+                rel="4">Greek Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="Essential Apps"
+                rel="4">Essential Apps</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="Open Source"
+                rel="4">Open Source</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="Unboxing"
+                rel="4">Unboxing</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="God of War"
+                rel="4">God of War</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIM Card"
+                rel="4">SIM Card</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%8B%93%E6%89%91"
+                title="Topology"
+                rel="4">Topology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="Story"
+                rel="4">Story</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="Data Structure"
+                rel="4">Data Structure</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="Travel"
+                rel="4">Travel</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="Daily Life"
+                rel="4">Daily Life</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="Japan"
+                rel="4">Japan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="Service"
+                rel="4">Service</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="Format"
+                rel="4">Format</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A2%A6"
+                title="Dream"
+                rel="4">Dream</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="Browser"
+                rel="4">Browser</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="Gaming"
+                rel="4">Gaming</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="Rant"
+                rel="4">Rant</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="User Privacy"
+                rel="4">User Privacy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="Algorithm"
+                rel="4">Algorithm</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="Details"
+                rel="4">Details</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="Headphones"
+                rel="4">Headphones</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="Freedom"
+                rel="4">Freedom</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="Plan"
+                rel="4">Plan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="Settings"
+                rel="4">Settings</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="Pitfalls"
+                rel="4">Pitfalls</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="Conversion"
+                rel="4">Conversion</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="Selection"
+                rel="4">Selection</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="Interview"
+                rel="4">Interview</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>Columns</h5>
+    <div class="tags">
+        <a href="/projects">Open Source</a>
+        <a href="/book-list">Book List</a>
+        <a href="/subscribe">Subscriptions & Paid Apps</a>
+        <a href="/my-food">Food Recommendations</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>Friends</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">China</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="A Simple Comparison Between Slate and ProseMirror"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/en/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

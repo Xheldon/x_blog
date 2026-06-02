@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      Data Structures and Algorithms in JavaScript - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="Data Structures and Algorithms in JavaScript - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2019-10-7T4:17:33"> 
+              
+                  
+                    <meta property="article:tag" content="JavaScript">
+                    
+                    <meta property="article:tag" content="Technology">
+                    
+                    <meta property="article:tag" content="Data Structure">
+                    
+                    <meta property="article:tag" content="Algorithm">
+                    
+                      
+                          
+                            <meta name="og:description" content="">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/en/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="en_US">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/en/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/en/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/en/">Home</a>
+            </li>
+            <li>
+              <a href="/en/about/">About</a>
+            </li>
+            <li>
+              <a href="/en/donate/">Donate</a>
+            </li>
+            <li>
+              <a href="/en/archive/">Archive</a>
+            </li>
+            <li>
+              <a href="/en/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">English</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/Data-Structures-and-Algorithms-in-Javascript.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item active"><a href="/en/tech/Data-Structures-and-Algorithms-in-Javascript.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/Data-Structures-and-Algorithms-in-Javascript.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/Data-Structures-and-Algorithms-in-Javascript.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/en/archive/?tag=JavaScript"
+                            title="JavaScript">
+                            JavaScript
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="Technology">
+                            Technology
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                            title="Data Structure">
+                            Data Structure
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E7%AE%97%E6%B3%95"
+                            title="Algorithm">
+                            Algorithm
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        Data Structures and Algorithms in JavaScript
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 Written on Oct 7, 2019</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;Note: it has been
+          <code id="from_time"></code> days since this article was written, please be aware of its timeliness
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1570465053000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+              <h2 id="preface">Preface</h2>
+<p>Although I know I’ve worked hard and even joined big companies, I’ve always felt weak in the fundamentals of computer science. Since I don’t have a formal academic background in this field, I’ve always hoped to bridge the gap with my peers who do. Among the three big dreams of a programmer (languages/algorithms/graphics), data structures and algorithms have been a lingering insecurity for me. During my free time, I often browse tech communities and get drawn in by clickbait titles about data structures and algorithms, only to find the content hollow and unsubstantial. Finally, I made up my mind to seriously study algorithms (the basics).</p>
+<p>This article is the product of my learning journey—a summary and reference while reading <em>Learning JavaScript Data Structures and Algorithms (2nd Edition)</em>. I started with data structures, then moved on to various algorithms related to them. Most implementations use ES5 methods, with a few using ES6. The focus is on achieving functionality without considering tangential issues like execution overhead (e.g., adding methods to each instance instead of using the prototype chain).</p>
+<h2 id="stack">Stack</h2>
+<h3 id="basic-concepts-and-methods-of-stacks">Basic Concepts and Methods of Stacks</h3>
+<p>A stack is an ordered collection that follows the Last-In-First-Out (LIFO) principle. Newly added or to-be-removed elements are stored at one end of the stack, called the top, while the other end is called the bottom. In a stack, new elements are close to the top, and old elements are near the bottom. A classic analogy is a stack of books. The stack data structure includes the following methods:</p>
+<ol>
+<li><code>push(element)</code>: Adds one or more elements.</li>
+<li><code>pop()</code>: Removes the top element and returns it.</li>
+<li><code>peek()</code>: Returns the top element without modifying the stack.</li>
+<li><code>isEmpty()</code>: Checks if the stack is empty.</li>
+<li><code>clear()</code>: Clears the stack.</li>
+<li><code>size()</code>: Returns the number of elements in the stack.</li>
+</ol>
+<h3 id="javascript-implementation-of-a-stack">JavaScript Implementation of a Stack</h3>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/Stack.js">Stack</a></li>
+</ol>
+<h3 id="applications-of-stacks">Applications of Stacks</h3>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/DecimalToBinary.js">Decimal to Binary Conversion</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/TowerOfHanoi.js">Tower of Hanoi</a></li>
+</ol>
+<h2 id="queue">Queue</h2>
+<h3 id="basic-concepts-and-methods-of-queues">Basic Concepts and Methods of Queues</h3>
+<p>A queue is an ordered collection of items that follows the First-In-First-Out (FIFO) principle. New elements are added at the tail, and elements are removed from the head. The newest element must be placed at the end of the queue. The queue data structure includes the following methods:</p>
+<ol>
+<li><code>enqueue(element)</code>: Adds one or more elements to the tail of the queue.</li>
+<li><code>dequeue()</code>: Removes the first element (the oldest added) and returns it.</li>
+<li><code>front()</code>: Returns the first element (the oldest added) without modifying the queue.</li>
+<li><code>isEmpty()</code>: Checks if the queue is empty.</li>
+<li><code>size()</code>: Returns the number of elements in the queue.</li>
+</ol>
+<h3 id="javascript-implementation-of-a-queue">JavaScript Implementation of a Queue</h3>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/Queue.js">Queue</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/PriorityQueue.js">Priority Queue</a></li>
+</ol>
+<h2 id="linked-list">Linked List</h2>
+<h3 id="basic-concepts-and-methods-of-linked-lists">Basic Concepts and Methods of Linked Lists</h3>
+<p>Each item in a linked list not only stores its own value but also a pointer to the next item—this is called a singly linked list. If each item also stores a pointer to the previous item (except for the first/last items, where the previous/next pointers are null), it’s called a doubly linked list. If a doubly linked list connects its head and tail, it’s called a doubly circular linked list. Here’s an illustration (the arrows represent pointers, which are part of the item at the tail of the arrow):</p>
+<ol>
+<li>Singly Linked List<pre><code class="hljs mermaid">   graph RL
+   A(Tail) --&gt; B(第三项) --&gt; C(第二项) --&gt; D(Head)
+   ```  
+2. Doubly Linked List  
+   ```mermaid
+   graph LR
+   A(Head) --&gt; B(第二项) --&gt; A
+   B --&gt; C(第三项) --&gt; B
+   C --&gt; D(Tail) --&gt; C
+   ```  
+3. Circular Linked List  
+   ```mermaid
+   graph LR
+   A(Head) --&gt; B(第二项) --&gt; A
+   B --&gt; C(第三项) --&gt; B
+   C --&gt; D(Tail) --&gt; C
+   A --&gt; D --&gt; A
+   ```  
+
+Linked lists have the following methods:
+
+1. `append(element)` Adds a new item to the end of the linked list  
+2. `insert(position, element)` Inserts a new item at a specific position in the linked list  
+3. `remove(element)` Removes an item from the linked list  
+4. `indexOf(element)` Returns the index of the element in the linked list, or -1 if not found  
+5. `removeAt(position)` Removes the item at the specified position in the linked list  
+6. `isEmpty()` Checks if the linked list is empty  
+7. `size()` Returns the number of items in the linked list  
+
+### JavaScript Implementation of Linked Lists  
+
+1. [Singly Linked List ](https://static.xheldon.cn/example-code/2019/LinkedList.js)&#123;:data-open=&quot;&quot;&#125;  
+2. [Doubly Linked List ](https://static.xheldon.cn/example-code/2019/DoublyLinkedList.js)&#123;:data-open=&quot;&quot;&#125;  
+3. [Circular Linked List ](https://static.xheldon.cn/example-code/2019/CircularLinkedList.js)&#123;:data-open=&quot;&quot;&#125;  
+
+## Sets  
+
+### Basic Concepts and Methods of Sets  
+
+A set is a collection of unordered and unique (non-repeating) items. Sets have the following methods:  
+
+1. `add(value)` Adds a new item to the set  
+2. `remove(value)` Removes an item from the set  
+3. `has(value)` Checks if an item exists in the set  
+4. `clear()` Empties the set  
+5. `size()` Returns the size of the set  
+6. `values()` Returns an array containing all values in the set  
+7. `union(set)` Returns the union with another set  
+8. `intersection(set)` Returns the intersection with another set  
+9. `difference(set)` Returns the difference (current set minus the specified set)  
+10. `subset(set)` Checks if one set is a subset of another  
+
+### JavaScript Implementation of Sets  
+
+Typically implemented using objects or ES6&#x27;s Set. Details omitted.  
+
+## Dictionaries  
+
+### Basic Concepts of Dictionaries  
+
+A set represents a group of distinct elements, stored as `&#123;value: value&#125;` in objects. In dictionaries, the format is `&#123;key: value&#125;`, also known as `maps`. Dictionaries usually have the following methods:  
+
+1. `set(key, value)` Adds an item to the dictionary  
+2. `delete(key)` Removes the item with the specified key  
+3. `has(key)` Checks if an item with the key exists in the dictionary  
+4. `get(key)` Finds and returns the item with the specified key  
+5. `clear()` Empties the dictionary  
+6. `size()` Returns the size of the dictionary  
+7. `keys()` Returns an array of all keys in the dictionary  
+8. `values()` Returns an array of all values in the dictionary  
+
+### JavaScript Implementation of Dictionaries  
+
+Omitted.  
+
+## Hash Tables  
+
+A hash table, or HashTable (array-based) / HashMap (object-based), is a hashed implementation of the dictionary data structure. If a dictionary needs to find an item, the worst-case scenario requires traversing the entire structure. With a hash table and its accompanying hashing algorithm, the exact location of the value is known, enabling fast retrieval. The purpose of a hash function is to take a key and return the address of the value in the hash table.  
+
+### Uses of Hash Tables
+
+You might ask, why do we need hash tables? In JavaScript, directly using objects to achieve key-value mapping already offers O(1) speed, right? That&#x27;s correct, but consider what to do if there are duplicate keys. For example, if you want to build a roster to record information about different classmates, how would you handle classmates with the same name? This is where an algorithm is needed to ensure that each classmate&#x27;s name, when used as input, produces a unique output, enabling a `one-to-one correspondence` and thus achieving an O(1) algorithm. This is called perfect hashing, known in mathematics as a total injective function. However, storing millions of data entries this way would make the `Object` extremely large, leading to performance issues. Hence, a hashing algorithm is needed to balance time and space.
+
+Taking the roster example again, if there are classmates with the same name, the name is still used as the key, but the value is no longer just one classmate&#x27;s information—it becomes an array (or linked list) of classmates&#x27; information. Given a classmate&#x27;s name, if the corresponding value is found to be an array, the array is traversed until the exact classmate&#x27;s information is found. This balances time (longer than the previous O(1) ❌) and space (smaller than the space occupied by the previous Object ✅). A good hashing algorithm should ensure that the arrays under each key are roughly similar in size.
+
+### Basic Methods of Hash Tables
+
+1. `put(key, value)` – Add an item to the hash table.
+2. `remove(key)` – Remove an item from the hash table based on the key.
+3. `get(key)` – Retrieve an item based on the key.
+
+### The Simplest Hash Function
+
+&gt; Taking strings as input (ignoring identical strings for now) and using an array as the data structure, the key can serve as the index.
+
+```js
+let loseloseHashCode = function (key) &#123;
+  let hash = 0;
+  for (let i = 0; i &lt; key.length; i++) &#123;
+    hash += key.charCodeAt(i);
+  &#125;
+  return hash % 37;
+&#125;;</code></pre>
+</li>
+</ol>
+<h3 id="resolving-collisions-in-hash-tables">Resolving Collisions in Hash Tables</h3>
+<p>From the above hashing algorithm, it’s clear that the computed keys can collide, meaning the same key in the array might correspond to different values, leading to overwrites. Thus, collisions need to be resolved. There are three approaches:</p>
+<ol>
+<li><code>Separate Chaining</code> – If the hashing algorithm produces the same key, the key no longer points directly to the value but to an array/linked list, transforming the problem into array/linked list insertion/search.</li>
+<li><code>Linear Probing</code> – If the hashing algorithm produces the same key, the key is automatically incremented by 1 to attempt storage again. If the key still collides, it continues incrementing until an empty slot is found (suitable for hash tables with numeric keys, like arrays). Some excellent implementations for numeric keys can be found <a href="http://web.archive.org/web/20071223173210/http://www.concentric.net/~Ttwang/tech/inthash.htm">here</a>.</li>
+<li><code>Double Hashing</code> – If the hashing algorithm produces the same key, another (or the same) hash function is applied to the collision to generate a new key.</li>
+</ol>
+<h3 id="javascript-implementations-of-hash-tables">JavaScript Implementations of Hash Tables</h3>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/HashTable.js">Basic Hash Table Implementation</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/HashCollisionSeparateChaining.js">Separate Chaining</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/HashCollisionLinearProbing.js">Linear Probing</a></li>
+</ol>
+<h2 id="trees">Trees</h2>
+<h3 id="tree-terminology">Tree Terminology</h3>
+<p>First, look at the structure diagram:</p>
+<pre><code class="hljs mermaid">graph TD;
+    11---7;
+    11---15;
+    7---5;
+    7---9;
+    5---3;
+    5---6;
+    9---8;
+    9---10;
+    15---13;
+    15---20;
+    13---12;
+    13---14;
+    20---18;
+    20---25;</code></pre>
+<p>Where:</p>
+<ol>
+<li>11 is at level 0, 7/15 at level 1, 5/9/13/20 at level 2, and the rest at level 3.</li>
+<li>11 is called the root node, and the others are child nodes. Nodes with at least one child are called internal nodes, while nodes without children are called external nodes.</li>
+<li>Nodes have a depth property. For example, node 3 has three ancestor elements, so its depth is 3.</li>
+<li>The height of the tree depends on the maximum depth among all nodes.</li>
+<li>This is a complete binary tree because, except for the bottom layer, all nodes have two children.</li>
+</ol>
+<blockquote>
+<p>Note: The same data can form several tree structures, not necessarily a unique representation. This is why the <code>AVL tree</code> exists—it aims to construct the data into as complete a tree as possible.</p>
+</blockquote>
+<h3 id="binary-trees-and-binary-search-trees">Binary Trees and Binary Search Trees</h3>
+<p>A <code>binary tree</code> node can have at most two child nodes: one left child node and one right child node. A <code>Binary Search Tree</code> (BST) is a type of binary tree, but it only allows storing values smaller than the node on the left side of any node and values greater than or equal to the node on the right side. The diagram shows a binary search tree with the following methods:</p>
+<ol>
+<li><code>insert(key)</code> Insert a new node</li>
+<li><code>search(key)</code> Search for a node or return null</li>
+<li><code>inOrderTraverse</code> In-order traversal of all nodes</li>
+<li><code>preOrderTraverse</code> Pre-order traversal of all nodes</li>
+<li><code>postOrderTraverse</code> Post-order traversal of all nodes</li>
+<li><code>min</code> Return the smallest value in the tree</li>
+<li><code>max</code> Return the largest value in the tree</li>
+<li><code>remove(key)</code> Remove an item from the tree</li>
+</ol>
+<h3 id="tree-traversal-diagram">Tree Traversal Diagram:</h3>
+<ol>
+<li>
+<p><strong>In-order traversal</strong>—Commonly used for sorting operations on the tree</p>
+<pre><code class="hljs mermaid">   graph TD;
+       11---7;
+       11---15;
+       7---5;
+       7---9;
+       5---3;
+       5---6;
+       9---8;
+       9---10;
+       15---13;
+       15---20;
+       13---12;
+       13---14;
+       20---18;
+       20---25;
+       3-.-&gt;5
+       5-.-&gt;6;
+       6-.-&gt;7;
+       7-.-&gt;8;
+       8-.-&gt;9;
+       9-.-&gt;10;
+       10-.-&gt;11;
+       11-.-&gt;12;
+       12-.-&gt;13;
+       13-.-&gt;14;
+       14-.-&gt;15;
+       15-.-&gt;18;
+       18-.-&gt;20;
+       20-.-&gt;25;
+   ```  
+
+   Traversal order: 3 5 6 7 8 9 10 11 12 13 14 15 18 20 25  
+
+2. **Pre-order traversal**—Often used to print a structured document. The traversal order in the example diagram is: 11 7 5 3 6 9 8 10 15 13 12 14 20 18 25  
+
+3. **Post-order traversal**—Applied to calculate the total file size of a directory and its subdirectories. The traversal order in the example diagram is: 3 6 5 8 10 9 7 12 14 13 18 25 20 15 11  
+
+### Adelson-Velskii-Landi Tree (AVL Tree)  
+
+An AVL tree is a self-balancing tree. A binary tree may sometimes result in one subtree being too deep while others are too shallow, as shown below:  
+
+```mermaid
+graph TD;
+    11---7;
+    11---15;
+    7---5;
+    7---9;
+    5---3;
+    5---6;
+    9---8;
+    9---10;
+    15---13;
+    15---20;
+    13---12;
+    13---14;
+    20---18;
+    20---25;
+    25---27
+    27---30
+```  
+
+This tree has an overly deep right side, which may cause performance issues when searching, adding, or deleting nodes. Hence, the need for an AVL self-balancing tree. An AVL tree is a self-balancing binary search tree where the height difference between the left and right subtrees of any node is at most 1. This means the tree attempts to remain as close to a complete tree as possible when inserting or removing nodes.  
+
+#### Balance Factor and Calculation in AVL Trees  
+
+Inserting and deleting nodes in an AVL tree is identical to a BST. The difference lies in checking the `balance factor` during insertion/deletion and applying self-balancing if necessary. In an AVL tree, the difference between the height of the right subtree (hr) and the left subtree (hl) must be calculated for each node. If this value (hr - hl) is not one of 0, 1, or -1, the AVL tree needs balancing. This is the concept of the balance factor. The following three trees are all balanced:  
+
+```mermaid
+graph TD;
+    subgraph 第三种
+        A((+1))---B(( -1))
+        A---C(( -1))
+        B---E((0))
+        C---D((+1))
+        C---F((0))
+        D---H((0))
+    end
+    subgraph 第二种
+        I((+1))---G((0))
+        I---K(( -1))
+        K---L((0))
+    end
+    subgraph 第一种
+        M(( -1))---N((0))
+    end
+```  
+
+#### Rotations in AVL Trees  
+
+When inserting a node into an AVL tree, two types of balancing operations can be performed: single rotation or double rotation, corresponding to four scenarios:  
+
+1. **Right-Right (RR)**: Single rotation to the left  
+2. **Left-Left (LL)**: Single rotation to the right  
+3. **Left-Right (LR)**: Double rotation to the right  
+4. **Right-Left (RL)**: Double rotation to the left  
+
+**Right-Right (RR)**: Diagram of a single rotation to the left (Mermaid cannot draw this as a binary tree, so 80 is on the left and 50 on the right):  
+
+```mermaid
+graph TD;
+    subgraph 之后
+        G((70))---H((50))
+        G---I((80))
+        I---J((90))
+        H---K((30))
+        H---L((60))
+    end
+    subgraph 之前
+        A((50))---B((30))
+        A---C((70))
+        C---D((60))
+        C---E((80))
+        E---F((90))
+    end
+```  
+
+**Left-Left (LL)**: Diagram of a single rotation to the right (Mermaid cannot draw this as a binary tree, so 50 is on the left and 10 on the right):  
+
+```mermaid
+graph TD;
+    subgraph 之后
+        G((30))---H((10))
+        G---I((50))
+        I---J((40))
+        I---K((70))
+        H---L((5))
+    end
+    subgraph 之前
+        A((50))---C((30))
+        A---B((70))
+        C---D((10))
+        C---E((40))
+        D---F((5))
+    end
+```  
+
+**Left-Right (LR)**: Diagram of a double rotation to the right (essentially performing an RR rotation followed by an LL rotation):  
+
+```mermaid
+graph TD;
+    subgraph 之后
+        G((40))---H((30))
+        G---I((50))
+        H---J((10))
+        H---K((35))
+        J---L((70))
+    end
+    subgraph 之前
+        A((50))---C((30))
+        A---B((70))
+        C---D((10))
+        C---E((40))
+        E---F((35))
+    end
+```  
+
+**Right-Left (RL)**: Diagram of a double rotation to the left (essentially performing an LL rotation followed by an RR rotation; Mermaid cannot draw this as a binary tree, so 80 is on the left and 70 on the right):  
+
+```mermaid
+graph TD;
+    subgraph 之后
+        G((72))---I((70))
+        G---H((80))
+        H---J((75))
+        H---K((90))
+        I---L((50))
+    end
+    subgraph 之前
+        A((70))---B((50))
+        A---C((80))
+        C---D((72))
+        C---E((90))
+        D---F((75))
+    end</code></pre>
+</li>
+</ol>
+<p>Although AVL trees are self-balancing, their performance for node insertion or removal is not always optimal. A better alternative is the red-black tree, ](<a href="http://goo.gl/OxED8K">http://goo.gl/OxED8K</a>) which can efficiently traverse its nodes in order.</p>
+<h3 id="javascript-implementations-of-basic-tree-methods">JavaScript Implementations of Basic Tree Methods</h3>
+<ol>
+<li>](<a href="https://static.xheldon.cn/example-code/2019/BinarySearchTree.js">https://static.xheldon.cn/example-code/2019/BinarySearchTree.js</a>) Binary Tree</li>
+<li>](<a href="https://static.xheldon.cn/example-code/2019/AVLTree.js">https://static.xheldon.cn/example-code/2019/AVLTree.js</a>) AVL Tree</li>
+<li>](<a href="https://static.xheldon.cn/example-code/2019/RedBlackTree.js">https://static.xheldon.cn/example-code/2019/RedBlackTree.js</a>) Red-Black Tree</li>
+<li>](<a href="http://goo.gl/SFlhW6">http://goo.gl/SFlhW6</a>) Heap Tree</li>
+</ol>
+<h2 id="graphs">Graphs</h2>
+<h3 id="basic-concepts-of-graphs">Basic Concepts of Graphs</h3>
+<p>A graph is an abstract model of a network structure. It represents a set of nodes (or vertices) connected by edges. Any binary relationship can be expressed using graphs. They can be employed to solve problems like finding the shortest path between two points.</p>
+<h3 id="mathematical-definition-of-graphs">Mathematical Definition of Graphs</h3>
+<p>A graph G = (V, E) consists of the following elements:</p>
+<ol>
+<li>V: A set of vertices</li>
+<li>E: A set of edges connecting the vertices in V</li>
+</ol>
+<p>Below is an illustration of a graph:</p>
+<pre><code class="language-mermaid">graph TD;
+    A---B
+    B---E
+    B---F
+    E---I
+    A---C
+    A---D
+    C---D
+    C---G
+    D---G
+    D---H
+</code></pre>
+<h3 id="graph-terminology">Graph Terminology</h3>
+<p>In the above graph:</p>
+<ol>
+<li>Vertices connected by an edge are called <code>adjacent vertices</code>.</li>
+<li>The <code>degree</code> of a vertex is the number of its adjacent vertices. In the graph above, A is adjacent to three other vertices, so its degree is 3; E has a degree of 2.</li>
+<li>A <code>path</code> is a continuous sequence of vertices v1, v2, …, vk, where vi and v(i+1) are adjacent. The graph above includes paths like ABEI and ACDG.</li>
+<li>A <code>simple path</code> does not contain repeated vertices, such as ADG. Excluding the last vertex (since it’s the same as the first), a <code>cycle</code> is also a simple path, like ADCA (where the last vertex returns to A).</li>
+<li>If a graph contains no cycles, it is called <code>acyclic</code>. If there is a path between every pair of vertices, the graph is <code>connected</code>.</li>
+<li>A graph can be <code>directed</code> (edges have direction) or <code>undirected</code> (edges have no direction). The graph above is an <code>undirected graph</code>.</li>
+<li>If there is a bidirectional path between every pair of vertices, the graph is <code>strongly connected</code>.</li>
+<li>Graphs can also be <code>unweighted</code> or <code>weighted</code>, where edges in a weighted graph are assigned values.</li>
+</ol>
+<h3 id="graph-representation">Graph Representation</h3>
+<h4 id="adjacency-matrix">Adjacency Matrix</h4>
+<p>The most common implementation of a graph is the adjacency matrix. Each node is associated with an integer, which serves as an index for an array. A two-dimensional array represents connections between vertices. If the node with index i is adjacent to the node with index j, then array[i][j] === 1; otherwise, array[i][j] === 0. The graph above can be represented by the following adjacency matrix:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+<th>G</th>
+<th>H</th>
+<th>I</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>C</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>D</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>E</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>F</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>G</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>H</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>I</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>A graph that is not strongly connected is called a <code>sparse graph</code>. If represented by an adjacency matrix, the matrix will contain many zeros, meaning we waste computer storage space representing edges that don’t actually exist.</p>
+<h4 id="adjacency-list">Adjacency List</h4>
+<p>An adjacency list consists of a list of adjacent vertices for each vertex in the graph. There are several ways to represent this data structure. Lists (arrays), linked lists, hash tables, or dictionaries can be used to represent the adjacent vertex lists. The above graph can be represented by the following adjacency list:</p>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td>A</td>
+<td>E</td>
+<td>F</td>
+<td></td>
+</tr>
+<tr>
+<td>C</td>
+<td>A</td>
+<td>D</td>
+<td>G</td>
+<td></td>
+</tr>
+<tr>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>G</td>
+<td>H</td>
+</tr>
+<tr>
+<td>E</td>
+<td>B</td>
+<td>I</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>F</td>
+<td>B</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>G</td>
+<td>C</td>
+<td>D</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>H</td>
+<td>D</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>I</td>
+<td>E</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="incidence-matrix-omitted">Incidence Matrix (Omitted)</h4>
+<h4 id="graph-related-methods">Graph-Related Methods</h4>
+<ol>
+<li><code>addVertex(v)</code> Add a new vertex</li>
+<li><code>addEdge(v, w)</code> Add a new edge</li>
+</ol>
+<h3 id="graph-traversal">Graph Traversal</h3>
+<p>Graph traversal can be used to find specific vertices or paths between two vertices, check if the graph is connected, or determine if the graph contains cycles. The basic idea of graph traversal algorithms is to track each node when it is first visited and keep track of which nodes have not been fully explored (i.e., they still have unexplored child nodes). For both search (traversal) modes described below, the first vertex to be visited must be explicitly specified. Fully exploring a vertex requires examining every edge of that vertex. For each edge connected to an unvisited vertex, mark it as discovered and add it to the list of vertices to be visited. To ensure algorithm efficiency, each vertex must be visited at most twice. In a connected graph, every edge and vertex will be visited. The visitation status of vertices can be represented by three states: unvisited / visited but not fully explored / fully explored.</p>
+<h4 id="breadth-first-search-bfs-for-graphs">Breadth-First Search (BFS) for Graphs</h4>
+<p>The data structure for the list of vertices to be visited is a queue. Vertices are stored in the queue, and the first vertex enqueued is the first to be explored.</p>
+<p>Breadth-First Search is used to find the shortest path (implementation provided below). The <code>Dijkstra's algorithm</code> solves the single-source shortest path problem (<code>greedy algorithm</code>). The <code>Bellman-Ford algorithm</code> solves the single-source shortest path problem with negative edge weights. The <code>A* search algorithm</code> solves the shortest path problem between a single pair of vertices, using heuristics to speed up the search process. The <code>Floyd-Warshall algorithm</code> solves the all-pairs shortest path problem (<code>dynamic programming algorithm</code>).</p>
+<h4 id="depth-first-search-dfs-for-graphs">Depth-First Search (DFS) for Graphs</h4>
+<p>The data structure for the list of vertices to be visited is a stack. Vertices are stored in the stack and explored along a path, visiting new adjacent vertices as they are encountered. When we need to determine the execution order of certain tasks or steps, this is called <code>topological sorting (topsort/toposort)</code>. We can use Depth-First Search to perform topological sorting. Topological sorting can only be applied to <code>Directed Acyclic Graphs (DAGs)</code>, with a specific implementation provided below.</p>
+<h3 id="minimum-spanning-tree-mst">Minimum Spanning Tree (MST)</h3>
+<p>The <code>Minimum Spanning Tree</code> is a common problem in network design. For example, if your company has several offices and you want to connect them with telephone lines at the lowest cost to save money, what is the best approach? This can also be applied to the island-bridge problem. Imagine you want to build bridges between n islands and connect all islands at the lowest cost. Both problems can be solved using <code>MST algorithms</code>:</p>
+<ol>
+<li>
+<p>Prim’s Algorithm<br />
+A greedy algorithm used to solve the MST problem for weighted undirected connected graphs. It finds a subset of edges that forms a tree including all vertices, with the minimum possible total edge weight.</p>
+</li>
+<li>
+<p>Kruskal’s Algorithm<br />
+Another greedy algorithm for solving the MST problem in weighted undirected connected graphs.</p>
+</li>
+</ol>
+<h4 id="javascript-implementation-of-graphs">JavaScript Implementation of Graphs</h4>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/Graph.js">Graph</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/ShortestPath.js">Shortest Path Algorithm</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/MinimumSpanningTree.js">Minimum Spanning Tree</a></li>
+</ol>
+<h2 id="sorting-and-searching-algorithms">Sorting and Searching Algorithms</h2>
+<h3 id="sorting-algorithms">Sorting Algorithms</h3>
+<ol>
+<li><code>Bubble Sort</code> Complexity O(n<sup>2</sup>): Two nested loops; swaps values in the inner loop if the condition is met.</li>
+<li><code>Selection Sort</code> Complexity O(n<sup>2</sup>): Two nested loops; the inner loop finds the minimum value and places it in the first position, then finds the second smallest value and places it in the second position, and so on.</li>
+<li><code>Insertion Sort</code> Complexity O(n<sup>2</sup>): Starts from the beginning, assuming the preceding elements are already sorted, then determines the position of the current value in the sorted array and inserts it, continuing to the next value.</li>
+<li><code>Merge Sort</code> Complexity O(nlog<sup>n</sup>): Recursive approach; divides the array into smaller arrays, then sorts them pairwise (like merging two sorted decks of cards) until fully sorted.</li>
+<li><code>Quick Sort</code> Complexity O(nlog<sup>n</sup>): Selects a pivot and partitions the data into two halves—values greater than the pivot go to the right, and smaller values go to the left—until the left pointer exceeds the right pointer.</li>
+<li><code>Heap Sort</code> Treats the array as a binary tree for sorting, with the following rules:
+<ol>
+<li>Index 0 is the root of the tree.</li>
+<li>For any node N (except the root), the parent node is N/2.</li>
+<li>The left child of node L is 2 * L.</li>
+<li>The right child of node R is 2 * R + 1.</li>
+<li>For example, the array [3, 5, 1, 6, 4, 7, 2] can be visualized as the following tree:<pre><code class="language-mermaid">graph TD;
+A((3))---B((5))
+A---C((1))
+B---D((6))
+B---E((4))
+C---F((7))
+C---G((2))
+</code></pre>
+</li>
+</ol>
+</li>
+<li>Counting Sort</li>
+<li>Bucket Sort</li>
+<li>Radix Sort (Distribution Sort)</li>
+</ol>
+<h3 id="searching-algorithms">Searching Algorithms</h3>
+<ol>
+<li>Sequential Search</li>
+<li>Binary Search</li>
+</ol>
+<h3 id="javascript-implementations-of-sorting-searching-algorithms">JavaScript Implementations of Sorting/Searching Algorithms</h3>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/SortingSearchingAlgorithms.js">Summary of Various Sorting/Searching Algorithms</a></li>
+</ol>
+<h2 id="algorithm-patterns">Algorithm Patterns</h2>
+<h3 id="dynamic-programming">Dynamic Programming</h3>
+<ol>
+<li><code>Knapsack Problem</code>: Given a set of items, each with a value and weight, the goal is to determine the subset of items with the maximum total value. The constraint is that the total weight must not exceed the knapsack’s capacity.</li>
+<li><code>Longest Common Subsequence</code>: Find the longest subsequence common to a set of sequences (obtained by deleting elements from another sequence without changing the order of the remaining elements).</li>
+<li><code>Matrix Chain Multiplication</code>: Given a sequence of matrices, the goal is to find the most efficient way to multiply them (minimizing the number of operations). The multiplication is not performed; the solution lies in determining the optimal order of multiplication.</li>
+<li><code>Coin Change</code>: Given coins of denominations d1, d2…dn and a target amount, determine the number of ways to make change for that amount.</li>
+<li><code>All-Pairs Shortest Path in Graphs</code>: For all vertex pairs (u, v), find the shortest path from vertex u to vertex v (previously solvable by the Floyd-Warshall algorithm).</li>
+</ol>
+<h3 id="javascript-implementations-of-algorithm-patterns">JavaScript Implementations of Algorithm Patterns</h3>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/Recursion.js">Recursion</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/MinCoinChangeDP.js">Minimum Coin Change DP Algorithm</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/MinCoinChangeGreedy.js">Minimum Coin Change Greedy Algorithm</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/KnapsackProblemDP.js">Knapsack Problem DP Algorithm</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/KnapSackProblemRecursive.js">Knapsack Problem Recursive Algorithm</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/KnapSackProblemGreedy.js">Knapsack Problem Greedy Algorithm</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/LongestCommonSubsequenceDP.js">Longest Common Subsequence DP Algorithm</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/LongestCommonSubsequenceRecursive.js">Longest Common Subsequence Recursive Algorithm</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/MatrixChainMultiplicationDP.js">Matrix Chain Multiplication DP Algorithm</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/MatrixChainMultiplicationRecursive.js">Matrix Chain Multiplication Recursive Algorithm</a></li>
+</ol>
+<h2 id="overview-of-np-complete-theory">Overview of NP-Complete Theory</h2>
+<p>Generally, if an algorithm’s complexity is O(n<sup>k</sup>), where k is a constant, the algorithm is considered efficient—this is a polynomial-time algorithm. For a given problem, if a polynomial-time algorithm exists, it is classified as P (polynomial).</p>
+<p>There is another class called NP (nondeterministic polynomial) algorithms. If a problem’s solution can be verified in polynomial time, it is classified as NP.</p>
+<p>If a problem has a polynomial-time algorithm, its solution can naturally be verified in polynomial time, so all P problems are NP. However, whether P = NP remains unknown.</p>
+<p>The most challenging subset of NP problems is <code>NP-complete</code> problems, which satisfy two conditions:</p>
+<ol>
+<li>They are NP problems, meaning their solutions can be verified in polynomial time, but no polynomial-time algorithm has been found yet.</li>
+<li>All NP problems can be reduced to them in polynomial time.</li>
+</ol>
+<p>Another class, <code>NP-hard</code> problems, only needs to satisfy the second condition of NP-complete problems. Thus, NP-complete problems are a subset of NP-hard problems.</p>
+<p>Examples of NP-hard problems that are not NP-complete include the <code>Halting Problem</code> and the <code>Boolean Satisfiability Problem (SAT)</code>. Examples of NP-complete problems include the <code>Subset Sum Problem</code>, <code>Traveling Salesman Problem</code>, and <code>Vertex Cover Problem</code>.</p>
+<p>Finally, some problems are <code>unsolvable</code>, yet approximate solutions can still be found within acceptable time frames. <code>Heuristic algorithms</code> are one such approach. While they may not yield optimal solutions, they are often sufficient.</p>
+<p>Examples of heuristic algorithms include <code>Local Search</code>, <code>Genetic Algorithms</code>, <code>Heuristic Navigation</code>, and <code>Machine Learning</code>. For more, <a href="http://goo.gl/gxIu9w">see here</a>.</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          Originally published at:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/Data-Structures-and-Algorithms-in-Javascript.en.html"
+            title="Data Structures and Algorithms in JavaScript"
+          >
+            Data Structures and Algorithms in JavaScript - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">Contents</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>From the author:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        I often wish that when facing some key decisions in life, someone could tell me the best course of action so that I would not waste my precious time. Putting myself in others&#39; shoes, I therefore write blogs often, hoping to record in this tiny corner of the vast Internet the once-in-a-lifetime experiences that matter to me, and to help those who seek help.
+    </div>
+    <hr>
+    
+    <h5><a href="/en/archive/">Popular Tags</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/en/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="Technology"
+                rel="188">Technology</a>
+        
+            <a data-sort="0200"
+                href="/en/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="Life"
+                rel="108">Life</a>
+        
+            <a data-sort="0264"
+                href="/en/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="Tinkering"
+                rel="44">Tinkering</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="Tips"
+                rel="32">Tips</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="Tutorial"
+                rel="32">Tutorial</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="Translation"
+                rel="24">Translation</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="Experience"
+                rel="20">Experience</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="Food"
+                rel="20">Food</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="First Impressions"
+                rel="16">First Impressions</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="Workflow"
+                rel="16">Workflow</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="Plugin"
+                rel="16">Plugin</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="Network"
+                rel="16">Network</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="User Experience"
+                rel="12">User Experience</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="Summary"
+                rel="12">Summary</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="Server"
+                rel="12">Server</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="Router"
+                rel="12">Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="Soft Router"
+                rel="12">Soft Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="Essay"
+                rel="12">Essay</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9B%86%E6%88%90"
+                title="Integration"
+                rel="12">Integration</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="Staple Food"
+                rel="8">Staple Food</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="Optimization"
+                rel="8">Optimization</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%8D%83%E5%85%86"
+                title="Gigabit"
+                rel="8">Gigabit</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="Big Event"
+                rel="8">Big Event</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="Tools"
+                rel="8">Tools</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="Bypass Router"
+                rel="8">Bypass Router</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="Framework"
+                rel="8">Framework</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="Foot Bath Time"
+                rel="8">Foot Bath Time</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="Testing"
+                rel="8">Testing</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="Tesla"
+                rel="8">Tesla</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="Editor"
+                rel="8">Editor</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="Video"
+                rel="8">Video</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="Debugging"
+                rel="8">Debugging</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BD%A6"
+                title="Car"
+                rel="8">Car</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="Migration"
+                rel="8">Migration</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="Northeastern Cuisine"
+                rel="4">Northeastern Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="Buying a House"
+                rel="4">Buying a House</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="Proxy"
+                rel="4">Proxy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="Full Stack"
+                rel="4">Full Stack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="Norse Mythology"
+                rel="4">Norse Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="Collaboration"
+                rel="4">Collaboration</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="Compression"
+                rel="4">Compression</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="Kratos"
+                rel="4">Kratos</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="Home Cooking"
+                rel="4">Home Cooking</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="Prosperity"
+                rel="4">Prosperity</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="Comparison"
+                rel="4">Comparison</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="Sichuan Cuisine"
+                rel="4">Sichuan Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="Work Experience"
+                rel="4">Work Experience</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="Greek Mythology"
+                rel="4">Greek Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="Essential Apps"
+                rel="4">Essential Apps</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="Open Source"
+                rel="4">Open Source</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="Unboxing"
+                rel="4">Unboxing</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="God of War"
+                rel="4">God of War</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIM Card"
+                rel="4">SIM Card</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%8B%93%E6%89%91"
+                title="Topology"
+                rel="4">Topology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="Story"
+                rel="4">Story</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="Data Structure"
+                rel="4">Data Structure</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="Travel"
+                rel="4">Travel</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="Daily Life"
+                rel="4">Daily Life</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="Japan"
+                rel="4">Japan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="Service"
+                rel="4">Service</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="Format"
+                rel="4">Format</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A2%A6"
+                title="Dream"
+                rel="4">Dream</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="Browser"
+                rel="4">Browser</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="Gaming"
+                rel="4">Gaming</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="Rant"
+                rel="4">Rant</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="User Privacy"
+                rel="4">User Privacy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="Algorithm"
+                rel="4">Algorithm</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="Details"
+                rel="4">Details</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="Headphones"
+                rel="4">Headphones</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="Freedom"
+                rel="4">Freedom</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="Plan"
+                rel="4">Plan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="Settings"
+                rel="4">Settings</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="Pitfalls"
+                rel="4">Pitfalls</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="Conversion"
+                rel="4">Conversion</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="Selection"
+                rel="4">Selection</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="Interview"
+                rel="4">Interview</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>Columns</h5>
+    <div class="tags">
+        <a href="/projects">Open Source</a>
+        <a href="/book-list">Book List</a>
+        <a href="/subscribe">Subscriptions & Paid Apps</a>
+        <a href="/my-food">Food Recommendations</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>Friends</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">China</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+ 
+<script src="/js/mermaid.8.3.1.js"></script>
+<script>
+  window.addEventListener('load', function () {
+    var config = {
+      startOnLoad: true,
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+      },
+    };
+    mermaid.initialize(config);
+    var elements = document.getElementsByClassName('language-mermaid');
+    for (var i = elements.length; i--; ) {
+      element = elements[i];
+      var graphDefinition = element.innerText;
+      if (graphDefinition) {
+        var svg = mermaid.render(
+          'ha_mermaid_' + i,
+          graphDefinition,
+          function (svg) {}
+        );
+        if (svg) {
+          var svgElement = document.createElement('div');
+          preNode = element.parentNode;
+          svgElement.innerHTML = svg;
+          svgElement.setAttribute('class', 'mermaid');
+          svgElement.setAttribute('data-processed', 'true');
+          preNode.parentNode.replaceChild(svgElement, preNode);
+        }
+      }
+    }
+  });
+</script>
+ <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="Data Structures and Algorithms in JavaScript"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/en/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

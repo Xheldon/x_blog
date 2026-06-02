@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      アプリ開発の旅（一）：摩訶不思議なSwift - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="本シリーズは、Webフロントエンド開発者として私がAppleアプリ開発を学ぶ過程での記録です。">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="アプリ開発の旅（一）：摩訶不思議なSwift - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2025-3-27T12:00:00"> 
+              
+                  
+                    <meta property="article:tag" content="Apple">
+                    
+                    <meta property="article:tag" content="Swift">
+                    
+                    <meta property="article:tag" content="フルスタック">
+                    
+                    <meta property="article:tag" content="初体験">
+                    
+                    <meta property="article:tag" content="コツ">
+                    
+                    <meta property="article:tag" content="技術">
+                    
+                    <meta property="article:tag" content="チュートリアル">
+                    
+                    <meta property="article:tag" content="Apple">
+                    
+                      
+                          
+                            <meta name="og:description" content="本シリーズは、Webフロントエンド開発者として私がAppleアプリ開発を学ぶ過程での記録です。">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ja/tech/app-dev-journey-swift.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ja_JP">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ja/tech/app-dev-journey-swift.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/app-dev-journey-swift.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/app-dev-journey-swift.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/app-dev-journey-swift.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/app-dev-journey-swift.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/app-dev-journey-swift.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ja/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ja/">ホーム</a>
+            </li>
+            <li>
+              <a href="/ja/about/">概要</a>
+            </li>
+            <li>
+              <a href="/ja/donate/">寄付</a>
+            </li>
+            <li>
+              <a href="/ja/archive/">アーカイブ</a>
+            </li>
+            <li>
+              <a href="/ja/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">日本語</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/app-dev-journey-swift.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/app-dev-journey-swift.html" hreflang="en">English</a></li>
+        <li class="lang-item active"><a href="/ja/tech/app-dev-journey-swift.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/app-dev-journey-swift.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ja/archive/?tag=Apple"
+                            title="Apple">
+                            Apple
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=Swift"
+                            title="Swift">
+                            Swift
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E5%85%A8%E6%A0%88"
+                            title="フルスタック">
+                            フルスタック
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                            title="初体験">
+                            初体験
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E6%8A%80%E5%B7%A7"
+                            title="コツ">
+                            コツ
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技術">
+                            技術
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E6%95%99%E7%A8%8B"
+                            title="チュートリアル">
+                            チュートリアル
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                            title="Apple">
+                            Apple
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        アプリ開発の旅（一）：摩訶不思議なSwift
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 作成日 2025年03月27日</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 更新日 2025年04月08日</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;注意：この記事が作成されてから既に
+          <code id="from_time"></code> 日が経過しています。情報の鮮度にご注意ください
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1743033600000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+           
+        <div class="callout-tips">🖥 &nbsp;説明：本シリーズは、Webフロントエンド開発者として私がAppleアプリ開発を学ぶ過程での記録です。</div>
+          
+        <div class="craft-tips">
+          📚 &nbsp;Notion にも公開：<a
+            href="https://xheldon.notion.site/App-Swift-1c3800e87a6180a0b1dcdc00491c3a7c"
+            target="_blank"
+          >
+            https://xheldon.notion.site/App-Swift-1c3800e87a6180a0b1dcdc00491c3a7c
+          </a>
+        </div>
+         <h2 id="説明">説明</h2>
+<blockquote style='border-color: ;color: '><p> なぜJavaScriptではないのかと聞かれることがありますが、それはスクリプト言語であり、型システムなどがなく、Swiftとは比較にならないからです。</p></blockquote>
+<p>私はフロントエンド開発者で、C、Java、Python言語については入門レベルの理解しかありませんが、TypeScript（以下TS）の機能と使用に関しては上級レベル（自負）です。そのため、私が驚く点が、他の方々にとっては「ただの当たり前の言語機能」に思えたり、「TypeScriptの設計者は天才なのか？」と感じられるかもしれません。</p>
+<p>私はSwiftとTSの違いすべてに無理に驚くわけではありません。なぜなら、一部の違いはTS自身の不足によるものであり、またコンピュータ言語では一般的な設計（例えば数字をIntとDoubleで区別し、Number型だけにしないなど）もあるからです。驚くべきはJSの設計（結局1週間で急いで設計されたものです）であって、Swiftではありません。</p>
+<blockquote style='border-color: ;color: '><p> 私の考えでは、言語のルールや例外、予約語が多すぎる場合、それは良い言語とは言えません。</p></blockquote>
+<h2 id="はじめに">はじめに</h2>
+<p>この記事はSwiftの公式言語紹介の順番に沿って驚きを記述しており、驚かなかったり理解できない内容（例：<code>附加宏</code>）は省略しています。</p>
+<h2 id="基本知識">基本知識</h2>
+<h3 id="コメント">コメント</h3>
+<blockquote style='border-color: ;color: '><p> 驚きポイント：XCodeには`/** */`ブロックコメントのショートカットがなく、`cmd + /`の行コメントしかありません。</p></blockquote>
+<p>VSCodeのブロックコメントショートカットも押しにくく、<code>Alt + Shift + A</code>です。この機能はあまり使われていないのでしょうか？</p>
+<p>もちろん、VSCodeとXCodeどちらも、<code>/**</code>と入力してEnterを押すと、自動的にブロックコメントが生成されます。</p>
+<h3 id="オプショナルバインディング">オプショナルバインディング</h3>
+<blockquote style='border-color: ;color: '><p> 驚きポイント：デバッグ中に`if`文で常に`true`となる値をテスト用に書こうとしてもできません。`if`文のオプショナルバインディングは、必ずオプショナル型の値でなければなりません。</p></blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> a <span class="hljs-operator">=</span> <span class="hljs-number">2</span> &#123; &#125; <span class="hljs-comment">// 错误！</span><br></code></pre></td></tr></table></figure>
+<p>こんな必要ある？</p>
+<h2 id="コレクション型">コレクション型</h2>
+<blockquote style='border-color: ;color: '><p> 驚きポイント：配列メソッドの中で、`sort` はその場でソートを行うのに対し、`sorted` は新しい配列を返します。</p></blockquote>
+<p>一つの言語がフレームワークの仕事までこなすとは、さすがAppleのスタイルだ。これに類する驚きは他にもたくさんあるが、いちいち驚いている場合ではない。</p>
+<h2 id="制御フロー">制御フロー</h2>
+<h3 id="if式">if式</h3>
+<blockquote style='border-color: ;color: '><p> 驚きポイント：`if-else`で同じ変数に代入する場合に対処するため、`if`式の書き方が用意されています。同様に、`switch`にも式形式が存在します。</p></blockquote>
+<p>Swiftはやりすぎなところがある：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// 平平无奇的写法</span><br><span class="hljs-keyword">let</span> a <span class="hljs-operator">=</span> <span class="hljs-number">25</span><br><span class="hljs-keyword">let</span> str: <span class="hljs-type">String</span><br><span class="hljs-keyword">if</span> a <span class="hljs-operator">&lt;=</span> <span class="hljs-number">0</span> &#123;<br>    str <span class="hljs-operator">=</span> <span class="hljs-string">&quot;小&quot;</span><br>&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> a <span class="hljs-operator">&gt;=</span> <span class="hljs-number">30</span> &#123;<br>    str <span class="hljs-operator">=</span> <span class="hljs-string">&quot;大&quot;</span><br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    str <span class="hljs-operator">=</span> <span class="hljs-string">&quot;中&quot;</span><br>&#125;<br><span class="hljs-comment">// 简写法</span><br><span class="hljs-keyword">let</span> str <span class="hljs-operator">=</span> <span class="hljs-keyword">if</span> a <span class="hljs-operator">&lt;=</span> <span class="hljs-number">0</span> &#123;<br>  <span class="hljs-string">&quot;小&quot;</span><br>&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> a <span class="hljs-operator">&gt;=</span> <span class="hljs-number">30</span> &#123;<br>  <span class="hljs-string">&quot;大&quot;</span><br>&#125; <span class="hljs-keyword">else</span> &#123;<br>  <span class="hljs-string">&quot;中&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="switchのすごい判定">Switchのすごい判定</h3>
+<blockquote style='border-color: ;color: '><p> 驚きポイント：switchには暗黙のフォールスルーがない</p></blockquote>
+<p>しかしこれは理解できるし、より合理的だ。普通の人が、わざわざ <code>break</code> を書かずに case 1 から case 2 に自動的に進んでほしいと思うだろうか？</p>
+<blockquote style='border-color: ;color: '><p> 驚きポイント：switchはオブジェクトの値を判定できる！</p></blockquote>
+<p>これは実際には <code>feature</code> であり、直感的により合理的で、まさにプロフェッショナル向けだ。</p>
+<p>TSでは、<code>switch</code>の<code>case</code>文が全等(===)判定を使用するため、通常<code>switch</code>の括弧内にオブジェクトを渡すことはない。オブジェクトは参照を判定するものであり、TSではオブジェクトの等価性を判定する必要がある場面は稀で、ましてや<code>switch</code>文で判定することはまずない。</p>
+<p>しかしSwiftでは、<code>case</code>文で判定する値を「キャプチャ」できる（正式名称は「パターン」と呼ばれる）：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">let</span> somePoint <span class="hljs-operator">=</span> (<span class="hljs-number">1</span>, <span class="hljs-number">1</span>) <span class="hljs-comment">// 一个平平无奇的元组罢了</span><br><span class="hljs-comment">// 我现在，开 始 判 断：</span><br><span class="hljs-keyword">switch</span> somePoint &#123;<br><span class="hljs-keyword">case</span> (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;<span class="hljs-subst">\(somePoint)</span> 在原点&quot;</span>)<br><span class="hljs-keyword">case</span> (<span class="hljs-keyword">_</span>, <span class="hljs-number">0</span>): <span class="hljs-comment">// 忽略第一个值</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;<span class="hljs-subst">\(somePoint)</span> 在 x 轴&quot;</span>)<br><span class="hljs-keyword">case</span> (<span class="hljs-number">0</span>, <span class="hljs-keyword">_</span>): <span class="hljs-comment">// 忽略第二个值</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;<span class="hljs-subst">\(somePoint)</span> 在 y 轴&quot;</span>)<br><span class="hljs-keyword">case</span> (<span class="hljs-operator">-</span><span class="hljs-number">2</span><span class="hljs-operator">...</span><span class="hljs-number">2</span>, <span class="hljs-operator">-</span><span class="hljs-number">2</span><span class="hljs-operator">...</span><span class="hljs-number">2</span>): <span class="hljs-comment">// 判断元组的两个值是否分别在给定区间，在就匹配成功</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;<span class="hljs-subst">\(somePoint)</span> 在盒子内部&quot;</span>)<br><span class="hljs-keyword">default</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;<span class="hljs-subst">\(somePoint)</span> 在盒子外部&quot;</span>)<br>&#125;<br><br><span class="hljs-comment">// 还可以值绑定！</span><br><span class="hljs-keyword">switch</span> somePoint &#123;<br><span class="hljs-keyword">case</span> (<span class="hljs-keyword">let</span> x, <span class="hljs-number">0</span>): <span class="hljs-comment">// 匹配第二个值，捕获第一个值</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;x轴值：<span class="hljs-subst">\(x)</span>&quot;</span>)<br><span class="hljs-keyword">case</span> (<span class="hljs-number">0</span>, <span class="hljs-keyword">let</span> y): <span class="hljs-comment">// 匹配第一个值，捕获第二个值</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;y 轴值：<span class="hljs-subst">\(y)</span>&quot;</span>)<br><span class="hljs-keyword">case</span> (<span class="hljs-keyword">let</span> x, <span class="hljs-keyword">let</span> y): <span class="hljs-comment">// 兜底，因为 x 和 y 都是 let，还可以写作 case let (x, y)</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;<span class="hljs-subst">\(x)</span> 和 <span class="hljs-subst">\(y)</span>&quot;</span>)<br>&#125;<br><span class="hljs-comment">// 还可以加 where 限定：</span><br><span class="hljs-keyword">case</span> <span class="hljs-keyword">let</span> (x, y) <span class="hljs-keyword">where</span> x <span class="hljs-operator">==</span> y:<br><span class="hljs-comment">//还可以多个匹配</span><br><span class="hljs-keyword">case</span> <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>:<br></code></pre></td></tr></table></figure>
+<p>TSにおいても「複数マッチ」がサポートされていますが、Swiftのcaseにおける複数マッチとは全く異なることに注意が必要です。</p>
+<p>Swiftの複数マッチでは、カンマ区切りの内容のいずれかが一致すればcase文が実行されます。しかし、TSのカンマ区切りのマッチは、本質的に最後の項目のみにマッチします。これはTSにおけるカンマ区切りの文が最後の値のみを返すためです：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">var</span> a = <span class="hljs-string">&quot;d&quot;</span><br><span class="hljs-keyword">switch</span> (a) &#123;<br> <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;d&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>:<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;OK&quot;</span>)<span class="hljs-comment">// 此处不会执行，因为此 case 匹配 &quot;b&quot; </span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="関数">関数</h2>
+<h3 id="関数のラベル付き引数">関数のラベル付き引数</h3>
+<blockquote style='border-color: ;color: '><p> 驚きのポイント：仮引数（ラベル付き引数）は同名でも良い？？？さらに規定（また制限が来た、参った）：可変引数の後ろの引数は必ず引数ラベルが必要（もし1つだけなら実引数が仮引数になる）省略できない。</p></blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// 下面两个 a 标签参数，完全合法（因为是 label 无所谓）</span><br><span class="hljs-comment">// 而且 a b 后面的参数 a c（或者单独的一个参数）必须存在，不能用 _ 省略，</span><br><span class="hljs-comment">//  也可以理解，要不咋知道是第二个参数，而不是前面的可变参数来的？</span><br><span class="hljs-keyword">func</span> <span class="hljs-title function_">a</span> (<span class="hljs-params">a</span> <span class="hljs-params">b</span>: <span class="hljs-type">Double</span>..., <span class="hljs-params">a</span> <span class="hljs-params">c</span>: <span class="hljs-type">Double</span>) -&gt; <span class="hljs-type">Double</span> &#123;<br>    <span class="hljs-keyword">return</span> b.reduce(<span class="hljs-number">0</span>, <span class="hljs-operator">+</span>) <span class="hljs-operator">+</span> c<br>&#125;<br>a(a: <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, a: <span class="hljs-number">6</span>)<br></code></pre></td></tr></table></figure>
+<h2 id="クロージャ">クロージャ</h2>
+<h3 id="クロージャのn種類の省略記法">クロージャのN種類の省略記法</h3>
+<blockquote style='border-color: ;color: '><p> 驚きポイント：クロージャのシンタックスシュガーが多すぎてここでは全て列挙しませんが、最も衝撃的なのはたった1つの `>` 記号だけで表現できる形式です。</p></blockquote>
+<p>このように書ける本質的な理由は、String型に <code>&gt;</code> という名前の関数が存在するからです。そうです、記号も関数になり得るのです！この点については後ほどさらに驚くべき内容を紹介します。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">var</span> num <span class="hljs-operator">=</span> [<span class="hljs-string">&quot;9&quot;</span>, <span class="hljs-string">&quot;2&quot;</span>, <span class="hljs-string">&quot;1&quot;</span>]<br><span class="hljs-keyword">var</span> sortedNum <span class="hljs-operator">=</span> num.sroted(by: <span class="hljs-operator">&gt;</span>)<br></code></pre></td></tr></table></figure>
+<p>本当に信じられない。</p>
+<h3 id="returnの省略">returnの省略</h3>
+<blockquote style='border-color: ;color: '><p> 驚きのポイント：「単一行のreturnは省略可能」と理解できるかもしれないが、「複数行でもreturnを省略できる」ことは絶対に理解できないでしょう</p></blockquote>
+<p>TypeScriptにおけるreturnの省略は、Swiftの通常の書き方と同じで、単一行のreturn省略：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// 省略写法</span><br><span class="hljs-keyword">var</span> <span class="hljs-title function_">a</span> = (<span class="hljs-params"></span>) =&gt; <span class="hljs-number">2</span><br><span class="hljs-comment">// 正常写法是：</span><br><span class="hljs-keyword">var</span> <span class="hljs-title function_">a</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br> <span class="hljs-keyword">return</span> <span class="hljs-number">2</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>通常のSwift構文：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">func</span> <span class="hljs-title function_">a</span>()-&gt; <span class="hljs-type">Int</span> &#123;<br> <span class="hljs-number">2</span> <span class="hljs-comment">// -&gt; 因为单行，所以省略了 return</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>しかし！SwiftUIでの書き方：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-type">VStack</span> &#123;<br> <span class="hljs-type">Text</span>(<span class="hljs-string">&quot;Hello&quot;</span>)<br> <span class="hljs-type">Text</span>(<span class="hljs-string">&quot;World&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>驚くべきことに、これもトレーリングクロージャ関数です。<code>VStack</code>は関数であり、クロージャパラメータが最後かつ唯一のパラメータとして渡されるため、<code>VStack</code>の括弧を省略できます。しかし！ここでは2つの<code>Text</code>関数呼び出しを返しているのに、<code>return</code>が書かれていません。なぜでしょうか？</p>
+<p>それは<code>ViewBuilder</code>を使用しているからです。この仕組みは後述する<code>resultBuilder</code>と同じシンタックスシュガーです。</p>
+<h3 id="自動クロージャ">自動クロージャ</h3>
+<blockquote style='border-color: ;color: '><p> 驚きポイント：一見普通のクロージャ代入に過ぎないようですが、その遅延評価能力には驚かされました。</p></blockquote>
+<p>自動クロージャについて最初に学んだ時、この例で「遅延評価」能力について説明されました：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">var</span> customersInLine <span class="hljs-operator">=</span> [<span class="hljs-string">&quot;Chris&quot;</span>, <span class="hljs-string">&quot;Alex&quot;</span>, <span class="hljs-string">&quot;Ewa&quot;</span>, <span class="hljs-string">&quot;Barry&quot;</span>, <span class="hljs-string">&quot;Daniella&quot;</span>]<br><span class="hljs-built_in">print</span>(customersInLine.count)<br><span class="hljs-comment">// 打印 “5”</span><br><span class="hljs-keyword">let</span> customerProvider <span class="hljs-operator">=</span> &#123; customersInLine.remove(at: <span class="hljs-number">0</span>) &#125;<br><span class="hljs-built_in">print</span>(customersInLine.count)<br><span class="hljs-comment">// 打印 ”5“</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Now serving <span class="hljs-subst">\(customerProvider())</span>!&quot;</span>)<br><span class="hljs-comment">// 打印 “Now serving Chris!”</span><br><span class="hljs-built_in">print</span>(customersInLine.count)<br><span class="hljs-comment">// 打印 “4”</span><br></code></pre></td></tr></table></figure>
+<p>これはごく普通のクロージャーで、TSと同じくcustomerProvider変数がクロージャーに代入されているだけだと私は考えます。同じ実装をTSで書くとこうなります：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> <span class="hljs-title function_">customerProvider</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br> <span class="hljs-comment">// 省略逻辑</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>そしてもちろん、それが呼び出されたときに初めてクロージャーのロジックが実行されます。これこそ遅延評価というものです！</p>
+<p>しかし、その遅延評価の真価が発揮されるのは、クロージャーが引数として渡される場合です。</p>
+<p>ごく普通の明示的なクロージャー呼び出しは、TSの呼び出し方法とほぼ同様で、クロージャーを引数として受け取り、書き方も中括弧の中に記述します：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// customersInLine 是 [&quot;Alex&quot;, &quot;Ewa&quot;, &quot;Barry&quot;, &quot;Daniella&quot;]</span><br><span class="hljs-keyword">func</span> <span class="hljs-title function_">serve</span>(<span class="hljs-params">customer</span> <span class="hljs-params">customerProvider</span>: () -&gt; <span class="hljs-type">String</span>) &#123;<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Now serving <span class="hljs-subst">\(customerProvider())</span>!&quot;</span>)<br>&#125;<br>serve(customer: &#123; customersInLine.remove(at: <span class="hljs-number">0</span>) &#125; )<br><span class="hljs-comment">// 打印 “Now serving Alex!”</span><br></code></pre></td></tr></table></figure>
+<p>しかし、<code>customerProvider</code> を <code>@autoclosuer</code> とマークすると状況が変わります。この場合、<code>serve</code> 関数の呼び出しは次のように記述できます:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// customersInLine 是 [&quot;Ewa&quot;, &quot;Barry&quot;, &quot;Daniella&quot;]</span><br><span class="hljs-keyword">func</span> <span class="hljs-title function_">serve</span>(<span class="hljs-params">customer</span> <span class="hljs-params">customerProvider</span>: <span class="hljs-keyword">@autoclosure</span> () -&gt; <span class="hljs-type">String</span>) &#123;<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Now serving <span class="hljs-subst">\(customerProvider())</span>!&quot;</span>)<br>&#125;<br>serve(customer: customersInLine.remove(at: <span class="hljs-number">0</span>))<br><span class="hljs-comment">// 打印 “Now serving Ewa!”</span><br></code></pre></td></tr></table></figure>
+<p>最後の <code>serve</code> 関数の呼び出しに注目してください。その引数 customer は文 <code>customersInLine.remove(at: 0)</code> です。TSでは、どんな場合でも呼び出しスタックはまずこの値を評価してから <code>serve</code> 関数を呼び出します。しかしSwiftでは、この書き方は上記の形式と単に見た目が異なるだけで、ロジックは同じです。つまり、まず <code>serve</code> 関数が実行され、その後内部でこの文が実行されます（<code>customerProvider</code> が呼び出された時点で）。これこそが噂の「遅延評価」というものでしょう。</p>
+<p>このようなケースを多く書いていると、以下のようなコードに頻繁に出くわすことになります：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs swift">a(b.remove(<span class="hljs-number">2</span>))<br>c(d.add4())<br></code></pre></td></tr></table></figure>
+<p>ここでは、括弧内の文が先に実行されるのか、外側の関数が先なのか判断が難しい場合があります。そのため、Swiftの公式ドキュメントでも以下のように説明されています：</p>
+<blockquote style='border-color: ;color: '><p> 自動クロージャを過度に使用すると、コードの可読性が低下する可能性があります。コンテキストや関数名は、計算が延期されていることを明確に示す必要があります。</p></blockquote>
+<p>本当に信じられない、推奨されていないなら最初から設計すべきじゃなかったのに！</p>
+<h2 id="列挙型">列挙型</h2>
+<blockquote style='border-color: ;color: '><p> 驚きポイント: 他の言語では単なる状態判断のためのオプション的な型に過ぎない列挙型が、Swiftでは最もよく使われる第一級の型であり、Structの機能を一部置き換えることができるなんて信じられますか？</p></blockquote>
+<blockquote style='border-color: ;color: '><p> 驚きポイント2： 列挙型は値型です。</p></blockquote>
+<p>TypeScriptにおける列挙型はごく普通の「列挙型」にすぎず、単に値を列挙するだけで、主に状態マシンで状態を記述するために使用されます：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">enum</span> A &#123;<br> B = <span class="hljs-string">&quot;B&quot;</span><br> C = <span class="hljs-string">&quot;c&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>もちろん、TSが提供する様々な機能には、実行時とコンパイル時の違いなどもありますが、ここでは触れません。TSでは、列挙型の代わりに完全にオブジェクトを使用することができます：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">const</span> <span class="hljs-keyword">enum</span> A &#123;<br>  B = <span class="hljs-number">0</span>,<br>  C = <span class="hljs-number">1</span>,<br>&#125;<br><br><span class="hljs-keyword">const</span> A = &#123;<br>  <span class="hljs-attr">B</span>: <span class="hljs-number">0</span>,<br>  <span class="hljs-attr">C</span>: <span class="hljs-number">1</span>,<br>&#125; <span class="hljs-keyword">as</span> <span class="hljs-keyword">const</span>;<br></code></pre></td></tr></table></figure>
+<h3 id="関連値">関連値</h3>
+<blockquote style='border-color: ;color: '><p> 驚きポイント: Swiftのこの列挙型設計、一体何を考えてるの！</p></blockquote>
+<p>Swiftにおいて、列挙型の重要性は最優先です。すべてのケースを列挙可能（<code>CaseIterable</code>プロトコルに準拠が必要）、ケースを関数として扱い、呼び出し時に値を渡して列挙型インスタンスに処理させることができます。これを「関連値」と呼びます：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">enum</span> <span class="hljs-title class_">A</span> &#123;<br> <span class="hljs-keyword">case</span> b(<span class="hljs-type">Int</span>, <span class="hljs-type">Int</span>) <span class="hljs-comment">// 声明方式好像一个协议（也就是抽象类）</span><br> <span class="hljs-keyword">case</span> c(<span class="hljs-type">String</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>そして使用時に値を渡すことができます：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> a = A.<span class="hljs-title function_">b</span>(<span class="hljs-number">1024</span>, <span class="hljs-number">9527</span>)<br></code></pre></td></tr></table></figure>
+<p>列挙型が最もよく使われるのはswitch文の中です。驚くべきswitchと同様に驚くべきcaseを組み合わせて、次のように書くことができます：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">switch</span> a &#123;<br><span class="hljs-keyword">case</span> .<span class="hljs-title function_">b</span>(<span class="hljs-keyword">let</span> d, <span class="hljs-keyword">let</span> f):<br> <span class="hljs-title function_">print</span>(<span class="hljs-string">&quot;A.b 关联值为:\(d) 和 \(f)&quot;</span>)<br><span class="hljs-keyword">case</span> <span class="hljs-keyword">let</span> .<span class="hljs-title function_">c</span>(g): <span class="hljs-comment">// 上面提到的另一种 switch case 写法</span><br> <span class="hljs-title function_">print</span>(<span class="hljs-string">&quot;A.c:\(g)&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>最初に見た時、正直かなり抽象的で、実際の使用場面も想像できませんでした（私自身そんなことをしたことがなかったので）。</p>
+<h3 id="暗黙的な代入">暗黙的な代入</h3>
+<blockquote style='border-color: ;color: '><p> 驚きポイント: 列挙型の型宣言は、列挙型自体の型（キーと値のペア）ではなく、ケースの型を宣言している。</p></blockquote>
+<p>Swiftにおける暗黙的な代入は、TypeScriptやその他のC系言語と同様で、最初の数字がnであれば、その後の値はn+1となります。</p>
+<p>しかしSwiftはさらに一歩進んでいて、宣言した型に基づいて暗黙的に値を代入します。デフォルトでは行われません。例えば：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">enum</span> <span class="hljs-title class_">A</span>: <span class="hljs-title class_">Int</span> &#123; <span class="hljs-comment">// &lt;- 声明了 Int 类型，所以隐式赋值了</span><br> <span class="hljs-keyword">case</span> b, c, d <span class="hljs-comment">// b c d 分别为 0 1 2(需要使用 A.b.rawValue 才能访问，这又是另一个震惊点了）</span><br>&#125;<br><span class="hljs-keyword">enum</span> <span class="hljs-title class_">B</span>: <span class="hljs-title class_">String</span> &#123; <span class="hljs-comment">// &lt;- 声明了 String 类型，所以隐式赋值了</span><br> <span class="hljs-keyword">case</span> bb, cc, dd <span class="hljs-comment">// bb cc dd分别为 &quot;bb&quot; &quot;cc&quot; &quot;dd&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>TSでは、Swiftで指定できるInt型（実際にはcaseの型を指す）さえ指定できず、enumの型（通常は<code>Record</code>で別途定義されたキーバリューペア）しか指定できません。</p>
+<h2 id="構造体とクラス">構造体とクラス</h2>
+<blockquote style='border-color: ;color: '><p> 衝撃の事実：構造体が値型だって？？？</p></blockquote>
+<p>この一見しっかり者の構造体が、実は値型（パフォーマンス最適化のために<code>Immutable</code>の仕組みを使用）だったとは：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">a</span> &#123;<br> <span class="hljs-keyword">var</span> b: <span class="hljs-type">Int</span><br> <span class="hljs-keyword">var</span> c: <span class="hljs-type">String</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>波括弧付きのもの、どう見ても値には見えない！信じられない！驚き！</p>
+<h2 id="プロパティ">プロパティ</h2>
+<h3 id="様々なxxプロパティ-ラッパー-オブザーバー">様々なxxプロパティ/ラッパー/オブザーバー</h3>
+<blockquote style='border-color: ;color: '><p> 驚きポイント：Swiftがやりすぎている。計算プロパティ、ストアドプロパティ、プロパティラッパー（TSにもある）、プロパティオブザーバー（TSにもあり、ラッパーと一緒）といった概念は、通常フレームワークが提供するものだ。例えばVueの`computed`や`watch`など。しかしSwiftはStructとクラスの中でこれらを自前で実装している。信じられない！</p></blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">A</span> &#123;<br> <span class="hljs-keyword">var</span> b <span class="hljs-operator">=</span> <span class="hljs-number">2</span> <span class="hljs-comment">// &lt;- 存储属性，直接有值，在 struct 实例化的时候就确定了</span><br> <span class="hljs-keyword">var</span> c: <span class="hljs-type">Int</span> &#123;<br>  <span class="hljs-keyword">return</span> b <span class="hljs-operator">*</span> <span class="hljs-number">2</span> <span class="hljs-comment">// &lt;- 一个只读计算属性，不存储值，因为单行，return 可以省略</span><br> &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>なお、属性ラッパーはグローバル変数には使用できません。</p>
+<h2 id="サブスクリプト">サブスクリプト</h2>
+<blockquote style='border-color: ;color: '><p> 驚きポイント: これについては特に言うことはありません。「サブスクリプト」という概念自体が既に驚きで、コレクション、リスト、ディクショナリの要素にアクセスするためのショートカットを提供しています。さらに、サブスクリプトは関数のように複数の値を渡すこともできます。</p></blockquote>
+<p>基本的に、サブスクリプトの呼び出し方法は、データ構造（前述のコレクション、リスト、ディクショナリ）に対する関数呼び出しで値をアクセスすると考えられますが、違いは関数呼び出しが <code>()</code> を使用するのに対し、サブスクリプトは <code>[]</code> を使用することです。</p>
+<h2 id="継承">継承</h2>
+<blockquote style='border-color: ;color: '><p> 驚きポイント: これまでのすべての驚きポイントと同様に、Swiftはさまざまな目的や効果を実現するために、あたかも随意にキーワードを追加しているかのようです。そのため、継承に関連する予約語（もちろん、「予約語」と呼べるものではありません。Swiftでは予約語もすべて使用可能で、バッククォートで囲めば良いのです。これについては後ほど驚きポイントとして取り上げます）が数多く存在します。例えば: `final`、`override`、`open`、`required` など。</p></blockquote>
+<h2 id="初期化プロセス">初期化プロセス</h2>
+<h3 id="structのメンバーワイズイニシャライザ">Structのメンバーワイズイニシャライザ</h3>
+<blockquote style='border-color: ;color: '><p> 驚きポイント: Structは値型であるため、従来のClassのイニシャライザルールとは初期化時に違いがあります。</p></blockquote>
+<p>本来、StructとClassはどちらもごく普通のデータ構造で、TSのClassと何ら変わりません。しかし、Swiftはここでも一風変わったことをしています。</p>
+<p>Structは値型であるため、特別な点として「メンバーワイズイニシャライザ」と呼ばれる初期化形式があります。これは、Structに <code>init</code> が全く定義されていない場合、そのプロパティを初期化するために引数を渡す形式でinitでき、明示的に記述する必要がないというものです。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// 此 Struct 没有 init，因此适用逐一成员构造器</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">A</span> &#123; <br> <span class="hljs-keyword">var</span> a: <span class="hljs-type">Int</span><br> <span class="hljs-keyword">var</span> b: <span class="hljs-type">Int</span><br>&#125;<br><span class="hljs-comment">// 上述效果等同于：</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">A</span> &#123;<br> <span class="hljs-keyword">var</span> a: <span class="hljs-type">Int</span><br> <span class="hljs-keyword">var</span> b: <span class="hljs-type">Int</span><br> <span class="hljs-keyword">init</span>(<span class="hljs-params">a</span>: <span class="hljs-type">Int</span>, <span class="hljs-params">b</span>: <span class="hljs-type">Int</span>) &#123;<br>  <span class="hljs-keyword">self</span>.a <span class="hljs-operator">=</span> a<br>  <span class="hljs-keyword">self</span>.b <span class="hljs-operator">=</span> b<br> &#125;<br>&#125;<br><span class="hljs-comment">// 上面两个都可以这么用：</span><br><span class="hljs-type">A</span>(a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span>)<br><br></code></pre></td></tr></table></figure>
+<p>しかし、このルールはClassには適用されません。Classは明示的にinitコンストラクタメソッドを持ち、プロパティを初期化する必要があります。</p>
+<h3 id="クラスの指定イニシャライザとコンビニエンスイニシャライザ">クラスの指定イニシャライザとコンビニエンスイニシャライザ</h3>
+<blockquote style='border-color: ;color: '><p> 驚きポイント: え？イニシャライザには2種類あるの？？？</p></blockquote>
+<p>クラスの指定イニシャライザは、TSにおける通常の<code>construct</code>と同じ役割を持つ<code>init</code>メソッドです。しかし、そのコンビニエンスイニシャライザは…initの前に<code>convenience</code>キーワードを付ける（また来た！）ものです:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">convenience</span> <span class="hljs-keyword">init</span>() &#123;&#125;<br></code></pre></td></tr></table></figure>
+<p>実はここでSwiftのドキュメントは、なぜ便利イニシャライザが必要なのかを明確に読者に伝えず、直接クラスの初期化、継承プロセスとイニシャライザのデリゲーションについて説明しています。ここで初心者の方々に、なぜ便利イニシャライザというものが存在するのかを説明します。とてもシンプルな理由です：<code>クラス内の複数の指定イニシャライザは互いに呼び出し合うことが許されていません。</code>これだけの理由です。呼び出したくてたまらない？初期化プロセスを簡素化したい？それなら便利イニシャライザを使いなさい！</p>
+<p>通常の書き方：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span> &#123;<br> <span class="hljs-keyword">var</span> b: <span class="hljs-type">Int</span><br> <span class="hljs-keyword">var</span> c: <span class="hljs-type">String</span><br> <span class="hljs-keyword">init</span>(<span class="hljs-params">b</span>: <span class="hljs-type">Int</span>, <span class="hljs-params">c</span>: <span class="hljs-type">String</span>) &#123;<br>  <span class="hljs-keyword">self</span>.b <span class="hljs-operator">=</span> b<br> &#125;<br> <span class="hljs-keyword">init</span>() &#123;<br>  <span class="hljs-keyword">self</span>.b <span class="hljs-operator">=</span> <span class="hljs-number">0</span><br>  <span class="hljs-keyword">self</span>.c <span class="hljs-operator">=</span> <span class="hljs-string">&quot;UnKnown&quot;</span><br> &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>上記のように、self.b を2回書くのは面倒だと感じませんか？そこで、2番目の <code>init()</code> では、このようにしたいと考えています：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">init</span>() &#123;<br> <span class="hljs-keyword">self</span>.<span class="hljs-keyword">init</span>(b: <span class="hljs-number">0</span>, c: <span class="hljs-string">&quot;UnKnown&quot;</span>)	<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>コンパイラエラーが報告されました：<code>Designated initializer for 'A' cannot delegate (with 'self.init'); did you mean this to be a convenience initializer?</code></p>
+<p>この場合、convenienceイニシャライザを使用する必要があります：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs swift">converience <span class="hljs-keyword">init</span>() &#123;<br> <span class="hljs-keyword">self</span>.<span class="hljs-keyword">init</span>(b: <span class="hljs-number">0</span>, c: <span class="hljs-string">&quot;UnKnown&quot;</span>)	<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>「便利」が目的です～</p>
+<h3 id="失敗可能イニシャライザ">失敗可能イニシャライザ</h3>
+<blockquote style='border-color: ;color: '><p> 驚きポイント: イニシャライザが失敗することもある？</p></blockquote>
+<p>実は、失敗可能イニシャライザとは、初期化プロセス（init関数の呼び出しプロセス）でエラーが発生する可能性があるものを指します。</p>
+<p>したがって、イニシャライザがエラーを投げる場合、TSのように外側で<code>try-catch</code>する必要はなく、直接明示すればよいです。方法は<code>init</code>の後に疑問符を付けて<code>init?</code>とし、エラーが発生する可能性のある場所で<code>nil</code>を返し、インスタンス化時に<code>nil</code>かどうかを判断するだけです。</p>
+<p>Swiftでは通常のイニシャライザは値を返しません。これはTSと同じです——ただしTSのイニシャライザは値を返すことができ、返される値がオブジェクト型の場合、<code>this</code>オブジェクトを置き換えます。これはさらに驚きかもしれません。</p>
+<h2 id="オプショナルチェーン">オプショナルチェーン</h2>
+<blockquote style='border-color: ;color: '><p> 驚きポイント: Q: どのような場合に関数に()を書いているのに実行されない？A: オプショナルチェーンのシナリオです。</p></blockquote>
+<p>余計な説明は抜きにして、例を見てみましょう:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">func</span> <span class="hljs-title function_">A</span>() -&gt; <span class="hljs-type">Int</span> &#123;<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;OK&quot;</span>)<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span><br>&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">B</span> &#123;<br>    <span class="hljs-keyword">var</span> c: <span class="hljs-type">C</span>?<br>&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">C</span> &#123;<br>    <span class="hljs-keyword">var</span> d: <span class="hljs-type">Int</span>?<br>&#125;<br><span class="hljs-keyword">var</span> d <span class="hljs-operator">=</span> <span class="hljs-type">B</span>()<br><span class="hljs-comment">// 震惊的事情发生了：</span><br><span class="hljs-comment">// 这里，A 函数未执行，不会打印 OK，赋值也不会成功，因为 c 是 nil，这个语句返回 nil（通常 Swift 的赋值语句都返回 Void 的，也就是空元组）</span><br><span class="hljs-comment">// 返回 nil 意味着你可以使用 if-let 语句判断</span><br>d.c<span class="hljs-operator">?</span>.d <span class="hljs-operator">=</span> <span class="hljs-type">A</span>()<br><br></code></pre></td></tr></table></figure>
+<h2 id="エラー処理">エラー処理</h2>
+<blockquote style='border-color: ;color: '><p> 驚きポイント：列挙型と同様に、Swiftのtry-catch（実際はdo-catch）の設計は非常に複雑です。</p></blockquote>
+<p>catch文は任意のエラーをキャッチできるだけでなく、特定のエラータイプもキャッチ可能で、isを使用したりswitch文のように複数のcatch分岐でマッチングが行えます。これは驚きです：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">do</span> &#123;<br> <span class="hljs-keyword">try</span> someError()<br>&#125; <span class="hljs-keyword">catch</span> <span class="hljs-keyword">is</span> <span class="hljs-type">ErrorA</span> &#123;<br> <span class="hljs-comment">// xxx</span><br>&#125; <span class="hljs-keyword">catch</span> <span class="hljs-type">ErrorB</span>, <span class="hljs-type">ErrorC</span>, <span class="hljs-type">ErrorD</span>.a &#123;<br> <span class="hljs-comment">// xxx</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="並行処理">並行処理</h2>
+<blockquote style='border-color: ;color: '><p> 驚きポイント：ドキュメントを読んでいた時、最初は `withTaskGroup` が Group Task を行う組み込みメソッドだとは気づきませんでした。。。</p></blockquote>
+<p><code>await</code> の使い方は TS の <code>await</code> と全く同じで、快適です！</p>
+<h2 id="拡張機能">拡張機能</h2>
+<blockquote style='border-color: ;color: '><p> 驚きポイント：拡張機能はおそらく Swift で最も強力な設計です。組み込みオブジェクトでもサードパーティ製でも、どんなオブジェクトでも、自由に、低コストで、複雑な宣言やキーワードを一切必要とせずに拡張できます。</p></blockquote>
+<p>TS では既存のクラスを拡張する場合、プロトタイプチェーンを操作し、オブジェクトの this をそのクラスに向ける必要があります。</p>
+<p>しかし Swift では、単に <code>extension</code> を書くだけで、好きなメソッドやプロパティを自由に追加できます。それらの <code>this</code> はインスタンスを指すか、拡張型（つまり静的）メソッドやプロパティになります。</p>
+<p>まさに圧倒的な自由度です。</p>
+<h2 id="プロトコル">プロトコル</h2>
+<blockquote style='border-color: ;color: '><p> 驚きポイント：プロトコルは Struct の抽象化問題を解決するために導入されたと思います。どの言語でもクラス自体は継承可能（言い切りすぎかもしれませんが）なので、余計な「プロトコル」を実装する必要はなく、抽象クラスで十分です。ただ副次的に、Swift はクラスの単一継承を制限すると同時に、プロトコルをクラス、Struct、列挙型のすべてで活用できるようにしました。</p></blockquote>
+<p>これ以上言うことはありません。言いたいことは上記に尽きます。</p>
+<h2 id="ジェネリクス">ジェネリクス</h2>
+<blockquote style='border-color: ;color: '><p> 驚きポイント：ジェネリクスには「関連型」という概念があり、これは宣言時に付与するジェネリクスと同様の役割ですが、より強力です。</p></blockquote>
+<p>Swift のジェネリクス関連型は次のようなものです：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Container</span> &#123;<br>    <span class="hljs-keyword">associatedtype</span> <span class="hljs-type">Item</span><br>    <span class="hljs-keyword">mutating</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">append</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">item</span>: <span class="hljs-type">Item</span>)<br>    <span class="hljs-keyword">var</span> count: <span class="hljs-type">Int</span> &#123; <span class="hljs-keyword">get</span> &#125;<br>    <span class="hljs-keyword">subscript</span>(<span class="hljs-params">i</span>: <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">Item</span> &#123; <span class="hljs-keyword">get</span> &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>なぜこのように設計されていないのか：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Container</span>&lt;<span class="hljs-title class_">Item</span>&gt; &#123;<br>    <span class="hljs-keyword">mutating</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">append</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">item</span>: <span class="hljs-type">Item</span>)<br>    <span class="hljs-keyword">var</span> count: <span class="hljs-type">Int</span> &#123; <span class="hljs-keyword">get</span> &#125;<br>    <span class="hljs-keyword">subscript</span>(<span class="hljs-params">i</span>: <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">Item</span> &#123; <span class="hljs-keyword">get</span> &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>おそらく、この項目が非常に長くなり、エレガントでなくなる可能性があるためでしょう。例えば：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">SuffixableContainer</span>: <span class="hljs-title class_">Container</span> &#123;<br>    <span class="hljs-keyword">associatedtype</span> <span class="hljs-type">Suffix</span>: <span class="hljs-type">SuffixableContainer</span> <span class="hljs-keyword">where</span> <span class="hljs-type">Suffix</span>.<span class="hljs-type">Item</span> <span class="hljs-operator">==</span> <span class="hljs-type">Item</span><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">suffix</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">size</span>: <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">Suffix</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>名前の後ろに書くと、ジェネリック宣言が頻繁に画面からはみ出してしまい、非常に扱いづらい。</p>
+<h2 id="不透明型とカプセル化プロトコル">不透明型とカプセル化プロトコル</h2>
+<blockquote style='border-color: ;color: '><p> 驚くべき点：コンパイラには型が何であるかを知らせつつ、呼び出し側には具体的な型を知らせず、ただそれが特定のプロトコルに準拠していることだけを知らせる効果を実現できます。</p></blockquote>
+<p>基本的に、不透明型とカプセル化プロトコルが実現しようとしている効果は、一方で呼び出し側に実装詳細を隠蔽しつつ、コードをリファクタリングする際に多くの変更を必要としないようにすることです。例えば：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">protocol</span> <span class="hljs-title class_">Shape</span> &#123;<br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">area</span>() -&gt; <span class="hljs-type">Double</span><br>&#125;<br><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Circle</span>: <span class="hljs-title class_">Shape</span> &#123;<br>    <span class="hljs-keyword">var</span> radius: <span class="hljs-type">Double</span><br>    <span class="hljs-keyword">func</span> <span class="hljs-title function_">area</span>() -&gt; <span class="hljs-type">Double</span> &#123;<br>        <span class="hljs-keyword">return</span> .pi <span class="hljs-operator">*</span> radius <span class="hljs-operator">*</span> radius<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">func</span> <span class="hljs-title function_">makeShape</span>() -&gt; <span class="hljs-keyword">some</span> <span class="hljs-type">Shape</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">Circle</span>(radius: <span class="hljs-number">5</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>ここで、<code>makeShape</code>が返す型は、<code>Shape</code>プロトコルに準拠する任意の型であればよく、明示的に<code>Circle</code>型を返す必要はありません。このようにすることで、後から<code>Shape</code>に準拠する新しい<code>Struct</code>を追加しても、この関数はそれを返すことができます（これはSwiftUIでよく使われる方法でもあります。例えば<code>some View</code>など）。</p>
+<h2 id="メモリ安全性">メモリ安全性</h2>
+<blockquote style='border-color: ;color: '><p> 驚きのポイント：Swiftは値の参照渡しが可能なため、同じメモリ領域への同時読み書きが発生する可能性があります（これは理にかなっていますよね？）</p></blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">var</span> a <span class="hljs-operator">=</span> <span class="hljs-number">1</span><br><span class="hljs-keyword">func</span> <span class="hljs-title function_">add</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">b</span>: <span class="hljs-keyword">inout</span> <span class="hljs-type">Int</span>) &#123;<br>    b <span class="hljs-operator">+=</span> a<br>&#125;<br>add(<span class="hljs-operator">&amp;</span>a)<br></code></pre></td></tr></table></figure>
+<p>上記の実行はエラーを発生させますが、コンパイラは警告を出しません。このようなケースは多く存在するため、特に注意が必要です。TSには参照渡しの概念が存在しないため、このような問題は発生せず、簡単です～</p>
+<h2 id="高度な演算子">高度な演算子</h2>
+<blockquote style='border-color: ;color: '><p> 驚きのポイント: 記号を関数名として使用した関数を再定義/カスタマイズすることで、同じクラスや構造体のインスタンス間で相互操作を実現できます。</p></blockquote>
+<p>例を挙げます:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">A</span> &#123;<br> <span class="hljs-keyword">var</span> b <span class="hljs-operator">=</span> <span class="hljs-number">1</span><br> <span class="hljs-keyword">var</span> c <span class="hljs-operator">=</span> <span class="hljs-number">2</span><br> <span class="hljs-keyword">static</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">+</span>(<span class="hljs-params">left</span>: <span class="hljs-type">A</span>, <span class="hljs-params">right</span>: <span class="hljs-type">A</span>) -&gt; <span class="hljs-type">A</span> &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-type">A</span>(b: left.b <span class="hljs-operator">+</span> right.b, c: left.c <span class="hljs-operator">+</span> right.c)<br> &#125;<br>&#125;<br><span class="hljs-comment">// 然后你就可以</span><br><span class="hljs-keyword">let</span> a <span class="hljs-operator">=</span> <span class="hljs-type">A</span>()<br><span class="hljs-keyword">let</span> b <span class="hljs-operator">=</span> <span class="hljs-type">A</span>()<br><span class="hljs-keyword">let</span> c <span class="hljs-operator">=</span> a <span class="hljs-operator">+</span> b <span class="hljs-comment">// &lt;- 是的你没看错，struct 实例可以相加！</span><br></code></pre></td></tr></table></figure>
+<p>このデザインは素晴らしい、どうして思いつかなかったんだろう。すごいすごい。</p>
+<p>注意が必要なのは、演算子メソッドには独自の属性があることです。例えば、<code>+</code> は二項演算子であり中置演算子でもあるため、2つの関数を受け取ります。<code>-</code> は中置演算子（二項演算子）にも、前置演算子（単項演算子、<code>func</code> の前に <code>prefix</code> を追加する必要あり）にもなるため、オーバーロード可能です。</p>
+<p>しかしSwiftでは、代入演算子 <code>=</code> はオーバーロードできず、三項条件演算子（<code>a ? b : c</code>）も同様にオーバーロード不可と規定されています。</p>
+<p>この演算子は非常に一般的で、任意のSwift組み込みオブジェクト/Foundationオブジェクトにおいて、<code>==</code> のような等価判定の演算子関数を見かけることができます。</p>
+<p>さらに、独自の演算子を実装することさえ可能です！</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">// 需要先声明，这是一个操作符，因为有两个值在操作符，所以这是个中缀操作符(infix)</span><br><span class="hljs-keyword">infix</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">+++++++</span><br><span class="hljs-comment">// 然后扩展一下整数类型</span><br><span class="hljs-keyword">extension</span> <span class="hljs-title class_">Int</span> &#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">+++++++</span>(<span class="hljs-params">left</span>: <span class="hljs-type">Int</span>, <span class="hljs-params">right</span>: <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">Int</span> &#123;<br>        <span class="hljs-keyword">return</span> (left <span class="hljs-operator">+</span> right) <span class="hljs-operator">*</span> <span class="hljs-number">7</span> <span class="hljs-comment">// &lt;- 因为有 7 个 + 号，所以我写了乘以 7</span><br>    &#125;<br>&#125;<br><span class="hljs-comment">// 这么用：</span><br><span class="hljs-number">2</span> <span class="hljs-operator">+++++++</span> <span class="hljs-number">7</span> <span class="hljs-comment">// &lt;- 63</span><br><br></code></pre></td></tr></table></figure>
+<p>すごい。</p>
+<h3 id="結果ビルダー">結果ビルダー</h3>
+<blockquote style='border-color: ;color: '><p> 驚きポイント：Swiftは「エレガントさ」と「再利用性」のために手段を選ばない。</p></blockquote>
+<p>以下のコードを見栄え良くするために、Swiftは<code>@resultBuilder</code>という魔法のようなものを「発明」しました。例：</p>
+<p>通常の書き方：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">var</span> a <span class="hljs-operator">=</span> <span class="hljs-number">1</span><br><span class="hljs-keyword">var</span> b <span class="hljs-operator">=</span> <span class="hljs-number">2</span><br><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">A</span> &#123;<br> <span class="hljs-keyword">var</span> a: <span class="hljs-type">Int</span><br>&#125;<br><br><span class="hljs-comment">// 这里会有一个三元判断</span><br><span class="hljs-keyword">var</span> c <span class="hljs-operator">=</span> <span class="hljs-type">A</span>(a: a <span class="hljs-operator">&gt;</span> b <span class="hljs-operator">?</span> <span class="hljs-number">666</span> : <span class="hljs-number">999</span> )<br></code></pre></td></tr></table></figure>
+<p>Swiftは、上記の三項演算子による判定が煩雑で、複雑な条件分岐の場合にはコードが長くなり可読性が低下すると指摘し、よりエレガントな解決策を求めました。そこで生まれたのが（私の理解が正しければ）結果ビルダーです：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">@resultBuilder</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">BBuilder</span> &#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">buildBlock</span>(<span class="hljs-keyword">_</span> <span class="hljs-params">b</span>: <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">Int</span> &#123; <span class="hljs-comment">// 对应 if/else 分支的执行结果</span><br>        <span class="hljs-keyword">return</span> b<br>    &#125;<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">buildEither</span>(<span class="hljs-params">aaa</span>: <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">Int</span> &#123; <span class="hljs-comment">// 对应 if 分支</span><br>        <span class="hljs-keyword">return</span> aaa<br>    &#125;<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">func</span> <span class="hljs-title function_">buildEither</span>(<span class="hljs-params">bbb</span>: <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">Int</span> &#123; <span class="hljs-comment">// 对应 else 分支</span><br>        <span class="hljs-keyword">return</span> bbb<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>そして、上記の <code>c</code> 変数に次のように値を代入します：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">func</span> <span class="hljs-title function_">BB</span>(<span class="hljs-meta">@BBuilder</span> <span class="hljs-params">b</span>: () -&gt; <span class="hljs-type">Int</span>) -&gt; <span class="hljs-type">A</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">A</span>(a: b())<br>&#125;<br><span class="hljs-comment">// 终于等到 c 了，这里的 c 和最开始的 c 完全一样</span><br><span class="hljs-keyword">var</span> c <span class="hljs-operator">=</span> <span class="hljs-type">BB</span> &#123;<br>    <span class="hljs-keyword">if</span> a <span class="hljs-operator">&gt;</span> b &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">666</span><br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">999</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>再利用、エレガント、効率的、最高！</p>
+<h2 id="字句構造">字句構造</h2>
+<blockquote style='border-color: ;color: '><p> 驚きのポイント：Swiftには予約語が非常に多いにもかかわらず、予約語を識別子として使用することが許可されています。</p></blockquote>
+<p>方法は、バッククォートで囲むだけです：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-keyword">func</span> <span class="hljs-title function_">`func`</span>() &#123;&#125; <span class="hljs-comment">// &lt;- 一个叫做 `func` 的函数</span><br><span class="hljs-comment">// 调用也是 </span><br>`func`()<br></code></pre></td></tr></table></figure>
+<p>しかし、キーワードを除けば、<code>x</code> と x は同じ変数です。</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          この記事の初出:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/app-dev-journey-swift.ja.html"
+            title="アプリ開発の旅（一）：摩訶不思議なSwift"
+          >
+            アプリ開発の旅（一）：摩訶不思議なSwift - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">目次</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>ブログ主より：</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        人生の重要な選択に直面したとき、最善の方法を誰かが教えてくれて、貴重な時間を無駄にせずに済めばと、私はよく願っています。だからこそ、自分の経験を踏まえて頻繁にブログを書き、広大なインターネットのこの小さな片隅に、私にとって一度きりの人生経験を記録し、助けを求める人々の力になれればと思っています。
+    </div>
+    <hr>
+    
+    <h5><a href="/ja/archive/">人気のタグ</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技術"
+                rel="188">技術</a>
+        
+            <a data-sort="0200"
+                href="/ja/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="108">生活</a>
+        
+            <a data-sort="0264"
+                href="/ja/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="いじり"
+                rel="44">いじり</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="コツ"
+                rel="32">コツ</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="チュートリアル"
+                rel="32">チュートリアル</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻訳"
+                rel="24">翻訳</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="経験"
+                rel="20">経験</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="グルメ"
+                rel="20">グルメ</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体験"
+                rel="16">初体験</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="ワークフロー"
+                rel="16">ワークフロー</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="プラグイン"
+                rel="16">プラグイン</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="ネットワーク"
+                rel="16">ネットワーク</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用感"
+                rel="12">使用感</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="まとめ"
+                rel="12">まとめ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="サーバー"
+                rel="12">サーバー</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="ルーター"
+                rel="12">ルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="ソフトルーター"
+                rel="12">ソフトルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="エッセイ"
+                rel="12">エッセイ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9B%86%E6%88%90"
+                title="統合"
+                rel="12">統合</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="8">主食</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="最適化"
+                rel="8">最適化</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%8D%83%E5%85%86"
+                title="ギガビット"
+                rel="8">ギガビット</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="8">大事</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="ツール"
+                rel="8">ツール</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="バイパスルーター"
+                rel="8">バイパスルーター</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="フレームワーク"
+                rel="8">フレームワーク</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="足湯タイム"
+                rel="8">足湯タイム</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="テスト"
+                rel="8">テスト</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="テスラ"
+                rel="8">テスラ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="エディタ"
+                rel="8">エディタ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="動画"
+                rel="8">動画</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="デバッグ"
+                rel="8">デバッグ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BD%A6"
+                title="車"
+                rel="8">車</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="移行"
+                rel="8">移行</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="東北料理"
+                rel="4">東北料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="住宅購入"
+                rel="4">住宅購入</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="プロキシ"
+                rel="4">プロキシ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="フルスタック"
+                rel="4">フルスタック</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="北欧神話"
+                rel="4">北欧神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="共同編集"
+                rel="4">共同編集</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="圧縮"
+                rel="4">圧縮</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="クレイトス"
+                rel="4">クレイトス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="家庭料理"
+                rel="4">家庭料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="富強"
+                rel="4">富強</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="比較"
+                rel="4">比較</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="四川料理"
+                rel="4">四川料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="仕事の経験"
+                rel="4">仕事の経験</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="ギリシャ神話"
+                rel="4">ギリシャ神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="定番ソフト"
+                rel="4">定番ソフト</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="オープンソース"
+                rel="4">オープンソース</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="開封"
+                rel="4">開封</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="ゴッド・オブ・ウォー"
+                rel="4">ゴッド・オブ・ウォー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIMカード"
+                rel="4">SIMカード</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%8B%93%E6%89%91"
+                title="トポロジー"
+                rel="4">トポロジー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="物語"
+                rel="4">物語</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="データ構造"
+                rel="4">データ構造</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="旅行"
+                rel="4">旅行</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="日常"
+                rel="4">日常</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="日本"
+                rel="4">日本</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="サービス"
+                rel="4">サービス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="フォーマット"
+                rel="4">フォーマット</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A2%A6"
+                title="夢"
+                rel="4">夢</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="ブラウザ"
+                rel="4">ブラウザ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="ゲーム"
+                rel="4">ゲーム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="愚痴"
+                rel="4">愚痴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="ユーザープライバシー"
+                rel="4">ユーザープライバシー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="アルゴリズム"
+                rel="4">アルゴリズム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="詳細"
+                rel="4">詳細</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="イヤホン"
+                rel="4">イヤホン</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="自由"
+                rel="4">自由</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="計画"
+                rel="4">計画</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="設定"
+                rel="4">設定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="落とし穴"
+                rel="4">落とし穴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="変換"
+                rel="4">変換</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="技術選定"
+                rel="4">技術選定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="面接"
+                rel="4">面接</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>コラム</h5>
+    <div class="tags">
+        <a href="/projects">オープンソース</a>
+        <a href="/book-list">技術書リスト</a>
+        <a href="/subscribe">サブスク＆有料アプリ</a>
+        <a href="/my-food">グルメのおすすめ</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>友達</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">中国版</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="アプリ開発の旅（一）：摩訶不思議なSwift"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ja"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ja/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

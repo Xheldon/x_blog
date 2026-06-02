@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      CORSの探究 - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="CORSの探究 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2016-7-7T12:56:45"> 
+              
+                  
+                    <meta property="article:tag" content="CORS">
+                    
+                    <meta property="article:tag" content="技術">
+                    
+                      
+                          
+                            <meta name="og:description" content="">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ja/tech/research-CORS.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ja_JP">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ja/tech/research-CORS.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/research-CORS.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/research-CORS.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/research-CORS.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/research-CORS.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/research-CORS.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ja/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ja/">ホーム</a>
+            </li>
+            <li>
+              <a href="/ja/about/">概要</a>
+            </li>
+            <li>
+              <a href="/ja/donate/">寄付</a>
+            </li>
+            <li>
+              <a href="/ja/archive/">アーカイブ</a>
+            </li>
+            <li>
+              <a href="/ja/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">日本語</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/research-CORS.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/research-CORS.html" hreflang="en">English</a></li>
+        <li class="lang-item active"><a href="/ja/tech/research-CORS.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/research-CORS.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ja/archive/?tag=CORS"
+                            title="CORS">
+                            CORS
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技術">
+                            技術
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        CORSの探究
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 作成日 2016年07月07日</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;注意：この記事が作成されてから既に
+          <code id="from_time"></code> 日が経過しています。情報の鮮度にご注意ください
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1467896205000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+              <h2 id="本文の経緯">本文の経緯</h2>
+<p>あるオンライン記事で<code>CORS</code>について調べていた際、『<code>withCredentials = true</code>を設定すると、送信される<code>cookie</code>はターゲットドメインの<code>cookie</code>である』という一文に困惑しました。私は理解できませんでした：現在のドメインが<code>a.com</code>で、<code>xhr</code>を<code>b.com</code>に送信する場合、当然ソースドメイン<code>a.com</code>の<code>cookie</code>を<code>b.com</code>に送信して処理するはずです。どうしてターゲットドメイン（ここでは<code>b.com</code>と解釈）の<code>cookie</code>が送信されるのでしょうか？そこで調査を開始しました（結論から言うと、参照した資料の記述は正しく、実際にターゲットドメイン<code>b.com</code>の<code>cookie</code>が送信されていました）。</p>
+<h2 id="小目標-1-シンプルリクエストでa-comからb-comへajaxを送信する">小目標-1: シンプルリクエストで<code>a.com</code>から<code>b.com</code>へ<code>ajax</code>を送信する</h2>
+<p>シンプルリクエストの定義については各自でGoogle/SOを参照してください。ここで重要な基本事実として、<code>cookie</code>は<code>IPアドレス</code>ではなく<code>ドメイン</code>に紐づきます。私はローカルで<code>cookie</code>を処理できる簡単な<code>express</code>サービスを立ち上げ、同時に<code>VPS</code>上にも同じサービスを用意し、<code>hosts</code>ファイルを編集して異なるドメインを実現しました：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 修改 hosts 如下</span><br><span class="hljs-comment">// 本机 ip</span><br><span class="hljs-number">172.16</span><span class="hljs-number">.26</span><span class="hljs-number">.57</span> www.<span class="hljs-property">a</span>.<span class="hljs-property">com</span><br><span class="hljs-comment">// VPS ip</span><br><span class="hljs-number">45.78</span><span class="hljs-number">.41</span><span class="hljs-number">.32</span> www.<span class="hljs-property">b</span>.<span class="hljs-property">com</span><br></code></pre></td></tr></table></figure>
+<p>まず<code>VPS</code>サーバー上で<code>express</code>サービスを起動します。特に設定はせず、単純に<code>header</code>を返すだけです。ポートは<code>9091</code>で起動：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);<br><span class="hljs-keyword">var</span> app = <span class="hljs-title function_">express</span>();<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br><br>app.<span class="hljs-title function_">listen</span>(<span class="hljs-number">9091</span>);<br></code></pre></td></tr></table></figure>
+<p><code>a.com</code>のサーバー側もほぼ同じですが、<code>ajax</code>を送信するための静的ページを追加しています。ポートは<code>9090</code>で起動：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);<br><span class="hljs-keyword">var</span> app = <span class="hljs-title function_">express</span>();<br><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) &#123;<br>  res.<span class="hljs-title function_">sendFile</span>(path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">&#x27;index.html&#x27;</span>));<br>&#125;);<br>app.<span class="hljs-title function_">listen</span>(<span class="hljs-number">9090</span>);<br></code></pre></td></tr></table></figure>
+<p><code>index.html</code>の内容：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>a.com<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;button&quot;</span>&gt;</span>点我发请求, 打开控制台查看信息<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">      <span class="hljs-keyword">var</span> button = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;button&#x27;</span>);</span><br><span class="language-javascript"></span><br><span class="language-javascript">      <span class="hljs-keyword">function</span> <span class="hljs-title function_">xhrSend</span>(<span class="hljs-params">e</span>) &#123;</span><br><span class="language-javascript">        e.<span class="hljs-title function_">preventDefault</span>();</span><br><span class="language-javascript">        <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();</span><br><span class="language-javascript">        xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://www.b.com:9091&#x27;</span>, <span class="hljs-literal">true</span>);</span><br><span class="language-javascript">        xhr.<span class="hljs-title function_">send</span>();</span><br><span class="language-javascript">      &#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript">      button.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, xhrSend);</span><br><span class="language-javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>サーバー側で<code>Access-Control-Allow-Origin</code>を設定していないため、エラーが発生します：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError.png" alt="VPSServerError" title="VPSServerError" /></p>
+<p>次に<code>b.com</code>のサーバー側で<code>a.com</code>からの<code>ajax</code>を許可する設定を追加します（ポートまで正確に指定する必要があります）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>  &#125;);<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>再度リクエストを送信：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError1.png" alt="VPSServerError1" title="VPSServerError1" /></p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError1.1.png" alt="VPSServerError1.1" title="VPSServerError1.1" /></p>
+<p>コンソールにエラーが表示されず、ステータスコードが<code>200</code>であることから、<code>b.com</code>が<code>a.com:9090</code>からのリクエストを許可していることが確認できます。</p>
+<h2 id="小目標-2-ローカルサービスがフロントエンドからのcookieを受信する">小目標-2: ローカルサービスがフロントエンドからの<code>cookie</code>を受信する</h2>
+<p>まずローカルで<code>a.com</code>のバックエンドがフロントエンドからの<code>cookie</code>を取得できるかテストします：</p>
+<p>テスト方法は簡単で、<code>js</code>に適当な<code>cookie</code>を追加するだけです：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span> = <span class="hljs-string">&#x27;domain=a.com;&#x27;</span>;<br><span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span> = <span class="hljs-string">&#x27;name=xheldon&#x27;</span>;<br><span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span> = <span class="hljs-string">&#x27;lover=xiaodan&#x27;</span>;<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer1.png" alt="LocalServer1" title="LocalServer1" /></p>
+<p>ローカルコンソールの<code>Application</code>タブで<code>cookie</code>が存在することを確認できます。次にバックエンドの出力を確認：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer2.png" alt="LocalServer2" title="LocalServer2" /></p>
+<p>問題ありません。<code>www.a.com:9090</code>にアクセスした際に確実に<code>cookie</code>が付与されています。予想通りです。</p>
+<h2 id="小目標-3-a-comのcookieをb-comに送信する">小目標-3: <code>a.com</code>の<code>cookie</code>を<code>b.com</code>に送信する</h2>
+<p>この時点で<code>a.com</code>のページには<code>cookie</code>が存在します。そこで再度ボタンをクリックし、<code>ajax</code>リクエストで<code>cookie</code>が<code>b.com</code>に送信されるか確認します：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError1.2.png" alt="VPSServerError1.2" title="VPSServerError1.2" /></p>
+<p><code>cookie</code>を追加しなかった場合と同様に、<code>a.com</code>からの<code>cookie</code>は取得できません。これはセキュリティ制限によるもので、予想通りの結果です。</p>
+<h2 id="追加の小目標-非シンプルリクエスト">追加の小目標: 非シンプルリクエスト</h2>
+<p>ここでシンプルリクエストに関するテストを挿入します。<code>xhr</code>に新しい<code>header</code>を追加し、再度リクエストを送信します：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">xhrSend</span>(<span class="hljs-params">e</span>) &#123;<br>  e.<span class="hljs-title function_">preventDefault</span>();<br>  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>  xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://www.b.com:9091&#x27;</span>, <span class="hljs-literal">true</span>);<br>  xhr.<span class="hljs-title function_">setRequestHeader</span>(<span class="hljs-string">&#x27;xiaodan&#x27;</span>, <span class="hljs-string">&#x27;xheldon&#x27;</span>);<br>  xhr.<span class="hljs-title function_">send</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>今回は<code>Access-Control-Allow-Origin</code>を追加した後の操作なので、ブラウザは異なるエラーを返します：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.1.png" alt="VPSServerError2.1" title="VPSServerError2.1" /></p>
+<p>気づいたのはやはり <code>Access-Control-Allow-Origin</code> のエラーでしたが、今回はフロントエンドでカスタム <code>header</code> を設定していたため、非シンプルリクエストとなっていました。非シンプルリクエストの場合、まずプリフライトリクエスト(<code>prelight</code>)が送信され、リクエストタイプは <code>OPTIONS</code> です。詳細は<a href="http://harttle.com/2016/12/30/cors-preflight.html">この記事</a>](リンク)をご覧ください。プリフライトリクエストの目的は、<code>b.com</code> のサーバーがこの <code>xiaodan</code> という <code>header</code> を受け入れるかどうかを確認することです。バックエンドが返す <code>header</code> の <code>Access-Control-Alow-Headers</code> に、<code>xiaodan</code> という値が含まれていなかったため、エラーが発生しました。</p>
+<p>次に、<code>b.com</code> が返す内容に適切な <code>header</code> を追加してみます:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">headers</span>);<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>  &#125;);<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>再度リクエストを送信してみます:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.1.png" alt="VPSServerError2.1" title="VPSServerError2.1" /></p>
+<p>なんと同じエラー結果です。サーバーは <code>200</code> を返していますが、適切な <code>Access-Control-Allow-Headers</code> を返していないため、ブラウザが結果を拒否しました（サーバーが拒否したわけではなく、サーバーは <code>200</code> を返しています）。</p>
+<p>調査してみると、問題はこの非シンプルリクエストにあることがわかりました。<code>b.com</code> の関数を少し修正します:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">use</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>  &#125;);<br>  <span class="hljs-title function_">next</span>();<br>&#125;);<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">headers</span>);<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>サーバー側:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.2.png" alt="VPSServerError2.2" title="VPSServerError2.2" /></p>
+<p>クライアント側:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.3.png" alt="VPSServerError2.3" title="VPSServerError2.3" /></p>
+<p>原因を分析すると（確認待ち、後で <code>HTTP</code> の権威あるガイドを参照します）、非シンプルリクエストの <code>prelight</code> リクエストは実際のリクエストを送信せず、まずプリフライトリクエストを送信して、サーバーが特定の非シンプル <code>header</code> フィールドをサポートしているかどうかをテストします。つまり、非シンプルヘッダーを含むリクエストは <code>app.get('/')</code> の中には到達しません。同時に、<code>b.com</code> のサーバーでは、<code>console.log(req.headers)</code> が <code>app.get('/')</code> の中に書かれているため、先ほどのリクエストでは <code>b.com</code> サーバーは何も出力していません。これもこの点を裏付けています。<code>この設計は、CORS標準を理解していない古いサーバーを保護するために、サーバーがCORS標準を認識していることを確認することを目的としています</code>。</p>
+<h2 id="小目標-4-a-com-ドメインの-cookie-を-b-com-に送信する">小目標-4: <code>a.com</code> ドメインの <code>cookie</code> を <code>b.com</code> に送信する</h2>
+<p>OK、中断はここまで。クライアント側、つまり <code>a.com</code> で発行される <code>xhr</code> リクエストのページで <code>withCredentials = true</code> を設定（<code>xhrSend</code> 部分のみを記載）して、<code>a.com</code> の <code>cookie</code> を <code>b.com</code> に送信できるかテストします（ここではシンプルリクエストと非シンプルリクエストは同じ結果です。違いを確認しやすくするために、<code>xhr</code> で設定した <code>header</code> を削除しました）:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 设置允许 cookie</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">xhrSend</span>(<span class="hljs-params">e</span>) &#123;<br>  e.<span class="hljs-title function_">preventDefault</span>();<br>  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>  xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://www.b.com/&#x27;</span>, <span class="hljs-literal">true</span>);<br>  xhr.<span class="hljs-property">withCredentials</span> = <span class="hljs-literal">true</span>;<br>  xhr.<span class="hljs-title function_">send</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.4.png" alt="VPSServerError2.4" title="VPSServerError2.4" /></p>
+<p>今回のエラーメッセージが変わり、サーバーが <code>Access-Control-Allow-Credentials</code> を <code>true</code> に設定していないという内容になりました。この <code>header</code> はリクエストに <code>cookie</code> を含めることを許可するためのものです。そこで設定を追加します:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">use</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Credentials&#x27;</span>: <span class="hljs-literal">true</span>,<br>  &#125;);<br>  <span class="hljs-title function_">next</span>();<br>&#125;);<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">headers</span>);<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.5.png" alt="VPSServerError2.5" title="VPSServerError2.5" /></p>
+<p>まだありません。<code>Chrome</code> の <code>cookie</code> を確認します:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.6.png" alt="VPSServerError2.6" title="VPSServerError2.6" /></p>
+<p>確かに <code>cookie</code> は設定されているはずです。どういうことでしょうか？ 納得できず、<code>req.headers</code> が <code>express</code> でフォーマットされたものなので、生の <code>headers</code> である <code>rawHeaders</code> を確認します:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.7.png" alt="VPSServerError2.7" title="VPSServerError2.7" /></p>
+<p>まだ見つかりません。<code>cookie</code> はどこに行ったのでしょうか？</p>
+<blockquote>
+<p>どちらもない、彼女は将来見つけると言った、時間、時間が私に答えをくれる ------私のスケート靴</p>
+</blockquote>
+<p>問題が見つからない時は、アイスクリームを食べましょう。階下でパクチー味のネスレアイスを買って（ハーゲンダッツは高くて手が出ません）、階段を上っている時にひらめきました。もしかしてこれはサードパーティの <code>cookie</code> で、ブラウザのトラッキングをブロックしているせいかもしれません。アイスを食べ終わった後、<code>Chrome</code> の設定で「“Do Not Track” リクエストをブラウジングトラフィックと共に送信する」のチェックを外しました:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.8.png" alt="VPSServerError2.8" title="VPSServerError2.8" /></p>
+<p>ちなみに、今回は万が一に備えて（実際には万が一はありませんが）<code>req.headers</code> を <code>app.use</code> の中に置きました:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">use</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">headers</span>);<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Credentials&#x27;</span>: <span class="hljs-literal">true</span>,<br>  &#125;);<br>  <span class="hljs-title function_">next</span>();<br>&#125;);<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">headers</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>再度ボタンをクリックしてリクエストを送信し、<code>Chrome</code> のコンソールと <code>b.com</code> のサーバー出力を確認します:</p>
+<p>非シンプルヘッダーがあるため、前回と同様に2つのリクエストが表示されます:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.9.png" alt="VPSServerError2.9" title="VPSServerError2.9" /></p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.9.1.png" alt="VPSServerError2.9.1" title="VPSServerError2.9.1" /></p>
+<p>サーバー側でも受信されていないため、この <code>Chrome</code> 設定とは無関係です。変数を制御するため、「Do Not Track」は前回と同じように再度チェックを入れました。サーバー側（<code>GET</code> リクエストのみ）:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError2.9.2.png" alt="VPSServerError2.9.2" title="VPSServerError2.9.2" /></p>
+<p>それでも <code>Cookie</code> フィールドがありません。なぜでしょうか？</p>
+<p>記事の冒頭で述べた言葉を思い出しました: 「注意: <code>withCredentials = true</code> を設定すると、送信される <code>cookie</code> はターゲットドメインの <code>cookie</code> です」。もしかして、<code>a.com</code> からボタンをクリックして <code>b.com</code> にリクエストを送信する場合、<code>b.com</code> に設定された <code>cookie</code> が送信されるのでしょうか？</p>
+<p>そこでまず、<code>b.com</code> のサーバーにも <code>index.html</code> を作成し、適当な <code>cookie</code> を設定してみます:</p>
+<p><code>b.com</code> のサーバーコード:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);<br><span class="hljs-keyword">var</span> app = <span class="hljs-title function_">express</span>();<br><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br>app.<span class="hljs-title function_">use</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">headers</span>);<br>  res.<span class="hljs-title function_">set</span>(&#123;<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>    <span class="hljs-string">&#x27;Access-Control-Allow-Credentials&#x27;</span>: <span class="hljs-literal">true</span>,<br>  &#125;);<br>  <span class="hljs-title function_">next</span>();<br>&#125;);<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) &#123;<br>  res.<span class="hljs-title function_">sendFile</span>(path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">&#x27;index.html&#x27;</span>));<br>&#125;);<br><br>app.<span class="hljs-title function_">listen</span>(<span class="hljs-number">9091</span>);<br></code></pre></td></tr></table></figure>
+<p><a href="http://b.com">b.com</a> の index.html コード:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>a.com<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br>      open Application inspector to check whether the cookie is be setting<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">      <span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span> = <span class="hljs-string">&#x27;yes=you_cant_believe_i_from_b.com&#x27;</span>;</span><br><span class="language-javascript">      <span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span> = <span class="hljs-string">&#x27;from=this_is_from_b.com&#x27;</span>;</span><br><span class="language-javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>OK、まず <code>b.com</code> にアクセスします:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError4.png" alt="VPSServerError4" title="VPSServerError4" /></p>
+<p>問題ありません。正常にページが返され、<code>cookie</code> も設定されます。次に、<code>a.com</code> からボタンをクリックしてリクエストを送信します:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/VPSServerError4.1.png" alt="VPSServerError4.1" title="VPSServerError4.1" /></p>
+<p><code>a.com</code> から送信された <code>ajax</code> リクエストに、<code>b.com</code> の <code>cookie</code> が含まれていることが確認できます。</p>
+<p>記事の冒頭の言葉が実証されました。</p>
+<h2 id="小目標-5-a-com-の-javascript-で-b-com-の-cookie-を取得する">小目標-5: <code>a.com</code> の <code>JavaScript</code> で <code>b.com</code> の <code>cookie</code> を取得する:</h2>
+<p><code>a.com</code> から <code>b.com</code> の <code>cookie</code> を送信できるなら、フロントエンドで <code>b.com</code> の <code>cookie</code> を取得できるでしょうか？</p>
+<p>ドキュメントを確認すると、<code>ajax</code> には <code>getAllResponseHeaders()</code> と <code>getResponseHeader()</code> という2つのインターフェースがあり、サーバー側には <code>Access-Control-Expose-Header</code> があります。そこでテストしてみました（あえて分けて出力します）。</p>
+<p>まずは簡単な方から、<code>xhr</code> の <code>getAllResponseHeaders()</code> インターフェースを呼び出します:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 设置允许 cookie</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">xhrSend</span>(<span class="hljs-params">e</span>) &#123;<br>  e.<span class="hljs-title function_">preventDefault</span>();<br>  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>  xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://www.b.com/&#x27;</span>, <span class="hljs-literal">true</span>);<br>  xhr.<span class="hljs-property">withCredentials</span> = <span class="hljs-literal">true</span>;<br>  xhr.<span class="hljs-property">onreadystatechange</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">status</span> === <span class="hljs-number">200</span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;AllRes:&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getAllResponseHeaders</span>());<br>    &#125;<br>  &#125;;<br>  xhr.<span class="hljs-title function_">send</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer3.png" alt="LocalServer3" title="LocalServer3" /></p>
+<p><code>header</code> の <code>Cookie</code> フィールドが表示されませんでした。予想通りです。もしかして <code>getAllResponseHeaders()</code> で <code>header</code> を走査しても <code>Cookie</code> が表示されないのは、<code>enumerable: false</code> に設定されているからかもしれません。そこで <code>getResponseHeader()</code> も試してみました:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 设置允许 cookie</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">xhrSend</span>(<span class="hljs-params">e</span>) &#123;<br>  e.<span class="hljs-title function_">preventDefault</span>();<br>  <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>  xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://www.b.com/&#x27;</span>, <span class="hljs-literal">true</span>);<br>  xhr.<span class="hljs-property">withCredentials</span> = <span class="hljs-literal">true</span>;<br>  xhr.<span class="hljs-property">onreadystatechange</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">status</span> === <span class="hljs-number">200</span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Res:&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getResponseHeader</span>(<span class="hljs-string">&#x27;Cookie&#x27;</span>));<br>    &#125;<br>  &#125;;<br>  xhr.<span class="hljs-title function_">send</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer3.1.png" alt="LocalServer3.1" title="LocalServer3.1" /></p>
+<p>これも予想通りでした。サーバー側で公開する <code>header</code> コンテンツが設定されていないためです。そこで <code>b.com</code> で <code>Access-Control-Expose-Header</code> を設定しました:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">res.<span class="hljs-title function_">set</span>(&#123;<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Credentials&#x27;</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Expose-Headers&#x27;</span>: <span class="hljs-string">&#x27;Cookie&#x27;</span>,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>再度 <code>getResponseHeader('Cookie')</code> と <code>getAllResponseHeaders()</code> を実行する</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer3.2.png" alt="LocalServer3.2" title="LocalServer3.2" /></p>
+<p>エラーはなくなったが、それでも <code>b.com</code> の <code>cookie</code> を取得できません。<code>b.com</code> のサーバー側がすべて許可していてもダメです。</p>
+<p>調べてみると、この <code>Access-Control-Expose-Header</code> はカスタム <code>header</code> にしか設定できず、フロントエンドで取得できるようになるだけだとわかりました。しかし、これはあまり意味がありません。なぜなら、このカスタム <code>header</code> はフロントエンドで設定したもので、唯一の用途はバックエンドがカスタム <code>header</code> を変更/新規作成した後にフロントエンドが取得することだからです。以下では、バックエンドに <code>header</code> を設定し、フロントエンドで取得できるようにします：</p>
+<p><code>b.com</code> の <code>server</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js">res.<span class="hljs-title function_">set</span>(&#123;<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="hljs-string">&#x27;http://www.a.com:9090&#x27;</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Headers&#x27;</span>: <span class="hljs-string">&#x27;xiaodan&#x27;</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Allow-Credentials&#x27;</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-string">&#x27;Access-Control-Expose-Headers&#x27;</span>: <span class="hljs-string">&#x27;Xheldon&#x27;</span>,<br>  <span class="hljs-title class_">Xheldon</span>: <span class="hljs-string">&#x27;MyNameIsXheldon&#x27;</span>,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p><code>a.com</code> の <code>index.html</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">xhr.<span class="hljs-property">onreadystatechange</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">status</span> === <span class="hljs-number">200</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Res:&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getResponseHeader</span>(<span class="hljs-string">&#x27;Xheldon&#x27;</span>));<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;AllRes:&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getAllResponseHeaders</span>());<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/LocalServer3.3.png" alt="LocalServer3.3" title="LocalServer3.3" /></p>
+<p>この通りです。</p>
+<p>したがって、この小さな目標は達成できませんが、<code>SO</code> コミュニティではサードパーティサービスを利用したりバックエンドで転送したりするなどの解決策が提案されています。結局のところ、ルールは固定的ですが、人間は柔軟に対応できます。<code>jsonp</code> と同じように、ですよね。</p>
+<h2 id="連想">連想</h2>
+<p>「数ヶ月のトレーニングでゼロからある言語をマスターできる」と言う人がいますが、私は夢物語だと思います。なぜなら、コンピュータの基礎知識がなく、バイナリ/コンパイル原理/コンピュータ原理/OS原理/ネットワーク基礎/通信プロトコルが何なのかわからない状態でコードを書けるということは、単に模倣する学習能力が高いだけで、そう書くとそうなることは知っていても、なぜそう書くとそうなるのかは理解していないからです。</p>
+<p>したがって、コンピュータと向き合うときは、知識の幅が広ければ広いほどよく、深ければ深いほど良いのです。このように、CORS を理解しているうちに、以前触れた AUTH を思い出しました。</p>
+<p><code>AUTH2.0</code> というものがありますが、それが <code>CORS</code> と何の関係があるのでしょうか？実は関係ありませんが、以下は私の比較です：</p>
+<p><code>CORS</code> は、<code>B</code> サイトにアクセスしたユーザーが、<code>A</code> サイトからリクエストを送信する際に <code>B</code> サイトの <code>cookie</code> を携帯できるようにします。手順は次のとおりです：</p>
+<ol>
+<li>ユーザーが <code>B</code> サイトにアクセスする。</li>
+<li>ユーザーが <code>A</code> サイトにアクセスし、<code>A</code> サイトから <code>B</code> サイトにリクエストを送信する。</li>
+<li><code>B</code> サイトは、<code>A</code> サイトからのリクエストに含まれる <code>B</code> サイトの <code>cookie</code> を検証し、問題がなければ <code>B</code> サイトのデータを返す。</li>
+</ol>
+<p><code>AUTH</code> は、ユーザーが <code>A</code> ウェブサイトから <code>B</code> ウェブサイトのリソースにアクセスできるようにします。ただし、ユーザーの承認が必要です。手順は次のとおりです：</p>
+<ol>
+<li><code>A</code> ウェブサイトでリクエストを送信する。</li>
+<li>ステップ 1 で <code>B</code> サイトにリダイレクトされ、承認を確認した後、<code>A</code> ウェブサイトに戻る。</li>
+<li>この時点で <code>A</code> ウェブサイトは <code>tooken(トークン)</code> を取得し、ユーザーの <code>B</code> ウェブサイトのリソースにアクセスできるようになる。</li>
+</ol>
+<p>似ていませんか？</p>
+<p><code>CORS</code> の最初のステップは <code>AUTH</code> の 2 番目のステップに対応します。<code>AUTH</code> の 2 番目のステップは、<code>CORS</code> の最初のステップと見なすことができ、<code>B</code> ウェブサイトのサーバー側に <code>Access-Control-Allow-Credentials</code> を追加したと考えることができます。これにより承認が完了したことになります。</p>
+<p><code>CORS</code> で <code>cookie</code> を携帯するのは、<code>AUTH</code> の簡易版と考えることができます。</p>
+<p>以下は <code>RFC 6749</code> からの抜粋です：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/AUTH.png" alt="AUTH" title="AUTH" /></p>
+<h2 id="後書き">後書き</h2>
+<p>なぜサードパーティ広告の<code>cookie</code>がプライバシーを漏洩すると言われるのでしょうか？これは、広告が<code>A</code>というウェブサイトに掲載されると、広告主はその広告が<code>A</code>サイトに配信されたことを知る（広告配信の<code>id/key</code>などの<code>identity</code>で識別し課金される）ためです。そこで広告主はこの広告に<code>cookie</code>を設定します。この広告は広告<code>B</code>のドメインから提供されるため、設定される<code>cookie</code>は当然<code>B</code>の<code>cookie</code>になります。<code>A</code>サイトがこの広告を読み込むたびに、必ず<code>js</code>を実行します。この<code>js</code>の中で、<code>A</code>サイトが<code>cookie</code>を送信することを許可し、同時に<code>B</code>サイトも<code>A</code>サイトからの<code>cookie</code>に<code>B</code>サイトの<code>cookie</code>を添えて送信することを許可します。これにより、すべてが把握されてしまうのです。</p>
+<p>`Google AD Impl:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/googleWithCredentials.png" alt="googleWithCredientials" title="googleWithCredientials" /></p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/googleWithCredentials2.png" alt="googleWithCredientials2" title="googleWithCredientials2" /></p>
+<h2 id="注意事項">注意事項</h2>
+<ol>
+<li>
+<p>上記の変更にはサーバー側の修正が含まれており、いずれもサービスの再起動が必要です。<code>VPS</code>上でサービスを再起動するのは不便であり、時間が経つと接続が切れてしまうため、最善の方法は<code>VPS</code>上に記事中の<code>a.com</code>（主に<code>index.html</code>を修正するため）を配置し、ローカルに記事中の<code>b.com</code>の内容（主に<code>index.js</code>を修正するため）を配置することです。</p>
+</li>
+<li>
+<p>リモート接続を維持する最も簡単な方法は、それをバックグラウンドで実行することです（接続を維持しないと、接続が切れた後にリクエストが来て<code>I/O</code>操作を行っても、やはり切断されます）。<code>node index.js &amp;</code>を実行するか、すでに<code>node index.js</code>を実行している場合は<code>ctrl+z</code>を押してバックグラウンドで凍結し、<code>bg</code>コマンドで最新のバックグラウンドタスクをアクティブにします。<code>jobs</code>コマンドで現在のタスクリストを確認できます。現在の<code>session</code>から退出した後、再度接続するとタスクはまだ実行中ですが、<code>jobs</code>ではそのタスクが見えなくなるため、<code>ps -A</code>ですべてのプロセスをリストアップし、<code>kill ID</code>で<code>node</code>のプロセスを終了させてから再実行します。</p>
+</li>
+<li>
+<p>小目標の達成中にエラーが発生した際、カスタムフィールドを<code>X-</code>で始めなかったためにエラーになったのではないかと疑いましたが、標準を確認したところ<code>X-</code>で始めるという規定はなく、ウィキペディアやSOではカスタム<code>Header</code>を<code>X-</code>で始めることを推奨しているだけでした。</p>
+</li>
+<li>
+<p><code>withCredentials = true</code>を設定した後は、サーバー側の<code>Access-Control-Allow-Origin</code>を<code>wildcard</code>の<code>*</code>に設定することはできなくなります。</p>
+</li>
+</ol>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          この記事の初出:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/research-CORS.ja.html"
+            title="CORSの探究"
+          >
+            CORSの探究 - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">目次</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>ブログ主より：</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        人生の重要な選択に直面したとき、最善の方法を誰かが教えてくれて、貴重な時間を無駄にせずに済めばと、私はよく願っています。だからこそ、自分の経験を踏まえて頻繁にブログを書き、広大なインターネットのこの小さな片隅に、私にとって一度きりの人生経験を記録し、助けを求める人々の力になれればと思っています。
+    </div>
+    <hr>
+    
+    <h5><a href="/ja/archive/">人気のタグ</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技術"
+                rel="188">技術</a>
+        
+            <a data-sort="0200"
+                href="/ja/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="108">生活</a>
+        
+            <a data-sort="0264"
+                href="/ja/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="いじり"
+                rel="44">いじり</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="コツ"
+                rel="32">コツ</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="チュートリアル"
+                rel="32">チュートリアル</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻訳"
+                rel="24">翻訳</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="経験"
+                rel="20">経験</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="グルメ"
+                rel="20">グルメ</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体験"
+                rel="16">初体験</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="ワークフロー"
+                rel="16">ワークフロー</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="プラグイン"
+                rel="16">プラグイン</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="ネットワーク"
+                rel="16">ネットワーク</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用感"
+                rel="12">使用感</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="まとめ"
+                rel="12">まとめ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="サーバー"
+                rel="12">サーバー</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="ルーター"
+                rel="12">ルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="ソフトルーター"
+                rel="12">ソフトルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="エッセイ"
+                rel="12">エッセイ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9B%86%E6%88%90"
+                title="統合"
+                rel="12">統合</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="8">主食</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="最適化"
+                rel="8">最適化</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%8D%83%E5%85%86"
+                title="ギガビット"
+                rel="8">ギガビット</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="8">大事</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="ツール"
+                rel="8">ツール</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="バイパスルーター"
+                rel="8">バイパスルーター</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="フレームワーク"
+                rel="8">フレームワーク</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="足湯タイム"
+                rel="8">足湯タイム</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="テスト"
+                rel="8">テスト</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="テスラ"
+                rel="8">テスラ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="エディタ"
+                rel="8">エディタ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="動画"
+                rel="8">動画</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="デバッグ"
+                rel="8">デバッグ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BD%A6"
+                title="車"
+                rel="8">車</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="移行"
+                rel="8">移行</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="東北料理"
+                rel="4">東北料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="住宅購入"
+                rel="4">住宅購入</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="プロキシ"
+                rel="4">プロキシ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="フルスタック"
+                rel="4">フルスタック</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="北欧神話"
+                rel="4">北欧神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="共同編集"
+                rel="4">共同編集</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="圧縮"
+                rel="4">圧縮</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="クレイトス"
+                rel="4">クレイトス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="家庭料理"
+                rel="4">家庭料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="富強"
+                rel="4">富強</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="比較"
+                rel="4">比較</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="四川料理"
+                rel="4">四川料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="仕事の経験"
+                rel="4">仕事の経験</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="ギリシャ神話"
+                rel="4">ギリシャ神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="定番ソフト"
+                rel="4">定番ソフト</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="オープンソース"
+                rel="4">オープンソース</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="開封"
+                rel="4">開封</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="ゴッド・オブ・ウォー"
+                rel="4">ゴッド・オブ・ウォー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIMカード"
+                rel="4">SIMカード</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%8B%93%E6%89%91"
+                title="トポロジー"
+                rel="4">トポロジー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="物語"
+                rel="4">物語</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="データ構造"
+                rel="4">データ構造</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="旅行"
+                rel="4">旅行</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="日常"
+                rel="4">日常</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="日本"
+                rel="4">日本</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="サービス"
+                rel="4">サービス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="フォーマット"
+                rel="4">フォーマット</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A2%A6"
+                title="夢"
+                rel="4">夢</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="ブラウザ"
+                rel="4">ブラウザ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="ゲーム"
+                rel="4">ゲーム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="愚痴"
+                rel="4">愚痴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="ユーザープライバシー"
+                rel="4">ユーザープライバシー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="アルゴリズム"
+                rel="4">アルゴリズム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="詳細"
+                rel="4">詳細</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="イヤホン"
+                rel="4">イヤホン</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="自由"
+                rel="4">自由</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="計画"
+                rel="4">計画</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="設定"
+                rel="4">設定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="落とし穴"
+                rel="4">落とし穴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="変換"
+                rel="4">変換</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="技術選定"
+                rel="4">技術選定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="面接"
+                rel="4">面接</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>コラム</h5>
+    <div class="tags">
+        <a href="/projects">オープンソース</a>
+        <a href="/book-list">技術書リスト</a>
+        <a href="/subscribe">サブスク＆有料アプリ</a>
+        <a href="/my-food">グルメのおすすめ</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>友達</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">中国版</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="CORSの探究"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ja"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ja/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

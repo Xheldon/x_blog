@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      「訳」Ace、CodeMirror、Monaco：Webコードエディタの比較 - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="最近この外国語の記事を見て、良いと思いました。ここで比較されているのは「コードエディタ」であり、リッチテキストエディタとは少し異なる点に注意してください。">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="「訳」Ace、CodeMirror、Monaco：Webコードエディタの比較 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2022-1-16T3:57:18"> 
+              
+                  
+                    <meta property="article:tag" content="エディタ">
+                    
+                    <meta property="article:tag" content="翻訳">
+                    
+                      
+                          
+                            <meta name="og:description" content="最近この外国語の記事を見て、良いと思いました。ここで比較されているのは「コードエディタ」であり、リッチテキストエディタとは少し異なる点に注意してください。">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ja/tech/a-comparison-of-code-editor.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ja_JP">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ja/tech/a-comparison-of-code-editor.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/a-comparison-of-code-editor.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/a-comparison-of-code-editor.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/a-comparison-of-code-editor.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/a-comparison-of-code-editor.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/a-comparison-of-code-editor.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ja/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ja/">ホーム</a>
+            </li>
+            <li>
+              <a href="/ja/about/">概要</a>
+            </li>
+            <li>
+              <a href="/ja/donate/">寄付</a>
+            </li>
+            <li>
+              <a href="/ja/archive/">アーカイブ</a>
+            </li>
+            <li>
+              <a href="/ja/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">日本語</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/a-comparison-of-code-editor.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/a-comparison-of-code-editor.html" hreflang="en">English</a></li>
+        <li class="lang-item active"><a href="/ja/tech/a-comparison-of-code-editor.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/a-comparison-of-code-editor.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ja/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                            title="エディタ">
+                            エディタ
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E7%BF%BB%E8%AF%91"
+                            title="翻訳">
+                            翻訳
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        「訳」Ace、CodeMirror、Monaco：Webコードエディタの比較
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 作成日 2022年01月16日</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 更新日 2022年05月29日</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;注意：この記事が作成されてから既に
+          <code id="from_time"></code> 日が経過しています。情報の鮮度にご注意ください
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1642348638000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+         
+        <div class="reference-tips">
+          🔗 &nbsp;原文：<a href="https://blog.replit.com/code-editors" target="_blank">
+            https://blog.replit.com/code-editors
+          </a>
+        </div>
+          
+        <div class="callout-tips">🖥 &nbsp;説明：最近この外国語の記事を見て、良いと思いました。ここで比較されているのは「コードエディタ」であり、リッチテキストエディタとは少し異なる点に注意してください。</div>
+         
+        <div class="craft-tips">
+          📚 &nbsp;Craft にも公開：<a
+            href="https://www.craft.do/s/anoVgw55pjshwp"
+            target="_blank"
+          >
+            https://www.craft.do/s/anoVgw55pjshwp
+          </a>
+        </div>
+          <p>私は約6年間Replitで働いており、チームの成長と共に、製品のIDE部分（私たちは「ワークスペース」と呼んでいます）に焦点を当ててきました。当然のことながら、私はますますコードエディタに集中するようになりました。私たちは自分たちのニーズに合ったコードエディタを作成することを検討しましたが、コードエディタ開発の複雑さ、利用可能なオープンソースオプションの豊富さ、そして私たちのチーム規模を考えると、これは未知の挑戦となる可能性が高く、そのため私の時間は独自のエディタを構築する方面には費やされないかもしれません。私は幸運にも（そして苦労しながらも）本番環境で<a href="https://ace.c9.io">Ace</a>、<a href="https://microsoft.github.io/monaco-editor/">Monaco</a>、<a href="https://codemirror.net/6/">CodeMirror</a>という3つのコードエディタを使用してきました。時には同時に使用することもありました（詳細は後述します）。この記事では、Replitの歴史と私のエディタ使用経験、そしてそれらがどのように相互作用してきたかを振り返ります。</p>
+<p>もしこの記事を読んでいる目的が直接的な3つのコードエディタの比較であれば、最後までスキップしてください。まとめと比較はそこに記載しています。</p>
+<h2 id="ストーリー">ストーリー</h2>
+<h3 id="前奏：ace">前奏：Ace</h3>
+<p>Replitの初期、2011年頃にはコードエディタは存在しませんでした。私たちは純粋な<a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop">REPL</a>インターフェース、つまりシンプルな入力ボックスのあるコンソールを使用していました。より複雑なプログラムを作成するためには、コードエディタの追加が明らかに急務でした。コードエディタは、シンタックスハイライト、エディタショートカット、自動インデント、検索と置換などの機能を提供してくれます。当時、Cloud9はAceをリリースしました。これは機能豊富でパフォーマンスの良いWebベースのコードエディタでした。現在でもAceエディタは積極的にメンテナンスされており、多言語サポート、キーバインディング、ブラウザでの良好な動作を特徴とする豊かなエコシステムを持っています。</p>
+<blockquote>
+<p>👇🏻 オリジナルのReplitインターフェースとAceコードエディタの比較。このスクリーンショットは、2011年からReplitのオープンソース版を再ホストしているコミュニティメンバーによって提供されました<a href="https://www.repldotit.com">https://www.repldotit.com</a>。</p>
+</blockquote>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/a-comparison-of-code-editor/FCE24555-97DB-4453-9DA4-A8C9BE00FF52_2.png" alt="Image" /></p>
+<p>私たちは2017年頃までAceを使用し続け、その後Monacoに切り替えました。Aceはまだメンテナンスされていますが、メンテナーはたった1人です。AmazonがCloud9を買収した後、彼らはオープンソースプロジェクトの優先順位を再調整したようです。エディタは以前のように頻繁に更新されなくなり、Githubのissueも積み上がり、メンテナーもほとんど新機能を追加しなくなりました。全体的に、AceのAPIは開発者にとって時代遅れで扱いにくいものに感じられ始めました。メンテナーは素晴らしい方ですが、できることには限界があります。</p>
+<h3 id="挿話：monaco">挿話：Monaco</h3>
+<p>ご存知かもしれませんが、VSCodeはMonacoエディタを使用しています。実際、MicrosoftはMonacoを基にVSCodeを構築しました。コードエディタをMonacoに切り替えることで、VSCodeの開発者たちによるクールな更新や機能をすべて享受できると考えました。Monacoは私たちのウェブサイトにマッチするモダンで洗練されたUIを備えており、JavaScript、HTML、CSSに対して優れたオートコンプリート機能があり、LSP（Language-Server-Protocol）に対応した言語クライアントを簡単に作成できるAPIも提供されているようです。APIドキュメントは素晴らしく、TypeScriptの定義も付属しており、開発視点で見ると拡張性の高い機能を備えています。</p>
+<blockquote>
+<p>👇🏻Monacoエディタのスクリーンショット（デフォルト設定）、クリーンで整理されたUIに注目してください。</p>
+</blockquote>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/a-comparison-of-code-editor/DE35EC5C-5470-49D5-ADFE-8FCAD8A71B29_2.png" alt="Image" /></p>
+<p>AceからMonacoへの移行には代償が伴いました。後者はAceの多くの機能を欠いていますが、コミュニティの熱意と貢献によって、すぐにAceを凌駕すると確信しています。Monacoの最初の問題は、多くの言語サポートが不足していることです。VSCodeには多くの言語サポートがありますが、それらはNodeJS/Electronの能力に依存しており、ブラウザでは利用できません。そのため、私たちはMonacoにコードを貢献し、より多くの言語をサポートするようにしました。Scala、Julia、Scheme、Clojureなどの言語サポートや、Pythonのような言語のバグ修正を追加しました。私はMonaco用にシンタックスハイライトディスプレイを書き、アダプターを通じてAceがサポートするすべての言語をサポートできるようにしました。最後に、MonacoがAceに比べて欠けている機能はVimとEmacsのキーバインドですが、おそらくすぐに誰かがNPMでこれらの機能をサポートするパッケージを公開するでしょう。</p>
+<p>Monacoのもう一つの問題はビルドツールです。MicrosoftはWeb技術を使ってMonacoを構築しましたが、現在のWebエコシステムやビルドツールとうまく統合されていません。私はMonacoをWebpack Dllとして事前コンパイルし、多くのWebpack設定を追加してようやく動作させることができました。これらの追加は苦痛であり、ビルドシステムの複雑さとコストを増加させました。数か月後、MicrosoftはMonaco用のWebpackプラグインをリリースし、状況は多少改善されましたが、特に私たちがフロントエンドをNext.jsに移行したときには完璧ではありませんでした。残念ながら、Monacoにはコードを遅延ロードしたり分割したりする簡単な方法もないため、コードを小さなファイルに分割して読み込み速度を向上させることはできませんでした。この問題により、私たちのプロジェクトのサイズは最大5M増加し、これは軽視できることではありません。</p>
+<p>Monacoはモバイル端末でもあまり使い勝手が良くありません。この部分のコードを外部委託しようとしましたが、引き受けてくれる業者がいませんでした。そこで自分で対応しようとしたとき、Monacoのコードベースを調査・読解することが非常に難しいことに気づきました。Monacoエディター自体は、VSCodeを最初に構築した後、そこから切り離されたようなもので、VSCodeコードベースの他の部分と強く結合しています。VSCode自体もコードがよく書かれているとは言えず、<a href="https://web.archive.org/web/20150502200822/https://www.zdnet.com/article/microsofts-browser-based-dev-toolbox-how-monaco-came-to-be/%E3%82%84https://www.youtube.com/watch?v=FyCYva9DhsI%E3%81%AE%E3%82%88%E3%81%86%E3%81%AB%E3%80%81%E6%9C%80%E3%82%82%E5%8F%A4%E3%81%84TypeScript%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E4%B8%80%E3%81%A4%E3%81%A7%E3%81%82%E3%82%8A%E3%80%81Microsoft%E3%81%AE%E5%A4%A7%E4%BC%81%E6%A5%AD%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB%E3%81%A7%E6%9B%B8%E3%81%8B%E3%82%8C%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E7%AB%AF%E6%9C%AB%E3%81%A7%E3%81%9D%E3%81%93%E3%81%9D%E3%81%93%E4%BD%BF%E3%81%88%E3%82%8B%E3%82%82%E3%81%AE%E3%81%AF%E5%AE%9F%E7%8F%BE%E3%81%A7%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F%E3%81%8C%E3%80%81VSCode%E3%81%AE%E3%83%95%E3%82%A9%E3%83%BC%E3%82%AF%E3%82%92%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E3%81%99%E3%82%8B%E3%81%A4%E3%82%82%E3%82%8A%E3%81%AF%E3%81%82%E3%82%8A%E3%81%BE%E3%81%9B%E3%82%93%E3%80%82%E7%A7%81%E3%81%9F%E3%81%A1%E3%81%8CVSCode%E3%81%AB%E8%A1%8C%E3%81%A3%E3%81%9F%E5%A4%89%E6%9B%B4%E3%81%AFVSCode%E3%81%AE%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%96%E3%83%A9%E3%83%B3%E3%83%81%E3%81%AB%E3%83%9E%E3%83%BC%E3%82%B8%E3%81%95%E3%82%8C%E3%82%8B%E8%A6%8B%E8%BE%BC%E3%81%BF%E3%81%8C%E3%81%AA%E3%81%8F%E3%80%81%E7%8F%BE%E5%9C%A8%E3%81%AE%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E7%89%88%E3%81%AF%E3%83%97%E3%83%AD%E3%83%80%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E7%92%B0%E5%A2%83%E3%81%A7%E4%BD%BF%E7%94%A8%E3%81%A7%E3%81%8D%E3%82%8B%E3%81%BE%E3%81%A7%E3%81%AB%E3%81%AF%E7%A8%8B%E9%81%A0%E3%81%84%E3%81%8B%E3%82%89%E3%81%A7%E3%81%99%E3%80%82%E3%81%9D%E3%81%AE%E3%81%9F%E3%82%81%E3%80%81%E6%9C%80%E5%96%84%E3%81%AE%E8%A7%A3%E6%B1%BA%E7%AD%96%E3%81%AF%E3%80%81%E3%82%B9%E3%83%9E%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%B3%E3%81%A7%E3%81%AF%E5%BC%95%E3%81%8D%E7%B6%9A%E3%81%8DAce%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%83%BC%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B%E3%81%93%E3%81%A8%E3%81%A0%E3%81%A8%E5%88%A4%E6%96%AD%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%E5%AE%8C%E7%92%A7%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%84%E3%81%8B%E3%82%82%E3%81%97%E3%82%8C%E3%81%BE%E3%81%9B%E3%82%93%E3%81%8C%E3%80%81%E5%95%8F%E9%A1%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%9B%E3%82%93%EF%BC%88%E4%BD%BF%E3%81%88%E3%81%AA%E3%81%84%E3%82%8F%E3%81%91%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%BE%E3%81%9B%E3%82%93%EF%BC%89%E3%80%82">https://web.archive.org/web/20150502200822/https://www.zdnet.com/article/microsofts-browser-based-dev-toolbox-how-monaco-came-to-be/やhttps://www.youtube.com/watch?v=FyCYva9DhsIのように、最も古いTypeScriptプロジェクトの一つであり、Microsoftの大企業スタイルで書かれています。モバイル端末でそこそこ使えるものは実現できましたが、VSCodeのフォークをメンテナンスするつもりはありません。私たちがVSCodeに行った変更はVSCodeのメインブランチにマージされる見込みがなく、現在のモバイル版はプロダクション環境で使用できるまでには程遠いからです。そのため、最善の解決策は、スマートフォンでは引き続きAceエディターを使用することだと判断しました。完璧ではないかもしれませんが、問題ありません（使えないわけではありません）。</a></p>
+<p>したがって、Replit上では最終的に2つのコードエディタが存在することになりました：1つはPC用、もう1つはモバイル用です。PC向けの新機能はすべてAce（モバイル版）に移植する必要がありました。Ace用にLSP機能をサポートする言語クライアントを開発し、複数ユーザーによる同時編集を可能にする操作変換アダプタ（訳注：OT変換？）も実装する必要がありました。多くの場合、移植する時間すらありませんでした。例えば、コードのマルチスレッド機能はモバイル版に移植されることはありませんでした。</p>
+<h3 id="舞台裏：codemirror">舞台裏：CodeMirror</h3>
+<p>2018年末、Marijnは<a href="https://web.archive.org/web/20180830201622/https://codemirror.net/6/">CodeMirrorの書き直し</a>を発表し、バージョン6への更新とともに<a href="https://web.archive.org/web/20181109055050/https://codemirror.net/6/design.html">優れた設計ドキュメント</a>を公開しました。このリライトの主な動機の一つは、タッチデバイスへの対応を強化することでした。この時期、私たちはモバイル（一般的な意味で）が戦略的に重要であると認識していました。次の10億人のソフトウェアクリエイターをオンラインにするためには、モバイル対応が必須だったのです。CodeMirrorは、JavaScript/ライブラリレベルで完全に実装する（Google DocsのGoogle Closureのように）のではなく、contenteditableを通じてネイティブブラウザのテキスト編集機能を活用することで、モバイルでの操作性を実現しようとしました。</p>
+<p><a href="https://prosemirror.net">ProseMirror</a>はCodeMirror 6のAPI設計に影響を与えたMarijnの別プロジェクトです。私自身、当時開発していたWYSIWYGプロジェクトで使用し、その良さを実感していました。ProseMirrorは非常に小さなコアを持ち、他のすべてはプラグインシステムを通じて実装されます。エディタライブラリとして、モジュール化され、プラグ可能で、機能的であり、信じられないほどの自由度を提供します。そこで私は、会社として新版CodeMirrorの開発をスポンサーすることに決め、個人的にも資金を提供しました。</p>
+<p>昨年、CodeMirror 6のベータ版がリリースされ、私はReplitに組み込むことに非常に興奮し、チームの他のメンバーも同様でした。エディタを試し始めると、学習曲線はやや急でしたが、一度理解するとスーパー・コードエディタ開発者のような気分になれます。CodeMirror 6をプロジェクトに適用するため、私は段階的に導入を開始しました。まずReplit上で読み取り専用のエディタとして追加し、その後、サイト内の他のコード編集可能な場所にも組み込んでいきました。</p>
+<p>今年初め、私たちは「信仰の飛躍」（訳注：アサシンクリードのネタ）を始め、CodeMirrorをモバイル環境に統合し始めました。ユーザーの視点から見ると、CodeMirrorは客観的に見てモバイル上の他のどのエディターよりも優れています。まだ私たちがサポートしているすべての言語やその他の機能をカバーしているわけではありませんが、モバイルへの統合は価値のある取り組みでした。この統合後のユーザーフィードバックは、私たちが予想していた以上に良好でした。CodeMirrorを使用しているユーザーの中で（訳注：おそらく小規模テスト、または新旧バージョンの切り替えオプションを提供して統計を取ったもの）、モバイルユーザーの割合は約70%に達しました！CodeMirrorは、モバイルでAceを使用する場合よりもユーザーを引き留める効果があります。CodeMirrorのプラグイン可能な性質（提供される無限の可能性）を考えると、これら（心躍る結果）は、モバイルでさらに価値あることを提供する始まりに過ぎないことは明らかです。私たちはまず、モバイルで欠けているPC版の機能をモバイル版CodeMirrorに移植することから始めます。</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/a-comparison-of-code-editor/7F0728B9-BE37-44CF-A518-F4020E276758_2.png" alt="Image" /></p>
+<p>CodeMirror 6のコミュニティはまだ初期段階にあるため、多くの機能を自前で実装したり、特定の機能の開発資金を提供したり、Marijnと協力してバグを修正する必要があります。私たちは、自身の貢献を通じてCodeMirrorコミュニティを導き、還元したいと考えています。ここでは、現在積極的に開発中の機能のリストを挙げます：Vim Mode、Emacs Mode、LSPクライアント、インデントマーカー、CSSカラーピッカー、言語パーサー、そして将来的にデスクトップ版CodeMirrorをリリースする際に、投稿で発表する予定の多くの機能です。新しいCodeMirrorに対する人々の期待は高く、今後1～2年でコミュニティとエコシステムのユーザー数が急増し、多くの人が本番環境での使用を急いでいると思います。</p>
+<p>私たちは、CodeMirror上でますます多くの機能を構築し、コードのアクセシビリティ向上において不可欠な要素とすることを非常に楽しみにしています。常々、理想的なユーザー体験を実現するためには最終的に独自のエディタを開発する必要があると話していました。それでも、CodeMirrorを使って実現できることに満足しています。</p>
+<h2 id="バトルセクション">バトルセクション</h2>
+<p>あなたに最適なコードエディタを見つけやすくするために、まとめておきます。繰り返しになりますが、これは私個人の経験であり、あなたの経験とは異なるかもしれません。</p>
+<p>各セクションで、エディタに1～3点を付けます。3点が最高評価です。</p>
+<h2 id="安定性">安定性</h2>
+<table>
+<thead>
+<tr>
+<th>エディタ</th>
+<th>評価</th>
+<th>説明</th>
+</tr>
+</thead>
+</table>
+<p>| Ace          | ⭐️⭐️⭐️ | 非常に安定しており信頼性が高い。このエディターは歴史的な検証を経ており、10年以上にわたり多くのツールをサポートしてきた。私が使用している間、重大な変更（break change）を経験したことは一度もない。いくつかのバージョンで小さなバグが導入されることはあったが、それらは迅速に修正された。                                                                                                                                                                                                                                                                                   |<br />
+| Monaco       | ⭐️⭐️    | Monacoは安定した編集体験を提供する。もちろんいくつかのバグは存在するが、VSCodeのリリースに伴い迅速に修正される。メンテナンスチームは新しいバージョンを継続的にリリースすることに長けている。1点減点した理由は、APIが最も安定しているとは言えず、頻繁に小さな変更があり煩わしいためである。マイクロソフトはまだMonacoの1.0バージョンをリリースしていない。                                                                                                                                                                                                                                           |<br />
+| CodeMirror 6 | ⭐️       | CodeMirrorはまだベータ段階であり、プロジェクトには多くの小さなバグが存在する。しかしMarijnは迅速に対応し修正を加えている。ベータ段階ではあるが、Marijnが現在のAPIに満足していると考えられ、重大な変更（break change）が発生する可能性は低い。CodeMirror 6は多くの機能に採用され始めており、Chromeの開発ツールでさえ<a href="https://github.com/ChromeDevTools/devtools-frontend/commit/6da128c3ae6b6dd0d4602059c23f8c4003823f5b#diff-592cac14b3eeb584a09b80d2696a73223ad0a79e4a8e6765f875a6f4492b4525">来年からコードエディターとしての採用を検討している</a>可能性がある。 |</p>
+<h2 id="すぐに使える体験">すぐに使える体験</h2>
+<table>
+<thead>
+<tr>
+<th>エディタ</th>
+<th>評価</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ace</td>
+<td>⭐️⭐️</td>
+<td>すぐに使える優れた体験を提供し、多くの機能と言語をサポートしています。基本的なJavaScript Lint機能（JSHintを使用）や自動補完機能も含まれています。ただ、ユーザーインターフェースが少し古く、時々混乱を感じるかもしれません。</td>
+</tr>
+<tr>
+<td>Monaco</td>
+<td>⭐️⭐️⭐️</td>
+<td>非常に洗練されたユーザーインターフェースです。このエディタには、HTML、CSS、JavaScriptのコードヒントサポートなど、多くの機能が組み込まれています。</td>
+</tr>
+<tr>
+<td>CodeMirror 6</td>
+<td>⭐️⭐️</td>
+<td>エディタを正常に動作させるにはいくつかの設定が必要です。これはプロジェクトのモジュール性とのトレードオフです。<a href="https://codemirror.net/6/docs/ref/#basic-setup">basic-setup パッケージ</a>があり、いくつかのモジュールを組み合わせ、コアモジュールを再エクスポートしています。ユーザーインターフェースは良好です。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="モジュール化、ビルドツール、進化の軌跡">モジュール化、ビルドツール、進化の軌跡</h2>
+<table>
+<thead>
+<tr>
+<th>エディタ</th>
+<th>評価</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ace</td>
+<td>⭐️⭐️</td>
+<td>Aceは非常に軽量で、モジュール化もサポートしています。他のモジュールを遅延ロードで読み込むことが可能です。しかしAceは比較的古いプロジェクトで、独自のモジュール管理システムを備えており、既存のプログラムに組み込むには若干の設定が必要です。</td>
+</tr>
+<tr>
+<td>Monaco</td>
+<td>⭐️</td>
+<td>Monacoエディタはバンドル後のサイズが非常に大きく、約5M程度になります。また、私の知る限り遅延ロードは不可能です。Monacoはビルドシステムに特別な設定が必要で、既存システムとの統合が難しいです。</td>
+</tr>
+<tr>
+<td>CodeMirror 6</td>
+<td>⭐️⭐️</td>
+<td>CodeMirrorは現代的な技術で構築されています。バンドラを使用せずにES6モジュールでインポートすることも可能です。遅延ロード機能は簡単に実現でき、ES6の動的インポート機能を使用するだけです。このプロジェクトは非常にモジュール化されており、エディタコアは非常に軽量です。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="拡張性と高度な機能">拡張性と高度な機能</h2>
+<table>
+<thead>
+<tr>
+<th>エディタ</th>
+<th>評価</th>
+<th>説明</th>
+</tr>
+</thead>
+</table>
+<p>| Ace          | ⭐️⭐️    | Aceには多くの設定項目があり、効果も良く、拡張ポイントも充実しています。汎用性は高くありませんが、多くの高度な機能を実現できます。APIは確かにやや古い印象を受けますが、非常に信頼性があります。プロジェクトを迅速に試す必要がある場合、Aceを簡単に選択できます。そのコードは読みやすく、コアコードはほぼ10年間変更されていません。                                                                                                                                                                                                                                                                                                          |<br />
+| Monaco       | ⭐️⭐️    | Monacoは豊富な設定項目を備え、エディタの動作や基本機能を変更するAPIを提供しています。しかし、拡張可能な領域は限定的で、あまりに特化しすぎています。私はよくエディタと格闘し、危険で収束が難しいハックパッチを当てなければなりませんでした。そのコードベースは読みやすくなく、内部コードは絶えず変化しています。最終的に、Monacoのアップグレードを止めました。将来も私たちが必要とするいくつかの機能をサポートする見込みがないためです。                                                                                                                                                                                                                                             |</p>
+<p>| CodeMirror 6 | ⭐️⭐️⭐️ | CodeMirror 6 は構築当初から拡張性を考慮して設計されており、これが主要な設計原則の一つとなっています。この拡張性により、CodeMirror はモジュール化が可能です。実際、コア自体（@codemirror/view と @codemirror/state）は本質的に拡張可能な textarea です。すべての「コード」機能は拡張として実装されています。シンタックスハイライトや行番号などの基本的な要素も、拡張やパッケージとして実装されています。独自の拡張を作成する際、これらの公式パッケージは優れたサンプルリソースとなります。CodeMirror を使用して派手なプラグインを構築するのは非常に簡単で、プラグイン開発者として、信じられないほど強力なサポートを提供してくれます！その拡張ポイントは非常に汎用的であるため、あなたはプログラム世界の神となり、実装したい機能を完全に自分で決定し、その結果に対処できます。 |</p>
+<h2 id="コミュニティとドキュメント">コミュニティとドキュメント</h2>
+<table>
+<thead>
+<tr>
+<th>エディタ</th>
+<th>評価</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ace</td>
+<td>⭐️⭐️</td>
+<td>長年にわたり、Aceは豊富なエコシステムと多数の使用記事・ブログを蓄積してきました。あらゆる言語のシンタックスハイライトをサポートし、コミュニティ提供のツールキットも豊富です。APIドキュメントは最良とは言えませんが、ほとんどのユースケースには十分です。構造化された（やや古い）コードベースは優れた（ドキュメントの）補助リソースです。オンラインには入門ガイドもあります。</td>
+</tr>
+</tbody>
+</table>
+<p>| Monaco       | ⭐️⭐️    | Monacoは2018年頃から本格的に開発が進められましたが、コミュニティの急速な衰退が感じられます。NPMにはコミュニティがメンテナンスするパッケージが多数存在します。MonacoのAPIドキュメント自体は十分に整っていますが、公式ガイドがないため、初心者にとっては習得が難しいと感じられるかもしれません。プロジェクトの構造が複雑なため、APIドキュメントの補助としてコードを読むことも容易ではありません。                                                                     |<br />
+| CodeMirror 6 | ⭐️⭐️⭐️ | CodeMirror 6には活発な開発の勢いが見られます。私たちもCodeMirror 6にとって重要なパッケージを提供することでコミュニティの発展を支援しようとしていますので、ご期待ください！そのドキュメントは素晴らしく、今後さらに改善されていくことを願っています。ドキュメントシステムには優れた入門記事と多くのサンプルが用意されており、詳細な解説が付随しています。前述の拡張性について触れましたが、ほとんどの機能は拡張によって実現されており、これらは機能を実装したい際の「強力な味方」となります。 |</p>
+<h2 id="パフォーマンス">パフォーマンス</h2>
+<h5 id="免責事項：パフォーマンス評価には明確なベンチマークデータが存在しません。">免責事項：パフォーマンス評価には明確なベンチマークデータが存在しません。</h5>
+<table>
+<thead>
+<tr>
+<th>エディタ</th>
+<th>評価</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ace</td>
+<td>⭐️⭐️⭐️</td>
+<td>Aceはブラウザやマシンの性能が現在ほど高くなかった時代に生まれたため、今日においても非常に優れたパフォーマンスを発揮します。</td>
+</tr>
+<tr>
+<td>Monaco</td>
+<td>⭐️⭐️</td>
+<td>Monacoには多くのパフォーマンス最適化が施されていますが、やや重い印象があります。Replitの低電力マシンユーザーからは、Monacoが電力消費が激しいという声が寄せられています。</td>
+</tr>
+<tr>
+<td>CodeMirror 6</td>
+<td>⭐️⭐️⭐️</td>
+<td>CodeMirrorはこれまでのところ優れたパフォーマンスを示しています。これは作者が多くの時間をかけてパフォーマンス最適化を行った結果です。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="モバイルサポート">モバイルサポート</h2>
+<p>ここでは評価を行いません。なぜなら、モバイル対応のコードエディタを求める場合、現時点で選択肢はCodeMirror 6のみだからです。Aceのモバイルサポートは悪くありませんが、プロダクション環境での使用には適しておらず、Monacoはモバイル端末では利用できません。</p>
+<p>私はむしろ、CodeMirrorはWebviewコンポーネントを使用するネイティブアプリケーションにも適用できると言えるでしょう。CodeMirrorのほとんどの内容はシリアライズ可能であるため、ネイティブコードからWebviewとやり取りすることができます。</p>
+<h2 id="お読みいただきありがとうございます！">お読みいただきありがとうございます！</h2>
+<p>この部分は著者の広告タイムのため、翻訳を一時的に控えます。</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          この記事の初出:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/a-comparison-of-code-editor.ja.html"
+            title="「訳」Ace、CodeMirror、Monaco：Webコードエディタの比較"
+          >
+            「訳」Ace、CodeMirror、Monaco：Webコードエディタの比較 - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">目次</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>ブログ主より：</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        人生の重要な選択に直面したとき、最善の方法を誰かが教えてくれて、貴重な時間を無駄にせずに済めばと、私はよく願っています。だからこそ、自分の経験を踏まえて頻繁にブログを書き、広大なインターネットのこの小さな片隅に、私にとって一度きりの人生経験を記録し、助けを求める人々の力になれればと思っています。
+    </div>
+    <hr>
+    
+    <h5><a href="/ja/archive/">人気のタグ</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技術"
+                rel="188">技術</a>
+        
+            <a data-sort="0200"
+                href="/ja/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="108">生活</a>
+        
+            <a data-sort="0264"
+                href="/ja/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="いじり"
+                rel="44">いじり</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="コツ"
+                rel="32">コツ</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="チュートリアル"
+                rel="32">チュートリアル</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻訳"
+                rel="24">翻訳</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="経験"
+                rel="20">経験</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="グルメ"
+                rel="20">グルメ</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体験"
+                rel="16">初体験</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="ワークフロー"
+                rel="16">ワークフロー</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="プラグイン"
+                rel="16">プラグイン</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="ネットワーク"
+                rel="16">ネットワーク</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用感"
+                rel="12">使用感</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="まとめ"
+                rel="12">まとめ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="サーバー"
+                rel="12">サーバー</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="ルーター"
+                rel="12">ルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="ソフトルーター"
+                rel="12">ソフトルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="エッセイ"
+                rel="12">エッセイ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9B%86%E6%88%90"
+                title="統合"
+                rel="12">統合</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="8">主食</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="最適化"
+                rel="8">最適化</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%8D%83%E5%85%86"
+                title="ギガビット"
+                rel="8">ギガビット</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="8">大事</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="ツール"
+                rel="8">ツール</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="バイパスルーター"
+                rel="8">バイパスルーター</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="フレームワーク"
+                rel="8">フレームワーク</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="足湯タイム"
+                rel="8">足湯タイム</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="テスト"
+                rel="8">テスト</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="テスラ"
+                rel="8">テスラ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="エディタ"
+                rel="8">エディタ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="動画"
+                rel="8">動画</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="デバッグ"
+                rel="8">デバッグ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BD%A6"
+                title="車"
+                rel="8">車</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="移行"
+                rel="8">移行</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="東北料理"
+                rel="4">東北料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="住宅購入"
+                rel="4">住宅購入</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="プロキシ"
+                rel="4">プロキシ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="フルスタック"
+                rel="4">フルスタック</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="北欧神話"
+                rel="4">北欧神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="共同編集"
+                rel="4">共同編集</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="圧縮"
+                rel="4">圧縮</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="クレイトス"
+                rel="4">クレイトス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="家庭料理"
+                rel="4">家庭料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="富強"
+                rel="4">富強</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="比較"
+                rel="4">比較</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="四川料理"
+                rel="4">四川料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="仕事の経験"
+                rel="4">仕事の経験</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="ギリシャ神話"
+                rel="4">ギリシャ神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="定番ソフト"
+                rel="4">定番ソフト</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="オープンソース"
+                rel="4">オープンソース</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="開封"
+                rel="4">開封</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="ゴッド・オブ・ウォー"
+                rel="4">ゴッド・オブ・ウォー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIMカード"
+                rel="4">SIMカード</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%8B%93%E6%89%91"
+                title="トポロジー"
+                rel="4">トポロジー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="物語"
+                rel="4">物語</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="データ構造"
+                rel="4">データ構造</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="旅行"
+                rel="4">旅行</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="日常"
+                rel="4">日常</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="日本"
+                rel="4">日本</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="サービス"
+                rel="4">サービス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="フォーマット"
+                rel="4">フォーマット</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A2%A6"
+                title="夢"
+                rel="4">夢</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="ブラウザ"
+                rel="4">ブラウザ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="ゲーム"
+                rel="4">ゲーム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="愚痴"
+                rel="4">愚痴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="ユーザープライバシー"
+                rel="4">ユーザープライバシー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="アルゴリズム"
+                rel="4">アルゴリズム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="詳細"
+                rel="4">詳細</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="イヤホン"
+                rel="4">イヤホン</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="自由"
+                rel="4">自由</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="計画"
+                rel="4">計画</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="設定"
+                rel="4">設定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="落とし穴"
+                rel="4">落とし穴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="変換"
+                rel="4">変換</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="技術選定"
+                rel="4">技術選定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="面接"
+                rel="4">面接</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>コラム</h5>
+    <div class="tags">
+        <a href="/projects">オープンソース</a>
+        <a href="/book-list">技術書リスト</a>
+        <a href="/subscribe">サブスク＆有料アプリ</a>
+        <a href="/my-food">グルメのおすすめ</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>友達</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">中国版</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="「訳」Ace、CodeMirror、Monaco：Webコードエディタの比較"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ja"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ja/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

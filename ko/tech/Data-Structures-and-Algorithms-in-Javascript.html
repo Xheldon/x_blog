@@ -1,0 +1,2080 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      JavaScript의 자료구조와 알고리즘 - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="JavaScript의 자료구조와 알고리즘 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2019-10-7T4:17:33"> 
+              
+                  
+                    <meta property="article:tag" content="JavaScript">
+                    
+                    <meta property="article:tag" content="기술">
+                    
+                    <meta property="article:tag" content="자료구조">
+                    
+                    <meta property="article:tag" content="알고리즘">
+                    
+                      
+                          
+                            <meta name="og:description" content="">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ko/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ko_KR">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ko/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/Data-Structures-and-Algorithms-in-Javascript.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ko/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ko/">홈</a>
+            </li>
+            <li>
+              <a href="/ko/about/">소개</a>
+            </li>
+            <li>
+              <a href="/ko/donate/">후원</a>
+            </li>
+            <li>
+              <a href="/ko/archive/">아카이브</a>
+            </li>
+            <li>
+              <a href="/ko/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">한국어</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/Data-Structures-and-Algorithms-in-Javascript.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/Data-Structures-and-Algorithms-in-Javascript.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/Data-Structures-and-Algorithms-in-Javascript.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item active"><a href="/ko/tech/Data-Structures-and-Algorithms-in-Javascript.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ko/archive/?tag=JavaScript"
+                            title="JavaScript">
+                            JavaScript
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="기술">
+                            기술
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                            title="자료구조">
+                            자료구조
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E7%AE%97%E6%B3%95"
+                            title="알고리즘">
+                            알고리즘
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        JavaScript의 자료구조와 알고리즘
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 작성일 2019년 10월 07일</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;참고: 이 글이 작성된 지 이미
+          <code id="from_time"></code> 일이 지났습니다. 시의성에 유의하세요
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1570465053000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+              <h2 id="서문">서문</h2>
+<p>비록 스스로 노력하고 대기업에 들어간 경험이 있지만, 컴퓨터 과학 기초 분야는 항상 부족함을 느꼈습니다. 전공자가 아니기 때문에, 후천적인 노력으로 전공자들과의 격차를 좁히고 싶었습니다. 프로그래머의 세 가지 꿈(언어/알고리즘/그래픽) 중 하나인 자료구조와 알고리즘은 항상 마음의 부담이었습니다. 여유 시간에 기술 커뮤니티를 돌아다니다가 자극적인 자료구조 및 알고리즘 관련 제목에 끌려 들어가곤 했지만, 내용은 허전한 경우가 많았습니다. 결국 알고리즘(기초)을 제대로 공부하기로 마음먹었습니다.</p>
+<p>이 글은 제가 공부한 내용을 정리한 것으로, &lt;자바스크립트 자료구조와 알고리즘 학습(제2판)&gt;을 보며 요약하고 메모한 것입니다. 먼저 자료구조부터 시작한 후, 다양한 자료구조 알고리즘을 다룹니다. 대부분 ES5 방법을 사용하며, 일부는 ES6 방법을 사용합니다. 효과 구현에 집중하며, 실행 비용과 같은 비관련 요소(예: 프로토타입 체인 대신 각 인스턴스에 메서드 추가 등)는 고려하지 않습니다.</p>
+<h2 id="스택">스택</h2>
+<h3 id="스택의-기본-개념과-메서드">스택의 기본 개념과 메서드</h3>
+<p>스택은 후입선출(LIFO) 원칙을 따르는 순서가 있는 집합입니다. 새로 추가되거나 삭제될 요소는 스택의 한쪽 끝(스택 상단)에 저장되며, 다른 쪽 끝은 스택 하단이라고 합니다. 스택에서 새 요소는 상단에, 오래된 요소는 하단에 위치합니다. 책을 쌓아 올린 모습을 연상하면 됩니다. 스택 자료구조에는 다음 메서드가 있습니다:</p>
+<ol>
+<li><code>push(element)</code> 하나 또는 여러 요소를 추가합니다.</li>
+<li><code>pop()</code> 스택 상단의 요소를 제거하고 반환합니다.</li>
+<li><code>peek()</code> 스택 상단의 요소를 반환하지만 원본 스택은 수정하지 않습니다.</li>
+<li><code>isEmpty()</code> 스택이 비어 있는지 확인합니다.</li>
+<li><code>clear()</code> 스택을 비웁니다.</li>
+<li><code>size()</code> 스택의 요소 개수를 반환합니다.</li>
+</ol>
+<h3 id="스택의-자바스크립트-구현">스택의 자바스크립트 구현</h3>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/Stack.js">스택</a></li>
+</ol>
+<h3 id="스택의-응용">스택의 응용</h3>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/DecimalToBinary.js">10진수를 2진수로 변환</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/TowerOfHanoi.js">하노이 탑</a></li>
+</ol>
+<h2 id="큐">큐</h2>
+<h3 id="큐의-기본-개념과-메서드">큐의 기본 개념과 메서드</h3>
+<p>큐는 FIFO(First In First Out, 선입선출) 원칙을 따르는 정렬된 항목들의 집합입니다. 큐는尾部에 새 요소를 추가하고,顶部에서 요소를 제거합니다. 가장 최근에 추가된 요소는 반드시 큐의 끝에 위치해야 합니다. 큐 자료 구조에는 다음과 같은 메서드가 있습니다:</p>
+<ol>
+<li><code>enqueue(element)</code> - 큐의尾部에 하나(또는 여러 개)의 새 항목을 추가</li>
+<li><code>dequeue()</code> - 큐의 첫 번째 항목(가장 먼저 추가된 요소)을 제거하고, 제거된 요소를 반환</li>
+<li><code>front()</code> - 큐의 첫 번째 요소(가장 먼저 추가된 요소)를 반환하되, 큐는 변경하지 않음</li>
+<li><code>isEmpty()</code> - 큐가 비어 있는지 여부를 반환</li>
+<li><code>size()</code> - 큐의 요소 개수를 반환</li>
+</ol>
+<h3 id="큐의-javascript-구현">큐의 JavaScript 구현</h3>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/Queue.js">큐</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/PriorityQueue.js">가중치 큐</a></li>
+</ol>
+<h2 id="연결-리스트">연결 리스트</h2>
+<h3 id="연결-리스트의-기본-개념과-메서드">연결 리스트의 기본 개념과 메서드</h3>
+<p>연결 리스트의 각 항목은 자신의 값뿐만 아니라 다음 항목의 위치를 가리키는 포인터도 저장합니다. 이를 단일 연결 리스트라고 합니다. 각 항목이 다음 항목의 위치를 가리키는 포인터뿐만 아니라 이전 항목을 가리키는 포인터도 저장하는 경우(시작/끝 항목 제외, 이들의 이전/다음 포인터는 null) 이를 이중 연결 리스트라고 합니다. 이중 연결 리스트의 처음과 끝이 서로 연결되어 있으면 이중 순환 연결 리스트라고 합니다. 아래와 같습니다(화살표가 포인터이며, 화살표 꼬리 부분에 해당하는 항목의 일부입니다):</p>
+<ol>
+<li>단일 연결 리스트<pre><code class="hljs mermaid">graph RL
+A(Tail) --&gt; B(第三项) --&gt; C(第二项) --&gt; D(Head)</code></pre>
+</li>
+<li>이중 연결 리스트<pre><code class="hljs mermaid">graph LR
+A(Head) --&gt; B(第二项) --&gt; A
+B --&gt; C(第三项) --&gt; B
+C --&gt; D(Tail) --&gt; C</code></pre>
+</li>
+<li>순환 연결 리스트<pre><code class="hljs mermaid">graph LR
+A(Head) --&gt; B(第二项) --&gt; A
+B --&gt; C(第三项) --&gt; B
+C --&gt; D(Tail) --&gt; C
+A --&gt; D --&gt; A</code></pre>
+</li>
+</ol>
+<p>연결 리스트에는 다음과 같은 메서드가 있습니다:</p>
+<ol>
+<li><code>append(element)</code> 연결 리스트의 끝에 새로운 항목 추가</li>
+<li><code>insert(position, element)</code> 연결 리스트의 특정 위치에 새로운 항목 삽입</li>
+<li><code>remove(element)</code> 연결 리스트에서 항목 제거</li>
+<li><code>indexOf(element)</code> 요소의 연결 리스트 내 인덱스 반환, 없을 경우 -1 반환</li>
+<li><code>removeAt(position)</code> 연결 리스트의 지정된 위치 항목 제거</li>
+<li><code>isEmpty()</code> 연결 리스트가 비어있는지 여부 확인</li>
+<li><code>size()</code> 연결 리스트 항목의 개수 반환</li>
+</ol>
+<h3 id="연결-리스트의-javascript-구현">연결 리스트의 JavaScript 구현</h3>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/LinkedList.js">단일 연결 리스트</a>{:data-open=“”}</li>
+<li><a href="https://static.xheldon.cn/example-code/2019/DoublyLinkedList.js">이중 연결 리스트</a>{:data-open=“”}</li>
+<li><a href="https://static.xheldon.cn/example-code/2019/CircularLinkedList.js">순환 연결 리스트</a>{:data-open=“”}</li>
+</ol>
+<h2 id="집합">집합</h2>
+<h3 id="집합의-기본-개념과-메서드">집합의 기본 개념과 메서드</h3>
+<p>집합은 순서 없고 유일한(중복 불가) 항목들의 모음입니다. 집합은 다음과 같은 메서드를 가집니다:</p>
+<ol>
+<li><code>add(value)</code> 집합에 새로운 항목 추가</li>
+<li><code>remove(value)</code> 집합에서 항목 제거</li>
+<li><code>has(value)</code> 항목이 집합에 있는지 확인</li>
+<li><code>clear()</code> 집합 비우기</li>
+<li><code>size()</code> 집합의 크기 반환</li>
+<li><code>values()</code> 집합의 모든 값을 포함한 배열 반환</li>
+<li><code>union(set)</code> 다른 집합과의 합집합 반환</li>
+<li><code>intersection(set)</code> 다른 집합과의 교집합 반환</li>
+<li><code>difference(set)</code> 다른 집합과의 차집합 반환(현재 집합에서 지정된 집합을 뺀 것)</li>
+<li><code>subset(set)</code> 한 집합이 다른 집합의 부분집합인지 확인</li>
+</ol>
+<h3 id="집합의-javascript-구현">집합의 JavaScript 구현</h3>
+<p>일반적으로 객체나 ES6의 Set을 사용하여 구현하며, 세부 사항은 생략합니다.</p>
+<h2 id="딕셔너리">딕셔너리</h2>
+<h3 id="딕셔너리의-기본-개념">딕셔너리의 기본 개념</h3>
+<p>집합은 서로 다른 요소들의 모음을 나타내며, 집합에서는 객체를 사용하여 <code>&#123;값: 값&#125;</code> 형태로 저장합니다. 반면, 사전에서는 <code>&#123;키: 값&#125;</code> 형태를 사용하며, 사전은 <code>매핑</code>이라고도 불립니다. 사전에는 일반적으로 다음과 같은 메서드들이 있습니다:</p>
+<ol>
+<li><code>set(key, value)</code> 사전에 항목 추가</li>
+<li><code>delete(key)</code> 지정된 키를 가진 항목 삭제</li>
+<li><code>has(key)</code> 특정 키를 가진 항목이 사전에 존재하는지 확인</li>
+<li><code>get(key)</code> 특정 키를 가진 항목을 찾아 반환</li>
+<li><code>clear()</code> 사전 비우기</li>
+<li><code>size()</code> 사전의 크기 반환</li>
+<li><code>keys()</code> 사전에 포함된 모든 항목의 키를 배열로 반환</li>
+<li><code>values()</code> 사전에 포함된 모든 항목의 값을 배열로 반환</li>
+</ol>
+<h3 id="사전의-javascript-구현">사전의 JavaScript 구현</h3>
+<p>생략</p>
+<h2 id="해시-테이블">해시 테이블</h2>
+<p>해시 테이블은 HashTable(배열 구현) 또는 HashMap(객체 구현)이라고도 하며, 사전 데이터 구조의 해시 테이블 구현 방식입니다. 사전에서 항목을 찾을 때 최악의 경우 전체 데이터 구조를 순회해야 할 수 있습니다. 하지만 해시 테이블과 함께 사용되는 해시 알고리즘을 이용하면 값의 정확한 위치를 알 수 있으므로 해당 값을 빠르게 검색할 수 있습니다. 해시 함수의 역할은 주어진 키 값을 기반으로 해시 테이블 내의 주소를 반환하는 것입니다.</p>
+<h3 id="해시-테이블의-용도">해시 테이블의 용도</h3>
+<p>당신은 왜 해시 테이블이 필요한지 물어볼 수 있습니다. JavaScript에서는 객체를 직접 사용하여 키-값 매핑을 얻을 때 O(1)의 속도로 처리할 수 있지 않냐고요. 이 말은 맞지만, 만약 중복된 키가 있다면 어떻게 해야 할까요? 예를 들어, 다른 학생들의 정보를 기록하기 위한 명부를 만들고 싶다고 가정해 봅시다. 그런데 동명이인 학생이 있다면 어떻게 해야 할까요? 이때는 각 학생의 이름을 입력으로 받아 고유한 출력을 생성하는 알고리즘이 필요합니다. 이렇게 해야 <code>일대일 대응</code>이 가능해져 O(1) 알고리즘을 구현할 수 있습니다. 이를 완벽한 해시라고 하며, 수학에서는 완전 단사 함수라고 합니다. 하지만 이 방법으로 수백만 개의 데이터를 저장하면 <code>Object</code> 객체가 매우 커져 성능 문제가 발생할 수 있습니다. 따라서 시간과 공간을 균형 있게 조절하기 위해 해시 알고리즘이 필요합니다.</p>
+<p>위의 명부 예시를 다시 살펴보면, 동명이인 학생이 있는 경우 여전히 그 이름을 키로 사용하지만, 값은 단순히 한 학생의 정보가 아니라 학생 정보의 배열(또는 연결 리스트)이 됩니다. 학생 이름이 주어졌을 때, 해당 값이 배열인 경우 배열을 순회하면서 정확한 학생 정보를 찾습니다. 이렇게 하면 시간(이전의 O(1)보다 길어짐 ❌)과 공간(이전의 Object 객체보다 적은 공간 사용 ✅)을 균형 있게 조절할 수 있습니다. 좋은 해시 알고리즘은 각 키의 배열 크기가 크게 차이나지 않도록 보장해야 합니다.</p>
+<h3 id="해시-테이블의-기본-메서드">해시 테이블의 기본 메서드</h3>
+<ol>
+<li><code>put(key, value)</code> 해시 테이블에 새 항목 추가</li>
+<li><code>remove(key)</code> 키를 기반으로 해시 테이블에서 항목 제거</li>
+<li><code>get(key)</code> 키를 기반으로 항목 검색</li>
+</ol>
+<h3 id="가장-간단한-해시-함수">가장 간단한 해시 함수</h3>
+<blockquote>
+<p>입력이 문자열인 경우를 예로 들며, 동일한 문자열은 일단 고려하지 않고, 데이터 구조로 배열을 사용합니다. 이렇게 하면 key를 키로 사용할 수 있습니다.</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> loseloseHashCode = <span class="hljs-keyword">function</span> (<span class="hljs-params">key</span>) &#123;<br>  <span class="hljs-keyword">let</span> hash = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; key.<span class="hljs-property">length</span>; i++) &#123;<br>    hash += key.<span class="hljs-title function_">charCodeAt</span>(i);<br>  &#125;<br>  <span class="hljs-keyword">return</span> hash % <span class="hljs-number">37</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h3 id="해시-테이블의-충돌-해결">해시 테이블의 충돌 해결</h3>
+<p>위의 해시 알고리즘을 통해 계산된 키는 충돌이 발생할 수 있습니다. 즉, 배열에서 동일한 key에 다른 값이 있을 경우 덮어쓰게 됩니다. 따라서 충돌을 해결해야 합니다. 세 가지 해결 방법이 있습니다:</p>
+<ol>
+<li><code>분리 연결법</code>은 해시 알고리즘이 생성한 키가 동일할 때, 키가 값을 직접 가리키는 대신 배열/연결 리스트를 가리키게 하여 문제를 배열/연결 리스트의 삽입/검색으로 변환하는 방법입니다.</li>
+<li><code>선형 탐사법</code>은 해시 알고리즘이 생성한 키가 동일할 때, 키를 자동으로 +1하여 다시 저장을 시도합니다. 여전히 키 충돌이 발생하면 계속 +1을 하여 빈 위치를 찾을 때까지 반복합니다(키가 숫자인 해시 테이블 형태, 예를 들어 배열에 적합합니다). 숫자 키를 위한 더 훌륭한 해시 구현은 <a href="http://web.archive.org/web/20071223173210/http://www.concentric.net/~Ttwang/tech/inthash.htm">이곳</a>에서 확인할 수 있습니다.</li>
+<li><code>이중 해싱법</code>은 해시 알고리즘이 생성한 키가 동일할 때, 충돌이 발생하면 다른 또는 동일한 해시 함수를 다시 사용하여 키를 생성하는 방법입니다.</li>
+</ol>
+<h3 id="해시-테이블의-javascript-구현">해시 테이블의 JavaScript 구현</h3>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/HashTable.js">일반 해시 테이블 구현</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/HashCollisionSeparateChaining.js">분리 연결법</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/HashCollisionLinearProbing.js">선형 탐사법</a></li>
+</ol>
+<h2 id="트리">트리</h2>
+<h3 id="트리-관련-용어">트리 관련 용어</h3>
+<p>먼저 구조 다이어그램을 살펴보세요:</p>
+<pre><code class="hljs mermaid">graph TD;
+    11---7;
+    11---15;
+    7---5;
+    7---9;
+    5---3;
+    5---6;
+    9---8;
+    9---10;
+    15---13;
+    15---20;
+    13---12;
+    13---14;
+    20---18;
+    20---25;</code></pre>
+<p>여기서:</p>
+<ol>
+<li>11은 0층, 7/15는 1층, 5/9/13/20은 2층, 나머지는 3층입니다.</li>
+<li>11을 루트 노드라고 하며, 나머지는 자식 노드라고 합니다. 최소한 하나의 자식 노드를 가진 노드를 내부 노드라고 하며, 자식 요소가 없는 노드를 외부 노드라고 합니다.</li>
+<li>노드에는 깊이 속성이 있습니다. 예를 들어 노드 3은 세 개의 조상 요소를 가지므로 깊이가 3입니다.</li>
+<li>트리의 높이는 모든 노드의 깊이 중 최댓값에 의해 결정됩니다.</li>
+<li>이것은 완전 이진 트리입니다. 가장 아래층 노드를 제외한 모든 노드가 두 개의 노드를 가지고 있기 때문입니다.</li>
+</ol>
+<blockquote>
+<p>주의: 동일한 데이터라도 여러 트리 구조가 있을 수 있으며, 반드시 유일한 표현 형태는 아닙니다. 따라서 다음 절의 <code>AVL 트리</code>가 등장합니다. AVL 트리는 데이터를 가능한 한 완전한 트리로 구성하려고 합니다.</p>
+</blockquote>
+<h3 id="이진-트리와-이진-탐색-트리">이진 트리와 이진 탐색 트리</h3>
+<p><code>이진 트리</code>의 노드는 최대 두 개의 자식 노드를 가질 수 있습니다. 하나는 왼쪽 자식 노드이고, 다른 하나는 오른쪽 자식 노드입니다. <code>이진 탐색 트리</code>(BST)는 이진 트리의 일종이지만, 임의의 노드의 왼쪽에는 해당 노드보다 작은 값을 저장하고, 오른쪽에는 해당 노드보다 크거나 같은 값을 저장할 수 있습니다. 다이어그램에 나온 것은 이진 탐색 트리이며, 다음과 같은 메서드가 있습니다:</p>
+<ol>
+<li><code>insert(key)</code> 새로운 노드 삽입</li>
+<li><code>search(key)</code> 노드 검색 또는 null 반환</li>
+<li><code>inOrderTraverse</code> 중위 순회로 모든 노드 방문</li>
+<li><code>preOrderTraverse</code> 전위 순회로 모든 노드 방문</li>
+<li><code>postOrderTraverse</code> 후위 순회로 모든 노드 방문</li>
+<li><code>min</code> 트리에서 가장 작은 값 반환</li>
+<li><code>max</code> 트리에서 가장 큰 값 반환</li>
+<li><code>remove(key)</code> 트리에서 특정 항목 제거</li>
+</ol>
+<h3 id="트리-순회-도식">트리 순회 도식:</h3>
+<ol>
+<li>
+<p>중위 순회—주로 트리 정렬 작업에 사용됨</p>
+<pre><code class="hljs mermaid">graph TD;
+    11---7;
+    11---15;
+    7---5;
+    7---9;
+    5---3;
+    5---6;
+    9---8;
+    9---10;
+    15---13;
+    15---20;
+    13---12;
+    13---14;
+    20---18;
+    20---25;
+    3-.-&gt;5
+    5-.-&gt;6;
+    6-.-&gt;7;
+    7-.-&gt;8;
+    8-.-&gt;9;
+    9-.-&gt;10;
+    10-.-&gt;11;
+    11-.-&gt;12;
+    12-.-&gt;13;
+    13-.-&gt;14;
+    14-.-&gt;15;
+    15-.-&gt;18;
+    18-.-&gt;20;
+    20-.-&gt;25;</code></pre>
+<p>순회 순서: 3 5 6 7 8 9 10 11 12 13 14 15 18 20 25</p>
+</li>
+<li>
+<p>전위 순회—구조화된 문서 출력에 주로 사용되며, 예시 도식의 순회 순서는: 11 7 5 3 6 9 8 10 15 13 12 14 20 18 25</p>
+</li>
+<li>
+<p>후위 순회—디렉토리와 그 하위 디렉토리의 전체 파일 크기 계산에 적용되며, 예시 도식의 순회 순서는: 3 6 5 8 10 9 7 12 14 13 18 25 20 15 11</p>
+</li>
+</ol>
+<h3 id="adelson-velskii-landi-트리-avl-트리">Adelson-Velskii-Landi 트리(AVL 트리)</h3>
+<p>AVL 트리는 자가 균형 트리입니다. 이진 트리는 특정 상황에서 한쪽 서브트리가 지나치게 깊어지고 다른 서브트리는 지나치게 얕아질 수 있으며, 아래 그림과 같습니다:</p>
+<pre><code class="hljs mermaid">graph TD;
+    11---7;
+    11---15;
+    7---5;
+    7---9;
+    5---3;
+    5---6;
+    9---8;
+    9---10;
+    15---13;
+    15---20;
+    13---12;
+    13---14;
+    20---18;
+    20---25;
+    25---27
+    27---30</code></pre>
+<p>이 트리의 오른쪽이 지나치게 깊어져 노드 검색, 추가, 삭제 시 성능 문제를 일으킬 수 있으므로 AVL 자가 균형 트리가 필요합니다. AVL은 자가 균형 이진 탐색 트리로, 모든 노드의 왼쪽과 오른쪽 서브트리 높이 차이가 최대 1입니다. 즉, 이 트리는 노드 추가 또는 제거 시 완전 트리에 가깝게 유지하려고 합니다.</p>
+<h4 id="avl-트리의-균형-인자-및-계산">AVL 트리의 균형 인자 및 계산</h4>
+<p>AVL 트리에서 노드 삽입 및 삭제는 BST와 완전히 동일합니다. AVL의 차이점은 삽입/삭제 시 <code>균형 인자(Balance Factor)</code>를 확인하고 필요한 경우 트리의 자동 균형 조정을 적용한다는 점입니다. AVL 트리에서는 각 노드에 대해 오른쪽 서브트리 높이(hr)와 왼쪽 서브트리 높이(hl)의 차이를 계산합니다. 이 값(hr-hl)이 0, 1, -1 중 하나가 아닌 경우 해당 AVL 트리의 균형을 조정해야 합니다. 이것이 균형 인자의 개념입니다. 다음 세 트리는 모두 균형이 잡혀 있습니다:</p>
+<pre><code class="hljs mermaid">graph TD;
+    subgraph 第三种
+        A((+1))---B(( -1))
+        A---C(( -1))
+        B---E((0))
+        C---D((+1))
+        C---F((0))
+        D---H((0))
+    end
+    subgraph 第二种
+        I((+1))---G((0))
+        I---K(( -1))
+        K---L((0))
+    end
+    subgraph 第一种
+        M(( -1))---N((0))
+    end</code></pre>
+<h4 id="avl-트리의-회전">AVL 트리의 회전</h4>
+<p>AVL 트리에 노드를 삽입할 때 단일 회전 또는 이중 회전 두 가지 균형 조정 연산을 수행할 수 있으며, 각각 네 가지 시나리오에 해당합니다:</p>
+<ol>
+<li><code>오른쪽---오른쪽(RR)</code>: 왼쪽으로의 단일 회전</li>
+<li><code>왼쪽---왼쪽(LL)</code>: 오른쪽으로의 단일 회전</li>
+<li><code>왼쪽---오른쪽(LR)</code>: 오른쪽으로의 이중 회전</li>
+<li><code>오른쪽---왼쪽(RL)</code>: 왼쪽으로의 이중 회전</li>
+</ol>
+<p>오른쪽—오른쪽(RR): 왼쪽으로의 단일 회전 예시(mermaid 그래프에서는 이진 트리로 표현할 수 없어 80이 왼쪽, 50이 오른쪽에 위치함):</p>
+<pre><code class="hljs mermaid">graph TD;
+    subgraph 之后
+        G((70))---H((50))
+        G---I((80))
+        I---J((90))
+        H---K((30))
+        H---L((60))
+    end
+    subgraph 之前
+        A((50))---B((30))
+        A---C((70))
+        C---D((60))
+        C---E((80))
+        E---F((90))
+    end</code></pre>
+<p>왼쪽—왼쪽(LL): 오른쪽으로의 단일 회전 예시(mermaid 그래프에서는 이진 트리로 표현할 수 없어 50이 왼쪽, 10이 오른쪽에 위치함):</p>
+<pre><code class="hljs mermaid">graph TD;
+    subgraph 之后
+        G((30))---H((10))
+        G---I((50))
+        I---J((40))
+        I---K((70))
+        H---L((5))
+    end
+    subgraph 之前
+        A((50))---C((30))
+        A---B((70))
+        C---D((10))
+        C---E((40))
+        D---F((5))
+    end</code></pre>
+<p>왼쪽—오른쪽(LR): 오른쪽으로의 이중 회전 예시(기본적으로 RR 회전을 한 번 수행한 후 LL 회전을 수행):</p>
+<pre><code class="hljs mermaid">graph TD;
+    subgraph 之后
+        G((40))---H((30))
+        G---I((50))
+        H---J((10))
+        H---K((35))
+        J---L((70))
+    end
+    subgraph 之前
+        A((50))---C((30))
+        A---B((70))
+        C---D((10))
+        C---E((40))
+        E---F((35))
+    end</code></pre>
+<p>오른쪽—왼쪽(RL): 왼쪽으로의 이중 회전 예시(기본적으로 LL 회전을 한 번 수행한 후 RR 회전을 수행, mermaid 그래프에서는 이진 트리로 표현할 수 없어 80이 왼쪽, 70이 오른쪽에 위치함):</p>
+<pre><code class="hljs mermaid">graph TD;
+    subgraph 之后
+        G((72))---I((70))
+        G---H((80))
+        H---J((75))
+        H---K((90))
+        I---L((50))
+    end
+    subgraph 之前
+        A((70))---B((50))
+        A---C((80))
+        C---D((72))
+        C---E((90))
+        D---F((75))
+    end</code></pre>
+<p>AVL 트리는 자동 균형 조정이 가능하지만, 노드 삽입 또는 제거 성능이 항상 최적은 아닙니다. 더 나은 선택은 레드-블랙 트리입니다. <a href="http://goo.gl/OxED8K">레드-블랙 트리</a>는 노드를 효율적이고 순차적으로 탐색할 수 있습니다.</p>
+<h3 id="트리-기본-메서드의-javascript-구현">트리 기본 메서드의 JavaScript 구현</h3>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/BinarySearchTree.js">이진 트리</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/AVLTree.js">AVL 트리</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/RedBlackTree.js">레드-블랙 트리</a></li>
+<li><a href="http://goo.gl/SFlhW6">힙 트리</a></li>
+</ol>
+<h2 id="그래프">그래프</h2>
+<h3 id="그래프의-기본-개념">그래프의 기본 개념</h3>
+<p>그래프는 네트워크 구조의 추상적 모델입니다. 그래프는 간선으로 연결된 노드(또는 정점)들의 집합을 나타냅니다. 모든 이항 관계는 그래프로 표현할 수 있습니다. 그래프를 사용하여 두 점 사이의 최단 경로 등의 문제를 해결할 수 있습니다.</p>
+<h3 id="그래프의-수학적-개념">그래프의 수학적 개념</h3>
+<p>하나의 그래프 G=(V, E)는 다음 요소들로 구성됩니다.</p>
+<ol>
+<li>V: 정점들의 집합</li>
+<li>E: V에 속한 정점들을 연결하는 간선들의 집합</li>
+</ol>
+<p>아래는 하나의 그래프를 나타낸 것입니다:</p>
+<pre><code class="hljs mermaid">graph TD;
+    A---B
+    B---E
+    B---F
+    E---I
+    A---C
+    A---D
+    C---D
+    C---G
+    D---G
+    D---H</code></pre>
+<h3 id="그래프-관련-용어">그래프 관련 용어</h3>
+<p>위 그래프에서:</p>
+<ol>
+<li>하나의 간선으로 연결된 정점들을 <code>인접 정점</code>이라고 합니다.</li>
+<li>하나의 정점의 <code>차수</code>는 그 정점과 인접한 정점들의 수입니다. 위 그래프에서 A는 다른 세 정점과 인접하므로 A의 차수는 3입니다; E의 차수는 2입니다.</li>
+<li><code>경로</code>는 정점 v1, v2,…vk의 연속적인 시퀀스로, vi와 v(i+1)은 인접합니다. 위 그래프에는 ABEI와 ACDG 경로가 포함됩니다.</li>
+<li><code>단순 경로</code>는 반복되는 정점을 포함하지 않아야 합니다. 예를 들어 ADG는 단순 경로입니다. 마지막 정점을 제외하면(첫 번째 정점과 동일한 정점이기 때문에), <code>순환</code>도 단순 경로입니다. 예를 들어 ADCA(마지막 정점이 A로 돌아옴)가 있습니다.</li>
+<li>그래프에 순환이 존재하지 않으면 해당 그래프는 <code>비순환적</code>이라고 합니다. 그래프의 모든 두 정점 사이에 경로가 존재하면 해당 그래프는 <code>연결됨</code>이라고 합니다.</li>
+<li>그래프는 <code>방향성</code>이 있을 수도 있고(간선에 방향이 있음) <code>무방향성</code>일 수도 있습니다(간선에 방향이 없음). 위 그래프는 <code>무방향 그래프</code>입니다.</li>
+<li>그래프의 모든 두 정점 사이에 양방향 경로가 존재하면 해당 그래프는 <code>강하게 연결됨</code>이라고 합니다.</li>
+<li>그래프는 <code>가중치가 없는</code> 상태일 수도 있고, <code>가중치가 있는</code> 상태일 수도 있습니다. 가중치 그래프에서는 간선에 가중치가 부여됩니다.</li>
+</ol>
+<h3 id="그래프의-표현">그래프의 표현</h3>
+<h4 id="인접-행렬">인접 행렬</h4>
+<p>그래프를 구현하는 가장 일반적인 방법은 인접 행렬입니다. 각 노드는 정수와 연관되며, 이 정수는 배열의 인덱스로 사용됩니다. 정점들 사이의 연결을 나타내기 위해 2차원 배열을 사용합니다. 인덱스가 i인 노드와 인덱스가 j인 노드가 인접하면 array[i][j] === 1이고, 그렇지 않으면 array[i][j] === 0입니다. 위의 그래프를 인접 행렬로 나타내면 다음과 같습니다:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+<th>G</th>
+<th>H</th>
+<th>I</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>C</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>D</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>E</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>F</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>G</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>H</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>I</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>강하게 연결되지 않은 그래프를 <code>희소 그래프</code>라고 합니다. 인접 행렬로 표현할 경우 행렬에 많은 0이 포함되어, 실제로 존재하지 않는 간선을 표현하기 위해 컴퓨터의 저장 공간을 낭비하게 됩니다.</p>
+<h4 id="인접-리스트">인접 리스트</h4>
+<p>인접 리스트는 그래프에서 각 정점의 인접한 정점 목록으로 구성됩니다. 이러한 데이터 구조를 표현하는 여러 가지 방법이 있습니다. 리스트(배열)/연결 리스트/심지어 해시 테이블이나 딕셔너리를 사용하여 인접 정점 목록을 나타낼 수 있습니다. 위의 그래프는 아래의 인접 리스트로 표현될 수 있습니다:</p>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td>A</td>
+<td>E</td>
+<td>F</td>
+<td></td>
+</tr>
+<tr>
+<td>C</td>
+<td>A</td>
+<td>D</td>
+<td>G</td>
+<td></td>
+</tr>
+<tr>
+<td>D</td>
+<td>A</td>
+<td>C</td>
+<td>G</td>
+<td>H</td>
+</tr>
+<tr>
+<td>E</td>
+<td>B</td>
+<td>I</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>F</td>
+<td>B</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>G</td>
+<td>C</td>
+<td>D</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>H</td>
+<td>D</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>I</td>
+<td>E</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="인접-행렬-생략">인접 행렬(생략)</h4>
+<h4 id="그래프-관련-메서드">그래프 관련 메서드</h4>
+<ol>
+<li><code>addVertex(v)</code> 새로운 정점 추가</li>
+<li><code>addEdge(v, w)</code> 새로운 간선 추가</li>
+</ol>
+<h3 id="그래프-순회">그래프 순회</h3>
+<p>그래프 순회는 특정 정점을 찾거나 두 정점 사이의 경로를 탐색하고, 그래프가 연결되어 있는지 확인하며, 그래프에 사이클이 포함되어 있는지 검사하는 등의 용도로 사용됩니다. 그래프 순회 알고리즘의 기본 아이디어는, 처음 방문한 각 노드를 추적하고, 아직 완전히 탐색되지 않은 노드(즉, 아직 탐색되지 않은 자식 노드가 있는 노드)가 무엇인지 추적하는 것입니다. 아래 두 가지 탐색(순회) 모드 모두에서, 첫 번째로 방문할 정점을 명확히 지정해야 합니다. 정점을 완전히 탐색하려면 해당 정점의 모든 간선을 확인하고, 각 간선으로 연결된 방문하지 않은 정점을 발견된 것으로 표시하고, 방문할 정점 목록에 추가해야 합니다. 알고리즘의 효율성을 보장하기 위해 각 정점을 최대 두 번만 방문해야 합니다. 연결된 그래프에서는 모든 간선과 정점이 방문됩니다. 정점의 방문 상태는 세 가지로 나타낼 수 있습니다: 미방문/방문되었지만 완전히 탐색되지 않음/완전히 탐색됨</p>
+<h4 id="그래프의-너비-우선-탐색-breadth-first-search-bfs">그래프의 너비 우선 탐색(Breadth-First Search, BFS)</h4>
+<p>방문할 정점 목록의 데이터 구조는 큐이며, 정점을 큐에 저장하고, 가장 먼저 큐에 들어간 정점부터 탐색합니다.</p>
+<p>너비 우선 탐색(BFS)은 최단 경로를 찾는 데 사용됩니다(아래에 구현 예시가 있음). <code>Dijkstra 알고리즘</code>은 단일 출발점 최단 경로 문제를 해결합니다(<code>탐욕 알고리즘</code>). <code>Bellman-Ford 알고리즘</code>은 간선 가중치가 음수인 단일 출발점 최단 경로 문제를 해결합니다. <code>A* 탐색 알고리즘</code>은 한 쌍의 정점 사이의 최단 경로만을 구하는 문제를 해결하며, 휴리스틱을 사용해 탐색 속도를 높입니다. <code>Floyd-Warshall 알고리즘</code>은 모든 정점 쌍 간의 최단 경로 문제를 해결합니다(<code>동적 계획법 알고리즘</code>).</p>
+<h4 id="그래프의-깊이-우선-탐색-depth-first-search-dfs">그래프의 깊이 우선 탐색(Depth-First Search, DFS)</h4>
+<p>방문할 정점 목록의 자료 구조는 스택이며, 정점을 스택에 저장하고 경로를 따라 정점을 탐색합니다. 새로운 인접 정점이 있으면 방문합니다. 작업이나 단계의 실행 순서를 정렬해야 할 때 이를 <code>위상 정렬(topsort/toposort)</code>이라고 하며, 깊이 우선 탐색을 사용해 위상 정렬을 수행할 수 있습니다. 위상 정렬은 <code>방향성 비순환 그래프(DAG)</code>에만 적용할 수 있으며, 아래에 구체적인 구현 예시가 있습니다.</p>
+<h3 id="최소-신장-트리-mst">최소 신장 트리(MST)</h3>
+<p><code>최소 신장 트리</code>는 네트워크 설계에서 흔히 접하는 문제입니다. 예를 들어 회사에 여러 사무실이 있고, 전화 회선을 상호 연결해 비용을 최소화하면서 자금을 절약하려면 어떤 방법이 가장 좋을까요? 이는 섬과 다리 문제에도 적용할 수 있습니다. n개의 섬 사이에 다리를 건설해 모든 섬을 상호 연결하는 데 최소 비용을 들이고 싶다면, 이 두 문제 모두 <code>MST 알고리즘</code>으로 해결할 수 있습니다:</p>
+<ol>
+<li>
+<p>Prim 알고리즘</p>
+<p>가중치가 있는 무방향 연결 그래프의 MST 문제를 해결하는 탐욕 알고리즘으로, 모든 정점을 포함하는 트리를 구성하는 간선의 부분 집합을 찾아 간선 가중치의 합이 최소가 되도록 합니다.</p>
+</li>
+<li>
+<p>Kruskal 알고리즘</p>
+<p>위와 마찬가지로 가중치가 있는 무방향 연결 그래프의 MST 문제를 해결하는 탐욕 알고리즘입니다.</p>
+</li>
+</ol>
+<h4 id="그래프의-javascript-구현">그래프의 JavaScript 구현</h4>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/Graph.js">그래프</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/ShortestPath.js">최단 경로 알고리즘</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/MinimumSpanningTree.js">최소 신장 트리</a></li>
+</ol>
+<h2 id="정렬-및-탐색-알고리즘">정렬 및 탐색 알고리즘</h2>
+<h3 id="정렬-알고리즘">정렬 알고리즘</h3>
+<ol>
+<li><code>버블 정렬</code> 복잡도 O(n<sup>2</sup>) 두 개의 루프를 사용하며, 조건을 만족하면 내부 루프의 두 값을 교환합니다.</li>
+<li><code>선택 정렬</code> 복잡도 O(n<sup>2</sup>) 두 개의 루프를 사용하며, 내부 루프에서 최솟값을 찾아 첫 번째 위치에 놓고, 두 번째로 작은 값을 찾아 두 번째 위치에 놓는 과정을 반복합니다.</li>
+<li><code>삽입 정렬</code> 복잡도 O(n<sup>2</sup>) 처음부터 시작하여 앞부분이 이미 정렬되었다고 가정한 후, 현재 값이 정렬된 배열의 어느 위치에 들어가야 하는지 판단하여 삽입하고 다음 값으로 넘어갑니다.</li>
+<li><code>병합 정렬</code> 복잡도 O(nlog<sup>n</sup>) 재귀적 접근으로 배열을 작은 배열로 나눈 후, 각 작은 배열을 두 개씩 정렬(각각 정렬된 두 벌의 카드를 정렬하는 것처럼)하여 최종적으로 완전히 정렬합니다.</li>
+<li><code>퀵 정렬</code> 복잡도 O(nlog<sup>n</sup>) 피벗(pivot)을 선택하고 데이터를 두 부분으로 나눕니다. 피벗보다 큰 값은 오른쪽, 작은 값은 왼쪽에 배치하며, 왼쪽 포인터가 오른쪽 포인터를 넘어설 때까지 반복합니다.</li>
+<li><code>힙 정렬</code> 배열을 이진 트리로 간주하여 정렬합니다. 규칙은 다음과 같습니다:
+<ol>
+<li>인덱스 0은 트리의 루트 노드입니다.</li>
+<li>루트 노드를 제외한 모든 노드 N의 부모 노드는 N/2입니다.</li>
+<li>노드 L의 왼쪽 자식 노드는 2 * L입니다.</li>
+<li>노드 R의 오른쪽 자식 노드는 2 * R + 1입니다.</li>
+<li>예를 들어 배열 [3, 5, 1, 6, 4, 7, 2]는 다음과 같은 트리로 볼 수 있습니다:<pre><code class="hljs mermaid">graph TD;
+A((3))---B((5))
+A---C((1))
+B---D((6))
+B---E((4))
+C---F((7))
+C---G((2))</code></pre>
+</li>
+</ol>
+</li>
+<li>계수 정렬</li>
+<li>버킷 정렬</li>
+<li>기수 정렬(분산 정렬)</li>
+</ol>
+<h3 id="검색-알고리즘">검색 알고리즘</h3>
+<ol>
+<li>순차 검색</li>
+<li>이진 검색</li>
+</ol>
+<h3 id="정렬-검색-알고리즘의-javascript-구현">정렬/검색 알고리즘의 JavaScript 구현</h3>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/SortingSearchingAlgorithms.js">다양한 정렬/검색 알고리즘 모음</a></li>
+</ol>
+<h2 id="알고리즘-패턴">알고리즘 패턴</h2>
+<h3 id="동적-프로그래밍">동적 프로그래밍</h3>
+<ol>
+<li><code>배낭 문제</code>는 일련의 아이템과 각각의 가치 및 용량이 주어졌을 때, 총 가치가 최대가 되는 아이템의 집합을 찾는 문제입니다. 제약 조건은 총 용량이 배낭의 용량보다 작거나 같아야 한다는 것입니다.</li>
+<li><code>최장 공통 부분 수열</code>은 여러 수열에서 가장 긴 공통 부분 수열을 찾는 문제입니다(다른 수열에서 요소를 삭제하되 남은 요소의 순서는 바꾸지 않고 얻을 수 있는 부분 수열).</li>
+<li><code>행렬 체인 곱셈</code>은 일련의 행렬이 주어졌을 때, 이들 행렬을 곱하는 가장 효율적인 방법(계산 횟수를 최소화)을 찾는 문제입니다. 실제 곱셈 연산은 수행되지 않으며, 행렬들이 곱해지는 순서를 찾는 것이 목적입니다.</li>
+<li><code>동전 거스름돈</code> 문제는 d1, d2…dn 액면가를 가진 일정 수의 동전과 거스름돈 금액이 주어졌을 때, 거스름돈을 만드는 방법의 수를 찾는 문제입니다.</li>
+<li><code>그래프의 모든 쌍 최단 경로</code>는 모든 정점 쌍(u, v)에 대해 정점 u에서 v로의 최단 경로를 찾는 문제입니다(이전에 Floyd-Warshall 알고리즘으로 해결할 수 있었습니다).</li>
+</ol>
+<h3 id="알고리즘-패턴의-javascript-구현">알고리즘 패턴의 JavaScript 구현</h3>
+<ol>
+<li><a href="https://static.xheldon.cn/example-code/2019/Recursion.js">재귀</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/MinCoinChangeDP.js">최소 동전 거스름돈 DP 알고리즘</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/MinCoinChangeGreedy.js">최소 동전 거스름돈 탐욕 알고리즘</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/KnapsackProblemDP.js">배낭 문제 DP 알고리즘</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/KnapSackProblemRecursive.js">배낭 문제 재귀 알고리즘</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/KnapSackProblemGreedy.js">배낭 문제 탐욕 알고리즘</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/LongestCommonSubsequenceDP.js">최장 공통 부분 수열 DP 알고리즘</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/LongestCommonSubsequenceRecursive.js">최장 공통 부분 수열 재귀 알고리즘</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/MatrixChainMultiplicationDP.js">행렬 체인 곱셈 DP 알고리즘</a></li>
+<li><a href="https://static.xheldon.cn/example-code/2019/MatrixChainMultiplicationRecursive.js">행렬 체인 곱셈 재귀 알고리즘</a></li>
+</ol>
+<h2 id="np-완전-이론-개요">NP 완전 이론 개요</h2>
+<p>일반적으로, 알고리즘의 복잡도가 O(n<sup>k</sup>)이고 k가 상수인 경우, 이 알고리즘을 효율적이라고 간주하며, 이를 다항식 알고리즘이라고 합니다. 주어진 문제에 대해 다항식 알고리즘이 존재하면 P(polynomial, 다항식)으로 분류합니다.</p>
+<p>또 다른 유형인 NP(nondeterministic polynomial, 비결정적 다항식) 알고리즘이 있습니다. 어떤 문제가 다항식 시간 내에 해의 정확성을 검증할 수 있다면 NP로 분류됩니다.</p>
+<p>어떤 문제가 다항식 알고리즘을 가지고 있다면, 자연스럽게 다항식 시간 내에 그 해답을 검증할 수 있으므로 모든 P는 NP에 속합니다. 그러나 P=NP가 성립하는지는 여전히 알려지지 않았습니다.</p>
+<p>NP 문제 중 가장 어려운 것은 <code>NP 완전</code> 문제로, 다음 두 가지 조건을 만족합니다:</p>
+<ol>
+<li>NP 문제입니다. 즉, 다항식 시간 내에 해답을 검증할 수 있지만 아직 다항식 알고리즘을 찾지 못했습니다.</li>
+<li>모든 NP 문제를 다항식 시간 내에 이 문제로 환원할 수 있습니다.</li>
+</ol>
+<p>또 다른 유형의 문제는 NP 완전 문제의 두 번째 조건만 만족하면 되며, 이를 NP 난해 문제라고 합니다. 따라서 NP 완전 문제는 NP 난해 문제의 부분집합입니다.</p>
+<p>NP 완전 문제가 아닌 NP 난해 문제의 예로는 <code>정지 문제</code>와 <code>부울 만족 가능성 문제(SAT)</code>가 있으며, NP 완전 문제의 예로는 <code>부분집합 합 문제</code>, <code>외판원 문제</code>, <code>정점 커버 문제</code> 등이 있습니다.</p>
+<p>마지막으로, 앞서 언급한 문제 중 일부는 <code>해결 불가능</code>하지만, 여전히 요구 사항에 맞는 시간 내에 근사해를 찾을 수 있는 방법이 있습니다. <code>휴리스틱 알고리즘</code>이 그 중 하나입니다. 휴리스틱 알고리즘으로 얻은 해답이 최적해는 아닐 수 있지만, 문제를 해결하기에는 충분합니다.</p>
+<p>휴리스틱 알고리즘의 예로는 <code>지역 탐색</code>, <code>유전 알고리즘</code>, <code>휴리스틱 네비게이션</code>, <code>기계 학습</code> 등이 있습니다. 더 많은 정보는 <a href="http://goo.gl/gxIu9w">여기에서 확인</a>할 수 있습니다.</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          이 글의 최초 게시:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/Data-Structures-and-Algorithms-in-Javascript.ko.html"
+            title="JavaScript의 자료구조와 알고리즘"
+          >
+            JavaScript의 자료구조와 알고리즘 - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">목차</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>블로거의 말:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        저는 인생의 중요한 선택의 기로에 섰을 때, 누군가 최선의 방법을 알려주어 소중한 시간을 헛되이 보내지 않기를 바라곤 합니다. 그런 마음으로 저는 자주 블로그를 쓰며, 광활한 인터넷의 이 작은 구석에 제게는 단 한 번뿐인 인생 경험을 기록하여 도움이 필요한 분들에게 도움이 되기를 바랍니다.
+    </div>
+    <hr>
+    
+    <h5><a href="/ko/archive/">인기 태그</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="기술"
+                rel="188">기술</a>
+        
+            <a data-sort="0200"
+                href="/ko/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="생활"
+                rel="108">생활</a>
+        
+            <a data-sort="0264"
+                href="/ko/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="삽질"
+                rel="44">삽질</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="팁"
+                rel="32">팁</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="튜토리얼"
+                rel="32">튜토리얼</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="번역"
+                rel="24">번역</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="경험"
+                rel="20">경험</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="미식"
+                rel="20">미식</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="첫인상"
+                rel="16">첫인상</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="워크플로"
+                rel="16">워크플로</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="플러그인"
+                rel="16">플러그인</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="네트워크"
+                rel="16">네트워크</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="사용 경험"
+                rel="12">사용 경험</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="정리"
+                rel="12">정리</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="서버"
+                rel="12">서버</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="라우터"
+                rel="12">라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="소프트 라우터"
+                rel="12">소프트 라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="에세이"
+                rel="12">에세이</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9B%86%E6%88%90"
+                title="통합"
+                rel="12">통합</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="주식"
+                rel="8">주식</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="최적화"
+                rel="8">최적화</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%8D%83%E5%85%86"
+                title="기가비트"
+                rel="8">기가비트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="큰일"
+                rel="8">큰일</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="도구"
+                rel="8">도구</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="바이패스 라우터"
+                rel="8">바이패스 라우터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="프레임워크"
+                rel="8">프레임워크</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="족욕 시간"
+                rel="8">족욕 시간</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="테스트"
+                rel="8">테스트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="테슬라"
+                rel="8">테슬라</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="에디터"
+                rel="8">에디터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="영상"
+                rel="8">영상</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="디버깅"
+                rel="8">디버깅</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BD%A6"
+                title="자동차"
+                rel="8">자동차</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="마이그레이션"
+                rel="8">마이그레이션</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="둥베이 요리"
+                rel="4">둥베이 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="집 사기"
+                rel="4">집 사기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="프록시"
+                rel="4">프록시</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="풀스택"
+                rel="4">풀스택</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="북유럽 신화"
+                rel="4">북유럽 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="협업"
+                rel="4">협업</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="압축"
+                rel="4">압축</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="크레토스"
+                rel="4">크레토스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="가정식"
+                rel="4">가정식</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="부강"
+                rel="4">부강</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="비교"
+                rel="4">비교</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="쓰촨 요리"
+                rel="4">쓰촨 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="업무 경험"
+                rel="4">업무 경험</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="그리스 신화"
+                rel="4">그리스 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="자주 쓰는 앱"
+                rel="4">자주 쓰는 앱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="오픈소스"
+                rel="4">오픈소스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="언박싱"
+                rel="4">언박싱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="갓 오브 워"
+                rel="4">갓 오브 워</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="유심"
+                rel="4">유심</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%8B%93%E6%89%91"
+                title="토폴로지"
+                rel="4">토폴로지</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="이야기"
+                rel="4">이야기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="자료구조"
+                rel="4">자료구조</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="여행"
+                rel="4">여행</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="일상"
+                rel="4">일상</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="일본"
+                rel="4">일본</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="서비스"
+                rel="4">서비스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="포맷"
+                rel="4">포맷</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A2%A6"
+                title="꿈"
+                rel="4">꿈</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="브라우저"
+                rel="4">브라우저</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="게임"
+                rel="4">게임</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="푸념"
+                rel="4">푸념</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="사용자 개인정보"
+                rel="4">사용자 개인정보</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="알고리즘"
+                rel="4">알고리즘</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="디테일"
+                rel="4">디테일</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="이어폰"
+                rel="4">이어폰</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="자유"
+                rel="4">자유</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="계획"
+                rel="4">계획</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="설정"
+                rel="4">설정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="함정"
+                rel="4">함정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="변환"
+                rel="4">변환</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="기술 선정"
+                rel="4">기술 선정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="면접"
+                rel="4">면접</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>칼럼</h5>
+    <div class="tags">
+        <a href="/projects">오픈 소스</a>
+        <a href="/book-list">기술 도서 목록</a>
+        <a href="/subscribe">구독 & 유료 앱</a>
+        <a href="/my-food">맛집 추천</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>친구들</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">중국판</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+ 
+<script src="/js/mermaid.8.3.1.js"></script>
+<script>
+  window.addEventListener('load', function () {
+    var config = {
+      startOnLoad: true,
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+      },
+    };
+    mermaid.initialize(config);
+    var elements = document.getElementsByClassName('language-mermaid');
+    for (var i = elements.length; i--; ) {
+      element = elements[i];
+      var graphDefinition = element.innerText;
+      if (graphDefinition) {
+        var svg = mermaid.render(
+          'ha_mermaid_' + i,
+          graphDefinition,
+          function (svg) {}
+        );
+        if (svg) {
+          var svgElement = document.createElement('div');
+          preNode = element.parentNode;
+          svgElement.innerHTML = svg;
+          svgElement.setAttribute('class', 'mermaid');
+          svgElement.setAttribute('data-processed', 'true');
+          preNode.parentNode.replaceChild(svgElement, preNode);
+        }
+      }
+    }
+  });
+</script>
+ <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="JavaScript의 자료구조와 알고리즘"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ko"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ko/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

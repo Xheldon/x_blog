@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      Vue + Webpack コンポーネント開発（練習環境）初体験 - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="Vue + Webpack コンポーネント開発（練習環境）初体験 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2016-4-29T9:12:12"> 
+              
+                  
+                    <meta property="article:tag" content="Vue">
+                    
+                    <meta property="article:tag" content="技術">
+                    
+                      
+                          
+                            <meta name="og:description" content="">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ja/tech/vue-simple-use.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ja_JP">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ja/tech/vue-simple-use.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/vue-simple-use.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/vue-simple-use.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/vue-simple-use.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/vue-simple-use.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/vue-simple-use.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ja/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ja/">ホーム</a>
+            </li>
+            <li>
+              <a href="/ja/about/">概要</a>
+            </li>
+            <li>
+              <a href="/ja/donate/">寄付</a>
+            </li>
+            <li>
+              <a href="/ja/archive/">アーカイブ</a>
+            </li>
+            <li>
+              <a href="/ja/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">日本語</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/vue-simple-use.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/vue-simple-use.html" hreflang="en">English</a></li>
+        <li class="lang-item active"><a href="/ja/tech/vue-simple-use.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/vue-simple-use.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ja/archive/?tag=Vue"
+                            title="Vue">
+                            Vue
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技術">
+                            技術
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        Vue + Webpack コンポーネント開発（練習環境）初体験
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 作成日 2016年04月29日</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;注意：この記事が作成されてから既に
+          <code id="from_time"></code> 日が経過しています。情報の鮮度にご注意ください
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1461964332000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+              <h2 id="はじめに">はじめに</h2>
+<p>他の人の <code>vue</code> マルチページフレームワークを研究してみたところ、ほとんどが <code>package.json</code> ファイルを直接コピーしてローカルで <code>npm install</code> を実行するか、公式の <code>vue-cli</code> ツールを使ってプロジェクトを生成する方法でした。確かに理解はできますが、記憶に残らないため、<code>.vue</code> をコンポーネントとして使用するプロジェクトをゼロから構築する練習が必要だと考え、このプロジェクトを作成しました。</p>
+<p><code>.vue</code> コンポーネントを使用する場合、以前のように <code>jQuery</code> のように <code>vue.js</code> をページに直接読み込むのではなく、<code>webpack</code> + <code>babel</code> + 各種 <code>loader</code> ツールを使用して <code>.vue</code> ファイルをコンパイルし、<code>html</code> をバンドル生成する必要があります。</p>
+<h2 id="fbi警告">FBI警告</h2>
+<p><em><code>注意</code></em> : これは最も基本的な初体験であるため、正式な開発で必須となる <code>loader</code> や <code>plugin</code> はインストールしていません。公式チュートリアルに従って手動で入力することで、特に上級チュートリアルで扱う親子コンポーネント間のパラメータ受け渡し、スコープ付きスロット、再帰コンポーネント、<code>slot</code> などの複雑な部分を深く理解するためです。したがって、この設定は正式な開発の参考設定として使用することはできず、<code>vue</code> コンポーネントの動作原理を理解するための練習プロジェクトとしてのみ利用してください。</p>
+<h2 id="設定説明">設定説明</h2>
+<p>以下の設定の詳細説明は後述しますが、読みたくない場合は以下の <code>package.json</code> を直接コピーしてください。ただし、記憶に定着させるためには手動で入力することをお勧めします。</p>
+<p>さっそく始めましょう。</p>
+<p>まず、<code>webpack+vue</code> を使用するため、必要なパッケージをインストールします。ここでは <code>vue@2.2.4</code> と <code>webpack@1.12.2</code> を使用します:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">npm install webpack@<span class="hljs-number">1.12</span><span class="hljs-number">.2</span> vue@<span class="hljs-number">2.2</span><span class="hljs-number">.4</span> --save-dev<br></code></pre></td></tr></table></figure>
+<p>次に <code>babel</code> と対応する <code>loader</code> です。ここでは <code>es2015</code> の設定を使用し、最新のものを利用します:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">npm install babel bebel-core babel-loader babel-preset-es2015 --save-dev<br></code></pre></td></tr></table></figure>
+<p>そして <code>webpack</code> の必須 <code>loader</code> です。<code>css-loader</code> は <code>css</code> 内の <code>url()</code> リソースを処理し、<code>style-loader</code> は <code>require</code> された <code>css</code> を抽出して <code>style</code> タグに挿入し、ページの <code>head</code> 部分に追加します。<code>html-webpack-plugin</code> はエントリーファイルの <code>js</code> を <code>html</code> に変換し、エントリーファイル内の各種リソースは各種 <code>loader</code> によって処理された後、生成された <code>html</code> に挿入されます。<code>extract-text-webpack-plugin</code> は <code>js</code> から <code>style</code> タグを介して <code>head</code> に追加されたスタイルを個別の <code>.css</code> ファイルに抽出します:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">npm install css-loader style-loader html-webpack-plugin extract-text-webpack-plugin@<span class="hljs-number">1.0</span><span class="hljs-number">.1</span> --save-dev<br></code></pre></td></tr></table></figure>
+<p>最後に <code>vue</code> 関連のものです。<code>.vue</code> ファイルには少なくとも <code>template/style/script</code> の3つのタグが含まれるため、3つの <code>loader</code> と総合的な <code>vue-loader</code> の計4つの <code>loader</code> が必要です:</p>
+<p><code>vue-html-loader</code> は <code>webpack</code> の公式 <code>html-loader</code> のフォークで、作者は <code>webpack.config.js</code> の <code>module.export.vue</code> オブジェクト上で <code>html</code> オプションを使用して <code>vue</code> 関連の <code>html</code> を個別に設定できるようにするためにここに配置しています（このプロジェクトでは <code>vue-loader</code> をインストールすれば十分ですが、説明のために一緒にインストールしています）。</p>
+<p><code>vue-style-loader</code>は<code>.vue</code>ファイル内の<code>style</code>セクションの内容を処理するために使用され、<code>webpack</code>の公式<code>style-loader</code>の<code>fork</code>です（このプロジェクトでは<code>vue-loader</code>をインストールすれば十分ですが、ここでは説明のために記載しています）。</p>
+<p><code>vue-template-compiler</code>は<code>.vue</code>ファイル内の<code>template</code>セクションの内容を処理するために使用されます。コンパイル後のファイルで他の処理を行う場合（つまり<code>build tools</code>を記述する場合）を除き、これは必須ではありません。なぜなら<code>vue-loader</code>は既にデフォルトでこれを使用しているからです（このプロジェクトでは<code>vue-loader</code>をインストールすれば十分ですが、ここでは説明のために記載しています）。</p>
+<p><code>vue-loader</code>は<code>.vue</code>拡張子の内容を処理するために使用され、関連する内容が検出されると、上記の3つの<code>loader</code>を呼び出して処理を行います。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">npm install vue-html-loader vue-loader vue-style-loader vue-template-compiler --save-dev<br></code></pre></td></tr></table></figure>
+<p>最後に開発用の<code>webpack-dev-server</code>です。ここでは<code>1.12.1</code>バージョンをインストールします：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">npm install webpack-dev-server --save-dev<br></code></pre></td></tr></table></figure>
+<p>以下は全体の<code>package.json</code>設定ファイルです。各<code>package.json</code>フィールドの具体的な意味については、<a href="http://json.is/">このサイト</a>を参照してください。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs js">&#123;<br>  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;vue-components&quot;</span>,<br>  <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;0.0.1&quot;</span>,<br>  <span class="hljs-string">&quot;description&quot;</span>: <span class="hljs-string">&quot;vue components test&quot;</span>,<br>  <span class="hljs-string">&quot;main&quot;</span>: <span class="hljs-string">&quot;app/app.js&quot;</span>,<br>  <span class="hljs-string">&quot;scripts&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;dev&quot;</span>: <span class="hljs-string">&quot;webpack-dev-server --hot&quot;</span>,<br>    <span class="hljs-string">&quot;build&quot;</span>: <span class="hljs-string">&quot;webpack&quot;</span><br>  &#125;,<br>  <span class="hljs-string">&quot;keywords&quot;</span>: [<br>    <span class="hljs-string">&quot;vue&quot;</span>,<br>    <span class="hljs-string">&quot;components&quot;</span><br>  ],<br>  <span class="hljs-string">&quot;author&quot;</span>: <span class="hljs-string">&quot;xheldon&quot;</span>,<br>  <span class="hljs-string">&quot;license&quot;</span>: <span class="hljs-string">&quot;MIT&quot;</span>,<br>  <span class="hljs-string">&quot;dependencies&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;vue&quot;</span>: <span class="hljs-string">&quot;^2.2.4&quot;</span><br>  &#125;,<br>  <span class="hljs-string">&quot;devDependencies&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;babel&quot;</span>: <span class="hljs-string">&quot;^6.23.0&quot;</span>,<br>    <span class="hljs-string">&quot;babel-core&quot;</span>: <span class="hljs-string">&quot;^6.24.0&quot;</span>,<br>    <span class="hljs-string">&quot;babel-loader&quot;</span>: <span class="hljs-string">&quot;^6.4.1&quot;</span>,<br>    <span class="hljs-string">&quot;babel-preset-es2015&quot;</span>: <span class="hljs-string">&quot;^6.24.0&quot;</span>,<br>    <span class="hljs-string">&quot;css-loader&quot;</span>: <span class="hljs-string">&quot;^0.27.3&quot;</span>,<br>    <span class="hljs-string">&quot;extract-text-webpack-plugin&quot;</span>: <span class="hljs-string">&quot;^1.0.1&quot;</span>,<br>    <span class="hljs-string">&quot;html-webpack-plugin&quot;</span>: <span class="hljs-string">&quot;^2.28.0&quot;</span>,<br>    <span class="hljs-string">&quot;style-loader&quot;</span>: <span class="hljs-string">&quot;^0.16.0&quot;</span>,<br>    <span class="hljs-string">&quot;vue-html-loader&quot;</span>: <span class="hljs-string">&quot;^1.2.4&quot;</span>,<br>    <span class="hljs-string">&quot;vue-loader&quot;</span>: <span class="hljs-string">&quot;^11.3.1&quot;</span>,<br>    <span class="hljs-string">&quot;vue-style-loader&quot;</span>: <span class="hljs-string">&quot;^2.0.4&quot;</span>,<br>    <span class="hljs-string">&quot;vue-template-compiler&quot;</span>: <span class="hljs-string">&quot;^2.2.4&quot;</span>,<br>    <span class="hljs-string">&quot;webpack&quot;</span>: <span class="hljs-string">&quot;^1.12.2&quot;</span>,<br>    <span class="hljs-string">&quot;webpack-dev-server&quot;</span>: <span class="hljs-string">&quot;^1.12.1&quot;</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="プロジェクト説明">プロジェクト説明</h2>
+<p>依存関係のインストールが完了したので、次に<code>webpack</code>の設定を見ていきます。<code>vue</code>公式ドキュメントのコンポーネント部分を早くテストしたいため、すべてを簡素化しています：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br><span class="hljs-keyword">var</span> webpack = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;webpack&#x27;</span>);<br><span class="hljs-keyword">var</span> <span class="hljs-title class_">HtmlwebpackPlugin</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;html-webpack-plugin&#x27;</span>);<br><br><span class="hljs-comment">// 常用配置,项目较小不抽出了</span><br><span class="hljs-keyword">var</span> <span class="hljs-variable constant_">ROOT_PATH</span> = path.<span class="hljs-title function_">resolve</span>(__dirname); <span class="hljs-comment">//根路径</span><br><span class="hljs-keyword">var</span> <span class="hljs-variable constant_">APP_PATH</span> = path.<span class="hljs-title function_">resolve</span>(<span class="hljs-variable constant_">ROOT_PATH</span>, <span class="hljs-string">&#x27;app&#x27;</span>); <span class="hljs-comment">//开发路径</span><br><span class="hljs-keyword">var</span> <span class="hljs-variable constant_">BUILD_PATH</span> = path.<span class="hljs-title function_">resolve</span>(<span class="hljs-variable constant_">ROOT_PATH</span>, <span class="hljs-string">&#x27;build&#x27;</span>); <span class="hljs-comment">//输出路径</span><br><span class="hljs-keyword">var</span> <span class="hljs-title class_">ExtractTextPlugin</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;extract-text-webpack-plugin&#x27;</span>);<br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">entry</span>: &#123;<br>    <span class="hljs-attr">app</span>: path.<span class="hljs-title function_">resolve</span>(<span class="hljs-variable constant_">APP_PATH</span>, <span class="hljs-string">&#x27;app.js&#x27;</span>),<br>  &#125;,<br>  <span class="hljs-attr">output</span>: &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-variable constant_">BUILD_PATH</span>,<br>    <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;bundle.js&#x27;</span>, <span class="hljs-comment">//因为只有一个入口文件, 因此直接写死了</span><br>  &#125;,<br>  <span class="hljs-attr">resolve</span>: &#123;<br>    <span class="hljs-attr">alias</span>: &#123;<br>      <span class="hljs-comment">//注意, 这里导入的是/node_module/vue/dist/vue.js, 跟 vue-router.js 的不同</span><br>      <span class="hljs-attr">vue</span>: <span class="hljs-string">&#x27;vue/dist/vue.js&#x27;</span>,<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-comment">//开启 dev source map</span><br>  <span class="hljs-attr">devtool</span>: <span class="hljs-string">&#x27;eval-source-map&#x27;</span>,<br>  <span class="hljs-comment">//开启 dev server</span><br>  <span class="hljs-attr">devServer</span>: &#123;<br>    <span class="hljs-attr">historyApiFallback</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">hot</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">//HMR</span><br>    <span class="hljs-attr">inline</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">progress</span>: <span class="hljs-literal">true</span>,<br>  &#125;,<br>  <span class="hljs-attr">module</span>: &#123;<br>    <span class="hljs-attr">loaders</span>: [<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.vue$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;vue&#x27;</span>,<br>      &#125;,<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.css$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-title class_">ExtractTextPlugin</span>.<span class="hljs-title function_">extract</span>(<span class="hljs-string">&#x27;css-loader&#x27;</span>),<br>      &#125;,<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.js$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;babel&#x27;</span>,<br>        <span class="hljs-attr">include</span>: <span class="hljs-variable constant_">ROOT_PATH</span>,<br>        <span class="hljs-attr">exclude</span>: <span class="hljs-regexp">/node_modules/</span>,<br>      &#125;,<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.html$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;vue-html&#x27;</span>,<br>      &#125;,<br>    ],<br>  &#125;,<br>  <span class="hljs-attr">vue</span>: &#123;<br>    <span class="hljs-attr">loaders</span>: &#123;<br>      <span class="hljs-attr">css</span>: <span class="hljs-title class_">ExtractTextPlugin</span>.<span class="hljs-title function_">extract</span>(<span class="hljs-string">&#x27;css-loader&#x27;</span>),<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">plugins</span>: [<br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">HtmlwebpackPlugin</span>(&#123;<br>      <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Vue component test&#x27;</span>,<br>      <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;this_is_final_filename_address_you_visit_in_browser.html&#x27;</span>, <span class="hljs-comment">//生成的最终文件名</span><br>      <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;app/this_is_main_page_which_you_put_components_into.html&#x27;</span>, <span class="hljs-comment">//放置组件的地方, 一般是一个 body 下一个孤零零的 app 标签即可.</span><br>      <span class="hljs-attr">inject</span>: <span class="hljs-literal">true</span>,<br>    &#125;),<br>  ],<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>この設定について、いくつか説明が必要です。</p>
+<p>上から順に、まず<code>alias</code>です。<a href="https://github.com/vuejs/vue-router/"><code>vue-router</code></a>を使用したことがある人はこの設定が必要ないかもしれませんが、<code>.vue</code>コンポーネントを使用するプロジェクトではこの設定が必須です。なぜなら、使用する<code>vue</code>の<code>js</code>タイプを指定する必要があるからです。このプロジェクトの<code>node_module/vue/dist/</code>フォルダ内のファイルを見ると、<code>vue.js</code>と<code>vue.common.js</code>の2種類があります。<code>vue</code>が<code>template</code>コンポーネントをコンパイルする際には<code>compiler.js</code>が必要で、その目的は<code>template</code>内の<code>html</code>内容を<code>render</code>関数にコンパイルすることです：</p>
+<p>コンパイル前：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs `html">&lt;div id=&quot;app&quot;&gt;Hello &#123;&#123;who&#125;&#125;&lt;/div&gt;<br>&lt;script&gt;<br>  new Vue(&#123;<br>    el: &#x27;#app&#x27;,<br>    data: &#123; who: &#x27;Vue&#x27; &#125;,<br>  &#125;);<br>&lt;/script&gt;<br>``` コンパイル後： ```js<br>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;<br>&lt;script&gt;<br>  new Vue(&#123;<br>    el: &#x27;#app&#x27;,<br>    render: function () &#123;<br>      with (this) &#123;<br>        __h__(<br>          &#x27;div&#x27;,<br>          &#123; staticAttrs: &#123; id: &#x27;app&#x27; &#125; &#125;,<br>          [&#x27;\n  Hello &#x27; + __toString__(who) + &#x27;\n&#x27;],<br>          &#x27;&#x27;<br>        );<br>      &#125;<br>    &#125;,<br>    data: &#123; who: &#x27;Vue&#x27; &#125;,<br>  &#125;);<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+<p>そして<code>vue</code>は<code>compiler</code>で<code>template</code>をコンパイルした後の<code>js</code>を実行する際、<code>render</code>関数が存在する場合は直接<code>render</code>を実行し、<code>template</code>フィールドの内容は無視されます。コンパイル後の<code>render</code>を実行するタスクは、<code>vue.common.js</code>によって行われます。したがって：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">vue.<span class="hljs-property">js</span> = vue.<span class="hljs-property">common</span>.<span class="hljs-property">js</span> + compiler.<span class="hljs-property">js</span>;<br></code></pre></td></tr></table></figure>
+<p>そのため、<code>vue-router</code>を使用している場合、その<code>package.json</code>の<code>main</code>フィールドは<code>node_module/dist/vue.common.js</code>を指しています。これをそのままプロジェクトにコピーすると、実行時に<code>vue.common.js</code>の<code>runtime</code>エラーといったメッセージが表示される可能性があります。</p>
+<p>次に説明する必要があるのは、この <code>css-loader</code> と <code>style-loader</code>、そして <code>vue-style-loader</code> についてです。<code>style-loader</code> があるのに、なぜ <code>vue-style-loader</code> が必要なのでしょうか？ <code>vue-style-loader</code> の説明を確認したところ、これは単に <code>style-loader</code> の <code>fork</code> であり、<code>.vue</code> ファイルを個別に処理するため、またユーザーが <code>vue</code> の設定をより明確に行えるように、<code>webpack@1.x</code> の設定ファイルの <code>vue</code> フィールドに追加されていることがわかりました。<code>extract-text-webpack-plugin</code> プラグインの設定を:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">vue</span>: &#123;<br>  <span class="hljs-attr">loaders</span>: &#123;<br>    <span class="hljs-attr">css</span>: <span class="hljs-title class_">ExtractTextPlugin</span>.<span class="hljs-title function_">extract</span>(<span class="hljs-string">&#x27;vue-style-loader&#x27;</span>, <span class="hljs-string">&#x27;css-loader&#x27;</span>);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>から:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">vue</span>: &#123;<br>  <span class="hljs-attr">loaders</span>: &#123;<br>    <span class="hljs-attr">css</span>: <span class="hljs-title class_">ExtractTextPlugin</span>.<span class="hljs-title function_">extract</span>(<span class="hljs-string">&#x27;style-loader&#x27;</span>, <span class="hljs-string">&#x27;css-loader&#x27;</span>);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>に変更することで、コンパイル後の結果が同じであることを確認しました。</p>
+<p>デフォルトでは、<code>vue-loader</code> は自動的に <code>vue-style-loader</code> を使用するため、<code>.vue</code> ファイル内で <code>@import</code> を使用して <code>css</code> を読み込まない場合、手動で <code>vue-loader-style</code> を <code>vue.loaders</code> フィールドに追加する必要はありません。<code>vue-loader</code> は自動的に <code>.vue</code> ファイル内の <code>style</code> タグの内容を処理し、<code>style</code> タグとしてページに挿入します。しかし、<code>.vue</code> ファイル内の <code>style</code> タグで <code>@import</code> を使用して <code>css</code> ファイルを読み込む必要がある場合は、<code>module.exports.vue</code> で個別に設定する必要があります。<code>vue</code> フィールドから <code>vue-style-loader</code> を削除してテストすることができます:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">module</span>: &#123;<br>  <span class="hljs-attr">loaders</span>:[<br>    &#123;<br>      <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.vue$/</span>,<br>      <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;vue&#x27;</span><br>    &#125;<br>  ]<br>&#125;,<br><span class="hljs-attr">vue</span>:&#123;<br>  <span class="hljs-comment">// loaders: &#123;</span><br>  <span class="hljs-comment">//   css: &#x27;vue-style-loader!css-loader&#x27;</span><br>  <span class="hljs-comment">// &#125;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>さらに、エントリーファイルの <code>js</code> 内の <code>require('xxx.css')</code> は、デフォルトの <code>module.exports.module.loader</code> によって処理されます。これは、デフォルトの <code>loader</code> で <code>extract</code> プラグインを使用し、<code>module.exports.vue</code> では <code>extract</code> プラグインを使用しないことで確認できます。結果から、エントリーファイル内の <code>css</code> は抽出されますが、<code>.vue</code> ファイル内の <code>@import</code> で読み込まれた <code>css</code> は抽出されないことがわかります。</p>
+<p>もしエントリーファイルで <code>require</code> された <code>css</code> ファイルを個別に抽出する必要がある場合は、<code>module.exports.module.loader</code> で <code>extract-text-webpack-plugin</code> を設定する必要があります。</p>
+<p>注意: <code>vue-style-loader</code> を <code>module.exports.vue.loaders</code> フィールドに配置するのは、<code>.vue</code> ファイル内の <code>style</code> タグの内容を個別の <code>.css</code> ファイルとして抽出し、ページに <code>link</code> として挿入するためです。<code>style-loader</code> と <code>css-loader</code> をデフォルトの <code>module.exports.module.loaders</code> に配置しても、<code>vue</code> 内の <code>style</code> タグの内容を処理することはできません。少なくとも <code>Vue 1.x</code> バージョンと <code>webpack 1.x</code> バージョンでは無効です。<code>webpack 2.x</code> バージョンでは、サードパーティのフィールドが削除され、<code>module.export</code> 内に自由にフィールドを追加することが制限されています。</p>
+<p>最後に、<code>css-loader</code>と<code>style-loader</code>は常にセットで記述されます。なぜなら、<code>css-loader</code>の役割は<code>@import</code>や<code>url()</code>属性値内の依存関係を解決することであり、単独では実質的に意味を成さないからです。<code>style-loader</code>こそが<code>css</code>を処理し、<code>js</code>にバンドルして、最終的に<code>head</code>内（挿入位置は設定可能）に<code>&lt;style&gt;</code>タグとして挿入する<code>loader</code>なのです。</p>
+<p>最後に<code>extract-text-webpack-plugin</code>について説明します。このプラグインは3つの引数を受け取ります:</p>
+<p>第1引数はオプションで、<code>loader</code>を渡します。<code>css</code>スタイルが抽出されなかった場合にこの<code>loader</code>が使用されます。<br />
+第2引数は<code>css</code>ファイルをコンパイル・解析するための<code>loader</code>で、前述の例の<code>css-loader</code>のように必須です。<br />
+第3引数は追加オプションで、現在は<code>publicPath</code>（現在の<code>loader</code>のパスを指定）のみが利用可能です。</p>
+<p>第1引数が必要なケースは、スタイルが抽出されない状況を理解すれば明らかになります。<br />
+<code>code splitting</code>をご存知の方ならわかるように、ページロード時に使用されないコードがある場合、<code>code splitting</code>によってそのコードを分割し、別ファイルとして按需ロードを実現できます。</p>
+<p>この分割されたコード内で<code>require</code>によりスタイルファイルをインポートしている場合、<code>ExtractTextPlugin</code>を使用してもこれらのスタイルコードは抽出されません。<br />
+抽出されないコードに対して<code>loader</code>で処理を行うのが、<code>ExtractTextPlugin.extract</code>の第1引数の役割です。</p>
+<p>さて、設定ファイルの話はこれで終わりです。次に、このプロジェクトの動作原理について説明しましょう。</p>
+<p>百聞は一見に如かず。まずはコード画面をご覧ください:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/vue-test.png" alt="项目结构" title="项目结构" /></p>
+<p>（画像が小さい場合は右クリックで新しいタブで開いてください）</p>
+<p>矢印が示す通り、1ページには少なくとも1つのコンポーネントが必要です。ここでは1ページ1コンポーネントとして記述し、他のコンポーネントを<code>import</code>していません。</p>
+<p>したがって、1ページには最低3つのファイル（<code>.vue</code>ファイル、<code>.js</code>エントリーファイル、<code>.html</code>コンポーネント挿入ファイル）が必要です。</p>
+<p><code>html</code>には<code>app</code>というコンポーネント名を記述し、エントリーファイルで<code>vue</code>をインスタンス化して<code>app</code>コンポーネントを使用します。この<code>app</code>コンポーネントのテンプレートは<code>index.vue</code>から取得し、対応する<code>css</code>、<code>js</code>、そして<code>mvvm</code>の特徴であるデータバインディングも<code>index.vue</code>内に記述します。</p>
+<p>「エントリーファイルの<code>js</code>はどうやって同ディレクトリの<code>html</code>ファイルを見つけるのか？」と疑問に思う方もいるでしょう。実はこれは<code>webpack.config.js</code>設定ファイルであらかじめ定義されています:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">plugins</span>: [<br>  <span class="hljs-keyword">new</span> <span class="hljs-title class_">HtmlwebpackPlugin</span>(&#123;<br>    <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Vue component test&#x27;</span>,<br>    <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;this_is_final_filename_address_you_visit_in_browser.html&#x27;</span>, <span class="hljs-comment">//生成的最终文件名</span><br>    <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;app/this_is_main_page_which_you_put_components_into.html&#x27;</span>, <span class="hljs-comment">//放置组件的地方, 一般是一个 body 下一个孤零零的 app 标签即可.</span><br>    <span class="hljs-attr">inject</span>: <span class="hljs-literal">true</span>,<br>  &#125;),<br>];<br></code></pre></td></tr></table></figure>
+<p>この<code>html</code>生成プラグインが<code>js</code>エントリーファイルに、必要なテンプレートが<code>app</code>ディレクトリの<code>xxx.html</code>から来ること、そして最終的にバンドルされた<code>bundle.js</code>がこの中に<code>inject</code>され、最終ページが生成されることを伝えています。</p>
+<p>また、疑問に思う学生もいるかもしれません。エントリーポイントの <code>js</code> ファイルで、<code>vue</code> のインスタンス化時に使用される <code>components.App</code> は、コンパイルプロセス中に <code>this_is_main_page_which_you_put_components_into.html</code> ファイル内の <code>&lt;app&gt;</code> コンポーネント参照を見つけるのか、それとも <code>runtime</code> 時に、最終的にバンドルされた <code>bundle.js</code> から実行され、<code>this_is_final_filename_address_you_visit_in_browser.html</code> ページ内の <code>&lt;app&gt;</code> タグを探すのか？答えは後者です。なぜなら、先ほど述べた <code>HtmlwebpackPlugin</code> プラグインは <code>html</code> の生成とバンドル後の <code>bundle.js</code> の注入のみを担当しており、<code>vue</code> が <code>bundle.js</code> にバンドルされた後、<code>vue</code> のインスタンス化時に初めて <code>&lt;app&gt;</code> タグを探すからです。</p>
+<p>こう見ると、直接 <code>script</code> タグで <code>vue.js</code> ファイルを参照してレンダリングする効果と同じですが、<code>webpack</code> のような開発方法はコンポーネントを分離し、開発プロセス中のコード/コンポーネント構造をより明確にします。また、直接 <code>vue.js</code> を参照するのはフロントエンドの <code>runtime render</code> であり、一方で <code>compiler render</code> 後に直接実行される後者の方が効率が高いです。</p>
+<p>次に、効果ページです：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/page-detail.png" alt="页面效果图" title="页面效果图" /><br />
+（画像が小さい場合は右クリックで新しいタブで開いてご覧ください）</p>
+<p>画像を見れば意味がわかりますね。</p>
+<p>まだ不明点がある場合はドキュメントを参照してください。</p>
+<p>今回はここまでです。<code>vue</code> と <code>webpack</code> に関する <code>注意点/詳細/設計思想</code> についてはまだ話すことがたくさんありますので、また後ほど～</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          この記事の初出:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/vue-simple-use.ja.html"
+            title="Vue + Webpack コンポーネント開発（練習環境）初体験"
+          >
+            Vue + Webpack コンポーネント開発（練習環境）初体験 - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">目次</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>ブログ主より：</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        人生の重要な選択に直面したとき、最善の方法を誰かが教えてくれて、貴重な時間を無駄にせずに済めばと、私はよく願っています。だからこそ、自分の経験を踏まえて頻繁にブログを書き、広大なインターネットのこの小さな片隅に、私にとって一度きりの人生経験を記録し、助けを求める人々の力になれればと思っています。
+    </div>
+    <hr>
+    
+    <h5><a href="/ja/archive/">人気のタグ</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技術"
+                rel="188">技術</a>
+        
+            <a data-sort="0200"
+                href="/ja/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="108">生活</a>
+        
+            <a data-sort="0264"
+                href="/ja/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="いじり"
+                rel="44">いじり</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="コツ"
+                rel="32">コツ</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="チュートリアル"
+                rel="32">チュートリアル</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻訳"
+                rel="24">翻訳</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="経験"
+                rel="20">経験</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="グルメ"
+                rel="20">グルメ</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体験"
+                rel="16">初体験</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="ワークフロー"
+                rel="16">ワークフロー</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="プラグイン"
+                rel="16">プラグイン</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="ネットワーク"
+                rel="16">ネットワーク</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用感"
+                rel="12">使用感</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="まとめ"
+                rel="12">まとめ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="サーバー"
+                rel="12">サーバー</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="ルーター"
+                rel="12">ルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="ソフトルーター"
+                rel="12">ソフトルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="エッセイ"
+                rel="12">エッセイ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9B%86%E6%88%90"
+                title="統合"
+                rel="12">統合</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="8">主食</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="最適化"
+                rel="8">最適化</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%8D%83%E5%85%86"
+                title="ギガビット"
+                rel="8">ギガビット</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="8">大事</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="ツール"
+                rel="8">ツール</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="バイパスルーター"
+                rel="8">バイパスルーター</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="フレームワーク"
+                rel="8">フレームワーク</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="足湯タイム"
+                rel="8">足湯タイム</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="テスト"
+                rel="8">テスト</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="テスラ"
+                rel="8">テスラ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="エディタ"
+                rel="8">エディタ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="動画"
+                rel="8">動画</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="デバッグ"
+                rel="8">デバッグ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BD%A6"
+                title="車"
+                rel="8">車</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="移行"
+                rel="8">移行</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="東北料理"
+                rel="4">東北料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="住宅購入"
+                rel="4">住宅購入</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="プロキシ"
+                rel="4">プロキシ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="フルスタック"
+                rel="4">フルスタック</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="北欧神話"
+                rel="4">北欧神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="共同編集"
+                rel="4">共同編集</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="圧縮"
+                rel="4">圧縮</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="クレイトス"
+                rel="4">クレイトス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="家庭料理"
+                rel="4">家庭料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="富強"
+                rel="4">富強</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="比較"
+                rel="4">比較</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="四川料理"
+                rel="4">四川料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="仕事の経験"
+                rel="4">仕事の経験</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="ギリシャ神話"
+                rel="4">ギリシャ神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="定番ソフト"
+                rel="4">定番ソフト</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="オープンソース"
+                rel="4">オープンソース</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="開封"
+                rel="4">開封</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="ゴッド・オブ・ウォー"
+                rel="4">ゴッド・オブ・ウォー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIMカード"
+                rel="4">SIMカード</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%8B%93%E6%89%91"
+                title="トポロジー"
+                rel="4">トポロジー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="物語"
+                rel="4">物語</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="データ構造"
+                rel="4">データ構造</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="旅行"
+                rel="4">旅行</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="日常"
+                rel="4">日常</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="日本"
+                rel="4">日本</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="サービス"
+                rel="4">サービス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="フォーマット"
+                rel="4">フォーマット</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A2%A6"
+                title="夢"
+                rel="4">夢</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="ブラウザ"
+                rel="4">ブラウザ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="ゲーム"
+                rel="4">ゲーム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="愚痴"
+                rel="4">愚痴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="ユーザープライバシー"
+                rel="4">ユーザープライバシー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="アルゴリズム"
+                rel="4">アルゴリズム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="詳細"
+                rel="4">詳細</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="イヤホン"
+                rel="4">イヤホン</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="自由"
+                rel="4">自由</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="計画"
+                rel="4">計画</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="設定"
+                rel="4">設定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="落とし穴"
+                rel="4">落とし穴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="変換"
+                rel="4">変換</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="技術選定"
+                rel="4">技術選定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="面接"
+                rel="4">面接</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>コラム</h5>
+    <div class="tags">
+        <a href="/projects">オープンソース</a>
+        <a href="/book-list">技術書リスト</a>
+        <a href="/subscribe">サブスク＆有料アプリ</a>
+        <a href="/my-food">グルメのおすすめ</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>友達</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">中国版</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="Vue + Webpack コンポーネント開発（練習環境）初体験"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ja"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ja/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

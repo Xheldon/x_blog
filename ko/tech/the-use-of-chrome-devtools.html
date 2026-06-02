@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      Chrome 자주 사용하는 디버깅 방법 및 기타 기능 - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="Chrome의 디버깅 기능은 매우 강력합니다. 여기서는 제 업무에서 가장 자주 사용하는 몇 가지 기능을 소개하겠습니다.">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="Chrome 자주 사용하는 디버깅 방법 및 기타 기능 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2022-8-7T12:39:47"> 
+              
+                  
+                    <meta property="article:tag" content="Chrome">
+                    
+                    <meta property="article:tag" content="팁">
+                    
+                    <meta property="article:tag" content="기술">
+                    
+                    <meta property="article:tag" content="디버깅">
+                    
+                      
+                          
+                            <meta name="og:description" content="Chrome의 디버깅 기능은 매우 강력합니다. 여기서는 제 업무에서 가장 자주 사용하는 몇 가지 기능을 소개하겠습니다.">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ko/tech/the-use-of-chrome-devtools.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ko_KR">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ko/tech/the-use-of-chrome-devtools.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/the-use-of-chrome-devtools.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/the-use-of-chrome-devtools.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/the-use-of-chrome-devtools.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/the-use-of-chrome-devtools.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/the-use-of-chrome-devtools.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ko/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ko/">홈</a>
+            </li>
+            <li>
+              <a href="/ko/about/">소개</a>
+            </li>
+            <li>
+              <a href="/ko/donate/">후원</a>
+            </li>
+            <li>
+              <a href="/ko/archive/">아카이브</a>
+            </li>
+            <li>
+              <a href="/ko/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">한국어</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/the-use-of-chrome-devtools.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/the-use-of-chrome-devtools.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/the-use-of-chrome-devtools.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item active"><a href="/ko/tech/the-use-of-chrome-devtools.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ko/archive/?tag=Chrome"
+                            title="Chrome">
+                            Chrome
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E6%8A%80%E5%B7%A7"
+                            title="팁">
+                            팁
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="기술">
+                            기술
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E8%B0%83%E8%AF%95"
+                            title="디버깅">
+                            디버깅
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        Chrome 자주 사용하는 디버깅 방법 및 기타 기능
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 작성일 2022년 08월 07일</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 수정일 2022년 08월 12일</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;참고: 이 글이 작성된 지 이미
+          <code id="from_time"></code> 일이 지났습니다. 시의성에 유의하세요
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1659875987000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+           
+        <div class="callout-tips">🖥 &nbsp;설명：Chrome의 디버깅 기능은 매우 강력합니다. 여기서는 제 업무에서 가장 자주 사용하는 몇 가지 기능을 소개하겠습니다.</div>
+         
+        <div class="craft-tips">
+          📚 &nbsp;Craft에도 게시：<a
+            href="https://www.craft.do/s/20CjMjTupEMXFc"
+            target="_blank"
+          >
+            https://www.craft.do/s/20CjMjTupEMXFc
+          </a>
+        </div>
+          <p>Chrome은 하나의 브라우저일 뿐만 아니라 프론트엔드 엔지니어에게는 강력한 디버깅 도구이기도 합니다. 아래는 제가 업무에서 가장 자주 사용하는 몇 가지 기능들입니다. 하나씩 소개하겠습니다.</p>
+<h3 id="브레이크포인트-breakpoint">브레이크포인트(Breakpoint)</h3>
+<blockquote>
+<p>이는 가장 기본적이면서도 많이 사용되는 기능이지만, 제가 면접본 많은 외주 개발자 분들은 Chrome의 브레이크포인트 디버깅을 어떻게 사용하는지 모르거나, 들어만 봤지만 실제 사용법을 모르는 경우가 많았습니다. 기본적인 사용법을 간단히 소개하겠습니다.</p>
+</blockquote>
+<p>브레이크포인트를 추가하는 방법은 코드에 직접 <code>debugger</code> 표현식을 한 줄 추가하는 것입니다. 코드가 이 부분에 도달하면 실행이 중단됩니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/B64AFAEF-676F-4AB6-BFD9-163096FFD511_2.png" alt="Image" /></p>
+<p>VSCode에서 노란색 밑줄은 경고를 나타냅니다. 일반적으로 이 방법은 사용하지 않습니다. 왜냐하면 이 방법은 <code>console.log</code>와 비교해 뚜렷한 장점이 없을 뿐만 아니라, 오히려 더 복잡하기 때문입니다. 사용한 후에는 삭제해야 하며, 그렇지 않으면 코드가 실행되지 않습니다.</p>
+<p>또 다른 방법은 devtools의 source 탭에서 직접 소스 코드를 찾는 것입니다. 일반적으로 <code>console.log</code>로 출력한 후, 콘솔 오른쪽의 파일 이름을 클릭하면 <code>Sources</code> 탭에서 소스 코드를 확인할 수 있습니다. 왼쪽 하단의 포맷 버튼을 클릭한 후, 코드 왼쪽의 줄 번호 옆에 중단점을 설정하면 디버깅을 할 수 있습니다. 아래 그림과 같습니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/C987CDFD-FF9E-45BE-AE3B-BADD657DE1B9_2.png" alt="Image" /></p>
+<p>중단점 이후, 그림에서 빨간색 부분의 버튼들은 왼쪽에서 오른쪽으로 순서대로 다음과 같은 의미를 가집니다:</p>
+<ul>
+<li>
+<p><code>继续执行</code> (계속 실행): 클릭하면 중단점이 다음 중단점까지 바로 실행됩니다.</p>
+</li>
+<li>
+<p><code>setp over</code>: 현재 중단점 위치가 함수가 아닌 경우 <code>step</code>과 동일하게 다음 줄로 실행됩니다. 함수인 경우 해당 함수를 건너뛰고 다음 줄로 계속 실행됩니다.</p>
+</li>
+<li>
+<p><code>setp into</code>: 비동기 코드가 없는 경우 <code>setp</code>과 동일하게 다음 줄로 실행됩니다. 비동기 코드가 있는 경우 비동기 코드 내부의 첫 번째 줄로 들어갑니다.</p>
+</li>
+<li>
+<p><code>step out</code>: 클릭하면 현재 함수에서 빠져나옵니다.</p>
+</li>
+<li>
+<p><code>setp</code>: 다음 동기 코드 줄을 실행합니다. <code>step into</code>와 달리 비동기 코드 실행을 건너뜁니다. 현재 중단점이 함수 위치에 있는 경우 함수 호출 내부의 첫 번째 줄로 들어갑니다.</p>
+</li>
+<li>
+<p><code>暂时停用/激活断点</code> (일시적으로 중단점 비활성화/활성화): 처음 클릭하면 중단점 기능이 일시적으로 비활성화되어 중단점을 설정하지 않은 것처럼 코드가 멈추지 않고 실행됩니다. 아래의 <code>Breakpoints</code>에 있는 중단점들이 전체적으로 회색으로 표시됩니다:</p>
+</li>
+</ul>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/91E6FC8D-D932-4412-9D5D-EBC5E92BD8EA_2.png" alt="Image" /></p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/0AC85FEA-3449-49A8-8BF9-A619CF2D924E_2.png" alt="Image" /></p>
+<ul>
+<li><code>에러 발생 지점에서 중단</code>을 클릭하여 강조 표시 후 활성화하면, 코드는 catch 여부나 HTTP 오류 등 모든 throw error 지점에서 자동으로 중단됩니다. 아래의 <code>Pause on caught exceptions</code>을 반드시 체크해야 하며, 체크하지 않으면 효과가 없습니다:</li>
+</ul>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/D99CEF49-A530-412E-B632-307C291C75E0_2.png" alt="Image" /></p>
+<p>이 기능은 코드 실행이 완료되고 페이지 로딩이 끝난 후, 상호작용이 시작될 때 활성화하는 것이 가장 좋습니다. 그렇지 않으면 페이지에 진입하자마자 오류가 발생할 수 있으며, React의 정상적인 오류까지 포함되어 페이지가 제대로 로드되지 않을 수 있습니다.</p>
+<p>공식 중단점(breakpoint)에 대한 이미지를 바로 첨부합니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/17ED1675-13EA-42A3-8B4D-83587390D7EF_2.png" alt="Image" /></p>
+<h5 id="공식-이미지-👆🏻">공식 이미지 👆🏻</h5>
+<p>위 이미지에서 버튼 아래에는 클릭할 수 있는 일련의 토글 <code>‣</code> 삼각 기호가 있으며, 순서대로 다음과 같습니다:</p>
+<ul>
+<li>
+<p><code>Watch</code>는 중단점에서 접근 가능한 모든 컨텍스트 변수를 모니터링하여 표시할 수 있습니다. 변수가 존재하지 않거나 접근할 수 없는 경우(예: <code>a.b.c</code>를 접근할 때 a가 존재하지 않는 경우) 사용할 수 없음이 표시됩니다. 중단점에서 실행이 멈출 때, 해당 위치에 입력된 변수는 자동으로 표시되며, 마우스를 올리지 않아도(위의 공식 이미지처럼) 변수를 확인할 수 있어 매우 편리합니다.</p>
+</li>
+<li>
+<p><code>Breakpoints</code>는 이미 설정된 중단점을 나타냅니다. 체크박스에 체크된 것은 사용 가능한 중단점이며, 체크되지 않은 것은 일시적으로 무시되는 중단점입니다(임시로 체크하거나 해제할 수 있음).</p>
+</li>
+</ul>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/5F3A5468-63E9-47EF-9E80-461D5988E2C3_2.png" alt="Image" /></p>
+<p>현재 실행 중인 중단점의 배경은 노란색으로 표시됩니다.</p>
+<ul>
+<li>
+<p><code>Threads</code>는 현재 호출 중인 파일 스레드를 나타내며, 현재 페이지의 JavaScript 스레드는 <code>Main</code>으로 표시됩니다. 이 부분은 일반적으로 사용되지 않으며, <code>Web Worker</code>를 디버깅할 때 유용하거나 현재 페이지에서 Chrome 브라우저 확장 프로그램을 디버깅하는 데 사용할 수 있습니다.</p>
+</li>
+<li>
+<p><code>Scope</code>는 현재 중단점에서 접근 가능한 변수 값을 표시합니다. JavaScript의 클로저와 호출 스택 특성으로 인해 많은 클로저 내부의 변수가 표시될 수 있습니다:</p>
+</li>
+</ul>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/54D3E302-A251-4411-B366-D69B4C7B6CEE_2.png" alt="Image" /></p>
+<ul>
+<li><code>Call Stack</code>은 함수의 호출 스택을 의미하며, 가장 상위에 있는 것이 가장 최근의 호출입니다. 서로 다른 함수를 클릭하여 그 사이를 이동할 수 있습니다. 주의할 점은 이동할 때 실제로 해당 위치가 다시 실행되는 것은 아니며, 해당 위치의 클로저 변수를 확인하기 편리하도록 하는 기능입니다.</li>
+</ul>
+<h3 id="ui-브레이크포인트">UI 브레이크포인트</h3>
+<p>어떤 경우에는 UI 문제가 왜 그렇게 변화하는지 알 수 없거나 위치를 파악할 수 없는 상황이 발생합니다. 예를 들어, 동료가 버튼에 hover 시 버튼 색상이 변하는 코드를 작성했는데, 여러분은 이 로직에 새로운 기능을 추가해야 하지만 그 코드가 어느 파일에 작성되어 있는지 모르는 경우(동료가 업무 인수인계 없이 휴가를 떠났다면, 정말 짜증 나는 상황입니다!).</p>
+<p>버튼에 hover 시 버튼에 class 이름이 추가되는 것을 발견했다면, DOM 브레이크포인트를 사용하여 디버깅할 수 있습니다. <code>Elements</code> 탭에서 해당 요소를 우클릭하면 됩니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/C9A19CAE-BEC6-4180-B618-73CA95E0CA90_2.png" alt="Image" /></p>
+<p>UI 중단점은 지정한 UI 이벤트가 실행되는 코드 바로 직전에 코드 실행을 중단할 수 있습니다. UI 이벤트에는 다음이 포함됩니다:</p>
+<ul>
+<li>
+<p>서브트리 수정: 서브트리에 추가, 속성 변경 등 어떤 수정이 발생하면 해당 로직이 실행되기 직전에 코드 실행이 중단됩니다.</p>
+</li>
+<li>
+<p>속성 수정: 현재 우클릭한 요소에 어떤 수정이 발생하면 해당 로직이 실행되기 직전에 코드 실행이 중단됩니다.</p>
+</li>
+<li>
+<p>노드 제거: 현재 우클릭한 요소가 제거되면 해당 로직이 실행되기 직전에 코드 실행이 중단됩니다.</p>
+</li>
+</ul>
+<p>예를 들어, Feishu 문서에서 블록이 포커스되면 해당 노드에 focus 클래스 이름이 추가됩니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/3690BB50-7AB1-4798-AEE3-98D1EEC495B3_2.png" alt="Image" /></p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/C7500F06-2A4D-47A5-8DE6-2ED7CB43868B_2.png" alt="Image" /></p>
+<p>이때 <code>attribute modifications</code>를 사용하여 중단점을 설정할 수 있습니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/9A783370-A839-4995-A5E3-2C1D4421ED7D_2.png" alt="Image" /></p>
+<p>물론, 기본적으로 온라인 코드는 압축된 상태로 제공됩니다. 왼쪽 하단의 <code>&#123;&#125;</code>를 클릭하면 포맷팅됩니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/A4049060-72F8-476F-A1D2-A21B099EF177_2.png" alt="Image" /></p>
+<p>포맷팅 후 Chrome은 새 탭을 열고 파일명 뒤에 <code>:formatted</code>를 추가합니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/CD25F7CA-7ABD-4B32-A28D-0E60935DB707_2.png" alt="Image" /></p>
+<blockquote>
+<p>주의할 점은, 마우스 오른쪽 버튼으로 클릭한 요소가 변경될 때 부모 노드가 변경되는 경우(예: 부모 노드 전체가 제거되는 경우) UI 중단점이 실행되지 않는다는 것입니다.</p>
+</blockquote>
+<h3 id="오버라이드-overwrite">오버라이드(Overwrite)</h3>
+<blockquote>
+<p>Charles에는 비슷한 기능으로 Map js(기억이 맞다면)가 있고, ProxyMan에는 Map Local이라는 유사한 기능이 있습니다. 모두 같은 의미입니다.</p>
+</blockquote>
+<p>때로는 배포/테스트 프로세스가 길 때(특히 에디터와 같은 기본 도구 컴포넌트의 경우 패키지를 배포해야 함), 특정 케이스를 빠르게 검증하려면 번거로울 수 있습니다. 이때 Chrome의 오버라이드 기능을 사용할 수 있습니다.</p>
+<p>이 기능은 Charles의 Map js 기능과 유사하며, 로컬 파일을 페이지의 요청에 대한 응답으로 사용할 수 있습니다. 먼저 <code>Sources</code>에서 이 기능을 활성화해야 합니다. 물론, 로컬 파일 저장 위치를 지정하지 않은 경우 먼저 위치를 지정해야 합니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/B5ADFA65-51E3-44AD-967F-311A3604D016_2.png" alt="Image" /></p>
+<p>이때 Chrome은 해당 경로에 대한 완전한 접근 권한이 필요하다고 알려줄 것입니다. 동의하면 됩니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/416C9680-96DF-40AF-861B-6C74EFC6C1DF_2.png" alt="Image" /></p>
+<p>로컬 폴더를 선택한 후(여기서는 <code>~/Developer/Overwrite</code> 폴더를 선택했습니다), <code>Overwrite</code> 기능을 활성화할 수 있습니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/362CACE4-9BBD-41B3-80FD-A69C85EF8209_2.png" alt="Image" /></p>
+<p>그런 다음 <code>Network</code> 탭으로 이동하여 css/js와 같은 리소스를 선택합니다. 여기서는 js를 선택했습니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/31AB1FF1-4016-4818-AFB3-3B823209319E_2.png" alt="Image" /></p>
+<p>주의: <code>Sources</code>에서 <code>Overwrite</code>를 활성화하지 않았다면, 여기에는 <code>Save for overrides</code>가 표시되지 않습니다.</p>
+<p>이후 해당 파일을 자유롭게 수정하고, 페이지를 새로고침하여 변경된 효과를 확인할 수 있습니다.</p>
+<p>주의할 점은, js 파일 요청에 타임스탬프가 포함된 경우 Overwrite가 적용되지 않는다는 것입니다. Chrome은 파일을 매핑할 때 엄격한 경로 매칭을 사용하기 때문입니다.</p>
+<h3 id="스니펫">스니펫</h3>
+<p>정확히 말하면 이것은 &quot;디버깅 방법&quot;은 아니지만, 평소에 코드 검증을 위한 스니펫을 여기에 저장해두면 Sublime(입력한 변수를 자동 완성할 수 있음)처럼 유용하게 사용할 수 있습니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/E231449D-FED8-4E4E-8446-D6A3AAEC87A4_2.png" alt="Image" /></p>
+<h3 id="파일-시스템">파일 시스템</h3>
+<p>이 기능은 위에서 설명한 몇 가지 기능과 같은 위치에 있으며, 브라우저에서의 수정 사항을 실시간으로 로컬 파일 시스템에 동기화하는 데 사용됩니다. 이 기능은 Express와 같은 서버에서 js/css/html 등을 반환하는 간단한 HTML 웹 서비스의 로컬 디버깅 시에 적합합니다.</p>
+<p>하지만 이 기능은 공식적으로 React App에는 적합하지 않다고 명시되어 있습니다. 현재 대부분의 프로젝트가 React, Vue 등의 현대적인 프레임워크로 구축되어 있기 때문에 이 기능은 거의 사용되지 않으며, 여기서는 공식 스크린샷만 첨부하겠습니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/image.png" alt="Image" /></p>
+<h2 id="기타">기타</h2>
+<h3 id="macvim">MacVim</h3>
+<p>위에서 언급한 Overwrite로 가져온 js 파일은 일반적으로 압축된 온라인 코드이며, 일부는 상당히 클 수 있습니다. 그래서 저는 보통 Vim으로 열어 포맷팅을 합니다. Vim을 설정하는 것은 너무 번거로워서 MacVim을 사용하는데, 바로 사용할 수 있는 경험을 제공하며 약간의 수정만으로 더 나은 환경을 만들 수 있습니다. MacVim을 사용하는 이유는 성능이 매우 뛰어나기 때문입니다. 수십 Mb 크기의 파일도 몇 초 안에 포맷팅할 수 있습니다. 저는 일반적으로 js-beautify를 설정하여 포맷팅하는데, 이름은 js-beautify이지만 js, css, html을 모두 포맷팅할 수 있습니다.</p>
+<p>js-beautify를 사용하려면 먼저 <code>vim-plug</code>를 설치해야 합니다. 이것은 vim 플러그인 관리자입니다: <a href="https://github.com/junegunn/vim-plug">https://github.com/junegunn/vim-plug</a>, 사용 방법은 여기를 참조하세요: <a href="https://github.com/junegunn/vim-plug/wiki/tutorial">https://github.com/junegunn/vim-plug/wiki/tutorial</a>.</p>
+<blockquote>
+<p>참고: 설치 시 마법이 필요합니다.</p>
+</blockquote>
+<p><code>js-beautify</code>는 이것을 사용하세요: <a href="https://github.com/beautify-web/js-beautify">https://github.com/beautify-web/js-beautify</a>.</p>
+<p>이것은 제 vim 설정입니다. 저는 <code>[]</code> 단축키를 <code>js-beautify</code> 호출 방식으로 사용하여 매번 명령어를 입력할 필요가 없게 했습니다:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">set number<br>set relativenumber<br>set smartindent<br>set autoindent<br>set hlsearch<br>set display=lastline<br>set scrolloff=3<br>set laststatus=2<br>set showmatch<br>set ruler<br>set guifont=Monaco:h12<br>syntax on<br>autocmd FileType *.js setlocal equalprg=js-beautify\ --stdin<br>nmap [] :%!js-beautify&lt;CR&gt;<br>colorscheme evening<br>call plug#begin(has(&#x27;nvim&#x27;) ? stdpath(&#x27;data&#x27;) . &#x27;/plugged&#x27; : &#x27;~/.vim/plugged&#x27;)<br>Plug &#x27;jelera/vim-javascript-syntax&#x27;<br>call plug#end()<br>if !has(&#x27;gui&#x27;)<br>    set term=$TERM<br>endif<br><br></code></pre></td></tr></table></figure>
+<h3 id="vscode">VSCode</h3>
+<p>VSCode도 중단점 디버깅 기능을 지원합니다(Chrome 커널 덕분에). 하지만 Node 애플리케이션만 디버깅할 수 있습니다(브라우저 확장 프로그램과 함께 사용해 웹 애플리케이션을 디버깅할 수 있지만, 이미 Chrome이 있으므로 필요 없습니다). 기본 사용 방법은 Chrome과 유사하므로 여기서는 설명하지 않겠습니다. 이미지를 첨부합니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/D7AD7683-F0C4-46D2-8632-2ADB519B230C_2.png" alt="Image" /></p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          이 글의 최초 게시:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/the-use-of-chrome-devtools.ko.html"
+            title="Chrome 자주 사용하는 디버깅 방법 및 기타 기능"
+          >
+            Chrome 자주 사용하는 디버깅 방법 및 기타 기능 - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">목차</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>블로거의 말:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        저는 인생의 중요한 선택의 기로에 섰을 때, 누군가 최선의 방법을 알려주어 소중한 시간을 헛되이 보내지 않기를 바라곤 합니다. 그런 마음으로 저는 자주 블로그를 쓰며, 광활한 인터넷의 이 작은 구석에 제게는 단 한 번뿐인 인생 경험을 기록하여 도움이 필요한 분들에게 도움이 되기를 바랍니다.
+    </div>
+    <hr>
+    
+    <h5><a href="/ko/archive/">인기 태그</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="기술"
+                rel="188">기술</a>
+        
+            <a data-sort="0200"
+                href="/ko/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="생활"
+                rel="108">생활</a>
+        
+            <a data-sort="0264"
+                href="/ko/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="삽질"
+                rel="44">삽질</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="팁"
+                rel="32">팁</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="튜토리얼"
+                rel="32">튜토리얼</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="번역"
+                rel="24">번역</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="경험"
+                rel="20">경험</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="미식"
+                rel="20">미식</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="첫인상"
+                rel="16">첫인상</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="워크플로"
+                rel="16">워크플로</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="플러그인"
+                rel="16">플러그인</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="네트워크"
+                rel="16">네트워크</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="사용 경험"
+                rel="12">사용 경험</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="정리"
+                rel="12">정리</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="서버"
+                rel="12">서버</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="라우터"
+                rel="12">라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="소프트 라우터"
+                rel="12">소프트 라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="에세이"
+                rel="12">에세이</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9B%86%E6%88%90"
+                title="통합"
+                rel="12">통합</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="주식"
+                rel="8">주식</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="최적화"
+                rel="8">최적화</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%8D%83%E5%85%86"
+                title="기가비트"
+                rel="8">기가비트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="큰일"
+                rel="8">큰일</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="도구"
+                rel="8">도구</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="바이패스 라우터"
+                rel="8">바이패스 라우터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="프레임워크"
+                rel="8">프레임워크</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="족욕 시간"
+                rel="8">족욕 시간</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="테스트"
+                rel="8">테스트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="테슬라"
+                rel="8">테슬라</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="에디터"
+                rel="8">에디터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="영상"
+                rel="8">영상</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="디버깅"
+                rel="8">디버깅</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BD%A6"
+                title="자동차"
+                rel="8">자동차</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="마이그레이션"
+                rel="8">마이그레이션</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="둥베이 요리"
+                rel="4">둥베이 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="집 사기"
+                rel="4">집 사기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="프록시"
+                rel="4">프록시</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="풀스택"
+                rel="4">풀스택</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="북유럽 신화"
+                rel="4">북유럽 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="협업"
+                rel="4">협업</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="압축"
+                rel="4">압축</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="크레토스"
+                rel="4">크레토스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="가정식"
+                rel="4">가정식</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="부강"
+                rel="4">부강</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="비교"
+                rel="4">비교</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="쓰촨 요리"
+                rel="4">쓰촨 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="업무 경험"
+                rel="4">업무 경험</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="그리스 신화"
+                rel="4">그리스 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="자주 쓰는 앱"
+                rel="4">자주 쓰는 앱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="오픈소스"
+                rel="4">오픈소스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="언박싱"
+                rel="4">언박싱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="갓 오브 워"
+                rel="4">갓 오브 워</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="유심"
+                rel="4">유심</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%8B%93%E6%89%91"
+                title="토폴로지"
+                rel="4">토폴로지</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="이야기"
+                rel="4">이야기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="자료구조"
+                rel="4">자료구조</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="여행"
+                rel="4">여행</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="일상"
+                rel="4">일상</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="일본"
+                rel="4">일본</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="서비스"
+                rel="4">서비스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="포맷"
+                rel="4">포맷</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A2%A6"
+                title="꿈"
+                rel="4">꿈</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="브라우저"
+                rel="4">브라우저</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="게임"
+                rel="4">게임</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="푸념"
+                rel="4">푸념</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="사용자 개인정보"
+                rel="4">사용자 개인정보</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="알고리즘"
+                rel="4">알고리즘</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="디테일"
+                rel="4">디테일</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="이어폰"
+                rel="4">이어폰</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="자유"
+                rel="4">자유</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="계획"
+                rel="4">계획</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="설정"
+                rel="4">설정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="함정"
+                rel="4">함정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="변환"
+                rel="4">변환</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="기술 선정"
+                rel="4">기술 선정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="면접"
+                rel="4">면접</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>칼럼</h5>
+    <div class="tags">
+        <a href="/projects">오픈 소스</a>
+        <a href="/book-list">기술 도서 목록</a>
+        <a href="/subscribe">구독 & 유료 앱</a>
+        <a href="/my-food">맛집 추천</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>친구들</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">중국판</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="Chrome 자주 사용하는 디버깅 방법 및 기타 기능"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ko"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ko/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

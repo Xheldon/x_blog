@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      Vue Learning Summary - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="Vue Learning Summary - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2016-6-1T1:22:21"> 
+              
+                  
+                    <meta property="article:tag" content="Vue">
+                    
+                    <meta property="article:tag" content="Technology">
+                    
+                      
+                          
+                            <meta name="og:description" content="">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/en/tech/vue-learning-summary.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="en_US">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/en/tech/vue-learning-summary.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/vue-learning-summary.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/vue-learning-summary.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/vue-learning-summary.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/vue-learning-summary.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/vue-learning-summary.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/en/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/en/">Home</a>
+            </li>
+            <li>
+              <a href="/en/about/">About</a>
+            </li>
+            <li>
+              <a href="/en/donate/">Donate</a>
+            </li>
+            <li>
+              <a href="/en/archive/">Archive</a>
+            </li>
+            <li>
+              <a href="/en/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">English</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/vue-learning-summary.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item active"><a href="/en/tech/vue-learning-summary.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/vue-learning-summary.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/vue-learning-summary.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/en/archive/?tag=Vue"
+                            title="Vue">
+                            Vue
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="Technology">
+                            Technology
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        Vue Learning Summary
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 Written on Jun 1, 2016</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;Note: it has been
+          <code id="from_time"></code> days since this article was written, please be aware of its timeliness
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1464787341000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+              <h2 id="preface">Preface</h2>
+<p>This article begins with the “Instance” section from the <a href="https://cn.vuejs.org/v2/guide/instance.html"><code>Vue 2.0 Official Documentation</code></a>], exploring some usage methods of the <code>Vue API</code> and the principles behind how <code>Vue</code> implements certain functionalities. Additionally, it includes personal usage experiences and, from my limited perspective, an analysis of why <code>Vue</code> is designed this way—though this may seem presumptuous. As I am relatively new to <code>Vue</code>, any inaccuracies are kindly requested to be pointed out, and I appreciate your understanding in advance.</p>
+<blockquote>
+<p>Note: Basic knowledge is skipped directly; I will only mention points I deem necessary.</p>
+</blockquote>
+<h2 id="vue-instance">Vue Instance</h2>
+<p>Every <code>Vue.js</code> application is launched by creating a root <code>Vue</code> instance via a constructor. This means that all data on a page should be maintained solely by this single instance, with the original data sources being emitted and received exclusively by the root instance for unified management. The root instance then distributes data via <code>props</code> or listens for data through <code>events</code>. Child components only need to <code>watch/computed</code> data changes and update promptly.</p>
+<p>The documentation states: <code>All Vue.js components are essentially extended Vue instances</code>. The correct interpretation of this is that you can use the same methods and lifecycle hooks on components as you would on instances, except for <code>data</code>.</p>
+<p>In components, <code>data</code> must be a function because components are reusable, so each invocation of a component must generate its own data.</p>
+<p>Data proxy refers to the fact that a <code>Vue</code> instance proxies all properties in its <code>data</code> object, while the instance property <code>$data</code> represents the <code>data</code> attribute itself, distinguishing it from the proxied <code>data</code>.</p>
+<p>In other words, if a <code>vm</code>’s <code>data</code> property is <code>&#123;a: 'xheldon'&#125;</code>, then <code>vm.a</code> equals <code>'xheldon'</code>, while <code>vm.$data</code> is <code>&#123;a: 'xheldon'&#125;</code>.</p>
+<p>A component is essentially an (extended) <code>Vue</code> instance. Here’s a simple verification:</p>
+<p>A <code>list.vue</code> component (<code>template</code> and <code>style</code> omitted):</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Vue</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span>&#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Vue</span>);<span class="hljs-comment">//true</span><br>    <span class="hljs-keyword">return</span> &#123;&#125;<br>  &#125;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="props-vs-data">props vs data</h2>
+<p>When initializing a component, properties on <code>props</code>, <code>data</code>, and methods in <code>computed</code> are all bound to the <code>Vue</code> instance. However, properties on <code>props</code> have higher priority than those with the same name on <code>data</code>. Here’s the verification:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;first:&#x27;</span>, <span class="hljs-variable language_">this</span>); <span class="hljs-comment">//list 的实例</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">a</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-comment">//属性 a 代表的值挂在 data 上, 但是被下面的 prop 属性同名覆盖(查看上面控制台输出的内容即可)</span><br>      <span class="hljs-attr">d</span>: <span class="hljs-string">&#x27;d&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">props</span>: [<span class="hljs-string">&#x27;a&#x27;</span>], <span class="hljs-comment">//和 data 中的 a 属性同名, 因此来自父级的数据将 data 中的同名属性 a 上的数据覆盖.(注:父级是根组件, 挂载在一个实例上)</span><br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>The result shows a warning (not an error, rendering is unaffected):</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">[<span class="hljs-title class_">Vue</span> warn]: <span class="hljs-title class_">The</span> data property <span class="hljs-string">&quot;a&quot;</span> is already declared <span class="hljs-keyword">as</span> a prop. <span class="hljs-title class_">Use</span> prop <span class="hljs-keyword">default</span> value instead.<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/propsVSdata.png" alt="props VS data" title="props VS data" /></p>
+<p>Meanwhile, the function names returned by <code>computed</code> can duplicate those of properties on <code>data</code> without any warnings. However, once duplicated, during initialization, the console shows that <code>_data</code> sets the <code>getter</code> and <code>setter</code> for the duplicated property after <code>_computedWatcher</code> (whether this is the reason remains to be confirmed after further research, so I’ll leave it here for now and update this article later). This leads to the property being overwritten. For related principles, <a href="https://juejin.im/entry/577639de165abd00547b0924">see this introduction</a>].</p>
+<p>They are all bound to the instance <code>properties</code> during initialization. Duplicate <code>computed</code> properties are overwritten, but <code>Vue devtool</code> still displays them correctly.)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;first:&#x27;</span>, <span class="hljs-variable language_">this</span>); <span class="hljs-comment">//list 的实例</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">ab</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-comment">//属性 a 代表的值挂在 data 上, 但是被下面的 prop 属性同名覆盖(查看上面控制台输出的内容即可)</span><br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">computed</span>: &#123;<br>    <span class="hljs-title function_">ab</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed a&#x27;</span>; <span class="hljs-comment">//方法名跟 data 上的 a 属性同名, 因此console 出来的 this 不会出现它的值, 用花括号输出的时候也是输出的 data 上的同名属性</span><br>    &#125;,<br>    <span class="hljs-title function_">f</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed f&#x27;</span>; <span class="hljs-comment">//方法名没有重复的, 因此 console 出来的 this 会有它的同名属性, 且值为 &#x27;computed f&#x27;, 我们提供的 function 被作为该属性的 getter(计算属性默认只有 getter, 可以手动添加 setter)</span><br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/computedVSdata1.png" alt="computed VS data" title="computed VS data" /></p>
+<p><code>Vue devtool</code> displays them correctly:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/computedVSdata3.png" alt="computed VS data" title="computed VS data" /></p>
+<p>If the method names in <code>computed</code> do not duplicate the property names in <code>data</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;first:&#x27;</span>, <span class="hljs-variable language_">this</span>); <span class="hljs-comment">//list 的实例</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">a</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-comment">//属性 a 代表的值挂在 data 上, 但是被下面的 prop 属性同名覆盖(查看上面控制台输出的内容即可)</span><br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">computed</span>: &#123;<br>    <span class="hljs-title function_">ab</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed a&#x27;</span>; <span class="hljs-comment">//方法名跟 data 上的 a 属性同名, 因此 console 出来的 this 不会出现它的值, 但 Vue devtool 控制台正确显示了出来, 用花括号输出的时候也是其返回值 computed a.</span><br>    &#125;,<br>    <span class="hljs-title function_">f</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed f&#x27;</span>; <span class="hljs-comment">//方法名没有重复的, 因此 console 出来的 this 会有它的同名属性, 且值为 &#x27;computed f&#x27;, 我们提供的 function 被作为该属性的 getter</span><br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/computedVSdata2.png" alt="computed VS data" title="computed VS data" /></p>
+<p>Additionally, the difference between <code>methods</code> and <code>computed</code> methods, aside from the latter having caching while the former does not (i.e., the latter won’t recalculate unless its dependent reactive data changes), is that if both are intended to return interpolated values, methods in <code>methods</code> are invoked as <code>functionName()</code>, whereas methods in <code>computed</code> are referenced as <code>functionName</code>—meaning the former requires executing the function, while the latter does not.</p>
+<p>The reason for this is that the methods we write in <code>computed</code> properties are treated as properties mounted on the <code>Vue</code> instance, and the functions we provide serve as the <code>getter</code> for these properties.</p>
+<p>In contrast, <code>methods</code> are simply functions, so whether they are referenced in interpolations or as event handlers, they must be called using <code>()</code>.</p>
+<p>Thus, when an actual function is needed—here, if a function call is required, <code>computed</code> must return a function, not just a value, because parameters need to be passed—<code>methods</code> take precedence.</p>
+<p>Below is an alternative version of a <code>todo list</code> different from the official documentation:</p>
+<p>Template:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> @<span class="hljs-attr">keyup.enter</span>=<span class="hljs-string">&quot;addToList&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;todotext&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span><br>      &#123;% raw %&#125;<br>      <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span>&gt;</span><br>        &#123;&#123;key&#125;&#125;:&#123;&#123;value&#125;&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span>&gt;</span>X<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>      &#123;% endraw %&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>Logic:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">todolist</span>: [],<br>      <span class="hljs-attr">todotext</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-title function_">addToList</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">push</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">todotext</span>);<br>    &#125;,<br>    <span class="hljs-title function_">deletetodo</span>(<span class="hljs-params">key</span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">splice</span>(key, <span class="hljs-number">1</span>);<br>    &#125;,<br>  &#125; <span class="hljs-comment">/*,</span><br><span class="hljs-comment">  computed:&#123;</span><br><span class="hljs-comment">    deletetodo(key)&#123;//不接收参数</span><br><span class="hljs-comment">      console.log(arguments);</span><br><span class="hljs-comment">      this.todolist.splice(key, 1);</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">  &#125;*/</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>In this example, if this template is used, a parameter must be passed to delete the current <code>li</code> when the <code>button</code> is clicked. Therefore, <code>methods</code> must be used in this case.</p>
+<p>When using <code>computed</code>, parameters are not accepted <a href="http://whereswalden.com/2010/08/22/incompatible-es5-change-literal-getter-and-setter-functions-must-now-have-exactly-zero-or-one-arguments">(because it is a <code>getter</code>)</a>, even if it returns a <code>function</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">computed</span>:&#123;<br>  <span class="hljs-title function_">deletetodo</span>(<span class="hljs-params">key</span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//控制台输出当前组件实例</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">splice</span>(key, <span class="hljs-number">1</span>);<span class="hljs-comment">//报错</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Note: If there are functions with the same name in both, the function in <code>computed</code> takes precedence over the one in <code>methods</code> (due to the order in which <code>getter</code> and <code>setter</code> are processed; refer to the source code for details). This applies to both interpolations and event bindings. Here’s the verification:</p>
+<p>Interpolation reference test:</p>
+<p>Template:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;%raw%&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;&#123;a()&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>&#123;% endraw%&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;im from methods&#x27;</span><br>  &#125;<br>&#125;,<br><span class="hljs-attr">computed</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;im from computed&#x27;</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>The output function is <code>im from computed</code>. If <code>computed</code> does not return a function, the interpolation reference using only <code>{{a}}</code> will obviously output the value from <code>computed</code> (verification omitted here).</p>
+<p>For event binding:</p>
+<p>When calling using <a href="https://cn.vuejs.org/v2/guide/events.html#%E5%86%85%E8%81%94%E5%A4%84%E7%90%86%E5%99%A8%E6%96%B9%E6%B3%95">inline handler methods</a>:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;%raw%&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;a()&quot;</span>&gt;</span>click me<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>&#123;% endraw%&#125;<br></code></pre></td></tr></table></figure>
+<p>Logic:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;methods&#x27;</span>)<br>  &#125;<br>&#125;,<br><span class="hljs-attr">computed</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-comment">//computed 返回一个函数</span><br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;computed&#x27;</span>)<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Outputs <code>computed</code>.</p>
+<p>If using <a href="https://cn.vuejs.org/v2/guide/events.html#%E6%96%B9%E6%B3%95%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A8">method event handlers</a>, the result is the same:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;%raw%&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;a&quot;</span>&gt;</span>click me<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>//注意此处不带括号 &#123;% endraw%&#125;<br></code></pre></td></tr></table></figure>
+<p>Logic:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;methods&#x27;</span>)<br>  &#125;<br>&#125;,<br><span class="hljs-attr">computed</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-comment">//computed 返回一个函数</span><br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;computed&#x27;</span>)<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Outputs <code>computed</code>.</p>
+<p>Note that for event binding, <code>computed</code> must always return a function.</p>
+<p>Thus, the order of precedence is:</p>
+<p><code>props &gt; data &gt; computed &gt; methods</code></p>
+<p>I suspect the reference priority for <code>this.xxx</code> in <code>computed</code> and <code>methods</code> follows the same order. Those curious can verify this.</p>
+<p>Moreover, it can be observed that in both cases, <code>methods</code> do not need to return a <code>function</code>, whereas <code>computed</code> must return a <code>function</code> and does not accept parameters (since it is a <code>getter</code>). In summary, event handling is best done with <code>methods</code>, while data binding/interpolation is best handled with <code>computed</code> (due to caching).</p>
+<p>Additionally, when binding events with <code>methods</code>, using <code>()</code> or omitting it has the same effect—both will execute the function. The differences are as follows:</p>
+<ol>
+<li>
+<p><code>Statements with () are called inline statements</code>, which fall into two cases: native events and custom events. Both cases can pass parameters. If the parameter list is empty, the default parameter <code>arguments</code> is also empty, meaning there is no default parameter. If triggered by a native event like <code>input/click</code>, a special <code>$event</code> parameter can be passed as the native <code>event</code> handler. If triggered by a custom event, the parameters of the event handler still depend on the values actually passed to it, and there is no special <code>$event</code> object available for custom functions. Parameters passed when triggering a custom event via <code>$emit</code> will be ignored.</p>
+</li>
+<li>
+<p><code>Statements without () are called method events</code>, which also fall into two cases: for native events, the native <code>event</code> object is passed as the sole default parameter; for custom events, the parameters passed are any number of arguments from the second to the last (excluding the event name) when the event is emitted via <code>$emit</code>.</p>
+</li>
+</ol>
+<blockquote>
+<p>Talk is cheap, show me the code.</p>
+</blockquote>
+<p>The above describes four scenarios:</p>
+<ol>
+<li>Native event with ()</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;input type=<span class="hljs-string">&quot;text&quot;</span> @click=<span class="hljs-string">&quot;test1()&quot;</span>&gt;<span class="hljs-comment">//模板里面传参为空</span><br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">test1</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//则逻辑中的参数也为空;</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>Custom event with ()</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//子模板</span><br>&lt;input type=<span class="hljs-string">&quot;text&quot;</span> @input=<span class="hljs-string">&quot;shuru($event)&quot;</span>/&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;&#123;xheldon&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="hljs-comment">//子逻辑:</span><br><span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;child&#x27;</span>,<br><span class="hljs-attr">props</span>:[<span class="hljs-string">&#x27;xheldon&#x27;</span>],<br><span class="hljs-attr">method</span>:&#123;<br>  <span class="hljs-title function_">shuru</span>(<span class="hljs-params">e</span>)&#123;<br>    <span class="hljs-variable language_">this</span>.$emit(<span class="hljs-string">&#x27;haha&#x27;</span>, e.<span class="hljs-property">target</span>.<span class="hljs-property">value</span>,<span class="hljs-string">&#x27;其他参数&#x27;</span>);<br>  &#125;<br>&#125;<br><span class="hljs-comment">//父模板</span><br>&lt;child :xheldon=<span class="hljs-string">&quot;blob&quot;</span> @haha=<span class="hljs-string">&quot;something()&quot;</span>&gt;&lt;/child&gt;<br><span class="hljs-comment">//父逻辑:</span><br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">something</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;parent:&#x27;</span>,...<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//上面 something() 中传 xxx, 则输出 &#x27;parent:xxx&#x27;, 即忽略了子组件 $emit 事件时候传递的参数.</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">blob</span> = <span class="hljs-variable language_">arguments</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li>Native event without ()</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;input type=<span class="hljs-string">&quot;text&quot;</span> @click=<span class="hljs-string">&quot;test1&quot;</span>&gt;<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">test1</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//结果: 输出原生的 MouseEvent 事件</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="4">
+<li>Custom event without ()</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//子模板</span><br>&lt;input type=<span class="hljs-string">&quot;text&quot;</span> @input=<span class="hljs-string">&quot;shuru($event)&quot;</span>/&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;&#123;xheldon&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="hljs-comment">//子逻辑:</span><br><span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;child&#x27;</span>,<br><span class="hljs-attr">props</span>:[<span class="hljs-string">&#x27;xheldon&#x27;</span>],<br><span class="hljs-attr">method</span>:&#123;<br>  <span class="hljs-title function_">shuru</span>(<span class="hljs-params">e</span>)&#123;<br>    <span class="hljs-variable language_">this</span>.$emit(<span class="hljs-string">&#x27;haha&#x27;</span>, e.<span class="hljs-property">target</span>.<span class="hljs-property">value</span>,<span class="hljs-string">&#x27;其他参数&#x27;</span>);<br>  &#125;<br>&#125;<br><span class="hljs-comment">//父模板</span><br>&lt;child :xheldon=<span class="hljs-string">&quot;blob&quot;</span> @haha=<span class="hljs-string">&quot;something&quot;</span>&gt;&lt;/child&gt;<br><span class="hljs-comment">//父逻辑:</span><br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">something</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;parent:&#x27;</span>,...<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//input 输入 xxx, 则输出 &#x27;parent: xxx 其他参数&#x27;, 即与子组件 $emit 时候传递的参数相关.</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">blob</span> = <span class="hljs-variable language_">arguments</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="directives-and-parameters-attributes">Directives and Parameters (Attributes)</h2>
+<p>Basic usage:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">v-directive:propNamed.modifiers</span>=<span class="hljs-string">&quot;value&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>Here, <code>directive</code> is called the directive, and <code>propName</code> is called the “parameter” of the directive. In practice, the parameter manifests as an attribute in <code>html</code> (<code>Vue</code> includes some built-in parameters/attributes, such as <code>click</code> in <code>v-bind:click=&quot;method&quot;</code> or <code>href</code> in <code>v-bind:href=&quot;/img/in-post/x.png&quot;</code>. The former does not appear inline, while the latter, being required, appears as an inline attribute. Custom-defined parameters/attributes will always appear as inline attributes). The <code>value</code> is a variable (though enclosed in quotes) and in most cases comes from the parent template.</p>
+<p><code>propName</code> can include a modifier for quick operations like preventing default events (e.g., <code>.prevent</code>).</p>
+<p>Some directives can be used directly, such as <code>v-if</code>, while others require parameters: <code>v-bind:href</code> or <code>v-on:click</code>.</p>
+<p>Note that whether <code>value</code> is enclosed in quotes or not yields the same result—i.e., <code>:propName=&quot;value&quot;</code> and <code>:propName=value</code> are equivalent. Unless otherwise specified, this applies to all cases below.</p>
+<p>If <code>value</code> evaluates to <code>false</code> when converted to a boolean, <code>propName</code> is removed; if <code>true</code>, <code>propName</code> appears. Specifically, it follows these rules (only for custom attributes):</p>
+<ol>
+<li>For literals <code>null</code>, <code>undefined</code>, or <code>false</code>, the <code>propName</code> attribute is removed.</li>
+<li>If <code>value</code> is an undefined variable, such as <code>:propName=&quot;wxd&quot;</code>, <code>propName</code> is removed, and a warning is issued:</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">[<span class="hljs-title class_">Vue</span> warn]: <span class="hljs-title class_">Property</span> or method <span class="hljs-string">&quot;s&quot;</span> is not defined on the instance but referenced during render. <span class="hljs-title class_">Make</span> sure to declare reactive data properties <span class="hljs-keyword">in</span> the data option.<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li>
+<p>If <code>value</code> is an array (since arrays are objects), <code>propName</code> will always exist except in the second case below. The <code>value</code> behaves as follows:</p>
+<ul>
+<li><code>:propName =[]</code>, <code>:propName =&quot;[]&quot;</code>, <code>:propName =&quot;['']&quot;</code>: <code>value</code> is removed, leaving only the attribute with no value.</li>
+<li><code>:propName =[&quot;&quot;]</code>: The structure breaks.</li>
+<li><code>:propName =[&quot;&quot;,&quot;&quot;]</code> or <code>:propName ='[&quot;&quot;,&quot;&quot;]'</code>: The <code>value</code> becomes <code>&quot;,&quot;</code>.</li>
+</ul>
+</li>
+<li>
+<p>If <code>value</code> is a nested array, after flattening its values, if <code>value</code> or its recursive child elements contain a literal <code>undefined</code> or <code>null</code> (not written as a string), the value at that position is left empty; if <code>value</code> or its recursive child elements contain an <code>Object</code>, the value at that position becomes <code>[object Object]</code>.</p>
+</li>
+<li>
+<p>If <code>value</code> is an object, <code>propName</code> is preserved, and the value becomes <code>[object Object]</code>.</p>
+</li>
+<li>
+<p>If <code>value</code> is a number or string, such as <code>:propName = &quot;'fff'&quot;</code>, <code>propName</code> is preserved, and <code>value</code> takes the string or numeric value.</p>
+</li>
+</ol>
+<p>After reviewing the source code, this is indeed the logic:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">setAttr</span>(<span class="hljs-params">el, key, value</span>) &#123;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isBooleanAttr</span>(key)) &#123;<br>    <span class="hljs-comment">// set attribute for blank value</span><br>    <span class="hljs-comment">// e.g. &lt;option disabled&gt;Select one&lt;/option&gt;</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isFalsyAttrValue</span>(value)) &#123;<br>      el.<span class="hljs-title function_">removeAttribute</span>(key);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      el.<span class="hljs-title function_">setAttribute</span>(key, key);<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isEnumeratedAttr</span>(key)) &#123;<br>    el.<span class="hljs-title function_">setAttribute</span>(<br>      key,<br>      <span class="hljs-title function_">isFalsyAttrValue</span>(value) || value === <span class="hljs-string">&#x27;false&#x27;</span> ? <span class="hljs-string">&#x27;false&#x27;</span> : <span class="hljs-string">&#x27;true&#x27;</span><br>    );<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isXlink</span>(key)) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isFalsyAttrValue</span>(value)) &#123;<br>      el.<span class="hljs-title function_">removeAttributeNS</span>(xlinkNS, <span class="hljs-title function_">getXlinkProp</span>(key));<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      el.<span class="hljs-title function_">setAttributeNS</span>(xlinkNS, key, value);<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isFalsyAttrValue</span>(value)) &#123;<br>      el.<span class="hljs-title function_">removeAttribute</span>(key);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      el.<span class="hljs-title function_">setAttribute</span>(key, value);<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>These rules only apply to custom properties. For built-in properties, the behavior differs. For example, when binding the <code>class</code> attribute:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">v-<span class="hljs-attr">bind</span>:<span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;&#123;active: isActive&#125;&quot;</span><br></code></pre></td></tr></table></figure>
+<p>This means if the value of <code>isActive</code> is <code>false</code> or any other value that can be converted to a boolean <code>false</code>, the <code>active</code> class name will not be applied. Otherwise, it will be applied (consistent with the truthiness evaluation of an <code>if</code> statement).</p>
+<h2 id="filters">Filters</h2>
+<p>When filters are chained, the first parameter of the first filter is the initial value, while the first parameter of subsequent filters is the return value of the previous filter (or <code>undefined</code> if there is no return value).</p>
+<p>Template:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">v-bind:prop</span>=<span class="hljs-string">&quot;rawProp | filterOne | filterTwo&quot;</span>&gt;</span><br>  控制台查看 filter 函数的参数<br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>Logic:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">rawProp</span>: <span class="hljs-string">&#x27;this is raw prop&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">filters</span>: &#123;<br>    <span class="hljs-title function_">filterOne</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;this param is pass to next filter&#x27;</span>;<br>    &#125;,<br>    <span class="hljs-title function_">filterTwo</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-header&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>Except for the first <code>filter</code>, subsequent <code>filter</code>s cannot access the initial value. Of course, if you want to pass parameters, there are plenty of workarounds, such as having the first <code>filter</code> return an array, etc.</p>
+<h2 id="list-rendering">List Rendering</h2>
+<p>In <code>v-for</code>, if two parameters are provided, they align with the parameters of the native <code>js</code> <code>forEach</code> method: <code>value, key</code>. Using the <code>of</code> operator has the exact same effect as using the <code>in</code> operator—even though this isn’t the case in native <code>js</code>.</p>
+<p>Another point to note is that when using <code>v-for</code> with components, the parent cannot automatically pass data to the component because the component has its own isolated scope. Therefore, to pass data to child components, you need to use the <code>props</code> property, which is slightly more verbose:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">my-component</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(item, index) in items&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-bind:item</span>=<span class="hljs-string">&quot;item&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-bind:index</span>=<span class="hljs-string">&quot;index&quot;</span></span><br><span class="hljs-tag">&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">my-component</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>Additionally, when <code>v-for</code> is used on an object, the iteration yields the object’s values, not its keys. This differs from native <code>js</code>, where a <code>for in</code> loop requires manually accessing <code>obj['i']</code> to output values, and a second parameter <code>(value, key)</code> is needed to output keys:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">obj</span>:&#123;<br>  <span class="hljs-attr">first</span>: <span class="hljs-string">&#x27;xheldon&#x27;</span>,<br>  <span class="hljs-attr">last</span>: <span class="hljs-string">&#x27;cao&#x27;</span>,<br>  <span class="hljs-attr">age</span>: <span class="hljs-string">&#x27;25&#x27;</span><br>&#125;<br>&lt;div v-<span class="hljs-keyword">for</span>=<span class="hljs-string">&quot;(value, key) in obj&quot;</span>&gt;&#123;% raw %&#125;&#123;&#123;value&#125;&#125;-&#123;&#123;key&#125;&#125;&#123;% endraw %&#125;&lt;<span class="hljs-regexp">/div&gt;/</span>/ 输出 xheldon cao <span class="hljs-number">25</span><br></code></pre></td></tr></table></figure>
+<p>Note that in native <code>js</code>, unless you manually implement a <code>Symbol.iterator</code>, you cannot use a <code>for of</code> loop. However, <code>Vue</code> allows it—though the effect is identical to <code>for in</code>.</p>
+<p>There’s also a small <code>tip</code> in list rendering called the “in-place reuse” principle. What does this mean? Take the <code>tololist</code> example mentioned earlier. If no unique <code>key</code> is assigned to each element, like this:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span>&gt;</span><br>  &#123;%raw%&#125;&#123;&#123;value.key&#125;&#125;:&#123;&#123;value.value&#125;&#125;&#123;%endraw%&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span></span><br><span class="hljs-tag">    @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    X<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>Then every time you click the “×” to delete the current <code>li</code>, <code>Vue</code> will reuse the existing elements in place, simply moving the data to the correct position instead of <code>remove</code>-ing the deleted <code>dom</code> element to avoid <code>reflow</code>. Below is the page <code>render</code> behavior when clicking “×” to delete an element, as shown by Chrome’s <code>devtool</code>:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/nokey.png" alt="没有key" title="没有key" /></p>
+<p>You can see that the <code>reflow</code> portion is only the very bottom part.</p>
+<p>When <code>key</code> is added:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span> <span class="hljs-attr">:key</span>=<span class="hljs-string">&quot;value.key&quot;</span>&gt;</span><br>  &#123;% raw %&#125;&#123;&#123;value.key&#125;&#125;:&#123;&#123;value.value&#125;&#125;&#123;% endraw%&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span></span><br><span class="hljs-tag">    @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    X<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>Let’s look at the browser’s <code>render</code> behavior after clicking the close button:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/key.png" alt="有key" title="有key" /></p>
+<p>Some might wonder: Why do we need to manually implement a <code>value.key</code> on <code>value</code> here instead of using the <code>key</code> provided by <code>Vue</code> in <code>(value, key)</code>?:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;% raw %&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span> <span class="hljs-attr">:key</span>=<span class="hljs-string">&quot;key&quot;</span>&gt;</span><br>  &#123;&#123;value.key&#125;&#125;:&#123;&#123;value.value&#125;&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span>&gt;</span>X<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>&#123;% endraw %&#125;<br></code></pre></td></tr></table></figure>
+<p>The answer is that while the <code>key</code> provided by <code>Vue</code> appears to be a <code>key</code>, it remains unrelated to the current data. Thus, when deleting an <code>li</code>, the <code>key</code> is merely recalculated without being removed or shifted along with the deleted or affected elements. If the above approach is used, the effect is the same as the first method without a <code>key</code>—it still employs the in-place reuse strategy, where the data changes while the <code>dom</code> structure remains unchanged. Therefore, you need to manually implement a <code>key</code>, roughly like this:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span>&#123;<br>    <span class="hljs-attr">toolist</span>:[],<br>    <span class="hljs-attr">truekey</span>: <span class="hljs-number">0</span>,<span class="hljs-comment">//手动实现一个 key</span><br>    <span class="hljs-attr">todotext</span>: <span class="hljs-string">&#x27;&#x27;</span><br>  &#125;<br>&#125;,<br><span class="hljs-attr">methods</span>: &#123;<br>  <span class="hljs-title function_">addTolist</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">push</span>(&#123;<span class="hljs-attr">value</span>:<span class="hljs-variable language_">this</span>.<span class="hljs-property">todotext</span>, <span class="hljs-attr">key</span>: ++<span class="hljs-variable language_">this</span>.<span class="hljs-property">truekey</span>&#125;);<span class="hljs-comment">// 把 key 放到 data 上</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="event-handlers">Event Handlers</h2>
+<p>Event handlers can be chained, but some elements inherently don’t support certain events, making binding meaningless—for example, binding a <code>keyup</code> event on a <code>div</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;div @keyup.<span class="hljs-property">alt</span>=<span class="hljs-string">&quot;pressalt&quot;</span>&gt;div alt 按键测试&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+<p>Thus, it’s common to handle events via bubbling on a <code>div</code> and then bind an <code>alt+ctrl</code> event on an <code>input</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;div @keyup.<span class="hljs-property">alt</span>=<span class="hljs-string">&quot;presskey&quot;</span>&gt;div冒泡按键测试<br>  &lt;input type=<span class="hljs-string">&quot;text&quot;</span>&gt;<br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+<p>I have a concern here: If an <code>input</code> uses <code>@keyup.space</code> for listening, but in Chinese input methods, the spacebar is typically used to select words, will the actual output be the unselected pinyin letters or the first candidate word after pressing the spacebar? (This might not be a <code>Vue</code> issue, but I’ll mention it here.)</p>
+<p>The answer is that in most cases, the result is the first candidate word after pressing the spacebar. However, if a sentence is very long and requires pressing the spacebar twice to output the entire phrase, the first press will output nothing (blank), and the second press will output the full phrase. I tested this edge case, so it’s safe to assume the output will be the first candidate word after pressing the spacebar, not blank or pinyin letters. I used Sogou <code>mac</code> input method’s single-line candidate mode for testing (details omitted).</p>
+<p>Note: The official documentation mentions <code>IME</code> when discussing <code>v-model</code>, referring to this issue. If you want <code>v-model</code> to respond immediately during IME composition, you can bind the <code>input</code> event.</p>
+<h2 id="form-controls">Form Controls</h2>
+<p><code>v-model</code> is typically used on <code>input</code> elements, and the <code>value</code> attribute in the template will be ignored—<code>v-model</code> only recognizes the initial value in <code>js</code> and binds to it. So if you write both <code>v-model</code> and a <code>value</code> attribute, the latter will appear in the <code>dom</code> structure but will be ignored when <code>js</code> retrieves the value, as <code>v-model</code> takes precedence:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span></span><br><span class="hljs-tag">  <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;我出现在 dom 结构的 value 属性中, 但是只能通过 getAttribute 获取到我, .value 并不能获取到, 伤心~&quot;</span></span><br><span class="hljs-tag">/&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span>&#123;<br>    <span class="hljs-attr">todotext</span>:<span class="hljs-string">&#x27;我是真正的初始值, js 获取的是我, 虽然我并不出现在 dom 中的 value 属性中~&#x27;</span>,<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>The difference between the two is similar to that between <code>.data</code> and <code>.attr</code> in <code>jQuery</code>—what’s written inline is the value of <code>attr('data','xxx')</code>, and inspecting the <code>dom</code> structure also shows the value <code>xxx</code>. However, the actual value obtained via <code>js</code> is the one bound through <code>.data('yyy')</code>—unless you use <code>attr</code> to read the <code>dom</code> structure. (Note: If you modify the <code>attr</code> value after instantiation, <code>js</code> will retrieve the <code>attr</code> value. The initial value is ignored here—only the initial value. For example, after initialization, if <code>v-model</code> binds to <code>value</code> and you manually modify the <code>value</code> in the <code>dom</code> structure, <code>v-model</code> will then use the modified <code>attr</code> value instead of the value on <code>data</code>.)</p>
+<p>If the requirement is unconventional—say, you don’t want to use <code>v-model</code> to get and update the <code>input</code> value in real-time, or you need to process the <code>input</code> value before updating it—you can try <code>$ref</code> (<code>e.target.value</code> also works):</p>
+<p>Template:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> @<span class="hljs-attr">input</span>=<span class="hljs-string">&quot;input&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;inputvalue&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>Logic:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;&#x27;</span><br>&#125;,<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">input</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">message</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">$refs</span>.<span class="hljs-property">inputvalue</span>.<span class="hljs-property">value</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>The official documentation also states that <code>v-model</code> is just syntactic sugar for two-way data binding:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-bind:value</span>=<span class="hljs-string">&quot;something&quot;</span> <span class="hljs-attr">v-on:input</span>=<span class="hljs-string">&quot;something = $event.target.value&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>However, listening for the <code>input</code> event has a drawback: when using an input method, the event triggers even before pressing space to select a word. So, unless this behavior is needed, it’s better to stick with <code>v-model</code>.</p>
+<p>For binding multiple elements to the same value and outputting them—a common requirement for a group of <code>checkbox</code>es—you need to use an array:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;messages&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;xheldon&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;messages&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;xiaodan&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123;messages&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span>&#123;<br>    <span class="hljs-attr">messages</span>: []<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>(As far as I’ve discovered,) this concise array usage only works for multiple <code>checkbox</code>-type <code>input</code>s—i.e., several elements bound to the same <code>v-model</code>, where their states aren’t synchronized but their corresponding <code>value</code>s are collected into an array. Of course, if you insist on using <code>methods</code> to achieve similar effects for arbitrary input types—well, never mind.</p>
+<p>For a single <code>checkbox</code>, <code>v-model</code> binds to the <code>value</code>, which is either <code>true</code> or <code>false</code>. You can customize the selected and unselected values using <code>:true-value</code> and <code>:false-value</code>.</p>
+<p>For multiple <code>radio</code> buttons, <code>v-model</code> serves a role similar to <code>name</code>—i.e., grouping them. Thus, <code>radio</code>-type <code>input</code>s using <code>v-model</code> don’t need the <code>name</code> attribute.</p>
+<p>For <code>select</code> types, if no <code>value</code> attribute is given for each <code>option</code>, the bound value is the content of the <code>option</code>; otherwise, it’s the <code>value</code> attribute. For multi-select <code>select</code>s, the <code>data</code> bound to <code>v-model</code> must be an array; otherwise, a warning is issued (though it won’t error—<code>Vue</code> auto-converts it, and it still runs):</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span> warn]: <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">multiple</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;selectM&quot;</span>&gt;</span> expects an Array value for its binding, but got String</span><br></code></pre></td></tr></table></figure>
+<p>Note: For all the above types, when <code>v-model</code> binds to <code>value</code> and the <code>value</code> attribute is dynamically bound (<code>:value=&quot;xxx&quot;</code>) to another property (<code>xxx</code>) on <code>data</code>, the properties corresponding to <code>v-model</code> and <code>:value</code> are the same (strictly equal).</p>
+<h2 id="components">Components</h2>
+<p>First, we need to distinguish between what is a <code>DOM</code> template and what is a string template.</p>
+<p>An <code>HTML</code> template refers to ordinary <code>html</code> elements that are bound through the <code>el</code> option of a <code>Vue</code> instance:<br />
+String template section:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;div id=<span class="hljs-string">&#x27;tpl&#x27;</span>&gt;<br>  &#123;<span class="hljs-string">&#x27; &#x27;</span>&#125;<br>  实例挂载元素 html 自有组件:<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br>  自定义组件:<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">my-component</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-component</span>&gt;</span></span><br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+<p>A string template refers to:</p>
+<ol>
+<li>Templates registered via <code>template</code> in <code>js</code>, such as:</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">component</span>(<span class="hljs-string">&#x27;my-component&#x27;</span>, &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;span&gt;&#123;&#123;message&#125;&#125;&lt;/span&gt;&#x27;</span>,<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;hello, xheldon&#x27;</span>;<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>Or:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> <span class="hljs-title class_">Child</span> = &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;div&gt;&#x27;</span>hello, xheldon<span class="hljs-string">&#x27;&lt;/div&gt;&#x27;</span><br>&#125;<br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>(&#123;<br>  <span class="hljs-attr">components</span>: &#123;<br>    <span class="hljs-string">&#x27;my-component&#x27;</span>: <span class="hljs-title class_">Child</span><br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>
+<p>Templates registered via <code>&lt;script type=&quot;text/x-tempalge&quot;&gt;&lt;/script&gt;</code> (similar to <code>Handlebar</code>).</p>
+</li>
+<li>
+<p>The content inside the <code>&lt;template&gt;</code> tag in <code>.vue</code> components.</p>
+</li>
+</ol>
+<p>Because <code>Vue</code> parses <code>DOM</code> templates only after the browser has finished parsing, <code>DOM</code> templates cannot use components in certain tags that require specific child elements. For example, the child elements of a <code>select</code> tag must be <code>option</code>, so a custom tag like <code>com-option</code> won’t be recognized. To address this, you can add an <code>is=&quot;component-name&quot;</code> attribute to indicate the template name used by the tag.</p>
+<h2 id="literal-syntax-vs-dynamic-syntax">Literal Syntax vs. Dynamic Syntax</h2>
+<p>Here’s an important note: In native <code>js</code>, object properties can be numbers, though they are treated as strings (limited to <code>ES5</code>; in <code>ES6</code>, object properties can be any value, but this doesn’t conflict with what follows). However, in <code>Vue</code>, the <code>data</code> property cannot use numbers as keys. If literal syntax is used, passing a number will first be converted to a string via <code>toString</code>. If dynamic syntax is used, it will be treated directly as a number and won’t look for the corresponding property value bound in <code>data</code>:</p>
+<p>Child component template:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;%raw%&#125;&#123;&#123;dynamic&#125;&#125;&#123;%endraw%&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;alertProp&quot;</span>&gt;</span>点我看上面 props 传参的类型<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>Child component logic:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">props</span>:[<span class="hljs-string">&#x27;dynamic&#x27;</span>],<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">alertProp</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-title function_">alert</span>(<span class="hljs-keyword">typeof</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">dynamic</span>)<span class="hljs-comment">//上面说过了, props 属性也是绑定到 Vue 实例上的, 因此可以直接使用 this</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Parent component—literal syntax:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">com-child</span> <span class="hljs-attr">dynamic</span>=<span class="hljs-string">&quot;11&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">com-todolist</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>Parent component—dynamic syntax:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">com-child</span> <span class="hljs-attr">:dynamic</span>=<span class="hljs-string">&quot;11&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">com-todolist</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>In both cases, the parent component logic is:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-number">11</span>:<span class="hljs-string">&#x27;属性-动态语法&#x27;</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>The result is: When using the parent component’s literal syntax, clicking the <code>button</code> passes <code>1</code> to the child component, and as the documentation states, it’s the string <code>&quot;1&quot;</code>, so <code>alert</code> shows <code>string</code>. When using the parent component’s dynamic syntax with <code>v-bind</code> bound to the <code>1</code> property in the parent’s <code>data</code>, the child component doesn’t receive the value corresponding to the <code>1</code> property (i.e., <code>&quot;属性-动态语法&quot;</code>), but rather the number <code>1</code> itself. Thus, clicking the <code>button</code> triggers an <code>alert</code> showing <code>number</code>.</p>
+<p>Conclusion: It’s best not to use numbers as properties in <code>data</code> objects.</p>
+<p>Note: If the property passed to the child component is an array or object, modifying this property in the child component will reflect in the parent component—this is usually undesirable. As the saying goes: <code>props down, events up</code> (example omitted). The best practice is to use a deep copy of reference types passed from the parent—unless you explicitly need the child component to affect the parent’s state, in which case, good luck.</p>
+<p>When <code>events up</code>, if the child component passes additional parameters besides the event name in <code>$emit</code>, these parameters will be passed to the parent component’s event listener function:</p>
+<p>Child component template:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;input type=<span class="hljs-string">&quot;text&quot;</span> @input=<span class="hljs-string">&quot;someEventHandlerForOriginalEventLikeClickOrInput($event)&quot;</span>/&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>&#123;&#123;data&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<p>Child component logic:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">props</span>:[<span class="hljs-string">&#x27;data&#x27;</span>],<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">someEventHandlerForOriginalEventLikeClickOrInput</span>(<span class="hljs-params">e</span>)&#123;<br>    <span class="hljs-variable language_">this</span>.$emit(<span class="hljs-string">&#x27;eventPasstoParent&#x27;</span>, e.<span class="hljs-property">target</span>.<span class="hljs-property">value</span>, <span class="hljs-string">&#x27;someOtherArgus&#x27;</span>);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Parent template:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">com-todolist</span></span><br><span class="hljs-tag">  <span class="hljs-attr">:data</span>=<span class="hljs-string">&quot;someParentData&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">eventPasstoParent</span>=<span class="hljs-string">&quot;someParentEventHandler&quot;</span></span><br><span class="hljs-tag">&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">com-todolist</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>Parent logic:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">someParentData</span>: <span class="hljs-string">&#x27;&#x27;</span><br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">someParentEventHandler</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">someParentData</span> = [...<span class="hljs-variable language_">arguments</span>];<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="asynchronous-update-queue">Asynchronous Update Queue</h2>
+<p>With <code>Vue</code>, <code>jQuery</code> is no longer necessary. The greatest advantage of frameworks is avoiding repetitive code for the same operations. Two-way data binding can solve many <code>DOM</code> manipulation issues, but in some cases, <code>jQuery</code> still has its advantages. For example, when manipulating the <code>DOM</code>, <code>jQuery</code> accepts a function as a callback, which triggers after the animation completes. With our two-way data binding, after setting the data, how do we know the <code>DOM</code> has been updated? The answer is the same as with <code>jQuery</code>: the asynchronous update queue.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> vm = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>(&#123;<br>  <span class="hljs-attr">el</span>: <span class="hljs-string">&#x27;#example&#x27;</span>,<br>  <span class="hljs-attr">data</span>: &#123;<br>    <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;123&#x27;</span>,<br>  &#125;,<br>&#125;);<br>vm.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;new message&#x27;</span>; <span class="hljs-comment">// 更改数据</span><br>vm.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span> === <span class="hljs-string">&#x27;new message&#x27;</span>; <span class="hljs-comment">// false</span><br><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">nextTick</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  vm.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span> === <span class="hljs-string">&#x27;new message&#x27;</span>; <span class="hljs-comment">// true</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>I personally don’t recommend writing it this way because I believe the best logic should be placed within the instance’s properties/methods rather than outside it. Fortunately, <code>Vue</code> provides a way to achieve this:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">component</span>(<span class="hljs-string">&#x27;example&#x27;</span>, &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;span&gt;&#123;&#123; message &#125;&#125;&lt;/span&gt;&#x27;</span>,<br>  <span class="hljs-attr">data</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;not updated&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-attr">updateMessage</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;updated&#x27;</span>;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>); <span class="hljs-comment">// =&gt; &#x27;没有更新&#x27;</span><br>      <span class="hljs-variable language_">this</span>.$nextTick(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>); <span class="hljs-comment">// =&gt; &#x27;更新完成&#x27;</span><br>      &#125;);<br>    &#125;,<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<h2 id="animation">Animation</h2>
+<p>There’s not much to say about animations, but two hooks in the <code>JavaScript</code> hook functions need mentioning: <code>enterCanceled</code> and <code>leaveCancelled</code>. <code>enterCancelled</code> is used with <code>v-if</code> and <code>v-show</code> and can be triggered in both cases. The timing of its trigger is after the <code>enter</code> event is fired but before the animation completes, when another animation needs to be executed. On the other hand, <code>leaveCancelled</code> is only used with <code>v-show</code> and is ineffective with <code>v-if</code>—it will never be triggered. Its trigger timing is when the leave animation (i.e., the <code>xxx-leave-active</code> animation) is interrupted by another animation before completion.</p>
+<p>Test code:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;show=!show&quot;</span>&gt;</span>点击我切换状态<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">transition</span></span><br><span class="hljs-tag">  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;go&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">before-enter</span>=<span class="hljs-string">&quot;beforeEnter&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">enter</span>=<span class="hljs-string">&quot;enter&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">after-enter</span>=<span class="hljs-string">&quot;afterEnter&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">enter-cancelled</span>=<span class="hljs-string">&quot;enterCancelled&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">before-leave</span>=<span class="hljs-string">&quot;beforeLeave&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">leave</span>=<span class="hljs-string">&quot;leave&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">after-leave</span>=<span class="hljs-string">&quot;afterLeave&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">leave-cancelled</span>=<span class="hljs-string">&quot;leaveCancelled&quot;</span></span><br><span class="hljs-tag">&gt;</span><br>  此处使用 v-show, 修改成 v-if 的时候发现, leave-cancelled 不会触发.<br>  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-show</span>=<span class="hljs-string">&quot;show&quot;</span>&gt;</span>点击展示我, 再点击一下隐藏我.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">transition</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>Logic:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span>&#123;<br>    <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span><br>  &#125;<br>&#125;,<br><span class="hljs-attr">methods</span>: &#123;<br>  <span class="hljs-title function_">beforeEnter</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-title function_">alert</span>(<span class="hljs-number">1</span>);&#125;,<br>  <span class="hljs-title function_">enter</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">2</span>);&#125;,<br>  <span class="hljs-title function_">afterEnter</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">3</span>);&#125;,<br>  <span class="hljs-title function_">enterCancelled</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">4</span>);&#125;,<br>  <span class="hljs-title function_">beforeLeave</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">5</span>);&#125;,<br>  <span class="hljs-title function_">leave</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-title function_">alert</span>(<span class="hljs-number">6</span>);&#125;,<br>  <span class="hljs-title function_">afterLeave</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">7</span>);&#125;,<br>  <span class="hljs-title function_">leaveCancelled</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">8</span>);&#125;<br>&#125;,<br></code></pre></td></tr></table></figure>
+<p>Styles:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">5s</span> ease;<br>&#125;<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">5s</span> <span class="hljs-built_in">cubic-bezier</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">0.8</span>, <span class="hljs-number">1</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter</span>,<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">10px</span>);<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Apart from the <code>enter</code> and <code>leave</code> hooks, which take the <code>el</code> element itself (a native <code>Element</code> type) and the <code>done</code> callback function as parameters, all other hooks only take the <code>el</code> element as their parameter.</p>
+<p>For element transitions, it’s best to add a <code>key</code> to each element. Due to the in-place reuse strategy mentioned earlier, data might be replaced directly during transitions without any animation effects.</p>
+<p>One point not mentioned at all in the official documentation is that the order of <code>CSS</code> class names for <code>Vue transition</code> animations is restricted. <code>v-enter</code> and <code>v-leave</code> must be written after <code>v-enter-active</code> and <code>v-leave-active</code>; otherwise, they won’t work. For example, if I want to create a fade-in/fade-out effect for a button click—where clicking the button triggers a new button fading in from left to right while the currently clicked button fades out from left to right—the logic would be:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">data</span>:&#123;<br>  <span class="hljs-attr">isShow</span>: <span class="hljs-literal">true</span><br>&#125;,<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">animakkey</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">isShow</span> = !<span class="hljs-variable language_">this</span>.<span class="hljs-property">isShow</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Structure:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;button-animate&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">transition</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;go&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;a&quot;</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;isShow&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>on<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;b&quot;</span> <span class="hljs-attr">v-else</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>off<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">transition</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>If your styles are written like this:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>&#125;<br><span class="hljs-selector-class">.go-enter</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">0px</span>);<br>&#125;<br><br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>You’ll find the animation effect unsatisfactory:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/animateBad.gif" alt="animate" title="animate" /></p>
+<p>But if you place <code>enter</code> after <code>enter-active</code>:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">0px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">25px</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>It works perfectly:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/animateGood.gif" alt="animate" title="animate" /></p>
+<p>After comparing all possible orders of these four <code>CSS</code> class names, I found that as long as <code>v-enter</code> is placed after <code>v-enter-active</code>, the effect works. The order of the other class names doesn’t matter.</p>
+<p>The <code>transition</code> tag should only contain the elements to be animated and no other elements. If the structure in the example above is written like this:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">transition</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;go&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;button-animate&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;a&quot;</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;isShow&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>on<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;b&quot;</span> <span class="hljs-attr">v-else</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>off<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">transition</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>No animation effect will occur. Additionally, if some <code>CSS</code> properties defining the element’s style are set in normal <code>CSS</code> class names, and the same properties are used in animation class names like <code>v-enter</code>, they won’t take effect. The <a href="https://cn.vuejs.org/v2/guide/transitions.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%87%E6%B8%A1%E7%B1%BB%E5%90%8D">documentation</a> claims “their priority is higher than normal class names,” but this isn’t actually the case (or perhaps I misunderstood—corrections are welcome). Using the same example, if you set the normal <code>CSS</code> properties for <code>button</code> in the styles:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">0px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">25px</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>The result is:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/animateWithout.gif" alt="animate" title="animate" /></p>
+<p>As you can see, only <code>opacity</code> produces an animation, while <code>transform</code> does not! (Students can test whether the animation effect still occurs when using <code>animate.css</code> by pre-setting elements with the same properties as in <code>Animate.css</code>. Feel free to submit an <code>issue</code> if you encounter any problems.)</p>
+<p><code>transition-group</code> is slightly different from <code>transition</code>. Visually, <code>transition</code> itself is just a wrapper container and does not participate in the page structure, whereas <code>transition-group</code> is replaced by <code>Vue</code> with a tag—defaulting to a <code>span</code> tag, though the tag name can be customized.</p>
+<h2 id="the-render-function">The <code>render</code> Function</h2>
+<p>The <code>render</code> function can replace the role of writing templates. Its parameter, <code>createElement</code>, is typically abbreviated as <code>h</code>. Various bindings/attributes within components or tags can all be expressed using corresponding <code>JavaScript</code> syntax in <code>createElement</code>. If something isn’t found, it means you can use native methods, such as <code>.stop</code> or <code>.prevent</code>, which can be directly replaced with <code>event.stopPropagation()</code> and <code>event.preventDefault()</code>.</p>
+<h2 id="other-topics">Other Topics</h2>
+<p><strong>Mixin</strong> refers to modifying or adding extra functionality during the normal component writing process (i.e., within the component’s lifecycle).</p>
+<p>Some <strong>plugins</strong> are built based on the above <code>mixin</code> concept. Beyond that, plugins may also add methods to <code>Vue.prototype</code> or introduce global methods or properties via <code>config</code>.</p>
+<p><strong>Routing</strong> can be simply implemented using the <code>is</code> attribute of a <code>component</code>, or by writing a <code>render</code> function to render different templates based on different paths. For more complex scenarios, third-party libraries are needed.</p>
+<p><strong>State Management</strong>: The example suggests adding a <code>wrap</code> to record each state change process. The official best practice recommends modifying state through functions rather than directly assigning values to instance properties, as this makes state changes traceable.</p>
+<p><strong>Unit Testing</strong> is standard unit testing—nothing special to mention.</p>
+<h2 id="server-side-rendering-server-side-render">Server-Side Rendering (<code>Server Side Render</code>)</h2>
+<p>The basic idea is straightforward: First, <code>exports</code> a <code>Vue</code> instance in <code>app.js</code>. Then, create a page template file <code>index.html</code> (which includes <code>Vue.js</code> and the <code>$mount</code> method for mounting the <code>Vue</code> instance—whether <code>app.js</code> also needs to be included, as shown in the official example, requires further verification). The template should contain a mount point (a non-empty element with an <code>id</code> attribute). In the server-side <code>server.js</code>, import these files and use <code>vue-server-renderer</code> to render the <code>Vue</code> instance exported from <code>app.js</code>. Finally, replace the mount point (a non-empty element with an <code>id</code> attribute, since the template from <code>app.js</code> already exists) when returning the content to the client.</p>
+<p>The result of server-side rendering is that the mount point (a non-empty element with an <code>id</code> attribute) will have a <code>server-rendered=&quot;true&quot;</code> attribute added (visible by right-clicking to view the page source, confirming it is not dynamically added by <code>js</code>).</p>
+<p>The server also supports streaming rendering. First, the <code>html</code> needs to be split at the mount point (a non-empty element with an <code>id</code> attribute, such as <code>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</code>), dividing it into two parts, <code>a</code> and <code>b</code>. Previously, <code>vue-server-renderer</code> used <code>renderToString</code> for <code>app.js</code>, but to support streaming rendering, we need to switch to a method called <code>renderToStream</code>. Then, listen for the <code>data</code> event and append it after part <code>a</code> of the <code>html</code>. After the <code>end</code> event, concatenate part <code>b</code> of the <code>html</code>, and finally send it all out via <code>res.send</code>.</p>
+<h2 id="postscript">Postscript</h2>
+<p>Located in the capital, <code>ping</code> <code>cn.vuejs.org</code>:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/ping1.png" alt="ping" title="ping" /></p>
+<p><code>ping</code> my company’s <code>FQ</code> <code>VPS</code>:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/ping2.png" alt="ping" title="ping" /></p>
+<p><code>dig</code> it:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/dig1.png" alt="dig" title="dig" /></p>
+<p>You can see it uses <code>cloudflare</code> services. International websites are tough to maintain, huh.</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          Originally published at:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/vue-learning-summary.en.html"
+            title="Vue Learning Summary"
+          >
+            Vue Learning Summary - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">Contents</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>From the author:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        I often wish that when facing some key decisions in life, someone could tell me the best course of action so that I would not waste my precious time. Putting myself in others&#39; shoes, I therefore write blogs often, hoping to record in this tiny corner of the vast Internet the once-in-a-lifetime experiences that matter to me, and to help those who seek help.
+    </div>
+    <hr>
+    
+    <h5><a href="/en/archive/">Popular Tags</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/en/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="Technology"
+                rel="188">Technology</a>
+        
+            <a data-sort="0200"
+                href="/en/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="Life"
+                rel="108">Life</a>
+        
+            <a data-sort="0264"
+                href="/en/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="Tinkering"
+                rel="44">Tinkering</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="Tips"
+                rel="32">Tips</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="Tutorial"
+                rel="32">Tutorial</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="Translation"
+                rel="24">Translation</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="Experience"
+                rel="20">Experience</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="Food"
+                rel="20">Food</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="First Impressions"
+                rel="16">First Impressions</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="Workflow"
+                rel="16">Workflow</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="Plugin"
+                rel="16">Plugin</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="Network"
+                rel="16">Network</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="User Experience"
+                rel="12">User Experience</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="Summary"
+                rel="12">Summary</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="Server"
+                rel="12">Server</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="Router"
+                rel="12">Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="Soft Router"
+                rel="12">Soft Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="Essay"
+                rel="12">Essay</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9B%86%E6%88%90"
+                title="Integration"
+                rel="12">Integration</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="Staple Food"
+                rel="8">Staple Food</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="Optimization"
+                rel="8">Optimization</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%8D%83%E5%85%86"
+                title="Gigabit"
+                rel="8">Gigabit</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="Big Event"
+                rel="8">Big Event</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="Tools"
+                rel="8">Tools</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="Bypass Router"
+                rel="8">Bypass Router</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="Framework"
+                rel="8">Framework</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="Foot Bath Time"
+                rel="8">Foot Bath Time</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="Testing"
+                rel="8">Testing</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="Tesla"
+                rel="8">Tesla</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="Editor"
+                rel="8">Editor</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="Video"
+                rel="8">Video</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="Debugging"
+                rel="8">Debugging</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BD%A6"
+                title="Car"
+                rel="8">Car</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="Migration"
+                rel="8">Migration</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="Northeastern Cuisine"
+                rel="4">Northeastern Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="Buying a House"
+                rel="4">Buying a House</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="Proxy"
+                rel="4">Proxy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="Full Stack"
+                rel="4">Full Stack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="Norse Mythology"
+                rel="4">Norse Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="Collaboration"
+                rel="4">Collaboration</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="Compression"
+                rel="4">Compression</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="Kratos"
+                rel="4">Kratos</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="Home Cooking"
+                rel="4">Home Cooking</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="Prosperity"
+                rel="4">Prosperity</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="Comparison"
+                rel="4">Comparison</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="Sichuan Cuisine"
+                rel="4">Sichuan Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="Work Experience"
+                rel="4">Work Experience</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="Greek Mythology"
+                rel="4">Greek Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="Essential Apps"
+                rel="4">Essential Apps</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="Open Source"
+                rel="4">Open Source</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="Unboxing"
+                rel="4">Unboxing</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="God of War"
+                rel="4">God of War</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIM Card"
+                rel="4">SIM Card</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%8B%93%E6%89%91"
+                title="Topology"
+                rel="4">Topology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="Story"
+                rel="4">Story</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="Data Structure"
+                rel="4">Data Structure</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="Travel"
+                rel="4">Travel</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="Daily Life"
+                rel="4">Daily Life</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="Japan"
+                rel="4">Japan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="Service"
+                rel="4">Service</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="Format"
+                rel="4">Format</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A2%A6"
+                title="Dream"
+                rel="4">Dream</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="Browser"
+                rel="4">Browser</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="Gaming"
+                rel="4">Gaming</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="Rant"
+                rel="4">Rant</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="User Privacy"
+                rel="4">User Privacy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="Algorithm"
+                rel="4">Algorithm</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="Details"
+                rel="4">Details</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="Headphones"
+                rel="4">Headphones</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="Freedom"
+                rel="4">Freedom</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="Plan"
+                rel="4">Plan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="Settings"
+                rel="4">Settings</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="Pitfalls"
+                rel="4">Pitfalls</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="Conversion"
+                rel="4">Conversion</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="Selection"
+                rel="4">Selection</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="Interview"
+                rel="4">Interview</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>Columns</h5>
+    <div class="tags">
+        <a href="/projects">Open Source</a>
+        <a href="/book-list">Book List</a>
+        <a href="/subscribe">Subscriptions & Paid Apps</a>
+        <a href="/my-food">Food Recommendations</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>Friends</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">China</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="Vue Learning Summary"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/en/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

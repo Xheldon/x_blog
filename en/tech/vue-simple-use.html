@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      First Experience with Vue + Webpack Component-Based Development (Practice Environment) - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="First Experience with Vue + Webpack Component-Based Development (Practice Environment) - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2016-4-29T9:12:12"> 
+              
+                  
+                    <meta property="article:tag" content="Vue">
+                    
+                    <meta property="article:tag" content="Technology">
+                    
+                      
+                          
+                            <meta name="og:description" content="">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/en/tech/vue-simple-use.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="en_US">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/en/tech/vue-simple-use.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/vue-simple-use.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/vue-simple-use.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/vue-simple-use.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/vue-simple-use.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/vue-simple-use.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/en/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/en/">Home</a>
+            </li>
+            <li>
+              <a href="/en/about/">About</a>
+            </li>
+            <li>
+              <a href="/en/donate/">Donate</a>
+            </li>
+            <li>
+              <a href="/en/archive/">Archive</a>
+            </li>
+            <li>
+              <a href="/en/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">English</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/vue-simple-use.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item active"><a href="/en/tech/vue-simple-use.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/vue-simple-use.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/vue-simple-use.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/en/archive/?tag=Vue"
+                            title="Vue">
+                            Vue
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="Technology">
+                            Technology
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        First Experience with Vue + Webpack Component-Based Development (Practice Environment)
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 Written on Apr 29, 2016</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;Note: it has been
+          <code id="from_time"></code> days since this article was written, please be aware of its timeliness
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1461964332000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+              <h2 id="preface">Preface</h2>
+<p>After studying others’ <code>vue</code> multi-page frameworks, I found they simply copy the <code>package.json</code> file and run <code>npm install</code> locally, or generate a project using the official <code>vue-cli</code> tool. While this approach is understandable, it’s hard to retain. Therefore, it’s necessary to practice building a project from scratch that uses <code>.vue</code> as components, which led to the creation of this project.</p>
+<p>Since <code>.vue</code> components are used, we can’t just include <code>vue.js</code> in the page as we did with <code>jQuery</code>. Instead, we need to compile <code>.vue</code> files using the accompanying tools like <code>webpack</code> + <code>babel</code> + various <code>loaders</code>, and then bundle them into <code>html</code>.</p>
+<h2 id="fbi-warning">FBI Warning</h2>
+<p><em><code>Important Note</code></em>: Since this is a basic introductory experience, some essential <code>loaders</code> and <code>plugins</code> for formal development are omitted. The goal here is to manually follow the official tutorials to reinforce understanding, especially advanced topics like parent-child component communication, scoped slots, recursive components, and <code>slot</code>. Thus, this configuration should not be used as a reference for formal development—it’s purely a hands-on project to understand how <code>vue</code> components work.</p>
+<h2 id="configuration-instructions">Configuration Instructions</h2>
+<p>Detailed explanations for the following configurations can be found later. If you don’t want to read them, you can directly copy the <code>package.json</code> below. However, for better retention, it’s recommended to type it out manually.</p>
+<p>Without further ado, let’s begin.</p>
+<p>First, since this is <code>webpack + vue</code>, the corresponding packages are essential. Here, we use <code>vue@2.2.4</code> and <code>webpack@1.12.2</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">npm install webpack@<span class="hljs-number">1.12</span><span class="hljs-number">.2</span> vue@<span class="hljs-number">2.2</span><span class="hljs-number">.4</span> --save-dev<br></code></pre></td></tr></table></figure>
+<p>Next are <code>babel</code> and its corresponding <code>loaders</code>. We use the <code>es2015</code> preset—just go with the latest:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">npm install babel bebel-core babel-loader babel-preset-es2015 --save-dev<br></code></pre></td></tr></table></figure>
+<p>Then come the must-have <code>loaders</code> for <code>webpack</code>:</p>
+<ul>
+<li><code>css-loader</code> handles resources in <code>url()</code> within <code>css</code>.</li>
+<li><code>style-loader</code> extracts <code>css</code> required via <code>require</code> and injects it into <code>style</code> tags in the page’s <code>head</code> section.</li>
+<li><code>html-webpack-plugin</code> converts entry <code>js</code> files into <code>html</code>, with all resources processed by various <code>loaders</code> and inserted into the generated <code>html</code>.</li>
+<li><code>extract-text-webpack-plugin</code> extracts styles appended to <code>head</code> via <code>style</code> tags in <code>js</code> into separate <code>.css</code> files:</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">npm install css-loader style-loader html-webpack-plugin extract-text-webpack-plugin@<span class="hljs-number">1.0</span><span class="hljs-number">.1</span> --save-dev<br></code></pre></td></tr></table></figure>
+<p>Next are <code>vue</code>-related tools. Since a <code>.vue</code> file contains at least three tags—<code>template</code>, <code>style</code>, and <code>script</code>—three <code>loaders</code> are needed to process them, plus a master <code>vue-loader</code>, totaling four <code>loaders</code>. Here:</p>
+<p><code>vue-html-loader</code> is a fork of <code>webpack</code>’s official <code>html-loader</code>, included here just to allow configuring <code>vue</code>-related <code>html</code> separately in the <code>module.export.vue</code> object in <code>webpack.config.js</code> (this project only requires <code>vue-loader</code>; this is just for explanatory purposes).</p>
+<p><code>vue-style-loader</code> is used to process the content within the <code>style</code> tags of <code>.vue</code> files. It is a fork of <code>webpack</code>’s official <code>style-loader</code> (installing <code>vue-loader</code> in this project is sufficient; this is just an additional explanation).</p>
+<p><code>vue-template-compiler</code> is used to process the content within the <code>template</code> tags of <code>.vue</code> files. It is only necessary to configure it separately if you intend to use its compiled files for other purposes (e.g., writing <code>build tools</code>). Otherwise, it is not required, as <code>vue-loader</code> already uses it by default (installing <code>vue-loader</code> in this project is sufficient; this is just an additional explanation).</p>
+<p><code>vue-loader</code> is used to handle <code>.vue</code> files. When encountering such content, it invokes the three aforementioned <code>loaders</code> for processing.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br></pre></td><td class="code"><pre><code class="hljs js">npm install vue-html-loader vue-loader vue-style-loader vue-template-compiler --save-dev<br><span class="hljs-string">``</span><span class="hljs-string">`  </span><br><span class="hljs-string"></span><br><span class="hljs-string">Finally, there’s the development tool `</span>webpack-dev-server<span class="hljs-string">`, for which we install version `</span><span class="hljs-number">1.12</span><span class="hljs-number">.1</span><span class="hljs-string">`:  </span><br><span class="hljs-string"></span><br><span class="hljs-string">`</span><span class="hljs-string">``</span>js<br>npm install webpack-dev-server --save-dev<br><span class="hljs-string">``</span><span class="hljs-string">`  </span><br><span class="hljs-string"></span><br><span class="hljs-string">Below is the complete `</span>package.<span class="hljs-property">json</span><span class="hljs-string">` configuration file. For detailed explanations of each `</span>package.<span class="hljs-property">json</span><span class="hljs-string">` field, refer to [this website](http://json.is/).  </span><br><span class="hljs-string"></span><br><span class="hljs-string">`</span><span class="hljs-string">``</span>js<br>&#123;<br>  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;vue-components&quot;</span>,<br>  <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;0.0.1&quot;</span>,<br>  <span class="hljs-string">&quot;description&quot;</span>: <span class="hljs-string">&quot;vue components test&quot;</span>,<br>  <span class="hljs-string">&quot;main&quot;</span>: <span class="hljs-string">&quot;app/app.js&quot;</span>,<br>  <span class="hljs-string">&quot;scripts&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;dev&quot;</span>: <span class="hljs-string">&quot;webpack-dev-server --hot&quot;</span>,<br>    <span class="hljs-string">&quot;build&quot;</span>: <span class="hljs-string">&quot;webpack&quot;</span><br>  &#125;,<br>  <span class="hljs-string">&quot;keywords&quot;</span>: [<br>    <span class="hljs-string">&quot;vue&quot;</span>,<br>    <span class="hljs-string">&quot;components&quot;</span><br>  ],<br>  <span class="hljs-string">&quot;author&quot;</span>: <span class="hljs-string">&quot;xheldon&quot;</span>,<br>  <span class="hljs-string">&quot;license&quot;</span>: <span class="hljs-string">&quot;MIT&quot;</span>,<br>  <span class="hljs-string">&quot;dependencies&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;vue&quot;</span>: <span class="hljs-string">&quot;^2.2.4&quot;</span><br>  &#125;,<br>  <span class="hljs-string">&quot;devDependencies&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;babel&quot;</span>: <span class="hljs-string">&quot;^6.23.0&quot;</span>,<br>    <span class="hljs-string">&quot;babel-core&quot;</span>: <span class="hljs-string">&quot;^6.24.0&quot;</span>,<br>    <span class="hljs-string">&quot;babel-loader&quot;</span>: <span class="hljs-string">&quot;^6.4.1&quot;</span>,<br>    <span class="hljs-string">&quot;babel-preset-es2015&quot;</span>: <span class="hljs-string">&quot;^6.24.0&quot;</span>,<br>    <span class="hljs-string">&quot;css-loader&quot;</span>: <span class="hljs-string">&quot;^0.27.3&quot;</span>,<br>    <span class="hljs-string">&quot;extract-text-webpack-plugin&quot;</span>: <span class="hljs-string">&quot;^1.0.1&quot;</span>,<br>    <span class="hljs-string">&quot;html-webpack-plugin&quot;</span>: <span class="hljs-string">&quot;^2.28.0&quot;</span>,<br>    <span class="hljs-string">&quot;style-loader&quot;</span>: <span class="hljs-string">&quot;^0.16.0&quot;</span>,<br>    <span class="hljs-string">&quot;vue-html-loader&quot;</span>: <span class="hljs-string">&quot;^1.2.4&quot;</span>,<br>    <span class="hljs-string">&quot;vue-loader&quot;</span>: <span class="hljs-string">&quot;^11.3.1&quot;</span>,<br>    <span class="hljs-string">&quot;vue-style-loader&quot;</span>: <span class="hljs-string">&quot;^2.0.4&quot;</span>,<br>    <span class="hljs-string">&quot;vue-template-compiler&quot;</span>: <span class="hljs-string">&quot;^2.2.4&quot;</span>,<br>    <span class="hljs-string">&quot;webpack&quot;</span>: <span class="hljs-string">&quot;^1.12.2&quot;</span>,<br>    <span class="hljs-string">&quot;webpack-dev-server&quot;</span>: <span class="hljs-string">&quot;^1.12.1&quot;</span><br>  &#125;<br>&#125;<br><span class="hljs-string">``</span><span class="hljs-string">`  </span><br><span class="hljs-string"></span><br><span class="hljs-string">## Project Overview  </span><br><span class="hljs-string"></span><br><span class="hljs-string">Okay, the dependencies are installed. Next, let’s look at the `</span>webpack<span class="hljs-string">` configuration. Since the goal is to quickly test the component section of the `</span>vue<span class="hljs-string">` official documentation, everything is kept minimal:  </span><br><span class="hljs-string"></span><br><span class="hljs-string">`</span><span class="hljs-string">``</span>js<br><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br><span class="hljs-keyword">var</span> webpack = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;webpack&#x27;</span>);<br><span class="hljs-keyword">var</span> <span class="hljs-title class_">HtmlwebpackPlugin</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;html-webpack-plugin&#x27;</span>);<br><br><span class="hljs-comment">// 常用配置,项目较小不抽出了</span><br><span class="hljs-keyword">var</span> <span class="hljs-variable constant_">ROOT_PATH</span> = path.<span class="hljs-title function_">resolve</span>(__dirname); <span class="hljs-comment">//根路径</span><br><span class="hljs-keyword">var</span> <span class="hljs-variable constant_">APP_PATH</span> = path.<span class="hljs-title function_">resolve</span>(<span class="hljs-variable constant_">ROOT_PATH</span>, <span class="hljs-string">&#x27;app&#x27;</span>); <span class="hljs-comment">//开发路径</span><br><span class="hljs-keyword">var</span> <span class="hljs-variable constant_">BUILD_PATH</span> = path.<span class="hljs-title function_">resolve</span>(<span class="hljs-variable constant_">ROOT_PATH</span>, <span class="hljs-string">&#x27;build&#x27;</span>); <span class="hljs-comment">//输出路径</span><br><span class="hljs-keyword">var</span> <span class="hljs-title class_">ExtractTextPlugin</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;extract-text-webpack-plugin&#x27;</span>);<br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">entry</span>: &#123;<br>    <span class="hljs-attr">app</span>: path.<span class="hljs-title function_">resolve</span>(<span class="hljs-variable constant_">APP_PATH</span>, <span class="hljs-string">&#x27;app.js&#x27;</span>),<br>  &#125;,<br>  <span class="hljs-attr">output</span>: &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-variable constant_">BUILD_PATH</span>,<br>    <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;bundle.js&#x27;</span>, <span class="hljs-comment">//因为只有一个入口文件, 因此直接写死了</span><br>  &#125;,<br>  <span class="hljs-attr">resolve</span>: &#123;<br>    <span class="hljs-attr">alias</span>: &#123;<br>      <span class="hljs-comment">//注意, 这里导入的是/node_module/vue/dist/vue.js, 跟 vue-router.js 的不同</span><br>      <span class="hljs-attr">vue</span>: <span class="hljs-string">&#x27;vue/dist/vue.js&#x27;</span>,<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-comment">//开启 dev source map</span><br>  <span class="hljs-attr">devtool</span>: <span class="hljs-string">&#x27;eval-source-map&#x27;</span>,<br>  <span class="hljs-comment">//开启 dev server</span><br>  <span class="hljs-attr">devServer</span>: &#123;<br>    <span class="hljs-attr">historyApiFallback</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">hot</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">//HMR</span><br>    <span class="hljs-attr">inline</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">progress</span>: <span class="hljs-literal">true</span>,<br>  &#125;,<br>  <span class="hljs-attr">module</span>: &#123;<br>    <span class="hljs-attr">loaders</span>: [<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.vue$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;vue&#x27;</span>,<br>      &#125;,<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.css$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-title class_">ExtractTextPlugin</span>.<span class="hljs-title function_">extract</span>(<span class="hljs-string">&#x27;css-loader&#x27;</span>),<br>      &#125;,<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.js$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;babel&#x27;</span>,<br>        <span class="hljs-attr">include</span>: <span class="hljs-variable constant_">ROOT_PATH</span>,<br>        <span class="hljs-attr">exclude</span>: <span class="hljs-regexp">/node_modules/</span>,<br>      &#125;,<br>      &#123;<br>        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.html$/</span>,<br>        <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;vue-html&#x27;</span>,<br>      &#125;,<br>    ],<br>  &#125;,<br>  <span class="hljs-attr">vue</span>: &#123;<br>    <span class="hljs-attr">loaders</span>: &#123;<br>      <span class="hljs-attr">css</span>: <span class="hljs-title class_">ExtractTextPlugin</span>.<span class="hljs-title function_">extract</span>(<span class="hljs-string">&#x27;css-loader&#x27;</span>),<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">plugins</span>: [<br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">HtmlwebpackPlugin</span>(&#123;<br>      <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Vue component test&#x27;</span>,<br>      <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;this_is_final_filename_address_you_visit_in_browser.html&#x27;</span>, <span class="hljs-comment">//生成的最终文件名</span><br>      <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;app/this_is_main_page_which_you_put_components_into.html&#x27;</span>, <span class="hljs-comment">//放置组件的地方, 一般是一个 body 下一个孤零零的 app 标签即可.</span><br>      <span class="hljs-attr">inject</span>: <span class="hljs-literal">true</span>,<br>    &#125;),<br>  ],<br>&#125;;<br><span class="hljs-string">``</span><span class="hljs-string">`  </span><br><span class="hljs-string"></span><br><span class="hljs-string">A few things need to be clarified about this configuration.  </span><br><span class="hljs-string"></span><br><span class="hljs-string">From top to bottom, first is the `</span>alias<span class="hljs-string">`. Those who have used [`</span>vue-router<span class="hljs-string">`](https://github.com/vuejs/vue-router/) might not need this configuration, but projects using `</span>.<span class="hljs-property">vue</span><span class="hljs-string">` components must include it because it specifies the type of `</span>vue<span class="hljs-string">` `</span>js<span class="hljs-string">` to be used. Check the files in the `</span>node_module/vue/dist/<span class="hljs-string">` folder of this project—there are two types: `</span>vue.<span class="hljs-property">js</span><span class="hljs-string">` and `</span>vue.<span class="hljs-property">common</span>.<span class="hljs-property">js</span><span class="hljs-string">`. When `</span>vue<span class="hljs-string">` compiles `</span>template<span class="hljs-string">` components, it requires a `</span>compiler.<span class="hljs-property">js</span><span class="hljs-string">` to convert the `</span>html`<span class="language-xml"> content in the `</span>template<span class="hljs-string">` into a `</span>render<span class="hljs-string">` function:  </span><br><span class="hljs-string"></span><br><span class="hljs-string">Before compilation:  </span><br><span class="hljs-string"></span><br><span class="hljs-string">`</span><span class="hljs-string">``</span><span class="hljs-string">`html</span><br><span class="hljs-string">&lt;div id=&quot;app&quot;&gt;Hello &#123;&#123;who&#125;&#125;&lt;/div&gt;</span><br><span class="hljs-string">&lt;script&gt;</span><br><span class="hljs-string">  new Vue(&#123;</span><br><span class="hljs-string">    el: &#x27;#app&#x27;,</span><br><span class="hljs-string">    data: &#123; who: &#x27;Vue&#x27; &#125;,</span><br><span class="hljs-string">  &#125;);</span><br><span class="hljs-string">&lt;/script&gt;</span><br><span class="hljs-string">`</span><span class="hljs-string">``</span> <span class="hljs-title class_">After</span> <span class="hljs-attr">compilation</span>: <span class="hljs-string">``</span><span class="hljs-string">`js</span><br><span class="hljs-string">&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</span><br><span class="hljs-string">&lt;script&gt;</span><br><span class="hljs-string">  new Vue(&#123;</span><br><span class="hljs-string">    el: &#x27;#app&#x27;,</span><br><span class="hljs-string">    render: function () &#123;</span><br><span class="hljs-string">      with (this) &#123;</span><br><span class="hljs-string">        __h__(</span><br><span class="hljs-string">          &#x27;div&#x27;,</span><br><span class="hljs-string">          &#123; staticAttrs: &#123; id: &#x27;app&#x27; &#125; &#125;,</span><br><span class="hljs-string">          [&#x27;\n  Hello &#x27; + __toString__(who) + &#x27;\n&#x27;],</span><br><span class="hljs-string">          &#x27;&#x27;</span><br><span class="hljs-string">        );</span><br><span class="hljs-string">      &#125;</span><br><span class="hljs-string">    &#125;,</span><br><span class="hljs-string">    data: &#123; who: &#x27;Vue&#x27; &#125;,</span><br><span class="hljs-string">  &#125;);</span><br><span class="hljs-string">&lt;/script&gt;</span><br><span class="hljs-string">`</span><span class="hljs-string">``</span>  <br><br><span class="hljs-title class_">When</span> <span class="hljs-string">`vue`</span> detects a <span class="hljs-string">`render`</span> <span class="hljs-keyword">function</span> <span class="hljs-keyword">in</span> the compiled <span class="hljs-string">`js`</span> during runtime, it directly executes the <span class="hljs-string">`render`</span> <span class="hljs-keyword">function</span>, and the content under the <span class="hljs-string">`template`</span> field is ignored. <span class="hljs-title class_">The</span> task <span class="hljs-keyword">of</span> executing the compiled <span class="hljs-string">`render`</span> <span class="hljs-keyword">function</span> is handled by <span class="hljs-string">`vue.common.js`</span>. <span class="hljs-title class_">Therefore</span>:  <br><br><span class="hljs-string">``</span><span class="hljs-string">`js</span><br><span class="hljs-string">vue.js = vue.common.js + compiler.js;</span><br><span class="hljs-string">`</span><span class="hljs-string">``</span>  <br><br><span class="hljs-title class_">So</span>, <span class="hljs-keyword">if</span> you’re using <span class="hljs-string">`vue-router`</span>, its <span class="hljs-string">`package.json`</span><span class="hljs-string">&#x27;s `main` field points to `node_module/dist/vue.common.js`. If you directly copy this into your project, you may encounter runtime errors related to `vue.common.js`.</span><br><span class="hljs-string"></span><br><span class="hljs-string">Next, let&#x27;</span>s discuss <span class="hljs-string">`css-loader`</span>, <span class="hljs-string">`style-loader`</span>, and <span class="hljs-string">`vue-style-loader`</span>. <span class="hljs-title class_">Why</span> <span class="hljs-keyword">do</span> we need <span class="hljs-string">`vue-style-loader`</span> when we already have <span class="hljs-string">`style-loader`</span>? <span class="hljs-title class_">After</span> reviewing the documentation <span class="hljs-keyword">of</span> <span class="hljs-string">`vue-style-loader`</span>, it becomes clear that it is merely a fork <span class="hljs-keyword">of</span> <span class="hljs-string">`style-loader`</span>, but it was created specifically to handle <span class="hljs-string">`.vue`</span> files. <span class="hljs-title class_">Additionally</span>, to make <span class="hljs-title class_">Vue</span> configuration clearer <span class="hljs-keyword">for</span> users, it was added to the <span class="hljs-string">`vue`</span> field <span class="hljs-keyword">in</span> <span class="hljs-string">`webpack@1.x`</span> configuration files. <span class="hljs-title class_">This</span> can be confirmed by changing the configuration <span class="hljs-keyword">of</span> the <span class="hljs-string">`extract-text-webpack-plugin`</span> <span class="hljs-attr">from</span>:<br><br><span class="hljs-string">``</span><span class="hljs-string">`js</span><br><span class="hljs-string">vue: &#123;</span><br><span class="hljs-string">  loaders: &#123;</span><br><span class="hljs-string">    css: ExtractTextPlugin.extract(&#x27;vue-style-loader&#x27;, &#x27;css-loader&#x27;);</span><br><span class="hljs-string">  &#125;</span><br><span class="hljs-string">&#125;</span><br></code></pre></td></tr></table></figure>
+<p>to:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">vue</span>: &#123;<br>  <span class="hljs-attr">loaders</span>: &#123;<br>    <span class="hljs-attr">css</span>: <span class="hljs-title class_">ExtractTextPlugin</span>.<span class="hljs-title function_">extract</span>(<span class="hljs-string">&#x27;style-loader&#x27;</span>, <span class="hljs-string">&#x27;css-loader&#x27;</span>);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>The compiled results remain identical, which verifies this.</p>
+<p>By default, <code>vue-loader</code> automatically uses <code>vue-style-loader</code>. Therefore, if you don’t <code>@import</code> any <code>css</code> in <code>.vue</code> files, you don’t need to manually include <code>vue-loader-style</code> in the <code>vue.loaders</code> field. <code>vue-loader</code> automatically processes the content within the <code>style</code> tags of <code>.vue</code> files and injects it into the page via <code>style</code> tags. However, if you need to <code>@import css</code> files within the <code>style</code> tags of <code>.vue</code> files, you must configure it separately in <code>module.exports.vue</code>. This can be tested by removing <code>vue-style-loader</code> from the <code>vue</code> field:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">module</span>: &#123;<br>  <span class="hljs-attr">loaders</span>:[<br>    &#123;<br>      <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.vue$/</span>,<br>      <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;vue&#x27;</span><br>    &#125;<br>  ]<br>&#125;,<br><span class="hljs-attr">vue</span>:&#123;<br>  <span class="hljs-comment">// loaders: &#123;</span><br>  <span class="hljs-comment">//   css: &#x27;vue-style-loader!css-loader&#x27;</span><br>  <span class="hljs-comment">// &#125;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Furthermore, <code>require('xxx.css')</code> in the entry <code>js</code> file is handled by the default <code>module.exports.module.loader</code>. This can be confirmed by using the <code>extract</code> plugin in the default <code>loader</code> while omitting it in <code>module.exports.vue</code>. The results show that the <code>css</code> in the entry file is extracted, but the <code>css</code> imported via <code>@import</code> in <code>.vue</code> files is not.</p>
+<p>If you need to extract <code>css</code> files required in the entry file separately, you must configure <code>extract-text-webpack-plugin</code> in <code>module.exports.module.loader</code>.</p>
+<p>Note: Placing <code>vue-style-loader</code> in the <code>module.exports.vue.loaders</code> field allows the content of <code>style</code> tags in <code>.vue</code> files to be extracted into a separate <code>.css</code> file and linked in the page. However, placing <code>style-loader</code> and <code>css-loader</code> in the default <code>module.exports.module.loaders</code> has no effect on processing <code>style</code> tag content in <code>vue</code>—at least not in <code>Vue 1.x</code> and <code>webpack 1.x</code> versions. <code>webpack 2.x</code> removed support for third-party fields, restricting arbitrary field additions in <code>module.export</code>.</p>
+<p>Finally, <code>css-loader</code> and <code>style-loader</code> are always used together because the role of <code>css-loader</code> is to resolve dependencies in <code>@import</code> and <code>url()</code> property values within CSS files. Using it alone is practically useless. <code>style-loader</code> is the one that processes CSS and bundles it into JS, ultimately inserting it into the <code>head</code> (insertion position is configurable) as a <code>&lt;style&gt;</code> tag.</p>
+<p>Now, let’s talk about <code>extract-text-webpack-plugin</code>, which accepts three parameters:</p>
+<p>The first parameter is optional and takes a <code>loader</code> that can be used when CSS styles are not extracted.<br />
+The second parameter is the <code>loader</code> for compiling and parsing CSS files, which is obviously required, as seen in the example above with <code>css-loader</code>.<br />
+The third parameter includes some additional options, currently only <code>publicPath</code>, which specifies the path for the current <code>loader</code>.</p>
+<p>So when is the first parameter needed? That depends on understanding when styles won’t be extracted. Those familiar with <code>code splitting</code> will know that some code isn’t used when the page loads. Using <code>code splitting</code>, such unused code can be separated into standalone files for on-demand loading.</p>
+<p>If these separated files include styles loaded via <code>require</code>, <code>ExtractTextPlugin</code> won’t extract them. For these non-extracted styles, you can use the <code>loader</code> to handle them—this is the purpose of the first parameter in <code>ExtractTextPlugin.extract</code>.</p>
+<p>OK, now that we’ve covered the configuration file, let’s discuss how this project works.</p>
+<p>A picture is worth a thousand words. Here’s the code interface:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/vue-test.png" alt="项目结构" title="项目结构" /></p>
+<p>(If the image appears too small, right-click to open it in a new tab.)</p>
+<p>As the arrows show, each page has at least one component. For simplicity, I’ve written one component per page without importing others.</p>
+<p>Thus, each page consists of at least three files: a <code>.vue</code> file, a <code>.js</code> entry file, and an <code>.html</code> file for component insertion.</p>
+<p>The <code>html</code> file defines a component named <code>app</code>. The entry file instantiates a <code>vue</code> instance and uses the <code>app</code> component, whose template comes from <code>index.vue</code>. The component’s CSS, JS, and data binding (a hallmark of MVVM) are also written in <code>index.vue</code>.</p>
+<p>Some might wonder how the entry <code>js</code> file finds the <code>html</code> file in the same directory. This is actually configured in <code>webpack.config.js</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">plugins</span>: [<br>  <span class="hljs-keyword">new</span> <span class="hljs-title class_">HtmlwebpackPlugin</span>(&#123;<br>    <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Vue component test&#x27;</span>,<br>    <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;this_is_final_filename_address_you_visit_in_browser.html&#x27;</span>, <span class="hljs-comment">//生成的最终文件名</span><br>    <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;app/this_is_main_page_which_you_put_components_into.html&#x27;</span>, <span class="hljs-comment">//放置组件的地方, 一般是一个 body 下一个孤零零的 app 标签即可.</span><br>    <span class="hljs-attr">inject</span>: <span class="hljs-literal">true</span>,<br>  &#125;),<br>];<br></code></pre></td></tr></table></figure>
+<p>This HTML generation plugin tells the JS entry file that the required template comes from <code>xxx.html</code> under <code>app</code>, and the final bundled <code>bundle.js</code> is injected into it to generate the complete page.</p>
+<p>Some students may ask: In the entry <code>js</code> file, when instantiating <code>vue</code>, does <code>components.App</code> locate the <code>&lt;app&gt;</code> component reference in the <code>this_is_main_page_which_you_put_components_into.html</code> file during the compilation process, or does it run from the final bundled <code>bundle.js</code> at <code>runtime</code> and then search for the <code>&lt;app&gt;</code> tag in the <code>this_is_final_filename_address_you_visit_in_browser.html</code> page? The answer is the latter, because the aforementioned <code>HtmlwebpackPlugin</code> plugin is only responsible for generating the <code>html</code> and injecting the bundled <code>bundle.js</code>. After <code>vue</code> is bundled into <code>bundle.js</code>, it will only look for the <code>&lt;app&gt;</code> tag when instantiating <code>vue</code>.</p>
+<p>From this perspective, the effect is the same as directly referencing the <code>vue.js</code> file in a <code>script</code> tag and then rendering. However, the <code>webpack</code> development approach helps us separate components, making the code/component structure clearer during development. Moreover, directly referencing <code>vue.js</code> is frontend <code>runtime render</code>, whereas the other approach executes after <code>compiler render</code>, making the latter more efficient.</p>
+<p>Next is the demo page:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/page-detail.png" alt="页面效果图" title="页面效果图" /><br />
+(If the image appears too small, right-click to open it in a new tab for a better view.)</p>
+<p>The image makes it clear what’s going on.</p>
+<p>For further clarification, please refer to the documentation.</p>
+<p>That’s all for now. There’s still much to discuss about <code>vue</code> and <code>webpack</code>—<code>precautions/details/design philosophy</code>. Talk later~</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          Originally published at:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/vue-simple-use.en.html"
+            title="First Experience with Vue + Webpack Component-Based Development (Practice Environment)"
+          >
+            First Experience with Vue + Webpack Component-Based Development (Practice Environment) - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">Contents</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>From the author:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        I often wish that when facing some key decisions in life, someone could tell me the best course of action so that I would not waste my precious time. Putting myself in others&#39; shoes, I therefore write blogs often, hoping to record in this tiny corner of the vast Internet the once-in-a-lifetime experiences that matter to me, and to help those who seek help.
+    </div>
+    <hr>
+    
+    <h5><a href="/en/archive/">Popular Tags</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/en/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="Technology"
+                rel="188">Technology</a>
+        
+            <a data-sort="0200"
+                href="/en/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="Life"
+                rel="108">Life</a>
+        
+            <a data-sort="0264"
+                href="/en/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="Tinkering"
+                rel="44">Tinkering</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="Tips"
+                rel="32">Tips</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="Tutorial"
+                rel="32">Tutorial</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="Translation"
+                rel="24">Translation</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="Experience"
+                rel="20">Experience</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="Food"
+                rel="20">Food</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="First Impressions"
+                rel="16">First Impressions</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="Workflow"
+                rel="16">Workflow</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="Plugin"
+                rel="16">Plugin</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="Network"
+                rel="16">Network</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="User Experience"
+                rel="12">User Experience</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="Summary"
+                rel="12">Summary</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="Server"
+                rel="12">Server</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="Router"
+                rel="12">Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="Soft Router"
+                rel="12">Soft Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="Essay"
+                rel="12">Essay</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9B%86%E6%88%90"
+                title="Integration"
+                rel="12">Integration</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="Staple Food"
+                rel="8">Staple Food</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="Optimization"
+                rel="8">Optimization</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%8D%83%E5%85%86"
+                title="Gigabit"
+                rel="8">Gigabit</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="Big Event"
+                rel="8">Big Event</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="Tools"
+                rel="8">Tools</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="Bypass Router"
+                rel="8">Bypass Router</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="Framework"
+                rel="8">Framework</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="Foot Bath Time"
+                rel="8">Foot Bath Time</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="Testing"
+                rel="8">Testing</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="Tesla"
+                rel="8">Tesla</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="Editor"
+                rel="8">Editor</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="Video"
+                rel="8">Video</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="Debugging"
+                rel="8">Debugging</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BD%A6"
+                title="Car"
+                rel="8">Car</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="Migration"
+                rel="8">Migration</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="Northeastern Cuisine"
+                rel="4">Northeastern Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="Buying a House"
+                rel="4">Buying a House</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="Proxy"
+                rel="4">Proxy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="Full Stack"
+                rel="4">Full Stack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="Norse Mythology"
+                rel="4">Norse Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="Collaboration"
+                rel="4">Collaboration</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="Compression"
+                rel="4">Compression</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="Kratos"
+                rel="4">Kratos</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="Home Cooking"
+                rel="4">Home Cooking</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="Prosperity"
+                rel="4">Prosperity</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="Comparison"
+                rel="4">Comparison</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="Sichuan Cuisine"
+                rel="4">Sichuan Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="Work Experience"
+                rel="4">Work Experience</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="Greek Mythology"
+                rel="4">Greek Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="Essential Apps"
+                rel="4">Essential Apps</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="Open Source"
+                rel="4">Open Source</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="Unboxing"
+                rel="4">Unboxing</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="God of War"
+                rel="4">God of War</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIM Card"
+                rel="4">SIM Card</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%8B%93%E6%89%91"
+                title="Topology"
+                rel="4">Topology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="Story"
+                rel="4">Story</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="Data Structure"
+                rel="4">Data Structure</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="Travel"
+                rel="4">Travel</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="Daily Life"
+                rel="4">Daily Life</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="Japan"
+                rel="4">Japan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="Service"
+                rel="4">Service</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="Format"
+                rel="4">Format</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A2%A6"
+                title="Dream"
+                rel="4">Dream</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="Browser"
+                rel="4">Browser</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="Gaming"
+                rel="4">Gaming</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="Rant"
+                rel="4">Rant</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="User Privacy"
+                rel="4">User Privacy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="Algorithm"
+                rel="4">Algorithm</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="Details"
+                rel="4">Details</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="Headphones"
+                rel="4">Headphones</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="Freedom"
+                rel="4">Freedom</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="Plan"
+                rel="4">Plan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="Settings"
+                rel="4">Settings</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="Pitfalls"
+                rel="4">Pitfalls</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="Conversion"
+                rel="4">Conversion</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="Selection"
+                rel="4">Selection</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="Interview"
+                rel="4">Interview</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>Columns</h5>
+    <div class="tags">
+        <a href="/projects">Open Source</a>
+        <a href="/book-list">Book List</a>
+        <a href="/subscribe">Subscriptions & Paid Apps</a>
+        <a href="/my-food">Food Recommendations</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>Friends</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">China</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="First Experience with Vue + Webpack Component-Based Development (Practice Environment)"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/en/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

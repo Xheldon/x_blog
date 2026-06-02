@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      「번역」ProseMirror의 협업 편집 구현 - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="[[0]]">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="「번역」ProseMirror의 협업 편집 구현 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2020-8-2T8:05:56"> 
+              
+                  
+                    <meta property="article:tag" content="ProseMirror">
+                    
+                    <meta property="article:tag" content="협업">
+                    
+                    <meta property="article:tag" content="기술">
+                    
+                    <meta property="article:tag" content="번역">
+                    
+                      
+                          
+                            <meta name="og:description" content="[[0]]">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ko/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ko_KR">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ko/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/Collaborative-Editing-in-ProseMirror.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/Collaborative-Editing-in-ProseMirror.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ko/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ko/">홈</a>
+            </li>
+            <li>
+              <a href="/ko/about/">소개</a>
+            </li>
+            <li>
+              <a href="/ko/donate/">후원</a>
+            </li>
+            <li>
+              <a href="/ko/archive/">아카이브</a>
+            </li>
+            <li>
+              <a href="/ko/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">한국어</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/Collaborative-Editing-in-ProseMirror.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/Collaborative-Editing-in-ProseMirror.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/Collaborative-Editing-in-ProseMirror.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item active"><a href="/ko/tech/Collaborative-Editing-in-ProseMirror.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ko/archive/?tag=ProseMirror"
+                            title="ProseMirror">
+                            ProseMirror
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E5%8D%8F%E5%90%8C"
+                            title="협업">
+                            협업
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="기술">
+                            기술
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E7%BF%BB%E8%AF%91"
+                            title="번역">
+                            번역
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        「번역」ProseMirror의 협업 편집 구현
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 작성일 2020년 08월 02일</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;참고: 이 글이 작성된 지 이미
+          <code id="from_time"></code> 일이 지났습니다. 시의성에 유의하세요
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1596355556000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+         
+        <div class="reference-tips">
+          🔗 &nbsp;원문：<a href="https://marijnhaverbeke.nl/blog/collaborative-editing.html" target="_blank">
+            https://marijnhaverbeke.nl/blog/collaborative-editing.html
+          </a>
+        </div>
+          
+        <div class="callout-tips">🖥 &nbsp;설명：[[0]]</div>
+           <p>이 블로그 글은 <a href="https://prosemirror.xheldon.com">ProseMirror</a>에서 사용되는 협업 편집 기술을 설명합니다. ProseMirror에 대한 소개는 <a href="https://marijnhaverbeke.nl/blog/prosemirror.html">여기</a>에서 확인할 수 있습니다.</p>
+<h2 id="협업-편집의-문제점">협업 편집의 문제점</h2>
+<p>실시간 협업 편집 시스템은 여러 사람이 동시에 같은 문서를 편집할 수 있음을 의미합니다. 이 시스템은 문서가 동기화 상태를 유지하도록 보장합니다. 즉, 한 사용자가 문서에 가한 변경 사항은 다른 사용자에게 전송되어 해당 사용자의 문서에 반영됩니다.</p>
+<p>이러한 시스템의 복잡성은 네트워크를 통해 변경 사항을 전송하는 데 시간이 걸리기 때문에 동시 업데이트를 처리하는 방식에 있습니다. 한 가지 해결책은 사용자가 현재 문서(또는 문서의 일부)를 잠그어 다른 사용자가 동시에 문서를 변경하지 못하도록 하는 것입니다. 그러나 이 메커니즘은 사용자로 하여금 잠금에 대해 고민하게 만들며, 잠금이 없는 경우(즉, 다른 사용자가 편집 중일 때) 계속 기다려야 합니다. 우리는 이를 원하지 않습니다.</p>
+<p>동시 업데이트를 허용하는 경우, 사용자 A와 B가 동시에 문서를 변경하고 서로의 변경 사항을 인지하지 못한 상태에서 최종적으로 문서를 어떻게 업데이트할지 협의해야 하는 상황이 발생합니다. A와 B의 행동은 서로 영향을 주지 않을 수도 있습니다(예: 문서의 다른 부분을 동시에 편집하는 경우). 또는 서로 영향을 줄 수도 있습니다(예: 같은 단어를 변경하려고 시도하는 경우).</p>
+<h2 id="operational-transformation-ot-작업-변환">Operational Transformation(OT, 작업 변환)</h2>
+<p>이 문제에 대한 많은 연구가 있습니다. 저는 많은 논문을 읽었지만 이 연구를 전혀 이해하지 못했음을 인정합니다. 만약 제가 어떤 내용을 오해했거나 흥미로운 참고 문헌을 누락했다면, 저에게 이메일을 보내 알려주시면 매우 기쁠 것입니다.</p>
+<p>이 문제에 대한 대부분의 연구는 사실 분산 시스템에 관한 것입니다. 즉, 중앙 제어 노드 없이 메시지를 교환하는 노드 집합에 관한 것입니다. 이 문제를 해결하기 위한 고전적인 방법은 「<a href="https://en.wikipedia.org/wiki/Operational_transformation">Operational Transformation</a>」라고 불리는 분산 알고리즘입니다. 이 알고리즘은 변경 사항을 설명하는 방법을 정의하며, 두 가지 속성을 가집니다:</p>
+<ol>
+<li>
+<p>다른 변경 사항에 상대적으로 변경 사항을 변환할 수 있습니다. 예를 들어, 사용자 A가 부모 오프셋 1에 문자 &quot;O&quot;를 삽입하는 동시에 사용자 B가 오프셋 10에 문자 &quot;T&quot;를 삽입하면, 사용자 A는 B의 변경 사항을 자신의 변경 사항에 상대적으로 변환할 수 있습니다. 즉, B의 변경 사항 오프셋 앞에 추가 문자가 삽입되었으므로 &quot;T&quot;를 오프셋 11에 삽입하는 것입니다.</p>
+</li>
+<li>
+<p>동시 변경 사항이 문서에 적용되는 순서와 관계없이 모든 사용자가 최종적으로 동일한 문서를 가지게 됩니다. 이는 A가 자신의 변경 사항에 상대적으로 B의 변경 사항을 변환하고, B도 유사하게 A의 변경 사항을 변환할 수 있도록 하여 두 사용자가 서로 다른 문서를 얻지 않도록 합니다.</p>
+</li>
+</ol>
+<p>Operational Transformation(OT) 시스템은 로컬 변경 사항을 즉시 로컬 문서에 적용한 다음 변경 사항을 다른 사용자에게 브로드캐스트합니다. 다른 사용자는 브로드캐스트된 변경 사항을 받아 변환하고 적용합니다. 원격 변경 사항을 정확히 어떤 로컬 변경 사항을 통해 변환해야 하는지 알기 위해, 시스템은 변경 사항을 브로드캐스트할 때 문서 상태 표현을 함께 전송해야 합니다.</p>
+<p>이 과정은 상당히 간단하게 들립니다. 그러나 구현은 악몽과 같습니다. “삽입” 및 &quot;삭제&quot;와 같은 여러 사소한 변경 사항을 지원하기 시작하면, 어떤 순서로든 변경 사항을 적용한 후 동일한 문서가 생성되도록 보장하는 것이 극도로 어려워집니다.</p>
+<p>Google Wave에서 일했던 엔지니어 Joseph Gentle는 <a href="http://sharejs.org/#body">이렇게 말했습니다</a>…</p>
+<blockquote>
+<p>불행히도 OT를 구현하는 것은 매우 고통스럽습니다. 수백만 가지의 알고리즘 중에서 선택해야 하며, 이들 대부분은 학술 논문에만 존재합니다. 이 알고리즘들을 올바르게 구현하는 것은 매우 어렵고 시간이 많이 걸립니다.</p>
+</blockquote>
+<h2 id="중앙화">중앙화</h2>
+<p>OT 메커니즘의 복잡한 설계 결정은 대부분 변경 사항을 어떻게 배포할지에 대한 요구 사항에서 비롯됩니다. 분산 시스템은 실제로나 전략적으로 훌륭한 특성을 가지며, 개발 과정에서 종종 흥미롭습니다.</p>
+<p>그러나 &quot;변경 사항을 처리하는 중앙&quot;을 도입하면 복잡성을 크게 줄일 수 있습니다. 솔직히, Google이 Google Docs(중앙화된 시스템)에서 OT를 사용한 것은 저에게 매우 의아합니다.</p>
+<p>ProseMirror의 알고리즘은 중앙화되어 있습니다. 모든 사용자가 연결된 단일 변경 처리 센터가 변경 사항을 적용할 순서를 결정하기 때문입니다. 이는 협업 편집 시스템을 상대적으로 쉽게 구현하고 이해할 수 있게 합니다.</p>
+<p>사실 저는 이 “중앙화” 특성이 분산 방식으로 OT 알고리즘을 실행하는 데 큰 장애물이 된다고 생각하지 않습니다(즉, OT의 분산 알고리즘의 어려움과 장애물은 중앙화에 있지 않습니다). [Raft](<a href="https://en.wikipedia.org/wiki/Raft_(computer_science)">https://en.wikipedia.org/wiki/Raft_(computer_science)</a>와 같은 합의 알고리즘을 사용하여 중앙화된 서비스 대신 중재자를 선택할 수도 있습니다. (하지만 제가 실제로 이 방법을 시도해 본 것은 아닙니다)</p>
+<h2 id="prosemirror의-협업-알고리즘">ProseMirror의 협업 알고리즘</h2>
+<p>OT와 마찬가지로 ProseMirror는 변경 기반 어휘를 사용하고 변경 사항을 상호 변환합니다. 그러나 OT와 달리, 다른 순서로 변경 사항을 적용해도 동일한 문서가 생성되도록 보장하려고 하지 않습니다.</p>
+<p>중앙 집중식 서비스를 사용하면 모든 클라이언트가 동일한 순서로 변경 사항을 적용하도록 쉽게 만들 수 있습니다. 코드 버전 관리 시스템에서 사용되는 메커니즘과 유사한 방식을 활용할 수 있습니다. 클라이언트가 변경 사항을 가지면, 해당 변경 사항을 서버로 _push_하려고 시도합니다. 서버가 이 변경 사항이 현재 최신 버전을 기반으로 한 것으로 판단하면 변경 사항이 수락됩니다. 그렇지 않으면, 클라이언트는 먼저 다른 클라이언트의 변경 사항을 _pull_한 다음, 서버로 다시 push하기 전에 자신의 변경 사항을 _rebase_해야 합니다.</p>
+<p>git과 달리, 이 모델에서 문서의 기록은 선형적이며, 문서의 특정 버전은 간단히 정수로 표현될 수 있습니다.</p>
+<p>또한 git과 다른 점은, 모든 클라이언트가 지속적으로 문서의 새로운 변경 사항을 pull(또는 push하고 수신)하며, 네트워크가 허용하는 한 최대한 빠르게 서버의 상태를 따라가려고 한다는 것입니다.</p>
+<p>유일한 어려운 부분은 다른 사람의 변경 사항을 자신의 변경 사항에 rebase하는 것입니다. 이는 OT(Operational Transformation)가 수행하는 변환과 매우 유사합니다. 하지만 이는 클라이언트 _자신_의 변경 사항을 통해 이루어지며, 원격 서버의 변경 사항이 아닙니다.</p>
+<h2 id="위치-매핑">위치 매핑</h2>
+<p>그러나 OT는 _다른 사람의 변경 사항_에 상대적으로 변경 사항을 변환하는 반면, ProseMirror는 <em>position map</em>(위치 매핑)이라는 파생 데이터 구조를 사용하여 이를 변환합니다. 문서에 변경 사항을 적용할 때마다 새로운 문서와 위에서 언급한 매핑을 얻게 되며, 이 매핑은 이전 문서의 위치를 새 문서의 해당 위치로 변환하는 데 사용될 수 있습니다. 매핑의 가장 두드러진 사용 사례는 커서를 동일한 “개념적” 위치에 유지하도록 조정하는 것입니다. 만약 커서 앞에 문자가 삽입되면, 커서는 주변 텍스트와 함께 한 위치 앞(오른쪽)으로 이동해야 합니다.</p>
+<p>변경 사항의 변환은 완전히 위치 매핑을 기반으로 수행됩니다. 이는 실제로 매우 유용하며, 특정 변경 유형에 대한 변환 코드를 작성할 필요가 없음을 의미합니다. 각 변경 사항은 <code>from</code>, <code>to</code>, <code>at</code>로 표현되는 하나에서 세 개의 위치 정보와 관련이 있습니다. 주어진 다른 변경 사항에 상대적으로 변경 사항을 변환할 때, 이러한 위치는 다른 변경 사항의 위치 매핑을 통해 매핑됩니다.</p>
+<p>예를 들어, 위치 5에 문자가 삽입되면, &quot;위치 10에서 14까지 삭제&quot;하는 변경 사항은 &quot;위치 11에서 15까지 삭제&quot;로 변환됩니다.</p>
+<p>각 변경 사항의 위치는 처음 적용된 문서 버전이 동일한 경우에만 의미가 있습니다. 위치 매핑은 변경 전후 두 문서 버전 간의 위치 매핑을 정의합니다. 변경 사항을 다른 버전에 적용하려면, 해당 버전과 대상 버전 사이의 변경 사항을 통해 단계별로 매핑해야 합니다.</p>
+<p>(간단함을 위해 예제는 위치 표현으로 정수를 사용합니다. ProseMirror에서 실제 위치는 문서 트리 내의 경로와 함께 단락 내의 정수 오프셋으로 구성됩니다)</p>
+<h2 id="위치-리베이스">위치 리베이스</h2>
+<p>한 클라이언트가 여러 개의 아직 원격으로 푸시되지 않은 로컬 변경 사항을 가지고 있을 때 흥미로운 일이 발생합니다. 다른 사람의 변경 사항이 들어오면, 모든 로컬 커밋되지 않은 변경 사항은 이러한 변경 사항을 기반으로 변환되어야 합니다. 로컬 변경 사항 _L1_과 _L2_가 있고, 이를 원격 변경 사항 _R1_과 _R2_에 리베이스한다고 가정해 보겠습니다. 여기서 _L1_과 _R1_은 동일한 문서 버전에서 변경되었습니다.</p>
+<p>먼저, R1과 R2를 원본 문서 버전에 적용합니다(클라이언트는 현재 표시 중인 문서 버전–푸시되지 않은 변경 사항 포함–과 이러한 변경 사항이 포함되지 않은 원본 버전을 추적해야 합니다). 이 작업은 두 매핑 _mR1_과 _mR2_를 생성합니다.</p>
+<blockquote>
+<p>역자 주: 아래 내용은 이해하기 어려울 수 있으며, 독자가 그림을 그려보는 것이 더 직관적일 수 있습니다. 간단히 말해, L2는 L1이 문서를 수정한 후 위치 매핑(위치 조정)을 거쳐 문서를 수정한 것입니다. L2를 올바르게 리베이스하려면 먼저 L1 및 L1 이전(즉, R1과 R2)의 문서 수정 사항이 영향을 미치는 위치를 모두 매핑(조정)해야 합니다. 이렇게 해야 L2가 올바른 위치 매핑을 얻고, 올바른 위치에서 문서 수정을 시작할 수 있습니다.</p>
+</blockquote>
+<p>_L1_을 _mR1_과 _mR2_를 통해 매핑된 버전인 *L1**로 간단히 매핑할 수 있습니다. 그러나 <em>L2</em>는 초기 문서 버전에서 <em>L1</em>이 수정된 후의 문서를 기반으로 수정되었으므로, <em>L2</em>에 대해 먼저 <em>mL1</em>(<em>L1</em>을 적용하여 생성된 매핑)을 통해 <em>역매핑</em>(즉, 역사 롤백, <em>mL1</em>의 역연산)해야 합니다. 이제 문서는 <em>R1</em>이 시작될 때의 문서와 동일해지며, <em>mR1</em>과 <em>mR2</em>를 통해 <em>L2</em>를 매핑한 다음, <em>mL1*</em>–앞서 간단히 적용한 *L1**에서 생성된 매핑–을 통해 다시 매핑할 수 있습니다. 이제 *L2**를 얻었으며, 이를 *L1**이 적용된 문서에 적용할 수 있습니다. 보세요, 우리는 두 변경 사항을 다른 두 변경 사항에 리베이스했습니다.</p>
+<blockquote>
+<p>번역자 주: 아래 문단에서 &quot;위치 5에 두 문자 삽입&quot;은 위의 L1에 해당하고, &quot;두 문자 사이(위치 6)에 삽입&quot;은 위의 L2에 해당합니다. 따라서 L2를 리베이스할 때는 mL1을 통해 L2의 삽입 위치를 초기 문서로 롤백해야 하지만, 이때 문서에는 L2가 매핑될 위치가 존재하지 않습니다. 해당 위치가 아직 존재하지 않기 때문입니다.</p>
+</blockquote>
+<p>삭제 작업 매핑과 역방향 매핑(역사 롤백–번역자 주) 삽입 작업은 정보 손실을 일으킵니다. 위치 5에 두 문자를 삽입한 후 다른 사람이 위치 6(이전에 삽입된 문자 사이)에 삽입하면, 역방향 매핑(역사 롤백, 앞서 언급한 L2–번역자 주)을 수행한 다음 초기 삽입 작업을 통해 순방향 매핑하면 삽입된 두 문자 앞이나 뒤 위치에 놓이게 됩니다. 아직 존재하지 않는 문서는 이 두 문자 사이 위치를 표현할 수 없기 때문입니다(아직 삽입되지 않을 문자들의 정확한 위치를 어떻게 표현할까요?–번역자 주).</p>
+<blockquote>
+<p>번역자 주: 아래 문단은 본문의 핵심으로, 매핑 시 추가적인 반대 방향 매핑 정보를 제공함으로써 역방향 매핑(역사 롤백) 시 존재하지 않는 위치로 매핑해야 할 경우 해당 위치 내용을 먼저 복원(해당 매핑의 미러 사용)한 후 매핑을 수행합니다. 이전 매핑이 완료된 후에는 이 매핑을 직접 건너뜁니다(이미 내용 복원 시 매핑이 완료되었기 때문). 매핑 미러와 매핑 내용은 반드시 동일한 크기를 유지해야 합니다(당연한 말이지만, 그렇지 않으면 위치 계산이 틀어집니다).</p>
+</blockquote>
+<p>이 문제를 해결하기 위해 ProseMirror 협업 시스템은 매핑 파이프라인(mapping pipelines)을 사용합니다. 이는 단순한 일련의 매핑뿐만 아니라 어떤 매핑이 서로의 미러인지에 대한 정보도 저장합니다. 위치가 이 파이프라인을 통과할 때 주변 내용을 삭제하는 매핑을 만나면, 시스템은 파이프라인을 역방향으로 스캔하여 해당 매핑의 미러를 찾습니다. 이러한 매핑을 찾으면 순방향 매핑으로 이동하여(일반적인 위치 조정–번역자 주) 해당 위치를 사용하고, 삭제된 내용의 상대적 오프셋을 이용해 이 매핑이 삽입한 내용 내 위치를 복원합니다. 삭제 작업의 매핑 미러는 삽입 작업의 매핑 미러와 동일한 내용 크기를 유지해야 합니다.</p>
+<h2 id="매핑-방향">매핑 방향</h2>
+<p>내용을 삽입할 때마다 이 명확한 삽입 지점을 두 가지 다른 위치(둘 다 의미 있는 위치)로 매핑할 수 있습니다: 삽입 내용 앞이나 뒤. 때로는 전자가 적합하고 때로는 후자가 적합합니다. ProseMirror의 위치 매핑 시스템은 개발자가 원하는 방향을 선택할 수 있도록 합니다.</p>
+<blockquote>
+<p>번역자 주: 아래 문단은 문서가 <code>abc</code>일 때, a 뒤 b 앞 위치에 문자 x를 삽입하면 변경된 <code>from</code>와 <code>to</code> 모두 1이 됨을 설명합니다. 삽입 내용 뒤에서 <code>from</code>은 순방향(왼쪽) 매핑 시 여전히 1로 유지되고, <code>to</code>은 역방향(오른쪽) 매핑 시 2가 됩니다.</p>
+</blockquote>
+<p>이것이 변경과 관련된 위치에 여러 다른 위치 정보가 포함되는 이유입니다. 변경에 <code>from</code>과 <code>to</code> 위치 정보가 있는 경우, 예를 들어 삭제나 문서 내용 스타일 설정 시 해당 위치 앞이나 뒤에 내용이 있다면 이 내용은 변경 범위에 포함되지 않아야 합니다(이 내용은 변경 발생 후 위치 매핑만 필요합니다–번역자 주). 따라서 <code>from</code> 위치는 순방향(왼쪽)으로 매핑되어야 하고, <code>to</code> 위치는 역방향(오른쪽)으로 매핑되어야 합니다.</p>
+<p>변경이 이를 완전히 포함하는 매핑을 통해 매핑될 때, 예를 들어 위치 5에 문자를 삽입한 후 2에서 10까지 삭제로 생성된 변경을 통해 매핑하면, 위치 5의 문자 삽입 전체 작업은 단순히 버려집니다. 해당 컨텍스트가 더 이상 존재하지 않기 때문입니다.</p>
+<h2 id="변경-유형">변경 유형</h2>
+<p>ProseMirror에서 원자적 변경을 <em>step</em>(단계)라고 합니다. 사용자 관점에서 단일 변경으로 보이는 일부 변경은 실제로 여러 단계로 분해됩니다. 예를 들어, 텍스트를 선택한 후 enter 키를 누르면 편집기는 선택 텍스트 삭제를 위한 <em>delete</em> 단계를 생성한 다음 현재 문단 분할을 위한 <em>split</em> 단계를 생성합니다.</p>
+<p>다음은 ProseMirror에 존재하는 단계 유형입니다:</p>
+<ul>
+<li><code>addStyle</code>와 <code>removeStyle</code>은 문서에 인라인 스타일을 추가하거나 제거합니다.</li>
+<li><code>split</code>는 하나의 노드를 두 개로 분할합니다. 예를 들어, 사용자가 엔터 키를 눌렀을 때 단락을 나누는 데 사용할 수 있습니다. 단일 <code>at</code> 위치 정보만 필요합니다.</li>
+<li><code>join</code>은 인접한 두 노드를 연결합니다. 이 단계는 동일한 유형의 콘텐츠를 포함하는 노드에만 유효합니다. 연결할 두 노드의 끝과 시작 위치를 각각 가리키는 <code>from</code>과 <code>to</code> 위치 정보가 필요합니다(예상된 노드가 올바르게 연결되도록 보장하기 위함입니다. 만약 이 과정에서 두 노드 사이에 콘텐츠가 삽입되면 연결 단계는 무시됩니다).</li>
+<li><code>ancestor</code>는 노드의 유형을 변경하거나 조상 노드를 추가/제거하는 데 사용됩니다. 목록을 감싸거나 단락을 제목으로 변환할 때 활용할 수 있습니다. 노드의 시작과 끝 위치를 가리키는 <code>from</code>과 <code>to</code> 위치가 필요합니다.</li>
+<li><code>replace</code>는 문서의 일부를 0개 이상의 노드로 교체하며, 필요한 경우 호환 가능한 노드를 자른 가장자리 부분에 결합할 수 있습니다. 삭제할 범위를 정의하는 <code>from</code>과 <code>to</code> 위치와 새 노드가 삽입될 위치를 지정하는 <code>at</code> 위치가 사용됩니다.</li>
+</ul>
+<p>위에서 설명한 유형 중 마지막이 가장 복잡합니다. 처음에는 이를 제거와 삽입 두 단계 유형으로 분리하려 했습니다. 하지만 교체 단계에서 생성되는 위치 매핑은 모든 교체 콘텐츠를 원자적으로 처리해야 하기 때문에(위치는 모든 교체 콘텐츠에서 계산되어야 함), 단일 단계로 처리하는 것이 더 나은 결과를 가져왔습니다.</p>
+<h2 id="작업의-의도">작업의 의도</h2>
+<p>실시간 협업 편집 시스템의 필수 속성은 변경의 의도를 보존하려는 노력입니다. 변경의 &quot;병합&quot;이 자동으로 발생하며 사용자 상호작용 없이 이루어지기 때문에, 문서 변경이 리베이스 과정에서 원하지 않는 결과로 변할 때 큰 불편을 초래할 수 있습니다.</p>
+<p>이러한 수정 단계와 리베이스 방식을 정의할 때, 리베이스 시 이상하지 않도록 노력했습니다. 대부분의 경우 변경 사항이 서로 겹치지 않아 상호작용이 필요 없습니다. 하지만 변경 사항이 겹치는 경우, 병합 결과가 정상적이도록 보장해야 합니다.</p>
+<p>때로는 변경 사항을 단순히 버려야 할 때도 있습니다. 예를 들어, 단락에 텍스트를 입력하는 동안 다른 사용자가 해당 단락을 삭제하면, 입력한 콘텐츠의 의미 있는 문맥이 사라지고, 해당 위치에 삽입되는 것은 무의미한 문서 조각을 생성할 뿐입니다.</p>
+<p>두 목록을 연결하려는 시도 중간에 다른 사용자가 단락을 삽입하면, 원하는 작업을 수행할 수 없게 됩니다(인접하지 않은 노드는 연결할 수 없음). 따라서 해당 작업은 버려집니다.</p>
+<p>다른 시나리오에서는 변경 사항이 수정되더라도 여전히 의미가 있습니다. 위치 5부터 10까지의 문자를 굵게 표시하는 동안 다른 사용자가 위치 7에 문자를 삽입하면, 최종 결과는 위치 5부터 11까지 굵게 표시됩니다.</p>
+<p>마지막으로, 일부 변경 사항은 서로 영향을 주지 않고 겹칠 수 있습니다. 예를 들어, 한 사용자가 단어에 하이퍼링크를 설정하는 동안 다른 사용자가 동일한 단어를 굵게 표시하면, 두 변경 사항 모두 원본 문서에 적용됩니다.</p>
+<h2 id="오프라인-작업">오프라인 작업</h2>
+<p>실시간 협업 편집에서는 변경 사항을 조용히 수정하거나 일부를 버리는 것이 큰 문제가 되지 않습니다. 이 경우 피드백이 거의 즉각적이기 때문입니다—편집 중인 단락이 사라지는 것을 보면, 다른 사용자가 삭제했음을 알 수 있고, 따라서 자신의 변경 사항도 사라졌음을 이해하게 됩니다.</p>
+<p>반면 오프라인 편집(중앙 서버에 연결되지 않은 상태에서의 편집)이나 분기된 작업 흐름에서는, 이 모델(OT도 마찬가지)이 효과적이지 않습니다. 오랜 시간 동안 많은 편집 작업을 수행한 후, 그 동안 다른 사용자가 문서를 수정/삭제/삽입한 내용과 병합해야 할 때, 이 모델은 많은 편집 작업을 조용히 삭제하거나(편집 문맥이 이미 삭제된 경우), 두 사용자가 같은 문장을 다른 방식으로 편집했을 때 이상한 텍스트 조합을 생성할 수 있습니다.</p>
+<p>이러한 시나리오에서는 diff 기반 구현이 더 적합할 수 있습니다. 자동 병합은 불가능할 수 있으며—충돌을 식별하여 사용자가 해결하도록 해야 합니다. Git이 사용자에게 요구하는 방식과 유사합니다.</p>
+<h2 id="실행-취소-기록">실행 취소 기록</h2>
+<p>협업 편집 시스템에서 실행 취소 기록은 어떻게 구현되어야 할까요? 널리 받아들여지는 답변은 단일 공유 기록을 사용해서는 안 된다는 것입니다. 편집을 취소할 때는 문서의 마지막 변경 사항이 아니라, 자신이 마지막으로 수행한 편집 작업을 취소해야 합니다.</p>
+<p>이는 단순히 이전 상태로 롤백하는 문서 기록 방식으로는 달성할 수 없음을 의미합니다. 자신의 변경 사항을 취소했을 때(다른 사용자의 변경 사항이 있는 경우) 이전에 존재하지 않았던 새로운 상태가 생성됩니다.</p>
+<p>이를 구현하기 위해, 반전 가능한 변경 사항(여러 단계)을 정의해야 했습니다. 이 반전은 원본 단계의 효과를 상쇄하는 새로운 단계를 생성합니다.</p>
+<p>ProseMirror의 실행 취소 기록은 반대 단계를 누적하고, 현재 문서 버전과의 모든 위치 매핑도 추적합니다. 현재 문서 버전으로 역매핑하기 위해서는 이 과정이 필수적입니다.</p>
+<p>하지만 불리한 점은 사용자가 변경을 수행한 후 유휴 상태가 되고, 그 동안 다른 사람이 문서를 변경한 경우, 이 사용자의 변경 사항을 현재 버전의 문서 위치로 매핑하는 과정이 무한정 쌓이게 된다는 것입니다. 이 문제를 해결하기 위해 기록은 주기적으로 _압축_되어, 반전된 변경 사항을 앞으로 매핑하여 다시 현재 문서부터 편집할 수 있도록 합니다. 이 과정에서 중간 단계의 위치 매핑은 버려집니다.</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          이 글의 최초 게시:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/Collaborative-Editing-in-ProseMirror.ko.html"
+            title="「번역」ProseMirror의 협업 편집 구현"
+          >
+            「번역」ProseMirror의 협업 편집 구현 - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">목차</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>블로거의 말:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        저는 인생의 중요한 선택의 기로에 섰을 때, 누군가 최선의 방법을 알려주어 소중한 시간을 헛되이 보내지 않기를 바라곤 합니다. 그런 마음으로 저는 자주 블로그를 쓰며, 광활한 인터넷의 이 작은 구석에 제게는 단 한 번뿐인 인생 경험을 기록하여 도움이 필요한 분들에게 도움이 되기를 바랍니다.
+    </div>
+    <hr>
+    
+    <h5><a href="/ko/archive/">인기 태그</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="기술"
+                rel="188">기술</a>
+        
+            <a data-sort="0200"
+                href="/ko/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="생활"
+                rel="108">생활</a>
+        
+            <a data-sort="0264"
+                href="/ko/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="삽질"
+                rel="44">삽질</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="팁"
+                rel="32">팁</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="튜토리얼"
+                rel="32">튜토리얼</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="번역"
+                rel="24">번역</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="경험"
+                rel="20">경험</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="미식"
+                rel="20">미식</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="첫인상"
+                rel="16">첫인상</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="워크플로"
+                rel="16">워크플로</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="플러그인"
+                rel="16">플러그인</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="네트워크"
+                rel="16">네트워크</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="사용 경험"
+                rel="12">사용 경험</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="정리"
+                rel="12">정리</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="서버"
+                rel="12">서버</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="라우터"
+                rel="12">라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="소프트 라우터"
+                rel="12">소프트 라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="에세이"
+                rel="12">에세이</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9B%86%E6%88%90"
+                title="통합"
+                rel="12">통합</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="주식"
+                rel="8">주식</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="최적화"
+                rel="8">최적화</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%8D%83%E5%85%86"
+                title="기가비트"
+                rel="8">기가비트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="큰일"
+                rel="8">큰일</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="도구"
+                rel="8">도구</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="바이패스 라우터"
+                rel="8">바이패스 라우터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="프레임워크"
+                rel="8">프레임워크</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="족욕 시간"
+                rel="8">족욕 시간</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="테스트"
+                rel="8">테스트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="테슬라"
+                rel="8">테슬라</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="에디터"
+                rel="8">에디터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="영상"
+                rel="8">영상</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="디버깅"
+                rel="8">디버깅</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BD%A6"
+                title="자동차"
+                rel="8">자동차</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="마이그레이션"
+                rel="8">마이그레이션</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="둥베이 요리"
+                rel="4">둥베이 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="집 사기"
+                rel="4">집 사기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="프록시"
+                rel="4">프록시</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="풀스택"
+                rel="4">풀스택</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="북유럽 신화"
+                rel="4">북유럽 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="협업"
+                rel="4">협업</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="압축"
+                rel="4">압축</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="크레토스"
+                rel="4">크레토스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="가정식"
+                rel="4">가정식</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="부강"
+                rel="4">부강</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="비교"
+                rel="4">비교</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="쓰촨 요리"
+                rel="4">쓰촨 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="업무 경험"
+                rel="4">업무 경험</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="그리스 신화"
+                rel="4">그리스 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="자주 쓰는 앱"
+                rel="4">자주 쓰는 앱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="오픈소스"
+                rel="4">오픈소스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="언박싱"
+                rel="4">언박싱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="갓 오브 워"
+                rel="4">갓 오브 워</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="유심"
+                rel="4">유심</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%8B%93%E6%89%91"
+                title="토폴로지"
+                rel="4">토폴로지</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="이야기"
+                rel="4">이야기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="자료구조"
+                rel="4">자료구조</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="여행"
+                rel="4">여행</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="일상"
+                rel="4">일상</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="일본"
+                rel="4">일본</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="서비스"
+                rel="4">서비스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="포맷"
+                rel="4">포맷</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A2%A6"
+                title="꿈"
+                rel="4">꿈</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="브라우저"
+                rel="4">브라우저</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="게임"
+                rel="4">게임</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="푸념"
+                rel="4">푸념</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="사용자 개인정보"
+                rel="4">사용자 개인정보</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="알고리즘"
+                rel="4">알고리즘</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="디테일"
+                rel="4">디테일</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="이어폰"
+                rel="4">이어폰</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="자유"
+                rel="4">자유</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="계획"
+                rel="4">계획</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="설정"
+                rel="4">설정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="함정"
+                rel="4">함정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="변환"
+                rel="4">변환</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="기술 선정"
+                rel="4">기술 선정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="면접"
+                rel="4">면접</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>칼럼</h5>
+    <div class="tags">
+        <a href="/projects">오픈 소스</a>
+        <a href="/book-list">기술 도서 목록</a>
+        <a href="/subscribe">구독 & 유료 앱</a>
+        <a href="/my-food">맛집 추천</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>친구들</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">중국판</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="「번역」ProseMirror의 협업 편집 구현"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ko"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ko/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

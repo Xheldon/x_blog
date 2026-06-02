@@ -1,0 +1,1800 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      &#34;Translated&#34; ProseMirror Chinese Guide - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="All documents or manual API descriptions mentioned in this article can be viewed at https://prosemirror.xheldon.com/docs/ref/.">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="&#34;Translated&#34; ProseMirror Chinese Guide - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2019-9-6T4:49:00"> 
+              
+                  
+                    <meta property="article:tag" content="ProseMirror">
+                    
+                    <meta property="article:tag" content="Technology">
+                    
+                    <meta property="article:tag" content="Translation">
+                    
+                      
+                          
+                            <meta name="og:description" content="All documents or manual API descriptions mentioned in this article can be viewed at https://prosemirror.xheldon.com/docs/ref/.">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/en/tech/prosemirror-guide-chinese.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="en_US">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/en/tech/prosemirror-guide-chinese.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/prosemirror-guide-chinese.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/prosemirror-guide-chinese.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/prosemirror-guide-chinese.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/prosemirror-guide-chinese.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/prosemirror-guide-chinese.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/en/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/en/">Home</a>
+            </li>
+            <li>
+              <a href="/en/about/">About</a>
+            </li>
+            <li>
+              <a href="/en/donate/">Donate</a>
+            </li>
+            <li>
+              <a href="/en/archive/">Archive</a>
+            </li>
+            <li>
+              <a href="/en/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">English</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/prosemirror-guide-chinese.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item active"><a href="/en/tech/prosemirror-guide-chinese.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/prosemirror-guide-chinese.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/prosemirror-guide-chinese.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/en/archive/?tag=ProseMirror"
+                            title="ProseMirror">
+                            ProseMirror
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="Technology">
+                            Technology
+                          </a>
+                          
+                          <a class="tag" href="/en/archive/?tag=%E7%BF%BB%E8%AF%91"
+                            title="Translation">
+                            Translation
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        &#34;Translated&#34; ProseMirror Chinese Guide
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 Written on Sep 6, 2019</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 Updated on Nov 15, 2021</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;Note: it has been
+          <code id="from_time"></code> days since this article was written, please be aware of its timeliness
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1567788540000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+         
+        <div class="reference-tips">
+          🔗 &nbsp;Source：<a href="https://prosemirror.net/docs/guide/" target="_blank">
+            https://prosemirror.net/docs/guide/
+          </a>
+        </div>
+          
+        <div class="callout-tips">🖥 &nbsp;Note：All documents or manual API descriptions mentioned in this article can be viewed at https://prosemirror.xheldon.com/docs/ref/.</div>
+           <blockquote>
+<p>Content pointing to the <code>https://prosemirror.xheldon.com</code> domain can be accessed in English by replacing it with <code>https://prosemirror.net</code>.</p>
+</blockquote>
+<h2 id="translation-notes">Translation Notes:</h2>
+<ol>
+<li>The work requires using ProseMirror, but no well-translated documentation was found on the market (some translations read like machine translations). Therefore, I took this opportunity to translate this conceptual guide for the library.</li>
+<li>Based on previous translation experience, to avoid ambiguity, keeping some <code>专有名词不翻译</code> is the best choice.</li>
+<li>The translation aims to stay faithful to the original text, but some direct translations may result in awkward or incoherent semantics. In such cases, additional context like subjects may be added, or paraphrasing may be used. Readers who find inconsistencies can <a href="http://prosemirror.net/docs/guide/">refer to the original text</a>.</li>
+<li>For parts I didn’t fully understand, I consulted the author on the ProseMirror forum. Links to these discussions are included.</li>
+<li>This guide may not make complete sense at first glance. It’s recommended to skim through it first, then <a href="https://github.com/prosemirror/prosemirror-example-setup">check this repository</a> to see and implement basic features like headings (node types) and bold (marks) before revisiting the guide for better comprehension.</li>
+<li>I prefer using English punctuation with Chinese input methods.</li>
+<li>Occasionally, I mistakenly wrote “ProseMirror” as “Prosemirror,” but this doesn’t affect the guide.</li>
+<li>I created a simple demo with basic examples for experimentation, available at: <a href="https://github.com/Xheldon/prosemirror-demo">this repository</a>. Forks and stars are welcome!</li>
+<li>Spaces between Chinese and English text and after commas are standard practice.</li>
+<li>My technical and translation skills are limited, and so is my understanding. Corrections and feedback are appreciated. Thank you!</li>
+</ol>
+<h2 id="translator’s-conceptual-explanation">Translator’s Conceptual Explanation</h2>
+<ol>
+<li><strong>Document</strong>: The entire document in ProseMirror, typically referenced by <code>editor.view.state.doc</code>.</li>
+<li><strong>Schema</strong>: The skeleton object of ProseMirror, defining various rules to constrain the document. Sometimes manual adjustments are needed to comply with these rules, but ProseMirror usually handles them automatically.</li>
+<li><strong>State</strong>: The data structure object in ProseMirror, analogous to React’s state. It includes the view’s state and plugin-specific states. For example, the schema is defined here: <code>state.schema</code>.</li>
+<li><strong>View</strong>: The visual representation object in ProseMirror, containing methods to update the view. The state is one of its properties: <code>view.state</code>.</li>
+<li><strong>Transform</strong>: A container object for document changes, with methods to modify these changes. <code>Transaction</code> is its subclass, handling state changes for the entire editor.</li>
+<li><strong>Selection</strong>: The selection object, representing the cursor when nothing is selected. It includes various position-related properties and methods.</li>
+<li><strong>Range</strong>: A container for multiple node objects, often used to handle selections spanning multiple node and mark types.</li>
+<li><strong>Slice</strong>: Primarily used to address schema violations caused by partial selections.</li>
+<li><strong>Node</strong>: The basic element in ProseMirror. Various node types can be defined via the schema, with at least <code>doc</code> (root node) and <code>text</code> (text node) required.</li>
+<li><strong>NodeType</strong>: The type of a ProseMirror node, typically used to create nodes and define their attributes.</li>
+<li><strong>XXXSpec</strong>: Configuration objects for defining XXX, such as <code>NodeSpec</code> and <code>MarkSpec</code>.</li>
+<li><strong>Mark</strong>: ProseMirror treats inline text as a flat structure (unlike DOM’s tree structure) for easier counting and manipulation. Marks represent attributes of inline nodes, like <code>font-size</code> or <code>bold</code>, and can be customized.</li>
+<li><strong>MarkType</strong>: Similar to node types, defines mark attributes and includes methods for creating marks.</li>
+<li><strong>DOMOutputSpec</strong>: The return value specified in the schema’s <code>toDOM</code>, as explained in the <a href="https://prosemirror.xheldon.com/docs/ref/#model.DOMOutputSpec">official documentation</a>.</li>
+<li><strong>ResolvedPos</strong>: An object returned by ProseMirror when resolving position information (see the “Position Counting” section), containing position-related details.</li>
+<li><strong>Plugin</strong>: Typically used to implement behaviors like clicks, pasting, or undo. Plugins can also define nodes directly.</li>
+<li><strong>Decoration</strong>: Often used to generate views independent of document state, enabling visual effects without altering the document structure.</li>
+</ol>
+<h2 id="chinese-english-translation-reference-interchangeable-while-reading-this-guide">Chinese-English Translation Reference (Interchangeable while reading this guide)</h2>
+<h2 id="prosemirror-chinese-guide">ProseMirror Chinese Guide</h2>
+<p>This guide introduces various concepts used in the library and how they interrelate. To give you an overall impression of the system, it’s recommended to read the documents in order, or at least (if you’re impatient and just want a general understanding) finish the section about the View component.</p>
+<h2 id="introduction">Introduction</h2>
+<p>ProseMirror provides a comprehensive set of tools and concepts for building rich text editors. Its user interface is inspired by <code>所见即所得</code> concepts but strives to avoid falling into its styling-editing pitfalls.</p>
+<p>The fundamental concept of ProseMirror is that you and your code have absolute control over the document and its changes. Here, a document isn’t the messy blob of code found in HTML, but rather a custom data structure that only contains elements you explicitly allow and the relationships you specify between them (meaning you control which elements can appear and their relationships—translator’s note). All document updates originate from a single point, making it easier to handle changes.</p>
+<p>The core modules of ProseMirror aren’t plug-and-play. During development, we prioritized modularity and customizability over simplicity. That said, we hope someone will eventually develop a ready-to-use editor based on ProseMirror. To use an analogy, ProseMirror is like LEGO bricks that require manual assembly, rather than a matchbox that’s ready to use upon opening.</p>
+<p>ProseMirror has four essential modules required for any operation, along with many extension modules maintained by the core team. These extension modules, like third-party modules offering useful features, can be replaced by other modules implementing the same functionality.</p>
+<p>The four essential modules are:</p>
+<ol>
+<li><a href="https://prosemirror.xheldon.com/docs/ref/#model">prosemirror-model</a> defines the editor’s <a href="https://prosemirror.xheldon.com/docs/guide/#doc">Document Model</a>, which describes the editor’s content.</li>
+<li><a href="https://prosemirror.xheldon.com/docs/ref/#state">prosemirror-state</a> provides a single data structure describing the editor’s complete state, including selection operations, and a system called “transaction” for transitioning from the current state to the next.</li>
+<li><a href="https://prosemirror.xheldon.com/docs/ref/#view">prosemirror-view</a> displays a given state as editable elements in the editor and handles user interactions.</li>
+<li><a href="https://prosemirror.xheldon.com/docs/ref/#transform">prosemirror-transform</a> includes functionality for making reversible document changes. It forms the foundation for the transaction system in prosemirror-state, enabling undo history and collaborative editing.</li>
+</ol>
+<p>Beyond these, there are modules like <a href="https://prosemirror.xheldon.com/docs/ref/#commands">basic editing commands</a>, <a href="https://prosemirror.xheldon.com/docs/ref/#keymap">keybindings</a>, <a href="https://prosemirror.xheldon.com/docs/ref/#history">undo history</a>, <a href="https://prosemirror.xheldon.com/docs/ref/#inputrules">macros</a>, <a href="https://prosemirror.xheldon.com/docs/ref/#collab">collaborative editing</a>, and <a href="https://prosemirror.xheldon.com/docs/ref/#schema-basic">a simple document Schema</a>, among others. More modules can be found in the <a href="https://github.com/prosemirror/">ProseMirror organization</a> on GitHub.</p>
+<p>ProseMirror isn’t a browser-loadable script, meaning you’ll need to use a bundler to work with it. A bundler automatically resolves your script’s dependencies and merges them into a single file for convenient browser loading. You can explore more about web bundling, for example, <a href="https://medium.freecodecamp.org/javascript-modules-part-2-module-bundling-5020383cf306">here</a>.</p>
+<h3 id="my-first-editor">My First Editor</h3>
+<p>The following code stacks together like LEGO bricks to create the simplest editor:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; schema &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;prosemirror-schema-basic&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">EditorState</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;prosemirror-state&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">EditorView</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;prosemirror-view&#x27;</span>;<br><br><span class="hljs-keyword">let</span> state = <span class="hljs-title class_">EditorState</span>.<span class="hljs-title function_">create</span>(&#123; schema &#125;);<br><span class="hljs-keyword">let</span> view = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EditorView</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>, &#123; state &#125;);<br></code></pre></td></tr></table></figure>
+<p>Prosemirror requires you to manually specify a Schema for the document (to define which elements can or cannot be contained and the relationships between elements). To achieve this, the first thing the above code does is import a basic schema (typically, you would write your own schema, but here the author uses a pre-existing one containing basic elements as an example — translator’s note).</p>
+<p>This base schema is then used to create a state, which generates an empty document adhering to the schema’s constraints, along with a default selection at the start of the document (this selection is empty, meaning it represents the cursor). Finally, this state generates a view that is appended to <code>document.body</code>. The document from the aforementioned state will ultimately be rendered as an editable DOM node (i.e., a <code>contenteditable</code> node — translator’s note) and a state transaction that reacts to user input.</p>
+<p>(Unfortunately) At this point, the editor is not yet functional. For example, if you press Enter in the editor, nothing will happen because the four core modules mentioned earlier do not know how to respond to such input. We will later instruct it on how to handle various input behaviors.</p>
+<h3 id="transactions">Transactions</h3>
+<p>When users input text or, more broadly, interact with the page’s view, Prosemirror generates ‘state transactions’. This means that after every user input, Prosemirror not only modifies the document content but also updates the state behind the scenes. In other words, each change results in the creation of a <a href="https://prosemirror.xheldon.com/docs/guide/#state.transactions">transaction</a>, which describes the changes applied to the state. These changes can then be used to create a new state, which in turn updates the view.</p>
+<p>By default, these changes are handled by the framework, and you don’t need to worry about them. However, you can attach hooks to this process by writing a plugin or customizing your view. For example, the following code adds a <a href="https://prosemirror.xheldon.com/docs/ref/#view.DirectEditorProps.dispatchTransaction">dispatchTransaction</a> <a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorProps">prop</a>, which is called whenever a transaction is created:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 忽略 import 部分</span><br><span class="hljs-keyword">let</span> state = <span class="hljs-title class_">EditorState</span>.<span class="hljs-title function_">create</span>(&#123; schema &#125;);<br><span class="hljs-keyword">let</span> view = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EditorView</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>, &#123;<br>  state,<br>  <span class="hljs-title function_">dispatchTransaction</span>(<span class="hljs-params">transaction</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<br>      <span class="hljs-string">&#x27;Document size went from&#x27;</span>,<br>      transaction.<span class="hljs-property">before</span>.<span class="hljs-property">content</span>.<span class="hljs-property">size</span>,<br>      <span class="hljs-string">&#x27;to&#x27;</span>,<br>      transaction.<span class="hljs-property">doc</span>.<span class="hljs-property">content</span>.<span class="hljs-property">size</span><br>    );<br>    <span class="hljs-keyword">let</span> newState = view.<span class="hljs-property">state</span>.<span class="hljs-title function_">apply</span>(transaction);<br>    view.<span class="hljs-title function_">updateState</span>(newState);<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p><em>Every</em> state update ultimately requires executing the <a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorView.updateState">updateState</a> method, and dispatching a transaction generally triggers an update to the editing state.</p>
+<h3 id="plugins">Plugins</h3>
+<p>Plugins are used to extend editing behavior and state in various ways. Some plugins are simple, like the <a href="https://prosemirror.xheldon.com/docs/ref/#keymap">keymap</a> plugin, which binds keyboard inputs to <a href="https://prosemirror.xheldon.com/docs/guide/#commands">actions</a>. Others are more complex, such as the history plugin, which monitors transactions and stores them in reverse order to enable undo/redo functionality when users want to revert a transaction.</p>
+<p>Let’s add the following two plugins to enable undo/redo functionality:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 忽略重复的导入</span><br><span class="hljs-keyword">import</span> &#123; undo, redo, history &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;prosemirror-history&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; keymap &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;prosemirror-keymap&#x27;</span>;<br><br><span class="hljs-keyword">let</span> state = <span class="hljs-title class_">EditorState</span>.<span class="hljs-title function_">create</span>(&#123;<br>  schema,<br>  <span class="hljs-attr">plugins</span>: [<span class="hljs-title function_">history</span>(), <span class="hljs-title function_">keymap</span>(&#123; <span class="hljs-string">&#x27;Mod-z&#x27;</span>: undo, <span class="hljs-string">&#x27;Mod-y&#x27;</span>: redo &#125;)],<br>&#125;);<br><span class="hljs-keyword">let</span> view = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EditorView</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>, &#123; state &#125;);<br></code></pre></td></tr></table></figure>
+<p>Plugins are registered when the state is created (because they require access to the state’s transactions). After creating a view for this undo/redo-capable state, you’ll be able to undo the last action by pressing Ctrl+Z (or Cmd+Z on Mac).</p>
+<h3 id="commands">Commands</h3>
+<p>The special functions bound to specific keyboard keys in the example above are called <a href="https://prosemirror.xheldon.com/docs/guide/#commands">commands</a>. Most editing behaviors are written as commands, allowing them to be bound to keys, called by editing menus, or exposed for user interaction.</p>
+<p>The <code>prosemirror-commands</code> package provides many basic editing commands, including mapping the Enter and Delete keys to behave as you’d expect in an editor.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 忽略重复的导入</span><br><span class="hljs-keyword">import</span> &#123; baseKeymap &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;prosemirror-commands&#x27;</span>;<br><br><span class="hljs-keyword">let</span> state = <span class="hljs-title class_">EditorState</span>.<span class="hljs-title function_">create</span>(&#123;<br>  schema,<br>  <span class="hljs-attr">plugins</span>: [<br>    <span class="hljs-title function_">history</span>(),<br>    <span class="hljs-title function_">keymap</span>(&#123; <span class="hljs-string">&#x27;Mod-z&#x27;</span>: undo, <span class="hljs-string">&#x27;Mod-y&#x27;</span>: redo &#125;),<br>    <span class="hljs-title function_">keymap</span>(baseKeymap),<br>  ],<br>&#125;);<br><span class="hljs-keyword">let</span> view = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EditorView</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>, &#123; state &#125;);<br></code></pre></td></tr></table></figure>
+<p>At this point, you should have a mostly functional editor.</p>
+<p>If you want to add a menu for easier editing or include key bindings allowed by the schema, you might want to check out the <a href="https://github.com/prosemirror/prosemirror-example-setup">prosemirror-example-setup</a> package. This package provides a set of preconfigured plugins for implementing a basic editor. However, as the name suggests, it’s primarily for demonstrating API usage and isn’t suitable for production. For a real-world development environment, you’ll likely want to replace some of its components with your own code to achieve precisely the desired behavior.</p>
+<h3 id="content">Content</h3>
+<p>A state’s document object is stored in the <a href="https://prosemirror.xheldon.com/docs/ref/#state.EditorState.doc">doc</a> property, which is a read-only data structure represented by a series of nodes at different levels. This hierarchical structure somewhat resembles DOM nodes in a browser. A simple document might have a “doc” node containing two “paragraph” nodes, each of which in turn contains a “text” node. You can read more about the document data structure in <a href="https://prosemirror.xheldon.com/docs/guide/#doc">guide</a>.</p>
+<p>When initializing a state, you can pass it an initial document. In this case, the schema field is optional because the schema can be derived from the document.</p>
+<p>In the following example, we initialize a state by formatting the DOM element with the id “content” through the DOM formatting mechanism. The schema information used by this state is obtained by mapping formatted DOM nodes to their corresponding elements (meaning the DOM nodes contain elements that are formatted and converted into schema form for the state to use, so the schema information can be derived from the formatted DOM without manual specification—translator’s note).</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">DOMParser</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;prosemirror-model&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">EditorState</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;prosemirror-state&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; schema &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;prosemirror-schema-basic&#x27;</span>;<br><br><span class="hljs-keyword">let</span> content = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;content&#x27;</span>);<br><span class="hljs-keyword">let</span> state = <span class="hljs-title class_">EditorState</span>.<span class="hljs-title function_">create</span>(&#123;<br>  <span class="hljs-attr">doc</span>: <span class="hljs-title class_">DOMParser</span>.<span class="hljs-title function_">fromSchema</span>(schema).<span class="hljs-title function_">parse</span>(content),<br>&#125;);<br></code></pre></td></tr></table></figure>
+<h2 id="documents">Documents</h2>
+<p>Prosemirror defines its own <a href="https://prosemirror.xheldon.com/docs/ref/#model.Node">data structure</a> to represent document content. Since the document is the core element of building an editor, understanding how it works is essential.</p>
+<h3 id="structure">Structure</h3>
+<p>A Prosemirror document is a <a href="https://prosemirror.xheldon.com/docs/ref/#model.Node">node</a> type containing a <a href="https://prosemirror.xheldon.com/docs/ref/#model.Fragment">fragment</a> object, which in turn contains zero or more child nodes.</p>
+<p>This closely resembles the structure of the browser’s <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model">DOM</a>, as Prosemirror, like the DOM, is a recursive tree structure. However, Prosemirror differs slightly from the DOM in how it stores inline elements.</p>
+<p>In HTML, a paragraph and its contained markup are represented as a tree. For example, consider the following HTML structure:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;p&gt;<br>  <span class="hljs-title class_">This</span> is&#123;<span class="hljs-string">&#x27; &#x27;</span>&#125;<br>  &lt;strong&gt;<br>    strong text <span class="hljs-keyword">with</span> &lt;em&gt;emphasis&lt;/em&gt;<br>  &lt;/strong&gt;<br>&lt;/p&gt;<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2019/dom-structure.png" alt="dom structure" /></p>
+<p>In Prosemirror, however, inline elements are represented as a flat model, with their node markup attached as metadata to the corresponding nodes:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2019/prosemirror-document-structure.png" alt="prosemirror-document-structure" /></p>
+<p>This data structure aligns more naturally with how we intuitively perceive such text. It allows us to use character offsets rather than tree node paths to indicate positions within a paragraph and makes operations like splitting content or changing styles straightforward, avoiding the clumsiness of tree manipulations.</p>
+<p>It also means each document has only one representation. Adjacent text nodes with identical marks are merged, and empty text nodes are disallowed. The order of marks is specified in the schema.</p>
+<p>Thus, a Prosemirror document is a tree of block nodes, with most leaf nodes being of the <em>textblock</em> type—block nodes containing text. You can also have simple leaf nodes with no content, such as a horizontal rule (hr) element or a video element.</p>
+<p>Node objects have several properties to describe their role in the document:</p>
+<ul>
+<li><code>isBlock</code> and <code>isInline</code> indicate whether the node is a block-type node (like a div) or an inline node (like a span).</li>
+<li><code>inlineContent</code> being true means the node only accepts inline elements as content (this can be used to determine whether to add inline nodes to it—translator’s note).</li>
+<li><code>isTextBlock</code> being true indicates the node is a block node containing inline content.</li>
+<li><code>isLeaf</code> being true means the node cannot contain any content.</li>
+</ul>
+<p>Thus, a typical “paragraph” node is a textblock-type node, while a blockquote (quotation element) is a block element that may contain other block elements as its content. Text nodes, line breaks, and inline images are all inline leaf nodes, whereas horizontal rule (hr element) nodes are typical block leaf nodes. (Leaf nodes, as mentioned, cannot contain child nodes; they can be either inline or block.)</p>
+<p><a href="https://prosemirror.xheldon.com/docs/guide/#schema">Schema</a> allows you to impose additional constraints on questions like “which elements are allowed where.” For example, even if a node permits block content, that doesn’t mean it allows all block nodes as content (you can manually specify exceptions via the schema).</p>
+<h3 id="identity-and-persistence">Identity and Persistence</h3>
+<p>Another difference between the DOM tree and a ProseMirror document lies in how they represent node objects. In the DOM, nodes are mutable objects with identity (search for “mutable objects” if unfamiliar). This means a node can only exist under its parent node (if it appears elsewhere, it is no longer here, as identity ensures uniqueness). When such a node updates, it mutates (i.e., the update occurs on the original node, modifying it in place).</p>
+<p>In ProseMirror, however, nodes are merely values (as opposed to DOM’s mutable objects), representing a node like the number 3. The number 3 can appear in multiple data structures simultaneously—it isn’t bound to any single structure. If you add 1 to it, you get a new value, 4, without altering the original 3.</p>
+<p>This is how ProseMirror documents operate. Their values are immutable and can be treated as primitive values to compute a new document. These document nodes are unaware of their containing data structure because they can exist in multiple structures or even repeat within a single structure. They are values, not stateful objects.</p>
+<p>This means every time you update a document, you get a new document. The new document shares all unchanged child node values from the old one, making document creation inexpensive.</p>
+<p>This approach has many advantages. It ensures the editor remains functional during state updates because the new state directly represents the new document (if an update is incomplete, the state doesn’t exist, so the document doesn’t either—the editor retains the previous state and document). Switching between states is instantaneous (with no intermediate states). Such transitions can also be reasoned about mathematically—something that would be very difficult if values mutated behind the scenes (like DOM nodes). ProseMirror’s design enables collaborative editing and allows for highly efficient DOM <a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorView.update">updates</a> by comparing the previously rendered document with the current one.</p>
+<p>Since nodes are represented as plain JavaScript objects, explicitly <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze">freezing</a> their properties (to prevent mutation) would severely impact performance. Thus, while ProseMirror documents operate immutably, you can technically mutate them manually. However, ProseMirror does not support this. If you forcibly mutate these data structures, the editor may crash because they are often shared across multiple contexts (modifying one affects others unpredictably). So, be very careful! The same applies to arrays and objects stored on node objects, such as node attributes or child nodes in fragments.</p>
+<h3 id="data-structures">Data Structures</h3>
+<p>A document’s data structure looks like this:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2019/prosemirror-data-structure.png" alt="prosemirror-data-structure" /></p>
+<p>Each node is an instance of the <a href="https://prosemirror.xheldon.com/docs/ref/#model.Node">Node</a> class. They are categorized by the <a href="https://prosemirror.xheldon.com/docs/ref/#model.NodeType">type</a> property, which reveals the node’s name, its available attributes, and similar information. Node types (and mark types) are created only once per schema, and they know which schema they belong to.</p>
+<p>A node’s content is stored in a field pointing to a <a href="https://prosemirror.xheldon.com/docs/ref/#model.Fragment">Fragment</a> instance, which contains an array of nodes. Even nodes that cannot or do not have content follow this pattern, with such nodes being replaced by a shared <a href="https://prosemirror.xheldon.com/docs/ref/#model.Fragment%5Eempty">empty fragment</a>.</p>
+<p>Some node types allow attributes, which are stored as additional values (separate from content) on each node. For example, an image node might use attributes to store alt text and URL information.</p>
+<p>Additionally, inline nodes contain active marks—marks refer to things like emphasis or links—represented as <a href="https://prosemirror.xheldon.com/docs/ref/#model.Mark">Mark</a> instances.</p>
+<p>The entire document is a node. The document’s content consists of child nodes under the top-level node. Typically, these top-level child nodes are a series of block nodes, some of which may contain text blocks that in turn hold inline content. However, the top-level node could also be just a text block, in which case the entire document contains only inline content.</p>
+<p>Which nodes are allowed in which positions is determined by the document’s <a href="https://prosemirror.xheldon.com/docs/guide/#schema">schema</a>. To create nodes programmatically (rather than by directly inputting content into the editor), you must traverse the schema, such as by using the <a href="https://prosemirror.xheldon.com/docs/ref/#model.Schema.node">node</a> and <a href="https://prosemirror.xheldon.com/docs/ref/#model.Schema.text">text</a> methods.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; schema &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;prosemirror-schema-basic&#x27;</span>;<br><br><span class="hljs-comment">// null 参数的位置是用来在必要的情况下指定属性的</span><br><span class="hljs-keyword">let</span> doc = schema.<span class="hljs-title function_">node</span>(<span class="hljs-string">&#x27;doc&#x27;</span>, <span class="hljs-literal">null</span>, [<br>  schema.<span class="hljs-title function_">node</span>(<span class="hljs-string">&#x27;paragraph&#x27;</span>, <span class="hljs-literal">null</span>, [schema.<span class="hljs-title function_">text</span>(<span class="hljs-string">&#x27;One.&#x27;</span>)]),<br>  schema.<span class="hljs-title function_">node</span>(<span class="hljs-string">&#x27;horizontal_rule&#x27;</span>),<br>  schema.<span class="hljs-title function_">node</span>(<span class="hljs-string">&#x27;paragraph&#x27;</span>, <span class="hljs-literal">null</span>, [schema.<span class="hljs-title function_">text</span>(<span class="hljs-string">&#x27;Two!&#x27;</span>)]),<br>]);<br></code></pre></td></tr></table></figure>
+<h3 id="indexing">Indexing</h3>
+<p>ProseMirror nodes support two types of indexing—they can be treated as a tree structure, where offsets distinguish nodes, or as a flat sequence of tokens (where a token is a counting unit).</p>
+<p>The first indexing method allows you to interact with individual nodes as you would in the DOM, using the <a href="https://prosemirror.xheldon.com/docs/ref/#model.Node.child">child method</a> and <a href="https://prosemirror.xheldon.com/docs/ref/#model.Node.childCount">childCount</a> to directly access child nodes, or writing recursive functions to traverse the document (if you want to traverse all nodes, use <a href="https://prosemirror.xheldon.com/docs/ref/#model.Node.descendants">descendants</a> or <a href="https://prosemirror.xheldon.com/docs/ref/#model.Node.nodesBetween">nodesBetween</a>).</p>
+<p>The second indexing method is more useful when locating a specific position in the document. It represents any position in the document as an integer—the token’s sequential number. These token objects don’t physically exist in memory—they are merely a counting convenience—but the document’s tree structure and each node’s awareness of its own size make position-based access efficient.</p>
+<ul>
+<li>The document’s starting position, before all content, is position 0.</li>
+<li>Entering or exiting a non-leaf node (i.e., a node that can contain content) counts as 1 token. So, if the document starts with a paragraph (tagged <code>p</code>), the position at the start of the paragraph is 1 (i.e., after <code>&lt;p&gt;</code>).</li>
+<li>Each character in a text node counts as 1 token. So, if the opening paragraph contains the word “hi,” position 2 is after “h,” position 3 is after “i,” and position 4 is after the entire paragraph (i.e., after <code>&lt;/p&gt;</code>).</li>
+<li>Leaf nodes that cannot have content (e.g., image nodes) count as 1 token.</li>
+</ul>
+<p>Thus, if you have a document represented in HTML like this:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;p&gt;<span class="hljs-title class_">One</span>&lt;/p&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">blockquote</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Two<span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;...&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">blockquote</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<p>The token sequence and positions would look like this:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2019/prosemirror-indexing.png" alt="prosemirror-indexing" /></p>
+<p>Every node has a <code>nodeSize</code> ](<a href="https://prosemirror.xheldon.com/docs/ref/#model.Node.nodeSize">https://prosemirror.xheldon.com/docs/ref/#model.Node.nodeSize</a>) attribute representing the overall size of the node. You can also obtain the size of the node’s content via <code>.content.size</code>. Note that for the outermost node of a document (i.e., the root node where the <code>contenteditable</code> attribute resides in the DOM), the opening and closing tokens are not considered part of the document (since you cannot place the cursor outside the document). Therefore, the size of the document is <code>doc.content.size</code>, not <code>doc.nodeSize</code> (though the document’s opening and closing tags are not part of the document, they are still counted. The latter is always 2 larger than the former).</p>
+<p>Manually calculating these positions involves a significant amount of computational work. (Thus) you can call <code>Node.resolve</code> ](<a href="https://prosemirror.xheldon.com/docs/ref/#model.Node.resolve">https://prosemirror.xheldon.com/docs/ref/#model.Node.resolve</a>) to obtain a more detailed [data structure] ](<a href="https://prosemirror.xheldon.com/docs/ref/#model.ResolvedPos">https://prosemirror.xheldon.com/docs/ref/#model.ResolvedPos</a>) description of a position. This data structure will tell you the parent node of the current position, its offset within the parent node, the ancestor nodes of the parent node, and other information.</p>
+<p>It is crucial to distinguish between a child node’s index (such as each <code>childCount</code>), a document-wide position, and a node’s offset (sometimes this offset is used in recursive functions to indicate the current node’s position, which involves the node’s offset).</p>
+<h3 id="slices">Slices</h3>
+<p>For operations like copy-paste and drag-and-drop, the concept of a <em>slice of document</em> comes into play. For example, the content between two positions is a slice. Unlike a complete node or fragment, a slice may be “open” (meaning the slice may contain unclosed tags, such as in <code>&lt;p&gt;123&lt;/p&gt;&lt;p&gt;456&lt;/p&gt;</code>, where a slice might be <code>23&lt;/p&gt;&lt;p&gt;45</code>).</p>
+<p>For instance, if you select from the middle of one paragraph to the middle of another, the resulting slice contains two paragraphs—the first open at the start and the second open at the end. If you select a paragraph node programmatically (rather than through view interaction), you get a closed node. Treating a slice like regular node content might violate schema constraints because certain required nodes (such as the opening <code>&lt;p&gt;</code> and closing <code>&lt;/p&gt;</code> tags to make the slice content a complete node) fall outside the slice.</p>
+<p>The <code>Slice</code> ](<a href="https://prosemirror.xheldon.com/docs/ref/#model.Slice">https://prosemirror.xheldon.com/docs/ref/#model.Slice</a>) data structure is used to represent such data. It stores a [fragment] ](<a href="https://prosemirror.xheldon.com/docs/ref/#model.Fragment">https://prosemirror.xheldon.com/docs/ref/#model.Fragment</a>) with information about the [open depth] ](<a href="https://prosemirror.xheldon.com/docs/ref/#model.Slice.openStart">https://prosemirror.xheldon.com/docs/ref/#model.Slice.openStart</a>) on both sides (i.e., the hierarchical depth relative to the root node). You can use the <code>slice</code> method ](<a href="https://prosemirror.xheldon.com/docs/ref/#model.Node.slice">https://prosemirror.xheldon.com/docs/ref/#model.Node.slice</a>) on nodes to “cut” a slice from the document.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//假设文档有两个 p 标签, 第一个 p 标签包含 a, 另一个 p 标签包含 b, 即:</span><br><span class="hljs-comment">// &lt;p&gt;a&lt;/p&gt;&lt;p&gt;b&lt;/p&gt;</span><br><span class="hljs-keyword">let</span> slice1 = doc.<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>, <span class="hljs-number">3</span>); <span class="hljs-comment">// The first paragraph</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(slice1.<span class="hljs-property">openStart</span>, slice1.<span class="hljs-property">openEnd</span>); <span class="hljs-comment">// → 0 0</span><br><span class="hljs-keyword">let</span> slice2 = doc.<span class="hljs-title function_">slice</span>(<span class="hljs-number">1</span>, <span class="hljs-number">5</span>); <span class="hljs-comment">// From start of first paragraph</span><br><span class="hljs-comment">// to end of second</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(slice2.<span class="hljs-property">openStart</span>, slice2.<span class="hljs-property">openEnd</span>); <span class="hljs-comment">// → 1 1</span><br></code></pre></td></tr></table></figure>
+<h3 id="changing">Changing</h3>
+<p>Since nodes and fragments are [persistent data structures] ](<a href="https://en.wikipedia.org/wiki/Persistent_data_structure">https://en.wikipedia.org/wiki/Persistent_data_structure</a>) (i.e., immutable), you should never modify them directly. If you need to manipulate a document, it should remain unchanged (operations produce a new document while the old one stays unmodified).</p>
+<p>In most cases, you should use [transformations] ](<a href="https://prosemirror.xheldon.com/docs/guide/#transform">https://prosemirror.xheldon.com/docs/guide/#transform</a>) to update the document without directly altering nodes. This also facilitates keeping a record of changes, which is necessary for the document as part of the editor’s state.</p>
+<p>If you must manually update a document, ProseMirror provides some useful helper functions on <a href="https://prosemirror.xheldon.com/docs/ref/#model.Node">Node</a> and <a href="https://prosemirror.xheldon.com/docs/ref/#model.Fragment">Fragment</a> to create a fresh version of a document. You’ll likely use the <a href="https://prosemirror.xheldon.com/docs/ref/#model.Node.replace">Node.replace</a> method frequently, which replaces the content within a specified range of the document with a <a href="https://prosemirror.xheldon.com/docs/ref/#model.Slice">slice</a> containing new content. For shallow updates to a node, you can use the <a href="https://prosemirror.xheldon.com/docs/ref/#model.Node.copy">copy</a> method, which creates an identical node but allows you to specify new content for the copy. Fragments also offer methods for updating documents, such as <a href="https://prosemirror.xheldon.com/docs/ref/#model.Fragment.replaceChild">replaceChild</a> and <a href="https://prosemirror.xheldon.com/docs/ref/#model.Fragment.append">append</a>.</p>
+<h2 id="schemas">Schemas</h2>
+<p>Every ProseMirror <a href="https://prosemirror.xheldon.com/docs/guide/#doc">document</a> has an associated <a href="https://prosemirror.xheldon.com/docs/ref/#model.Schema">schema</a>. This schema describes the types of nodes that exist in the document and their nesting relationships. For example, a schema might specify that a top-level node can contain one or more blocks, while paragraph nodes can contain any number of inline nodes, which in turn can contain any number of <a href="https://prosemirror.xheldon.com/docs/ref/#model.Mark">marks</a>.</p>
+<p>For an example of schema usage, you can refer to this <a href="https://prosemirror.xheldon.com/docs/ref/#schema-basic">basic schema</a> package. However, one of ProseMirror’s strengths is that it allows you to define your own schemas.</p>
+<h3 id="node-types">Node Types</h3>
+<p>Each node in a document has a <a href="https://prosemirror.xheldon.com/docs/ref/#model.NodeType">type</a>, which represents its semantic meaning and attributes, including how it is rendered in the editor.</p>
+<p>When defining a schema, you need to list each node type used, describing them with a <a href="https://prosemirror.xheldon.com/docs/ref/#model.NodeSpec">spec object</a>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> trivialSchema = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Schema</span>(&#123;<br>  <span class="hljs-attr">nodes</span>: &#123;<br>    <span class="hljs-attr">doc</span>: &#123; <span class="hljs-attr">content</span>: <span class="hljs-string">&#x27;paragraph+&#x27;</span> &#125;,<br>    <span class="hljs-attr">paragraph</span>: &#123; <span class="hljs-attr">content</span>: <span class="hljs-string">&#x27;text*&#x27;</span> &#125;,<br>    <span class="hljs-attr">text</span>: &#123; <span class="hljs-attr">inline</span>: <span class="hljs-literal">true</span> &#125;,<br>    <span class="hljs-comment">/* ... and so on */</span><br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>The above code defines a schema where a document can contain one or more paragraphs, and each paragraph can contain any number of text nodes.</p>
+<p>Every schema must at least define the type of the top-level node (by default named “doc,” though you can <a href="https://prosemirror.xheldon.com/docs/ref/#model.Schema.topNodeType">configure</a> it) and the “text” type for textual content.</p>
+<p>Nodes that function as inline types for indexing, etc., must declare their <a href="https://prosemirror.xheldon.com/docs/ref/#model.NodeSpec.inline">inline</a> property (recall that the text type is defined as inline—something you might have overlooked).</p>
+<h3 id="content-expressions">Content Expressions</h3>
+<p>The string values in the <code>content</code> field of the schema example above are called ‘content expressions.’ They control which child node types are allowed for the current node type.</p>
+<p>For example, “paragraph” means “one paragraph,” while “paragraph+” means “one or more paragraphs.” Similarly, “paragraph*” means “zero or more paragraphs,” and “caption?” means “zero or one caption node.” You can also use range expressions akin to regular expressions after node names, such as <code>&#123;2&#125;</code> (exactly two), <code>&#123;1, 5&#125;</code> (one to five), or <code>&#123;2, &#125;</code> (two or more).</p>
+<p>These expressions can be combined to create sequences. For instance, “heading paragraph+” means “a heading followed by one or more paragraphs.” You can also use the pipe operator “|” to choose between two expressions, like “(paragraph | blockquote)+.”</p>
+<p>Some element type groups may appear multiple times in your schema. For example, if you have nodes representing the “block” concept, they might appear under top-level elements or nested within blockquote-type nodes. You can create a node group by specifying the <a href="https://prosemirror.xheldon.com/docs/ref/#model.NodeSpec.group">group</a> property in the schema and then referencing the group name in other expressions:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> groupSchema = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Schema</span>(&#123;<br>  <span class="hljs-attr">nodes</span>: &#123;<br>    <span class="hljs-attr">doc</span>: &#123; <span class="hljs-attr">content</span>: <span class="hljs-string">&#x27;block+&#x27;</span> &#125;,<br>    <span class="hljs-attr">paragraph</span>: &#123; <span class="hljs-attr">group</span>: <span class="hljs-string">&#x27;block&#x27;</span>, <span class="hljs-attr">content</span>: <span class="hljs-string">&#x27;text*&#x27;</span> &#125;,<br>    <span class="hljs-attr">blockquote</span>: &#123; <span class="hljs-attr">group</span>: <span class="hljs-string">&#x27;block&#x27;</span>, <span class="hljs-attr">content</span>: <span class="hljs-string">&#x27;block+&#x27;</span> &#125;,<br>    <span class="hljs-attr">text</span>: &#123;&#125;,<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>In the example above, “block+” is equivalent to “(paragraph | blockquote)+.”</p>
+<p>It is recommended to set nodes that allow block content (in this example, <code>doc</code> and <code>blockquote</code>) to have at least one child node. If a node is empty, the browser will collapse it, making it uneditable (this means that if the content of <code>doc</code> or <code>blockquote</code> is set to <code>block*</code> instead of <code>block+</code>, it allows the case where no child nodes exist—it follows the common regex notation: <code>*</code> for zero or more, <code>+</code> for one or more. In this scenario, when editing, the browser inputs a text node, which is an inline node, making it impossible to input. Readers can try this out—translator’s note).</p>
+<p>In the schema, the order of nodes matters. When creating a default instance of a required node—for example, after applying a <a href="https://prosemirror.xheldon.com/docs/ref/#transform.ReplaceStep">replace step</a>—to ensure the current document still complies with the schema constraints, the first node expression that satisfies the schema constraints will be used. If the node expression is a group, the first node type in that group (determined by the order of the group’s member nodes in the schema) will be used. If I swap the order of “paragraph” and “blockquote” in the schema example above, the editor will throw a stack overflow error when attempting to create a new block node—because the editor will first try to create a “blockquote” node, but this node requires at least one block node as content, so it then needs to create another “blockquote” node as content, and so on indefinitely.</p>
+<p>Not every node operation function in the Prosemirror library checks the validity of the content it processes—higher-level concepts like <a href="https://prosemirror.xheldon.com/docs/guide/#transform">transforms</a> do perform checks, but lower-level node creation methods typically do not. These lower-level methods usually delegate validity checks to their callers. It is entirely possible for these methods to work even with invalid content—for example, <a href="https://prosemirror.xheldon.com/docs/ref/#model.NodeType.create">NodeType.create</a>, which creates a node with invalid content. This is even justifiable for nodes on the “open” side of a slice (because a slice is not a <em>valid node</em> but still needs to be manipulated directly—users shouldn’t have to manually complete it, right?—translator’s note). There is a <a href="https://prosemirror.xheldon.com/docs/ref/#model.NodeType.createChecked">createChecked</a> method to verify whether given content complies with the schema, and a <a href="https://prosemirror.xheldon.com/docs/ref/#model.Node.check">check</a> method to assert whether the given content is valid.</p>
+<h3 id="marks">Marks</h3>
+<p>Marks are typically used to add extra styling or other information to inline content. The <a href="https://prosemirror.xheldon.com/docs/ref/#model.Schema">schema</a> must declare all allowed marks in the current document (just like declaring nodes—translator’s note). <a href="https://prosemirror.xheldon.com/docs/ref/#model.MarkType">Mark types</a> are objects somewhat similar to node types, used to categorize different marks and provide additional information.</p>
+<p>By default, nodes that allow inline content permit all marks defined in the schema to be applied to their child nodes. You can configure this in the <code>marks</code> field of the node spec.</p>
+<p>Below is a simple schema example that supports <code>strong</code> and <code>emphasis</code> marks in paragraphs but disallows them in headings.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> markSchema = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Schema</span>(&#123;<br>  <span class="hljs-attr">nodes</span>: &#123;<br>    <span class="hljs-attr">doc</span>: &#123; <span class="hljs-attr">content</span>: <span class="hljs-string">&#x27;block+&#x27;</span> &#125;,<br>    <span class="hljs-attr">paragraph</span>: &#123; <span class="hljs-attr">group</span>: <span class="hljs-string">&#x27;block&#x27;</span>, <span class="hljs-attr">content</span>: <span class="hljs-string">&#x27;text*&#x27;</span>, <span class="hljs-attr">marks</span>: <span class="hljs-string">&#x27;_&#x27;</span> &#125;,<br>    <span class="hljs-attr">heading</span>: &#123; <span class="hljs-attr">group</span>: <span class="hljs-string">&#x27;block&#x27;</span>, <span class="hljs-attr">content</span>: <span class="hljs-string">&#x27;text*&#x27;</span>, <span class="hljs-attr">marks</span>: <span class="hljs-string">&#x27;&#x27;</span> &#125;,<br>    <span class="hljs-attr">text</span>: &#123; <span class="hljs-attr">inline</span>: <span class="hljs-literal">true</span> &#125;,<br>  &#125;,<br>  <span class="hljs-attr">marks</span>: &#123;<br>    <span class="hljs-attr">strong</span>: &#123;&#125;,<br>    <span class="hljs-attr">em</span>: &#123;&#125;,<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>The value of the <code>marks</code> field can be written as a comma-separated list of mark names or mark groups—“_”, which is a wildcard allowing all marks. An empty string means no marks are allowed.</p>
+<h3 id="attributes">Attributes</h3>
+<p>The document schema also defines which attributes are allowed for nodes and marks. If your node type requires additional node-specific information—such as the <code>level</code> attribute for heading nodes (e.g., H1, H2, etc.)—attributes are the way to go.</p>
+<p>Attributes are plain objects with predefined properties (on each node or mark) pointing to JSON-serializable values. To specify which attributes are allowed, use the optional <code>attrs</code> property in the node spec or mark spec:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">heading</span>: &#123;<br>  <span class="hljs-attr">content</span>: <span class="hljs-string">&quot;text*&quot;</span>,<br>  <span class="hljs-attr">attrs</span>: &#123;<span class="hljs-attr">level</span>: &#123;<span class="hljs-attr">default</span>: <span class="hljs-number">1</span>&#125;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>In the schema above, each heading node instance has a level attribute accessible via .attrs.level. If not specified when creating a ](<a href="https://prosemirror.xheldon.com/docs/ref/#model.NodeType.create">https://prosemirror.xheldon.com/docs/ref/#model.NodeType.create</a>) heading, the default level is 1.</p>
+<p>If you don’t provide a default value for an attribute when defining a node, an error will occur when creating that node without explicitly passing the attribute. This also makes it impossible for Prosemirror to call certain interfaces like <a href="https://prosemirror.xheldon.com/docs/ref/#model.NodeType.createAndFill">createAndFill</a> to generate nodes that comply with schema constraints.</p>
+<h3 id="serialization-and-parsing">Serialization and Parsing</h3>
+<p>To enable editing elements in the browser, document nodes must be rendered as DOM elements. The simplest way is to specify how each node should appear in the DOM within the schema. This can be achieved by defining the <a href="https://prosemirror.xheldon.com/docs/ref/#model.NodeSpec.toDOM">toDOM</a> field in each node spec of the schema.</p>
+<p>This field should point to a function that takes the current node as an argument and returns a description of the node’s DOM structure. This can be either a DOM node directly or <a href="https://prosemirror.xheldon.com/docs/ref/#model.DOMOutputSpec">an array describing it</a>, for example:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> schema = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Schema</span>(&#123;<br>  <span class="hljs-attr">nodes</span>: &#123;<br>    <span class="hljs-attr">doc</span>: &#123; <span class="hljs-attr">content</span>: <span class="hljs-string">&#x27;paragraph+&#x27;</span> &#125;,<br>    <span class="hljs-attr">paragraph</span>: &#123;<br>      <span class="hljs-attr">content</span>: <span class="hljs-string">&#x27;text*&#x27;</span>,<br>      <span class="hljs-title function_">toDOM</span>(<span class="hljs-params">node</span>) &#123;<br>        <span class="hljs-keyword">return</span> [<span class="hljs-string">&#x27;p&#x27;</span>, <span class="hljs-number">0</span>];<br>      &#125;,<br>    &#125;,<br>    <span class="hljs-attr">text</span>: &#123;&#125;,<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>In the example above, [“p”, 0] means the paragraph node is rendered as a <p> tag in HTML. The 0 represents a “hole,” indicating where the node’s content should be rendered (meaning if the node is expected to have content, a 0 should be included at the end of the array). You can also add an object after the tag to specify HTML attributes, such as [“div”, {class: “c”}, 0]. Leaf nodes don’t need a “hole” in their DOM representation since they have no content.</p>
+<p>Mark specs have a similar toDOM method as nodes, but they need to render as standalone tags that directly wrap the content. Thus, the content is placed directly in the returned node, eliminating the need to explicitly specify the “hole.”</p>
+<p>You’ll also often need to parse HTML DOM content into a Prosemirror-recognized document—for example, when users paste or drag content into the editor. The prosemirror-model module provides functions for this, but you can also include parsing instructions directly in the schema’s <a href="https://prosemirror.xheldon.com/docs/ref/#model.NodeSpec.parseDOM">parseDOM</a> property.</p>
+<p>Here, a set of <a href="https://prosemirror.xheldon.com/docs/ref/#model.ParseRule">parsing rules</a> is listed, describing how the DOM maps to nodes or marks. For instance, the basic schema defines the emphasis mark as follows:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">parseDOM</span>: [<br>  &#123; <span class="hljs-attr">tag</span>: <span class="hljs-string">&#x27;em&#x27;</span> &#125;, <span class="hljs-comment">// Match &lt;em&gt; nodes</span><br>  &#123; <span class="hljs-attr">tag</span>: <span class="hljs-string">&#x27;i&#x27;</span> &#125;, <span class="hljs-comment">// and &lt;i&gt; nodes</span><br>  &#123; <span class="hljs-attr">style</span>: <span class="hljs-string">&#x27;font-style=italic&#x27;</span> &#125;, <span class="hljs-comment">// and inline &#x27;font-style: italic&#x27;</span><br>];<br></code></pre></td></tr></table></figure>
+<p>The <a href="https://prosemirror.xheldon.com/docs/ref/#model.ParseRule.tag">tag</a> field in the parse rule can also be a CSS selector, so you can pass strings like “div.myclass.” Similarly, the <a href="https://prosemirror.xheldon.com/docs/ref/#model.ParseRule.style">style</a> field matches inline CSS styles.</p>
+<p>When a schema includes the parseDOM field, you can create a <a href="https://prosemirror.xheldon.com/docs/ref/#model.DOMParser">DOMParser</a> object using <a href="https://prosemirror.xheldon.com/docs/ref/#model.DOMParser%5EfromSchema">DOMParser.fromSchema</a>. The editor does this by default when creating a clipboard content parser, but you can <a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorProps.clipboardParser">override</a> it.</p>
+<p>Documents also have built-in JSON serialization. You can call <a href="https://prosemirror.xheldon.com/docs/ref/#model.Node.toJSON">toJSON</a> on a node to generate an object that can safely be passed to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">JSON.stringify</a> (likely for debugging purposes). Additionally, the schema object has a nodeFromJSON method to convert the toJSON result back into the original node.</p>
+<h3 id="extending-a-schema">Extending a schema</h3>
+<p>The parameters passed to the <a href="https://prosemirror.xheldon.com/docs/ref/#model.Schema">Schema constructor</a> for setting nodes and marks can be either <a href="https://github.com/marijnh/orderedmap#readme">OrderedMap</a>-type objects or plain JavaScript objects. The resulting schema’s .<a href="https://prosemirror.xheldon.com/docs/ref/#model.Schema.spec">spec</a>.nodes and .spec.marks properties are always OrderedMaps, which can serve as the foundation for other schemas.</p>
+<p>OrderedMaps support many methods for conveniently creating new schemas. For example, you can generate a schema without the blockquote node by calling <code>schema.markSpec.remove(&quot;blockquote&quot;)</code> and passing the result to the <code>nodes</code> field of the Schema constructor’s parameters.</p>
+<h2 id="document-transformations">Document Transformations</h2>
+<p><a href="https://prosemirror.xheldon.com/docs/ref/#transform.Transform">Transform</a> is the core working mechanism of Prosemirror. It serves as the foundation for <a href="https://prosemirror.xheldon.com/docs/guide/#state.transactions">transactions</a>, enabling features like edit history tracking and collaborative editing.</p>
+<h3 id="why">Why?</h3>
+<p>Why can’t we directly modify (mutate) the document? Or at least create a completely new version of the document and replace the editor’s content with it?</p>
+<p>There are several reasons. One is code clarity. Immutable data structures indeed lead to simpler code. Moreover, the primary function of the transform system is to preserve the <em>traces</em> of document updates—the sequence of steps in a transform represents each incremental change from the old document to the new one.</p>
+<p><a href="https://prosemirror.xheldon.com/docs/ref/#history">Undo History</a> can save these steps and reapply them in reverse when needed (Prosemirror implements selective undo, which is more sophisticated than simply rolling back to a previous state).</p>
+<p><a href="http://marijnhaverbeke.nl/blog/collaborative-editing.html">Collaborative editing</a> systems transmit these steps and, when necessary, record them to ensure all collaborators maintain the same document.</p>
+<p>In most cases, it’s useful for editor plugins to react to every document change (whether from the user or collaborative editing), ensuring the plugins remain synchronized with the editor’s state.</p>
+<h3 id="steps">Steps</h3>
+<p>Document updates are broken down into individual <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Step">steps</a>, each describing a specific update. While you typically don’t interact with them directly, understanding how they work is essential.</p>
+<p>An example of a step is <a href="https://prosemirror.xheldon.com/docs/ref/#transform.ReplaceStep">ReplaceStep</a>, which replaces a portion of the document, or <a href="https://prosemirror.xheldon.com/docs/ref/#transform.AddMarkStep">AddMarkStep</a>, which applies a mark to a range.</p>
+<p>A Step can be <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Step.apply">applied</a> to a document to produce a new document.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myDoc.<span class="hljs-title function_">toString</span>()); <span class="hljs-comment">// → p(&quot;hello&quot;)</span><br><span class="hljs-comment">// 删除了 position 在 3-5 的 setp</span><br><span class="hljs-keyword">let</span> step = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReplaceStep</span>(<span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-title class_">Slice</span>.<span class="hljs-property">empty</span>);<br><span class="hljs-keyword">let</span> result = step.<span class="hljs-title function_">apply</span>(myDoc);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result.<span class="hljs-property">doc</span>.<span class="hljs-title function_">toString</span>()); <span class="hljs-comment">// → p(&quot;heo&quot;)</span><br></code></pre></td></tr></table></figure>
+<p>Applying a step is a relatively straightforward process—it doesn’t handle tasks like inserting nodes to maintain schema constraints or transforming slices to fit the schema. This means applying a step can fail. For instance, attempting to delete one token of a node (i.e., its opening or closing tag) would leave the other token unclosed, which is nonsensical. This is why the <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Step.apply">apply</a> method returns a <a href="https://prosemirror.xheldon.com/docs/ref/#transform.StepResult">result object</a>—either referencing the new document (if the step succeeds) or containing an error message (if it fails).</p>
+<p>You’ll usually want to use <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Transform.replace">helper functions</a> to generate steps for you, sparing you from worrying about the details.</p>
+<h3 id="transforms">Transforms</h3>
+<p>An editing action may produce one or more steps. The most convenient way to handle a sequence of steps is to create a <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Transform">Transform object</a> (or, if you’re working with the editor’s overall state, a <a href="https://prosemirror.xheldon.com/docs/ref/#state.Transaction">Transaction</a>, which is a subclass of Transform).</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> tr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Transform</span>(myDoc);<br>tr.<span class="hljs-title function_">delete</span>(<span class="hljs-number">5</span>, <span class="hljs-number">7</span>); <span class="hljs-comment">// Delete between position 5 and 7</span><br>tr.<span class="hljs-title function_">split</span>(<span class="hljs-number">5</span>); <span class="hljs-comment">// Split the parent node at position 5</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(tr.<span class="hljs-property">doc</span>.<span class="hljs-title function_">toString</span>()); <span class="hljs-comment">// The modified document</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(tr.<span class="hljs-property">steps</span>.<span class="hljs-property">length</span>); <span class="hljs-comment">// → 2</span><br></code></pre></td></tr></table></figure>
+<p>Most transform methods return the transform itself, allowing for convenient method chaining (e.g., <code>tr.delete(5, 7).split(5)</code>).</p>
+<p>Transforms include methods like <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Transform.delete">deleting</a> and <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Transform.replace">replacing</a>, <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Transform.addMark">adding</a> and <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Transform.removeMark">removing marks</a>, tree manipulation methods such as <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Transform.split">splitting</a>, <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Transform.join">joining</a>, <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Transform.lift">lifting</a>, and <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Transform.wrap">wrapping</a>, among others.</p>
+<h3 id="mapping">Mapping</h3>
+<p>When you make changes to a document, certain positions referencing the document may become invalid or lose their original meaning. For example, if you insert a character, the positions of all subsequent characters will increment by 1, meaning those characters now point to new positions. Similarly, if you delete all content in a document, any positions previously referencing that content become invalid.</p>
+<p>We often need to preserve positions during document changes (regardless of how they shift—translator’s note), such as selection boundaries (which contain positional information like <code>from</code> and <code>to</code>; if the document changes, these <code>from</code> and <code>to</code> values must sometimes adjust accordingly to avoid incorrect selection positioning—translator’s note). To address this, steps can provide a <a href="https://prosemirror.xheldon.com/docs/ref/#transform.StepMap">map</a> that transforms positional information in the document before and after applying the step.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> step = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReplaceStep</span>(<span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-title class_">Slice</span>.<span class="hljs-property">empty</span>); <span class="hljs-comment">// Delete 4-5</span><br><span class="hljs-keyword">let</span> map = step.<span class="hljs-title function_">getMap</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(map.<span class="hljs-title function_">map</span>(<span class="hljs-number">8</span>)); <span class="hljs-comment">// → 6</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(map.<span class="hljs-title function_">map</span>(<span class="hljs-number">2</span>)); <span class="hljs-comment">// → 2 (document 变化的地方之前的 position 未变化)</span><br></code></pre></td></tr></table></figure>
+<p>The Transform object automatically <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Transform.mapping">accumulates</a> the maps generated by a series of steps. It achieves this using an abstraction called <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Mapping">Mapping</a>, which collects a sequence of step maps and allows you to map them all at once.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> tr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Transaction</span>(myDoc);<br>tr.<span class="hljs-title function_">split</span>(<span class="hljs-number">10</span>); <span class="hljs-comment">// split a node, +2 tokens at 10</span><br>tr.<span class="hljs-title function_">delete</span>(<span class="hljs-number">2</span>, <span class="hljs-number">5</span>); <span class="hljs-comment">// -3 tokens at 2</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(tr.<span class="hljs-property">mapping</span>.<span class="hljs-title function_">map</span>(<span class="hljs-number">15</span>)); <span class="hljs-comment">// → 14</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(tr.<span class="hljs-property">mapping</span>.<span class="hljs-title function_">map</span>(<span class="hljs-number">6</span>)); <span class="hljs-comment">// → 3</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(tr.<span class="hljs-property">mapping</span>.<span class="hljs-title function_">map</span>(<span class="hljs-number">10</span>)); <span class="hljs-comment">// → 9</span><br></code></pre></td></tr></table></figure>
+<p>However, a question arises: where should a given position be mapped to? (For instance, if a position falls exactly in the middle of a change, splitting a node into two parts, the position could logically map to either the end of the preceding node or the start of the following one. Thus, a convention is needed—translator’s note.) Consider the last line of the example above. Position 10 happens to be at the split point of a node where two tokens are inserted. Should it map before or after the inserted content? In this case, it clearly maps after the insertion.</p>
+<p>Sometimes, though, you might want different mapping behavior. This is why the <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Mappable.map">map method</a> for step maps and mappings accepts a second parameter: <code>bias</code>. Setting this to <code>-1</code> will position the insertion point before the inserted content.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(tr.<span class="hljs-property">mapping</span>.<span class="hljs-title function_">map</span>(<span class="hljs-number">10</span>, -<span class="hljs-number">1</span>)); <span class="hljs-comment">// → 7</span><br></code></pre></td></tr></table></figure>
+<p>The reason for keeping each individual step small and straightforward is to enable this kind of mapping, as well as to allow steps to be <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Step.invert">inverted</a> losslessly and to map step positions relative to one another.</p>
+<h3 id="rebasing">Rebasing</h3>
+<p>(Admittedly, I didn’t fully grasp the meaning of this section, so I’ve translated it verbatim from the documentation without adding my own interpretation. Corrections are welcome if any inaccuracies exist—translator’s note.)</p>
+<p>When dealing with more complex tasks involving steps and maps—such as implementing your own change tracking or integrating collaborative editing features—you’ll need to rebase steps.</p>
+<p>You might want to skip learning this part until you’re certain you actually need it.</p>
+<p>Rebasing, in simple terms, refers to transforming one step so it can be applied to a document modified by another step when both steps alter the same document. Pseudocode example:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">stepA</span>(doc) = docA<br><span class="hljs-title function_">stepB</span>(doc) = docB<br><span class="hljs-title function_">stepB</span>(docA) = <span class="hljs-variable constant_">MISMATCH</span>!<br><span class="hljs-title function_">rebase</span>(stepB, mapA) = stepB<span class="hljs-string">&#x27;</span><br><span class="hljs-string">stepB&#x27;</span>(docA) = docAB<br></code></pre></td></tr></table></figure>
+<p>Steps have a <a href="https://prosemirror.xheldon.com/docs/ref/#transform.Step.map">map method</a> that takes a mapping and uses it to transform the entire step. This mapping process can fail if the step becomes meaningless after mapping—for example, if the content it intends to apply has been deleted. However, when successful, you’ll have a step pointing to a new document, i.e., the mapped version. Thus, in the pseudocode example above, <code>rebase(stepB, mapA)</code> can simply be implemented as <code>stepB.map(mapA)</code>.</p>
+<p>If you need to rebase a chain of steps onto another chain of steps:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">stepA2</span>(<span class="hljs-title function_">stepA1</span>(doc)) = docA<br><span class="hljs-title function_">stepB2</span>(<span class="hljs-title function_">stepB1</span>(doc)) = docB<br>???(docA) = docAB<br></code></pre></td></tr></table></figure>
+<p>We can map <code>stepB1</code> through <code>stepA1</code> and <code>stepA2</code>, resulting in <code>stepB1'</code>. However, for <code>stepB2</code>, which originates from the document produced by <code>stepB1(doc)</code> and whose mapped version must be applied to the document produced by <code>stepB1'(docA)</code>, things get more complicated. It must be mapped through the following chain of maps:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">rebase</span>(stepB2, [<span class="hljs-title function_">invert</span>(mapB1), mapA1, mapA2, mapB1<span class="hljs-string">&#x27;])</span><br></code></pre></td></tr></table></figure>
+<p>For example, first, the inversion of stepB1’s map reverts the document back to the initial document. Then (stepB1) applies the map stream (chained calls) generated by stepA1 and stepA2. Finally, by applying the map produced by stepB1, the document is transformed into docA.</p>
+<p>If there were a stepB3 here, we could obtain stepB3’s map stream from the previous map stream by prepending <code>invert(mapB2)</code> and appending <code>mapB2'</code> to the end of the stream, and so on.</p>
+<p>However, when stepB1 inserts some content and stepB2 performs operations on that content, applying stepB2 through <code>invert(mapB1)</code> mapping will return null because the inversion of stepB1 removes the content it was about to apply. Nevertheless, this content will later be reintroduced into the stream by <code>mapB1</code>. The <code>mapping</code> abstraction provides a way to track such streams, including methods to invert related maps within the pipeline. You can use the <code>mapping</code> object to map steps to address the scenario described above.</p>
+<p>Even if you have a rebased step, there’s no guarantee it will still be applicable to the current document. For instance, your step might add some marks, but another step could modify the parent node of the content you intended to mark, turning it into a node that no longer allows the marks from your previous step. Attempting to apply your step would then fail. A more appropriate approach in such cases is to simply discard the step.</p>
+<h2 id="the-editor-state">The Editor State</h2>
+<p>What constitutes the editor’s state? Of course, you already have a document that forms part of it. But there’s also a selection (to complete the state). Additionally, there needs to be a way to store changes in mark settings, such as enabling or disabling a mark before editing begins (to fulfill a common requirement: clicking a mark like bold or font-size first, then editing).</p>
+<p>ProseMirror’s state primarily consists of three components, which exist on the state object: <a href="https://prosemirror.xheldon.com/docs/ref/#state.EditorState.doc">doc</a>, <a href="https://prosemirror.xheldon.com/docs/ref/#state.EditorState.selection">selection</a>, and <a href="https://prosemirror.xheldon.com/docs/ref/#state.EditorState.selection">storeMarks</a>.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; schema &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;prosemirror-schema-basic&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">EditorState</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;prosemirror-state&#x27;</span>;<br><br><span class="hljs-keyword">let</span> state = <span class="hljs-title class_">EditorState</span>.<span class="hljs-title function_">create</span>(&#123; schema &#125;);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(state.<span class="hljs-property">doc</span>.<span class="hljs-title function_">toString</span>()); <span class="hljs-comment">// An empty paragraph</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(state.<span class="hljs-property">selection</span>.<span class="hljs-property">from</span>); <span class="hljs-comment">// 1, the start of the paragraph</span><br></code></pre></td></tr></table></figure>
+<p>However, plugins may also need to store state. For example, the undo history plugin needs to save the history of changes. This is why the settings of active plugins are also stored in the state, and these plugins can define their own slots to store their own state.</p>
+<h3 id="selection">Selection</h3>
+<p>ProseMirror supports various types of selections (and allows third-party code to define new selection types). These different types of selections appear as subclasses of <a href="https://prosemirror.xheldon.com/docs/ref/#state.Selection">Selection</a>. Like documents and other state-related values, they are immutable—meaning to change a selection, you need to create a new selection object and a new state to hold it.</p>
+<p>A selection has at least a start (<a href="https://prosemirror.xheldon.com/docs/ref/#state.Selection.from">.from</a>) and an end (<a href="https://prosemirror.xheldon.com/docs/ref/#state.Selection.to">.to</a>) position pointing to the current document. Many selection types also distinguish between <a href="https://prosemirror.xheldon.com/docs/ref/#state.Selection.anchor">anchor</a> (the fixed side of the selection) and <a href="https://prosemirror.xheldon.com/docs/ref/#state.Selection.head">head</a> (the movable side of the selection), so these properties exist on every selection object.</p>
+<p>The most commonly used selection type is <a href="https://prosemirror.xheldon.com/docs/ref/#state.TextSelection">text selection</a>, which represents a normal cursor (when anchor and head are the same) or selected text. Both ends of a text selection must be at inline positions, i.e., within nodes that allow inline content.</p>
+<p>ProseMirror’s core library also supports <a href="https://prosemirror.xheldon.com/docs/ref/#state.NodeSelection">node selection</a>, which represents when a single node is selected. For instance, when you Ctrl/Cmd + click on a node. The range of this selection type spans from before the node to after it.</p>
+<h3 id="transactions-2">Transactions</h3>
+<p>During normal editing, new states are derived from old states. You may have encountered situations like loading a document where you want to create a completely new state, which is an exception (i.e., not derived from the old state—translator’s note).</p>
+<p>States are updated by applying ](<a href="https://prosemirror.xheldon.com/docs/ref/#state.EditorState.apply">https://prosemirror.xheldon.com/docs/ref/#state.EditorState.apply</a>) and ](<a href="https://prosemirror.xheldon.com/docs/ref/#state.Transaction">https://prosemirror.xheldon.com/docs/ref/#state.Transaction</a>) to an existing state to produce a new state. Conceptually, this happens once: given an old state and a transaction of changes, the new values for each component of the state are computed, which together form the new state’s value.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> tr = state.<span class="hljs-property">tr</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(tr.<span class="hljs-property">doc</span>.<span class="hljs-property">content</span>.<span class="hljs-property">size</span>); <span class="hljs-comment">// 25</span><br>tr.<span class="hljs-title function_">insertText</span>(<span class="hljs-string">&#x27;hello&#x27;</span>); <span class="hljs-comment">// Replaces selection with &#x27;hello&#x27;</span><br><span class="hljs-keyword">let</span> newState = state.<span class="hljs-title function_">apply</span>(tr);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(tr.<span class="hljs-property">doc</span>.<span class="hljs-property">content</span>.<span class="hljs-property">size</span>); <span class="hljs-comment">// 30</span><br></code></pre></td></tr></table></figure>
+<p>](<a href="https://prosemirror.xheldon.com/docs/ref/#state.Transaction">https://prosemirror.xheldon.com/docs/ref/#state.Transaction</a>) is a subclass of ](<a href="https://prosemirror.xheldon.com/docs/ref/#transform.Transform">https://prosemirror.xheldon.com/docs/ref/#transform.Transform</a>), inheriting methods for updating documents by applying ](<a href="https://prosemirror.xheldon.com/docs/ref/#transform.Step">https://prosemirror.xheldon.com/docs/ref/#transform.Step</a>) to the previous document. Additionally, transactions track selections and other state-related components, providing convenient selection-related methods such as ](<a href="https://prosemirror.xheldon.com/docs/ref/#state.Transaction.replaceSelection">https://prosemirror.xheldon.com/docs/ref/#state.Transaction.replaceSelection</a>).</p>
+<p>The simplest way to create a transaction is to call the ](<a href="https://prosemirror.xheldon.com/docs/ref/#state.EditorState.tr">https://prosemirror.xheldon.com/docs/ref/#state.EditorState.tr</a>) getter on the editor’s state object (i.e., <code>view.state.tr</code>). This creates an empty transaction based on the current state, allowing you to add steps and other updates to it.</p>
+<p>By default, the old selection is ](<a href="https://prosemirror.xheldon.com/docs/ref/#state.Selection.map">https://prosemirror.xheldon.com/docs/ref/#state.Selection.map</a>) through each step, resulting in a new selection. However, you can also use ](<a href="https://prosemirror.xheldon.com/docs/ref/#state.Transaction.setSelection">https://prosemirror.xheldon.com/docs/ref/#state.Transaction.setSelection</a>) to precisely set a new selection.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> tr = state.<span class="hljs-property">tr</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(tr.<span class="hljs-property">selection</span>.<span class="hljs-property">from</span>); <span class="hljs-comment">// → 10</span><br>tr.<span class="hljs-title function_">delete</span>(<span class="hljs-number">6</span>, <span class="hljs-number">8</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(tr.<span class="hljs-property">selection</span>.<span class="hljs-property">from</span>); <span class="hljs-comment">// → 8 (moved back)</span><br>tr.<span class="hljs-title function_">setSelection</span>(<span class="hljs-title class_">TextSelection</span>.<span class="hljs-title function_">create</span>(tr.<span class="hljs-property">doc</span>, <span class="hljs-number">3</span>));<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(tr.<span class="hljs-property">selection</span>.<span class="hljs-property">from</span>); <span class="hljs-comment">// → 3</span><br></code></pre></td></tr></table></figure>
+<p>Similarly, the ](<a href="https://prosemirror.xheldon.com/docs/ref/#state.EditorState.storedMarks">https://prosemirror.xheldon.com/docs/ref/#state.EditorState.storedMarks</a>) (i.e., <code>storeMarks</code>) is automatically cleared when the document or selection changes. It can be reset using ](<a href="https://prosemirror.xheldon.com/docs/ref/#state.Transaction.setStoredMarks">https://prosemirror.xheldon.com/docs/ref/#state.Transaction.setStoredMarks</a>) or ](<a href="https://prosemirror.xheldon.com/docs/ref/#state.Transaction.ensureMarks">https://prosemirror.xheldon.com/docs/ref/#state.Transaction.ensureMarks</a>).</p>
+<p>Finally, the ](<a href="https://prosemirror.xheldon.com/docs/ref/#state.Transaction.scrollIntoView">https://prosemirror.xheldon.com/docs/ref/#state.Transaction.scrollIntoView</a>) method ensures the next state is drawn in the current viewport. You may want to call this after most user interactions.</p>
+<p>Like Transform methods, most Transaction methods return the transaction itself for convenient chaining.</p>
+<h3 id="plugins-2">Plugins</h3>
+<p>When ](<a href="https://prosemirror.xheldon.com/docs/ref/#state.EditorState%5Ecreate">https://prosemirror.xheldon.com/docs/ref/#state.EditorState^create</a>) a new state, you can provide an array of plugins. These will persist in any state and influence how transactions are applied and how the state behaves.</p>
+<p>Plugins are instances of the ](<a href="https://prosemirror.xheldon.com/docs/ref/#state.Plugin">https://prosemirror.xheldon.com/docs/ref/#state.Plugin</a>) class, enabling a wide range of features. The simplest case is adding some ](<a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorProps">https://prosemirror.xheldon.com/docs/ref/#view.EditorProps</a>) to the editor view in response to an event, while more complex cases involve adding new state to the editor and updating it based on transactions.</p>
+<p>When creating a plugin, you need to pass ](<a href="https://prosemirror.xheldon.com/docs/ref/#state.PluginSpec">https://prosemirror.xheldon.com/docs/ref/#state.PluginSpec</a>) to specify its behavior:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> myPlugin = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Plugin</span>(&#123;<br>  <span class="hljs-attr">props</span>: &#123;<br>    <span class="hljs-title function_">handleKeyDown</span>(<span class="hljs-params">view, event</span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;A key was pressed!&#x27;</span>);<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; <span class="hljs-comment">// We did not handle this</span><br>    &#125;,<br>  &#125;,<br>&#125;);<br><br><span class="hljs-keyword">let</span> state = <span class="hljs-title class_">EditorState</span>.<span class="hljs-title function_">create</span>(&#123; schema, <span class="hljs-attr">plugins</span>: [myPlugin] &#125;);<br></code></pre></td></tr></table></figure>
+<p>If a plugin requires its own state slot (in Vue terms, a scoped slot—translator’s note), it can define its own state property:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> transactionCounter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Plugin</span>(&#123;<br>  <span class="hljs-attr">state</span>: &#123;<br>    <span class="hljs-title function_">init</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125;,<br>    <span class="hljs-title function_">apply</span>(<span class="hljs-params">tr, value</span>) &#123;<br>      <span class="hljs-keyword">return</span> value + <span class="hljs-number">1</span>;<br>    &#125;,<br>  &#125;,<br>&#125;);<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getTransactionCount</span>(<span class="hljs-params">state</span>) &#123;<br>  <span class="hljs-keyword">return</span> transactionCounter.<span class="hljs-title function_">getState</span>(state);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>In the example above, the plugin simply counts the number of transactions applied to the state. The helper function uses the plugin’s <code>getState</code> method, which retrieves the plugin’s state from the editor’s state object.</p>
+<p>Since the editor’s state is a persistent, immutable object and plugin state is part of it, plugin state values must also be immutable. For example, if a plugin’s state needs to change, the <code>apply</code> method must return a new value rather than modifying the old one, and no other code should alter it.</p>
+<p>For plugins, it’s often useful to attach additional information to transactions. For example, in undo history, when performing an undo operation, a marker is added to the resulting transaction. When a plugin detects this marker, it treats the transaction specially: the plugin removes the top item from the undo stack and adds the transaction to the redo stack, rather than applying it as a normal change to the current document.</p>
+<p>To achieve this (adding extra information to transactions), transactions allow <a href="https://prosemirror.xheldon.com/docs/ref/#state.Transaction.getMeta">metadata</a> to be attached to them. We can update the transaction-counting plugin (the example mentioned above—translator’s note) to ignore marked transactions, as shown below:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> transactionCounter = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Plugin</span>(&#123;<br>  <span class="hljs-attr">state</span>: &#123;<br>    <span class="hljs-title function_">init</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125;,<br>    <span class="hljs-title function_">apply</span>(<span class="hljs-params">tr, value</span>) &#123;<br>      <span class="hljs-keyword">if</span> (tr.<span class="hljs-title function_">getMeta</span>(transactionCounter)) <span class="hljs-keyword">return</span> value;<br>      <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> value + <span class="hljs-number">1</span>;<br>    &#125;,<br>  &#125;,<br>&#125;);<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">markAsUncounted</span>(<span class="hljs-params">tr</span>) &#123;<br>  tr.<span class="hljs-title function_">setMeta</span>(transactionCounter, <span class="hljs-literal">true</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>The keys in metadata can be strings, but to avoid naming conflicts, it’s strongly recommended to use plugin objects (i.e., PluginKey objects, similar in principle to Symbols). Some keys are already reserved by ProseMirror, such as “addToHistory,” which can be set to false to prevent a transaction from being undone. When handling a paste event, the editor will set the transaction’s paste property to true.</p>
+<h2 id="the-view-component">The view component</h2>
+<p>ProseMirror’s <a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorView">editor view</a> is a user interface component that displays the <a href="https://prosemirror.xheldon.com/docs/guide/#state">editor state</a> to users and allows them to perform editing operations.</p>
+<p>The definition of “editing operations” mentioned above is narrower for the core view component, which directly handles interactions with the editing interface, such as typing, copying, pasting, and dragging. Beyond that, it doesn’t do much more. This means other tasks, such as displaying a menu, providing keyboard bindings, or responding outside the core view component, cannot be implemented by the view component alone and require plugins to achieve.</p>
+<h3 id="editable-dom">Editable DOM</h3>
+<p>The editor allows us to designate a portion of the DOM as <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/contentEditable">editable</a>. This property enables that portion of the DOM to be focused and selected, making it possible to input content. The view component creates a DOM representation of the document (by default using your schema’s <a href="https://prosemirror.xheldon.com/docs/ref/#model.NodeSpec.toDOM">toDOM method</a>) and makes it editable. When the editable element is focused, ProseMirror ensures that the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Selection">DOM Selection</a> matches the editor state’s selection.</p>
+<p>For most DOM events, there are also many registered event handlers available, which convert events into appropriate <a href="https://prosemirror.xheldon.com/docs/guide/#state.transactions">transactions</a>. For example, when pasting, the pasted content is <a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorProps.clipboardParser">formatted</a> into a ProseMirror document slice and then inserted into the document.</p>
+<p>Most events are also allowed to be handled directly by the user (rather than being wrapped by ProseMirror) and then reinterpreted using ProseMirror’s data model. For instance, browsers are quite adept at handling cursor and selection positions (especially with bidirectional text), so most cursor movement-related key and mouse events are delegated to the browser. After processing, ProseMirror checks which type of <a href="https://prosemirror.xheldon.com/docs/ref/#state.TextSelection">text selection</a> the current DOM selection should correspond to. If it detects that the actual selection doesn’t match ProseMirror’s current selection, a transaction to update the selection will be dispatched.</p>
+<p>Input events are typically left to the browser as well, because interfering with them can disable native features like spell-checking, auto-capitalization, and others on mobile devices. When the browser updates the DOM, the editor detects the changes, reformats the affected parts of the document, and converts these changes into transactions.</p>
+<h3 id="data-flow">Data flow</h3>
+<p>So, the editor view displays a given editor state, and when certain events occur, it creates a new transaction and broadcasts it (broadcasting this newly created transaction for use by other plugins or events—translator’s note). This transaction is then typically used to create a new state, which is then applied to the view via the <a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorView.updateState">updateState</a> method:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2019/prosemirror-data-flow.png" alt="prosemirror-data-flow" /></p>
+<p>As shown, ProseMirror establishes a simple cyclic data flow, which is entirely different from the typical imperative event-handling implementations (common in the JavaScript world) that often result in a more complex network of data flows.</p>
+<p>“Intercepting” transactions is possible because they are <a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorView.dispatch">dispatched</a> through the <a href="https://prosemirror.xheldon.com/docs/ref/#view.DirectEditorProps.dispatchTransaction">dispatchTransaction</a> property, allowing ProseMirror’s data flow to integrate into a larger data cycle—if your entire app follows a data flow similar to ProseMirror’s (such as the data flow in view frameworks like React/Vue—translator’s note), for example, <a href="https://github.com/reactjs/redux">Redux</a> or other similar architectures, you can integrate ProseMirror’s transactions into your main event dispatch loop and place ProseMirror’s state in your app’s ‘store’ (borrowing the Redux store concept here—translator’s note).</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// The app&#x27;s state</span><br><span class="hljs-keyword">let</span> appState = &#123;<br>  <span class="hljs-attr">editor</span>: <span class="hljs-title class_">EditorState</span>.<span class="hljs-title function_">create</span>(&#123; schema &#125;),<br>  <span class="hljs-attr">score</span>: <span class="hljs-number">0</span>,<br>&#125;;<br><span class="hljs-keyword">let</span> view = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EditorView</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>, &#123;<br>  <span class="hljs-attr">state</span>: appState.<span class="hljs-property">editor</span>,<br>  <span class="hljs-title function_">dispatchTransaction</span>(<span class="hljs-params">transaction</span>) &#123;<br>    <span class="hljs-title function_">update</span>(&#123; <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;EDITOR_TRANSACTION&#x27;</span>, transaction &#125;);<br>  &#125;,<br>&#125;);<br><br><span class="hljs-comment">// A crude app state update function, which takes an update object,</span><br><span class="hljs-comment">// updates the `appState`, and then refreshes the UI.</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">update</span>(<span class="hljs-params">event</span>) &#123;<br>  <span class="hljs-keyword">if</span> (event.<span class="hljs-property">type</span> == <span class="hljs-string">&#x27;EDITOR_TRANSACTION&#x27;</span>)<br>    appState.<span class="hljs-property">editor</span> = appState.<span class="hljs-property">editor</span>.<span class="hljs-title function_">apply</span>(event.<span class="hljs-property">transaction</span>);<br>  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (event.<span class="hljs-property">type</span> == <span class="hljs-string">&#x27;SCORE_POINT&#x27;</span>) appState.<span class="hljs-property">score</span>++;<br>  <span class="hljs-title function_">draw</span>();<br>&#125;<br><span class="hljs-comment">// An even cruder drawing function</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">draw</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;#score&#x27;</span>).<span class="hljs-property">textContent</span> = appState.<span class="hljs-property">score</span>;<br>  view.<span class="hljs-title function_">updateState</span>(appState.<span class="hljs-property">editor</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="efficient-updating">Efficient Updating</h3>
+<p>One way to implement the <a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorView.updateState">updateState</a> functionality is to re-render the entire document every time it is called. However, for larger documents, this would be very slow.</p>
+<p>Therefore, when updating the view, the view compares the old document with the new one and preserves the parts of the DOM that remain unchanged (while replacing the new ones—translator’s note). ProseMirror handles this for you, ensuring that each update requires only minimal work.</p>
+<p>In some cases, such as when updating input text, the text has already been added to the DOM by the browser’s own editing operations (i.e., the browser has modified the DOM, and ProseMirror listens for DOM change events, triggering a transaction to synchronize the DOM changes without needing further DOM updates). Ensuring consistency between ProseMirror and the DOM may not require any DOM updates at all. (When such a transaction synchronizing DOM state to ProseMirror is canceled, the view will undo the DOM changes to ensure the DOM remains in sync with the state.)</p>
+<p>Similarly, the DOM selection is only synchronized when it becomes out of sync with the state’s selection, to avoid disrupting the browser selection’s hidden states (such as the functionality where pressing the up or down arrow on a shorter line moves the cursor to the end of a longer line above or below).</p>
+<h3 id="props">Props</h3>
+<p>‘Props’ are highly useful, a concept borrowed directly from <a href="https://facebook.github.io/react/docs/components-and-props.html">React</a>. Props act like parameters for UI components. Ideally, the props a component receives completely define its behavior.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> view = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EditorView</span>(&#123;<br>  <span class="hljs-attr">state</span>: myState,<br>  <span class="hljs-title function_">editable</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>  &#125;, <span class="hljs-comment">// Enables read-only behavior</span><br>  <span class="hljs-title function_">handleDoubleClick</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Double click!&#x27;</span>);<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>As mentioned above, the current <a href="https://prosemirror.xheldon.com/docs/ref/#view.DirectEditorProps.state">state</a> is a prop. The code controlling the component (i.e., the code passing props to the component—translator’s note) can <a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorView.setProps">update</a> other props at different times, but not the state, because the component itself does not change any props other than the state (as these should be updated by the controlling code—translator’s note). <a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorView.updateState">updateState</a> is simply a shortcut for updating the <a href="https://prosemirror.xheldon.com/docs/ref/#view.DirectEditorProps.state">state prop</a>.</p>
+<p>Plugins can also <a href="https://prosemirror.xheldon.com/docs/ref/#state.PluginSpec.props">declare</a> props, excluding <a href="https://prosemirror.xheldon.com/docs/ref/#view.DirectEditorProps.state">state</a> and <a href="https://prosemirror.xheldon.com/docs/ref/#view.DirectEditorProps.dispatchTransaction">dispatchTransaction</a>, which must be provided directly when defining the view (Plugins are allowed to define a state field representing the plugin’s state; here, ‘state’ refers to the editor’s state—translator’s note).</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">maxSizePlugin</span>(<span class="hljs-params">max</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Plugin</span>(&#123;<br>    <span class="hljs-attr">props</span>: &#123;<br>      <span class="hljs-title function_">editable</span>(<span class="hljs-params">state</span>) &#123;<br>        <span class="hljs-keyword">return</span> state.<span class="hljs-property">doc</span>.<span class="hljs-property">content</span>.<span class="hljs-property">size</span> &lt; max;<br>      &#125;,<br>    &#125;,<br>  &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>When a prop is declared multiple times (by multiple plugins, etc.), how these props are handled depends on their own nature. Generally, props provided directly by the (editor view) take precedence, followed by processing in the order each plugin declares them. For some props, such as ](<a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorProps.domParser">https://prosemirror.xheldon.com/docs/ref/#view.EditorProps.domParser</a>), the first declared value is used, and subsequent declarations are ignored. For handler functions (of props), returning a boolean indicates whether they handle the event—the first one returning true processes the event (and other handlers of the same type are ignored—translator’s note). Finally, for other props, such as ](<a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorProps.attributes">https://prosemirror.xheldon.com/docs/ref/#view.EditorProps.attributes</a>) (which sets attributes on the editable DOM) and decorations (covered in the next section), their merged values are used.</p>
+<h3 id="decorations">Decorations</h3>
+<p>Decorations give you some control over how your document view is rendered. They are created through the return value of the ](<a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorProps.decorations">https://prosemirror.xheldon.com/docs/ref/#view.EditorProps.decorations</a>) property and come in three types:</p>
+<ul>
+<li>](<a href="https://prosemirror.xheldon.com/docs/ref/#view.Decoration%5Enode">https://prosemirror.xheldon.com/docs/ref/#view.Decoration^node</a>) add styles or other DOM attributes to the DOM of a single node.</li>
+<li>](<a href="https://prosemirror.xheldon.com/docs/ref/#view.Decoration%5Ewidget">https://prosemirror.xheldon.com/docs/ref/#view.Decoration^widget</a>) insert a DOM node at a given position, which is not part of the actual document.</li>
+<li>](<a href="https://prosemirror.xheldon.com/docs/ref/#view.Decoration%5Einline">https://prosemirror.xheldon.com/docs/ref/#view.Decoration^inline</a>) add styles or attributes to inline elements within a given range, similar to node decorations but only for inline elements.</li>
+</ul>
+<p>To efficiently render and compare decorations, these decorations need to be provided in the form of a ](<a href="https://prosemirror.xheldon.com/docs/ref/#view.DecorationSet">https://prosemirror.xheldon.com/docs/ref/#view.DecorationSet</a>) (a tree-like data structure resembling the actual document structure). You can create one using the static method ](<a href="https://prosemirror.xheldon.com/docs/ref/#view.DecorationSet%5Ecreate">https://prosemirror.xheldon.com/docs/ref/#view.DecorationSet^create</a>), passing the current document and an array of decoration objects as arguments:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> purplePlugin = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Plugin</span>(&#123;<br>  <span class="hljs-attr">props</span>: &#123;<br>    <span class="hljs-title function_">decorations</span>(<span class="hljs-params">state</span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-title class_">DecorationSet</span>.<span class="hljs-title function_">create</span>(state.<span class="hljs-property">doc</span>, [<br>        <span class="hljs-title class_">Decoration</span>.<span class="hljs-title function_">inline</span>(<span class="hljs-number">0</span>, state.<span class="hljs-property">doc</span>.<span class="hljs-property">content</span>.<span class="hljs-property">size</span>, &#123;<br>          <span class="hljs-attr">style</span>: <span class="hljs-string">&#x27;color: purple&#x27;</span>,<br>        &#125;),<br>      ]);<br>    &#125;,<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>When you have many decorations, recreating the decoration set in memory during every redraw can be costly. Therefore, in such cases, it is recommended to maintain your decorations in the plugin’s state, map them to the new document state when the document changes, and update them only when necessary.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> specklePlugin = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Plugin</span>(&#123;<br>  <span class="hljs-attr">state</span>: &#123;<br>    <span class="hljs-title function_">init</span>(<span class="hljs-params">_, &#123; doc &#125;</span>) &#123;<br>      <span class="hljs-keyword">let</span> speckles = [];<br>      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> pos = <span class="hljs-number">1</span>; pos &lt; doc.<span class="hljs-property">content</span>.<span class="hljs-property">size</span>; pos += <span class="hljs-number">4</span>)<br>        speckles.<span class="hljs-title function_">push</span>(<br>          <span class="hljs-title class_">Decoration</span>.<span class="hljs-title function_">inline</span>(pos - <span class="hljs-number">1</span>, pos, &#123; <span class="hljs-attr">style</span>: <span class="hljs-string">&#x27;background: yellow&#x27;</span> &#125;)<br>        );<br>      <span class="hljs-keyword">return</span> <span class="hljs-title class_">DecorationSet</span>.<span class="hljs-title function_">create</span>(doc, speckles);<br>    &#125;,<br>    <span class="hljs-title function_">apply</span>(<span class="hljs-params">tr, set</span>) &#123;<br>      <span class="hljs-keyword">return</span> set.<span class="hljs-title function_">map</span>(tr.<span class="hljs-property">mapping</span>, tr.<span class="hljs-property">doc</span>);<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">props</span>: &#123;<br>    <span class="hljs-title function_">decorations</span>(<span class="hljs-params">state</span>) &#123;<br>      <span class="hljs-keyword">return</span> specklePlugin.<span class="hljs-title function_">getState</span>(state);<br>    &#125;,<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>In the example, the plugin initializes its state as a decoration set, adding a yellow inline background decoration every four positions. This may not be very useful, but similar scenarios can implement features like highlighting search results or adding comment areas.</p>
+<p>When a transaction is applied to the state, the plugin state’s ](<a href="https://prosemirror.xheldon.com/docs/ref/#state.StateField.apply">https://prosemirror.xheldon.com/docs/ref/#state.StateField.apply</a>) method maps the decoration set forward, keeping the decorations in place to “adapt” to the new document structure. The mapping method (often used for local changes) updates efficiently due to the tree structure of the decoration set—only nodes affected by changes are updated.</p>
+<p>(In production environments, the plugin’s apply method may also handle adding or removing decorations triggered by new events, which can be detected by inspecting transaction metadata or information carried by the transaction.)</p>
+<p>Finally, the decorations property simply returns the plugin’s state, which will display the decorations in the view.</p>
+<h3 id="node-views">Node Views</h3>
+<p>Another way to influence how the editor view renders your document is through ](<a href="https://prosemirror.xheldon.com/docs/ref/#view.NodeView">https://prosemirror.xheldon.com/docs/ref/#view.NodeView</a>). These define small, independent UI components for nodes in the document. They allow you to control how these DOM elements are rendered, define their update behavior, and write custom code to handle events.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> view = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EditorView</span>(&#123;<br>  state,<br>  <span class="hljs-attr">nodeViews</span>: &#123;<br>    <span class="hljs-title function_">image</span>(<span class="hljs-params">node</span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ImageView</span>(node);<br>    &#125;,<br>  &#125;,<br>&#125;);<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ImageView</span> &#123;<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">node</span>) &#123;<br>    <span class="hljs-comment">// The editor will use this as the node&#x27;s DOM representation</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">dom</span> = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;img&#x27;</span>);<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">dom</span>.<span class="hljs-property">src</span> = node.<span class="hljs-property">attrs</span>.<span class="hljs-property">src</span>;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">dom</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;You clicked me!&#x27;</span>);<br>      e.<span class="hljs-title function_">preventDefault</span>();<br>    &#125;);<br>  &#125;<br>  <span class="hljs-title function_">stopEvent</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>In the example, the image node’s view object creates a custom DOM node for the image, adds event handlers, and includes a <code>stopEvent</code> method to indicate that ProseMirror should ignore events from this DOM node.</p>
+<p>You’ll often want to interact with nodes to affect real nodes in the document. But to create a transaction that modifies a node, you first need to know where that node is located. To enable this, node views pass a getter function that can be used to query their current position in the document. Let’s modify the previous example to allow entering alt text for the image node when it’s clicked.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> view = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EditorView</span>(&#123;<br>  state,<br>  <span class="hljs-attr">nodeViews</span>: &#123;<br>    <span class="hljs-title function_">image</span>(<span class="hljs-params">node, view, getPos</span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ImageView</span>(node, view, getPos);<br>    &#125;,<br>  &#125;,<br>&#125;);<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ImageView</span> &#123;<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">node, view, getPos</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">dom</span> = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;img&#x27;</span>);<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">dom</span>.<span class="hljs-property">src</span> = node.<span class="hljs-property">attrs</span>.<span class="hljs-property">src</span>;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">dom</span>.<span class="hljs-property">alt</span> = node.<span class="hljs-property">attrs</span>.<span class="hljs-property">alt</span>;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">dom</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> &#123;<br>      e.<span class="hljs-title function_">preventDefault</span>();<br>      <span class="hljs-keyword">let</span> alt = <span class="hljs-title function_">prompt</span>(<span class="hljs-string">&#x27;New alt text:&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>);<br>      <span class="hljs-keyword">if</span> (alt)<br>        view.<span class="hljs-title function_">dispatch</span>(<br>          view.<span class="hljs-property">state</span>.<span class="hljs-property">tr</span>.<span class="hljs-title function_">setNodeMarkup</span>(<span class="hljs-title function_">getPos</span>(), <span class="hljs-literal">null</span>, &#123;<br>            <span class="hljs-attr">src</span>: node.<span class="hljs-property">attrs</span>.<span class="hljs-property">src</span>,<br>            alt,<br>          &#125;)<br>        );<br>    &#125;);<br>  &#125;<br>  <span class="hljs-title function_">stopEvent</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a href="https://prosemirror.xheldon.com/docs/ref/#transform.Transform.setNodeMarkup">setNodeMarkup</a> is a method that can be used to change the type or attributes of a node at a given position. In the example above, we use the getPos method to find the current position of the image node, then assign new attributes with updated alt text to that node.</p>
+<p>When a node updates, the default behavior is to preserve its outer DOM structure, only comparing its children with the new set of child nodes and updating or replacing them as needed. A node view can override this default behavior, allowing us to perform actions like updating CSS class names for paragraphs based on node content.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> view = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EditorView</span>(&#123;<br>  state,<br>  <span class="hljs-attr">nodeViews</span>: &#123;<br>    <span class="hljs-title function_">paragraph</span>(<span class="hljs-params">node</span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ParagraphView</span>(node);<br>    &#125;,<br>  &#125;,<br>&#125;);<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ParagraphView</span> &#123;<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">node</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">dom</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">contentDOM</span> = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;p&#x27;</span>);<br>    <span class="hljs-keyword">if</span> (node.<span class="hljs-property">content</span>.<span class="hljs-property">size</span> == <span class="hljs-number">0</span>) <span class="hljs-variable language_">this</span>.<span class="hljs-property">dom</span>.<span class="hljs-property">classList</span>.<span class="hljs-title function_">add</span>(<span class="hljs-string">&#x27;empty&#x27;</span>);<br>  &#125;<br>  <span class="hljs-title function_">update</span>(<span class="hljs-params">node</span>) &#123;<br>    <span class="hljs-keyword">if</span> (node.<span class="hljs-property">type</span>.<span class="hljs-property">name</span> != <span class="hljs-string">&#x27;paragraph&#x27;</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    <span class="hljs-keyword">if</span> (node.<span class="hljs-property">content</span>.<span class="hljs-property">size</span> &gt; <span class="hljs-number">0</span>) <span class="hljs-variable language_">this</span>.<span class="hljs-property">dom</span>.<span class="hljs-property">classList</span>.<span class="hljs-title function_">remove</span>(<span class="hljs-string">&#x27;empty&#x27;</span>);<br>    <span class="hljs-keyword">else</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">dom</span>.<span class="hljs-property">classList</span>.<span class="hljs-title function_">add</span>(<span class="hljs-string">&#x27;empty&#x27;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Images don’t contain content, so in our earlier example, we didn’t need to worry about how their content would be rendered. But paragraphs do have content. Node views support two approaches for handling content: you can let ProseMirror manage it, or you can handle it entirely manually. If you provide a <a href="https://prosemirror.xheldon.com/docs/ref/#view.NodeView.contentDOM">contentDOM property</a>, ProseMirror will render the node’s content inside that DOM node and handle content updates. If you don’t provide this property, the node’s content becomes a black box to the editor - how you display the content and handle user interaction is entirely up to you.</p>
+<p>In this case, we want the paragraph content to behave like normal editable text, so the contentDOM property is defined the same as the dom property, since the content needs to be rendered directly into the outer container.</p>
+<p>The magic happens in the <a href="https://prosemirror.xheldon.com/docs/ref/#view.NodeView.update">update method</a>. First, it’s important to note that this method entirely determines how the node view should be updated to reflect changes in the node. The new node drawn by the editor’s update algorithm could be anything, so you must verify that the newly drawn node can be processed by the current node view.</p>
+<p>The update method in the example first checks whether the new node is still a paragraph, aborting if not. Then based on the new node’s content, it determines whether the empty class name should be present on the node. Returning true indicates the update was successful (at which point the node’s content will be updated).</p>
+<h2 id="commands-2">Commands</h2>
+<p>In ProseMirror terminology, a command function enables users to perform actions through key combinations (like cmd+a for select all) or menu interactions.</p>
+<p>For practical reasons, commands are somewhat complex. Some simple commands are functions that take an <a href="https://prosemirror.xheldon.com/docs/guide/#state">editor state</a> and a dispatch function (<a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorView.dispatch">EditorView.dispatch</a> or another transaction-related function) as parameters, then return a boolean. Here’s a very simple example:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">deleteSelection</span>(<span class="hljs-params">state, dispatch</span>) &#123;<br>  <span class="hljs-keyword">if</span> (state.<span class="hljs-property">selection</span>.<span class="hljs-property">empty</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>  <span class="hljs-title function_">dispatch</span>(state.<span class="hljs-property">tr</span>.<span class="hljs-title function_">deleteSelection</span>());<br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>If a command isn’t available, it should return false and do nothing. When available, it should dispatch a transaction and return true. The <a href="https://prosemirror.xheldon.com/docs/ref/#keymap">keymap plugin</a> uses this mechanism to prevent keys already handled by one command from being processed by others.</p>
+<p>To query whether a command can be applied to a given state without actually executing it, the dispatch parameter is optional. When no dispatch function is provided and the command is available, it will simply return true without performing any actions. The following example demonstrates this:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">deleteSelection</span>(<span class="hljs-params">state, dispatch</span>) &#123;<br>  <span class="hljs-keyword">if</span> (state.<span class="hljs-property">selection</span>.<span class="hljs-property">empty</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>  <span class="hljs-keyword">if</span> (dispatch) <span class="hljs-title function_">dispatch</span>(state.<span class="hljs-property">tr</span>.<span class="hljs-title function_">deleteSelection</span>());<br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>To check whether the current selection can be deleted, you’d call deleteSelection(view.state, null), whereas actually deleting a selection would involve calling deleteSelection(view.state, view.dispatch). A menu bar could use this mechanism to determine whether menu buttons should be grayed out (indicating unavailability).</p>
+<p>When using commands from the menu bar mentioned above, they do not access the actual editor view—in fact, most commands don’t need to access it. They can even be applied and tested via menu commands in settings when no view is available. However, some commands do require interaction with the DOM—they might need to ](<a href="https://prosemirror.xheldon.com/docs/ref/#view.EditorView.endOfTextblock">https://prosemirror.xheldon.com/docs/ref/#view.EditorView.endOfTextblock</a>)query whether a given position is at the end of a textblock or want to pop up a dialog positioned relative to the view. Therefore, most plugins that invoke commands will pass a third parameter: the current view.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">blinkView</span>(<span class="hljs-params">_state, dispatch, view</span>) &#123;<br>  <span class="hljs-keyword">if</span> (dispatch) &#123;<br>    view.<span class="hljs-property">dom</span>.<span class="hljs-property">style</span>.<span class="hljs-property">background</span> = <span class="hljs-string">&#x27;yellow&#x27;</span>;<br>    <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> (view.<span class="hljs-property">dom</span>.<span class="hljs-property">style</span>.<span class="hljs-property">background</span> = <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-number">1000</span>);<br>  &#125;<br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>This example (though quite useless) demonstrates that commands don’t necessarily need to dispatch a transaction—while they are often called to apply their so-called side effects (i.e., dispatching a transaction), they can also be invoked to pop up a dialog (without dispatching).</p>
+<p>The ](<a href="https://prosemirror.xheldon.com/docs/ref/#commands">https://prosemirror.xheldon.com/docs/ref/#commands</a>)prosemirror-commands module provides a wide range of editing commands, from simple variants like ](<a href="https://prosemirror.xheldon.com/docs/ref/#commands.deleteSelection">https://prosemirror.xheldon.com/docs/ref/#commands.deleteSelection</a>)deleteSelection to more complex ones such as ](<a href="https://prosemirror.xheldon.com/docs/ref/#commands.joinBackward">https://prosemirror.xheldon.com/docs/ref/#commands.joinBackward</a>)joinBackward, which implements the block-joining behavior that occurs when you press backspace at the start of a textblock line. The module also includes a ](<a href="https://prosemirror.xheldon.com/docs/ref/#commands.baseKeymap">https://prosemirror.xheldon.com/docs/ref/#commands.baseKeymap</a>)basic keymap that binds numerous architecture-agnostic (i.e., not distinguishing between Win/Mac or Safari/Chrome, etc.) commands to their respective keys.</p>
+<p>In some cases, different behaviors—even those typically bound to a single key—are split into separate commands (i.e., a single key may be handled by different commands under different circumstances). The utility function ](<a href="https://prosemirror.xheldon.com/docs/ref/#commands.chainCommands">https://prosemirror.xheldon.com/docs/ref/#commands.chainCommands</a>)chainCommands can be used to combine multiple commands—they will be tried one after another until one returns true.</p>
+<p>For example, the basic keymap binds the backspace key to a command chain: ](<a href="https://prosemirror.xheldon.com/docs/ref/#commands.deleteSelection">https://prosemirror.xheldon.com/docs/ref/#commands.deleteSelection</a>)deleteSelection (effective when the selection is non-empty), ](<a href="https://prosemirror.xheldon.com/docs/ref/#commands.joinBackward">https://prosemirror.xheldon.com/docs/ref/#commands.joinBackward</a>)joinBackward (effective when the cursor is at the start of a textblock), followed by ](<a href="https://prosemirror.xheldon.com/docs/ref/#commands.selectNodeBackward">https://prosemirror.xheldon.com/docs/ref/#commands.selectNodeBackward</a>)selectNodeBackward (which selects the node before the selection if the schema prohibits normal node joining). When none of these apply, the browser executes its default behavior, which is appropriate for pressing backspace within a textblock (ensuring native spell-checking and similar features work correctly).</p>
+<p>The commands module also exports some command constructors, such as toggleMark, which takes a mark type and an optional set of attributes, then returns a command function that can toggle the mark on the current selection.</p>
+<p>Other modules may also export command functions, such as the ](<a href="https://prosemirror.xheldon.com/docs/ref/#history.undo">https://prosemirror.xheldon.com/docs/ref/#history.undo</a>)undo and ](<a href="https://prosemirror.xheldon.com/docs/ref/#history.redo">https://prosemirror.xheldon.com/docs/ref/#history.redo</a>)redo functions from the history module. To customize your own editor or allow users to interact with custom document nodes, you may need to write your own command functions.</p>
+<h2 id="collaborative-editing">Collaborative Editing</h2>
+<p>Real-time collaborative editing allows multiple users to edit the same document simultaneously. Changes made by users are immediately applied to their local documents, then sent to others, with modifications from different users automatically merged (without manual conflict resolution). This editing experience ensures uninterrupted workflow while maintaining document consistency.</p>
+<p>This guide explains how to get started with Prosemirror’s collaborative editing features.</p>
+<h3 id="algorithm">Algorithm</h3>
+<p>Prosemirror’s collaborative editing system employs a central authority model, which determines the order in which modifications from different users are applied to the document. If two editors make changes simultaneously, these changes are submitted to the authority. The authority will accept one of the changes and broadcast it to all editors. Other changes will not be accepted. When an editor receives new changes from the server, it must rebase its local changes onto the latest version from other editors and attempt to resubmit them (similar to Git’s rebase—local modifications remain unchanged (as rejected by the server), the editor’s document is updated to the latest version, and the local changes are resubmitted to see if the server accepts them this time).</p>
+<p>The role of the central authority is actually quite simple—it must:</p>
+<ul>
+<li>Track the current version of the document</li>
+<li>Accept changes from editors and, when these changes are applied, add them to its own list of modifications</li>
+<li>Provide editors with a way to receive updates for a given version</li>
+</ul>
+<p>Let’s implement a minimal central authority that runs in a JavaScript environment, just like the editor.</p>
+<pre><code class="language-js">class Authority &#123;
+  constructor(doc) &#123;
+    this.doc = doc;
+    this.steps = [];
+    this.stepClientIDs = [];
+    this.onNewSteps = [];
+  &#125;
+  receiveSteps(version, steps, clientID) &#123;
+    if (version != this.steps.length) return;
+    // Apply and accumulate new steps
+    steps.forEach((step) =&gt; &#123;
+      this.doc = step.apply(this.doc).doc;
+      this.steps.push(step);
+      this.stepClientIDs.push(clientID);
+    &#125;);
+    // Signal listeners
+    this.onNewSteps.forEach(function (f) &#123;
+      f();
+    &#125;);
+  &#125;
+  stepsSince(version) &#123;
+    return &#123;
+      steps: this.steps.slice(version),
+      clientIDs: this.stepClientIDs.slice(version),
+    &#125;;
+  &#125;
+&#125;
+</code></pre>
+<p>When an editor attempts to submit its changes to the authority, it calls the authority’s <code>receiveSteps</code> method. It passes the last version number it received, the new changes it has made based on that version, and its client ID (which identifies which changes originated from itself).</p>
+<p>Once the submission is accepted by the authority, the client will be notified because the authority informs it that new server-side changes are available, along with the corresponding steps for applying those changes. In a real-world implementation of the authority, you could optimize by having <code>receiveSteps</code> return a status and immediately confirm the steps it sends (instead of passively waiting for the server to notify it). However, the mechanism described above (waiting for server notification) serves as a fallback solution for unreliable network conditions. Therefore, you should always treat waiting for server updates as the default fallback behavior.</p>
+<p>The example authority implementation will maintain an indefinitely growing array of steps, where its length represents the current version.</p>
+<h3 id="the-collab-module">The <code>collab</code> Module</h3>
+<p>The <code>collab</code> module exports a <code>collab</code> function, which returns a plugin used to track local modifications, accept remote changes, and determine when and what changes should be sent to the authority.</p>
+<pre><code class="language-js">import &#123; EditorState &#125; from 'prosemirror-state';
+import &#123; EditorView &#125; from 'prosemirror-view';
+import &#123; schema &#125; from 'prosemirror-schema-basic';
+import collab from 'prosemirror-collab';
+
+function collabEditor(authority, place) &#123;
+  let view = new EditorView(place, &#123;
+    state: EditorState.create(&#123;
+      doc: authority.doc,
+      plugins: [collab.collab(&#123; version: authority.steps.length &#125;)],
+    &#125;),
+    dispatchTransaction(transaction) &#123;
+      let newState = view.state.apply(transaction);
+      view.updateState(newState);
+      let sendable = collab.sendableSteps(newState);
+      if (sendable)
+        authority.receiveSteps(
+          sendable.version,
+          sendable.steps,
+          sendable.clientID
+        );
+    &#125;,
+  &#125;);
+
+  authority.onNewSteps.push(function () &#123;
+    let newData = authority.stepsSince(collab.getVersion(view.state));
+    view.dispatch(
+      collab.receiveTransaction(view.state, newData.steps, newData.clientIDs)
+    );
+  &#125;);
+
+  return view;
+&#125;
+</code></pre>
+<p>The <code>collabEditor</code> function creates a new editor view that loads the <code>collab</code> plugin. Whenever the state updates, it checks whether anything needs to be sent to the authority and, if so, sends it.</p>
+<p>It also registers a function that the authority will call when new modification steps are available. This function creates a transaction to update the local editor according to the steps provided by the authority.</p>
+<p>When a set of steps is rejected by the authority, those steps remain unconfirmed until—perhaps soon—we receive new steps from the authority. After that (i.e., after accepting the new steps), the <code>onNewSteps</code> callback invokes <code>[dispatch](https://prosemirror.xheldon.com/docs/ref/#state.Transaction)</code>, triggering our <code>dispatchTransaction</code> function, which will then attempt to resubmit its changes.</p>
+<p>That’s all there is to it. Of course, for asynchronous data flows (such as long polling or WebSockets in the <a href="https://github.com/ProseMirror/website/blob/master/src/collab/client/collab.js">collab demo</a>), you’ll need more complex communication and synchronization code. You might also want your authority to discard some steps occasionally to reduce memory usage. But overall, this small example fully outlines how an authority should be implemented.</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          Originally published at:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/prosemirror-guide-chinese.en.html"
+            title="&#34;Translated&#34; ProseMirror Chinese Guide"
+          >
+            &#34;Translated&#34; ProseMirror Chinese Guide - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">Contents</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>From the author:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        I often wish that when facing some key decisions in life, someone could tell me the best course of action so that I would not waste my precious time. Putting myself in others&#39; shoes, I therefore write blogs often, hoping to record in this tiny corner of the vast Internet the once-in-a-lifetime experiences that matter to me, and to help those who seek help.
+    </div>
+    <hr>
+    
+    <h5><a href="/en/archive/">Popular Tags</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/en/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="Technology"
+                rel="188">Technology</a>
+        
+            <a data-sort="0200"
+                href="/en/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="Life"
+                rel="108">Life</a>
+        
+            <a data-sort="0264"
+                href="/en/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="Tinkering"
+                rel="44">Tinkering</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="Tips"
+                rel="32">Tips</a>
+        
+            <a data-sort="0276"
+                href="/en/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="Tutorial"
+                rel="32">Tutorial</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="Translation"
+                rel="24">Translation</a>
+        
+            <a data-sort="0284"
+                href="/en/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="Experience"
+                rel="20">Experience</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="Food"
+                rel="20">Food</a>
+        
+            <a data-sort="0288"
+                href="/en/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="First Impressions"
+                rel="16">First Impressions</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="Workflow"
+                rel="16">Workflow</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="Plugin"
+                rel="16">Plugin</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="Network"
+                rel="16">Network</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/en/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="User Experience"
+                rel="12">User Experience</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="Summary"
+                rel="12">Summary</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="Server"
+                rel="12">Server</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="Router"
+                rel="12">Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="Soft Router"
+                rel="12">Soft Router</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="Essay"
+                rel="12">Essay</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=%E9%9B%86%E6%88%90"
+                title="Integration"
+                rel="12">Integration</a>
+        
+            <a data-sort="0296"
+                href="/en/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="Staple Food"
+                rel="8">Staple Food</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="Optimization"
+                rel="8">Optimization</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%8D%83%E5%85%86"
+                title="Gigabit"
+                rel="8">Gigabit</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="Big Event"
+                rel="8">Big Event</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="Tools"
+                rel="8">Tools</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="Bypass Router"
+                rel="8">Bypass Router</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="Framework"
+                rel="8">Framework</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="Foot Bath Time"
+                rel="8">Foot Bath Time</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="Testing"
+                rel="8">Testing</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="Tesla"
+                rel="8">Tesla</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="Editor"
+                rel="8">Editor</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="Video"
+                rel="8">Video</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="Debugging"
+                rel="8">Debugging</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BD%A6"
+                title="Car"
+                rel="8">Car</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="Migration"
+                rel="8">Migration</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/en/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="Northeastern Cuisine"
+                rel="4">Northeastern Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="Buying a House"
+                rel="4">Buying a House</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="Proxy"
+                rel="4">Proxy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="Full Stack"
+                rel="4">Full Stack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="Norse Mythology"
+                rel="4">Norse Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="Collaboration"
+                rel="4">Collaboration</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="Compression"
+                rel="4">Compression</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="Kratos"
+                rel="4">Kratos</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="Home Cooking"
+                rel="4">Home Cooking</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="Prosperity"
+                rel="4">Prosperity</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="Comparison"
+                rel="4">Comparison</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="Sichuan Cuisine"
+                rel="4">Sichuan Cuisine</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="Work Experience"
+                rel="4">Work Experience</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="Greek Mythology"
+                rel="4">Greek Mythology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="Essential Apps"
+                rel="4">Essential Apps</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="Open Source"
+                rel="4">Open Source</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="Unboxing"
+                rel="4">Unboxing</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="God of War"
+                rel="4">God of War</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIM Card"
+                rel="4">SIM Card</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%8B%93%E6%89%91"
+                title="Topology"
+                rel="4">Topology</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="Story"
+                rel="4">Story</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="Data Structure"
+                rel="4">Data Structure</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="Travel"
+                rel="4">Travel</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="Daily Life"
+                rel="4">Daily Life</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="Japan"
+                rel="4">Japan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="Service"
+                rel="4">Service</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="Format"
+                rel="4">Format</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%A2%A6"
+                title="Dream"
+                rel="4">Dream</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="Browser"
+                rel="4">Browser</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="Gaming"
+                rel="4">Gaming</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="Rant"
+                rel="4">Rant</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="User Privacy"
+                rel="4">User Privacy</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="Algorithm"
+                rel="4">Algorithm</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="Details"
+                rel="4">Details</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="Headphones"
+                rel="4">Headphones</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="Freedom"
+                rel="4">Freedom</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="Plan"
+                rel="4">Plan</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="Settings"
+                rel="4">Settings</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="Pitfalls"
+                rel="4">Pitfalls</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="Conversion"
+                rel="4">Conversion</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="Selection"
+                rel="4">Selection</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="Interview"
+                rel="4">Interview</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/en/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>Columns</h5>
+    <div class="tags">
+        <a href="/projects">Open Source</a>
+        <a href="/book-list">Book List</a>
+        <a href="/subscribe">Subscriptions & Paid Apps</a>
+        <a href="/my-food">Food Recommendations</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>Friends</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">China</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="&#34;Translated&#34; ProseMirror Chinese Guide"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/en/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

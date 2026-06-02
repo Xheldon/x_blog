@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      Chrome のよく使うデバッグ方法とその他 - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="Chromeのデバッグ機能は非常に強力で、ここでは私の仕事で最もよく使う機能をいくつか紹介します。">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="Chrome のよく使うデバッグ方法とその他 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2022-8-7T12:39:47"> 
+              
+                  
+                    <meta property="article:tag" content="Chrome">
+                    
+                    <meta property="article:tag" content="コツ">
+                    
+                    <meta property="article:tag" content="技術">
+                    
+                    <meta property="article:tag" content="デバッグ">
+                    
+                      
+                          
+                            <meta name="og:description" content="Chromeのデバッグ機能は非常に強力で、ここでは私の仕事で最もよく使う機能をいくつか紹介します。">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ja/tech/the-use-of-chrome-devtools.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ja_JP">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ja/tech/the-use-of-chrome-devtools.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/the-use-of-chrome-devtools.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/the-use-of-chrome-devtools.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/the-use-of-chrome-devtools.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/the-use-of-chrome-devtools.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/the-use-of-chrome-devtools.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ja/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ja/">ホーム</a>
+            </li>
+            <li>
+              <a href="/ja/about/">概要</a>
+            </li>
+            <li>
+              <a href="/ja/donate/">寄付</a>
+            </li>
+            <li>
+              <a href="/ja/archive/">アーカイブ</a>
+            </li>
+            <li>
+              <a href="/ja/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">日本語</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/the-use-of-chrome-devtools.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/the-use-of-chrome-devtools.html" hreflang="en">English</a></li>
+        <li class="lang-item active"><a href="/ja/tech/the-use-of-chrome-devtools.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/the-use-of-chrome-devtools.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ja/archive/?tag=Chrome"
+                            title="Chrome">
+                            Chrome
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E6%8A%80%E5%B7%A7"
+                            title="コツ">
+                            コツ
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技術">
+                            技術
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E8%B0%83%E8%AF%95"
+                            title="デバッグ">
+                            デバッグ
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        Chrome のよく使うデバッグ方法とその他
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 作成日 2022年08月07日</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 更新日 2022年08月12日</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;注意：この記事が作成されてから既に
+          <code id="from_time"></code> 日が経過しています。情報の鮮度にご注意ください
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1659875987000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+           
+        <div class="callout-tips">🖥 &nbsp;説明：Chromeのデバッグ機能は非常に強力で、ここでは私の仕事で最もよく使う機能をいくつか紹介します。</div>
+         
+        <div class="craft-tips">
+          📚 &nbsp;Craft にも公開：<a
+            href="https://www.craft.do/s/20CjMjTupEMXFc"
+            target="_blank"
+          >
+            https://www.craft.do/s/20CjMjTupEMXFc
+          </a>
+        </div>
+          <p>Chromeはブラウザであり、フロントエンドエンジニアにとっては強力なデバッグツールでもあります。以下に、私が仕事で最も頻繁に使用する機能をいくつか紹介します。</p>
+<h3 id="ブレークポイント">ブレークポイント</h3>
+<blockquote>
+<p>これは最も基本的でよく使われる機能ですが、私が面接した多くの外部委託の方はChromeのブレークポイントデバッグの使用方法を知らないか、聞いたことはあるが使い方がわからないというケースが多いです。以下に基本的な操作方法を簡単に説明します。</p>
+</blockquote>
+<p>ブレークポイントを追加するには、コード内に直接<code>debugger</code>式を1行追加するだけで、コードがこの位置に到達すると実行が停止します：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/B64AFAEF-676F-4AB6-BFD9-163096FFD511_2.png" alt="Image" /></p>
+<p>VSCodeでは、黄色の下線は警告を表します。一般的にこの方法は使用されません。なぜなら、この方法は <code>console.log</code> と比べて明らかな利点がなく、むしろ前者よりも簡潔さに欠けるからです。使用後は削除する必要があり、そうしないとコードが利用不可になるためです。</p>
+<p>もう一つの方法は、devtoolsのSourceタブで直接ソースコードを見つけることです。一般的には <code>console.log</code> で出力した後、コンソール右側のファイル名をクリックすると、<code>Sources</code>タブでソースコードを確認できます。左下のフォーマットボタンをクリックして整形した後、コード左側の行番号をクリックしてブレークポイントを設定すれば、デバッグが可能です。下図の通りです：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/C987CDFD-FF9E-45BE-AE3B-BADD657DE1B9_2.png" alt="Image" /></p>
+<p>ブレークポイントの後、図中の赤い部分のボタンは左から右へ順に以下の意味を持ちます：</p>
+<ul>
+<li>
+<p><code>続行実行</code>：クリックすると、ブレークポイントは次のブレークポイントまで直接実行されます。</p>
+</li>
+<li>
+<p><code>ステップオーバー</code>：現在のブレークポイントが関数内でない場合、<code>ステップ</code>と同じく次の行まで実行されます。関数内の場合はその関数をスキップして次の行まで実行されます。</p>
+</li>
+<li>
+<p><code>ステップイン</code>：非同期コードがない場合、<code>ステップ</code>と同じく次の行まで実行されます。非同期コードがある場合、その非同期コードの内部最初の行に入ります。</p>
+</li>
+<li>
+<p><code>ステップアウト</code>：クリックすると、現在の関数から抜け出します。</p>
+</li>
+<li>
+<p><code>ステップ</code>：次の同期コード行を実行します。<code>ステップイン</code>とは異なり、非同期コードの実行をスキップします。現在のブレークポイントが関数にある場合、その関数呼び出しの内部最初の行に入ります。</p>
+</li>
+<li>
+<p><code>一時無効/有効化</code>：初回クリックでブレークポイント機能が一時的に無効化され、ブレークポイントが設定されていないかのようにコードが停止せず実行されます。下部の<code>Breakpoints</code>にあるブレークポイントは全体がグレー表示になります：</p>
+</li>
+</ul>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/91E6FC8D-D932-4412-9D5D-EBC5E92BD8EA_2.png" alt="Image" /></p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/0AC85FEA-3449-49A8-8BF9-A619CF2D924E_2.png" alt="Image" /></p>
+<ul>
+<li><code>エラー発生時にブレークポイントで停止</code> ハイライト後にクリックして有効にすると、コードはあらゆる throw error の場所で自動停止します。catch されているかどうか、HTTPエラーかどうかに関係なく停止します。ただし、必ず下の<code>Pause on caught exceptions</code>にチェックを入れてください。チェックしないと無効になります：</li>
+</ul>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/D99CEF49-A530-412E-B632-307C291C75E0_2.png" alt="Image" /></p>
+<p>この機能は、コードの実行が1回完了し、ページの読み込みが終了して、インタラクションが開始されるタイミングで有効にするのが最適です。そうしないと、ページにアクセスした瞬間にエラーが発生する可能性があり、Reactにおける正当なエラーも含めて、ページが正常に読み込めなくなることがあります。</p>
+<p>公式のブレークポイントの図を直接掲載します：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/17ED1675-13EA-42A3-8B4D-83587390D7EF_2.png" alt="Image" /></p>
+<h5 id="公式図-👆🏻">公式図 👆🏻</h5>
+<p>上記の図にあるボタンの下には、一連のトグル <code>‣</code> 三角記号があり、クリック可能です。順番に以下の通り：</p>
+<ul>
+<li>
+<p><code>Watch</code> はブレークポイントでアクセス可能な任意のコンテキスト変数を監視して表示できます。変数が存在しないかアクセスできない場合（例えば <code>a.b.c</code> にアクセスする際にaが存在しない場合）、「利用不可」と表示されます。ブレークポイントで停止した際、この位置に入力された変数は自動的に表示され、マウスをホバーして（上記の公式図のように）変数を確認する必要がなく、非常に便利です。</p>
+</li>
+<li>
+<p><code>Breakpoints</code> は既存のブレークポイントを表示します。チェックボックスにチェックが入っているものは有効なブレークポイントで、チェックが入っていないものは一時的に無視されるブレークポイントです（一時的にチェックを入れたり外したりできます）。</p>
+</li>
+</ul>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/5F3A5468-63E9-47EF-9E80-461D5988E2C3_2.png" alt="Image" /></p>
+<p>現在実行中のブレークポイントは黄色の背景で表示されます。</p>
+<ul>
+<li>
+<p><code>Threads</code> は現在呼び出されているファイルのスレッドを表し、現在のページのJavaScriptスレッドは<code>Main</code>と表示されます。この部分は通常使用されませんが、<code>Web Worker</code>のデバッグに有用であり、現在のページでChromeブラウザの拡張機能をデバッグする際にも使用できます。</p>
+</li>
+<li>
+<p><code>Scope</code> には現在のブレークポイントでアクセス可能な変数の値が表示されます。JavaScriptのクロージャとコールスタックの特性により、多くのクロージャ内の変数が表示されます：</p>
+</li>
+</ul>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/54D3E302-A251-4411-B366-D69B4C7B6CEE_2.png" alt="Image" /></p>
+<ul>
+<li><code>Call Stack</code> とは関数の呼び出しスタックを指し、最上位が最も最近の呼び出しです。異なる関数をクリックすることで、それらの間を行き来できます。注意点として、ジャンプ時に実際にその位置まで再度実行されるわけではなく、その位置のクロージャ変数を確認するための機能です。</li>
+</ul>
+<h3 id="ui-ブレークポイント">UI ブレークポイント</h3>
+<p>UIの問題がなぜそのように変化するのか分からない、または特定できない状況があります。例えば、同僚がボタンにホバーした際に色が変わるコードを書いたとします。あなたはこのロジックに新たな処理を追加する必要がありますが、彼のコードがどのファイルに書かれているか分かりません（彼は引き継ぎもせずに休暇に入ってしまいました、困った！）。</p>
+<p>ボタンにホバーするとクラス名が追加されることに気づいたら、DOMブレークポイントを使用してデバッグできます。<code>Elements</code>タブで、調査したい要素を右クリックします：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/C9A19CAE-BEC6-4180-B618-73CA95E0CA90_2.png" alt="Image" /></p>
+<p>UIブレークポイントを使用すると、指定したUIイベントが実行される直前のコードの時点で実行を停止できます。UIイベントには以下が含まれます：</p>
+<ul>
+<li>
+<p>サブツリーの変更：サブツリーに追加や属性変更などの変更があった場合、そのロジックが実行される直前でコードを停止します。</p>
+</li>
+<li>
+<p>属性の変更：現在右クリックした要素に変更があった場合、そのロジックが実行される直前でコードを停止します。</p>
+</li>
+<li>
+<p>ノードの削除：現在右クリックした要素が削除された場合、そのロジックが実行される直前でコードを停止します。</p>
+</li>
+</ul>
+<p>例として、飛書ドキュメントでは、blockがフォーカスされるとノードにfocusクラス名が追加されます：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/3690BB50-7AB1-4798-AEE3-98D1EEC495B3_2.png" alt="Image" /></p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/C7500F06-2A4D-47A5-8DE6-2ED7CB43868B_2.png" alt="Image" /></p>
+<p>この時点で <code>attribute modifications</code> を使用してブレークポイントを設定できます：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/9A783370-A839-4995-A5E3-2C1D4421ED7D_2.png" alt="Image" /></p>
+<p>もちろん、デフォルトではオンラインコードは圧縮されています。左下の <code>&#123;&#125;</code> をクリックするとフォーマットされます：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/A4049060-72F8-476F-A1D2-A21B099EF177_2.png" alt="Image" /></p>
+<p>フォーマット後、Chromeは新しいタブを作成し、ファイル名の末尾に<code>:formatted</code>を追加します。</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/CD25F7CA-7ABD-4B32-A28D-0E60935DB707_2.png" alt="Image" /></p>
+<blockquote>
+<p>注意すべき点として、右クリックした要素の変更が親ノードの変更（例えば親ノード全体が削除される場合）である場合、UIブレークポイントは実行されません。</p>
+</blockquote>
+<h3 id="overwrite">Overwrite</h3>
+<blockquote>
+<p>Charlesには「Map js」という類似機能（記憶が正しければ）、ProxyManでは「Map Local」と呼ばれる機能があり、いずれも同じ意味です。</p>
+</blockquote>
+<p>場合によっては、リリース/テストのプロセスが長い（特にエディタのような基本ツールコンポーネントでパッケージ公開が必要な場合）ため、特定のケースを迅速に検証したい時に不便を感じることがあります。そのような場合、ChromeのOverwrite機能が利用できます。</p>
+<p>この機能はCharlesの「Map js」機能と類似しており、ローカルファイルをページのリクエストに対するレスポンスとして使用できます。まず<code>Sources</code>でこの機能を有効にする必要があります。もちろん、ローカルファイルの保存場所が指定されていない場合は、先に場所を指定する必要があります:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/B5ADFA65-51E3-44AD-967F-311A3604D016_2.png" alt="Image" /></p>
+<p>この時、Chromeはそのパスへの完全なアクセス権限が必要であることを通知します。許可すれば問題ありません：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/416C9680-96DF-40AF-861B-6C74EFC6C1DF_2.png" alt="Image" /></p>
+<p>ローカルフォルダを選択した後（ここでは <code>~/Developer/Overwrite</code> フォルダを選択しています）、<code>Overwrite</code> 機能を有効にできます：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/362CACE4-9BBD-41B3-80FD-A69C85EF8209_2.png" alt="Image" /></p>
+<p>次に、<code>Network</code> タブに移動し、css/jsなどのリソースを選択します。ここではjsを選択しました：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/31AB1FF1-4016-4818-AFB3-3B823209319E_2.png" alt="Image" /></p>
+<p>注意してください。<code>Sources</code> で <code>Overwrite</code> を有効にしていない場合、ここに <code>Save for overrides</code> は表示されません。</p>
+<p>その後、このファイルを自由に編集し、ページをリフレッシュして変更後の効果を確認できます。</p>
+<p>留意点として、jsファイルのリクエストにタイムスタンプが付いている場合、Overwriteは効果を発揮しません。Chromeはファイルをマッピングする際に厳密なパスマッチングを使用するためです。</p>
+<h3 id="スニペット">スニペット</h3>
+<p>正確にはこれは「デバッグ方法」とは言えませんが、普段のコード検証用のスニペットもここに保存しています。Sublime（入力済みの変数を自動補完できる）のような感じで、とても便利です：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/E231449D-FED8-4E4E-8446-D6A3AAEC87A4_2.png" alt="Image" /></p>
+<h3 id="ファイルシステム">ファイルシステム</h3>
+<p>この機能は上記の機能と同じ場所にあり、ブラウザ内での変更をリアルタイムでローカルファイルシステムに同期するために使用されます。この機能は、Expressのようなサーバーがjs/css/htmlなどを返すシンプルなHTML Webサービスのローカルデバッグ時に適しています。</p>
+<p>しかし、この機能は公式にReactアプリには適さないと明言されています。現在のプロジェクトのほとんどはReactやVueなどのモダンフレームワークで構築されているため、この機能はあまり使用されません。ここでは公式スクリーンショットを掲載します：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/image.png" alt="Image" /></p>
+<h2 id="その他">その他</h2>
+<h3 id="macvim">MacVim</h3>
+<p>上記のOverwriteで取得したjsファイルは一般的に圧縮された本番環境のコードであり、サイズが大きい場合があります。そのため、私は通常Vimで開いてフォーマットします。Vimの設定は手間がかかりますが、MacVimはすぐに使える体験を提供しており、少しカスタマイズするだけでより良い作業環境が得られます。MacVimを使う理由は、そのパフォーマンスの高さにあります。数十MBの大きなファイルでも数秒でフォーマットできます。私は通常、js-beautifyを設定してフォーマットを行います。名前はjs-beautifyですが、js、css、htmlをフォーマットできます。</p>
+<p>js-beautifyを使用するには、まず<code>vim-plug</code>をインストールする必要があります。これはvimプラグインマネージャーです：<a href="https://github.com/junegunn/vim-plug">https://github.com/junegunn/vim-plug</a>。使用方法はこちらを参照してください：<a href="https://github.com/junegunn/vim-plug/wiki/tutorial">https://github.com/junegunn/vim-plug/wiki/tutorial</a>。</p>
+<blockquote>
+<p>注：インストールには「魔法」が必要です。</p>
+</blockquote>
+<p><code>js-beautify</code>はこちらを使用します：<a href="https://github.com/beautify-web/js-beautify">https://github.com/beautify-web/js-beautify</a>。</p>
+<p>これは私のvim設定です。<code>[]</code>ショートカットキーを<code>js-beautify</code>の呼び出しに割り当てており、毎回コマンドを入力する必要がありません：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">set number<br>set relativenumber<br>set smartindent<br>set autoindent<br>set hlsearch<br>set display=lastline<br>set scrolloff=3<br>set laststatus=2<br>set showmatch<br>set ruler<br>set guifont=Monaco:h12<br>syntax on<br>autocmd FileType *.js setlocal equalprg=js-beautify\ --stdin<br>nmap [] :%!js-beautify&lt;CR&gt;<br>colorscheme evening<br>call plug#begin(has(&#x27;nvim&#x27;) ? stdpath(&#x27;data&#x27;) . &#x27;/plugged&#x27; : &#x27;~/.vim/plugged&#x27;)<br>Plug &#x27;jelera/vim-javascript-syntax&#x27;<br>call plug#end()<br>if !has(&#x27;gui&#x27;)<br>    set term=$TERM<br>endif<br><br></code></pre></td></tr></table></figure>
+<h3 id="vscode">VSCode</h3>
+<p>VSCodeにもブレークポイントデバッグ機能があります（Chromeカーネルのおかげです）。ただし、Nodeアプリケーションのみをデバッグできます（ブラウザ拡張機能と組み合わせてWebアプリケーションをデバッグすることも可能ですが、すでにChromeがあるため必要ありません）。基本的な使用方法はChromeと似ているので、ここでは説明しません。画像を載せておきます：</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/the-use-of-chrome-devtools/D7AD7683-F0C4-46D2-8632-2ADB519B230C_2.png" alt="Image" /></p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          この記事の初出:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/the-use-of-chrome-devtools.ja.html"
+            title="Chrome のよく使うデバッグ方法とその他"
+          >
+            Chrome のよく使うデバッグ方法とその他 - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">目次</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>ブログ主より：</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        人生の重要な選択に直面したとき、最善の方法を誰かが教えてくれて、貴重な時間を無駄にせずに済めばと、私はよく願っています。だからこそ、自分の経験を踏まえて頻繁にブログを書き、広大なインターネットのこの小さな片隅に、私にとって一度きりの人生経験を記録し、助けを求める人々の力になれればと思っています。
+    </div>
+    <hr>
+    
+    <h5><a href="/ja/archive/">人気のタグ</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技術"
+                rel="188">技術</a>
+        
+            <a data-sort="0200"
+                href="/ja/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="108">生活</a>
+        
+            <a data-sort="0264"
+                href="/ja/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="いじり"
+                rel="44">いじり</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="コツ"
+                rel="32">コツ</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="チュートリアル"
+                rel="32">チュートリアル</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻訳"
+                rel="24">翻訳</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="経験"
+                rel="20">経験</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="グルメ"
+                rel="20">グルメ</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体験"
+                rel="16">初体験</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="ワークフロー"
+                rel="16">ワークフロー</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="プラグイン"
+                rel="16">プラグイン</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="ネットワーク"
+                rel="16">ネットワーク</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用感"
+                rel="12">使用感</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="まとめ"
+                rel="12">まとめ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="サーバー"
+                rel="12">サーバー</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="ルーター"
+                rel="12">ルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="ソフトルーター"
+                rel="12">ソフトルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="エッセイ"
+                rel="12">エッセイ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9B%86%E6%88%90"
+                title="統合"
+                rel="12">統合</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="8">主食</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="最適化"
+                rel="8">最適化</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%8D%83%E5%85%86"
+                title="ギガビット"
+                rel="8">ギガビット</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="8">大事</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="ツール"
+                rel="8">ツール</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="バイパスルーター"
+                rel="8">バイパスルーター</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="フレームワーク"
+                rel="8">フレームワーク</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="足湯タイム"
+                rel="8">足湯タイム</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="テスト"
+                rel="8">テスト</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="テスラ"
+                rel="8">テスラ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="エディタ"
+                rel="8">エディタ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="動画"
+                rel="8">動画</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="デバッグ"
+                rel="8">デバッグ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BD%A6"
+                title="車"
+                rel="8">車</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="移行"
+                rel="8">移行</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="東北料理"
+                rel="4">東北料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="住宅購入"
+                rel="4">住宅購入</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="プロキシ"
+                rel="4">プロキシ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="フルスタック"
+                rel="4">フルスタック</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="北欧神話"
+                rel="4">北欧神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="共同編集"
+                rel="4">共同編集</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="圧縮"
+                rel="4">圧縮</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="クレイトス"
+                rel="4">クレイトス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="家庭料理"
+                rel="4">家庭料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="富強"
+                rel="4">富強</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="比較"
+                rel="4">比較</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="四川料理"
+                rel="4">四川料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="仕事の経験"
+                rel="4">仕事の経験</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="ギリシャ神話"
+                rel="4">ギリシャ神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="定番ソフト"
+                rel="4">定番ソフト</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="オープンソース"
+                rel="4">オープンソース</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="開封"
+                rel="4">開封</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="ゴッド・オブ・ウォー"
+                rel="4">ゴッド・オブ・ウォー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIMカード"
+                rel="4">SIMカード</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%8B%93%E6%89%91"
+                title="トポロジー"
+                rel="4">トポロジー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="物語"
+                rel="4">物語</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="データ構造"
+                rel="4">データ構造</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="旅行"
+                rel="4">旅行</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="日常"
+                rel="4">日常</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="日本"
+                rel="4">日本</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="サービス"
+                rel="4">サービス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="フォーマット"
+                rel="4">フォーマット</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A2%A6"
+                title="夢"
+                rel="4">夢</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="ブラウザ"
+                rel="4">ブラウザ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="ゲーム"
+                rel="4">ゲーム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="愚痴"
+                rel="4">愚痴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="ユーザープライバシー"
+                rel="4">ユーザープライバシー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="アルゴリズム"
+                rel="4">アルゴリズム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="詳細"
+                rel="4">詳細</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="イヤホン"
+                rel="4">イヤホン</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="自由"
+                rel="4">自由</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="計画"
+                rel="4">計画</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="設定"
+                rel="4">設定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="落とし穴"
+                rel="4">落とし穴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="変換"
+                rel="4">変換</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="技術選定"
+                rel="4">技術選定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="面接"
+                rel="4">面接</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>コラム</h5>
+    <div class="tags">
+        <a href="/projects">オープンソース</a>
+        <a href="/book-list">技術書リスト</a>
+        <a href="/subscribe">サブスク＆有料アプリ</a>
+        <a href="/my-food">グルメのおすすめ</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>友達</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">中国版</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="Chrome のよく使うデバッグ方法とその他"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ja"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ja/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

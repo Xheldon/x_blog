@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      「번역」Ace, CodeMirror 및 Monaco: 웹 코드 편집기 비교 - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="최근 이 외국어 글을 보고 괜찮다고 생각했는데, 여기서 비교하는 것은 &#39;코드 편집기&#39;이며, 리치 텍스트 편집기와는 약간 차이가 있다는 점에 유의하세요.">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="「번역」Ace, CodeMirror 및 Monaco: 웹 코드 편집기 비교 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2022-1-16T3:57:18"> 
+              
+                  
+                    <meta property="article:tag" content="에디터">
+                    
+                    <meta property="article:tag" content="번역">
+                    
+                      
+                          
+                            <meta name="og:description" content="최근 이 외국어 글을 보고 괜찮다고 생각했는데, 여기서 비교하는 것은 &#39;코드 편집기&#39;이며, 리치 텍스트 편집기와는 약간 차이가 있다는 점에 유의하세요.">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ko/tech/a-comparison-of-code-editor.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ko_KR">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ko/tech/a-comparison-of-code-editor.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/a-comparison-of-code-editor.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/a-comparison-of-code-editor.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/a-comparison-of-code-editor.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/a-comparison-of-code-editor.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/a-comparison-of-code-editor.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ko/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ko/">홈</a>
+            </li>
+            <li>
+              <a href="/ko/about/">소개</a>
+            </li>
+            <li>
+              <a href="/ko/donate/">후원</a>
+            </li>
+            <li>
+              <a href="/ko/archive/">아카이브</a>
+            </li>
+            <li>
+              <a href="/ko/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">한국어</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/a-comparison-of-code-editor.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/a-comparison-of-code-editor.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/a-comparison-of-code-editor.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item active"><a href="/ko/tech/a-comparison-of-code-editor.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ko/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                            title="에디터">
+                            에디터
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E7%BF%BB%E8%AF%91"
+                            title="번역">
+                            번역
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        「번역」Ace, CodeMirror 및 Monaco: 웹 코드 편집기 비교
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 작성일 2022년 01월 16일</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 수정일 2022년 05월 29일</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;참고: 이 글이 작성된 지 이미
+          <code id="from_time"></code> 일이 지났습니다. 시의성에 유의하세요
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1642348638000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+         
+        <div class="reference-tips">
+          🔗 &nbsp;원문：<a href="https://blog.replit.com/code-editors" target="_blank">
+            https://blog.replit.com/code-editors
+          </a>
+        </div>
+          
+        <div class="callout-tips">🖥 &nbsp;설명：최근 이 외국어 글을 보고 괜찮다고 생각했는데, 여기서 비교하는 것은 &#39;코드 편집기&#39;이며, 리치 텍스트 편집기와는 약간 차이가 있다는 점에 유의하세요.</div>
+         
+        <div class="craft-tips">
+          📚 &nbsp;Craft에도 게시：<a
+            href="https://www.craft.do/s/anoVgw55pjshwp"
+            target="_blank"
+          >
+            https://www.craft.do/s/anoVgw55pjshwp
+          </a>
+        </div>
+          <p>저는 약 6년 동안 Replit에서 일해왔으며, 팀이 성장함에 따라 제품의 IDE(우리는 이를 &quot;작업 공간&quot;이라고 부릅니다) 부분에 집중해왔습니다. 당연히 코드 편집기에 점점 더 집중하게 되었죠. 우리만의 요구사항을 충족하는 코드 편집기를 만들 것을 고려했지만, 코드 편집기 개발의 복잡성, 풍부한 오픈소스 옵션, 그리고 우리 팀의 규모를 고려할 때 이는 예측 불가능한 도전이 될 것 같아서, 우리만의 편집기를 구축하는 데 시간을 할애하지 않기로 했습니다. 저는 운 좋게(그리고 고통스럽게도) <a href="https://ace.c9.io">Ace</a>, <a href="https://microsoft.github.io/monaco-editor/">Monaco</a>, <a href="https://codemirror.net/6/">CodeMirror</a> 이 세 가지 코드 편집기를 프로덕션 환경에서 사용해본 경험이 있는데, 때로는 동시에 사용하기도 했습니다(자세한 내용은 후술하겠습니다). 이 글에서는 Replit의 역사와 제가 편집기를 사용한 경험, 그리고 이 둘이 어떻게 상호작용했는지 돌아보려 합니다.</p>
+<p>이 글을 읽는 목적이 세 코드 편집器的 직접적인 비교라면, 마지막 부분으로 바로 이동해 주세요. 요약과 비교는 그곳에 정리해 두었습니다.</p>
+<h2 id="이야기">이야기</h2>
+<h3 id="서곡-ace">서곡: Ace</h3>
+<p>Replit 초기, 약 2011년에는 코드 편집기가 없었습니다. 우리는 단순한 입력창이 있는 콘솔, 순수한 <a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop">REPL</a> 인터페이스를 사용했습니다. 더 복잡한 프로그램을 만들려면 코드 편집기를 추가하는 것이 시급한 과제였죠. 코드 편집기는 구문 강조, 편집기 단축키, 자동 들여쓰기, 검색 및 교체 등의 기능을 제공했습니다. 당시 Cloud9에서 출시한 Ace는 기능이 풍부하고 성능이 뛰어난 웹 기반 코드 편집기였습니다. 현재까지도 Ace 편집기는 활발히 유지보수되고 있으며, 다국어 지원, 키 바인딩, 브라우저에서의 원활한 실행 등을 지원하는 풍부한 생태계를 자랑합니다.</p>
+<blockquote>
+<p>👇🏻 원래의 Replit 인터페이스와 Ace 코드 편집기 비교. 이 스크린샷은 2011년부터 Replit의 오픈소스 버전을 재호스팅해온 우리 커뮤니티 멤버가 제공했습니다 <a href="https://www.repldotit.com">https://www.repldotit.com</a>.</p>
+</blockquote>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/a-comparison-of-code-editor/FCE24555-97DB-4453-9DA4-A8C9BE00FF52_2.png" alt="Image" /></p>
+<p>우리는 2017년경까지 Ace를 사용하다가 Monaco로 전환했습니다. Ace는 여전히 유지보수되고 있지만, 유지보수 담당자는 단 한 명뿐입니다. 아마존이 Cloud9을 인수한 후, 오픈소스 프로젝트의 우선순위를 재조정한 것으로 보입니다. 에디터는 이전처럼 자주 업데이트되지 않았고, Github의 이슈는 쌓이기 시작했으며, 유지보수 담당자도 거의 새로운 기능을 추가하지 않았습니다. 전반적으로 Ace의 API는 개발자들에게 구식이고 투박하게 느껴지기 시작했습니다. 유지보수 담당자는 훌륭하지만, 그가 할 수 있는 것에도 한계가 있었습니다.</p>
+<h3 id="인터루드-monaco">인터루드: Monaco</h3>
+<p>아마도 이미 알고 계시겠지만, VSCode는 Monaco 에디터를 사용합니다. 사실, 마이크로소프트는 Monaco를 기반으로 VSCode를 구축했습니다. 우리가 코드 에디터를 Monaco로 전환한다면, VSCode의 개발 대가들로부터 모든 멋진 업데이트와 기능을 얻을 수 있을 거라 생각했습니다. Monaco는 우리 웹사이트와 잘 어울리는 현대적인 사용자 인터페이스를 제공하며, JavaScript, HTML, CSS에 대한 훌륭한 자동 완성 기능을 가지고 있습니다. 또한 LSP(Language-Server-Protocol)에 대한 언어 클라이언트를 쉽게 작성할 수 있는 API도 있는 것 같습니다. 그들의 API 문서는 훌륭하며, Typescript 정의가 포함되어 있어 개발 관점에서 더 많은 확장 기능을 제공합니다.</p>
+<blockquote>
+<p>👇🏻Monaco 에디터 스크린샷(기본 설정), 깔끔하고 정돈된 UI를 확인하세요.</p>
+</blockquote>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/a-comparison-of-code-editor/DE35EC5C-5470-49D5-ADFE-8FCAD8A71B29_2.png" alt="Image" /></p>
+<p>Ace에서 Monaco로 전환하는 데는 대가가 따릅니다. 후자는 Ace의 많은 기능이 부족하지만, 우리는 커뮤니티의 열기와 기여로 인해 곧 Ace를 능가할 것이라고 믿습니다. (Ace에 비해) Monaco의 첫 번째 문제는 많은 언어 지원이 부족하다는 점입니다. VSCode에는 많은 언어 지원이 있지만, 이는 브라우저가 아닌 NodeJS/Electron의 능력에 의존합니다. 따라서 우리는 Monaco가 더 많은 언어를 지원할 수 있도록 코드 기여를 시작했습니다. Scala, Julia, Scheme, Clojure 등 다양한 언어 지원과 Python 같은 언어의 버그 수정을 추가했습니다. 나는 Monaco용 문법 강조 표시기를 작성하여 어댑터를 통해 Ace가 지원하는 모든 언어를 지원할 수 있도록 했습니다. 마지막으로, Monaco가 Ace에 비해 부족한 기능은 Vim과 Emacs의 키 바인딩이지만, 곧 누군가가 NPM에서 이러한 기능을 지원하는 패키지를 릴리스할 것입니다.</p>
+<p>Monaco의 또 다른 문제는 빌드 도구입니다. Microsoft가 웹 기술로 Monaco를 구축했지만, 현재의 웹 생태계 및 빌드 도구와 잘 통합되지 않습니다. Monaco를 Webpack Dll로 사전 컴파일하고 많은 Webpack 구성을 추가해야만 정상적으로 작동했습니다. 이러한 추가 작업은 고통스러웠고, 우리의 빌드 시스템 복잡성과 비용을 증가시켰습니다. 몇 달 후, Microsoft는 Monaco용 Webpack 플러그인을 발표했는데, 이는 약간의 개선을 가져왔지만 완벽하지 않았습니다. 특히 우리가 프론트엔드를 Next.js로 옮겼을 때 더욱 그랬습니다. 안타깝게도 Monaco는 코드를 지연 로드하고 분할하는 간단한 방법도 없어서, 코드를 작은 파일로 분할하여 로드 속도를 높이는 것은 불가능했습니다. 이 문제로 인해 우리 프로젝트의 크기가 최대 5M까지 증가했는데, 이는 쉽게 무시할 수 있는 문제가 아닙니다.</p>
+<p>Monaco는 모바일에서도 잘 작동하지 않습니다. 우리는 이 부분을 아웃소싱하려고 시도했지만, 아무도 수주하지 않았습니다. 그래서 제가 직접 처리하려고 했을 때, Monaco 코드베이스를 살펴보고 읽기가 매우 어렵다는 것을 깨달았습니다. Monaco 에디터 자체가 VSCode를 먼저 구축한 후 분리된 것처럼, VSCode 코드베이스의 다른 부분과 너무 많이 결합되어 있습니다. VSCode 자체도 코드가 잘 작성되지 않았을 뿐만 아니라, <a href="https://web.archive.org/web/20150502200822/https://www.zdnet.com/article/microsofts-browser-based-dev-toolbox-how-monaco-came-to-be/">가장 오래된 Typescript 프로젝트</a> 중 하나일 수 있으며 <a href="https://www.youtube.com/watch?v=FyCYva9DhsI">Microsoft의 대기업 스타일</a>로 작성되었습니다. 우리는 모바일에서 꽤 쓸만한 것을 만들었지만, VSCode에 대한 우리의 수정 사항이 VSCode의 메인 브랜치에 병합되지 않을 것이며, 현재의 모바일 버전은 프로덕션 환경에서 사용할 수 있을 때까지 아직 멀었기 때문에 VSCode 포크를 유지하고 싶지 않았습니다. 따라서 저는 휴대폰에서 계속 Ace 에디터를 사용하는 것이 최선의 해결책이라고 결정했습니다. 완벽하지는 않지만, 괜찮습니다(사용할 수는 있습니다).</p>
+<p>따라서 우리는 Replit에서 최종적으로 두 개의 코드 편집기를 갖게 되었습니다: 하나는 PC용이고 다른 하나는 모바일용입니다. PC용의 모든 새로운 기능은 Ace(모바일 버전)로 이식되어야 했습니다. 우리는 Ace를 위해 LSP 기능을 지원하는 언어 클라이언트를 작성해야 했고, 여러 사용자가 동시에 편집할 수 있도록 Ace용 작업 변환 어댑터(역자 주: OT 변환?)도 작성해야 했습니다. 많은 경우에 우리는 기능을 이식할 시간조차 없었습니다. 예를 들어, 우리는 코드 멀티스레딩 기능을 모바일로 이식하지 못했습니다.</p>
+<h3 id="뒷이야기-codemirror">뒷이야기: CodeMirror</h3>
+<p>2018년 말, Marijn은 CodeMirror를 <a href="https://web.archive.org/web/20180830201622/https://codemirror.net/6/%EB%A1%9C">https://web.archive.org/web/20180830201622/https://codemirror.net/6/로</a> 재작성하여 버전 6으로 업데이트할 것을 발표했고, <a href="https://web.archive.org/web/20181109055050/https://codemirror.net/6/design.html">훌륭한 설계 문서</a>를 함께 공개했습니다. 재작성의 주요 동기 중 하나는 터치 디바이스 지원을 추가하는 것이었습니다. 이 시기에 우리는 모바일(일반적인 의미에서)이 우리 전략의 중요한 부분이라는 것을 깨달았습니다; 다음 10억 명의 소프트웨어 창작자들이 온라인에서 작업할 수 있도록 하려면 모바일에서도 사용 가능해야 했습니다. CodeMirror는 JavaScript/라이브러리 레벨에서 완전히 구현하는 대신(Google Docs의 Google Closure처럼) contenteditable을 통해 네이티브 브라우저의 텍스트 편집 기능을 활용함으로써 모바일 사용성을 실현할 계획이었습니다.</p>
+<p><a href="https://prosemirror.net">ProseMirror</a>는 CodeMirror 6의 API 디자인에 영감을 주었으며, Marijn의 또 다른 프로젝트입니다. 저는 당시 개발 중이던 WYSIWYG 프로젝트에서 이를 사용해 본 적이 있고 매우 마음에 들었습니다. ProseMirror는 매우 작은 코어를 가지고 있으며, 다른 모든 기능은 플러그인 시스템을 통해 구현됩니다. 편집기 라이브러리로서 모듈화되고, 플러그인 가능하며, 기능적이며, 믿을 수 없을 정도로 권한을 부여받은 느낌을 줍니다. 그래서 저는 회사가 새 버전의 CodeMirror 개발을 후원하도록 결정했고, 심지어 직접 프로젝트에 자금을 지원하기도 했습니다.</p>
+<p>작년에 CodeMirror 6의 베타 버전이 출시되었을 때, 저와 팀원들은 매우 흥분되어 Replit에 추가하기 시작했습니다. 우리는 편집기를 사용해 보기 시작했고, 학습 곡선이 다소 가파르긴 하지만 결국 &quot;이해&quot;하게 되면 슈퍼-코드-편집기-개발자가 된 기분이 들었습니다. CodeMirror 6를 프로젝트에 적용하기 위해, 저는 점진적으로 프로젝트에 통합하기 시작했습니다. 먼저 Replit에서 읽기 전용 편집기로 추가한 다음, 웹사이트의 다른 코드 편집 가능한 부분들에 추가하기 시작했습니다.</p>
+<p>올해 초, 우리는 ‘믿음의 도약’(역자 주: 어쌔신 크리드에서 유래한 표현)을 시작하며 CodeMirror를 모바일 환경에 통합하기 시작했습니다. 사용자 관점에서 보면 CodeMirror는 객관적으로 모바일에서 사용 가능한 다른 어떤 에디터보다 우수합니다. 아직 우리가 지원하는 모든 언어와 일부 기능을 완전히 지원하지는 않지만, 모바일 통합은 그만한 가치가 있었습니다. 이 통합 이후의 사용자 피드백은 우리 예상을 훨씬 뛰어넘었습니다. CodeMirror를 사용한 사용자 중(역자 주: 소규모 테스트 또는 신/구버전 전환 기능을 통해 에디터 사용 통계를 수집한 것으로 추정) 모바일 사용자 비율이 약 70%에 달했습니다! CodeMirror는 모바일에서 Ace를 사용할 때보다 사용자 유지율이 더 높았습니다. CodeMirror의 플러그 가능성(제공하는 무한한 가능성)을 고려할 때, 이렇게 고무적인 결과는 모바일에서 더 많은 가치를 제공하기 위한 시작에 불과하다는 것이 분명해졌습니다. 우리는 먼저 PC 버전에서 제공되지만 모바일에는 없는 기능들을 모바일 CodeMirror로 이식하는 작업부터 시작할 것입니다.</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2022/a-comparison-of-code-editor/7F0728B9-BE37-44CF-A518-F4020E276758_2.png" alt="Image" /></p>
+<p>CodeMirror 6의 커뮤니티는 아직 초기 단계에 있기 때문에, 우리는 많은 부분을 직접 구현하거나 특정 기능을 위해 후원금을 지불하고 Marijn과 함께 버그를 해결해야 했습니다. 우리는 우리의 기여가 CodeMirror 커뮤니티를 이끌고 보답하는 데 도움이 되기를 바랍니다. 여기서 우리가 적극적으로 개발 중인 기능 목록을 소개하겠습니다: Vim 모드, Emacs 모드, LSP 클라이언트, 들여쓰기 표시, CSS 색상 선택기, 언어 파서, 그리고 앞으로 데스크톱 버전의 CodeMirror를 출시할 때 게시물에서 발표할 많은 다른 기능들입니다. 저는 사람들이 새로운 CodeMirror에 대해 흥분하고 있으며, 앞으로 1~2년 안에 커뮤니티와 생태계 사용자 수가 급증할 것이라고 생각합니다. 많은 사람들이 프로덕션 환경에서 사용하기를 간절히 원하고 있습니다.</p>
+<p>우리는 CodeMirror에 점점 더 많은 기능을 구축하고, 코드 접근성을 높이는 과정에서 필수적인 부분으로 만들 수 있어 매우 기쁩니다. 우리는 항상 사용자 경험을 우리가 원하는 방식으로 구축하기 위해 결국에는 자신만의 에디터를 개발해야 한다고 말해왔습니다. 그럼에도 불구하고, 우리는 CodeMirror로 할 수 있는 일에 대해 매우 만족하고 있습니다.</p>
+<h2 id="battle-섹션">Battle 섹션</h2>
+<p>여러분이 적합한 코드 에디터를 찾는 데 도움이 되도록 요약해 보겠습니다. 다시 말하지만, 이는 제 개인적인 경험일 뿐이며 여러분의 경험과 다를 수 있습니다.</p>
+<p>각 섹션에서 저는 에디터에 1점에서 3점까지 점수를 매길 것입니다. 3점이 가장 높은 점수입니다.</p>
+<h2 id="안정성">안정성</h2>
+<table>
+<thead>
+<tr>
+<th>에디터</th>
+<th>점수</th>
+<th>설명</th>
+</tr>
+</thead>
+</table>
+<p>| Ace          | ⭐️⭐️⭐️ | 매우 안정적이고 신뢰할 수 있습니다. 이 편집기는 역사적 검증을 거쳤으며, 10년 이상 다양한 도구를 지원해 왔습니다. 제가 사용한 모든 기간 동안 단 한 번도 break change를 경험한 적이 없습니다. 일부 버전에서 작은 버그가 도입되기도 했지만, 빠르게 수정되었습니다.                                                                                                                                                                                                                                                                                   |<br />
+| Monaco       | ⭐️⭐️    | Monaco는 안정적인 편집 경험을 제공합니다; 물론 몇 가지 버그도 있지만, VSCode의 릴리스와 함께 빠르게 수정되며, 유지 관리자들은 지속적으로 새로운 버전을 출시하는 데 능숙합니다. 1점을 깎은 이유는 API가 가장 안정적이지 않고 자주 작은 변화가 있어 성가시기 때문입니다. Microsoft는 아직 Monaco의 1.0 버전을 출시하지 않았습니다.                                                                                                                                                                                                                                           |<br />
+| CodeMirror 6 | ⭐️       | CodeMirror는 아직 베타 단계에 있으며, 이 프로젝트에는 많은 사소한 버그가 있습니다. 하지만 Marijn은 빠르게 대응하고 수정합니다. 비록 프로젝트가 여전히 베타 단계이지만, Marijn이 현재의 API에 만족하고 있어 큰 break change는 없을 것이라고 생각합니다. CodeMirror 6는 이미 많은 기능에 채택되기 시작했으며, Chrome의 개발자 도구도 <a href="https://github.com/ChromeDevTools/devtools-frontend/commit/6da128c3ae6b6dd0d4602059c23f8c4003823f5b#diff-592cac14b3eeb584a09b80d2696a73223ad0a79e4a8e6765f875a6f4492b4525">내년부터 코드 편집기로 사용할 계획</a>일 수 있습니다. |</p>
+<h2 id="즉시-사용-가능한-경험">즉시 사용 가능한 경험</h2>
+<table>
+<thead>
+<tr>
+<th>에디터</th>
+<th>평점</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ace</td>
+<td>⭐️⭐️</td>
+<td>뛰어난 즉시 사용 경험을 제공하며, 많은 기능과 언어를 지원합니다. 기본적인 JavaScript Lint 기능(JSHint 사용)과 자동 완성 기능도 포함되어 있습니다. 다만 사용자 인터페이스가 약간 구식이라 때로는 다소 혼란스러울 수 있습니다.</td>
+</tr>
+<tr>
+<td>Monaco</td>
+<td>⭐️⭐️⭐️</td>
+<td>매우 정교한 사용자 인터페이스를 가지고 있습니다. 이 에디터는 HTML, CSS, JavaScript에 대한 코드 힌트 지원을 기본적으로 제공하는 등 많은 기능이 내장되어 있습니다.</td>
+</tr>
+<tr>
+<td>CodeMirror 6</td>
+<td>⭐️⭐️</td>
+<td>에디터가 정상적으로 작동하려면 약간의 설정이 필요합니다. 이는 프로젝트의 모듈화 특성과의 균형을 맞추는 과정입니다. <a href="https://codemirror.net/6/docs/ref/#basic-setup">basic-setup 패키지</a>가 있으며, 이는 여러 모듈을 결합하고 코어 모듈을 다시 내보냅니다. 사용자 인터페이스는 훌륭합니다.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="모듈화-빌드-도구-및-발전-궤적">모듈화, 빌드 도구 및 발전 궤적</h2>
+<table>
+<thead>
+<tr>
+<th>에디터</th>
+<th>평점</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ace</td>
+<td>⭐️⭐️</td>
+<td>Ace 자체는 매우 작고 모듈화도 지원합니다. 다른 모듈을 지연 로딩(lazy loading)으로 로드할 수 있습니다. 그러나 Ace는 비교적 오래된 프로젝트이며 자체 모듈 관리 시스템을 갖추고 있어 프로그램에서 작동시키려면 약간의 설정이 필요합니다.</td>
+</tr>
+<tr>
+<td>Monaco</td>
+<td>⭐️</td>
+<td>Monaco 에디터는 번들 크기가 매우 큽니다. 약 5MB 정도입니다. 또한 제가 아는 한, 지연 로딩은 불가능합니다. Monaco는 빌드 시스템에 몇 가지 특별한 설정이 필요하며, 이는 기존 시스템과 통합하기 어렵게 만듭니다.</td>
+</tr>
+<tr>
+<td>CodeMirror 6</td>
+<td>⭐️⭐️</td>
+<td>CodeMirror는 현대적인 기술로 구축되었습니다. 번들러를 사용하지 않고도 ES6 모듈로 가져올 수 있습니다. 지연 로딩 기능은 매우 간단합니다. ES6의 동적 임포트 기능만 있으면 됩니다. 이 프로젝트는 매우 모듈화되어 있으며 에디터 코어는 매우 작습니다.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="확장성-및-고급-기능">확장성 및 고급 기능</h2>
+<p>| 에디터       | 점수      | 설명                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |</p>
+<p>| Ace          | ⭐️⭐️    | Ace는 많은 구성 옵션을 제공하며 효과적이고 확장 포인트도 훌륭합니다. 비록 매우 범용적이지는 않지만, 많은 고급 기능을 구현할 수 있게 해줍니다. API는 약간 구식으로 느껴지지만 확실히 안정적입니다. 프로젝트를 빠르게 실험해 볼 필요가 있을 때, Ace를 쉽게 선택하는 이유는 코드가 읽기 쉽고 핵심 코드가 거의 10년 동안 변경되지 않았기 때문입니다.                                                                                                                                                                                                                                                                                                          |<br />
+| Monaco       | ⭐️⭐️    | Monaco는 다양한 구성 옵션을 제공하며 편집기의 동작과 기본 기능을 수정할 수 있는 API를 제공합니다. 그럼에도 불구하고 확장 가능한 부분은 제한적이고 지나치게 구체적입니다. 종종 편집기와 머리를 맞대고 해킹 패치를 적용해야 하는데, 이는 매우 위험하고 수렴하기 어려운 작업입니다. 코드베이스가 쉽게 읽히지 않고 내부 코드가 지속적으로 변경되기 때문입니다. 결국, 우리는 Monaco 업그레이드를 중단했는데, 앞으로도 우리가 필요로 하는 일부 기능을 지원할 가능성이 없기 때문입니다.                                                                                                                                                                                                                                             |</p>
+<p>| CodeMirror 6 | ⭐️⭐️⭐️ | CodeMirror 6는 처음부터 확장성을 염두에 두고 설계되었으며, 이는 주요 설계 원칙 중 하나입니다. 이러한 확장성 덕분에 CodeMirror는 모듈화가 가능합니다. 실제로 코어 자체(@codemirror/view 및 @codemirror/state)는 본질적으로 확장 가능한 textarea입니다. 모든 ‘코드’ 기능은 확장으로 구현됩니다. 구문 강조 및 줄 번호와 같은 기본 요소도 확장 및 패키지로 구현됩니다. 자신만의 확장을 만들 때 이러한 공식 패키지는 훌륭한 예시 자료가 됩니다. CodeMirror를 사용하여 화려한 플러그인을 구축하는 것은 식은 죽 먹기이며, 플러그인 개발자로서 믿기 힘들 정도로 강력한 지원을 제공합니다! 확장 포인트는 매우 유연하므로, 여러분은 프로그램 세계의 신이 되어 원하는 모든 기능을 자유롭게 구현하고 그 결과를 책임질 수 있습니다. |</p>
+<h2 id="커뮤니티와-문서">커뮤니티와 문서</h2>
+<table>
+<thead>
+<tr>
+<th>에디터</th>
+<th>평점</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ace</td>
+<td>⭐️⭐️</td>
+<td>수년 동안 Ace는 풍부한 생태계와 Ace 사용에 관한 수많은 글과 블로그를 축적해왔습니다. 모든 언어의 하이라이트 기능을 지원하며 커뮤니티에서 제공하는 다양한 툴킷을 보유하고 있습니다. API 문서가 가장 뛰어나지는 않지만 대부분의 사용 시나리오에는 충분합니다. 구조화된(약간 오래된) 코드베이스는 훌륭한 (문서) 보완 자료입니다. 온라인에는 입문 가이드도 있습니다.</td>
+</tr>
+</tbody>
+</table>
+<p>| Monaco       | ⭐️⭐️    | Monaco은 2018년경부터 본격적으로 발전하기 시작했지만, 커뮤니티가 빠르게 쇠퇴하는 것을 느낄 수 있습니다. NPM에서 커뮤니티에서 유지 관리하는 다양한 패키지를 찾을 수 있습니다. Monaco의 API 문서 자체는 이미 꽤 좋은 수준이지만, 공식 가이드가 없어 초보자들이 시작하기 어렵게 느낄 수 있습니다. 프로젝트 구조가 복잡하기 때문에 코드를 읽는 것이 API 문서를 보완하는 자료로 사용하기 어렵습니다.                                                                     |<br />
+| CodeMirror 6 | ⭐️⭐️⭐️ | CodeMirror 6에 대한 개발 동력이 커뮤니티에서 많이 느껴집니다. 우리는 CodeMirror 6에 꼭 필요하다고 생각하는 몇 가지 패키지로 커뮤니티 발전을 돕기 위해 노력하고 있으니 기대해주세요! 문서는 훌륭하며 시간이 지남에 따라 더 나아질 것이라 기대합니다. 문서 시스템에는 훌륭한 입문 글과 많은 예제가 있으며 상세한 설명이 함께 제공됩니다. 위에서 확장성에 대해 언급했듯이, 대부분의 기능은 확장을 통해 구현되며, 이러한 기능 패키지는 원하는 기능을 구현할 때 '최고의 동료’가 될 것입니다. |</p>
+<h2 id="성능">성능</h2>
+<h5 id="면책-조항-성능-평가에는-명확한-벤치마크-데이터가-없습니다">면책 조항: 성능 평가에는 명확한 벤치마크 데이터가 없습니다.</h5>
+<table>
+<thead>
+<tr>
+<th>에디터</th>
+<th>평점</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ace</td>
+<td>⭐️⭐️⭐️</td>
+<td>Ace는 브라우저와 머신이 지금만큼 강력하지 않았던 시절에 태어났기 때문에, 현재의 성능은 매우 인상적입니다.</td>
+</tr>
+<tr>
+<td>Monaco</td>
+<td>⭐️⭐️</td>
+<td>Monaco에는 많은 성능 최적화가 있지만 다소 무거울 수 있습니다. Replit에는 저전력 머신을 사용하는 많은 사용자가 있으며, 그들은 Monaco가 전력을 많이 소모한다고 느끼고 있습니다.</td>
+</tr>
+<tr>
+<td>CodeMirror 6</td>
+<td>⭐️⭐️⭐️</td>
+<td>CodeMirror는 지금까지 성능이 우수한데, 이는 작성자가 많은 시간을 성능 최적화에 투자했기 때문입니다.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="모바일-지원">모바일 지원</h2>
+<p>여기서는 평점을 매기지 않겠습니다. 모바일을 지원하는 코드 에디터를 원한다면 사용 가능한 유일한 선택지는 CodeMirror 6입니다. Ace의 모바일 지원이 나쁘지는 않지만 프로덕션 환경에서 사용하기에는 적합하지 않으며, Monaco는 모바일에서 사용할 수 없습니다.</p>
+<p>나는 CodeMirror가 Webview 컴포넌트를 사용하는 네이티브 애플리케이션에서도 적용될 수 있다고 말할 수 있습니다. CodeMirror의 대부분 내용은 직렬화 가능하므로, 네이티브 코드에서 Webview와 상호작용할 수 있습니다.</p>
+<h2 id="감사합니다">감사합니다!</h2>
+<p>이 부분은 저자의 광고 시간으로, 일단 번역하지 않겠습니다.</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          이 글의 최초 게시:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/a-comparison-of-code-editor.ko.html"
+            title="「번역」Ace, CodeMirror 및 Monaco: 웹 코드 편집기 비교"
+          >
+            「번역」Ace, CodeMirror 및 Monaco: 웹 코드 편집기 비교 - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">목차</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>블로거의 말:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        저는 인생의 중요한 선택의 기로에 섰을 때, 누군가 최선의 방법을 알려주어 소중한 시간을 헛되이 보내지 않기를 바라곤 합니다. 그런 마음으로 저는 자주 블로그를 쓰며, 광활한 인터넷의 이 작은 구석에 제게는 단 한 번뿐인 인생 경험을 기록하여 도움이 필요한 분들에게 도움이 되기를 바랍니다.
+    </div>
+    <hr>
+    
+    <h5><a href="/ko/archive/">인기 태그</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="기술"
+                rel="188">기술</a>
+        
+            <a data-sort="0200"
+                href="/ko/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="생활"
+                rel="108">생활</a>
+        
+            <a data-sort="0264"
+                href="/ko/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="삽질"
+                rel="44">삽질</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="팁"
+                rel="32">팁</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="튜토리얼"
+                rel="32">튜토리얼</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="번역"
+                rel="24">번역</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="경험"
+                rel="20">경험</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="미식"
+                rel="20">미식</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="첫인상"
+                rel="16">첫인상</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="워크플로"
+                rel="16">워크플로</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="플러그인"
+                rel="16">플러그인</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="네트워크"
+                rel="16">네트워크</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="사용 경험"
+                rel="12">사용 경험</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="정리"
+                rel="12">정리</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="서버"
+                rel="12">서버</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="라우터"
+                rel="12">라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="소프트 라우터"
+                rel="12">소프트 라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="에세이"
+                rel="12">에세이</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9B%86%E6%88%90"
+                title="통합"
+                rel="12">통합</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="주식"
+                rel="8">주식</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="최적화"
+                rel="8">최적화</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%8D%83%E5%85%86"
+                title="기가비트"
+                rel="8">기가비트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="큰일"
+                rel="8">큰일</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="도구"
+                rel="8">도구</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="바이패스 라우터"
+                rel="8">바이패스 라우터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="프레임워크"
+                rel="8">프레임워크</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="족욕 시간"
+                rel="8">족욕 시간</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="테스트"
+                rel="8">테스트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="테슬라"
+                rel="8">테슬라</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="에디터"
+                rel="8">에디터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="영상"
+                rel="8">영상</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="디버깅"
+                rel="8">디버깅</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BD%A6"
+                title="자동차"
+                rel="8">자동차</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="마이그레이션"
+                rel="8">마이그레이션</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="둥베이 요리"
+                rel="4">둥베이 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="집 사기"
+                rel="4">집 사기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="프록시"
+                rel="4">프록시</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="풀스택"
+                rel="4">풀스택</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="북유럽 신화"
+                rel="4">북유럽 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="협업"
+                rel="4">협업</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="압축"
+                rel="4">압축</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="크레토스"
+                rel="4">크레토스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="가정식"
+                rel="4">가정식</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="부강"
+                rel="4">부강</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="비교"
+                rel="4">비교</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="쓰촨 요리"
+                rel="4">쓰촨 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="업무 경험"
+                rel="4">업무 경험</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="그리스 신화"
+                rel="4">그리스 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="자주 쓰는 앱"
+                rel="4">자주 쓰는 앱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="오픈소스"
+                rel="4">오픈소스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="언박싱"
+                rel="4">언박싱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="갓 오브 워"
+                rel="4">갓 오브 워</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="유심"
+                rel="4">유심</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%8B%93%E6%89%91"
+                title="토폴로지"
+                rel="4">토폴로지</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="이야기"
+                rel="4">이야기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="자료구조"
+                rel="4">자료구조</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="여행"
+                rel="4">여행</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="일상"
+                rel="4">일상</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="일본"
+                rel="4">일본</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="서비스"
+                rel="4">서비스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="포맷"
+                rel="4">포맷</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A2%A6"
+                title="꿈"
+                rel="4">꿈</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="브라우저"
+                rel="4">브라우저</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="게임"
+                rel="4">게임</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="푸념"
+                rel="4">푸념</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="사용자 개인정보"
+                rel="4">사용자 개인정보</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="알고리즘"
+                rel="4">알고리즘</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="디테일"
+                rel="4">디테일</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="이어폰"
+                rel="4">이어폰</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="자유"
+                rel="4">자유</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="계획"
+                rel="4">계획</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="설정"
+                rel="4">설정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="함정"
+                rel="4">함정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="변환"
+                rel="4">변환</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="기술 선정"
+                rel="4">기술 선정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="면접"
+                rel="4">면접</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>칼럼</h5>
+    <div class="tags">
+        <a href="/projects">오픈 소스</a>
+        <a href="/book-list">기술 도서 목록</a>
+        <a href="/subscribe">구독 & 유료 앱</a>
+        <a href="/my-food">맛집 추천</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>친구들</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">중국판</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="「번역」Ace, CodeMirror 및 Monaco: 웹 코드 편집기 비교"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ko"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ko/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

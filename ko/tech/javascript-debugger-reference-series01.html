@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      「번역」공식 가이드 시리즈: JavaScript 디버깅 가이드 (1) - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="공식 가이드 시리즈 1탄">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="「번역」공식 가이드 시리즈: JavaScript 디버깅 가이드 (1) - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2022-9-13T1:29:30"> 
+              
+                  
+                    <meta property="article:tag" content="JavaScript">
+                    
+                    <meta property="article:tag" content="팁">
+                    
+                    <meta property="article:tag" content="기술">
+                    
+                    <meta property="article:tag" content="디버깅">
+                    
+                      
+                          
+                            <meta name="og:description" content="공식 가이드 시리즈 1탄">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ko/tech/javascript-debugger-reference-series01.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ko_KR">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ko/tech/javascript-debugger-reference-series01.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/javascript-debugger-reference-series01.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/javascript-debugger-reference-series01.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/javascript-debugger-reference-series01.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/javascript-debugger-reference-series01.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/javascript-debugger-reference-series01.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ko/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ko/">홈</a>
+            </li>
+            <li>
+              <a href="/ko/about/">소개</a>
+            </li>
+            <li>
+              <a href="/ko/donate/">후원</a>
+            </li>
+            <li>
+              <a href="/ko/archive/">아카이브</a>
+            </li>
+            <li>
+              <a href="/ko/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">한국어</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/javascript-debugger-reference-series01.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/javascript-debugger-reference-series01.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/javascript-debugger-reference-series01.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item active"><a href="/ko/tech/javascript-debugger-reference-series01.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ko/archive/?tag=JavaScript"
+                            title="JavaScript">
+                            JavaScript
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E6%8A%80%E5%B7%A7"
+                            title="팁">
+                            팁
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="기술">
+                            기술
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E8%B0%83%E8%AF%95"
+                            title="디버깅">
+                            디버깅
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        「번역」공식 가이드 시리즈: JavaScript 디버깅 가이드 (1)
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 작성일 2022년 09월 13일</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 수정일 2022년 09월 13일</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;참고: 이 글이 작성된 지 이미
+          <code id="from_time"></code> 일이 지났습니다. 시의성에 유의하세요
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1663032570000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+         
+        <div class="reference-tips">
+          🔗 &nbsp;원문：<a href="https://developer.chrome.com/docs/devtools/javascript/reference/" target="_blank">
+            https://developer.chrome.com/docs/devtools/javascript/reference/
+          </a>
+        </div>
+          
+        <div class="callout-tips">🖥 &nbsp;설명：공식 가이드 시리즈 1탄</div>
+         
+        <div class="craft-tips">
+          📚 &nbsp;Craft에도 게시：<a
+            href="https://www.craft.do/s/kyKcQKCEQjAksv"
+            target="_blank"
+          >
+            https://www.craft.do/s/kyKcQKCEQjAksv
+          </a>
+        </div>
+          <p>이 포괄적인 Chrome DevTools 디버깅 기능 소개를 통해 여러분의 디버깅 과정이 한층 더 나아지길 바랍니다.</p>
+<p>먼저, 기본적인 디버깅 기술을 <a href="https://developer.chrome.com/docs/devtools/javascript/">여기</a> (영문, 번역 필요)에서 학습해야 할 수도 있습니다.</p>
+<h2 id="코드를-중단점으로-일시-정지하기">코드를 중단점으로 일시 정지하기</h2>
+<p>중단점을 설정하여 코드 실행 도중에 일시 정지할 수 있습니다.</p>
+<p>중단점을 설정하는 방법은 <a href="https://developer.chrome.com/docs/devtools/javascript/breakpoints/">여기</a> (영문, 번역 필요)에서 확인하세요.</p>
+<h3 id="마우스-오버-시-클래스-함수-속성-확인하기">마우스 오버 시 클래스/함수 속성 확인하기</h3>
+<p>코드 실행이 일시 정지된 상태에서 클래스나 함수명 위에 마우스를 올리면 해당 속성을 미리 볼 수 있습니다.</p>
+<p caption='1'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/EA456FA6-9331-41E3-96DC-3FCCFFA82C2E_2.png' alt='1' title='1'></p>
+<h2 id="코드-단계별-실행">코드 단계별 실행</h2>
+<p>코드가 일시 중지된 후에는 한 번에 한 줄씩 코드를 실행하여 호출 스택과 관련 속성 값을 파악할 수 있습니다.</p>
+<h3 id="현재-코드-줄-건너뛰기-step-over">현재 코드 줄 건너뛰기(Step over)</h3>
+<p>현재 조사 중인 문제와 관련이 없는 코드 줄에 중단점이 설정되어 있고, 해당 줄에 함수가 포함된 경우 <code>Step Over</code>를 클릭하여 함수 내부로 진입하지 않고 코드 실행을 계속할 수 있습니다.</p>
+<p caption='step_over'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/63AE5442-D0AD-46C5-8DB0-36452E2842D2_2.png' alt='step_over' title='step_over'></p>
+<p>그림 1 👆🏻, 위 이미지에서 파란색 상자 안의 <code>Step Over</code>의 의미 설명:</p>
+<p>예를 들어, 다음과 같은 코드를 디버깅하고 있다고 가정해 보겠습니다:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">updateName</span>(name); <span class="hljs-comment">// D</span><br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// B</span><br>  <span class="hljs-keyword">return</span> name; <span class="hljs-comment">// C</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>현재 브레이크포인트가 <code>A</code> 위치에서 멈춰 있습니다. <strong>Step over</strong>를 클릭하면 Devtools는 ‘Step over’ 위치에 있는 모든 코드를 실행합니다. 위 예시에서 'Step over’는 A 위치의 getName 함수 내 <code>B</code>와 <code>C</code> 위치를 건너뛰므로, Devtools는 코드를 D 위치에서 멈추게 됩니다.</p>
+<h3 id="현재-코드-라인-진입-step-into">현재 코드 라인 진입(Step into)</h3>
+<p>브레이크포인트가 조사하려는 문제와 관련된 위치에 멈추었고, 해당 위치에 함수 호출이 포함된 경우 <code>Step into</code>를 클릭하면 해당 함수를 더 자세히 검사할 수 있습니다.</p>
+<p caption='step_into'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/0B7F9CB7-7EA3-44A2-8808-8E23F9E0D786_2.png' alt='step_into' title='step_into'></p>
+<p>그림 2 👆🏻, 위 그림의 파란색 상자 안에 있는 <code>Step into</code>의 의미 설명:</p>
+<p>예를 들어, 다음과 같은 코드를 디버깅하고 있다고 가정해 보겠습니다:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">updateName</span>(name);<br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// B</span><br>  <span class="hljs-keyword">return</span> name;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>현재 중단점이 <code>A</code> 위치에 멈춰 있는 상태에서 <strong>Step into</strong>를 클릭하면 Devtools가 해당 코드를 실행한 후 <code>B</code> 위치에서 멈춥니다.</p>
+<h3 id="현재-코드-라인에서-벗어나기-step-out">현재 코드 라인에서 벗어나기(Step out)</h3>
+<p>조사 중인 문제와 관련이 없는 함수 내부에서 중단점이 멈춰 있을 때, <strong>Step out</strong>을 클릭하면 해당 함수의 남은 코드를 실행합니다.</p>
+<p caption='step_out'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6E97FB74-E73D-4189-9A21-3771A1DF27AF_2.png' alt='step_out' title='step_out'></p>
+<p>그림 3 👆🏻, 위 그림의 파란색 상자 안에 있는 <code>Step out</code>의 의미 설명:</p>
+<p>예를 들어, 다음과 같은 코드를 디버깅하고 있다고 가정해 보겠습니다:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>();<br>  <span class="hljs-title function_">updateName</span>(name); <span class="hljs-comment">// C</span><br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// A</span><br>  <span class="hljs-keyword">return</span> name; <span class="hljs-comment">// B</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>당신의 중단점이 <code>A</code> 위치에 멈춰 있을 때, <strong>Step out</strong>을 클릭하면 DevTools는 <code>getName()</code> 함수의 남은 코드, 즉 B 위치의 코드를 실행한 후, 중단점을 <code>C</code> 위치에서 멈추게 됩니다.</p>
+<h3 id="지정된-행까지-코드-계속-실행하기">지정된 행까지 코드 계속 실행하기</h3>
+<p>매우 긴 함수를 디버깅할 때, 함수 내부에는 현재 조사 중인 문제와 관련 없는 많은 코드가 포함될 수 있습니다.</p>
+<p>이러한 관련 없는 코드를 한 단계씩 실행할 수도 있지만, 이 과정은 지루할 수 있습니다. 또는 중단하고 싶은 코드 행에 중단점을 설정한 후 <code>Resume Script Execution</code>(스크립트 실행 재개)을 누를 수도 있습니다. 그러나 더 빠른 방법이 있습니다.</p>
+<p>중단하고 싶은 코드 행을 우클릭한 후 <strong>Continue to here</strong>(여기까지 계속 실행)을 선택할 수 있습니다. DevTools는 중단점을 재개하여 해당 위치까지 코드를 실행한 후, 그 행에서 멈출 것입니다.</p>
+<p caption='continue_to_here'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/01C96466-2B8C-4088-9E66-7408708B0401_2.png' alt='continue_to_here' title='continue_to_here'></p>
+<p>그림 4 👆🏻에서 <strong>Continue to here</strong>를 선택하세요.</p>
+<h3 id="스크립트-실행-재개">스크립트 실행 재개</h3>
+<p><strong>Resume Script Execution</strong>을 클릭하면 중단점에서 일시 정지된 위치부터 코드 실행을 계속할 수 있습니다. Devtools는 다음 중단점(있는 경우)을 만날 때까지 코드를 계속 실행합니다.</p>
+<p caption='resume_script_execution'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/E67463E2-9D01-48BB-A743-28A189DF68CD_2.png' alt='resume_script_execution' title='resume_script_execution'></p>
+<p>그림 5 👆🏻, <strong>Resume Script Execution</strong>, 파란색 상자 부분.</p>
+<h4 id="강제-실행">강제 실행</h4>
+<p><strong>Resume Script Execution</strong>을 길게 누른 후 <strong>Force Script Execution</strong>을 선택하면 남은 모든 중단점을 무시하고 전체 코드를 직접 실행할 수 있습니다.</p>
+<p caption='force_script_execution'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DAB9BD94-70F7-4464-8609-3016E8B40A44_2.png' alt='force_script_execution' title='force_script_execution'></p>
+<p>그림 6 👆🏻에서 <strong>Force Script Execution</strong>을 선택하세요.</p>
+<h3 id="현재-스레드의-컨텍스트-변경">현재 스레드의 컨텍스트 변경</h3>
+<p>디버깅이 Web Worker나 Service Worker와 관련된 경우, <strong>Threads</strong> 표시줄에 나타나는 컨텍스트 목록 항목을 클릭하여 컨텍스트를 전환할 수 있습니다. 파란색 화살표는 현재 선택된 컨텍스트를 나타냅니다.</p>
+<p caption='change_threads_context'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1474933D-3F44-4D93-9909-FF4245545704_2.png' alt='change_threads_context' title='change_threads_context'></p>
+<p>그림 7 👆🏻, <strong>Threads</strong> (스레드) 탭에서 파란색 상자로 표시된 부분입니다.</p>
+<p>예를 들어, 다음과 같은 시나리오를 가정해 보겠습니다. 중단점이 메인 스크립트와 서비스 워커 스크립트에 동시에 존재하는 경우입니다. 서비스 워커의 지역 변수와 전역 변수를 확인하고 싶지만, <strong>Source</strong> 탭에는 현재 메인 스크립트의 컨텍스트가 표시되고 있습니다. 이때 <strong>Threads</strong> 탭에서 서비스 워커 항목을 클릭하면 컨텍스트를 전환하여 원하는 변수를 확인할 수 있습니다.</p>
+<h2 id="지역-클로저-전역-스코프의-변수-속성-확인-및-편집">지역, 클로저, 전역 스코프의 변수/속성 확인 및 편집</h2>
+<p>특정 라인에서 실행이 일시 중지된 경우, Scope 탭을 사용하여 지역, 클로저, 전역 변수를 확인하고 편집할 수 있습니다.</p>
+<ul>
+<li>
+<p>속성 값을 더블 클릭하여 수정합니다.</p>
+</li>
+<li>
+<p>열거 불가능한 속성은 회색으로 강조 표시됩니다.</p>
+</li>
+</ul>
+<p caption='查看和修改变量'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/40A93D0F-ACA8-4128-A695-E502565253AD_2.png' alt='查看和修改变量' title='查看和修改变量'></p>
+<p>그림 8 👆🏻, <strong>Scope</strong> (스코프) 섹션에서 파란색 상자로 표시된 위치.</p>
+<h2 id="현재-호출-스택-확인하기">현재 호출 스택 확인하기</h2>
+<p>코드 실행이 특정 라인에서 일시 중지된 상태일 때, <strong>Call Stack</strong> 섹션을 사용하여 현재 중단점까지 이어지는 함수 호출 스택을 확인할 수 있습니다.</p>
+<p>코드에 비동기 코드가 포함된 경우, <strong>Async</strong> 체크박스를 선택하여 비동기 함수 호출 스택을 활성화할 수 있습니다.</p>
+<p>항목 중 하나를 클릭하면 해당 항목이 나타내는 함수의 호출 위치로 이동합니다. 파란색 화살표 아이콘은 현재 강조 표시된 함수를 나타냅니다.</p>
+<p caption='查看函数调用栈'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1168318B-1CFA-493D-9AE6-2CF79930C58C_2.png' alt='查看函数调用栈' title='查看函数调用栈'></p>
+<p>그림 9 👆🏻, <strong>Call Stack</strong>(호출 스택) 창에서 파란색 상자 위치.</p>
+<blockquote>
+<p>참고: 코드가 특정 줄에서 일시 정지되지 않은 경우 Call Stack 창은 비어 있습니다.</p>
+</blockquote>
+<h3 id="스택-내-함수-재실행">스택 내 함수 재실행</h3>
+<p>때로는 특정 함수의 실행 상황을 관찰하고 싶지만 전체 디버깅 프로세스를 다시 실행하고 싶지 않을 때, 해당 함수 내부에서 중단점이 일시 정지된 상태에서 해당 함수만 다시 실행할 수 있습니다. 즉, 호출 스택에 해당 함수의 호출 컨텍스트를 다시 넣을 수 있습니다.</p>
+<blockquote>
+<p>참고: WebAssembly, async, generator 함수를 제외하고 Call Stack(호출 스택) 내의 어떤 함수든 처음부터 다시 실행할 수 있습니다.</p>
+</blockquote>
+<p>함수를 재실행하려면:</p>
+<ol>
+<li>
+<p>중단점을 사용하여 함수를 일시 정지시키면, <strong>Call Stack</strong> 창에 함수 호출 순서가 기록됩니다.</p>
+</li>
+<li>
+<p><strong>Call Stack</strong> 창에서 함수를 우클릭한 후 나타나는 메뉴에서 Restart frame(함수 재실행)을 선택합니다.</p>
+</li>
+</ol>
+<p caption='重新执行断点所在的函数'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DFF3FAC8-B00F-415A-A581-50A299F1884D_2.png' alt='重新执行断点所在的函数' title='重新执行断点所在的函数'></p>
+<p>재시작 프레임(Restart frame)이 어떻게 실행되는지 이해하기 위해, 다음과 같은 코드가 있다고 가정해 봅시다:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">value</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>  <span class="hljs-title function_">bar</span>(value);<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params">value</span>) &#123;<br>  value++;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>  <span class="hljs-keyword">debugger</span>;<br>&#125;<br><br><span class="hljs-title function_">foo</span>(<span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+<p><code>foo</code> 함수는 <code>0</code>을 매개변수로 받아 console에 log를 출력한 후 <code>bar()</code> 함수를 호출합니다. 이에 대응하여 <code>bar</code> 함수는 이 값을 1 증가시킵니다.</p>
+<p>다음과 같은 방법으로 이 두 함수를 처음부터 실행해 보세요:</p>
+<ul>
+<li>
+<p>위 코드를 <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/#createsources">snippet</a>에 복사한 후 <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/#runsources">실행</a>하세요. 중단점은 <code>debugger</code>가 위치한 <a href="https://developer.chrome.com/docs/devtools/javascript/breakpoints/#debugger">코드 라인</a>에서 멈출 것입니다.</p>
+<blockquote>
+<p>⚠️ 주의: 코드 실행이 일시 중지된 상태에서는 현재 호출 스택에 있는 함수를 콘솔에서 실행하지 마세요. 이는 예기치 않은 오류를 발생시킬 수 있습니다.</p>
+</blockquote>
+</li>
+<li>
+<p>현재 debugger가 위치한 함수 선언 오른쪽에 현재 값 <code>value = 1</code>이 표시되는 것을 확인할 수 있을 것입니다.</p>
+</li>
+</ul>
+<p caption='注意函数声明处右侧的值'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9111BA1D-AA80-4C2F-B54E-123FC66A5C17_2.png' alt='注意函数声明处右侧的值' title='注意函数声明处右侧的值'></p>
+<ul>
+<li><code>bar()</code> 함수를 처음부터 다시 실행합니다.</li>
+</ul>
+<p caption='重头执行bar'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/036AAE1B-CA41-4627-A9D6-A4F7E6302C0C_2.png' alt='重头执行bar' title='重头执行bar'></p>
+<ul>
+<li>
+<p><code>F9</code> 키를 누르면, 값이 증가하는 해당 코드 줄을 지나갈 수 있으며, 다시 디버거에서 중단됩니다.</p>
+<p>값이 2로 변경된 것을 확인하세요: <code>value = 2</code>.</p>
+</li>
+</ul>
+<p caption='重头执行debugger'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/09D36505-821B-4392-8DD3-BDE9D05F0210_2.png' alt='重头执行debugger' title='重头执行debugger'></p>
+<ul>
+<li>이 외에도 Scope 창에서 <code>value</code> 값을 더블 클릭하여 원하는 값으로 편집할 수 있습니다.</li>
+</ul>
+<p caption='双击编辑值'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9481CF99-8735-43A4-8A57-D2F953C289BC_2.png' alt='双击编辑值' title='双击编辑值'></p>
+<ul>
+<li><code>bar()</code> 함수를 여러 번 다시 실행해 보면 값이 계속 증가하는 것을 확인할 수 있습니다.</li>
+</ul>
+<p caption='多次重复执行后值会一直增加'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/AEE7EEA3-2150-431B-980C-6FCF03527DC7_2.png' alt='多次重复执行后值会一直增加' title='多次重复执行后值会一直增加'></p>
+<blockquote>
+<p>💡 놀랍죠! 왜 <code>value</code>가 <code>0</code>으로 재설정되지 않을까요?</p>
+</blockquote>
+<blockquote>
+<p>함수를 처음부터 다시 실행할 때 매개변수는 재설정되지 않습니다. 달리 말하면, 처음부터 다시 실행한다고 해서 함수가 호출될 당시의 초기 상태로 복원되는 것은 아닙니다. 따라서 이는 단순히 호출 스택에서 현재 호출 포인터를 함수의 시작 위치로 이동시키는 것뿐입니다.</p>
+</blockquote>
+<blockquote>
+<p>따라서 현재 매개변수 값인 <code>value</code>는 동일한 함수가 반복 실행되는 동안 메모리에 계속 존재하게 됩니다.</p>
+</blockquote>
+<ul>
+<li>이제 <strong>Call Stack</strong>에서 <code>foo()</code> 함수를 처음부터 다시 실행해 보세요.</li>
+</ul>
+<p caption='重头执行foo函数'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/11D4B549-3006-4564-B92D-4D1727913D74_2.png' alt='重头执行foo函数' title='重头执行foo函数'></p>
+<p>주의해서 보세요, <code>value</code>가 다시 <code>0</code>으로 변했습니다.</p>
+<p caption='value重新变为0'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9F706F35-0041-41E3-BB4A-70A5BFFEFE06_2.png' alt='value重新变为0' title='value重新变为0'></p>
+<blockquote>
+<p>💡 다시 한번 놀랍네요! 왜 이번에 <code>value</code>가 <code>0</code>으로 재설정되었을까요?</p>
+</blockquote>
+<blockquote>
+<p>간단합니다(의역 적용). JavaScript에서 매개변수는 값에 의해 전달됩니다. <code>value</code>가 원시 값이기 때문에 함수 내에서 값을 수정해도 함수 외부의 값에는 영향을 주지 않습니다.</p>
+</blockquote>
+<h3 id="호출-스택-실행-경로-복사하기">호출 스택 실행 경로 복사하기</h3>
+<p><strong>Call Stack</strong> 창의 아무 곳이나 마우스 오른쪽 버튼으로 클릭한 후 <strong>Copy Stack Trace</strong>(스택 추적 복사)를 선택하면 현재 호출 스택을 클립보드에 복사할 수 있습니다.</p>
+<p caption='复制调用栈'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/7EF33B00-5F90-4D0D-8979-B18ED3CD1527_2.png' alt='复制调用栈' title='复制调用栈'></p>
+<p>그림 10 👆🏻에서 <strong>스택 트레이스 복사</strong>를 선택합니다.</p>
+<p>복사된 내용은 대략 다음과 같을 것입니다:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs other">getNumber1 (get-started.js:35)<br>inputsAreEmpty (get-started.js:22)<br>onClick (get-started.js:15)<br></code></pre></td></tr></table></figure>
+<h2 id="특정-스크립트-또는-특정-조건을-충족하는-스크립트-무시하기">특정 스크립트 또는 특정 조건을 충족하는 스크립트 무시하기</h2>
+<p>디버깅 중에 특정 스크립트를 무시하여 건너뛸 수 있습니다. 일반적으로 해당 스크립트의 함수가 복잡하고 이해하기 어려우며 현재 디버깅 중인 내용과 관련이 없는 경우에 이를 무시하도록 선택합니다.</p>
+<p>예를 들어, 다음과 같은 코드를 디버깅 중이라고 가정해 보겠습니다:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">animate</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-title function_">prepare</span>();<br>  lib.<span class="hljs-title function_">doFancyStuff</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">render</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>A</code>는 신뢰할 수 있는 서드파티 라이브러리입니다. 조사 중인 문제가 이 서드파티 라이브러리와 관련이 없다고 확신한다면, 이를 무시하는 것이 현명한 결정일 수 있습니다.</p>
+<h3 id="source-편집기에서-특정-스크립트-무시하기">Source 편집기에서 특정 스크립트 무시하기</h3>
+<ol>
+<li>
+<p>파일 열기</p>
+</li>
+<li>
+<p>아무 위치에서 마우스 오른쪽 버튼 클릭</p>
+</li>
+<li>
+<p><strong>Add script to ignore list</strong>(스크립트를 무시 목록에 추가) 선택</p>
+</li>
+</ol>
+<p caption='忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/39DA9D92-C270-4705-8920-7BC248703936_2.png' alt='忽略脚本' title='忽略脚本'></p>
+<p>그림 11 👆🏻, 에디터 바에서 스크립트 하나를 무시하는 방법.</p>
+<h3 id="call-stack-호출-스택-바에서-특정-스크립트-무시하기">Call Stack(호출 스택) 바에서 특정 스크립트 무시하기</h3>
+<p>호출 스택에서 특정 스크립트를 무시하려면 다음 단계를 따르세요:</p>
+<ol>
+<li>
+<p>호출 스택 내의 함수를 마우스 오른쪽 버튼으로 클릭합니다.</p>
+</li>
+<li>
+<p><strong>Add script to ignore list</strong>를 선택합니다.</p>
+</li>
+</ol>
+<p caption='从调用栈中忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/73837AF8-CB34-4B72-AE5C-1B266E15B8EB_2.png' alt='从调用栈中忽略脚本' title='从调用栈中忽略脚本'></p>
+<p>그림 12 👆🏻, Call Stack(호출 스택)에서 특정 스크립트를 무시하기.</p>
+<h3 id="settings-설정-에서-특정-스크립트-무시하기">Settings(설정)에서 특정 스크립트 무시하기</h3>
+<blockquote>
+<p>역자 주: 여기서의 설정은 Devtools의 설정이며, 브라우저의 설정이 아닙니다.</p>
+</blockquote>
+<p>설정에서 특정 스크립트나 특정 조건을 만족하는 스크립트를 무시하려면 다음 단계를 따르세요:</p>
+<ol>
+<li>
+<p>설정 열기:</p>
+</li>
+<li>
+<p><strong>Ignore List</strong> 탭을 클릭합니다.</p>
+</li>
+<li>
+<p><strong>Add pattern</strong>을 클릭합니다.</p>
+</li>
+<li>
+<p>무시할 스크립트 이름이나 정규식을 입력하여 스크립트 이름과 매칭시킵니다.</p>
+</li>
+<li>
+<p><strong>Add</strong>를 클릭합니다.</p>
+</li>
+</ol>
+<p caption='devoools设置界面'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/54F9290D-CE6A-4630-9387-34DE7EA6266F_2.png' alt='devoools设置界面' title='devoools设置界面'></p>
+<p caption='devtools忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/65A0FE7C-D5BB-4329-B978-1C7184F6C1B6_2.png' alt='devtools忽略脚本' title='devtools忽略脚本'></p>
+<p>그림 13 👆🏻, Setting에서 스크립트를 무시하세요.</p>
+<h2 id="모든-페이지에서-디버그-코드-스니펫-snippets-실행하기">모든 페이지에서 디버그 코드 스니펫(Snippets) 실행하기</h2>
+<p>콘솔에서 일부 디버그 코드를 반복적으로 실행하고 있다면 스니펫을 고려해볼 수 있습니다. 스니펫은 Devtools에 저장하고 실행할 수 있는 스크립트입니다.</p>
+<p>자세한 내용은 <a href="https://developer.chrome.com/docs/devtools/javascript/snippets/">https://developer.chrome.com/docs/devtools/javascript/snippets/</a> (번역되지 않음)을 참조하세요.</p>
+<blockquote>
+<p>역자 주: 스니펫은 실행 시 현재 컨텍스트를 가지고 있습니다. 예를 들어 디버깅 중에 일시 중지한 후 스니펫 코드를 실행하면, 해당 스니펫 코드는 현재 컨텍스트의 변수에 접근할 수 있습니다.</p>
+</blockquote>
+<h2 id="사용자-정의-javascript-표현식-값-watch-감시-하기">사용자 정의 JavaScript 표현식 값 Watch(감시)하기</h2>
+<p>Watch 패널을 사용하여 사용자 정의 표현식의 값을 모니터링할 수 있습니다. 유효한 모든 JavaScript 표현식을 감시할 수 있습니다.</p>
+<p caption='监听JavaScript表达式'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/02D81797-A39F-4837-B402-648AA39E5C21_2.png' alt='监听JavaScript表达式' title='监听JavaScript表达式'></p>
+<p>그림 14 👆🏻에서 파란색으로 표시된 부분이 Watch(감시) 패널입니다.</p>
+<ul>
+<li>
+<p>Add Expression(표현식 추가)를 클릭하여 새로운 감시 표현식을 생성합니다.</p>
+</li>
+<li>
+<p>Refresh(새로 고침)을 클릭하면 기존의 모든 표현식이 갱신됩니다. 코드가 실행될 때 값은 자동으로 업데이트됩니다.</p>
+</li>
+<li>
+<p>표현식 위에 마우스를 올린 후 Delete Expression(표현식 삭제)를 클릭하면 해당 표현식을 삭제할 수 있습니다.</p>
+</li>
+</ul>
+<h2 id="압축된-코드를-가독성-있게-포맷팅하기">압축된 코드를 가독성 있게 포맷팅하기</h2>
+<p><code>Format &#123;&#125;</code>을 클릭하면 압축된 코드를 사람이 읽기 쉬운 형식으로 변환할 수 있습니다.</p>
+<p caption='格式化压缩后的文件'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/572D9BCF-DC18-460E-8B23-62398391ED92_2.png' alt='格式化压缩后的文件' title='格式化压缩后的文件'></p>
+<h2 id="스크립트-편집하기">스크립트 편집하기</h2>
+<p>버그를 수정할 때는 자주 JavaScript 코드의 수정 효과를 테스트해야 합니다. 외부 편집기에서 JavaScript 코드를 편집한 후 현재 페이지로 돌아와 새로 고침하여 결과를 확인할 필요가 없습니다. Devtools에서 직접 JavaScript 코드를 편집할 수 있습니다.</p>
+<p>스크립트를 편집하려면 다음 단계를 따르세요:</p>
+<ol>
+<li>
+<p>Source 탭에서 편집하려는 파일을 엽니다(Editor 탭에 나타납니다).</p>
+</li>
+<li>
+<p>Editor 탭에서 수정을 진행합니다.</p>
+</li>
+<li>
+<p><code>Command + S</code>(Mac) 또는 <code>Ctrl + S</code>(Windows, Linux)를 눌러 변경 사항을 저장합니다. Devtools는 전체 js 파일을 패치 형태로 Chrome의 JavaScript 엔진에 적용할 것입니다.</p>
+</li>
+</ol>
+<p caption='直接编辑js文件'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6DC1E149-D2D2-4005-A2B9-451CF0456112_2.png' alt='直接编辑js文件' title='直接编辑js文件'></p>
+<p>위 그림에서 파란색 상자로 표시된 부분이 편집기 바입니다.</p>
+<h2 id="일시-중지된-함수-실시간-편집하기">일시 중지된 함수 실시간 편집하기</h2>
+<blockquote>
+<p>주의: 이 기능은 Chrome 105 버전 이상에서만 사용 가능합니다.</p>
+</blockquote>
+<p>코드가 일시 중지된 상태에서 현재 함수를 편집하고 실시간으로 수정 사항을 적용할 수 있지만, 다음과 같은 제한이 있습니다:</p>
+<ul>
+<li>
+<p><strong>Call Stack</strong>의 최상위 함수(즉, 현재 중단점이 위치한 함수)만 편집할 수 있습니다.</p>
+</li>
+<li>
+<p>호출 스택에 동일한 함수에 대한 재귀 호출이 없어야 합니다(그렇지 않으면 현재 호출 스택이 아닌 함수를 수정하는 것과 같습니다).</p>
+</li>
+</ul>
+<blockquote>
+<p>💡 일시 중지된 함수 실시간 편집의 진실…<br />
+수정 사항을 적용할 때 디버거 도구는 자동으로 함수를 다시 실행합니다(앞서 설명한 &quot;스택의 함수 다시 실행&quot;과 동일). 따라서 다시 실행할 수 있는 함수에 대한 제한 사항은 실시간 편집이 적용되는 일시 중지된 함수와 동일합니다. WebAssembly, 비동기(async), 제너레이터(이터레이터) 함수는 처음부터 다시 실행할 수 없습니다.</p>
+</blockquote>
+<p>함수를 실시간으로 편집하려면 다음 단계를 따르세요:</p>
+<ol>
+<li>
+<p>중단점을 사용해 실행을 일시 중지합니다.</p>
+</li>
+<li>
+<p>중단점이 위치한 일시 중지된 함수를 편집합니다.</p>
+</li>
+<li>
+<p><code>Command/Control+S</code>를 눌러 변경 사항을 적용하면 디버거가 자동으로 해당 함수를 다시 실행합니다.</p>
+</li>
+<li>
+<p>실행을 계속합니다.</p>
+</li>
+</ol>
+<p caption='实时重新执行函数'><video controls muted><source src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/37CA2680-5D00-477F-A1CF-161AD18F2A5E_2.mp4' type='video/mp4' /></video></p>
+<p>이 예시에서, <code>addend1</code>과 <code>addend2</code> 변수는 처음에 잘못된 <code>string</code> 타입을 가지고 있습니다. 따라서 숫자가 더해지는 대신 문자열이 잘못 연결되었습니다. 이 문제를 해결하기 위해 실시간 편집 중에 <code>parseInt()</code> 함수를 추가했습니다.</p>
+<h2 id="스크립트-내에서-텍스트-검색-및-교체">스크립트 내에서 텍스트 검색 및 교체</h2>
+<p>스크립트에서 특정 텍스트를 검색하려면 다음 단계를 따르세요:</p>
+<ol>
+<li>
+<p>코드 소스(Sources) - 편집기(Editor) 탭에서 파일을 엽니다.</p>
+</li>
+<li>
+<p><strong>Command+F</strong>(Mac) 또는 <strong>Ctrl+F</strong>(Windows, Linux)를 눌러 내장 검색창을 엽니다.</p>
+</li>
+<li>
+<p>검색창에 찾고자 하는 문자열을 입력하세요:</p>
+<p>추가적으로 다음을 할 수 있습니다:</p>
+<ul>
+<li>
+<p><code>Aa</code>를 클릭하여 대소문자를 구분하는 검색을 활성화할 수 있습니다.</p>
+</li>
+<li>
+<p><code>.*</code>를 클릭하여 정규 표현식 검색을 사용할 수 있습니다.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Enter</code> 키를 눌러 검색을 실행합니다. 위/아래 화살표를 눌러 다음/이전 검색 결과로 이동할 수 있습니다.</p>
+</li>
+</ol>
+<p caption='搜索字符'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6D3D4E4D-22CD-4095-8773-1DFD4F3089A5_2.png' alt='搜索字符' title='搜索字符'></p>
+<p>검색 결과를 바꾸고 싶다면 다음 단계를 따르세요:</p>
+<ol>
+<li>
+<p>검색창을 열고 <code>A→B</code> (직접 그린 것이 아니라 아래 그림을 참고하세요) 즉 ‘바꾸기’ 버튼을 클릭하여 텍스트를 교체합니다.</p>
+</li>
+<li>
+<p>교체할 텍스트를 입력한 후 <strong>Replce</strong> 또는 <strong>Replace all</strong>을 클릭하면 됩니다.</p>
+</li>
+</ol>
+<p caption='按下替换按钮'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/4CFF9F79-2118-4DA6-AF12-1440A520C6F8_2.png' alt='按下替换按钮' title='按下替换按钮'></p>
+<h2 id="javascript-비활성화">JavaScript 비활성화</h2>
+<p>자세한 내용은 <a href="https://developer.chrome.com/docs/devtools/javascript/disable/">Disable JavaScript With Chrome DevTools</a>를 참조하세요(번역되지 않음).</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          이 글의 최초 게시:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/javascript-debugger-reference-series01.ko.html"
+            title="「번역」공식 가이드 시리즈: JavaScript 디버깅 가이드 (1)"
+          >
+            「번역」공식 가이드 시리즈: JavaScript 디버깅 가이드 (1) - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">목차</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>블로거의 말:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        저는 인생의 중요한 선택의 기로에 섰을 때, 누군가 최선의 방법을 알려주어 소중한 시간을 헛되이 보내지 않기를 바라곤 합니다. 그런 마음으로 저는 자주 블로그를 쓰며, 광활한 인터넷의 이 작은 구석에 제게는 단 한 번뿐인 인생 경험을 기록하여 도움이 필요한 분들에게 도움이 되기를 바랍니다.
+    </div>
+    <hr>
+    
+    <h5><a href="/ko/archive/">인기 태그</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="기술"
+                rel="188">기술</a>
+        
+            <a data-sort="0200"
+                href="/ko/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="생활"
+                rel="108">생활</a>
+        
+            <a data-sort="0264"
+                href="/ko/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="삽질"
+                rel="44">삽질</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="팁"
+                rel="32">팁</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="튜토리얼"
+                rel="32">튜토리얼</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="번역"
+                rel="24">번역</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="경험"
+                rel="20">경험</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="미식"
+                rel="20">미식</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="첫인상"
+                rel="16">첫인상</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="워크플로"
+                rel="16">워크플로</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="플러그인"
+                rel="16">플러그인</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="네트워크"
+                rel="16">네트워크</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="사용 경험"
+                rel="12">사용 경험</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="정리"
+                rel="12">정리</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="서버"
+                rel="12">서버</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="라우터"
+                rel="12">라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="소프트 라우터"
+                rel="12">소프트 라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="에세이"
+                rel="12">에세이</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9B%86%E6%88%90"
+                title="통합"
+                rel="12">통합</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="주식"
+                rel="8">주식</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="최적화"
+                rel="8">최적화</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%8D%83%E5%85%86"
+                title="기가비트"
+                rel="8">기가비트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="큰일"
+                rel="8">큰일</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="도구"
+                rel="8">도구</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="바이패스 라우터"
+                rel="8">바이패스 라우터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="프레임워크"
+                rel="8">프레임워크</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="족욕 시간"
+                rel="8">족욕 시간</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="테스트"
+                rel="8">테스트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="테슬라"
+                rel="8">테슬라</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="에디터"
+                rel="8">에디터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="영상"
+                rel="8">영상</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="디버깅"
+                rel="8">디버깅</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BD%A6"
+                title="자동차"
+                rel="8">자동차</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="마이그레이션"
+                rel="8">마이그레이션</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="둥베이 요리"
+                rel="4">둥베이 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="집 사기"
+                rel="4">집 사기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="프록시"
+                rel="4">프록시</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="풀스택"
+                rel="4">풀스택</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="북유럽 신화"
+                rel="4">북유럽 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="협업"
+                rel="4">협업</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="압축"
+                rel="4">압축</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="크레토스"
+                rel="4">크레토스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="가정식"
+                rel="4">가정식</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="부강"
+                rel="4">부강</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="비교"
+                rel="4">비교</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="쓰촨 요리"
+                rel="4">쓰촨 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="업무 경험"
+                rel="4">업무 경험</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="그리스 신화"
+                rel="4">그리스 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="자주 쓰는 앱"
+                rel="4">자주 쓰는 앱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="오픈소스"
+                rel="4">오픈소스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="언박싱"
+                rel="4">언박싱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="갓 오브 워"
+                rel="4">갓 오브 워</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="유심"
+                rel="4">유심</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%8B%93%E6%89%91"
+                title="토폴로지"
+                rel="4">토폴로지</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="이야기"
+                rel="4">이야기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="자료구조"
+                rel="4">자료구조</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="여행"
+                rel="4">여행</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="일상"
+                rel="4">일상</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="일본"
+                rel="4">일본</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="서비스"
+                rel="4">서비스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="포맷"
+                rel="4">포맷</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A2%A6"
+                title="꿈"
+                rel="4">꿈</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="브라우저"
+                rel="4">브라우저</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="게임"
+                rel="4">게임</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="푸념"
+                rel="4">푸념</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="사용자 개인정보"
+                rel="4">사용자 개인정보</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="알고리즘"
+                rel="4">알고리즘</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="디테일"
+                rel="4">디테일</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="이어폰"
+                rel="4">이어폰</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="자유"
+                rel="4">자유</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="계획"
+                rel="4">계획</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="설정"
+                rel="4">설정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="함정"
+                rel="4">함정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="변환"
+                rel="4">변환</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="기술 선정"
+                rel="4">기술 선정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="면접"
+                rel="4">면접</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>칼럼</h5>
+    <div class="tags">
+        <a href="/projects">오픈 소스</a>
+        <a href="/book-list">기술 도서 목록</a>
+        <a href="/subscribe">구독 & 유료 앱</a>
+        <a href="/my-food">맛집 추천</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>친구들</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">중국판</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="「번역」공식 가이드 시리즈: JavaScript 디버깅 가이드 (1)"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ko"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ko/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

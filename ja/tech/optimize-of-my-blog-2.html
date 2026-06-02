@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      ブログ自動化プロセスと体験最適化——第二弾 - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="ブログ体験がさらにレベルアップしました！">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="ブログ自動化プロセスと体験最適化——第二弾 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2022-8-14T4:13:32"> 
+              
+                  
+                    <meta property="article:tag" content="AppleScript">
+                    
+                    <meta property="article:tag" content="CI">
+                    
+                    <meta property="article:tag" content="Craft">
+                    
+                    <meta property="article:tag" content="Jekyll">
+                    
+                    <meta property="article:tag" content="最適化">
+                    
+                    <meta property="article:tag" content="技術">
+                    
+                    <meta property="article:tag" content="プラグイン">
+                    
+                      
+                          
+                            <meta name="og:description" content="ブログ体験がさらにレベルアップしました！">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ja/tech/optimize-of-my-blog-2.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ja_JP">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ja/tech/optimize-of-my-blog-2.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/optimize-of-my-blog-2.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/optimize-of-my-blog-2.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/optimize-of-my-blog-2.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/optimize-of-my-blog-2.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/optimize-of-my-blog-2.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ja/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ja/">ホーム</a>
+            </li>
+            <li>
+              <a href="/ja/about/">概要</a>
+            </li>
+            <li>
+              <a href="/ja/donate/">寄付</a>
+            </li>
+            <li>
+              <a href="/ja/archive/">アーカイブ</a>
+            </li>
+            <li>
+              <a href="/ja/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">日本語</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/optimize-of-my-blog-2.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/optimize-of-my-blog-2.html" hreflang="en">English</a></li>
+        <li class="lang-item active"><a href="/ja/tech/optimize-of-my-blog-2.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item"><a href="/ko/tech/optimize-of-my-blog-2.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ja/archive/?tag=AppleScript"
+                            title="AppleScript">
+                            AppleScript
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=CI"
+                            title="CI">
+                            CI
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=Craft"
+                            title="Craft">
+                            Craft
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=Jekyll"
+                            title="Jekyll">
+                            Jekyll
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E4%BC%98%E5%8C%96"
+                            title="最適化">
+                            最適化
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="技術">
+                            技術
+                          </a>
+                          
+                          <a class="tag" href="/ja/archive/?tag=%E6%8F%92%E4%BB%B6"
+                            title="プラグイン">
+                            プラグイン
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        ブログ自動化プロセスと体験最適化——第二弾
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 作成日 2022年08月14日</span>&nbsp;&nbsp;&nbsp;
+                      
+                        <span class="meta">💡 更新日 2022年08月25日</span>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;注意：この記事が作成されてから既に
+          <code id="from_time"></code> 日が経過しています。情報の鮮度にご注意ください
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1660493612000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+           
+        <div class="callout-tips">🖥 &nbsp;説明：ブログ体験がさらにレベルアップしました！</div>
+         
+        <div class="craft-tips">
+          📚 &nbsp;Craft にも公開：<a
+            href="https://www.craft.do/s/BJ8gIm5fmtdOCB"
+            target="_blank"
+          >
+            https://www.craft.do/s/BJ8gIm5fmtdOCB
+          </a>
+        </div>
+          <h2 id="はじめに">はじめに</h2>
+<p>以前、<a href="/tech/my-blog-ci.html">ブログ自動化プロセス</a>](<a href="https://example.com">https://example.com</a>)とその後<a href="/tech/my-blog-ci-in-2022.html">2022年ブログ自動化プロセス</a>](<a href="https://example.com">https://example.com</a>)を作成しましたが、全体的に以下の課題がありました：</p>
+<ol>
+<li>
+<p>Github CI経由でCraftから取得した画像をTencent Cloudにアップロードする際、頻繁にネットワークエラーが発生し、プロセスが不安定。</p>
+</li>
+<li>
+<p>ブログの画像をTencent Cloudにアップロードすると、強制的に<code>png</code>形式に変換されるが、実際は<code>gif</code>などより多くの形式をサポートすべき。</p>
+</li>
+<li>
+<p>CraftからMarkdownへの変換結果には、標準Markdownと異なる点が多数存在：</p>
+<ol>
+<li>ネストされたリストをサポートしない</li>
+<li>引用ブロック内にネストされたリストがある場合、レンダリング結果ではリストが外側に出てしまう</li>
+<li>Craftの「フォーカス」(block)と「ブロック」(focus)のうち、後者のみがblockquote（引用ブロック）として認識される。本来は両方とも認識されるべき</li>
+<li>Craftのbookmarkにはページ説明やタイトルなど多くの情報が含まれるが、Markdown変換後はリンクを囲む段落だけになり、情報が失われる</li>
+<li>Craftでは画像自体にキャプションを付ける機能がない</li>
+<li>Craftが生成するコードブロックは、バッククォートの後に言語指定が自動追加されないため、一部の言語が<code>plaintext</code>と認識されハイライトされない</li>
+</ol>
+</li>
+</ol>
+<p>そこで今回の最適化では、これらの課題に対処するため、再度改良を加えました。</p>
+<h2 id="最適化1：独自のcraftblocktomarkdown関数を使用">最適化1：独自のCraftBlockToMarkdown関数を使用</h2>
+<p>Craftに<code>craft.markdown.craftBlockToMarkdown</code>が正しく変換されない問題を報告しました：</p>
+<p><a class='link-bookmark' href='https://forum.developer.craft.do/t/wrong-render-of-markdown-with-decoration-focus-and-image-question/235' target='_blank'><span data-bookmark-img='https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png' data-bookmark-title='W'><img src='https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png'/></span><span><span> Wrong render of markdown with Decoration focus and image question</span><span> Decoration block 'focus'は'blockquote'としてレンダリングされるべきですが、現在のmarkdow API craftBlockToMarkdown(flavorは'common')はこのブロックタイプを無視しプレーンテキストとしてレンダリングします。markdow API craftBlockToMarkdownが返すImageのURIはあらゆる場所で有効であり、問題を引き起こす可能性があります。サイトホワイトリスト設定を導入し、リスト内のサイトのみがドキュメント内の画像を使用できるようにすることを希望します。この戦略はAWSのデータ転送コスト削減にもつながります。</span><span> https://forum.developer.craft.do/t/wrong-render-of-markdown-with-decoration-focus-and-image-question/235</span></span></a></p>
+<p>しかし公式には解決する気配が全くないため、手動変換用のシンプルな関数を自作しました：</p>
+<p><a class='link-bookmark' href='https://gist.github.com/Xheldon/036d9b187bd83303205001e8af97eda7' target='_blank'><span data-bookmark-img='https://github.githubassets.com/images/modules/gists/gist-og-image.png' data-bookmark-title='C'><img src='https://github.githubassets.com/images/modules/gists/gist-og-image.png'/></span><span><span> craftBlockToMarkdown</span><span> GitHub Gist: コード、メモ、スニペットを即座に共有</span><span> https://gist.github.com/Xheldon/036d9b187bd83303205001e8af97eda7</span></span></a></p>
+<p>注意点として、この関数はJekyllに適応させるため（後述の最適化3参照）に特別に<code>imageBlock</code>と<code>urlBlock</code>タイプのBlockを処理しています：</p>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/FE4436B8-B16D-4CA7-9041-E2F5F831CC80_2.png' alt='Image' title='Image'></p>
+<p>この関数は公式プラグイン開発者フォーラムに公開していますので、ぜひご意見を：</p>
+<p><a class='link-bookmark' href='https://forum.developer.craft.do/t/a-better-implementation-of-craft-blocks-to-markdown-transformation-methods/554' target='_blank'><span data-bookmark-img='https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png' data-bookmark-title='A'><img src='https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png'/></span><span><span> A better implementation of craft blocks to Markdown transformation methods</span><span> Craftのmarkdown APIには以下の問題があります：1.ネストされたリストがサポートされない 2.ネストされたblockquoteの順序が誤っている 3.後者のみが参照ブロックとして認識される 4.urlBlock（'bookmark'と呼ばれる？）はリンクとして認識される（この関数ではJekyllのレンダリングタグをカスタマイズ可能）注：1.toggle/formulaはサポートしない（Markdownもサポートしていないため）2.私はこの関数をJekyllブログ用に使用しています...</span><span> https://forum.developer.craft.do/t/a-better-implementation-of-craft-blocks-to-markdown-transformation-methods/554</span></span></a></p>
+<h2 id="最適化2：github-ciプロセスをローカルに移行">最適化2：Github CIプロセスをローカルに移行</h2>
+<p>以前のプロセスでは、プラグインの公開ボタンをクリック（もちろんGitHub Tokenの入力やCOS関連情報の設定が必要）し、待つだけでした。</p>
+<p>今回の最適化では、以前のプロセスとの一貫性を保つため、Craftプラグインを新たに作成しました。これをクリックするとドキュメントの内容を取得し、簡単な処理（例：headerImgの画像著作権情報をmetaに追加）を行った後、特定のリンクを呼び出します。リンクのパラメータにはドキュメント情報が含まれます：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">craft.<span class="hljs-property">editorApi</span>.<span class="hljs-title function_">openURL</span>(<br>  <span class="hljs-string">`xhelper://<span class="hljs-subst">$&#123;btoa(<span class="hljs-built_in">unescape</span>(<span class="hljs-built_in">encodeURIComponent</span>(content)))&#125;</span>`</span><br>);<br></code></pre></td></tr></table></figure>
+<p>この特定のリンクの役割は、Apple Scriptで書かれたApplicationを呼び出すことです。Applicationの作成方法やリンク呼び出しへの対応方法については、私が書いた<a href="/tech/applescript-simple-use.html">このドキュメント</a>]を参照してください。内部ではnodeが呼び出され、実際には以前Github CIで実行していたコードと同じ処理が行われます。ここに簡単なスクリーンショットを掲載します：</p>
+<p caption='Xhelper截图👆🏻'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/BC93AD26-26C5-4AD1-A8AC-2BB3B2AD2945_2.png' alt='Xhelper截图👆🏻' title='Xhelper截图👆🏻'></p>
+<p>効果：</p>
+<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/5E5FDC00-D081-4B50-91FE-61946A453356_2.png' alt='Image' title='Image'></p>
+<p>以前のプロセスでは簡便さを優先し、Craftにアップロードされた画像に必ずしも拡張子が付いていない（ドラッグ＆ドロップや画像アップロードの場合は拡張子あり、コピペやWebアップロードの場合は拡張子なし）ため、全ての画像を<code>png</code>形式に変換していました。今回はこのロジックを削除し、まず元の拡張子がある場合はそれを使用し、拡張子がない場合のみ<code>png</code>に強制変換するようにしました。<code>Sharp</code>というライブラリが非常に便利でおすすめです：</p>
+<p><a class='link-bookmark' href='https://sharp.pixelplumbing.com/' target='_blank'><span data-bookmark-img='https://cdn.jsdelivr.net/gh/lovell/sharp@main/docs/image/sharp-logo.png' data-bookmark-title='S'><img src='https://cdn.jsdelivr.net/gh/lovell/sharp@main/docs/image/sharp-logo.png'/></span><span><span> sharp - High performance Node.js image processing</span><span> "一般的な形式の大きな画像を、ウェブ向けの小さなJPEG、PNG、WebP、GIF、AVIF画像にリサイズ"</span><span> https://sharp.pixelplumbing.com/</span></span></a></p>
+<p>というわけで…Gifをご覧ください！</p>
+<p caption='支持gif啦'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/59E358FD-2A7A-4125-8223-1A51FFCCC8A3_2.gif' alt='支持gif啦' title='支持gif啦'></p>
+<blockquote>
+<p>注：以前は手軽さ（認証不要、固定IPサーバー不要）を優先し、<a href="https://cloud.weixin.qq.com/cloudrun">微信云托管</a>]を使用していました。ついでに要約を微信公众号に送信するロジックも実装していました。しかし困ったことに、このサーバーは単に微信公众号公開を楽にするために用意したものですが、私の性格上3ヶ月に1回しか使わず、使うたびにコールドスタート（リクエストが30分ないとインスタンスが自動停止、実行時間課金のため）になり、頻繁に失敗します。そのトラブルシューティングにかかる時間を考えると、手動で微信公众号のエディタにコピペする方が早いです。というわけで、微信公众号は諦めて手動貼り付け…これも悪くない！</p>
+</blockquote>
+<h2 id="最適化その3：craftのbookmarkと画像captionの実現">最適化その3：CraftのBookmarkと画像Captionの実現</h2>
+<p>Jekyllベースのブログシステムでこの効果を実現できたのは、GithubのJekyllサービスを直接使わず、自分でJekyll buildしてHTMLを生成し、それをリポジトリにpushしているためです。理由と過程は<a href="https://www.xheldon.com/tech/my-blog-ci.html#%E9%85%8D%E7%BD%AE-github-actions-build-%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6">こちら</a>]をご覧ください。</p>
+<p>Bookmarkと画像Captionの実現には、前段階で生成されたMarkdown内の特殊Jekyllタグを利用し、カスタムJekyllプラグインで処理しています。Bookmarkのレンダリングには<code>render_bookmark</code>を、画像captionのレンダリングには<code>render_caption</code>を使用しました（2時間前に学んだrubyスクリプト言語で書いています）：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">module</span> <span class="hljs-title class_">Jekyll</span><br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">RenderBookMarkBlock</span> &lt; <span class="hljs-title class_ inherited__">Liquid::Block</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">initialize</span>(<span class="hljs-params">tag_name, attr, tokens</span>)<br>            <span class="hljs-variable language_">super</span><br>            attrs = attr.scan(<span class="hljs-regexp">/url\=\&quot;(.*)\&quot;\stitle\=\&quot;(.*)\&quot;\simg\=\&quot;(.*)\&quot;/</span>)<br>            <span class="hljs-variable">@url</span> = attrs[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br>            <span class="hljs-variable">@title</span> = attrs[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>]<br>            <span class="hljs-variable">@img</span> = attrs[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>]<br>            <span class="hljs-variable">@error</span> = <span class="hljs-string">&quot;&quot;</span><br>        <span class="hljs-keyword">end</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">render</span>(<span class="hljs-params">context</span>)<br>            <span class="hljs-variable">@desc</span> = <span class="hljs-variable language_">super</span><br>            <span class="hljs-string">&quot;&lt;p&gt;&lt;a class=&#x27;link-bookmark&#x27; href=&#x27;<span class="hljs-subst">#&#123;<span class="hljs-variable">@url</span>&#125;</span>&#x27;&gt;&lt;span&gt;&lt;img src=&#x27;<span class="hljs-subst">#&#123;<span class="hljs-variable">@img</span>&#125;</span>&#x27;/&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;<span class="hljs-subst">#&#123;<span class="hljs-variable">@title</span>&#125;</span>&lt;/span&gt;&lt;span&gt;<span class="hljs-subst">#&#123;<span class="hljs-variable">@desc</span>&#125;</span>&lt;/span&gt;&lt;span&gt;<span class="hljs-subst">#&#123;<span class="hljs-variable">@url</span>&#125;</span>&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&quot;</span><br>        <span class="hljs-keyword">end</span><br><br>    <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-keyword">module</span> <span class="hljs-title class_">Jekyll</span><br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">RenderImageCaptionBlock</span> &lt; <span class="hljs-title class_ inherited__">Liquid::Block</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">initialize</span>(<span class="hljs-params">tag_name, attr, tokens</span>)<br>            <span class="hljs-variable language_">super</span><br>            attrs = attr.scan(<span class="hljs-regexp">/caption\=\&quot;(.*)\&quot;\simg\=\&quot;(.*)\&quot;/</span>)<br>            <span class="hljs-variable">@caption</span> = attrs[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br>            <span class="hljs-variable">@img</span> = attrs[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>]<br>        <span class="hljs-keyword">end</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">render</span>(<span class="hljs-params">context</span>)<br>            text = <span class="hljs-variable language_">super</span><br>            <span class="hljs-string">&quot;&lt;p caption=&#x27;<span class="hljs-subst">#&#123;<span class="hljs-variable">@caption</span>&#125;</span>&#x27;&gt;&lt;img src=&#x27;<span class="hljs-subst">#&#123;<span class="hljs-variable">@img</span>&#125;</span>&#x27; alt=&#x27;<span class="hljs-subst">#&#123;<span class="hljs-variable">@caption</span>&#125;</span>&#x27; title=&#x27;<span class="hljs-subst">#&#123;<span class="hljs-variable">@caption</span>&#125;</span>&#x27; /&gt;&lt;/p&gt;&quot;</span><br>        <span class="hljs-keyword">end</span><br><br>    <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-title class_">Liquid</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:Template</span>.register_tag(<span class="hljs-string">&#x27;render_caption&#x27;</span>, <span class="hljs-title class_">Jekyll</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:RenderImageCaptionBlock</span>)<br><span class="hljs-title class_">Liquid</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:Template</span>.register_tag(<span class="hljs-string">&#x27;render_bookmark&#x27;</span>, <span class="hljs-title class_">Jekyll</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:RenderBookMarkBlock</span>)<br></code></pre></td></tr></table></figure>
+<p>Jekyllでプラグインを使うのは非常に簡単です。ルートディレクトリに<code>_plugins</code>ディレクトリを作成し、<code>ruby</code>で書かれたJekyllプラグインを配置するだけで、Jekyll Build時にプラグインがロードされます。</p>
+<h2 id="その他の細かい調整">その他の細かい調整</h2>
+<p>以前の内容は標準Markdownから生成されたHTMLだったため、RSSリーダーで内容を取得してもフォーマットが崩れませんでした。しかし今回Bookmarkを追加したことで、RSSのフォーマットが乱れるようになりました（Reeder 5でのスクリーンショット）：</p>
+<p caption='Reeder5中Bookmark格式错乱'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/B1E25DC1-17C1-45D8-8721-8160FDCA1676_2.jpeg' alt='Reeder5中Bookmark格式错乱' title='Reeder5中Bookmark格式错乱'></p>
+<p>そこで再びrubyプラグインを作成し、このタグをフィルタリングして通常のHTMLリンクに変換しました：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">module</span> <span class="hljs-title class_">Jekyll</span><br>    <span class="hljs-keyword">module</span> <span class="hljs-title class_">BookmarkFilter</span><br>      <span class="hljs-keyword">def</span> <span class="hljs-title function_">bookmark_filter</span>(<span class="hljs-params">input</span>)<br>        input.gsub(<span class="hljs-regexp">/^\&lt;p\&gt;\&lt;a\s+class=\&quot;link-bookmark\&quot;\shref=(.*)\starget=\&quot;_blank\&quot;\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;span\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;span\&gt;\n(.*)\n\&lt;\/span\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;\/span\&gt;\&lt;\/a\&gt;\&lt;\/p\&gt;$/</span>, <span class="hljs-string">&#x27;&lt;p&gt;&lt;a href=\1 target=&quot;_blank&quot;&gt;\4&lt;/a&gt;&lt;/p&gt;&#x27;</span>);<br>      <span class="hljs-keyword">end</span><br>    <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-title class_">Liquid</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:Template</span>.register_filter(<span class="hljs-title class_">Jekyll</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:BookmarkFilter</span>)<br></code></pre></td></tr></table></figure>
+<p>その後、feed.xmlで使用します：<code>post.content | bookmark_filter</code>。</p>
+<p>ご意見・ご感想お待ちしています！</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          この記事の初出:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/optimize-of-my-blog-2.ja.html"
+            title="ブログ自動化プロセスと体験最適化——第二弾"
+          >
+            ブログ自動化プロセスと体験最適化——第二弾 - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">目次</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>ブログ主より：</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        人生の重要な選択に直面したとき、最善の方法を誰かが教えてくれて、貴重な時間を無駄にせずに済めばと、私はよく願っています。だからこそ、自分の経験を踏まえて頻繁にブログを書き、広大なインターネットのこの小さな片隅に、私にとって一度きりの人生経験を記録し、助けを求める人々の力になれればと思っています。
+    </div>
+    <hr>
+    
+    <h5><a href="/ja/archive/">人気のタグ</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ja/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="技術"
+                rel="188">技術</a>
+        
+            <a data-sort="0200"
+                href="/ja/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="生活"
+                rel="108">生活</a>
+        
+            <a data-sort="0264"
+                href="/ja/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="いじり"
+                rel="44">いじり</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="コツ"
+                rel="32">コツ</a>
+        
+            <a data-sort="0276"
+                href="/ja/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="チュートリアル"
+                rel="32">チュートリアル</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="翻訳"
+                rel="24">翻訳</a>
+        
+            <a data-sort="0284"
+                href="/ja/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="経験"
+                rel="20">経験</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="グルメ"
+                rel="20">グルメ</a>
+        
+            <a data-sort="0288"
+                href="/ja/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="初体験"
+                rel="16">初体験</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="ワークフロー"
+                rel="16">ワークフロー</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="プラグイン"
+                rel="16">プラグイン</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="ネットワーク"
+                rel="16">ネットワーク</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ja/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="使用感"
+                rel="12">使用感</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="まとめ"
+                rel="12">まとめ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="サーバー"
+                rel="12">サーバー</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="ルーター"
+                rel="12">ルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="ソフトルーター"
+                rel="12">ソフトルーター</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="エッセイ"
+                rel="12">エッセイ</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=%E9%9B%86%E6%88%90"
+                title="統合"
+                rel="12">統合</a>
+        
+            <a data-sort="0296"
+                href="/ja/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="主食"
+                rel="8">主食</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="最適化"
+                rel="8">最適化</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%8D%83%E5%85%86"
+                title="ギガビット"
+                rel="8">ギガビット</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="大事"
+                rel="8">大事</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="ツール"
+                rel="8">ツール</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="バイパスルーター"
+                rel="8">バイパスルーター</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="フレームワーク"
+                rel="8">フレームワーク</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="足湯タイム"
+                rel="8">足湯タイム</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="テスト"
+                rel="8">テスト</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="テスラ"
+                rel="8">テスラ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="エディタ"
+                rel="8">エディタ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="動画"
+                rel="8">動画</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="デバッグ"
+                rel="8">デバッグ</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BD%A6"
+                title="車"
+                rel="8">車</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="移行"
+                rel="8">移行</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ja/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="東北料理"
+                rel="4">東北料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="住宅購入"
+                rel="4">住宅購入</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="プロキシ"
+                rel="4">プロキシ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="フルスタック"
+                rel="4">フルスタック</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="北欧神話"
+                rel="4">北欧神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="共同編集"
+                rel="4">共同編集</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="圧縮"
+                rel="4">圧縮</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="クレイトス"
+                rel="4">クレイトス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="家庭料理"
+                rel="4">家庭料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="富強"
+                rel="4">富強</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="比較"
+                rel="4">比較</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="四川料理"
+                rel="4">四川料理</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="仕事の経験"
+                rel="4">仕事の経験</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="ギリシャ神話"
+                rel="4">ギリシャ神話</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="定番ソフト"
+                rel="4">定番ソフト</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="オープンソース"
+                rel="4">オープンソース</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="開封"
+                rel="4">開封</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="ゴッド・オブ・ウォー"
+                rel="4">ゴッド・オブ・ウォー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="SIMカード"
+                rel="4">SIMカード</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%8B%93%E6%89%91"
+                title="トポロジー"
+                rel="4">トポロジー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="物語"
+                rel="4">物語</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="データ構造"
+                rel="4">データ構造</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="旅行"
+                rel="4">旅行</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="日常"
+                rel="4">日常</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="日本"
+                rel="4">日本</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="サービス"
+                rel="4">サービス</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="フォーマット"
+                rel="4">フォーマット</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%A2%A6"
+                title="夢"
+                rel="4">夢</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="ブラウザ"
+                rel="4">ブラウザ</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="ゲーム"
+                rel="4">ゲーム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="愚痴"
+                rel="4">愚痴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="ユーザープライバシー"
+                rel="4">ユーザープライバシー</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="アルゴリズム"
+                rel="4">アルゴリズム</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="詳細"
+                rel="4">詳細</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="イヤホン"
+                rel="4">イヤホン</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="自由"
+                rel="4">自由</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="計画"
+                rel="4">計画</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="設定"
+                rel="4">設定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="落とし穴"
+                rel="4">落とし穴</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="変換"
+                rel="4">変換</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="技術選定"
+                rel="4">技術選定</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="面接"
+                rel="4">面接</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ja/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>コラム</h5>
+    <div class="tags">
+        <a href="/projects">オープンソース</a>
+        <a href="/book-list">技術書リスト</a>
+        <a href="/subscribe">サブスク＆有料アプリ</a>
+        <a href="/my-food">グルメのおすすめ</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>友達</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">中国版</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="ブログ自動化プロセスと体験最適化——第二弾"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ja"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ja/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>

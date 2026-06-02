@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+  <meta charset="utf-8">
+  <title>
+    
+      Vue 학습 정리 - Xheldon Blog
+        
+  </title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+    <meta name="description" content="">
+    
+        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="theme-color" content="#000000">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title"
+          content="Vue 학습 정리 - Xheldon Blog">
+        
+          <meta property="og:type" content="article">
+          
+            <meta property="article:published_time" content=" 2016-6-1T1:22:21"> 
+              
+                  
+                    <meta property="article:tag" content="Vue">
+                    
+                    <meta property="article:tag" content="기술">
+                    
+                      
+                          
+                            <meta name="og:description" content="">
+                            
+                                
+                                    <meta property="twitter:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    <meta property="og:image"
+                                      content="https://www.xheldon.com/img/logo.png">
+                                    
+                                      <meta property="og:url" content="https://www.xheldon.com/ko/tech/vue-learning-summary.html">
+                                      <meta property="og:site_name" content="Xheldon Blog">
+                                      <meta property="og:locale" content="ko_KR">
+                                      <!-- 首页 about 和 donate 不显示广告 -->
+                                      
+                                      <meta name="google-adsense-account" content="ca-pub-5486286026923411">
+                                      <script async
+                                        src="https://fundingchoicesmessages.google.com/i/pub-5486286026923411?ers=1"
+                                        nonce="hkl-3cDcQhqR8uwDMTDGjQ"></script>
+                                      <script nonce="hkl-3cDcQhqR8uwDMTDGjQ">
+                                        (function () {
+                                          function signalGooglefcPresent() {
+                                            if (!window.frames['googlefcPresent']) {
+                                              if (document.body) {
+                                                const iframe = document.createElement('iframe');
+                                                iframe.style =
+                                                  'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+                                                iframe.style.display = 'none';
+                                                iframe.name = 'googlefcPresent';
+                                                document.body.appendChild(iframe);
+                                              } else {
+                                                setTimeout(signalGooglefcPresent, 0);
+                                              }
+                                            }
+                                          }
+                                          signalGooglefcPresent();
+                                        })();
+                                      </script>
+                                      <script async
+                                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486286026923411"
+                                        crossorigin="anonymous"></script>
+                                      
+                                      <!-- Web App Manifest -->
+                                      <!-- <link rel="manifest" href="/js/manifest.json"> -->
+                                      <link rel="shortcut icon" href="/img/favicon.ico">
+                                      <link rel="canonical"
+                                        href="https://www.xheldon.com/ko/tech/vue-learning-summary.html">
+                                      <link rel="alternate" hreflang="zh-CN" href="https://www.xheldon.com/tech/vue-learning-summary.html">
+                                      <link rel="alternate" hreflang="en" href="https://www.xheldon.com/en/tech/vue-learning-summary.html">
+                                      <link rel="alternate" hreflang="ja" href="https://www.xheldon.com/ja/tech/vue-learning-summary.html">
+                                      <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/vue-learning-summary.html">
+                                      <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/vue-learning-summary.html">
+
+                                      <!-- Bootstrap Core CSS -->
+                                      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+                                      <!-- Custom CSS -->
+                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+
+                                      <!-- Pygments Highlight CSS -->
+                                      <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+
+                                      <!-- Custom Fonts -->
+                                      <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+                                      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                                      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                                      <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <!-- hack iOS CSS :active style -->
+
+  <body ontouchstart="">
+    <!-- Navigation -->
+    
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+  
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/ko/">
+          Xheldon Blog
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="xblog_navbar">
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/ko/">홈</a>
+            </li>
+            <li>
+              <a href="/ko/about/">소개</a>
+            </li>
+            <li>
+              <a href="/ko/donate/">후원</a>
+            </li>
+            <li>
+              <a href="/ko/archive/">아카이브</a>
+            </li>
+            <li>
+              <a href="/ko/feed.xml">RSS</a>
+            </li>
+<li class="lang-dropdown">
+  <a href="javascript:void(0)" class="lang-toggle" aria-haspopup="true" aria-label="Language">
+    <i class="fa fa-globe"></i> <span class="lang-current">한국어</span> <i class="fa fa-angle-down"></i>
+  </a>
+  <ul class="lang-menu">
+        <li class="lang-item"><a href="/tech/vue-learning-summary.html" hreflang="zh-CN">中文</a></li>
+        <li class="lang-item"><a href="/en/tech/vue-learning-summary.html" hreflang="en">English</a></li>
+        <li class="lang-item"><a href="/ja/tech/vue-learning-summary.html" hreflang="ja">日本語</a></li>
+        <li class="lang-item active"><a href="/ko/tech/vue-learning-summary.html" hreflang="ko">한국어</a></li>
+      </ul>
+</li>
+            <li class="search-icon">
+              <a href="javascript:void(0)">
+                <i class="fa fa-search"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+  <script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#xblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+    var __XNav__ = {
+      close: function () {
+        $navbar.className = ' ';
+        // wait until animation end.
+        setTimeout(function () {
+          // prevent frequently toggle
+          if ($navbar.className.indexOf('in') < 0) {
+            $collapse.style.height = '0px';
+          }
+        }, 400);
+      },
+      open: function () {
+        $collapse.style.height = 'auto';
+        $navbar.className += ' in';
+      },
+    };
+    // Bind Event
+    $toggle.addEventListener('click', function (e) {
+      if ($navbar.className.indexOf('in') > 0) {
+        __XNav__.close();
+      } else {
+        __XNav__.open();
+      }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close XheldonNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function (e) {
+      if (e.target == $toggle) return;
+      if (e.target.className == 'icon-bar') return;
+      __XNav__.close();
+    });
+  </script>
+</nav>
+ <!-- Search -->
+<div class="search-page">
+    <div class="search-icon-close-container">
+      <span class="search-icon-close">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </div>
+    <div class="search-main container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <form></form>
+          <input type="text" id="search-input" placeholder="$ grep...">
+          </form>
+          <div id="search-results" class="mini-post-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/index-bg.png" width="0" height="0"> -->
+
+<style type="text/css">
+  header.intro-header {
+    position: relative;
+    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+
+    
+  }
+
+  
+</style>
+
+  <header class="intro-header style-text">
+    
+          <div class="headerMask"></div>
+          
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                      <div class="tags">
+                        
+                        
+                          <a class="tag" href="/ko/archive/?tag=Vue"
+                            title="Vue">
+                            Vue
+                          </a>
+                          
+                          <a class="tag" href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                            title="기술">
+                            기술
+                          </a>
+                          
+                      </div>
+                      <h1>
+                        Vue 학습 정리
+                      </h1>
+                      <h2 class="subheading">
+                        
+                      </h2>
+                      <span class="meta">✍🏼 작성일 2016년 06월 01일</span>&nbsp;&nbsp;&nbsp;
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      </header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container"
+      >
+         
+        <div class="time-tips">
+          ❗️&nbsp;참고: 이 글이 작성된 지 이미
+          <code id="from_time"></code> 일이 지났습니다. 시의성에 유의하세요
+        </div>
+        <script>
+          var timeDom = document.getElementById('from_time');
+          var pageTime = Number('1464787341000');
+          var currentTime = Date.now();
+          var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
+            0
+          );
+          if (Number(fromNow) <= 0) {
+            fromNow = 1; // Note: 至少显示一天
+          }
+          timeDom.innerText = fromNow;
+        </script>
+              <h2 id="서문">서문</h2>
+<p>이 글은 <a href="https://cn.vuejs.org/v2/guide/instance.html"><code>Vue 2.0 공식 문서</code></a>의 “인스턴스” 섹션부터 시작하여, 몇 가지 <code>Vue API</code> 사용 방법과 <code>Vue</code>가 특정 기능을 구현하는 원리를 탐구합니다. 또한 제 개인적인 사용 경험과 제한된 시각에서 <code>Vue</code>의 설계 의도를 분석하는 내용을 담고 있습니다. <code>Vue</code>를 접한 지 얼마 되지 않아 부족한 점이 있다면 지적해 주시면 감사하겠습니다.</p>
+<blockquote>
+<p>참고: 기본적인 내용은 생략하고, 제가 설명이 필요하다고 생각하는 부분만 다룹니다.</p>
+</blockquote>
+<h2 id="vue-인스턴스">Vue 인스턴스</h2>
+<p>모든 <code>Vue.js</code> 애플리케이션은 생성자를 통해 <code>Vue</code>의 루트 인스턴스를 생성하여 시작됩니다. 즉, 각 페이지의 데이터는 이 하나의 인스턴스에 의해 관리되어야 하며, 원본 데이터의 출처는 루트 인스턴스에서만 발신 및 수신되어 통합 관리되어야 합니다. 루트 인스턴스는 <code>props</code>를 통해 데이터를 분배하거나 <code>events</code>를 통해 데이터를 감지합니다. 자식 컴포넌트는 <code>watch/computed</code>를 통해 데이터 변화를 감지하고 즉시 업데이트하면 됩니다.</p>
+<p>문서에는 &quot;모든 Vue.js 컴포넌트는 사실 확장된 Vue 인스턴스&quot;라고 설명되어 있습니다. 이는 컴포넌트에서도 인스턴스와 동일한 메서드와 훅 함수를 사용할 수 있다는 의미로 이해해야 합니다. 단, <code>data</code>는 예외입니다.</p>
+<p>컴포넌트의 <code>data</code>는 반드시 함수여야 합니다. 컴포넌트가 재사용되기 때문에 매번 컴포넌트를 호출할 때마다 새로운 데이터를 생성해야 합니다.</p>
+<p>데이터 프록시(proxy)는 <code>Vue</code> 인스턴스가 <code>data</code> 객체의 모든 속성을 프록시한다는 것을 의미합니다. 인스턴스 속성 <code>$data</code>는 프록시된 <code>data</code>와 구분하기 위해 <code>data</code> 속성 자체를 나타냅니다.</p>
+<p>즉, <code>vm</code>의 <code>data</code> 속성이 <code>&#123;a: 'xheldon'&#125;</code>이라면, <code>vm.a</code>는 <code>'xheldon'</code>이고, <code>vm.$data</code>는 <code>&#123;a: 'xheldon'&#125;</code>입니다.</p>
+<p>컴포넌트도 사실 (확장된) <code>Vue</code> 인스턴스입니다. 다음은 간단한 검증 예시입니다:</p>
+<p><code>list.vue</code> 컴포넌트가 있다고 가정합니다(<code>template</code>과 <code>style</code>은 생략):</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> <span class="hljs-title class_">Vue</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span>&#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Vue</span>);<span class="hljs-comment">//true</span><br>    <span class="hljs-keyword">return</span> &#123;&#125;<br>  &#125;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="props-vs-data">props vs data</h2>
+<p>컴포넌트를 초기화할 때, <code>prop</code>의 속성과 <code>data</code>의 속성, 그리고 <code>computed</code> 메서드가 모두 <code>Vue</code> 인스턴스에 바인딩됩니다. 그러나 <code>props</code>의 속성은 <code>data</code>의 동일한 이름 속성보다 우선순위가 높습니다. 다음은 검증 예시입니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;first:&#x27;</span>, <span class="hljs-variable language_">this</span>); <span class="hljs-comment">//list 的实例</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">a</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-comment">//属性 a 代表的值挂在 data 上, 但是被下面的 prop 属性同名覆盖(查看上面控制台输出的内容即可)</span><br>      <span class="hljs-attr">d</span>: <span class="hljs-string">&#x27;d&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">props</span>: [<span class="hljs-string">&#x27;a&#x27;</span>], <span class="hljs-comment">//和 data 中的 a 属性同名, 因此来自父级的数据将 data 中的同名属性 a 上的数据覆盖.(注:父级是根组件, 挂载在一个实例上)</span><br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>결과로 경고가 발생합니다(에러가 아니라 렌더링에는 영향을 미치지 않음):</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">[<span class="hljs-title class_">Vue</span> warn]: <span class="hljs-title class_">The</span> data property <span class="hljs-string">&quot;a&quot;</span> is already declared <span class="hljs-keyword">as</span> a prop. <span class="hljs-title class_">Use</span> prop <span class="hljs-keyword">default</span> value instead.<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/propsVSdata.png" alt="props VS data" title="props VS data" /></p>
+<p>반면 <code>computed</code>에서 반환된 함수 이름과 <code>data</code>의 속성 이름은 중복될 수 있으며, 아무런 경고도 발생하지 않습니다. 그러나 중복된 이름으로 인해 초기화 시점에 콘솔에서 <code>_data</code>가 <code>_computedWatcher</code>보다 늦게 이 중복 속성의 <code>getter</code>와 <code>setter</code>를 설정하는 것을 확인할 수 있습니다(이것이 원인인지는 확실하지 않으며, 추후 심층 연구 후 이 글을 수정할 예정입니다). 이로 인해 덮어쓰기가 발생합니다. 관련 원리는 <a href="https://juejin.im/entry/577639de165abd00547b0924">이 글</a>을 참조하세요.</p>
+<p>이들은 모두 초기화 시점에 인스턴스 <code>속성</code>으로 바인딩되며, 동일한 이름의 <code>computed</code> 속성이 덮어쓰여졌지만, <code>Vue devtool</code>은 여전히 정확히 표시합니다)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;first:&#x27;</span>, <span class="hljs-variable language_">this</span>); <span class="hljs-comment">//list 的实例</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">ab</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-comment">//属性 a 代表的值挂在 data 上, 但是被下面的 prop 属性同名覆盖(查看上面控制台输出的内容即可)</span><br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">computed</span>: &#123;<br>    <span class="hljs-title function_">ab</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed a&#x27;</span>; <span class="hljs-comment">//方法名跟 data 上的 a 属性同名, 因此console 出来的 this 不会出现它的值, 用花括号输出的时候也是输出的 data 上的同名属性</span><br>    &#125;,<br>    <span class="hljs-title function_">f</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed f&#x27;</span>; <span class="hljs-comment">//方法名没有重复的, 因此 console 出来的 this 会有它的同名属性, 且值为 &#x27;computed f&#x27;, 我们提供的 function 被作为该属性的 getter(计算属性默认只有 getter, 可以手动添加 setter)</span><br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/computedVSdata1.png" alt="computed VS data" title="computed VS data" /></p>
+<p><code>Vue devtool</code>이 정확히 표시합니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/computedVSdata3.png" alt="computed VS data" title="computed VS data" /></p>
+<p>만약 <code>computed</code>의 메서드 이름과 <code>data</code>의 속성 이름이 중복되지 않는다면:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;first:&#x27;</span>, <span class="hljs-variable language_">this</span>); <span class="hljs-comment">//list 的实例</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">a</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-comment">//属性 a 代表的值挂在 data 上, 但是被下面的 prop 属性同名覆盖(查看上面控制台输出的内容即可)</span><br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">computed</span>: &#123;<br>    <span class="hljs-title function_">ab</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed a&#x27;</span>; <span class="hljs-comment">//方法名跟 data 上的 a 属性同名, 因此 console 出来的 this 不会出现它的值, 但 Vue devtool 控制台正确显示了出来, 用花括号输出的时候也是其返回值 computed a.</span><br>    &#125;,<br>    <span class="hljs-title function_">f</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;computed f&#x27;</span>; <span class="hljs-comment">//方法名没有重复的, 因此 console 出来的 this 会有它的同名属性, 且值为 &#x27;computed f&#x27;, 我们提供的 function 被作为该属性的 getter</span><br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-list&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/computedVSdata2.png" alt="computed VS data" title="computed VS data" /></p>
+<p>또한, <code>methods</code>와 <code>computed</code> 메서드의 차이점은 후자가 캐시를 가지고 전자는 그렇지 않다는 점(즉, 후자는 의존하는 반응형 데이터가 변경되지 않는 한 재계산되지 않음) 외에도, 둘 다 값을 반환하기 위한 것이라면 <code>methods</code>의 메서드는 <code>functionName()</code> 형태로 사용되고,<br />
+<code>computed</code>의 메서드는 <code>functionName</code>으로 참조된다는 것입니다. 즉, 전자는 함수를 실행해야 하지만 후자는 그럴 필요가 없습니다.</p>
+<p>그 이유는 <code>computed</code> 속성에 작성한 메서드가 속성으로 간주되어 <code>Vue</code> 인스턴스에 마운트되기 때문이며, 우리가 제공한 함수는 이 메서드의 <code>getter</code>로 사용되기 때문입니다.</p>
+<p>반면 <code>methods</code>는 단순한 함수이므로, 템플릿에서 참조하거나 이벤트 메서드로 사용할 때 모두 <code>()</code>를 사용해 호출해야 합니다.</p>
+<p>따라서 실제 함수가 필요한 경우------여기서 함수 호출을 사용한다면 <code>computed</code>는 단순히 값을 반환하는 것이 아니라 매개변수를 전달해야 하는 함수를 반환해야 합니다------이때는 <code>methods</code>가 가장 적합합니다.</p>
+<p>다음은 공식 문서와 다른 버전의 <code>todo list</code> 예제입니다:</p>
+<p>템플릿:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> @<span class="hljs-attr">keyup.enter</span>=<span class="hljs-string">&quot;addToList&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;todotext&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span><br>      &#123;% raw %&#125;<br>      <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span>&gt;</span><br>        &#123;&#123;key&#125;&#125;:&#123;&#123;value&#125;&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span>&gt;</span>X<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>      &#123;% endraw %&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>로직:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">todolist</span>: [],<br>      <span class="hljs-attr">todotext</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-title function_">addToList</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">push</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">todotext</span>);<br>    &#125;,<br>    <span class="hljs-title function_">deletetodo</span>(<span class="hljs-params">key</span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">splice</span>(key, <span class="hljs-number">1</span>);<br>    &#125;,<br>  &#125; <span class="hljs-comment">/*,</span><br><span class="hljs-comment">  computed:&#123;</span><br><span class="hljs-comment">    deletetodo(key)&#123;//不接收参数</span><br><span class="hljs-comment">      console.log(arguments);</span><br><span class="hljs-comment">      this.todolist.splice(key, 1);</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">  &#125;*/</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>이 예제에서, 이러한 템플릿을 사용하는 경우 현재 <code>li</code>를 클릭할 때 삭제하기 위해 매개변수를 전달해야 하므로 이 경우 반드시 <code>methods</code>를 사용해야 합니다.</p>
+<p><code>computed</code>를 사용할 때는 매개변수를 받지 않습니다 <a href="http://whereswalden.com/2010/08/22/incompatible-es5-change-literal-getter-and-setter-functions-must-now-have-exactly-zero-or-one-arguments">(이는 <code>getter</code>이기 때문)</a>, 심지어 함수를 반환하더라도:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">computed</span>:&#123;<br>  <span class="hljs-title function_">deletetodo</span>(<span class="hljs-params">key</span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//控制台输出当前组件实例</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">splice</span>(key, <span class="hljs-number">1</span>);<span class="hljs-comment">//报错</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>참고: 만약 동일한 이름의 함수가 <code>computed</code>와 <code>methods</code>에 모두 존재한다면, <code>computed</code>의 함수가 더 높은 우선순위를 가집니다 (<code>getter</code>와 <code>setter</code> 처리 순서 문제로, 자세한 내용은 소스 코드를 참조하세요). 이는 템플릿 참조와 이벤트 바인딩 모두에 적용됩니다. 다음은 검증 내용입니다:</p>
+<p>템플릿 참조 테스트:</p>
+<p>템플릿:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;%raw%&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;&#123;a()&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>&#123;% endraw%&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;im from methods&#x27;</span><br>  &#125;<br>&#125;,<br><span class="hljs-attr">computed</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;im from computed&#x27;</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>출력 결과는 <code>computed</code>의 함수인 <code>im from computed</code>입니다. 만약 <code>computed</code>가 함수를 반환하지 않는다면, <code>{{a}}</code>와 같은 템플릿 참조는 당연히 <code>computed</code>의 값을 출력할 것입니다. 이에 대한 검증은 생략합니다.</p>
+<p>이벤트 바인딩의 경우:</p>
+<p><a href="https://cn.vuejs.org/v2/guide/events.html#%E5%86%85%E8%81%94%E5%A4%84%E7%90%86%E5%99%A8%E6%96%B9%E6%B3%95">인라인 핸들러 메서드</a>를 사용할 때:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;%raw%&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;a()&quot;</span>&gt;</span>click me<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>&#123;% endraw%&#125;<br></code></pre></td></tr></table></figure>
+<p>로직:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;methods&#x27;</span>)<br>  &#125;<br>&#125;,<br><span class="hljs-attr">computed</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-comment">//computed 返回一个函数</span><br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;computed&#x27;</span>)<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>출력 결과는 <code>computed</code>입니다.</p>
+<p><a href="https://cn.vuejs.org/v2/guide/events.html#%E6%96%B9%E6%B3%95%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A8">메서드 이벤트 핸들러</a>를 사용해도 결과는 동일합니다:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;%raw%&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;a&quot;</span>&gt;</span>click me<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>//注意此处不带括号 &#123;% endraw%&#125;<br></code></pre></td></tr></table></figure>
+<p>로직:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;methods&#x27;</span>)<br>  &#125;<br>&#125;,<br><span class="hljs-attr">computed</span>:&#123;<br>  <span class="hljs-title function_">a</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-comment">//computed 返回一个函数</span><br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;computed&#x27;</span>)<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>출력 결과는 <code>computed</code>입니다.</p>
+<p>이벤트 바인딩 시 <code>computed</code>는 항상 함수를 반환해야 합니다.</p>
+<p>따라서 우선순위 순서는 다음과 같습니다:</p>
+<p><code>props &gt; data &gt; computed &gt; methods</code></p>
+<p>저는 <code>computed</code>와 <code>methods</code>에서 <code>this.xxx</code>로 참조할 때도 동일한 우선순위가 적용될 것이라고 추측합니다. 확인해보고 싶다면 직접 테스트해보시기 바랍니다.</p>
+<p>또한 두 경우 모두 <code>method</code>는 함수를 반환할 필요가 없지만, <code>computed</code>는 항상 함수를 반환해야 하며 매개변수를 받지 않습니다(<code>getter</code>이기 때문). 결론적으로, 이벤트 처리에는 <code>methods</code>를 사용하는 것이 가장 좋고, 데이터 바인딩/템플릿 참조에는 <code>computed</code>를 사용하는 것이 가장 좋습니다(캐시 기능이 있기 때문).</p>
+<p>추가로, <code>method</code>로 이벤트를 바인딩할 때 <code>()</code>를 붙이거나 붙이지 않아도 함수는 실행됩니다. 차이점은 다음과 같습니다:</p>
+<ol>
+<li>
+<p><code>()</code>가 포함된 것을 인라인 문장이라고 부르며, 두 가지 경우로 나뉩니다: 네이티브 이벤트와 커스텀 이벤트. 두 경우 모두 매개변수를 전달할 수 있으며, 매개변수 목록이 비어 있으면 기본 매개변수 <code>arguments</code>도 비어 있어 기본 매개변수가 존재하지 않습니다. 만약 <code>input/click</code>과 같은 네이티브 이벤트로 트리거된 경우, 특수한 <code>$event</code> 매개변수를 네이티브 <code>event</code> 이벤트 처리로 전달할 수 있습니다. 반면 커스텀 이벤트로 트리거된 경우, 이벤트 처리 함수의 매개변수는 여전히 실제로 이벤트 처리 함수에 전달된 값에 의존하며, 커스텀 함수에는 사용할 수 있는 특별한 <code>$event</code> 객체가 없습니다. <code>$emit</code>으로 커스텀 이벤트를 트리거할 때 전달된 매개변수는 무시됩니다.</p>
+</li>
+<li>
+<p><code>()</code>가 없는 것을 메서드 이벤트라고 부르며, 두 가지 경우로 나뉩니다: 네이티브 이벤트인 경우 네이티브 <code>event</code> 이벤트를 유일한 기본 매개변수로 전달합니다. 커스텀 이벤트인 경우 <code>$emit</code> 이벤트 시 이벤트 이름을 제외한 두 번째부터 마지막까지의 임의 개수의 매개변수가 전달됩니다.</p>
+</li>
+</ol>
+<blockquote>
+<p>말보다는 코드를 보여주세요</p>
+</blockquote>
+<p>위에서 설명한 네 가지 경우는 다음과 같습니다:</p>
+<ol>
+<li><code>()</code>가 포함된 네이티브 이벤트</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;input type=<span class="hljs-string">&quot;text&quot;</span> @click=<span class="hljs-string">&quot;test1()&quot;</span>&gt;<span class="hljs-comment">//模板里面传参为空</span><br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">test1</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//则逻辑中的参数也为空;</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li><code>()</code>가 포함된 커스텀 이벤트</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//子模板</span><br>&lt;input type=<span class="hljs-string">&quot;text&quot;</span> @input=<span class="hljs-string">&quot;shuru($event)&quot;</span>/&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;&#123;xheldon&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="hljs-comment">//子逻辑:</span><br><span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;child&#x27;</span>,<br><span class="hljs-attr">props</span>:[<span class="hljs-string">&#x27;xheldon&#x27;</span>],<br><span class="hljs-attr">method</span>:&#123;<br>  <span class="hljs-title function_">shuru</span>(<span class="hljs-params">e</span>)&#123;<br>    <span class="hljs-variable language_">this</span>.$emit(<span class="hljs-string">&#x27;haha&#x27;</span>, e.<span class="hljs-property">target</span>.<span class="hljs-property">value</span>,<span class="hljs-string">&#x27;其他参数&#x27;</span>);<br>  &#125;<br>&#125;<br><span class="hljs-comment">//父模板</span><br>&lt;child :xheldon=<span class="hljs-string">&quot;blob&quot;</span> @haha=<span class="hljs-string">&quot;something()&quot;</span>&gt;&lt;/child&gt;<br><span class="hljs-comment">//父逻辑:</span><br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">something</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;parent:&#x27;</span>,...<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//上面 something() 中传 xxx, 则输出 &#x27;parent:xxx&#x27;, 即忽略了子组件 $emit 事件时候传递的参数.</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">blob</span> = <span class="hljs-variable language_">arguments</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li><code>()</code>가 없는 네이티브 이벤트</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;input type=<span class="hljs-string">&quot;text&quot;</span> @click=<span class="hljs-string">&quot;test1&quot;</span>&gt;<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">test1</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//结果: 输出原生的 MouseEvent 事件</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="4">
+<li><code>()</code>가 없는 커스텀 이벤트</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//子模板</span><br>&lt;input type=<span class="hljs-string">&quot;text&quot;</span> @input=<span class="hljs-string">&quot;shuru($event)&quot;</span>/&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;&#123;xheldon&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="hljs-comment">//子逻辑:</span><br><span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;child&#x27;</span>,<br><span class="hljs-attr">props</span>:[<span class="hljs-string">&#x27;xheldon&#x27;</span>],<br><span class="hljs-attr">method</span>:&#123;<br>  <span class="hljs-title function_">shuru</span>(<span class="hljs-params">e</span>)&#123;<br>    <span class="hljs-variable language_">this</span>.$emit(<span class="hljs-string">&#x27;haha&#x27;</span>, e.<span class="hljs-property">target</span>.<span class="hljs-property">value</span>,<span class="hljs-string">&#x27;其他参数&#x27;</span>);<br>  &#125;<br>&#125;<br><span class="hljs-comment">//父模板</span><br>&lt;child :xheldon=<span class="hljs-string">&quot;blob&quot;</span> @haha=<span class="hljs-string">&quot;something&quot;</span>&gt;&lt;/child&gt;<br><span class="hljs-comment">//父逻辑:</span><br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">something</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;parent:&#x27;</span>,...<span class="hljs-variable language_">arguments</span>);<span class="hljs-comment">//input 输入 xxx, 则输出 &#x27;parent: xxx 其他参数&#x27;, 即与子组件 $emit 时候传递的参数相关.</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">blob</span> = <span class="hljs-variable language_">arguments</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="디렉티브와-매개변수-속성">디렉티브와 매개변수(속성)</h2>
+<p>기본 사용법:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">v-directive:propNamed.modifiers</span>=<span class="hljs-string">&quot;value&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>여기서 <code>directive</code>는 디렉티브라고 부르며, <code>propName</code>은 디렉티브의 &quot;매개변수&quot;라고 합니다. 실제로 매개변수의 구체적 표현은 <code>html</code>의 속성입니다(<code>Vue</code>는 내장된 매개변수/속성을 제공합니다. 예를 들어 <code>v-bind:click=&quot;method&quot;</code>의 <code>click</code>, <code>v-bind:href=&quot;/img/in-post/x.png&quot;</code>의 <code>href</code> 등이 있습니다. 전자는 인라인에 나타나지 않지만, 후자는 필수적이므로 인라인 속성에 나타납니다. 사용자가 정의한 매개변수/속성은 반드시 인라인 속성에 나타납니다). <code>value</code>는 변수입니다(비록 쌍따옴표 안에 작성되었지만) 대부분의 경우 부모 템플릿에서 가져옵니다.</p>
+<p><code>propName</code>에는 <code>.prevent</code>와 같은 기본 이벤트를 금지하는 등의 동작을 빠르게 조작하기 위한 수식어를 추가할 수 있습니다.</p>
+<p>일부 디렉티브는 <code>v-if</code>처럼 직접 사용할 수 있지만, <code>v-bind:href/v-on:click</code>처럼 매개변수를 반드시 추가해야 하는 경우도 있습니다.</p>
+<p>주의할 점은 <code>value</code>에 쌍따옴표가 있든 없든 결과는 동일합니다. 즉, <code>:propName=&quot;value&quot;</code>와 <code>:propName=value</code>는 동일합니다. 특별히 명시되지 않는 한, 아래 모든 경우에 적용됩니다.</p>
+<p><code>value</code>가 불리언 값으로 변환된 후 <code>false</code>인 경우 <code>propName</code>이 제거되고, <code>true</code>인 경우 <code>propName</code>이 나타납니다. 실제로 다음과 같은 규칙을 따릅니다(커스텀 속성에만 해당):</p>
+<ol>
+<li><code>null</code>, <code>undefined</code>, <code>false</code> 리터럴인 경우 <code>propName</code> 속성이 제거됩니다.</li>
+<li><code>value</code>가 정의되지 않은 변수인 경우(예: <code>:propName=&quot;wxd&quot;</code>), <code>propName</code>이 제거되고 경고가 발생합니다:</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">[<span class="hljs-title class_">Vue</span> warn]: <span class="hljs-title class_">Property</span> or method <span class="hljs-string">&quot;s&quot;</span> is not defined on the instance but referenced during render. <span class="hljs-title class_">Make</span> sure to declare reactive data properties <span class="hljs-keyword">in</span> the data option.<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li>
+<p><code>value</code>가 배열인 경우, 배열은 객체이므로 <code>propName</code>은 아래 두 번째 경우를 제외하고 항상 존재합니다. <code>value</code>는 다음과 같은 경우로 나뉩니다:</p>
+</li>
+<li>
+<p><code>:propName =[]</code>, <code>:propName =&quot;[]&quot;</code>, <code>:propName =&quot;['']&quot;</code>인 경우 <code>value</code>가 제거되어 속성만 있고 값이 없습니다.</p>
+</li>
+<li>
+<p><code>:propName =[&quot;&quot;]</code>인 경우 구조가 깨집니다.</p>
+</li>
+<li>
+<p><code>:propName =[&quot;&quot;,&quot;&quot;]</code> 또는 <code>:propName ='[&quot;&quot;,&quot;&quot;]'</code>인 경우 <code>value</code> 값은 <code>&quot;,&quot;</code>입니다.</p>
+</li>
+<li>
+<p><code>value</code>가 중첩 배열인 경우, 값을 1차원화한 후 <code>value</code> 또는 재귀적 하위 요소에 <code>undefined</code> 또는 <code>null</code> 리터럴(문자열 안에 작성된 것이 아닌)이 포함되어 있으면 해당 값은 비워집니다. <code>value</code> 또는 재귀적 하위 요소에 <code>Object</code>가 포함되어 있으면 해당 값은 <code>[object Object]</code>가 됩니다.</p>
+</li>
+<li>
+<p><code>value</code>가 객체인 경우 <code>propName</code>은 유지되고 값은 <code>[object Object]</code>가 됩니다.</p>
+</li>
+<li>
+<p><code>value</code>가 숫자나 문자열인 경우(예: <code>:propName = &quot;'fff'&quot;</code>), <code>propName</code>은 유지되고 <code>value</code>는 문자열 또는 숫자 값이 됩니다.</p>
+</li>
+</ol>
+<p>소스 코드를 확인해보면 실제로 이런 로직으로 동작합니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">setAttr</span>(<span class="hljs-params">el, key, value</span>) &#123;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isBooleanAttr</span>(key)) &#123;<br>    <span class="hljs-comment">// set attribute for blank value</span><br>    <span class="hljs-comment">// e.g. &lt;option disabled&gt;Select one&lt;/option&gt;</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isFalsyAttrValue</span>(value)) &#123;<br>      el.<span class="hljs-title function_">removeAttribute</span>(key);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      el.<span class="hljs-title function_">setAttribute</span>(key, key);<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isEnumeratedAttr</span>(key)) &#123;<br>    el.<span class="hljs-title function_">setAttribute</span>(<br>      key,<br>      <span class="hljs-title function_">isFalsyAttrValue</span>(value) || value === <span class="hljs-string">&#x27;false&#x27;</span> ? <span class="hljs-string">&#x27;false&#x27;</span> : <span class="hljs-string">&#x27;true&#x27;</span><br>    );<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isXlink</span>(key)) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isFalsyAttrValue</span>(value)) &#123;<br>      el.<span class="hljs-title function_">removeAttributeNS</span>(xlinkNS, <span class="hljs-title function_">getXlinkProp</span>(key));<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      el.<span class="hljs-title function_">setAttributeNS</span>(xlinkNS, key, value);<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isFalsyAttrValue</span>(value)) &#123;<br>      el.<span class="hljs-title function_">removeAttribute</span>(key);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      el.<span class="hljs-title function_">setAttribute</span>(key, value);<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>이러한 규칙은 사용자 정의 속성에만 적용됩니다. 내장 속성인 경우 다르게 처리됩니다. 예를 들어 <code>class</code> 속성을 바인딩하는 경우:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">v-<span class="hljs-attr">bind</span>:<span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;&#123;active: isActive&#125;&quot;</span><br></code></pre></td></tr></table></figure>
+<p>이는 <code>isActive</code> 값이 <code>false</code>이거나 불리언 <code>false</code>로 변환될 수 있는 다른 값인 경우 <code>active</code> 클래스 이름이 적용되지 않고, 그렇지 않으면 해당 클래스 이름이 적용됨을 의미합니다(if 문의 참/거짓 판정과 동일합니다).</p>
+<h2 id="필터">필터</h2>
+<p>필터를 체인으로 연결하면 첫 번째 필터의 매개변수는 초기값이고, 이후 필터의 첫 번째 매개변수는 이전 필터의 반환값입니다. 반환값이 없으면 <code>undefined</code>가 됩니다.</p>
+<p>템플릿:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">v-bind:prop</span>=<span class="hljs-string">&quot;rawProp | filterOne | filterTwo&quot;</span>&gt;</span><br>  控制台查看 filter 函数的参数<br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>로직:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">rawProp</span>: <span class="hljs-string">&#x27;this is raw prop&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">filters</span>: &#123;<br>    <span class="hljs-title function_">filterOne</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;this param is pass to next filter&#x27;</span>;<br>    &#125;,<br>    <span class="hljs-title function_">filterTwo</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">arguments</span>);<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;com-header&#x27;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>첫 번째 <code>filter</code>를 제외하고 후속 <code>filter</code>는 초기값을 얻을 수 없습니다. 물론 매개변수를 전달하려면 방법은 다양합니다. 예를 들어 첫 번째 <code>filter</code>가 배열을 반환하도록 하는 등입니다.</p>
+<h2 id="리스트-렌더링">리스트 렌더링</h2>
+<p><code>v-for</code>에서 매개변수가 두 개인 경우 네이티브 <code>js</code>의 <code>forEach</code> 매개변수와 동일하게 <code>value, key</code> 순서입니다. <code>of</code> 연산자와 <code>in</code> 연산자를 사용하는 효과는 완전히 동일합니다. 네이티브 <code>js</code>에서는 다르지만요.</p>
+<p>또한 주의할 점은 컴포넌트에 <code>v-for</code>를 사용할 때 부모는 자동으로 데이터를 컴포넌트에 전달할 수 없습니다. 컴포넌트는 자신의 독립적인 스코프를 가지기 때문입니다. 따라서 자식 컴포넌트에 데이터를 전달하려면 <code>props</code> 속성을 사용해 약간 더 번거롭게 작성해야 합니다:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">my-component</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(item, index) in items&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-bind:item</span>=<span class="hljs-string">&quot;item&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-bind:index</span>=<span class="hljs-string">&quot;index&quot;</span></span><br><span class="hljs-tag">&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">my-component</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>또한 <code>v-for</code>를 객체에 사용할 때 반복값은 객체의 값이지 키가 아닙니다. 이는 네이티브 <code>js</code>와 다릅니다. 네이티브 <code>js</code>의 <code>for in</code> 루프에서 값을 출력하려면 수동으로 <code>obj['i']</code>를 순회해야 하며, 키를 출력하려면 두 번째 매개변수 <code>(value, key)</code>를 작성해야 합니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">obj</span>:&#123;<br>  <span class="hljs-attr">first</span>: <span class="hljs-string">&#x27;xheldon&#x27;</span>,<br>  <span class="hljs-attr">last</span>: <span class="hljs-string">&#x27;cao&#x27;</span>,<br>  <span class="hljs-attr">age</span>: <span class="hljs-string">&#x27;25&#x27;</span><br>&#125;<br>&lt;div v-<span class="hljs-keyword">for</span>=<span class="hljs-string">&quot;(value, key) in obj&quot;</span>&gt;&#123;% raw %&#125;&#123;&#123;value&#125;&#125;-&#123;&#123;key&#125;&#125;&#123;% endraw %&#125;&lt;<span class="hljs-regexp">/div&gt;/</span>/ 输出 xheldon cao <span class="hljs-number">25</span><br></code></pre></td></tr></table></figure>
+<p>주의: 네이티브 <code>js</code>에서는 수동으로 <code>Symbol.iterator</code>를 구현하지 않는 한 <code>for of</code> 루프를 사용할 수 없지만, <code>Vue</code>에서는 가능합니다. 비록 효과는 <code>for in</code>과 완전히 동일하지만요.</p>
+<p>리스트 렌더링에는 '제자리 재사용 원칙’이라는 작은 팁이 있습니다. 이는 무엇을 의미할까요? 위에서 언급한 <code>tololist</code> 예시를 다시 보면, 각 요소에 고유한 <code>key</code> 값을 지정하지 않은 경우:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span>&gt;</span><br>  &#123;%raw%&#125;&#123;&#123;value.key&#125;&#125;:&#123;&#123;value.value&#125;&#125;&#123;%endraw%&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span></span><br><span class="hljs-tag">    @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    X<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>이 경우 'X’를 클릭해 현재 <code>li</code>를 삭제할 때마다 <code>Vue</code>는 현재 요소를 제자리에서 재사용하며, <code>remove</code>로 DOM 요소를 삭제하는 대신 데이터를 올바른 위치로 직접 이동시켜 <code>reflow</code>를 방지합니다. 아래는 <code>chrome</code>의 <code>devtool</code>로 표시된 ‘X’ 클릭 시 페이지 렌더링 상황입니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/nokey.png" alt="没有key" title="没有key" /></p>
+<p><code>reflow</code>가 발생한 부분은 맨 아래 약간만 있는 것을 확인할 수 있습니다.</p>
+<p>반면 <code>key</code>를 추가한 경우:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span> <span class="hljs-attr">:key</span>=<span class="hljs-string">&quot;value.key&quot;</span>&gt;</span><br>  &#123;% raw %&#125;&#123;&#123;value.key&#125;&#125;:&#123;&#123;value.value&#125;&#125;&#123;% endraw%&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span></span><br><span class="hljs-tag">    @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    X<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>닫기 버튼을 클릭한 후 브라우저의 <code>render</code> 동작을 다시 살펴보겠습니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/key.png" alt="有key" title="有key" /></p>
+<p>어떤 분들은 여기서 왜 <code>Vue</code>에서 제공하는 <code>(value, key)</code>의 <code>key</code>를 사용하지 않고 직접 <code>value</code>에 <code>value.key</code>를 구현해야 하는지 궁금해할 수 있습니다:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;% raw %&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(value, key) in todolist&quot;</span> <span class="hljs-attr">:key</span>=<span class="hljs-string">&quot;key&quot;</span>&gt;</span><br>  &#123;&#123;value.key&#125;&#125;:&#123;&#123;value.value&#125;&#125;<span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;deletetodo(key)&quot;</span>&gt;</span>X<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>&#123;% endraw %&#125;<br></code></pre></td></tr></table></figure>
+<p>그 이유는, <code>Vue</code>에서 제공하는 <code>key</code>는表面上 <code>key</code>처럼 보이지만 실제로 현재 데이터와 무관하기 때문입니다. 따라서 <code>li</code>를 삭제할 때 <code>key</code>는 단순히 재계산될 뿐, 삭제되거나 이동된 요소와 함께 제거되거나 상하 이동하지 않습니다. 위의 방식으로 작성하면 효과는 첫 번째 <code>key</code> 없는 경우와 동일하며, 여전히就地 재사용 전략을 사용합니다. 변경되는 것은 데이터뿐이고 <code>dom</code> 구조는 그대로 유지되므로, 직접 <code>key</code>를 구현해야 합니다. 대략 다음과 같은 방식입니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span>&#123;<br>    <span class="hljs-attr">toolist</span>:[],<br>    <span class="hljs-attr">truekey</span>: <span class="hljs-number">0</span>,<span class="hljs-comment">//手动实现一个 key</span><br>    <span class="hljs-attr">todotext</span>: <span class="hljs-string">&#x27;&#x27;</span><br>  &#125;<br>&#125;,<br><span class="hljs-attr">methods</span>: &#123;<br>  <span class="hljs-title function_">addTolist</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">todolist</span>.<span class="hljs-title function_">push</span>(&#123;<span class="hljs-attr">value</span>:<span class="hljs-variable language_">this</span>.<span class="hljs-property">todotext</span>, <span class="hljs-attr">key</span>: ++<span class="hljs-variable language_">this</span>.<span class="hljs-property">truekey</span>&#125;);<span class="hljs-comment">// 把 key 放到 data 上</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="이벤트-핸들러">이벤트 핸들러</h2>
+<p>이벤트 핸들러는 체이닝할 수 있지만, 일부 요소는 기본적으로 지원하지 않아 바인딩해도 의미가 없습니다. 예를 들어 <code>div</code>에 <code>keyup</code> 이벤트를 바인딩하는 경우:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;div @keyup.<span class="hljs-property">alt</span>=<span class="hljs-string">&quot;pressalt&quot;</span>&gt;div alt 按键测试&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+<p>따라서 일반적으로 <code>div</code>에서 이벤트 버블링을 처리한 후, <code>input</code>에 <code>alt+ctrl</code> 이벤트를 바인딩합니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;div @keyup.<span class="hljs-property">alt</span>=<span class="hljs-string">&quot;presskey&quot;</span>&gt;div冒泡按键测试<br>  &lt;input type=<span class="hljs-string">&quot;text&quot;</span>&gt;<br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+<p>여기서 한 가지 우려사항은, <code>input</code>에 <code>@keyup.space</code> 리스너를 사용할 때 중국어 입력법에서 스페이스는 일반적으로 단어 선택에 사용되므로, 실제 출력은 아직 선택되지 않은 단어의 병음 알파벳일까요, 아니면 스페이스를 누른 후 후보 목록의 첫 번째 단어일까요? (이는 <code>Vue</code>의 문제는 아니지만 여기서 언급합니다)</p>
+<p>답은 대부분의 경우 스페이스 누른 후의 첫 번째 단어가 출력됩니다. 하지만 문장이 길어 두 번의 <code>space</code>를 눌러야 하는 경우, 첫 번째 누를 때는 아무것도 출력되지 않고 빈 상태이며, 두 번째 <code>space</code>를 눌러야 전체 단어가 출력됩니다. 여기서는 테스트를 위한 극단적인 경우를 고려했으므로, 기본적으로 스페이스 후 첫 번째 단어가 출력되며 빈 값이나 병음 알파벳이 아닙니다. 저는 Sogou <code>mac</code> 입력법의 단일 행 후보 모드를 사용하며, 위의 <code>todolist</code>로 테스트할 수 있습니다 (생략)</p>
+<p>참고: 공식 문서에서 <code>v-model</code>을 설명할 때 <code>IME</code>에 대해 언급하는데, 바로 이 문제를 다룹니다. 입력법 사용 시 <code>v-model</code>도 즉시 반응하도록 하려면 <code>input</code> 이벤트를 바인딩하면 됩니다.</p>
+<h2 id="폼-컨트롤">폼 컨트롤</h2>
+<p><code>v-model</code>은 일반적으로 <code>input</code>에 사용되며, 템플릿의 <code>input</code> <code>value</code> 값은 무시됩니다. <code>v-model</code>은 <code>js</code>의 초기값만 인식하고 바인딩합니다. 따라서 <code>v-model</code>을 작성하면서 <code>value</code> 속성도 함께 작성하면, 후자는 <code>dom</code> 구조에는 나타나지만 <code>js</code>에서 값을 가져올 때는 무시되고 <code>v-model</code> 바인딩 값이 사용됩니다:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span></span><br><span class="hljs-tag">  <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;我出现在 dom 结构的 value 属性中, 但是只能通过 getAttribute 获取到我, .value 并不能获取到, 伤心~&quot;</span></span><br><span class="hljs-tag">/&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span>&#123;<br>    <span class="hljs-attr">todotext</span>:<span class="hljs-string">&#x27;我是真正的初始值, js 获取的是我, 虽然我并不出现在 dom 中的 value 属性中~&#x27;</span>,<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>둘의 차이는 <code>jQuery</code>의 <code>.data</code>와 <code>.attr</code>의 차이와 유사합니다------인라인에 작성된 것은 <code>attr('data','xxx')</code>의 값이며, <code>dom</code> 구조를 확인해봐도 <code>xxx</code>의 값이 보입니다. 하지만 <code>js</code>로 실제 얻는 값은 <code>js</code>로 바인딩된 <code>.data('yyy')</code>의 값입니다------물론 <code>attr</code>을 사용해 <code>dom</code> 구조를 읽는 경우는 제외입니다. (참고: 인스턴스화 후에 <code>attr</code> 값을 수정하면 <code>js</code>로 얻는 값은 <code>attr</code>의 값이 됩니다. 여기서 초기값 무시는 정말 초기값만 무시하는 것입니다. 예를 들어 초기화 후 <code>v-model</code>이 <code>value</code>에 바인딩된 상태에서 <code>dom</code> 구조의 <code>value</code> 값을 수동으로 수정하면, <code>v-model</code>이 해당 요소의 <code>value</code> 값을 다시 가져올 때 수정된 <code>attr</code> 속성 값을 사용하며 <code>data</code> 상의 값은 사용하지 않습니다).</p>
+<p>요구사항이 특이해서 <code>v-model</code>을 통해 <code>input</code> 값을 실시간으로 가져와 업데이트하지 않거나, <code>input</code> 값을 가져와 처리한 후 업데이트해야 하는 동시에 <code>v-model</code>을 사용하고 싶지 않다면 <code>$ref</code>를 시도해볼 수 있습니다(<code>e.target.value</code>도 가능합니다):</p>
+<p>템플릿:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> @<span class="hljs-attr">input</span>=<span class="hljs-string">&quot;input&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;inputvalue&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>로직:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;&#x27;</span><br>&#125;,<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">input</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">message</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">$refs</span>.<span class="hljs-property">inputvalue</span>.<span class="hljs-property">value</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>공식 문서에서도 설명하듯, <code>v-model</code>은 양방향 데이터 바인딩을 구현하는 syntactic sugar일 뿐입니다:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-bind:value</span>=<span class="hljs-string">&quot;something&quot;</span> <span class="hljs-attr">v-on:input</span>=<span class="hljs-string">&quot;something = $event.target.value&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>하지만 <code>input</code> 이벤트를 감지하면 발생하는 문제는 입력기를 사용할 때 공백 없이 단어를 선택하기 전에도 입력 이벤트가 트리거된다는 점입니다. 따라서 이러한 요구사항이 없다면 그냥 <code>v-model</code>을 사용하는 것이 좋습니다.</p>
+<p>여러 요소에 동일한 값을 바인딩하고 출력해야 하는 경우, 일반적인 요구사항은 일련의 <code>checkbox</code>입니다. 이때는 배열을 사용해야 합니다:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;messages&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;xheldon&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;messages&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;xiaodan&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#123;&#123;messages&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span>&#123;<br>    <span class="hljs-attr">messages</span>: []<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>(제가 발견한 바로는) 이렇게 간결한 배열 사용법은 여러 <code>checkbox</code> 타입의 <code>input</code>에만 유효합니다------즉, 여러 요소가 동일한 <code>v-model</code>에 바인딩되지만 이들 요소의 상태는 동기화되지 않고 해당 <code>value</code>가 배열에 들어갑니다. 물론 <code>methods</code>를 사용해 어떤 입력 타입의 요소든 비슷한 효과를 구현할 수 있다고 강조하신다면------그냥 넘어가겠습니다.</p>
+<p>단일 <code>checkbox</code>의 <code>v-model</code>은 <code>value</code> 값에 바인딩되며, <code>true</code> 또는 <code>false</code>입니다. <code>:true-value</code>와 <code>:false-value</code>를 통해 선택 시 값과 선택하지 않았을 때의 값을 사용자 정의할 수 있습니다.</p>
+<p>반면 여러 라디오 버튼 <code>radio</code>에서 <code>v-model</code>은 <code>name</code>과 유사한 역할을 합니다------즉 그룹화에 사용되므로 <code>radio</code> 타입의 <code>input</code>에 <code>v-model</code>을 사용하면 <code>name</code> 속성을 작성할 필요가 없습니다.</p>
+<p><code>select</code> 타입의 경우 각 <code>option</code>에 <code>value</code> 속성이 지정되지 않으면 <code>option</code>의 값에 바인딩되며, 지정된 경우 <code>value</code> 속성 값이 사용됩니다. <code>select</code> 타입의 다중 선택 상자에서 <code>v-model</code>에 바인딩된 <code>data</code>는 반드시 배열 타입이어야 합니다. 그렇지 않으면 경고가 발생합니다(하지만 오류는 아니며, <code>Vue</code>가 자동으로 변환하여 정상 실행됩니다):</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span> warn]: <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">multiple</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;selectM&quot;</span>&gt;</span> expects an Array value for its binding, but got String</span><br></code></pre></td></tr></table></figure>
+<p>주의: 위의 모든 타입에서 <code>v-model</code>과 <code>value</code>가 바인딩될 때, <code>value</code> 속성이 동적으로(<code>:value=&quot;xxx&quot;</code>) <code>data</code>의 다른 속성(<code>xxx</code>)에 바인딩된 경우, <code>v-model</code>에 해당하는 속성과 <code>:value</code>에 해당하는 속성은 동일합니다(엄격하게 동등).</p>
+<h2 id="컴포넌트">컴포넌트</h2>
+<p>먼저 구분해야 할 것은 <code>DOM</code> 템플릿과 문자열 템플릿의 차이입니다.</p>
+<p><code>HTML</code> 템플릿은 일반적인 <code>html</code> 요소를 의미하며, 이러한 요소들은 <code>Vue</code> 인스턴스의 <code>el</code> 옵션을 통해 바인딩됩니다:<br />
+문자열 템플릿 부분:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;div id=<span class="hljs-string">&#x27;tpl&#x27;</span>&gt;<br>  &#123;<span class="hljs-string">&#x27; &#x27;</span>&#125;<br>  实例挂载元素 html 自有组件:<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br>  自定义组件:<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">my-component</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-component</span>&gt;</span></span><br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+<p>문자열 템플릿은 다음과 같습니다:</p>
+<ol>
+<li><code>js</code>에서 <code>template</code>로 등록된 템플릿, 예를 들어:</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">component</span>(<span class="hljs-string">&#x27;my-component&#x27;</span>, &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;span&gt;&#123;&#123;message&#125;&#125;&lt;/span&gt;&#x27;</span>,<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;hello, xheldon&#x27;</span>;<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>또는:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> <span class="hljs-title class_">Child</span> = &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;div&gt;&#x27;</span>hello, xheldon<span class="hljs-string">&#x27;&lt;/div&gt;&#x27;</span><br>&#125;<br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>(&#123;<br>  <span class="hljs-attr">components</span>: &#123;<br>    <span class="hljs-string">&#x27;my-component&#x27;</span>: <span class="hljs-title class_">Child</span><br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>
+<p><code>&lt;script type=&quot;text/x-tempalge&quot;&gt;&lt;/script&gt;</code>로 등록된 템플릿(<code>Handlebar</code>와 동일)</p>
+</li>
+<li>
+<p><code>.vue</code> 컴포넌트 내 <code>&lt;template&gt;</code> 태그 안의 내용.</p>
+</li>
+</ol>
+<p><code>Vue</code>는 브라우저가 파싱을 완료한 후에야 <code>DOM</code> 템플릿을 파싱하기 시작하므로, <code>DOM</code> 템플릿은 특정 자식 요소가 필요한 태그에서 컴포넌트를 사용할 수 없습니다. 예를 들어 <code>select</code> 태그의 자식 요소는 반드시 <code>option</code>이어야 하므로, 사용자 정의 태그 <code>com-option</code>은 인식되지 않습니다. 이 경우 <code>is=&quot;component-name&quot;</code> 속성을 추가하여 해당 태그가 사용하는 템플릿 이름을 명시하면 됩니다.</p>
+<h2 id="리터럴-문법-vs-동적-문법">리터럴 문법 VS 동적 문법</h2>
+<p>여기서 주의할 점은, 기본 <code>js</code>에서는 객체의 속성으로 숫자를 사용할 수 있지만(단, <code>ES5</code>에서는 문자열로 취급되며, <code>ES6</code>에서는 객체 속성으로 어떤 값이든 가능하지만 이후 설명과 충돌하지 않음), <code>Vue</code>에서는 <code>data</code> 속성에 숫자를 속성으로 사용할 수 없다는 것입니다. 리터럴 문법을 사용하면 숫자가 전달될 때 먼저 <code>toString</code> 처리되지만, 동적 문법을 사용하면 숫자로 직접 처리되며 <code>data</code>에 바인딩된 속성 값을 찾지 않습니다:</p>
+<p>자식 컴포넌트 템플릿:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;%raw%&#125;&#123;&#123;dynamic&#125;&#125;&#123;%endraw%&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;alertProp&quot;</span>&gt;</span>点我看上面 props 传参的类型<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>자식 컴포넌트 로직:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">props</span>:[<span class="hljs-string">&#x27;dynamic&#x27;</span>],<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">alertProp</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-title function_">alert</span>(<span class="hljs-keyword">typeof</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">dynamic</span>)<span class="hljs-comment">//上面说过了, props 属性也是绑定到 Vue 实例上的, 因此可以直接使用 this</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>부모 컴포넌트-리터럴 문법:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">com-child</span> <span class="hljs-attr">dynamic</span>=<span class="hljs-string">&quot;11&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">com-todolist</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>부모 컴포넌트-동적 문법:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">com-child</span> <span class="hljs-attr">:dynamic</span>=<span class="hljs-string">&quot;11&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">com-todolist</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>위 두 문법에서 부모 컴포넌트 로직은 모두:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-number">11</span>:<span class="hljs-string">&#x27;属性-动态语法&#x27;</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>결과는, 부모 컴포넌트 리터럴 문법을 사용할 때 <code>button</code>을 클릭하면 자식 컴포넌트에 <code>1</code>이 전달되며, 문서에서도 설명한 대로 문자열 <code>1</code>이므로 <code>alert</code>에는 <code>string</code>이 표시됩니다. 반면 부모 컴포넌트 동적 문법에서 <code>v-bind</code>를 사용해 부모 컴포넌트 <code>data</code>의 <code>1</code> 속성을 바인딩했지만, 자식 컴포넌트는 <code>1</code> 속성에 해당하는 <code>속성-동적 문법</code> 값을 받지 못하고 여전히 <code>1</code> 값을 받으므로, <code>button</code>을 클릭할 때 <code>alert</code>에는 <code>number</code>가 표시됩니다.</p>
+<p>결론: <code>data</code> 객체의 속성으로 숫자를 사용하지 않는 것이 좋습니다.</p>
+<p>참고: 자식 컴포넌트에 전달된 속성이 배열이나 객체인 경우, 자식 컴포넌트에서 이 속성 값을 수정하면 부모 컴포넌트에 반영됩니다. 이는 일반적으로 바람직하지 않은데, &quot;props down, events up&quot;이라는 말이 있듯이(예시 생략), 가장 좋은 방법은 부모 컴포넌트에서 전달된 참조 타입의 깊은 복사본을 사용하는 것입니다. 물론 자식 컴포넌트가 부모 컴포넌트의 상태에 영향을 주어야 하는 경우라면, 행운을 빕니다.</p>
+<p><code>events up</code> 시, 자식 컴포넌트가 <code>$emit</code>할 때 이벤트 이름 외에 다른 매개변수를 전달하면, 이러한 매개변수는 부모 컴포넌트의 이벤트 리스너 함수에 전달됩니다:</p>
+<p>자식 컴포넌트 템플릿:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;input type=<span class="hljs-string">&quot;text&quot;</span> @input=<span class="hljs-string">&quot;someEventHandlerForOriginalEventLikeClickOrInput($event)&quot;</span>/&gt;<br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>&#123;&#123;data&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<p>자식 컴포넌트 로직:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">props</span>:[<span class="hljs-string">&#x27;data&#x27;</span>],<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">someEventHandlerForOriginalEventLikeClickOrInput</span>(<span class="hljs-params">e</span>)&#123;<br>    <span class="hljs-variable language_">this</span>.$emit(<span class="hljs-string">&#x27;eventPasstoParent&#x27;</span>, e.<span class="hljs-property">target</span>.<span class="hljs-property">value</span>, <span class="hljs-string">&#x27;someOtherArgus&#x27;</span>);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>부모 템플릿:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">com-todolist</span></span><br><span class="hljs-tag">  <span class="hljs-attr">:data</span>=<span class="hljs-string">&quot;someParentData&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">eventPasstoParent</span>=<span class="hljs-string">&quot;someParentEventHandler&quot;</span></span><br><span class="hljs-tag">&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">com-todolist</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>부모 로직:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">someParentData</span>: <span class="hljs-string">&#x27;&#x27;</span><br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">someParentEventHandler</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">someParentData</span> = [...<span class="hljs-variable language_">arguments</span>];<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="비동기-업데이트-큐">비동기 업데이트 큐</h2>
+<p><code>Vue</code>가 있으면 <code>jQuery</code>는 더 이상 필요하지 않습니다. 프레임워크의 가장 큰 장점은 동일한 작업에 대해 반복적인 코드를 작성하지 않아도 된다는 점입니다. 양방향 데이터 바인딩은 많은 <code>DOM</code> 조작 문제를 해결해주지만, 어떤 경우에는 <code>jQuery</code>가 더 유리할 때가 있습니다. 예를 들어 <code>DOM</code>을 조작할 때 <code>jQuery</code>는 콜백 함수로 함수를 받아 애니메이션이 완료되면 트리거됩니다. 하지만 우리가 사용하는 양방향 데이터 바인딩에서는 데이터를 설정한 후 <code>DOM</code>이 업데이트된 시점을 어떻게 알 수 있을까요? 답은 <code>jQuery</code>와 마찬가지로 비동기 업데이트 큐입니다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> vm = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Vue</span>(&#123;<br>  <span class="hljs-attr">el</span>: <span class="hljs-string">&#x27;#example&#x27;</span>,<br>  <span class="hljs-attr">data</span>: &#123;<br>    <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;123&#x27;</span>,<br>  &#125;,<br>&#125;);<br>vm.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;new message&#x27;</span>; <span class="hljs-comment">// 更改数据</span><br>vm.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span> === <span class="hljs-string">&#x27;new message&#x27;</span>; <span class="hljs-comment">// false</span><br><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">nextTick</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  vm.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span> === <span class="hljs-string">&#x27;new message&#x27;</span>; <span class="hljs-comment">// true</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>이렇게 작성하는 것은 개인적으로 권장하지 않습니다. 왜냐하면 가장 좋은 로직은 인스턴스의 속성/메서드 내부에 작성하는 것이지, 인스턴스 외부에 작성하는 것이 아니기 때문입니다. 다행히 <code>Vue</code>는 이를 구현할 수 있는 방법을 제공합니다:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">component</span>(<span class="hljs-string">&#x27;example&#x27;</span>, &#123;<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;span&gt;&#123;&#123; message &#125;&#125;&lt;/span&gt;&#x27;</span>,<br>  <span class="hljs-attr">data</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;not updated&#x27;</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-attr">updateMessage</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">message</span> = <span class="hljs-string">&#x27;updated&#x27;</span>;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>); <span class="hljs-comment">// =&gt; &#x27;没有更新&#x27;</span><br>      <span class="hljs-variable language_">this</span>.$nextTick(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$el</span>.<span class="hljs-property">textContent</span>); <span class="hljs-comment">// =&gt; &#x27;更新完成&#x27;</span><br>      &#125;);<br>    &#125;,<br>  &#125;,<br>&#125;);<br></code></pre></td></tr></table></figure>
+<h2 id="애니메이션">애니메이션</h2>
+<p>애니메이션에 대해 특별히 설명할 것은 없지만, <code>JavaScript</code> 훅 함수 중 두 가지 훅에 대해 언급해야 합니다. 바로 <code>enterCanceled</code>와 <code>leaveCancelled</code>입니다. <code>enterCancelled</code>는 <code>v-if</code>와 <code>v-show</code>에서 모두 사용될 수 있으며, 트리거되는 시점은 <code>enter</code> 이벤트가 발생한 후 애니메이션이 완료되기 전에 다른 애니메이션이 실행되어야 할 때입니다. 반면 <code>leaveCancelled</code>는 <code>v-show</code>에서만 사용되며, <code>v-if</code>에서는 무효화되어 절대 트리거되지 않습니다. 이 훅은 떠나는 애니메이션(즉, <code>xxx-leave-active</code> 애니메이션)이 완료되기 전에 다른 애니메이션이 실행될 때 트리거됩니다.</p>
+<p>테스트 코드:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;show=!show&quot;</span>&gt;</span>点击我切换状态<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">transition</span></span><br><span class="hljs-tag">  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;go&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">before-enter</span>=<span class="hljs-string">&quot;beforeEnter&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">enter</span>=<span class="hljs-string">&quot;enter&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">after-enter</span>=<span class="hljs-string">&quot;afterEnter&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">enter-cancelled</span>=<span class="hljs-string">&quot;enterCancelled&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">before-leave</span>=<span class="hljs-string">&quot;beforeLeave&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">leave</span>=<span class="hljs-string">&quot;leave&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">after-leave</span>=<span class="hljs-string">&quot;afterLeave&quot;</span></span><br><span class="hljs-tag">  @<span class="hljs-attr">leave-cancelled</span>=<span class="hljs-string">&quot;leaveCancelled&quot;</span></span><br><span class="hljs-tag">&gt;</span><br>  此处使用 v-show, 修改成 v-if 的时候发现, leave-cancelled 不会触发.<br>  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-show</span>=<span class="hljs-string">&quot;show&quot;</span>&gt;</span>点击展示我, 再点击一下隐藏我.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">transition</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>로직:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-keyword">return</span>&#123;<br>    <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span><br>  &#125;<br>&#125;,<br><span class="hljs-attr">methods</span>: &#123;<br>  <span class="hljs-title function_">beforeEnter</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-title function_">alert</span>(<span class="hljs-number">1</span>);&#125;,<br>  <span class="hljs-title function_">enter</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">2</span>);&#125;,<br>  <span class="hljs-title function_">afterEnter</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">3</span>);&#125;,<br>  <span class="hljs-title function_">enterCancelled</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">4</span>);&#125;,<br>  <span class="hljs-title function_">beforeLeave</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">5</span>);&#125;,<br>  <span class="hljs-title function_">leave</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-title function_">alert</span>(<span class="hljs-number">6</span>);&#125;,<br>  <span class="hljs-title function_">afterLeave</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">7</span>);&#125;,<br>  <span class="hljs-title function_">leaveCancelled</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-title function_">alert</span>(<span class="hljs-number">8</span>);&#125;<br>&#125;,<br></code></pre></td></tr></table></figure>
+<p>스타일:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">5s</span> ease;<br>&#125;<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">5s</span> <span class="hljs-built_in">cubic-bezier</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">0.8</span>, <span class="hljs-number">1</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter</span>,<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">10px</span>);<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>훅들의 매개변수는 <code>enter</code>와 <code>leave</code>가 <code>el</code> 요소 자체(기본 <code>Element</code> 타입 요소)와 <code>done</code> 콜백 함수인 반면, 다른 훅들의 매개변수는 모두 <code>el</code> 요소 자체입니다.</p>
+<p>요소의 전환에는 각 요소에 <code>key</code>를 추가하는 것이 가장 좋습니다. 이전에 언급된 재사용 전략 때문에 전환 시 데이터가 직접 교체되어 애니메이션 효과가 나타나지 않을 수 있기 때문입니다.</p>
+<p>공식 문서에서 전혀 설명되지 않은 한 가지는 <code>Vue transition</code>의 애니메이션 클래스 이름 <code>css</code> 작성 순서에 제한이 있다는 것입니다. <code>v-enter</code>와 <code>v-leave</code>는 반드시 <code>v-enter-active</code>와 <code>v-leave-active</code> 뒤에 작성되어야 합니다. 그렇지 않으면 무효화됩니다. 예를 들어, 버튼을 클릭했을 때 페이드 인/아웃 효과를 주고 싶다면, 버튼을 클릭한 후 버튼이 왼쪽에서 오른쪽으로 페이드 인되면서 현재 클릭된 버튼은 왼쪽에서 오른쪽으로 페이드 아웃되도록 할 수 있습니다:<br />
+로직:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-attr">data</span>:&#123;<br>  <span class="hljs-attr">isShow</span>: <span class="hljs-literal">true</span><br>&#125;,<br><span class="hljs-attr">methods</span>:&#123;<br>  <span class="hljs-title function_">animakkey</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">isShow</span> = !<span class="hljs-variable language_">this</span>.<span class="hljs-property">isShow</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>구조:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;button-animate&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">transition</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;go&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;a&quot;</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;isShow&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>on<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;b&quot;</span> <span class="hljs-attr">v-else</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>off<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">transition</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>만약 스타일이 이렇게 작성되었다면:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>&#125;<br><span class="hljs-selector-class">.go-enter</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">0px</span>);<br>&#125;<br><br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>애니메이션 효과가 기대와 다를 것입니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/animateBad.gif" alt="animate" title="animate" /></p>
+<p>하지만 <code>enter</code>를 <code>enter-active</code> 뒤로 옮기면:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">0px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">25px</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>완벽해집니다:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/animateGood.gif" alt="animate" title="animate" /></p>
+<p>이 네 가지 <code>css</code> 클래스 이름의 가능한 순서를 비교해본 결과, <code>v-enter</code>를 <code>v-enter-active</code> 뒤에 배치하기만 하면 효과가 구현되며, 다른 클래스 이름은 순서에 상관없이 작동한다는 것을 발견했습니다.</p>
+<p><code>transition</code> 태그 내에는 애니메이션이 필요한 요소만 배치해야 하며 다른 요소를 넣을 수 없습니다. 만약 위 예제의 구조가 이렇게 작성되었다면:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">transition</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;go&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;button-animate&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;a&quot;</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;isShow&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>on<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;b&quot;</span> <span class="hljs-attr">v-else</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;animakkey&quot;</span>&gt;</span>off<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">transition</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>어떤 애니메이션 효과도 나타나지 않을 것입니다. 또한 일반 <code>css</code> 클래스 이름에서 일부 <code>css</code> 속성을 사용해 요소의 스타일을 지정한 상태에서 <code>v-enter</code>와 같은 애니메이션 클래스 이름에 동일한 속성을 사용하면 역시 작동하지 않습니다. <a href="https://cn.vuejs.org/v2/guide/transitions.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%87%E6%B8%A1%E7%B1%BB%E5%90%8D">문서</a>에서는 &quot;이들의 우선순위가 일반 클래스 이름보다 높다&quot;고 설명하지만, 실제로는 그렇지 않습니다(제가 잘못 이해한 것일 수도 있습니다. 수정이 필요하다면 알려주세요). 위 예제에서 <code>button</code>의 일반 <code>css</code> 속성을 설정하면:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.button-animate</span> <span class="hljs-selector-tag">button</span> &#123;<br>  <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">20px</span>;<br>  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">40px</span>;<br>  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease;<br>  <span class="hljs-attribute">position</span>: absolute;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">0px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-enter</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-<span class="hljs-number">25px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave-active</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">50px</span>);<br>&#125;<br><span class="hljs-selector-class">.go-leave</span> &#123;<br>  <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;<br>  <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(<span class="hljs-number">25px</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>결과:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/animateWithout.gif" alt="animate" title="animate" /></p>
+<p>보시다시피, <code>opacity</code>만 애니메이션이 적용되고 <code>transform</code>은 애니메이션이 없습니다! (학생들은 <code>animate.css</code>를 사용할 때 <code>Animate.css</code>에서 동일한 속성을 사용해 요소를 미리 설정하면 애니메이션 효과가 여전히 있는지 테스트해 볼 수 있으며, <code>issue</code>를 제출해 주시기 바랍니다.)</p>
+<p><code>transition-group</code>과 <code>transition</code>은 약간 다릅니다. 외관상으로는 <code>transition</code>은 단순히 래핑 컨테이너일 뿐이며 페이지 구성에 참여하지 않지만, <code>transition-group</code>은 <code>Vue</code>에 의해 태그로 대체됩니다. 기본적으로는 <code>span</code> 태그이지만, 대체될 태그 이름을 커스터마이징할 수도 있습니다.</p>
+<h2 id="render-함수"><code>render</code> 함수</h2>
+<p><code>render</code> 함수를 사용하면 템플릿 작성 대신 사용할 수 있습니다. 이 함수의 매개변수인 <code>createElement</code>는 일반적으로 <code>h</code>로 작성됩니다. 컴포넌트나 태그 내의 다양한 바인딩/속성 등은 <code>createElement</code>에서 해당하는 <code>JavaScript</code> 작성법을 찾을 수 있습니다. 만약 찾을 수 없다면, 네이티브 작성법을 사용하면 됩니다. 예를 들어 <code>.stop</code>, <code>.prevent</code> 등은 직접 <code>event.stopPropagation()</code>과 <code>event.preventDefault()</code>를 사용하면 됩니다.</p>
+<h2 id="기타">기타</h2>
+<p>믹스인(<code>mixin</code>)은 일반적인 컴포넌트 작성 과정에서(즉, 컴포넌트의 라이프사이클에서) 추가 기능을 수정하거나 추가하는 것을 의미합니다.</p>
+<p>일부 <code>플러그인</code>은 위의 <code>mixin</code>을 기반으로 작성되었습니다. 이 외에도 플러그인은 <code>Vue.prototype</code>에 메서드를 추가하거나 <code>config</code>를 통해 전역 메서드나 속성을 추가할 수 있습니다.</p>
+<p><code>라우팅</code>은 <code>component</code>의 <code>is</code> 속성을 사용해 간단히 구현할 수 있으며, 또는 <code>render</code> 함수를 직접 작성해 다른 경로에 따라 다른 템플릿을 렌더링할 수도 있습니다. 물론 더 복잡한 경우에는 서드파티 라이브러리가 필요합니다.</p>
+<p><code>상태 관리</code>는 예제를 보면 각 상태 변경 과정을 기록하기 위해 <code>wrap</code>을 추가해야 합니다. 그리고 공식적으로 권장하는 모범 사례는 인스턴스 속성에 직접 할당할 수 있더라도 상태를 함수를 통해 수정하는 것입니다. 이렇게 하면 상태를 추적할 수 있기 때문입니다.</p>
+<p><code>단위 테스트</code>는 일반적인 단위 테스트이므로 특별히 설명할 것이 없습니다.</p>
+<h2 id="서버-사이드-렌더링-server-side-render">서버 사이드 렌더링(<code>Server Side Render</code>)</h2>
+<p>기본적인 아이디어를 살펴보면 매우 간단합니다. 먼저 <code>app.js</code>에서 <code>Vue</code> 인스턴스를 <code>exports</code>하고, <code>index.html</code>이라는 페이지 템플릿 파일을 새로 만듭니다(<code>Vue.js</code>를 포함하고 <code>Vue</code> 인스턴스를 마운트하는 메서드인 <code>$mount</code>를 추가합니다. 공식 사이트에서는 <code>app.js</code>도 포함하고 있는데, 이 부분은 제가 확인해 봐야 합니다). 이 템플릿에는 인스턴스의 마운트 포인트(<code>id</code> 속성을 가진 비어 있지 않은 요소)가 포함되어 있습니다. 그런 다음 서버 측인 <code>server.js</code>에서 이들을 모두 <code>require</code>하고, <code>vue-server-renderer</code>를 사용해 <code>app.js</code>에서 <code>exports</code>한 <code>Vue</code> 인스턴스를 렌더링한 후, 클라이언트에 반환할 때 마운트 포인트(<code>id</code> 속성을 가진 비어 있지 않은 요소, <code>app.js</code>의 템플릿이 이미 존재하기 때문)를 대체하면 됩니다.</p>
+<p>서버 사이드 렌더링의 결과는 위에서 언급한 마운트 포인트(<code>id</code> 속성을 가진 비어 있지 않은 요소)에 <code>server-rendered=&quot;true&quot;</code> 속성이 추가되는 것입니다(페이지 소스 코드를 우클릭해 확인하면 존재하는 것을 알 수 있으며, 이는 <code>js</code>가 동적으로 추가한 것이 아님을 의미합니다).</p>
+<p>서버 측에서도 스트리밍 렌더링을 지원합니다. 먼저 <code>html</code>을 마운트 포인트(<code>id</code> 속성을 가진 비어 있지 않은 요소, 예: <code>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</code>)를 기준으로 <code>split</code>하여 <code>a</code>와 <code>b</code> 두 부분으로 나눕니다. 기존에 사용한 <code>vue-server-renderer</code>는 <code>app.js</code>를 <code>renderToString</code>으로 처리했지만, 스트리밍 렌더링을 지원하기 위해서는 <code>renderToStream</code>이라는 다른 방법을 사용해야 합니다. 그런 다음 <code>data</code> 이벤트를 감지하여 <code>html</code>의 <code>a</code> 부분 뒤에 추가하고, <code>end</code> 이벤트 이후에 <code>html</code>의 <code>b</code> 부분을 연결한 다음 최종적으로 <code>res.send</code>로 전송합니다.</p>
+<h2 id="후기">후기</h2>
+<p>베이징에서 <code>ping</code> <code>cn.vuejs.org</code>:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/ping1.png" alt="ping" title="ping" /></p>
+<p>회사의 <code>FQ</code> <code>VPS</code>에 <code>ping</code>:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/ping2.png" alt="ping" title="ping" /></p>
+<p><code>dig</code> 명령어 실행:</p>
+<p><img src="https://static.xheldon.cn/img/in-post/2016/dig1.png" alt="dig" title="dig" /></p>
+<p><code>cloudflare</code> 서비스를 사용하고 있는 것을 확인할 수 있습니다. 국제적인 웹사이트 운영이 쉽지 않네요, 허허.</p>
+
+        <div class="text-danger">- EOF -</div>
+        <div style="font-size: 12px; color: #ccc !important">
+          이 글의 최초 게시:
+          <a
+            style="color: #ccc"
+            href="https://www.xheldon.com/tech/vue-learning-summary.ko.html"
+            title="Vue 학습 정리"
+          >
+            Vue 학습 정리 - Xheldon Blog
+          </a>
+        </div>
+        <hr style="visibility: hidden" />
+
+        <ul class="pager">
+           
+        </ul>
+        <hr style="visibility: hidden" />
+        <div class="giscus"></div>
+        <hr />
+      </div>
+      <!-- Side Catalog Container -->
+      
+      <div
+        class="col-lg-2 col-lg-offset-0 visible-lg-block sidebar-container catalog-container"
+      >
+        <div class="side-catalog">
+          <hr class="hidden-sm hidden-xs" />
+          <h5>
+            <a class="catalog-toggle" href="#">목차</a>
+          </h5>
+          <ul class="catalog-body"></ul>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Container -->
+
+      <div
+        class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 sidebar-container"
+      >
+        
+<section style="margin-bottom: 20px;">
+    <h5>블로거의 말:</h5>
+    <div>
+        <img style="float: right; max-width: 120px; max-height: 120px; margin-right: 5px; margin-top: -45px;" src="/img/gwechat.png" />
+        저는 인생의 중요한 선택의 기로에 섰을 때, 누군가 최선의 방법을 알려주어 소중한 시간을 헛되이 보내지 않기를 바라곤 합니다. 그런 마음으로 저는 자주 블로그를 쓰며, 광활한 인터넷의 이 작은 구석에 제게는 단 한 번뿐인 인생 경험을 기록하여 도움이 필요한 분들에게 도움이 되기를 바랍니다.
+    </div>
+    <hr>
+    
+    <h5><a href="/ko/archive/">인기 태그</a></h5>
+    <div class="tags">
+        
+
+        
+            <a data-sort="0120"
+                href="/ko/archive/?tag=%E6%8A%80%E6%9C%AF"
+                title="기술"
+                rel="188">기술</a>
+        
+            <a data-sort="0200"
+                href="/ko/archive/?tag=%E7%94%9F%E6%B4%BB"
+                title="생활"
+                rel="108">생활</a>
+        
+            <a data-sort="0264"
+                href="/ko/archive/?tag=%E6%8A%98%E8%85%BE"
+                title="삽질"
+                rel="44">삽질</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%8A%80%E5%B7%A7"
+                title="팁"
+                rel="32">팁</a>
+        
+            <a data-sort="0276"
+                href="/ko/archive/?tag=%E6%95%99%E7%A8%8B"
+                title="튜토리얼"
+                rel="32">튜토리얼</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=%E7%BF%BB%E8%AF%91"
+                title="번역"
+                rel="24">번역</a>
+        
+            <a data-sort="0284"
+                href="/ko/archive/?tag=Apple"
+                title="Apple"
+                rel="24">Apple</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BB%8F%E9%AA%8C"
+                title="경험"
+                rel="20">경험</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=%E7%BE%8E%E9%A3%9F"
+                title="미식"
+                rel="20">미식</a>
+        
+            <a data-sort="0288"
+                href="/ko/archive/?tag=ProseMirror"
+                title="ProseMirror"
+                rel="20">ProseMirror</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%88%9D%E4%BD%93%E9%AA%8C"
+                title="첫인상"
+                rel="16">첫인상</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E6%B5%81"
+                title="워크플로"
+                rel="16">워크플로</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E6%8F%92%E4%BB%B6"
+                title="플러그인"
+                rel="16">플러그인</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E7%BD%91%E7%BB%9C"
+                title="네트워크"
+                rel="16">네트워크</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=%E8%8B%B9%E6%9E%9C"
+                title="Apple"
+                rel="16">Apple</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Craft"
+                title="Craft"
+                rel="16">Craft</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=JavaScript"
+                title="JavaScript"
+                rel="16">JavaScript</a>
+        
+            <a data-sort="0292"
+                href="/ko/archive/?tag=Vue"
+                title="Vue"
+                rel="16">Vue</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C"
+                title="사용 경험"
+                rel="12">사용 경험</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%80%BB%E7%BB%93"
+                title="정리"
+                rel="12">정리</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1%E5%99%A8"
+                title="서버"
+                rel="12">서버</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%B7%AF%E7%94%B1%E5%99%A8"
+                title="라우터"
+                rel="12">라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E8%BD%AF%E8%B7%AF%E7%94%B1"
+                title="소프트 라우터"
+                rel="12">소프트 라우터</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9A%8F%E7%AC%94"
+                title="에세이"
+                rel="12">에세이</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=%E9%9B%86%E6%88%90"
+                title="통합"
+                rel="12">통합</a>
+        
+            <a data-sort="0296"
+                href="/ko/archive/?tag=Git"
+                title="Git"
+                rel="12">Git</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%B8%BB%E9%A3%9F"
+                title="주식"
+                rel="8">주식</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E4%BC%98%E5%8C%96"
+                title="최적화"
+                rel="8">최적화</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%8D%83%E5%85%86"
+                title="기가비트"
+                rel="8">기가비트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%A4%A7%E4%BA%8B"
+                title="큰일"
+                rel="8">큰일</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E5%B7%A5%E5%85%B7"
+                title="도구"
+                rel="8">도구</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%97%81%E8%B7%AF%E7%94%B1"
+                title="바이패스 라우터"
+                rel="8">바이패스 라우터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%A1%86%E6%9E%B6"
+                title="프레임워크"
+                rel="8">프레임워크</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B3%A1%E8%84%9A%E6%97%B6%E9%97%B4"
+                title="족욕 시간"
+                rel="8">족욕 시간</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E6%B5%8B%E8%AF%95"
+                title="테스트"
+                rel="8">테스트</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%89%B9%E6%96%AF%E6%8B%89"
+                title="테슬라"
+                rel="8">테슬라</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E7%BC%96%E8%BE%91%E5%99%A8"
+                title="에디터"
+                rel="8">에디터</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%A7%86%E9%A2%91"
+                title="영상"
+                rel="8">영상</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%B0%83%E8%AF%95"
+                title="디버깅"
+                rel="8">디버깅</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BD%A6"
+                title="자동차"
+                rel="8">자동차</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=%E8%BF%81%E7%A7%BB"
+                title="마이그레이션"
+                rel="8">마이그레이션</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AI"
+                title="AI"
+                rel="8">AI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=AppleScript"
+                title="AppleScript"
+                rel="8">AppleScript</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=CI"
+                title="CI"
+                rel="8">CI</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=GitHub"
+                title="GitHub"
+                rel="8">GitHub</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Jekyll"
+                title="Jekyll"
+                rel="8">Jekyll</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=Notion"
+                title="Notion"
+                rel="8">Notion</a>
+        
+            <a data-sort="0300"
+                href="/ko/archive/?tag=VSCode"
+                title="VSCode"
+                rel="8">VSCode</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B8%9C%E5%8C%97%E8%8F%9C"
+                title="둥베이 요리"
+                rel="4">둥베이 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%B9%B0%E6%88%BF"
+                title="집 사기"
+                rel="4">집 사기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E4%BB%A3%E7%90%86"
+                title="프록시"
+                rel="4">프록시</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%85%A8%E6%A0%88"
+                title="풀스택"
+                rel="4">풀스택</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8C%97%E6%AC%A7%E7%A5%9E%E8%AF%9D"
+                title="북유럽 신화"
+                rel="4">북유럽 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8D%8F%E5%90%8C"
+                title="협업"
+                rel="4">협업</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%8E%8B%E7%BC%A9"
+                title="압축"
+                rel="4">압축</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%A5%8E%E6%89%98%E6%96%AF"
+                title="크레토스"
+                rel="4">크레토스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AE%B6%E5%B8%B8%E8%8F%9C"
+                title="가정식"
+                rel="4">가정식</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%8C%E5%BC%BA"
+                title="부강"
+                rel="4">부강</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%AF%B9%E6%AF%94"
+                title="비교"
+                rel="4">비교</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%9D%E8%8F%9C"
+                title="쓰촨 요리"
+                rel="4">쓰촨 요리</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C"
+                title="업무 경험"
+                rel="4">업무 경험</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%8C%E8%85%8A%E7%A5%9E%E8%AF%9D"
+                title="그리스 신화"
+                rel="4">그리스 신화</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"
+                title="자주 쓰는 앱"
+                rel="4">자주 쓰는 앱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E6%BA%90"
+                title="오픈소스"
+                rel="4">오픈소스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E5%BC%80%E7%AE%B1"
+                title="언박싱"
+                rel="4">언박싱</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%88%98%E7%A5%9E"
+                title="갓 오브 워"
+                rel="4">갓 오브 워</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%89%8B%E6%9C%BA%E5%8D%A1"
+                title="유심"
+                rel="4">유심</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%8B%93%E6%89%91"
+                title="토폴로지"
+                rel="4">토폴로지</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%85%E4%BA%8B"
+                title="이야기"
+                rel="4">이야기</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"
+                title="자료구조"
+                rel="4">자료구조</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%85%E8%A1%8C"
+                title="여행"
+                rel="4">여행</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E5%B8%B8"
+                title="일상"
+                rel="4">일상</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%97%A5%E6%9C%AC"
+                title="일본"
+                rel="4">일본</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%9C%8D%E5%8A%A1"
+                title="서비스"
+                rel="4">서비스</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A0%BC%E5%BC%8F"
+                title="포맷"
+                rel="4">포맷</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%A2%A6"
+                title="꿈"
+                rel="4">꿈</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B5%8F%E8%A7%88%E5%99%A8"
+                title="브라우저"
+                rel="4">브라우저</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E6%B8%B8%E6%88%8F"
+                title="게임"
+                rel="4">게임</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%89%A2%E9%AA%9A"
+                title="푸념"
+                rel="4">푸념</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%94%A8%E6%88%B7%E9%9A%90%E7%A7%81"
+                title="사용자 개인정보"
+                rel="4">사용자 개인정보</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%AE%97%E6%B3%95"
+                title="알고리즘"
+                rel="4">알고리즘</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E7%BB%86%E8%8A%82"
+                title="디테일"
+                rel="4">디테일</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%80%B3%E6%9C%BA"
+                title="이어폰"
+                rel="4">이어폰</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%87%AA%E7%94%B1"
+                title="자유"
+                rel="4">자유</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%A1%E5%88%92"
+                title="계획"
+                rel="4">계획</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%AE%BE%E7%BD%AE"
+                title="설정"
+                rel="4">설정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%B8%A9%E5%9D%91"
+                title="함정"
+                rel="4">함정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E8%BD%AC%E6%8D%A2"
+                title="변환"
+                rel="4">변환</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%80%89%E5%9E%8B"
+                title="기술 선정"
+                rel="4">기술 선정</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=%E9%9D%A2%E8%AF%95"
+                title="면접"
+                rel="4">면접</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=2022"
+                title="2022"
+                rel="4">2022</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=C"
+                title="C"
+                rel="4">C</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Chrome"
+                title="Chrome"
+                rel="4">Chrome</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Clash"
+                title="Clash"
+                rel="4">Clash</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=CORS"
+                title="CORS"
+                rel="4">CORS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=ES6"
+                title="ES6"
+                rel="4">ES6</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Evernote"
+                title="Evernote"
+                rel="4">Evernote</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Linux"
+                title="Linux"
+                rel="4">Linux</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Nginx"
+                title="Nginx"
+                rel="4">Nginx</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Promise"
+                title="Promise"
+                rel="4">Promise</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=R4S"
+                title="R4S"
+                rel="4">R4S</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Router"
+                title="Router"
+                rel="4">Router</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SDK"
+                title="SDK"
+                rel="4">SDK</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SlateJS"
+                title="SlateJS"
+                rel="4">SlateJS</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=SPA"
+                title="SPA"
+                rel="4">SPA</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Swift"
+                title="Swift"
+                rel="4">Swift</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=TeslaMate"
+                title="TeslaMate"
+                rel="4">TeslaMate</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Web"
+                title="Web"
+                rel="4">Web</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Webpack"
+                title="Webpack"
+                rel="4">Webpack</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=Windows"
+                title="Windows"
+                rel="4">Windows</a>
+        
+            <a data-sort="0304"
+                href="/ko/archive/?tag=XCode"
+                title="XCode"
+                rel="4">XCode</a>
+        
+    </div>
+    <hr>
+    <h5>칼럼</h5>
+    <div class="tags">
+        <a href="/projects">오픈 소스</a>
+        <a href="/book-list">기술 도서 목록</a>
+        <a href="/subscribe">구독 & 유료 앱</a>
+        <a href="/my-food">맛집 추천</a>
+    </div>
+</section>
+ 
+  <hr>
+  <h5>친구들</h5>
+  <ul class="list-inline">
+    
+      <li><a href="https://prosemirror.xheldon.com" target="_blank">
+          ProseMirror 中文
+        </a></li>
+      
+      <li><a href="https://rust.xheldon.com" target="_blank">
+          Rust 中文
+        </a></li>
+      
+      <li><a href="https://slate.xheldon.com" target="_blank">
+          Slate 中文
+        </a></li>
+      
+      <li><a href="https://notion-flow.xheldon.com" target="_blank">
+          Notion Flow
+        </a></li>
+      
+      <li><a href="https://xpic.xheldon.com" target="_blank">
+          xPic
+        </a></li>
+      
+      <li><a href="https://appledocs.dev" target="_blank">
+          Apple Dev Docs Translation
+        </a></li>
+      
+        
+            <li><a href="https://www.xheldon.cn" target="_blank">중국판</a></li>
+            
+  </ul>
+  
+      </div>
+    </div>
+  </div>
+</article>
+
+  <script src="https://giscus.app/client.js"
+        data-repo="Xheldon/x_blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk1MDgyODA3Ng=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOAweTLM4B_uhM"
+        data-mapping="specific"
+        data-term="Vue 학습 정리"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ko"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script> 
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+  async('/js/anchor.min.js', function () {
+    anchors.options = {
+      visible: 'always',
+      placement: 'right',
+      //   icon: '#'
+    };
+    anchors
+      .add()
+      .remove('.intro-header h1')
+      .remove('.subheading')
+      .remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+
+
+    <!-- Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- @param {Boolean} center -->
+
+<ul class="list-inline text-center">
+   
+    <li>
+      <a target="_blank" href="https://twitter.com/_xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="http://weibo.com/xheldon">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+       
+    <li>
+      <a
+        target="_blank"
+        href="https://www.youtube.com/@xheldon"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+     
+    <li>
+      <a
+        target="_blank"
+        href="https://space.bilibili.com/13835416"
+      >
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-youtube-play fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+      
+    <li>
+      <a target="_blank" href="https://t.me/xheldon_tech">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-plane fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    
+  </ul>
+</ul>
+
+        <p class="copyright text-muted">
+          Copyright &copy;
+          <a href="https://github.com/Xheldon" target="_blank">Xheldon</a>
+          2026
+          <br />
+          Don't Panic | Theme fork from
+          <a href="https://github.com/Huxpro/huxpro.github.io" target="_blank"
+            >Hux</a
+          >
+          <br />
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+    console.log('浏览器不支持主题色');
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      // Note: 推特列表添加暗黑主题
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.setAttribute('data-theme', 'dark');
+      }
+    }
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      let ttl = document.querySelector('.twitter-timeline');
+      if (ttl) {
+        ttl.removeAttribute('data-theme');
+      }
+    }
+    // document.getElementById('dark-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.remove('light');
+    //     document.documentElement.classList.add('dark');
+    // });
+    // document.getElementById('light-mode').addEventListener('click', function() {
+    //     document.documentElement.classList.add('light');
+    //     document.documentElement.classList.remove('dark');
+    // });
+    // Note: 自动切换
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      });
+    window
+      .matchMedia('(prefers-color-scheme: light)')
+      .addListener(function (mediaQueryList) {
+        if (mediaQueryList.matches) {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        }
+      });
+  }
+</script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/xblog.min.js?202405251426"></script>
+
+<!-- Simple Jekyll Search 复制逻辑 -->
+<script defer src="/js/simple-jekyll-search.min.js"></script>
+
+<!-- Service Worker 不要了，不然总弹那个资源更新的按钮，很烦 -->
+
+<!-- async load function -->
+<script>
+  function async(u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          c(null, e);
+        },
+        false
+      );
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+
+<!-- TODO: 原博客看着有个叫 plchart 的东西，不知道是啥，也没有用，先不管了 -->
+
+<!-- jquery.tagcloud.js -->
+
+
+<!--fastClick.js -->
+<script>
+  async('/js/fastclick.min.js', function () {
+    var $nav = document.querySelector('nav');
+    if ($nav) FastClick.attach($nav);
+  });
+</script>
+
+<!-- Google Analytics -->
+
+  <!-- about 和 donate 和首页不显示广告 -->
+  
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-V9E8G53PQQ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9E8G53PQQ');
+</script>
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+  function generateCatalog(selector) {
+    // TODO: 多语种没有迁移过来
+    // init
+    var P = $('div.post-container'),
+      a,
+      n,
+      t,
+      l,
+      i,
+      c;
+    a = P.find('h1,h2,h3,h4,h5,h6');
+
+    // clean
+    $(selector).html('');
+
+    // appending
+    a.each(function () {
+      n = $(this).prop('tagName').toLowerCase();
+      i = '#' + $(this).prop('id');
+      t = $(this).text();
+      c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+      l = $('<li class="' + n + '_nav"></li>').append(c);
+      $(selector).append(l);
+    });
+    return true;
+  }
+
+  generateCatalog('.catalog-body');
+
+  // toggle side catalog
+  $('.catalog-toggle').click(function (e) {
+    e.preventDefault();
+    $('.side-catalog').toggleClass('fold');
+  });
+
+  /*
+   * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+   * Fork by Hux to support padding
+   */
+  async('/js/jquery.nav.js', function () {
+    $('.catalog-body').onePageNav({
+      currentClass: 'active',
+      changeHash: !1,
+      easing: 'swing',
+      filter: '',
+      scrollSpeed: 700,
+      scrollOffset: 0,
+      scrollThreshold: 0.2,
+      begin: null,
+      end: null,
+      scrollChange: null,
+      padding: 80,
+    });
+  });
+</script>
+
+
+<script>
+  // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+  function htmlDecode(input) {
+    var e = document.createElement('textarea');
+    e.innerHTML = input;
+    // handle case of empty input
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+  }
+
+  $(document).ready(function () {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/ko/search.json',
+      searchResultTemplate:
+        '<div class="post-preview item"><a href="{url}"><h2 class="post-title">{title}</h2><h3 class="post-subtitle">{subtitle}</h3><hr></a></div>',
+      noResultsText: 'No results',
+      limit: 50,
+      fuzzy: false,
+      // a hack to get escaped subtitle unescaped. for some reason,
+      // post.subtitle w/o escape filter nuke entire search.
+      templateMiddleware: function (prop, value, template) {
+        if (prop === 'subtitle' || prop === 'title') {
+          if (value.indexOf('code')) {
+            return htmlDecode(value);
+          } else {
+            return value;
+          }
+        }
+      },
+    });
+    var $searchPage = $('.search-page');
+    var $searchOpen = $('.search-icon');
+    var $searchClose = $('.search-icon-close');
+    var $searchInput = $('#search-input');
+    var $body = $('body');
+
+    $searchOpen.on('click', function (e) {
+      e.preventDefault();
+      $searchPage.toggleClass('search-active');
+      var prevClasses = $body.attr('class') || '';
+      setTimeout(function () {
+        $body.addClass('no-scroll');
+      }, 400);
+
+      if ($searchPage.hasClass('search-active')) {
+        $searchClose.on('click', function (e) {
+          e.preventDefault();
+          $searchPage.removeClass('search-active');
+          $body.attr('class', prevClasses); // from closure
+        });
+        $searchInput.focus();
+      }
+    });
+  });
+</script>
+
+
+    <!-- Image to hack wechat -->
+    <img src="/img/icon_wechat.png" width="0" height="0" />
+    <!-- Migrate from head to bottom, no longer block render and still work -->
+  </body>
+</html>
