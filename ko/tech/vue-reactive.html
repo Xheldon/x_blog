@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>
     
-      Vue 반응형 시스템의 원리와 구현 Vue.js의 핵심 기능 중 하나는 반응형 데이터 시스템입니다. 이 시스템 덕분에 데이터가 변경될 때 자동으로 UI가 업데이트됩니다. 이 글에서는 Vue의 반응형 시스템이 어떻게 작동하는지 그 내부 메커니즘을 살펴보고, 간단한 구현 예제를 통해 이해해 보겠습니다. ### 반응형 시스템의 기본 개념 1. **의존성 추적**: Vue는 데이터 속성에 접근할 때 어떤 컴포넌트가 해당 속성을 사용하는지 추적합니다. 2. **변경 감지**: 데이터 속성이 변경되면 이에 의존하는 모든 컴포넌트에 알립니다. 3. **효율적인 업데이트**: 변경 사항을 바탕으로 가상 DOM을 효율적으로 갱신합니다. ### 구현 핵심: Object.defineProperty Vue 2.x에서는 [[0]]를 사용하여 반응형 시스템을 구현했습니다. 다음은 간단한 예제입니다: ```javascript function defineReactive(obj, key, val) {   Object.defineProperty(obj, key, {     get() {       console.log(`[[1]] 값을 읽음`);       return val;     },     set(newVal) {       console.log(`[[2]] 값이 ${val}에서 ${newVal}로 변경됨`);       val = newVal;       // 변경 알림 로직 실행     }   }); } ``` ### 의존성 수집 시스템 Vue는 Watcher 클래스를 사용하여 의존성을 관리합니다: 1. **의존성 수집**: 데이터 속성에 접근할 때 현재 Watcher를 의존성 목록에 추가합니다. 2. **알림 전파**: 데이터가 변경되면 해당 Watcher 목록에 변경 사항을 알립니다. ### Proxy 기반 구현 (Vue 3) Vue 3에서는 [[3]]를 사용하여 더 강력한 반응형 시스템을 구현했습니다: ```javascript const reactive = (target) =&gt; {   return new Proxy(target, {     get(target, key) {       track(target, key); // 의존성 추적       return target[key];     },     set(target, key, value) {       target[key] = value;       trigger(target, key); // 변경 알림       return true;     }   }); }; ``` ### 반응형 시스템의 한계 1. **객체 속성 추가/삭제**: [[4]]로는 새로운 속성의 추가/삭제를 감지할 수 없습니다. 2. **배열 변경**: 배열의 인덱스를 통한 직접 접근이나 length 변경은 감지되지 않습니다. ### 결론 Vue의 반응형 시스템은 데이터와 UI의 동기화를 자동화하는 강력한 기능입니다. [[5]]와 [[6]]을 이해하면 Vue의 내부 동작 방식을 더 깊이 이해할 수 있으며, 커스텀 반응형 시스템을 구현할 때도 유용합니다. - Xheldon Blog
+      Vue 반응형 원리 및 구현 - Xheldon Blog
         
   </title>
 
@@ -18,7 +18,7 @@
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
         <meta property="og:title"
-          content="Vue 반응형 시스템의 원리와 구현 Vue.js의 핵심 기능 중 하나는 반응형 데이터 시스템입니다. 이 시스템 덕분에 데이터가 변경될 때 자동으로 UI가 업데이트됩니다. 이 글에서는 Vue의 반응형 시스템이 어떻게 작동하는지 그 내부 메커니즘을 살펴보고, 간단한 구현 예제를 통해 이해해 보겠습니다. ### 반응형 시스템의 기본 개념 1. **의존성 추적**: Vue는 데이터 속성에 접근할 때 어떤 컴포넌트가 해당 속성을 사용하는지 추적합니다. 2. **변경 감지**: 데이터 속성이 변경되면 이에 의존하는 모든 컴포넌트에 알립니다. 3. **효율적인 업데이트**: 변경 사항을 바탕으로 가상 DOM을 효율적으로 갱신합니다. ### 구현 핵심: Object.defineProperty Vue 2.x에서는 [[0]]를 사용하여 반응형 시스템을 구현했습니다. 다음은 간단한 예제입니다: ```javascript function defineReactive(obj, key, val) {   Object.defineProperty(obj, key, {     get() {       console.log(`[[1]] 값을 읽음`);       return val;     },     set(newVal) {       console.log(`[[2]] 값이 ${val}에서 ${newVal}로 변경됨`);       val = newVal;       // 변경 알림 로직 실행     }   }); } ``` ### 의존성 수집 시스템 Vue는 Watcher 클래스를 사용하여 의존성을 관리합니다: 1. **의존성 수집**: 데이터 속성에 접근할 때 현재 Watcher를 의존성 목록에 추가합니다. 2. **알림 전파**: 데이터가 변경되면 해당 Watcher 목록에 변경 사항을 알립니다. ### Proxy 기반 구현 (Vue 3) Vue 3에서는 [[3]]를 사용하여 더 강력한 반응형 시스템을 구현했습니다: ```javascript const reactive = (target) =&gt; {   return new Proxy(target, {     get(target, key) {       track(target, key); // 의존성 추적       return target[key];     },     set(target, key, value) {       target[key] = value;       trigger(target, key); // 변경 알림       return true;     }   }); }; ``` ### 반응형 시스템의 한계 1. **객체 속성 추가/삭제**: [[4]]로는 새로운 속성의 추가/삭제를 감지할 수 없습니다. 2. **배열 변경**: 배열의 인덱스를 통한 직접 접근이나 length 변경은 감지되지 않습니다. ### 결론 Vue의 반응형 시스템은 데이터와 UI의 동기화를 자동화하는 강력한 기능입니다. [[5]]와 [[6]]을 이해하면 Vue의 내부 동작 방식을 더 깊이 이해할 수 있으며, 커스텀 반응형 시스템을 구현할 때도 유용합니다. - Xheldon Blog">
+          content="Vue 반응형 원리 및 구현 - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
@@ -86,7 +86,7 @@
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=5feffe34" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -274,7 +274,7 @@
                           
                       </div>
                       <h1>
-                        Vue 반응형 시스템의 원리와 구현 Vue.js의 핵심 기능 중 하나는 반응형 데이터 시스템입니다. 이 시스템 덕분에 데이터가 변경될 때 자동으로 UI가 업데이트됩니다. 이 글에서는 Vue의 반응형 시스템이 어떻게 작동하는지 그 내부 메커니즘을 살펴보고, 간단한 구현 예제를 통해 이해해 보겠습니다. ### 반응형 시스템의 기본 개념 1. **의존성 추적**: Vue는 데이터 속성에 접근할 때 어떤 컴포넌트가 해당 속성을 사용하는지 추적합니다. 2. **변경 감지**: 데이터 속성이 변경되면 이에 의존하는 모든 컴포넌트에 알립니다. 3. **효율적인 업데이트**: 변경 사항을 바탕으로 가상 DOM을 효율적으로 갱신합니다. ### 구현 핵심: Object.defineProperty Vue 2.x에서는 [[0]]를 사용하여 반응형 시스템을 구현했습니다. 다음은 간단한 예제입니다: ```javascript function defineReactive(obj, key, val) {   Object.defineProperty(obj, key, {     get() {       console.log(`[[1]] 값을 읽음`);       return val;     },     set(newVal) {       console.log(`[[2]] 값이 ${val}에서 ${newVal}로 변경됨`);       val = newVal;       // 변경 알림 로직 실행     }   }); } ``` ### 의존성 수집 시스템 Vue는 Watcher 클래스를 사용하여 의존성을 관리합니다: 1. **의존성 수집**: 데이터 속성에 접근할 때 현재 Watcher를 의존성 목록에 추가합니다. 2. **알림 전파**: 데이터가 변경되면 해당 Watcher 목록에 변경 사항을 알립니다. ### Proxy 기반 구현 (Vue 3) Vue 3에서는 [[3]]를 사용하여 더 강력한 반응형 시스템을 구현했습니다: ```javascript const reactive = (target) =&gt; {   return new Proxy(target, {     get(target, key) {       track(target, key); // 의존성 추적       return target[key];     },     set(target, key, value) {       target[key] = value;       trigger(target, key); // 변경 알림       return true;     }   }); }; ``` ### 반응형 시스템의 한계 1. **객체 속성 추가/삭제**: [[4]]로는 새로운 속성의 추가/삭제를 감지할 수 없습니다. 2. **배열 변경**: 배열의 인덱스를 통한 직접 접근이나 length 변경은 감지되지 않습니다. ### 결론 Vue의 반응형 시스템은 데이터와 UI의 동기화를 자동화하는 강력한 기능입니다. [[5]]와 [[6]]을 이해하면 Vue의 내부 동작 방식을 더 깊이 이해할 수 있으며, 커스텀 반응형 시스템을 구현할 때도 유용합니다.
+                        Vue 반응형 원리 및 구현
                       </h1>
                       <h2 class="subheading">
                         
@@ -338,9 +338,9 @@
           <a
             style="color: #ccc"
             href="https://www.xheldon.com/tech/vue-reactive.ko.html"
-            title="Vue 반응형 시스템의 원리와 구현 Vue.js의 핵심 기능 중 하나는 반응형 데이터 시스템입니다. 이 시스템 덕분에 데이터가 변경될 때 자동으로 UI가 업데이트됩니다. 이 글에서는 Vue의 반응형 시스템이 어떻게 작동하는지 그 내부 메커니즘을 살펴보고, 간단한 구현 예제를 통해 이해해 보겠습니다. ### 반응형 시스템의 기본 개념 1. **의존성 추적**: Vue는 데이터 속성에 접근할 때 어떤 컴포넌트가 해당 속성을 사용하는지 추적합니다. 2. **변경 감지**: 데이터 속성이 변경되면 이에 의존하는 모든 컴포넌트에 알립니다. 3. **효율적인 업데이트**: 변경 사항을 바탕으로 가상 DOM을 효율적으로 갱신합니다. ### 구현 핵심: Object.defineProperty Vue 2.x에서는 [[0]]를 사용하여 반응형 시스템을 구현했습니다. 다음은 간단한 예제입니다: ```javascript function defineReactive(obj, key, val) {   Object.defineProperty(obj, key, {     get() {       console.log(`[[1]] 값을 읽음`);       return val;     },     set(newVal) {       console.log(`[[2]] 값이 ${val}에서 ${newVal}로 변경됨`);       val = newVal;       // 변경 알림 로직 실행     }   }); } ``` ### 의존성 수집 시스템 Vue는 Watcher 클래스를 사용하여 의존성을 관리합니다: 1. **의존성 수집**: 데이터 속성에 접근할 때 현재 Watcher를 의존성 목록에 추가합니다. 2. **알림 전파**: 데이터가 변경되면 해당 Watcher 목록에 변경 사항을 알립니다. ### Proxy 기반 구현 (Vue 3) Vue 3에서는 [[3]]를 사용하여 더 강력한 반응형 시스템을 구현했습니다: ```javascript const reactive = (target) =&gt; {   return new Proxy(target, {     get(target, key) {       track(target, key); // 의존성 추적       return target[key];     },     set(target, key, value) {       target[key] = value;       trigger(target, key); // 변경 알림       return true;     }   }); }; ``` ### 반응형 시스템의 한계 1. **객체 속성 추가/삭제**: [[4]]로는 새로운 속성의 추가/삭제를 감지할 수 없습니다. 2. **배열 변경**: 배열의 인덱스를 통한 직접 접근이나 length 변경은 감지되지 않습니다. ### 결론 Vue의 반응형 시스템은 데이터와 UI의 동기화를 자동화하는 강력한 기능입니다. [[5]]와 [[6]]을 이해하면 Vue의 내부 동작 방식을 더 깊이 이해할 수 있으며, 커스텀 반응형 시스템을 구현할 때도 유용합니다."
+            title="Vue 반응형 원리 및 구현"
           >
-            Vue 반응형 시스템의 원리와 구현 Vue.js의 핵심 기능 중 하나는 반응형 데이터 시스템입니다. 이 시스템 덕분에 데이터가 변경될 때 자동으로 UI가 업데이트됩니다. 이 글에서는 Vue의 반응형 시스템이 어떻게 작동하는지 그 내부 메커니즘을 살펴보고, 간단한 구현 예제를 통해 이해해 보겠습니다. ### 반응형 시스템의 기본 개념 1. **의존성 추적**: Vue는 데이터 속성에 접근할 때 어떤 컴포넌트가 해당 속성을 사용하는지 추적합니다. 2. **변경 감지**: 데이터 속성이 변경되면 이에 의존하는 모든 컴포넌트에 알립니다. 3. **효율적인 업데이트**: 변경 사항을 바탕으로 가상 DOM을 효율적으로 갱신합니다. ### 구현 핵심: Object.defineProperty Vue 2.x에서는 [[0]]를 사용하여 반응형 시스템을 구현했습니다. 다음은 간단한 예제입니다: ```javascript function defineReactive(obj, key, val) {   Object.defineProperty(obj, key, {     get() {       console.log(`[[1]] 값을 읽음`);       return val;     },     set(newVal) {       console.log(`[[2]] 값이 ${val}에서 ${newVal}로 변경됨`);       val = newVal;       // 변경 알림 로직 실행     }   }); } ``` ### 의존성 수집 시스템 Vue는 Watcher 클래스를 사용하여 의존성을 관리합니다: 1. **의존성 수집**: 데이터 속성에 접근할 때 현재 Watcher를 의존성 목록에 추가합니다. 2. **알림 전파**: 데이터가 변경되면 해당 Watcher 목록에 변경 사항을 알립니다. ### Proxy 기반 구현 (Vue 3) Vue 3에서는 [[3]]를 사용하여 더 강력한 반응형 시스템을 구현했습니다: ```javascript const reactive = (target) =&gt; {   return new Proxy(target, {     get(target, key) {       track(target, key); // 의존성 추적       return target[key];     },     set(target, key, value) {       target[key] = value;       trigger(target, key); // 변경 알림       return true;     }   }); }; ``` ### 반응형 시스템의 한계 1. **객체 속성 추가/삭제**: [[4]]로는 새로운 속성의 추가/삭제를 감지할 수 없습니다. 2. **배열 변경**: 배열의 인덱스를 통한 직접 접근이나 length 변경은 감지되지 않습니다. ### 결론 Vue의 반응형 시스템은 데이터와 UI의 동기화를 자동화하는 강력한 기능입니다. [[5]]와 [[6]]을 이해하면 Vue의 내부 동작 방식을 더 깊이 이해할 수 있으며, 커스텀 반응형 시스템을 구현할 때도 유용합니다. - Xheldon Blog
+            Vue 반응형 원리 및 구현 - Xheldon Blog
           </a>
         </div>
         <hr style="visibility: hidden" />
@@ -996,7 +996,7 @@
         data-category="Announcements"
         data-category-id="DIC_kwDOAweTLM4B_uhM"
         data-mapping="specific"
-        data-term="Vue 반응형 시스템의 원리와 구현 Vue.js의 핵심 기능 중 하나는 반응형 데이터 시스템입니다. 이 시스템 덕분에 데이터가 변경될 때 자동으로 UI가 업데이트됩니다. 이 글에서는 Vue의 반응형 시스템이 어떻게 작동하는지 그 내부 메커니즘을 살펴보고, 간단한 구현 예제를 통해 이해해 보겠습니다. ### 반응형 시스템의 기본 개념 1. **의존성 추적**: Vue는 데이터 속성에 접근할 때 어떤 컴포넌트가 해당 속성을 사용하는지 추적합니다. 2. **변경 감지**: 데이터 속성이 변경되면 이에 의존하는 모든 컴포넌트에 알립니다. 3. **효율적인 업데이트**: 변경 사항을 바탕으로 가상 DOM을 효율적으로 갱신합니다. ### 구현 핵심: Object.defineProperty Vue 2.x에서는 [[0]]를 사용하여 반응형 시스템을 구현했습니다. 다음은 간단한 예제입니다: ```javascript function defineReactive(obj, key, val) {   Object.defineProperty(obj, key, {     get() {       console.log(`[[1]] 값을 읽음`);       return val;     },     set(newVal) {       console.log(`[[2]] 값이 ${val}에서 ${newVal}로 변경됨`);       val = newVal;       // 변경 알림 로직 실행     }   }); } ``` ### 의존성 수집 시스템 Vue는 Watcher 클래스를 사용하여 의존성을 관리합니다: 1. **의존성 수집**: 데이터 속성에 접근할 때 현재 Watcher를 의존성 목록에 추가합니다. 2. **알림 전파**: 데이터가 변경되면 해당 Watcher 목록에 변경 사항을 알립니다. ### Proxy 기반 구현 (Vue 3) Vue 3에서는 [[3]]를 사용하여 더 강력한 반응형 시스템을 구현했습니다: ```javascript const reactive = (target) =&gt; {   return new Proxy(target, {     get(target, key) {       track(target, key); // 의존성 추적       return target[key];     },     set(target, key, value) {       target[key] = value;       trigger(target, key); // 변경 알림       return true;     }   }); }; ``` ### 반응형 시스템의 한계 1. **객체 속성 추가/삭제**: [[4]]로는 새로운 속성의 추가/삭제를 감지할 수 없습니다. 2. **배열 변경**: 배열의 인덱스를 통한 직접 접근이나 length 변경은 감지되지 않습니다. ### 결론 Vue의 반응형 시스템은 데이터와 UI의 동기화를 자동화하는 강력한 기능입니다. [[5]]와 [[6]]을 이해하면 Vue의 내부 동작 방식을 더 깊이 이해할 수 있으며, 커스텀 반응형 시스템을 구현할 때도 유용합니다."
+        data-term="Vue 반응형 원리 및 구현"
         data-strict="0"
         data-reactions-enabled="1"
         data-emit-metadata="0"
@@ -1191,7 +1191,7 @@
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/xblog.min.js?202405251426"></script>
+<script src="/js/xblog.min.js?v=75a58ec0"></script>
 
 <!-- Simple Jekyll Search 复制逻辑 -->
 <script defer src="/js/simple-jekyll-search.min.js"></script>

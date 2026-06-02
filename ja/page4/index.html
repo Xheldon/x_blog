@@ -73,7 +73,7 @@
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=5feffe34" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -344,7 +344,7 @@
             
             <div class="post-preview">
               <a href="/ja/tech/vue-reactive.html">
-                <h2 class="post-title"># Vueのリアクティブ原理と実装 Vue.jsの核心的な特徴の1つは、その**リアクティブシステム**です。このシステムにより、データが変更されると自動的にビューが更新されます。この記事では、Vueのリアクティブシステムがどのように動作するのか、その背後にある原理と簡易実装を解説します。 ## リアクティブシステムの基本概念 Vueのリアクティブシステムは主に以下の要素で構成されています： 1. **データオブザーバー** - データオブジェクトのプロパティを監視 2. **依存関係収集** - どのコンポーネントがどのデータに依存しているかを追跡 3. **ウォッチャー** - データ変更を監視し、対応する更新をトリガー ## 実装の核心：Object.defineProperty Vue 2.xでは、`Object.defineProperty`を使用してデータのgetter/setterを定義することでリアクティブを実現しています。以下はその簡易実装例です： ```javascript function defineReactive(obj, key, val) {   // 依存関係を管理するDepクラス   const dep = new Dep()      Object.defineProperty(obj, key, {     get() {       // 依存関係を収集       if (Dep.target) {         dep.depend()       }       return val     },     set(newVal) {       if (newVal === val) return       val = newVal       // 変更を通知       dep.notify()     }   }) } ``` ## 依存関係管理システム 依存関係を管理するための`Dep`クラスと`Watcher`クラスの簡易実装： ```javascript class Dep {   constructor() {     this.subscribers = []   }      depend() {     if (Dep.target && !this.subscribers.includes(Dep.target)) {       this.subscribers.push(Dep.target)     }   }      notify() {     this.subscribers.forEach(sub => sub.update())   } } Dep.target = null class Watcher {   constructor(vm, expOrFn, cb) {     this.vm = vm     this.getter = parsePath(expOrFn)     this.cb = cb     this.value = this.get()   }      get() {     Dep.target = this     const value = this.getter.call(this.vm, this.vm)     Dep.target = null     return value   }      update() {     const oldValue = this.value     this.value = this.get()     this.cb.call(this.vm, this.value, oldValue)   } } ``` ## Vue 3の進化：Proxyベースのリアクティブ Vue 3では、`Proxy`オブジェクトを使用してリアクティブシステムを再実装しています。これにより、以下の改善がもたらされました： - 配列の変更検出がより信頼性向上 - 新しいプロパティの追加も自動的に追跡可能 - パフォーマンスの向上 ```javascript function reactive(obj) {   return new Proxy(obj, {     get(target, key) {       track(target, key)       return Reflect.get(target, key)     },     set(target, key, value) {       Reflect.set(target, key, value)       trigger(target, key)     }   }) } ``` ## まとめ Vueのリアクティブシステムは、データバインディングと自動更新の基盤です。その核心は： 1. データアクセスをインターセプトして依存関係を追跡 2. データ変更時に依存するウォッチャーに通知 3. 仮想DOMを効率的に更新 この原理を理解することで、Vueアプリケーションのデバッグやパフォーマンス最適化がより容易になります。</h2>
+                <h2 class="post-title">Vueのリアクティブ原理と実装</h2>
               </a>
               <div class="post-content-preview">
                 <div class="post-content-desc">
@@ -1532,7 +1532,7 @@ Promises自体は非常にシンプルですが、前提としてその糸口を
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/xblog.min.js?202405251426"></script>
+<script src="/js/xblog.min.js?v=75a58ec0"></script>
 
 <!-- Simple Jekyll Search 复制逻辑 -->
 <script defer src="/js/simple-jekyll-search.min.js"></script>
