@@ -12,7 +12,7 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-      <meta name="description" content="「订阅年年有，今年特别多」">
+      <meta name="description" content="&#34;Subscriptions every year, but this year there are especially many.&#34;">
       
         <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
@@ -23,7 +23,7 @@
                         <meta property="og:type" content="website">
                         
                           
-                              <meta name="og:description" content="「订阅年年有，今年特别多」">
+                              <meta name="og:description" content="&#34;Subscriptions every year, but this year there are especially many.&#34;">
                               
                                 
                                   <meta property="twitter:image"
@@ -78,7 +78,7 @@
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3a6d8f49" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=5f6904c8" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -259,7 +259,7 @@
             <div class="site-heading">
               
               <h1>Subscription &amp; Paid Software</h1>
-              <span class="subheading">「订阅年年有，今年特别多」</span>
+              <span class="subheading">&#34;Subscriptions every year, but this year there are especially many.&#34;</span>
             </div>
           </div>
         </div>
@@ -326,24 +326,24 @@
                     
                           <div class='notion-container'>
     <blockquote>
-        Note: The data on this page is sourced from a Notion database. Due to Notion API limitations allowing a maximum of three requests per second, the cached data is refreshed only once per hour.
+        Note: The data on this page is sourced from a Notion database. Due to Notion API limitations allowing a maximum of three requests per second, this cached data refreshes only once per hour.
     </blockquote>
     <div class="data-loading"><span></span><span></span><span></span><span></span><span></span></div>
     <table class='data-container'></table>
 </div>
 <script>
     /**
-     * Should return a DOM structure in the format:
+     * 应该返回的是形如
      * <tr>
-     *  <td>Apple Music Subscription</td>
-     *  <td>¥10/month</td>
+     *  <td>Apple Music 订阅</td>
+     *  <td>10元/月</td>
      *  <td>www.apple.com.cm/music</td>
-     *  <td>Additional notes</td>
+     *  <td>其他说明</td>
      * </tr>
-     * Consider using a template engine
+     * 的 dom 结构，考虑使用模板引擎
      */
     window.onload =  function () {
-        const properties = ['Name','Software Type','Date','Price','Description'];
+        const properties = ['名称','软件类型','日期','价格','介绍'];
         let totalCost = 0;
         const tmp = function (props, k, res) {
             let result = '';
@@ -376,16 +376,63 @@
                                 return '<td></td>';
                             case 'number':
                                 if (val[val.type]) {
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">if</span> (name === <span class="hljs-string">&#x27;price&#x27;</span> &amp;&amp; !<span class="hljs-title class_">Number</span>.<span class="hljs-built_in">isNaN</span>(val[val.<span class="hljs-property">type</span>])) &#123;<br>    totalCost += <span class="hljs-title class_">Number</span>(val[val.<span class="hljs-property">type</span>]);<br>&#125;<br><span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;td&gt;<span class="hljs-subst">$&#123;val[val.type]&#125;</span>&lt;/td&gt;`</span>;<br>&#125;<br><span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&lt;td&gt;&lt;/td&gt;&#x27;</span><br><span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;multi_select&#x27;</span>:<br>    <span class="hljs-keyword">if</span> (val[val.<span class="hljs-property">type</span>].<span class="hljs-property">length</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&lt;td&gt;&#x27;</span> + <br>            val[val.<span class="hljs-property">type</span>].<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">tag</span> =&gt;</span> &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-string">`  &lt;span class=&#x27;label label-info&#x27;&gt;<span class="hljs-subst">$&#123;tag.name&#125;</span>&lt;/span&gt;`</span>;<br>            &#125;).<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>)<br>        + <span class="hljs-string">&#x27;&lt;/td&gt;&#x27;</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&lt;td&gt;&lt;/td&gt;&#x27;</span>;<br>&#125;<br>&#125;).<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>)<br>+   <br><span class="hljs-string">&#x27;&lt;/td&gt;&#x27;</span>);<br><span class="hljs-keyword">if</span> (k === res.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>) &#123;<br>    result += (<span class="hljs-string">&#x27;&lt;tr&gt;&#x27;</span>+<br>        <span class="hljs-string">`&lt;td colspan=&quot;999&quot;&gt;总计有 <span class="hljs-subst">$&#123;res.length&#125;</span> 个软件，共花费 ￥<span class="hljs-subst">$&#123;totalCost.toFixed(<span class="hljs-number">2</span>)&#125;</span> 元&lt;/td&gt;`</span><br>    +<span class="hljs-string">&#x27;&lt;/tr&gt;&#x27;</span>);<br>&#125;<br><span class="hljs-keyword">return</span> result;<br>&#125;;<br><span class="hljs-title function_">fetch</span>(<span class="hljs-string">&#x27;https://api.xheldon.com/api/getDatabase&#x27;</span>, &#123;<br>    <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;POST&#x27;</span>,<br>    <span class="hljs-attr">headers</span>: &#123;<br>        <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/json;charset=utf-8&#x27;</span><br>    &#125;,<br>    <span class="hljs-attr">body</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(&#123;<br>        <span class="hljs-attr">properties</span>: properties,<br>        <span class="hljs-comment">// databaseId: &#x27;e828412b1852467b81b1a19507df3a8f&#x27;,</span><br>        <span class="hljs-attr">databaseId</span>: <span class="hljs-string">&#x27;2b0800e87a6180ee9175c57c462852a0&#x27;</span>,<br>        <span class="hljs-attr">opt</span>: &#123;<br>            <span class="hljs-attr">sorts</span>: [&#123;<br>                <span class="hljs-attr">timestamp</span>: <span class="hljs-string">&#x27;created_time&#x27;</span>,<br>                <span class="hljs-attr">direction</span>: <span class="hljs-string">&#x27;ascending&#x27;</span><br>            &#125;]<br>        &#125;<br>    &#125;)<br>&#125;).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> &#123;<br>    <span class="hljs-comment">// Note: Error messages are also returned to then, no exceptions thrown</span><br>    _.<span class="hljs-title function_">json</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> &#123;<br>        $(<span class="hljs-string">&#x27;.data-loading&#x27;</span>).<span class="hljs-title function_">remove</span>();<br>        <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(res)) &#123;<br>            $(<span class="hljs-string">&#x27;.data-container&#x27;</span>).<span class="hljs-title function_">html</span>(res.<span class="hljs-title function_">map</span>(tmp.<span class="hljs-title function_">bind</span>(res)).<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>));<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br></code></pre></td></tr></table></figure>
-<p>$(‘.data-container’).html(‘Notion server data exception:’, res.msg);<br />
-}<br />
-}).catch(err =&gt; {<br />
-$(‘.data-container’).html(<code>请求异常: 错误信息$&#123;err.message&#125;</code>, err);<br />
-});<br />
-});<br />
-};<br />
-</script></p>
-
+                                    if (name === '价格' && !Number.isNaN(val[val.type])) {
+                                        totalCost += Number(val[val.type]);
+                                    }
+                                    return `<td>${val[val.type]}</td>`;
+                                }
+                                return '<td></td>'
+                            case 'multi_select':
+                                if (val[val.type].length) {
+                                        return '<td>' + 
+                                            val[val.type].map(tag => {
+                                                return `  <span class='label label-info'>${tag.name}</span>`;
+                                            }).join('')
+                                        + '</td>';
+                                }
+                                return '<td></td>';
+                        }
+                    }).join('')
+                +   
+                '</td>');
+            if (k === res.length - 1) {
+                result += ('<tr>'+
+                        `<td colspan="999">总计有 ${res.length} 个软件，共花费 ￥${totalCost.toFixed(2)} 元</td>`
+                    +'</tr>');
+            }
+            return result;
+        };
+        fetch('https://api.xheldon.com/api/getDatabase', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                properties: properties,
+                // databaseId: 'e828412b1852467b81b1a19507df3a8f',
+                databaseId: '2b0800e87a6180ee9175c57c462852a0',
+                opt: {
+                    sorts: [{
+                        timestamp: 'created_time',
+                        direction: 'ascending'
+                    }]
+                }
+            })
+        }).then(_ => {
+            // Note: 错误信息也返回给 then，没有异常抛出
+            _.json().then(res => {
+                $('.data-loading').remove();
+                if (Array.isArray(res)) {
+                    $('.data-container').html(res.map(tmp.bind(res)).join(''));
+                } else {
+                    $('.data-container').html('Notion 服务器数据异常:', res.msg);
+                }
+            }).catch(err => {
+                $('.data-container').html(`请求异常: 错误信息${err.message}`, err);
+            });
+        });
+    };
+</script>
                             
                         <div class="text-danger">- EOF -</div>
                         <div style="font-size: 12px; color: #ccc!important;">Originally published at: <a style="color: #ccc;"
@@ -980,7 +1027,7 @@ $(‘.data-container’).html(<code>请求异常: 错误信息$&#123;err.message
     <hr>
     <h5>Columns</h5>
     <div class="tags">
-        <a href="/projects/">Open Source</a>
+        <a href="/en/projects/">Open Source</a>
         <a href="/en/book-list/">Book List</a>
         <a href="/en/subscribe/">Subscriptions & Paid Apps</a>
         <a href="/en/my-food/">Food Recommendations</a>

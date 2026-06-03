@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>
     
-      購読＆有料ソフトウェア - Xheldon Blog
+      サブスク&amp;有料ソフト - Xheldon Blog
         
   </title>
 
@@ -12,18 +12,18 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-      <meta name="description" content="「订阅年年有，今年特别多」">
+      <meta name="description" content="「サブスクリプションは毎年あるが、今年は特に多い」">
       
         <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
         <meta property="og:title"
-          content="購読＆有料ソフトウェア - Xheldon Blog">
+          content="サブスク&amp;有料ソフト - Xheldon Blog">
         
                         <meta property="og:type" content="website">
                         
                           
-                              <meta name="og:description" content="「订阅年年有，今年特别多」">
+                              <meta name="og:description" content="「サブスクリプションは毎年あるが、今年は特に多い」">
                               
                                 
                                   <meta property="twitter:image"
@@ -78,7 +78,7 @@
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3a6d8f49" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=5f6904c8" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -258,8 +258,8 @@
           
             <div class="site-heading">
               
-              <h1>購読＆有料ソフトウェア</h1>
-              <span class="subheading">「订阅年年有，今年特别多」</span>
+              <h1>サブスク&amp;有料ソフト</h1>
+              <span class="subheading">「サブスクリプションは毎年あるが、今年は特に多い」</span>
             </div>
           </div>
         </div>
@@ -333,17 +333,17 @@
 </div>
 <script>
     /**
-     * 返すべきDOM構造は以下の形式:
+     * 应该返回的是形如
      * <tr>
-     *  <td>Apple Musicサブスクリプション</td>
+     *  <td>Apple Music 订阅</td>
      *  <td>10元/月</td>
      *  <td>www.apple.com.cm/music</td>
-     *  <td>その他の説明</td>
+     *  <td>其他说明</td>
      * </tr>
-     * テンプレートエンジンの使用を検討してください
+     * 的 dom 结构，考虑使用模板引擎
      */
     window.onload =  function () {
-        const properties = ['名称','ソフトウェアタイプ','日付','価格','説明'];
+        const properties = ['名称','软件类型','日期','价格','介绍'];
         let totalCost = 0;
         const tmp = function (props, k, res) {
             let result = '';
@@ -376,70 +376,69 @@
                                 return '<td></td>';
                             case 'number':
                                 if (val[val.type]) {
-<p>if (name === ‘価格’ &amp;&amp; !Number.isNaN(val[val.type])) {<br />
-totalCost += Number(val[val.type]);<br />
-}<br />
-return <code>&lt;td&gt;$&#123;val[val.type]&#125;&lt;/td&gt;</code>;<br />
-}<br />
-return ‘<td></td>’<br />
-case ‘multi_select’:<br />
-if (val[val.type].length) {<br />
-return ‘<td>’ +<br />
-val[val.type].map(tag =&gt; {<br />
-return <code>  &lt;span class='label label-info'&gt;$&#123;tag.name&#125;&lt;/span&gt;</code>;<br />
-}).join(‘’)<br />
-+ ‘</td>’;<br />
-}<br />
-return ‘<td></td>’;<br />
-}<br />
-}).join(‘’)<br />
-+<br />
-‘</td>’);<br />
-if (k === res.length - 1) {<br />
-result += (‘<tr>’+<br />
-<code>&lt;td colspan=&quot;999&quot;&gt;总计有 $&#123;res.length&#125; 个软件，共花费 ￥$&#123;totalCost.toFixed(2)&#125; 元&lt;/td&gt;</code><br />
-+‘</tr>’);<br />
-}<br />
-return result;<br />
-};<br />
-fetch(‘<a href="https://api.xheldon.com/api/getDatabase">https://api.xheldon.com/api/getDatabase</a>’, {<br />
-method: ‘POST’,<br />
-headers: {<br />
-‘Content-Type’: ‘application/json;charset=utf-8’<br />
-},<br />
-body: JSON.stringify({<br />
-properties: properties,<br />
-// databaseId: ‘e828412b1852467b81b1a19507df3a8f’,<br />
-databaseId: ‘2b0800e87a6180ee9175c57c462852a0’,<br />
-opt: {<br />
-sorts: [{<br />
-timestamp: ‘created_time’,<br />
-direction: ‘ascending’<br />
-}]<br />
-}<br />
-})<br />
-}).then(_ =&gt; {<br />
-// 注: エラーメッセージもthenに返され、例外はスローされません<br />
-_.json().then(res =&gt; {<br />
-$(‘.data-loading’).remove();<br />
-if (Array.isArray(res)) {<br />
-$(‘.data-container’).html(res.map(tmp.bind(res)).join(‘’));<br />
-} else {</p>
-<p>$(‘.data-container’).html(‘Notion サーバーデータ異常:’, res.msg);<br />
-}<br />
-}).catch(err =&gt; {<br />
-$(‘.data-container’).html(<code>请求异常: 错误信息$&#123;err.message&#125;</code>, err);<br />
-});<br />
-});<br />
-};<br />
-</script></p>
-
+                                    if (name === '价格' && !Number.isNaN(val[val.type])) {
+                                        totalCost += Number(val[val.type]);
+                                    }
+                                    return `<td>${val[val.type]}</td>`;
+                                }
+                                return '<td></td>'
+                            case 'multi_select':
+                                if (val[val.type].length) {
+                                        return '<td>' + 
+                                            val[val.type].map(tag => {
+                                                return `  <span class='label label-info'>${tag.name}</span>`;
+                                            }).join('')
+                                        + '</td>';
+                                }
+                                return '<td></td>';
+                        }
+                    }).join('')
+                +   
+                '</td>');
+            if (k === res.length - 1) {
+                result += ('<tr>'+
+                        `<td colspan="999">总计有 ${res.length} 个软件，共花费 ￥${totalCost.toFixed(2)} 元</td>`
+                    +'</tr>');
+            }
+            return result;
+        };
+        fetch('https://api.xheldon.com/api/getDatabase', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                properties: properties,
+                // databaseId: 'e828412b1852467b81b1a19507df3a8f',
+                databaseId: '2b0800e87a6180ee9175c57c462852a0',
+                opt: {
+                    sorts: [{
+                        timestamp: 'created_time',
+                        direction: 'ascending'
+                    }]
+                }
+            })
+        }).then(_ => {
+            // Note: 错误信息也返回给 then，没有异常抛出
+            _.json().then(res => {
+                $('.data-loading').remove();
+                if (Array.isArray(res)) {
+                    $('.data-container').html(res.map(tmp.bind(res)).join(''));
+                } else {
+                    $('.data-container').html('Notion 服务器数据异常:', res.msg);
+                }
+            }).catch(err => {
+                $('.data-container').html(`请求异常: 错误信息${err.message}`, err);
+            });
+        });
+    };
+</script>
                             
                         <div class="text-danger">- EOF -</div>
                         <div style="font-size: 12px; color: #ccc!important;">この記事の初出: <a style="color: #ccc;"
                             href="https://www.xheldon.com/subscribe/"
-                            title="購読＆有料ソフトウェア">
-                            購読＆有料ソフトウェア - Xheldon Blog
+                            title="サブスク&amp;有料ソフト">
+                            サブスク&amp;有料ソフト - Xheldon Blog
                           </a></div>
                         
                           <hr style="visibility: hidden;">
@@ -1028,7 +1027,7 @@ $(‘.data-container’).html(<code>请求异常: 错误信息$&#123;err.message
     <hr>
     <h5>コラム</h5>
     <div class="tags">
-        <a href="/projects/">オープンソース</a>
+        <a href="/ja/projects/">オープンソース</a>
         <a href="/ja/book-list/">技術書リスト</a>
         <a href="/ja/subscribe/">サブスク＆有料アプリ</a>
         <a href="/ja/my-food/">グルメのおすすめ</a>
@@ -1082,7 +1081,7 @@ $(‘.data-container’).html(<code>请求异常: 错误信息$&#123;err.message
         data-category="Announcements"
         data-category-id="DIC_kwDOAweTLM4B_uhM"
         data-mapping="specific"
-        data-term="購読＆有料ソフトウェア"
+        data-term="サブスク&amp;有料ソフト"
         data-strict="0"
         data-reactions-enabled="1"
         data-emit-metadata="0"
