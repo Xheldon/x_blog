@@ -387,7 +387,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -520,9 +520,9 @@
 <p>이유는 모르겠지만 Hexo에서 <code>:category/:name.html</code>을 설정했는데도 <code>life/2024-life-xxx.html</code>(<code>-</code> 디렉토리 구분 사용)가 생성되었습니다. 예상대로라면 <code>life/xxx.html</code>이어야 했습니다. 소스 코드 <code>name</code>를 보면 <code>slug</code>의 <code>basename</code>를 사용하지만, <code>slug</code> 생성 로직은 folder 경로를 기반으로 하여 -를 추가하는 방식이었습니다. 그래서 파일 이름을 수동으로 수정할 수밖에 없었습니다. Jekyll에서는 파일 이름 앞의 날짜 형식(예: <a href="http://2024-02-12-xxx.md">2024-02-12-xxx.md</a>)에서 2024-02-12는 무시되고 title은 바로 xxx가 됩니다. 하지만 Hexo에서는 post에서 읽는 title이 front matter의 title이기 때문에 permalink 주소를 최종 결정하기 위해 filter 플러그인을 작성해야 했습니다:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * permalink 中的 name 不符合预期，对于 _posts/life/2015/xxx.md 来说，在文档中 :name 表示的是 xxx，但是实际是 life-2015-xxx</span><br><span class="hljs-comment"> */</span><br>hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">filter</span>.<span class="hljs-title function_">register</span>(<span class="hljs-string">&#x27;post_permalink&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) &#123;<br>  <span class="hljs-comment">// 在这里修改 post.name 的值</span><br>  <span class="hljs-keyword">const</span> arr = data.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;/&#x27;</span>).<span class="hljs-title function_">filter</span>(<span class="hljs-title class_">Boolean</span>);<br>  <span class="hljs-keyword">const</span> categories = arr[<span class="hljs-number">0</span>];<br>  <span class="hljs-keyword">const</span> name = arr[<span class="hljs-number">1</span>];<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;categories&#125;</span>/<span class="hljs-subst">$&#123;name.split(<span class="hljs-string">&#x27;-&#x27;</span>).filter(<span class="hljs-built_in">Boolean</span>).slice(<span class="hljs-number">3</span>).join(<span class="hljs-string">&#x27;-&#x27;</span>)&#125;</span>`</span>;<br>&#125;);<br></code></pre></td></tr></table></figure>
 <p>또한 permalink는 순수 숫자가 될 수 없고 문자열이어야 합니다:</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8006-a660-e8ecfbe7da9a.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8006-a660-e8ecfbe7da9a.webp' alt='' title=''></p>
 <p>그렇지 않으면 오류가 발생합니다(.endsWith를 보면 왜 오류가 나는지 알 수 있습니다):</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8032-8e51-d6528f277306.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8032-8e51-d6528f277306.webp' alt='' title=''></p>
 <h3 id="ejs-템플릿-문법-문제">EJS 템플릿 문법 문제</h3>
 <p>ejs 템플릿을 중첩할 때 Jekyll의 liquid 문법과 달리 템플릿 내에서 front-matter를 사용자 정의할 수 없습니다. 즉, 템플릿 간의 매개변수 전달은 외부에서 내부로만 가능하고 내부에서 외부로는 불가능합니다. 예를 들어 index의 레이아웃이 page이고 front-matter도 설정했지만 이 front-matter는 page.ejs 템플릿에서 읽을 수 없습니다. 그래서 사용하는 모든 곳에서 매개변수를 전달해야 했습니다.</p>
 <h3 id="markdown-문법-렌더링-문제">Markdown 문법 렌더링 문제</h3>
@@ -531,9 +531,9 @@
 <p>그래서 markdown-it을 사용해 처리했고, hexo-renderer-markdown-it을 설치했습니다.</p>
 <h3 id="liquid-정렬-문제">Liquid 정렬 문제</h3>
 <p>Jekyll의 liquid 정렬은 이렇게 사용했습니다: <code>&#123;&#123; tags | split:'`**`SEPARATOR`**`' | sort &#125;&#125;</code> :</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/0389dcbb-8bb7-413c-a968-4a77a8b76b71.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2025/jekyll-2-hexo/0389dcbb-8bb7-413c-a968-4a77a8b76b71.webp' alt='' title=''></p>
 <p>문제는 Liquid의 정렬에서 sort 부분이 동일한 경우 href 문자열로 정렬된다는 점입니다. 따라서 이를 상속받으면:</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/a24e2d73-ab8b-4b5d-a57d-7e0f2f5f0a66.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2025/jekyll-2-hexo/a24e2d73-ab8b-4b5d-a57d-7e0f2f5f0a66.webp' alt='' title=''></p>
 <h3 id="mermaid-문법-문제">Mermaid 문법 문제</h3>
 <p>mermaid는 highlight로 강조 표시할 수 없으며 hexo의 config에서 제외해야 합니다:</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">exclude_languages:</span><br> <span class="hljs-bullet">-</span> <span class="hljs-string">mermaid</span><br></code></pre></td></tr></table></figure>
@@ -549,7 +549,7 @@
 <hr />
 <h3 id="빌드-후-불필요한-파일-문제">빌드 후 불필요한 파일 문제</h3>
 <p>일부 파일은 불필요하므로 빌드 후 삭제합니다:</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8077-911f-f5d55f484628.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8077-911f-f5d55f484628.webp' alt='' title=''></p>
 <p>구체적으로 다음 파일들이 해당됩니다:</p>
 <ul>
 <li>

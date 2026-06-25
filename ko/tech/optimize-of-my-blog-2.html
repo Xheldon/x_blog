@@ -385,7 +385,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -532,7 +532,7 @@
 <p>하지만 공식적으로 해결할 의지가 없는 것 같아, 직접 간단한 변환 함수를 작성했습니다:</p>
 <p><a class='link-bookmark' href='https://gist.github.com/Xheldon/036d9b187bd83303205001e8af97eda7' target='_blank'><span data-bookmark-img='https://github.githubassets.com/images/modules/gists/gist-og-image.png' data-bookmark-title='C'><img src='https://github.githubassets.com/images/modules/gists/gist-og-image.png'/></span><span><span> craftBlockToMarkdown</span><span> GitHub Gist: 코드, 노트, 스니펫을 즉시 공유하세요.</span><span> https://gist.github.com/Xheldon/036d9b187bd83303205001e8af97eda7</span></span></a></p>
 <p>이 함수는 Jekyll에 맞춰 다음 단계 처리를 위해(아래 최적화 3 참조) <code>imageBlock</code>와 <code>urlBlock</code> 타입의 블록을 특별히 처리합니다:</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/FE4436B8-B16D-4CA7-9041-E2F5F831CC80_2.png' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/optimize-of-my-blog-2/FE4436B8-B16D-4CA7-9041-E2F5F831CC80_2.png' alt='Image' title='Image'></p>
 <p>이 함수는 이미 공식 플러그인 개발자 포럼에 올려두었습니다. 관심 있으시면 의견 나눠주세요:</p>
 <p><a class='link-bookmark' href='https://forum.developer.craft.do/t/a-better-implementation-of-craft-blocks-to-markdown-transformation-methods/554' target='_blank'><span data-bookmark-img='https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png' data-bookmark-title='A'><img src='https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png'/></span><span><span> A better implementation of craft blocks to Markdown transformation methods</span><span> Craft의 markdown API에는 다음과 같은 문제가 있습니다: 1. 중첩 리스트를 지원하지 않음. 2. 중첩 인용 블록 순서가 잘못됨. 3. 후자만 참조 블록으로 인식됨. 4. urlBlock(북마크라고 할 수 있음?)이 링크로 인식됨(이 함수에서는 jekyll의 렌더링 태그를 커스터마이즈할 수 있으니 원하는 대로 수정 가능). 참고: 1. 토글/수식은 지원하지 않음. 마크다운도 이를 지원하지 않기 때문이지만, 직접 구현할 수 있음. 2. 이 함수는 제 jekyll 블로그에 사용 중입니다...</span><span> https://forum.developer.craft.do/t/a-better-implementation-of-craft-blocks-to-markdown-transformation-methods/554</span></span></a></p>
 <h2 id="최적화-2-github-ci-프로세스를-로컬로-이동">최적화 2: Github CI 프로세스를 로컬로 이동</h2>
@@ -540,13 +540,13 @@
 <p>이번 최적화에서는 이전 프로세스와 일관성을 유지하기 위해 Craft 플러그인을 하나 더 작성했습니다. 이 플러그인을 클릭하면 문서 내용을 가져와 간단한 처리(예: headerImg의 이미지 저작권 정보를 meta로 가져오기)를 한 후, 문서 정보를 매개변수로 포함한 특정 링크를 호출합니다:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">craft.<span class="hljs-property">editorApi</span>.<span class="hljs-title function_">openURL</span>(<br>  <span class="hljs-string">`xhelper://<span class="hljs-subst">$&#123;btoa(<span class="hljs-built_in">unescape</span>(<span class="hljs-built_in">encodeURIComponent</span>(content)))&#125;</span>`</span><br>);<br></code></pre></td></tr></table></figure>
 <p>이 특정 링크의 역할은 Apple Script로 작성된 Application을 호출하는 것입니다. Application을 작성하는 방법과 링크 호출에 응답하는 방법은 제가 작성한 <a href="/tech/applescript-simple-use.html">이 문서</a>]를 참조하시면 됩니다. 여기서는 node를 호출하며, 실제로는 이전에 Github CI에서 실행하던 코드를 실행합니다. 간단한 스크린샷을 첨부합니다:</p>
-<p caption='Xhelper截图👆🏻'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/BC93AD26-26C5-4AD1-A8AC-2BB3B2AD2945_2.png' alt='Xhelper截图👆🏻' title='Xhelper截图👆🏻'></p>
+<p caption='Xhelper截图👆🏻'><img src='https://static.xheldon.com/img/in-post/2022/optimize-of-my-blog-2/BC93AD26-26C5-4AD1-A8AC-2BB3B2AD2945_2.png' alt='Xhelper截图👆🏻' title='Xhelper截图👆🏻'></p>
 <p>효과:</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/5E5FDC00-D081-4B50-91FE-61946A453356_2.png' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/optimize-of-my-blog-2/5E5FDC00-D081-4B50-91FE-61946A453356_2.png' alt='Image' title='Image'></p>
 <p>이전 프로세스에서는 제가 편의를 위해 모든 이미지를 <code>png</code> 형식으로 변환했습니다(Craft에 업로드된 이미지가 항상 확장자를 가지는 것은 아니기 때문입니다. 드래그 앤 드롭이나 이미지 업로드 방식으로 추가된 이미지는 확장자가 있지만, 복사 붙여넣기나 웹 업로드로 추가된 이미지는 확장자가 없습니다). 이번에는 이 로직을 제거하고, 먼저 이미지에 확장자가 있는 경우 그 확장자를 사용하도록 했습니다. 확장자가 없는 경우에만 <code>png</code> 형식으로 강제 변환합니다. <code>Sharp</code> 라이브러리를 사용하는 것을 추천드립니다. 정~말~ 유용합니다:</p>
 <p><a class='link-bookmark' href='https://sharp.pixelplumbing.com/' target='_blank'><span data-bookmark-img='https://cdn.jsdelivr.net/gh/lovell/sharp@main/docs/image/sharp-logo.png' data-bookmark-title='S'><img src='https://cdn.jsdelivr.net/gh/lovell/sharp@main/docs/image/sharp-logo.png'/></span><span><span> sharp - High performance Node.js image processing</span><span> "Resize large images in common formats to smaller, web-friendly JPEG, PNG, WebP, GIF and AVIF images of varying dimensions"</span><span> https://sharp.pixelplumbing.com/</span></span></a></p>
 <p>그래서… GIF를 보여드리겠습니다!</p>
-<p caption='支持gif啦'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/59E358FD-2A7A-4125-8223-1A51FFCCC8A3_2.gif' alt='支持gif啦' title='支持gif啦'></p>
+<p caption='支持gif啦'><img src='https://static.xheldon.com/img/in-post/2022/optimize-of-my-blog-2/59E358FD-2A7A-4125-8223-1A51FFCCC8A3_2.gif' alt='支持gif啦' title='支持gif啦'></p>
 <blockquote>
 <p>참고: 이전에는 편의를 위해(인증 없이, 고정 IP 서버 없이) <a href="https://cloud.weixin.qq.com/cloudrun">WeChat Cloud Hosting</a>]을 사용했고, 요약을 WeChat 공식 계정으로 전송하는 로직도 구현했습니다. 하지만 문제는 이 서버가 단지 공식 계정 발행을 편하게 하려고 만든 것인데, 제 성격상 보통 3개월에 한 번씩만 사용하다 보니, 사용할 때마다 콜드 스타트(서버는 기본적으로 30분 동안 요청이 없으면 인스턴스를 자동으로 종료합니다. 실행 시간에 따라 요금이 부과되기 때문입니다)가 발생해 자주 실패했습니다. 이 문제를 해결하는 시간이면 차라리 수동으로 WeChat 공식 계정 편집기에 복사 붙여넣기를 하는 게 나았습니다. 그래서 WeChat 공식 계정은 포기하고, 수동으로 붙여넣기… 이것도 괜찮네요!</p>
 </blockquote>
@@ -557,7 +557,7 @@
 <p>Jekyll에서 플러그인을 사용하는 것은 매우 간단합니다. 루트 디렉토리에 <code>_plugins</code> 디렉토리를 생성하고, <code>ruby</code>로 작성된 Jekyll 플러그인을 넣으면 Jekyll Build 시 해당 플러그인이 로드됩니다.</p>
 <h2 id="기타-세부-사항">기타 세부 사항</h2>
 <p>이전 내용은 표준 Markdown으로 생성된 HTML이었기 때문에 일부 RSS 리더가 내용을 가져온 후 형식이 잘 유지되었습니다. 하지만 이번 최적화에서 Bookmark를 추가하면서 RSS 형식이 깨졌습니다(Reeder 5의 스크린샷):</p>
-<p caption='Reeder5中Bookmark格式错乱'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/B1E25DC1-17C1-45D8-8721-8160FDCA1676_2.jpeg' alt='Reeder5中Bookmark格式错乱' title='Reeder5中Bookmark格式错乱'></p>
+<p caption='Reeder5中Bookmark格式错乱'><img src='https://static.xheldon.com/img/in-post/2022/optimize-of-my-blog-2/B1E25DC1-17C1-45D8-8721-8160FDCA1676_2.jpeg' alt='Reeder5中Bookmark格式错乱' title='Reeder5中Bookmark格式错乱'></p>
 <p>그래서 ruby 플러그인을 하나 더 작성해 이 태그를 필터링하고 일반 HTML 링크로 변환했습니다:</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">module</span> <span class="hljs-title class_">Jekyll</span><br>    <span class="hljs-keyword">module</span> <span class="hljs-title class_">BookmarkFilter</span><br>      <span class="hljs-keyword">def</span> <span class="hljs-title function_">bookmark_filter</span>(<span class="hljs-params">input</span>)<br>        input.gsub(<span class="hljs-regexp">/^\&lt;p\&gt;\&lt;a\s+class=\&quot;link-bookmark\&quot;\shref=(.*)\starget=\&quot;_blank\&quot;\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;span\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;span\&gt;\n(.*)\n\&lt;\/span\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;\/span\&gt;\&lt;\/a\&gt;\&lt;\/p\&gt;$/</span>, <span class="hljs-string">&#x27;&lt;p&gt;&lt;a href=\1 target=&quot;_blank&quot;&gt;\4&lt;/a&gt;&lt;/p&gt;&#x27;</span>);<br>      <span class="hljs-keyword">end</span><br>    <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-title class_">Liquid</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:Template</span>.register_filter(<span class="hljs-title class_">Jekyll</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:BookmarkFilter</span>)<br></code></pre></td></tr></table></figure>
 <p>그런 다음 feed.xml에서 사용하면 됩니다: <code>post.content | bookmark_filter</code>.</p>

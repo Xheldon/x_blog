@@ -377,7 +377,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -466,7 +466,7 @@
         </div>
           <h2 id="서문">서문</h2>
 <p>최근 M1 Max 칩과 64GB 메모리가 탑재된 Mac Studio를 새로 구입했습니다. 성능이 매우 뛰어납니다. 그동안 <a href="/tech/my-blog-ci-in-2022.html">블로그 처리 과정</a>]에서 Craft에서 가져온 이미지(이 단계는 두 서비스 모두 해외에 있어서 빠릅니다)를 텐센트 클라우드 COS로 전송할 때 Github Action을 사용하면서 네트워크 속도가 느린 문제가 자주 발생했습니다.</p>
-<p caption='SCR-20220502-q47'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/FBB4B556-8472-4C92-8EFD-E07015DC5FBB_2.webp' alt='SCR-20220502-q47' title='SCR-20220502-q47'></p>
+<p caption='SCR-20220502-q47'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/FBB4B556-8472-4C92-8EFD-E07015DC5FBB_2.webp' alt='SCR-20220502-q47' title='SCR-20220502-q47'></p>
 <p>조사해 본 결과, Github는 <a href="https://github.community/t/is-there-a-way-to-specify-virtual-machine-region/120438">Action 서버의 지역을 설정하는 기능을 지원하지 않는 것</a>]으로 보입니다. 이에 따라 이후 배포 프로세스를 로컬로 옮겨 빌드 속도를 높이기로 결정했고, 이 글을 작성하게 되었습니다. 아래에서 AppleScript는 AS로 줄여서 표기합니다.</p>
 <h2 id="왜-다른-도구가-아닌-applescript를-사용했나요">왜 다른 도구가 아닌 AppleScript를 사용했나요?</h2>
 <p>우선, 가능한 한 작업 경로와 복잡도를 최소화하고 싶었기 때문에 다음과 같은 작업 단계를 정했습니다:</p>
@@ -484,7 +484,7 @@
 <p>한 앱에서 다른 앱을 호출해야 하기 때문에 AppleScript가 유일한 선택지였습니다. 하지만 AS를 사용하더라도 실제로 실행되는 것은 기존의 js 파일이며, <a href="https://github.com/Xheldon/craft_publish_ci/blob/master/.github/workflows/publish.yml">craft_publish_ci의 workflow 작업</a>]을 로컬로 옮겨 실행하는 것뿐입니다.</p>
 <h2 id="applescript-소개">AppleScript 소개</h2>
 <p>개념도:</p>
-<p caption='execute_script_2x'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/6C1FA0DD-5875-4C15-BCA8-495B34F5F699_2.webp' alt='execute_script_2x' title='execute_script_2x'></p>
+<p caption='execute_script_2x'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/6C1FA0DD-5875-4C15-BCA8-495B34F5F699_2.webp' alt='execute_script_2x' title='execute_script_2x'></p>
 <h3 id="applescript로-할-수-있는-것들">AppleScript로 할 수 있는 것들</h3>
 <ol>
 <li>
@@ -511,21 +511,21 @@
 </ul>
 <h3 id="applescript의-형태">AppleScript의 형태</h3>
 <p>AppleScript는 일반적으로 Script(스크립트)와 Application(애플리케이션) 두 가지 형태로 사용됩니다. 여기서는 이 두 가지만 소개하며, Script bundle과 Text는 사용하지 않았으므로 다루지 않겠습니다.</p>
-<p caption='SCR-20220502-qqc'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/08F57517-C6AC-49C1-9B5E-9606F2DD2A8E_2.webp' alt='SCR-20220502-qqc' title='SCR-20220502-qqc'></p>
+<p caption='SCR-20220502-qqc'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/08F57517-C6AC-49C1-9B5E-9606F2DD2A8E_2.webp' alt='SCR-20220502-qqc' title='SCR-20220502-qqc'></p>
 <blockquote>
 <p>참고: 동일한 코드라도 스크립트로 저장해 실행하는 것과 애플리케이션으로 저장해 실행하는 것은 인터페이스가 다릅니다.</p>
 </blockquote>
 <h4 id="스크립트">스크립트</h4>
 <p>스크립트는 js와 같은 실행 가능한 파일이지만, as는 Mac 데스크톱 환경에서 실행되고 js는 Chrome에서 실행된다는 차이가 있습니다. 더블 클릭하면 실행됩니다. 아래는 스크립트 process가 진행 상황을 표시하는 인터페이스로, 스크립트 우측 상단의 ‘실행’ 버튼을 클릭해 실행합니다:</p>
-<p caption='SCR-20220502-r3e'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/A8E4D5D2-C4A6-4E6D-80DA-7E3A0EFA7D41_2.webp' alt='SCR-20220502-r3e' title='SCR-20220502-r3e'></p>
+<p caption='SCR-20220502-r3e'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/A8E4D5D2-C4A6-4E6D-80DA-7E3A0EFA7D41_2.webp' alt='SCR-20220502-r3e' title='SCR-20220502-r3e'></p>
 <h4 id="애플리케이션">애플리케이션</h4>
 <p>애플리케이션으로 저장한 AS의 확장자는 Safari, Chrome, WeChat 등의 일반 애플리케이션과 동일하게 <code>.app</code>로 끝나며, 패키지 내용을 확인할 수도 있습니다. URL Scheme 호출, 더블 클릭, 콘텐츠를 앱 아이콘으로 드래그 앤 드롭 등 다양한 실행 방식이 있으며, 관련 이벤트 함수를 작성해 사용자 작업에 응답해야 합니다. 아래는 애플리케이션 process가 진행 상황을 표시하는 인터페이스로, 'xxx.app’을 더블 클릭해 실행합니다:</p>
-<p caption='SCR-20220502-r33'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/E0B4F2DA-21AA-4EF1-B059-9C500E18B67C_2.webp' alt='SCR-20220502-r33' title='SCR-20220502-r33'></p>
+<p caption='SCR-20220502-r33'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/E0B4F2DA-21AA-4EF1-B059-9C500E18B67C_2.webp' alt='SCR-20220502-r33' title='SCR-20220502-r33'></p>
 <h4 id="기타">기타</h4>
 <p>위의 두 가지 형태 외에는 자주 사용되지 않지만, 스크립트를 서비스로 저장해 상태 표시줄이나 모든 인터페이스의 오른쪽 클릭 메뉴에서 호출할 수 있도록 하려면 다른 형태가 필요합니다:</p>
-<p caption='SCR-20220502-rcr'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/D09A2EEB-72DC-4CA1-8812-59E4BC4206DB_2.webp' alt='SCR-20220502-rcr' title='SCR-20220502-rcr'></p>
+<p caption='SCR-20220502-rcr'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/D09A2EEB-72DC-4CA1-8812-59E4BC4206DB_2.webp' alt='SCR-20220502-rcr' title='SCR-20220502-rcr'></p>
 <p>스크립트를 시스템 서비스로 저장할 수 있으며, 이 경우 process 코드가 실행될 때 진행률 표시줄이 상단 상태 표시줄에 표시됩니다:</p>
-<p caption='scriptmenu_progress_2x'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/B936F8C6-DCA3-4B98-B995-7F4F3F013E74_2.webp' alt='scriptmenu_progress_2x' title='scriptmenu_progress_2x'></p>
+<p caption='scriptmenu_progress_2x'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/B936F8C6-DCA3-4B98-B995-7F4F3F013E74_2.webp' alt='scriptmenu_progress_2x' title='scriptmenu_progress_2x'></p>
 <h2 id="자주-사용하는-작업-코드">자주 사용하는 작업 코드</h2>
 <blockquote>
 <p>다음 작업은 ‘애플리케이션’ 유형의 AS를 기반으로 합니다. 아래 문법은 터미널에서 <code>osascript -e '语法内容'</code>을 사용해 빠르게 확인할 수 있습니다. 다만, process 진행률 표시줄과 같은 여러 줄 표현은 osascript로는 구현할 수 없습니다. <code>tell</code>와 같은 여러 줄 명령어에서 여러 <code>-e</code> 매개변수를 사용해 <code>osascript -e ‘tell application “Finder”’ -e ‘end tell’</code>처럼 연결할 수는 있지만, 이 문법은 process 진행률 표시줄에는 적용되지 않습니다.</p>
@@ -533,13 +533,13 @@
 <h3 id="사용자-상호작용">사용자 상호작용</h3>
 <h4 id="알림-센터에-메시지-표시">알림 센터에 메시지 표시</h4>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">display notification <span class="hljs-string">&quot;通知内容&quot;</span> <span class="hljs-keyword">with</span> title <span class="hljs-string">&quot;通知 title&quot;</span> subtitle <span class="hljs-string">&quot;通知副标题&quot;</span><br></code></pre></td></tr></table></figure>
-<p caption='SCR-20220502-sfl'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/AC96218F-E238-4695-9220-7933C27BC841_2.webp' alt='SCR-20220502-sfl' title='SCR-20220502-sfl'></p>
+<p caption='SCR-20220502-sfl'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/AC96218F-E238-4695-9220-7933C27BC841_2.webp' alt='SCR-20220502-sfl' title='SCR-20220502-sfl'></p>
 <h4 id="팝업-창">팝업 창</h4>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">display dialog <span class="hljs-string">&quot;这是个通知&quot;</span><br></code></pre></td></tr></table></figure>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/B945A1B9-4704-4F39-9A68-C0287846A061_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/B945A1B9-4704-4F39-9A68-C0287846A061_2.webp' alt='Image' title='Image'></p>
 <h4 id="사용자-입력-받기">사용자 입력 받기</h4>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">display dialog <span class="hljs-string">&quot;What&#x27;s your name?&quot;</span> <span class="hljs-keyword">default</span> answer <span class="hljs-string">&quot;&quot;</span> <span class="hljs-keyword">with</span> icon note buttons &#123;<span class="hljs-string">&quot;取消&quot;</span>, <span class="hljs-string">&quot;确认&quot;</span>&#125; <span class="hljs-keyword">default</span> button <span class="hljs-string">&quot;确认&quot;</span><br></code></pre></td></tr></table></figure>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/F4002573-AD3C-4D4E-BF98-9B6696788442_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/F4002573-AD3C-4D4E-BF98-9B6696788442_2.webp' alt='Image' title='Image'></p>
 <blockquote>
 <p>참고: AS는 양식과 같은 컴포넌트를 생성할 수 없으며, 위와 같은 대화 상자만 생성할 수 있습니다. 웹의 prompt와 유사합니다.</p>
 </blockquote>
@@ -557,11 +557,11 @@
 <h3 id="이전-명령어의-출력-결과-가져오기">이전 명령어의 출력 결과 가져오기</h3>
 <p>직전 명령어 뒤에 바로 <code>result</code>를 사용하여 결과를 나타낼 수 있습니다:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">do</span> shell script <span class="hljs-string">&quot;echo $PATH&quot;</span><br>display dialog result <span class="hljs-keyword">with</span> title <span class="hljs-string">&quot;通知&quot;</span><br></code></pre></td></tr></table></figure>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/6214E292-E4CB-49BC-B8D2-945C135E5B45_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/6214E292-E4CB-49BC-B8D2-945C135E5B45_2.webp' alt='Image' title='Image'></p>
 <h3 id="디버그-정보-표시">디버그 정보 표시</h3>
 <p><code>log</code> 문을 사용하면 됩니다. 그런 다음 <code>Script Editor</code> 아래의 <code>Replies</code>에서 출력 정보를 확인할 수 있습니다. 여기서 <code>shell script</code> 명령어 실행 중 스크립트가 콘솔에 출력한 내용을 볼 수 있으며, 예를 들어 js 스크립트 실행 시의 <code>console.log</code> 등이 있습니다.</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">log <span class="hljs-keyword">do</span> shell script <span class="hljs-string">&quot;echo $PATH&quot;</span><br></code></pre></td></tr></table></figure>
-<p caption='SCR-20220502-sov'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/1089533E-DE38-418F-A20C-592669941C2D_2.webp' alt='SCR-20220502-sov' title='SCR-20220502-sov'></p>
+<p caption='SCR-20220502-sov'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/1089533E-DE38-418F-A20C-592669941C2D_2.webp' alt='SCR-20220502-sov' title='SCR-20220502-sov'></p>
 <h3 id="진행-상태-표시">진행 상태 표시</h3>
 <p>진행 상태를 표시하려면 progress를 사용하며, 문법이 상대적으로 복잡합니다. 다양한 상태의 진행률을 표시해야 하므로 여러 줄이 필요합니다:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript">set progress total steps to <span class="hljs-number">3</span><br>set progress completed steps to <span class="hljs-number">0</span><br>set progress description to <span class="hljs-string">&quot;处理中...&quot;</span><br>delay <span class="hljs-number">1</span><br>set progress completed steps to <span class="hljs-number">1</span><br>delay <span class="hljs-number">1</span><br>set progress completed steps to <span class="hljs-number">2</span><br>delay <span class="hljs-number">1</span><br>set progress completed steps to <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
@@ -571,23 +571,23 @@
 <p><code>n</code>는 초 단위를 나타내며, 소수를 지원합니다. 일반적으로 사용자 작업을 시뮬레이션할 때 지연 작업으로 사용되며, 그렇지 않으면 스크립트 작업이 너무 빨라 페이지가 아직 표시되지 않을 수 있습니다. 일부 이상한 문제도 지연 실행으로 해결할 수 있으며, 이 문은 <code>js</code>의 <code>setTimeout</code> 방법과 유사합니다.</p>
 <h3 id="다른-애플리케이션-호출">다른 애플리케이션 호출</h3>
 <p>주의: 시스템 경고가 발생하며, 실행 전 확인이 필요합니다:</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/898D7F67-700E-40F2-AC6C-D999F5543578_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/898D7F67-700E-40F2-AC6C-D999F5543578_2.webp' alt='Image' title='Image'></p>
 <p>확인 후 <code>设置-安全与隐私-隐私-自动化</code>에서 확인할 수 있습니다:</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/47444D53-68E4-4518-87FD-521AE42B737F_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/47444D53-68E4-4518-87FD-521AE42B737F_2.webp' alt='Image' title='Image'></p>
 <p>다른 애플리케이션을 호출하여 해당 작업을 실행할 수 있습니다. 아래는 <code>Terminal</code> 애플리케이션을 실행한 후 활성화하고 명령어를 실행하는 예시입니다:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript">tell application <span class="hljs-string">&quot;Terminal&quot;</span><br> <span class="hljs-keyword">if</span> not (exists <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>) then reopen<br> activate<br> <span class="hljs-keyword">do</span> script <span class="hljs-string">&quot;echo $PATH&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span><br>end tell<br></code></pre></td></tr></table></figure>
 <p>이 문은 첫 번째로 열린 창이 존재하면 활성화한 후 명령어를 실행하고(<code>do script</code>), 존재하지 않으면 새 창을 생성한 후 명령어를 실행합니다. 각 <code>do script</code>은 새로운 Terminal을 열기 때문에 이 확인은 창 재사용을 보장합니다. 그러나 <code>window 1</code> 내에 이미 실행 중인 프로세스(예: 서버가 중단되지 않은 경우)가 있다면 이 명령어는 실행되지 않으며, 추가 확인이 필요합니다. 여기서는 자세히 다루지 않습니다.</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/8701C38B-8CE9-479A-816A-9126692B313D_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/8701C38B-8CE9-479A-816A-9126692B313D_2.webp' alt='Image' title='Image'></p>
 <h3 id="url-scheme-응답">URL Scheme 응답</h3>
 <p>때로는 AS 스크립트를 먼저 찾아서 더블 클릭하여 실행하고 싶지 않거나, 다른 애플리케이션에서 작성한 AS 애플리케이션을 호출하고 싶을 때 URL Scheme를 사용합니다. <a href="https://sspai.com/post/31500">이 글</a>]에서 소개하고 있으니 참고하세요.</p>
 <p>먼저 <code>Info.plist</code> 파일을 수정해야 합니다. Script Editor의 오른쪽에서 &quot;Finder에서 보기&quot;를 우클릭하면 됩니다:</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/E1F3DFE5-54E3-4615-9A74-1B084686CC37_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/E1F3DFE5-54E3-4615-9A74-1B084686CC37_2.webp' alt='Image' title='Image'></p>
 <p>그런 다음 상위 폴더로 이동하여 해당 파일을 찾을 수 있습니다:</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/DE5F9B08-4F60-4B2A-9645-DF37B420C96B_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/DE5F9B08-4F60-4B2A-9645-DF37B420C96B_2.webp' alt='Image' title='Image'></p>
 <p>내용은 XML과 유사하며, 다음과 같은 필드를 추가합니다:</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">array</span>&gt;</span><br> <span class="hljs-tag">&lt;<span class="hljs-name">dict</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>CFBundleURLName<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>Open File<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>CFBundleURLSchemes<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">array</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>xhelper<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">array</span>&gt;</span><br> <span class="hljs-tag">&lt;/<span class="hljs-name">dict</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">array</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>그런 다음 XCode로 해당 파일을 열어 다음과 유사한 항목이 있는지 확인합니다:</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/901047E8-38AA-4B9C-BA60-680EC60864F5_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/901047E8-38AA-4B9C-BA60-680EC60864F5_2.webp' alt='Image' title='Image'></p>
 <p>추가가 성공했음을 나타냅니다.</p>
 <p>이 작업은 AS 애플리케이션이 <code>xhelper</code>(기존과 중복되지 않도록 원하는 접두사로 수정 가능)로 시작하는 URL에 응답하도록 설정하는 것입니다.</p>
 <p>설정 완료 후, Script Editor에서 저장하거나 <code>cmd + L</code>를 실행하거나 한 번 실행(또는 모두 수행)하여 다시 컴파일해야 합니다. 그런 다음 적용됩니다.</p>
@@ -595,13 +595,13 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">on open location this_URL<br> display dialog this_URL<br>end open location<br></code></pre></td></tr></table></figure>
 <p>위 코드에서 <code>this_URL</code>는 <code>xhelper</code>로 열린 링크입니다.</p>
 <p>이제 브라우저(Chrome)에서 링크를 테스트할 수 있습니다:</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/01F724A1-041B-4143-80CC-5F4F3D6ECFC8_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/01F724A1-041B-4143-80CC-5F4F3D6ECFC8_2.webp' alt='Image' title='Image'></p>
 <p>그러면 AS 애플리케이션이 응답하여 <code>xhelper://你好！</code>을 팝업으로 표시합니다. 여기서는 encode 인코딩이 필요하지 않습니다.</p>
 <h2 id="사용-예시">사용 예시</h2>
 <p>여기서는 제가 사용하는 Craft build 코드를 공유합니다. 위에서 설명한 URL Scheme를 사용하며, node로 실행하는 js는 <a href="/tech/my-blog-ci-in-2022.html">이전 워크플로</a>]에서 개조한 것입니다. 새로운 로직은 없습니다. 또한 AS 문법은 구어체에 가깝기 때문에 각 문장의 의미를 바로 이해할 수 있습니다. 여기서는 일일이 설명하지 않겠습니다.</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs javascript">on open location this_URL<br> <span class="hljs-keyword">try</span><br>  set startOffset to offset <span class="hljs-keyword">of</span> <span class="hljs-string">&quot;://&quot;</span> <span class="hljs-keyword">in</span> this_URL<br>  set the content to text <span class="hljs-keyword">from</span> (startOffset + <span class="hljs-number">3</span>) to -<span class="hljs-number">1</span> <span class="hljs-keyword">of</span> this_URL<br>  set node to <span class="hljs-string">&quot;/Users/x/.nvm/versions/node/v14.19.1/bin/node&quot;</span><br>  set appPath to <span class="hljs-string">&quot;/Applications/Xhelper.app/Contents/Resources/Scripts/&quot;</span><br>  --- 如果有两个参数表示需要发布到 wechat，如果只有一个参数则参数即为 base64 编码的内容<br>  set <span class="hljs-title class_">AppleScript</span><span class="hljs-string">&#x27;s text item delimiters to &quot;&amp;&quot;</span><br><span class="hljs-string">  set arguments to every text item of the content</span><br><span class="hljs-string">  set AppleScript&#x27;</span>s text item delimiters to <span class="hljs-string">&quot;&quot;</span><br>  set listLength to the length <span class="hljs-keyword">of</span> <span class="hljs-variable language_">arguments</span><br>  <span class="hljs-keyword">if</span> listLength = <span class="hljs-number">2</span> then<br>   set realContent to item <span class="hljs-number">2</span> <span class="hljs-keyword">of</span> <span class="hljs-variable language_">arguments</span><br>   <span class="hljs-keyword">do</span> shell script <span class="hljs-string">&quot;echo &quot;</span> &amp; realContent &amp; <span class="hljs-string">&quot; &gt; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;content.base64.txt&quot;</span><br>   tell application <span class="hljs-string">&quot;Terminal&quot;</span><br>    <span class="hljs-keyword">if</span> not (exists <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>) then reopen<br>    activate<br>    set alive to <span class="hljs-keyword">do</span> script node &amp; <span class="hljs-string">&quot; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;index.js&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span><br>    --- 等待上一个脚本执行完毕后再执行下一个脚本<br>    repeat<br>     delay <span class="hljs-number">0.1</span><br>     <span class="hljs-keyword">if</span> not busy <span class="hljs-keyword">of</span> alive then exit repeat<br>    end repeat<br>    beep<br>    <span class="hljs-keyword">do</span> script node &amp; <span class="hljs-string">&quot; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;wechat.js&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span><br>   end tell<br>  <span class="hljs-keyword">else</span><br>   <span class="hljs-keyword">do</span> shell script <span class="hljs-string">&quot;echo &quot;</span> &amp; content &amp; <span class="hljs-string">&quot; &gt; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;content.base64.txt&quot;</span><br>   tell application <span class="hljs-string">&quot;Terminal&quot;</span><br>    <span class="hljs-keyword">if</span> not (exists <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>) then reopen<br>    activate<br>    <span class="hljs-keyword">do</span> script node &amp; <span class="hljs-string">&quot; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;index.js&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span><br>   end tell<br>  end <span class="hljs-keyword">if</span><br> on error error_message<br>  display dialog error_message buttons &#123;<span class="hljs-string">&quot;Cancel&quot;</span>&#125; <span class="hljs-keyword">default</span> button <span class="hljs-number">1</span><br> end <span class="hljs-keyword">try</span><br><br>end open location<br></code></pre></td></tr></table></figure>
 <p>결과:</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/F7A4DDFF-2698-4E1E-8D72-C8B3D0EC5020_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/F7A4DDFF-2698-4E1E-8D72-C8B3D0EC5020_2.webp' alt='Image' title='Image'></p>
 <h2 id="참고-링크">참고 링크</h2>
 <ul>
 <li>

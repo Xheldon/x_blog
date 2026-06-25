@@ -377,7 +377,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -457,7 +457,7 @@
 <p>以前のCDNサービスについては、<a href="https://xheldon.com/github-pages-config.html#%E4%BD%BF%E7%94%A8%E7%99%BE%E5%BA%A6-cdn-%E6%9C%8D%E5%8A%A1%E5%92%8C%E4%B8%83%E7%89%9B%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%89%98%E7%AE%A1">百度CDNサービスと七牛静的リソースホスティングの使用</a>]で、<code>img.xheldon.com</code>を七牛雲に解析し、七牛雲上で関連する静的リソースを追加していました。しかし、周知の理由により、七牛雲のこの個人向け無料CDNサービスはICP登録が必要で、さらに国内の物理サーバーも必要だったため、この案は断念しました。</p>
 <p>長い間、私は画像や静的リソースを直接プロジェクトに配置していました。GitHubの無料リポジトリには1GBの総容量制限があるため、できるだけテキストで説明し、画像を使わないようにしていましたが、非常に制約がありました。最近、偶然GitHub Pagesをベースにした別のブログを訪れ、そこでは多くの画像が使われており、画像のリンクが<code>jsdelivr.net</code>に関連していることに気づきました。そこで、これは海外の無料CDNサービスではないかと推測し、調べてみると、実際にその通りで、国内にもサーバーがあり、無料で加速できることがわかりました。GitHubリポジトリ内のリソースの前に固定のパスを追加するだけで、初回リクエスト時にリソースがS3に保存され、その後GitHubがダウンしても正しいリンクにアクセスできます。S3上にリソースがない場合は、直接GitHubの内容をリクエストする、つまりCDNの基本的な操作です。</p>
 <p>私は膝を叩き、~~「これはプロだ」~~と思いました。無料のCDN加速で、複雑ではなく、jsdelivrの特徴の一つは、中国で合法的なICPライセンスを持つ海外の公共CDNサービスプロバイダーであり、中国国内に数百のサーバーを保有していることです。</p>
-<p><img src="https://static.xheldon.cn/img/in-post/2020/jsdelivr.png" alt="赣江" title="jsdelivr china" /></p>
+<p><img src="https://static.xheldon.com/img/in-post/2020/jsdelivr.png" alt="赣江" title="jsdelivr china" /></p>
 <p>すぐに取り掛かり、以下の手順を実行しました：</p>
 <h3 id="専用静的リソースリポジトリの追加">専用静的リソースリポジトリの追加</h3>
 <p>このステップは、jsdelivr CDNサービスが正しく解析できるようにするためです。例えば、ローカルの画像の参照パスが<code>/static/img/in-post/logo.png</code>の場合、その一意のパスは<code>/img/logo.png</code>です。内容をGitHubリポジトリにプッシュすると、アクセスパスは<code>https://github.com/Xheldon/x_blog-static/tree/master/img/logo.png</code>になります。私のユーザー名はxheldonで、リポジトリはx_blog-staticなので、jsdelivr CDNサービスを使用した後のアドレスは<code>https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/img/logo.png</code>になります。jsdelivrサービスに登録する必要もなく、何も設定せずに使用できるので、非常に便利です！</p>
@@ -468,7 +468,7 @@
 <li>リソースリポジトリ<code>x_blog-static</code>をブログリポジトリのサブモジュールとして追加：<code>git submodule add https://github.com/Xheldon/x_blog-static.git ./static</code>、そして静的リソースリポジトリ（先ほどのstaticフォルダの内容）を<code>static</code>フォルダに配置します。</li>
 <li><code>_config.yml</code>ファイルを修正し、設定オブジェクト<code>static_url: https://cdn.jsdelivr.net/gh/xheldon/x_blog-static</code>を追加して、次のステップで静的リソースの絶対パスを修正しやすくします。</li>
 <li>ローカル開発設定ファイル<code>_config.dev.yml</code>を追加し、設定オブジェクト<code>static_url: /static</code>を追加して、次のステップで静的リソースの絶対パスを修正しやすくします。</li>
-<li>ローカルの絶対パスで参照されている静的リソースをグローバルに置換します。例えば、imgのsrcが<code>/static/img/in-post/logo.png</code>や<code>/static/css/main.css</code>などのパスの場合、`https://static.xheldon.cn/img/logo.png`などに置換します。ここで注意が必要なのは、Liquid構文のタグ`{{}}`は、markdownファイル内でも使用できるという点です。素晴らしいですね。</li>
+<li>ローカルの絶対パスで参照されている静的リソースをグローバルに置換します。例えば、imgのsrcが<code>/static/img/in-post/logo.png</code>や<code>/static/css/main.css</code>などのパスの場合、`https://static.xheldon.com/img/logo.png`などに置換します。ここで注意が必要なのは、Liquid構文のタグ`{{}}`は、markdownファイル内でも使用できるという点です。素晴らしいですね。</li>
 <li>頻繁に修正するファイル、例えば<code>main.scss</code>ファイルは、やはりローカルに置いた方が良いです。理由は後述します。</li>
 <li>修正をリモートにプッシュします。</li>
 </ol>

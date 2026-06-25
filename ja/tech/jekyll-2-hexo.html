@@ -387,7 +387,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -520,9 +520,9 @@
 <p>理由はわかりませんが、Hexoで<code>:category/:name.html</code>を設定しているにもかかわらず、生成されるのは<code>life/2024-life-xxx.html</code>（<code>-</code>ディレクトリ区切りを使用）で、本来期待されるのは<code>life/xxx.html</code>でした。ソースコード<code>name</code>を見ると、<code>slug</code>が使用されており、<code>basename</code>ですが、<code>slug</code>の生成ロジックはfolderパスに基づいてハイフンが追加されるため、手動でファイル名を修正するしかありませんでした。Jekyllでは、ファイル名の前の日付形式（例：<a href="http://2024-02-12-xxx.md">2024-02-12-xxx.md</a>）の2024-02-12は無視され、titleは単にxxxになりますが、Hexoではpost内のtitle front matterから読み取られるため、最終的にpermalinkアドレスを決定するfilterプラグインを作成する必要がありました：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * permalink 中的 name 不符合预期，对于 _posts/life/2015/xxx.md 来说，在文档中 :name 表示的是 xxx，但是实际是 life-2015-xxx</span><br><span class="hljs-comment"> */</span><br>hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">filter</span>.<span class="hljs-title function_">register</span>(<span class="hljs-string">&#x27;post_permalink&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) &#123;<br>  <span class="hljs-comment">// 在这里修改 post.name 的值</span><br>  <span class="hljs-keyword">const</span> arr = data.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;/&#x27;</span>).<span class="hljs-title function_">filter</span>(<span class="hljs-title class_">Boolean</span>);<br>  <span class="hljs-keyword">const</span> categories = arr[<span class="hljs-number">0</span>];<br>  <span class="hljs-keyword">const</span> name = arr[<span class="hljs-number">1</span>];<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;categories&#125;</span>/<span class="hljs-subst">$&#123;name.split(<span class="hljs-string">&#x27;-&#x27;</span>).filter(<span class="hljs-built_in">Boolean</span>).slice(<span class="hljs-number">3</span>).join(<span class="hljs-string">&#x27;-&#x27;</span>)&#125;</span>`</span>;<br>&#125;);<br></code></pre></td></tr></table></figure>
 <p>また、permalinkは純粋な数字ではなく、文字列でなければなりません：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8006-a660-e8ecfbe7da9a.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8006-a660-e8ecfbe7da9a.webp' alt='' title=''></p>
 <p>そうしないとエラーが発生します（.endsWithを見ればなぜエラーになるかわかります）：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8032-8e51-d6528f277306.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8032-8e51-d6528f277306.webp' alt='' title=''></p>
 <h3 id="ejsテンプレート構文問題">EJSテンプレート構文問題</h3>
 <p>ejsテンプレートをネストする際、Jekyllのliquid構文とは異なり、テンプレート内でfront-matterをカスタマイズできません。つまり、テンプレート間のパラメータ伝達は外側から内側のみで、内側から外側にはできません。例えば、indexのlayoutがpageで、front-matterも設定していますが、このfront-matterはpage.ejsテンプレートから読み取ることができないため、使用するすべての場所でパラメータを下に渡す必要がありました。</p>
 <h3 id="markdown構文レンダリング問題">Markdown構文レンダリング問題</h3>
@@ -531,9 +531,9 @@
 <p>そこで、markdown-itを使用して処理することにし、hexo-renderer-markdown-itをインストールしました。</p>
 <h3 id="liquidソート問題">Liquidソート問題</h3>
 <p>Jekyllのliquidのソートは以下のように使用していました：<code>&#123;&#123; tags | split:'`**`SEPARATOR`**`' | sort &#125;&#125;</code>：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/0389dcbb-8bb7-413c-a968-4a77a8b76b71.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2025/jekyll-2-hexo/0389dcbb-8bb7-413c-a968-4a77a8b76b71.webp' alt='' title=''></p>
 <p>問題は、Liquidのソートでsort部分が同じ場合、後続のhref文字列でソートされるため、これを引き継ぐことになりました：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/a24e2d73-ab8b-4b5d-a57d-7e0f2f5f0a66.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2025/jekyll-2-hexo/a24e2d73-ab8b-4b5d-a57d-7e0f2f5f0a66.webp' alt='' title=''></p>
 <h3 id="mermaid構文問題">Mermaid構文問題</h3>
 <p>mermaidはhighlightでハイライトできず、hexoのconfigで除外する必要があります：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">exclude_languages:</span><br> <span class="hljs-bullet">-</span> <span class="hljs-string">mermaid</span><br></code></pre></td></tr></table></figure>
@@ -549,7 +549,7 @@
 <hr />
 <h3 id="ビルド後の余分なファイル問題">ビルド後の余分なファイル問題</h3>
 <p>いくつかのファイルは不要なため、ビルド後に削除します：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8077-911f-f5d55f484628.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8077-911f-f5d55f484628.webp' alt='' title=''></p>
 <p>具体的には：</p>
 <ul>
 <li>

@@ -387,7 +387,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -520,9 +520,9 @@
 <p>不知道为什么，我在 Hexo 中设置了 <code>:category/:name.html</code> 但是依然给我生成的是 <code>life/2024-life-xxx.html</code>（使用 <code>-</code>目录分割） 而预期应该是 <code>life/xxx.html</code>，看源码 <code>name</code> 使用了 <code>slug</code>，的 <code>basename</code>，但是 <code>slug</code> 生成逻辑是基于 folder 路径然后加上 - 的，因此我只能自己手动修改文件名。Jekyll 中，文件名前的日期格式，如 <a href="http://2024-02-12-xxx.md">2024-02-12-xxx.md</a> 中，2024-02-12 会被忽略，title 直接就是 xxx，但是在 Hexo 中 title 在 post 中读取的 title front matter，所以只能写一个 filter 插件来最终确定 permalink 地址:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * permalink 中的 name 不符合预期，对于 _posts/life/2015/xxx.md 来说，在文档中 :name 表示的是 xxx，但是实际是 life-2015-xxx</span><br><span class="hljs-comment"> */</span><br>hexo.<span class="hljs-property">extend</span>.<span class="hljs-property">filter</span>.<span class="hljs-title function_">register</span>(<span class="hljs-string">&#x27;post_permalink&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) &#123;<br>  <span class="hljs-comment">// 在这里修改 post.name 的值</span><br>  <span class="hljs-keyword">const</span> arr = data.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;/&#x27;</span>).<span class="hljs-title function_">filter</span>(<span class="hljs-title class_">Boolean</span>);<br>  <span class="hljs-keyword">const</span> categories = arr[<span class="hljs-number">0</span>];<br>  <span class="hljs-keyword">const</span> name = arr[<span class="hljs-number">1</span>];<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;categories&#125;</span>/<span class="hljs-subst">$&#123;name.split(<span class="hljs-string">&#x27;-&#x27;</span>).filter(<span class="hljs-built_in">Boolean</span>).slice(<span class="hljs-number">3</span>).join(<span class="hljs-string">&#x27;-&#x27;</span>)&#125;</span>`</span>;<br>&#125;);<br></code></pre></td></tr></table></figure>
 <p>另外，permalink 不能是纯数字，得用字符串：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8006-a660-e8ecfbe7da9a.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8006-a660-e8ecfbe7da9a.webp' alt='' title=''></p>
 <p>不然报错（看 .endsWith 就知道为什么报错啦）：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8032-8e51-d6528f277306.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8032-8e51-d6528f277306.webp' alt='' title=''></p>
 <h3 id="ejs-模板语法问题">EJS 模板语法问题</h3>
 <p>ejs 模板嵌套的时候，与 Jekyll 的 liquid 语法不同的是，它不能在模板中自定义 front-matter。也就是说，模板之间的传参，只能外层到内层，不能从内到外。比如我 index 的 layout 是  page，同时还设置了 fornt-matter，但是此 front-matter 无法被 page.ejs 这个模板读取到，因此我只能每个用到的地方都往下传参。</p>
 <h3 id="markdown-语法渲染问题">Markdown 语法渲染问题</h3>
@@ -531,9 +531,9 @@
 <p>于是我使用了 markdown-it 进行处理，安装 hexo-renderer-markdown-it 即可。</p>
 <h3 id="liquid-排序问题">Liquid 排序问题</h3>
 <p>我 Jekyll 的 liquid 的排序是这么用的： <code>&#123;&#123; tags | split:'`**`SEPARATOR`**`' | sort &#125;&#125;</code> :</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/0389dcbb-8bb7-413c-a968-4a77a8b76b71.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2025/jekyll-2-hexo/0389dcbb-8bb7-413c-a968-4a77a8b76b71.webp' alt='' title=''></p>
 <p>问题是，Liquid 的排序在 sort 部分相同后，会按照后面的 href 字符串排序的，因此继承过来：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/a24e2d73-ab8b-4b5d-a57d-7e0f2f5f0a66.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2025/jekyll-2-hexo/a24e2d73-ab8b-4b5d-a57d-7e0f2f5f0a66.webp' alt='' title=''></p>
 <h3 id="mermaid-语法问题">Mermaid 语法问题</h3>
 <p>mermaid 不能被 highlight 高亮，需要在 hexo 的 config 中排除掉：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">exclude_languages:</span><br> <span class="hljs-bullet">-</span> <span class="hljs-string">mermaid</span><br></code></pre></td></tr></table></figure>
@@ -549,7 +549,7 @@
 <hr />
 <h3 id="构建后多余文件问题">构建后多余文件问题</h3>
 <p>有些文件是多余的，构建后删除掉：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8077-911f-f5d55f484628.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2025/jekyll-2-hexo/147800e8-7a61-8077-911f-f5d55f484628.webp' alt='' title=''></p>
 <p>具体有：</p>
 <ul>
 <li>

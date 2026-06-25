@@ -379,7 +379,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -484,26 +484,26 @@
 <p>중단점을 설정하는 방법은 <a href="https://developer.chrome.com/docs/devtools/javascript/breakpoints/">여기</a> (영문, 번역 필요)에서 확인하세요.</p>
 <h3 id="마우스-오버-시-클래스-함수-속성-확인하기">마우스 오버 시 클래스/함수 속성 확인하기</h3>
 <p>코드 실행이 일시 정지된 상태에서 클래스나 함수명 위에 마우스를 올리면 해당 속성을 미리 볼 수 있습니다.</p>
-<p caption='1'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/EA456FA6-9331-41E3-96DC-3FCCFFA82C2E_2.png' alt='1' title='1'></p>
+<p caption='1'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/EA456FA6-9331-41E3-96DC-3FCCFFA82C2E_2.png' alt='1' title='1'></p>
 <h2 id="코드-단계별-실행">코드 단계별 실행</h2>
 <p>코드가 일시 중지된 후에는 한 번에 한 줄씩 코드를 실행하여 호출 스택과 관련 속성 값을 파악할 수 있습니다.</p>
 <h3 id="현재-코드-줄-건너뛰기-step-over">현재 코드 줄 건너뛰기(Step over)</h3>
 <p>현재 조사 중인 문제와 관련이 없는 코드 줄에 중단점이 설정되어 있고, 해당 줄에 함수가 포함된 경우 <code>Step Over</code>를 클릭하여 함수 내부로 진입하지 않고 코드 실행을 계속할 수 있습니다.</p>
-<p caption='step_over'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/63AE5442-D0AD-46C5-8DB0-36452E2842D2_2.png' alt='step_over' title='step_over'></p>
+<p caption='step_over'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/63AE5442-D0AD-46C5-8DB0-36452E2842D2_2.png' alt='step_over' title='step_over'></p>
 <p>그림 1 👆🏻, 위 이미지에서 파란색 상자 안의 <code>Step Over</code>의 의미 설명:</p>
 <p>예를 들어, 다음과 같은 코드를 디버깅하고 있다고 가정해 보겠습니다:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">updateName</span>(name); <span class="hljs-comment">// D</span><br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// B</span><br>  <span class="hljs-keyword">return</span> name; <span class="hljs-comment">// C</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>현재 브레이크포인트가 <code>A</code> 위치에서 멈춰 있습니다. <strong>Step over</strong>를 클릭하면 Devtools는 ‘Step over’ 위치에 있는 모든 코드를 실행합니다. 위 예시에서 'Step over’는 A 위치의 getName 함수 내 <code>B</code>와 <code>C</code> 위치를 건너뛰므로, Devtools는 코드를 D 위치에서 멈추게 됩니다.</p>
 <h3 id="현재-코드-라인-진입-step-into">현재 코드 라인 진입(Step into)</h3>
 <p>브레이크포인트가 조사하려는 문제와 관련된 위치에 멈추었고, 해당 위치에 함수 호출이 포함된 경우 <code>Step into</code>를 클릭하면 해당 함수를 더 자세히 검사할 수 있습니다.</p>
-<p caption='step_into'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/0B7F9CB7-7EA3-44A2-8808-8E23F9E0D786_2.png' alt='step_into' title='step_into'></p>
+<p caption='step_into'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/0B7F9CB7-7EA3-44A2-8808-8E23F9E0D786_2.png' alt='step_into' title='step_into'></p>
 <p>그림 2 👆🏻, 위 그림의 파란색 상자 안에 있는 <code>Step into</code>의 의미 설명:</p>
 <p>예를 들어, 다음과 같은 코드를 디버깅하고 있다고 가정해 보겠습니다:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">updateName</span>(name);<br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// B</span><br>  <span class="hljs-keyword">return</span> name;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>현재 중단점이 <code>A</code> 위치에 멈춰 있는 상태에서 <strong>Step into</strong>를 클릭하면 Devtools가 해당 코드를 실행한 후 <code>B</code> 위치에서 멈춥니다.</p>
 <h3 id="현재-코드-라인에서-벗어나기-step-out">현재 코드 라인에서 벗어나기(Step out)</h3>
 <p>조사 중인 문제와 관련이 없는 함수 내부에서 중단점이 멈춰 있을 때, <strong>Step out</strong>을 클릭하면 해당 함수의 남은 코드를 실행합니다.</p>
-<p caption='step_out'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6E97FB74-E73D-4189-9A21-3771A1DF27AF_2.png' alt='step_out' title='step_out'></p>
+<p caption='step_out'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/6E97FB74-E73D-4189-9A21-3771A1DF27AF_2.png' alt='step_out' title='step_out'></p>
 <p>그림 3 👆🏻, 위 그림의 파란색 상자 안에 있는 <code>Step out</code>의 의미 설명:</p>
 <p>예를 들어, 다음과 같은 코드를 디버깅하고 있다고 가정해 보겠습니다:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>();<br>  <span class="hljs-title function_">updateName</span>(name); <span class="hljs-comment">// C</span><br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// A</span><br>  <span class="hljs-keyword">return</span> name; <span class="hljs-comment">// B</span><br>&#125;<br></code></pre></td></tr></table></figure>
@@ -512,19 +512,19 @@
 <p>매우 긴 함수를 디버깅할 때, 함수 내부에는 현재 조사 중인 문제와 관련 없는 많은 코드가 포함될 수 있습니다.</p>
 <p>이러한 관련 없는 코드를 한 단계씩 실행할 수도 있지만, 이 과정은 지루할 수 있습니다. 또는 중단하고 싶은 코드 행에 중단점을 설정한 후 <code>Resume Script Execution</code>(스크립트 실행 재개)을 누를 수도 있습니다. 그러나 더 빠른 방법이 있습니다.</p>
 <p>중단하고 싶은 코드 행을 우클릭한 후 <strong>Continue to here</strong>(여기까지 계속 실행)을 선택할 수 있습니다. DevTools는 중단점을 재개하여 해당 위치까지 코드를 실행한 후, 그 행에서 멈출 것입니다.</p>
-<p caption='continue_to_here'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/01C96466-2B8C-4088-9E66-7408708B0401_2.png' alt='continue_to_here' title='continue_to_here'></p>
+<p caption='continue_to_here'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/01C96466-2B8C-4088-9E66-7408708B0401_2.png' alt='continue_to_here' title='continue_to_here'></p>
 <p>그림 4 👆🏻에서 <strong>Continue to here</strong>를 선택하세요.</p>
 <h3 id="스크립트-실행-재개">스크립트 실행 재개</h3>
 <p><strong>Resume Script Execution</strong>을 클릭하면 중단점에서 일시 정지된 위치부터 코드 실행을 계속할 수 있습니다. Devtools는 다음 중단점(있는 경우)을 만날 때까지 코드를 계속 실행합니다.</p>
-<p caption='resume_script_execution'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/E67463E2-9D01-48BB-A743-28A189DF68CD_2.png' alt='resume_script_execution' title='resume_script_execution'></p>
+<p caption='resume_script_execution'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/E67463E2-9D01-48BB-A743-28A189DF68CD_2.png' alt='resume_script_execution' title='resume_script_execution'></p>
 <p>그림 5 👆🏻, <strong>Resume Script Execution</strong>, 파란색 상자 부분.</p>
 <h4 id="강제-실행">강제 실행</h4>
 <p><strong>Resume Script Execution</strong>을 길게 누른 후 <strong>Force Script Execution</strong>을 선택하면 남은 모든 중단점을 무시하고 전체 코드를 직접 실행할 수 있습니다.</p>
-<p caption='force_script_execution'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DAB9BD94-70F7-4464-8609-3016E8B40A44_2.png' alt='force_script_execution' title='force_script_execution'></p>
+<p caption='force_script_execution'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/DAB9BD94-70F7-4464-8609-3016E8B40A44_2.png' alt='force_script_execution' title='force_script_execution'></p>
 <p>그림 6 👆🏻에서 <strong>Force Script Execution</strong>을 선택하세요.</p>
 <h3 id="현재-스레드의-컨텍스트-변경">현재 스레드의 컨텍스트 변경</h3>
 <p>디버깅이 Web Worker나 Service Worker와 관련된 경우, <strong>Threads</strong> 표시줄에 나타나는 컨텍스트 목록 항목을 클릭하여 컨텍스트를 전환할 수 있습니다. 파란색 화살표는 현재 선택된 컨텍스트를 나타냅니다.</p>
-<p caption='change_threads_context'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1474933D-3F44-4D93-9909-FF4245545704_2.png' alt='change_threads_context' title='change_threads_context'></p>
+<p caption='change_threads_context'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/1474933D-3F44-4D93-9909-FF4245545704_2.png' alt='change_threads_context' title='change_threads_context'></p>
 <p>그림 7 👆🏻, <strong>Threads</strong> (스레드) 탭에서 파란색 상자로 표시된 부분입니다.</p>
 <p>예를 들어, 다음과 같은 시나리오를 가정해 보겠습니다. 중단점이 메인 스크립트와 서비스 워커 스크립트에 동시에 존재하는 경우입니다. 서비스 워커의 지역 변수와 전역 변수를 확인하고 싶지만, <strong>Source</strong> 탭에는 현재 메인 스크립트의 컨텍스트가 표시되고 있습니다. 이때 <strong>Threads</strong> 탭에서 서비스 워커 항목을 클릭하면 컨텍스트를 전환하여 원하는 변수를 확인할 수 있습니다.</p>
 <h2 id="지역-클로저-전역-스코프의-변수-속성-확인-및-편집">지역, 클로저, 전역 스코프의 변수/속성 확인 및 편집</h2>
@@ -537,13 +537,13 @@
 <p>열거 불가능한 속성은 회색으로 강조 표시됩니다.</p>
 </li>
 </ul>
-<p caption='查看和修改变量'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/40A93D0F-ACA8-4128-A695-E502565253AD_2.png' alt='查看和修改变量' title='查看和修改变量'></p>
+<p caption='查看和修改变量'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/40A93D0F-ACA8-4128-A695-E502565253AD_2.png' alt='查看和修改变量' title='查看和修改变量'></p>
 <p>그림 8 👆🏻, <strong>Scope</strong> (스코프) 섹션에서 파란색 상자로 표시된 위치.</p>
 <h2 id="현재-호출-스택-확인하기">현재 호출 스택 확인하기</h2>
 <p>코드 실행이 특정 라인에서 일시 중지된 상태일 때, <strong>Call Stack</strong> 섹션을 사용하여 현재 중단점까지 이어지는 함수 호출 스택을 확인할 수 있습니다.</p>
 <p>코드에 비동기 코드가 포함된 경우, <strong>Async</strong> 체크박스를 선택하여 비동기 함수 호출 스택을 활성화할 수 있습니다.</p>
 <p>항목 중 하나를 클릭하면 해당 항목이 나타내는 함수의 호출 위치로 이동합니다. 파란색 화살표 아이콘은 현재 강조 표시된 함수를 나타냅니다.</p>
-<p caption='查看函数调用栈'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1168318B-1CFA-493D-9AE6-2CF79930C58C_2.png' alt='查看函数调用栈' title='查看函数调用栈'></p>
+<p caption='查看函数调用栈'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/1168318B-1CFA-493D-9AE6-2CF79930C58C_2.png' alt='查看函数调用栈' title='查看函数调用栈'></p>
 <p>그림 9 👆🏻, <strong>Call Stack</strong>(호출 스택) 창에서 파란색 상자 위치.</p>
 <blockquote>
 <p>참고: 코드가 특정 줄에서 일시 정지되지 않은 경우 Call Stack 창은 비어 있습니다.</p>
@@ -562,7 +562,7 @@
 <p><strong>Call Stack</strong> 창에서 함수를 우클릭한 후 나타나는 메뉴에서 Restart frame(함수 재실행)을 선택합니다.</p>
 </li>
 </ol>
-<p caption='重新执行断点所在的函数'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DFF3FAC8-B00F-415A-A581-50A299F1884D_2.png' alt='重新执行断点所在的函数' title='重新执行断点所在的函数'></p>
+<p caption='重新执行断点所在的函数'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/DFF3FAC8-B00F-415A-A581-50A299F1884D_2.png' alt='重新执行断点所在的函数' title='重新执行断点所在的函数'></p>
 <p>재시작 프레임(Restart frame)이 어떻게 실행되는지 이해하기 위해, 다음과 같은 코드가 있다고 가정해 봅시다:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">value</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>  <span class="hljs-title function_">bar</span>(value);<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params">value</span>) &#123;<br>  value++;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>  <span class="hljs-keyword">debugger</span>;<br>&#125;<br><br><span class="hljs-title function_">foo</span>(<span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
 <p><code>foo</code> 함수는 <code>0</code>을 매개변수로 받아 console에 log를 출력한 후 <code>bar()</code> 함수를 호출합니다. 이에 대응하여 <code>bar</code> 함수는 이 값을 1 증가시킵니다.</p>
@@ -578,26 +578,26 @@
 <p>현재 debugger가 위치한 함수 선언 오른쪽에 현재 값 <code>value = 1</code>이 표시되는 것을 확인할 수 있을 것입니다.</p>
 </li>
 </ul>
-<p caption='注意函数声明处右侧的值'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9111BA1D-AA80-4C2F-B54E-123FC66A5C17_2.png' alt='注意函数声明处右侧的值' title='注意函数声明处右侧的值'></p>
+<p caption='注意函数声明处右侧的值'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/9111BA1D-AA80-4C2F-B54E-123FC66A5C17_2.png' alt='注意函数声明处右侧的值' title='注意函数声明处右侧的值'></p>
 <ul>
 <li><code>bar()</code> 함수를 처음부터 다시 실행합니다.</li>
 </ul>
-<p caption='重头执行bar'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/036AAE1B-CA41-4627-A9D6-A4F7E6302C0C_2.png' alt='重头执行bar' title='重头执行bar'></p>
+<p caption='重头执行bar'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/036AAE1B-CA41-4627-A9D6-A4F7E6302C0C_2.png' alt='重头执行bar' title='重头执行bar'></p>
 <ul>
 <li>
 <p><code>F9</code> 키를 누르면, 값이 증가하는 해당 코드 줄을 지나갈 수 있으며, 다시 디버거에서 중단됩니다.</p>
 <p>값이 2로 변경된 것을 확인하세요: <code>value = 2</code>.</p>
 </li>
 </ul>
-<p caption='重头执行debugger'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/09D36505-821B-4392-8DD3-BDE9D05F0210_2.png' alt='重头执行debugger' title='重头执行debugger'></p>
+<p caption='重头执行debugger'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/09D36505-821B-4392-8DD3-BDE9D05F0210_2.png' alt='重头执行debugger' title='重头执行debugger'></p>
 <ul>
 <li>이 외에도 Scope 창에서 <code>value</code> 값을 더블 클릭하여 원하는 값으로 편집할 수 있습니다.</li>
 </ul>
-<p caption='双击编辑值'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9481CF99-8735-43A4-8A57-D2F953C289BC_2.png' alt='双击编辑值' title='双击编辑值'></p>
+<p caption='双击编辑值'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/9481CF99-8735-43A4-8A57-D2F953C289BC_2.png' alt='双击编辑值' title='双击编辑值'></p>
 <ul>
 <li><code>bar()</code> 함수를 여러 번 다시 실행해 보면 값이 계속 증가하는 것을 확인할 수 있습니다.</li>
 </ul>
-<p caption='多次重复执行后值会一直增加'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/AEE7EEA3-2150-431B-980C-6FCF03527DC7_2.png' alt='多次重复执行后值会一直增加' title='多次重复执行后值会一直增加'></p>
+<p caption='多次重复执行后值会一直增加'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/AEE7EEA3-2150-431B-980C-6FCF03527DC7_2.png' alt='多次重复执行后值会一直增加' title='多次重复执行后值会一直增加'></p>
 <blockquote>
 <p>💡 놀랍죠! 왜 <code>value</code>가 <code>0</code>으로 재설정되지 않을까요?</p>
 </blockquote>
@@ -610,9 +610,9 @@
 <ul>
 <li>이제 <strong>Call Stack</strong>에서 <code>foo()</code> 함수를 처음부터 다시 실행해 보세요.</li>
 </ul>
-<p caption='重头执行foo函数'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/11D4B549-3006-4564-B92D-4D1727913D74_2.png' alt='重头执行foo函数' title='重头执行foo函数'></p>
+<p caption='重头执行foo函数'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/11D4B549-3006-4564-B92D-4D1727913D74_2.png' alt='重头执行foo函数' title='重头执行foo函数'></p>
 <p>주의해서 보세요, <code>value</code>가 다시 <code>0</code>으로 변했습니다.</p>
-<p caption='value重新变为0'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9F706F35-0041-41E3-BB4A-70A5BFFEFE06_2.png' alt='value重新变为0' title='value重新变为0'></p>
+<p caption='value重新变为0'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/9F706F35-0041-41E3-BB4A-70A5BFFEFE06_2.png' alt='value重新变为0' title='value重新变为0'></p>
 <blockquote>
 <p>💡 다시 한번 놀랍네요! 왜 이번에 <code>value</code>가 <code>0</code>으로 재설정되었을까요?</p>
 </blockquote>
@@ -621,7 +621,7 @@
 </blockquote>
 <h3 id="호출-스택-실행-경로-복사하기">호출 스택 실행 경로 복사하기</h3>
 <p><strong>Call Stack</strong> 창의 아무 곳이나 마우스 오른쪽 버튼으로 클릭한 후 <strong>Copy Stack Trace</strong>(스택 추적 복사)를 선택하면 현재 호출 스택을 클립보드에 복사할 수 있습니다.</p>
-<p caption='复制调用栈'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/7EF33B00-5F90-4D0D-8979-B18ED3CD1527_2.png' alt='复制调用栈' title='复制调用栈'></p>
+<p caption='复制调用栈'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/7EF33B00-5F90-4D0D-8979-B18ED3CD1527_2.png' alt='复制调用栈' title='复制调用栈'></p>
 <p>그림 10 👆🏻에서 <strong>스택 트레이스 복사</strong>를 선택합니다.</p>
 <p>복사된 내용은 대략 다음과 같을 것입니다:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs other">getNumber1 (get-started.js:35)<br>inputsAreEmpty (get-started.js:22)<br>onClick (get-started.js:15)<br></code></pre></td></tr></table></figure>
@@ -642,7 +642,7 @@
 <p><strong>Add script to ignore list</strong>(스크립트를 무시 목록에 추가) 선택</p>
 </li>
 </ol>
-<p caption='忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/39DA9D92-C270-4705-8920-7BC248703936_2.png' alt='忽略脚本' title='忽略脚本'></p>
+<p caption='忽略脚本'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/39DA9D92-C270-4705-8920-7BC248703936_2.png' alt='忽略脚本' title='忽略脚本'></p>
 <p>그림 11 👆🏻, 에디터 바에서 스크립트 하나를 무시하는 방법.</p>
 <h3 id="call-stack-호출-스택-바에서-특정-스크립트-무시하기">Call Stack(호출 스택) 바에서 특정 스크립트 무시하기</h3>
 <p>호출 스택에서 특정 스크립트를 무시하려면 다음 단계를 따르세요:</p>
@@ -654,7 +654,7 @@
 <p><strong>Add script to ignore list</strong>를 선택합니다.</p>
 </li>
 </ol>
-<p caption='从调用栈中忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/73837AF8-CB34-4B72-AE5C-1B266E15B8EB_2.png' alt='从调用栈中忽略脚本' title='从调用栈中忽略脚本'></p>
+<p caption='从调用栈中忽略脚本'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/73837AF8-CB34-4B72-AE5C-1B266E15B8EB_2.png' alt='从调用栈中忽略脚本' title='从调用栈中忽略脚本'></p>
 <p>그림 12 👆🏻, Call Stack(호출 스택)에서 특정 스크립트를 무시하기.</p>
 <h3 id="settings-설정-에서-특정-스크립트-무시하기">Settings(설정)에서 특정 스크립트 무시하기</h3>
 <blockquote>
@@ -678,8 +678,8 @@
 <p><strong>Add</strong>를 클릭합니다.</p>
 </li>
 </ol>
-<p caption='devoools设置界面'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/54F9290D-CE6A-4630-9387-34DE7EA6266F_2.png' alt='devoools设置界面' title='devoools设置界面'></p>
-<p caption='devtools忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/65A0FE7C-D5BB-4329-B978-1C7184F6C1B6_2.png' alt='devtools忽略脚本' title='devtools忽略脚本'></p>
+<p caption='devoools设置界面'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/54F9290D-CE6A-4630-9387-34DE7EA6266F_2.png' alt='devoools设置界面' title='devoools设置界面'></p>
+<p caption='devtools忽略脚本'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/65A0FE7C-D5BB-4329-B978-1C7184F6C1B6_2.png' alt='devtools忽略脚本' title='devtools忽略脚本'></p>
 <p>그림 13 👆🏻, Setting에서 스크립트를 무시하세요.</p>
 <h2 id="모든-페이지에서-디버그-코드-스니펫-snippets-실행하기">모든 페이지에서 디버그 코드 스니펫(Snippets) 실행하기</h2>
 <p>콘솔에서 일부 디버그 코드를 반복적으로 실행하고 있다면 스니펫을 고려해볼 수 있습니다. 스니펫은 Devtools에 저장하고 실행할 수 있는 스크립트입니다.</p>
@@ -689,7 +689,7 @@
 </blockquote>
 <h2 id="사용자-정의-javascript-표현식-값-watch-감시-하기">사용자 정의 JavaScript 표현식 값 Watch(감시)하기</h2>
 <p>Watch 패널을 사용하여 사용자 정의 표현식의 값을 모니터링할 수 있습니다. 유효한 모든 JavaScript 표현식을 감시할 수 있습니다.</p>
-<p caption='监听JavaScript表达式'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/02D81797-A39F-4837-B402-648AA39E5C21_2.png' alt='监听JavaScript表达式' title='监听JavaScript表达式'></p>
+<p caption='监听JavaScript表达式'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/02D81797-A39F-4837-B402-648AA39E5C21_2.png' alt='监听JavaScript表达式' title='监听JavaScript表达式'></p>
 <p>그림 14 👆🏻에서 파란색으로 표시된 부분이 Watch(감시) 패널입니다.</p>
 <ul>
 <li>
@@ -704,7 +704,7 @@
 </ul>
 <h2 id="압축된-코드를-가독성-있게-포맷팅하기">압축된 코드를 가독성 있게 포맷팅하기</h2>
 <p><code>Format &#123;&#125;</code>을 클릭하면 압축된 코드를 사람이 읽기 쉬운 형식으로 변환할 수 있습니다.</p>
-<p caption='格式化压缩后的文件'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/572D9BCF-DC18-460E-8B23-62398391ED92_2.png' alt='格式化压缩后的文件' title='格式化压缩后的文件'></p>
+<p caption='格式化压缩后的文件'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/572D9BCF-DC18-460E-8B23-62398391ED92_2.png' alt='格式化压缩后的文件' title='格式化压缩后的文件'></p>
 <h2 id="스크립트-편집하기">스크립트 편집하기</h2>
 <p>버그를 수정할 때는 자주 JavaScript 코드의 수정 효과를 테스트해야 합니다. 외부 편집기에서 JavaScript 코드를 편집한 후 현재 페이지로 돌아와 새로 고침하여 결과를 확인할 필요가 없습니다. Devtools에서 직접 JavaScript 코드를 편집할 수 있습니다.</p>
 <p>스크립트를 편집하려면 다음 단계를 따르세요:</p>
@@ -719,7 +719,7 @@
 <p><code>Command + S</code>(Mac) 또는 <code>Ctrl + S</code>(Windows, Linux)를 눌러 변경 사항을 저장합니다. Devtools는 전체 js 파일을 패치 형태로 Chrome의 JavaScript 엔진에 적용할 것입니다.</p>
 </li>
 </ol>
-<p caption='直接编辑js文件'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6DC1E149-D2D2-4005-A2B9-451CF0456112_2.png' alt='直接编辑js文件' title='直接编辑js文件'></p>
+<p caption='直接编辑js文件'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/6DC1E149-D2D2-4005-A2B9-451CF0456112_2.png' alt='直接编辑js文件' title='直接编辑js文件'></p>
 <p>위 그림에서 파란색 상자로 표시된 부분이 편집기 바입니다.</p>
 <h2 id="일시-중지된-함수-실시간-편집하기">일시 중지된 함수 실시간 편집하기</h2>
 <blockquote>
@@ -753,7 +753,7 @@
 <p>실행을 계속합니다.</p>
 </li>
 </ol>
-<p caption='实时重新执行函数'><video controls muted><source src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/37CA2680-5D00-477F-A1CF-161AD18F2A5E_2.mp4' type='video/mp4' /></video></p>
+<p caption='实时重新执行函数'><video controls muted><source src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/37CA2680-5D00-477F-A1CF-161AD18F2A5E_2.mp4' type='video/mp4' /></video></p>
 <p>이 예시에서, <code>addend1</code>과 <code>addend2</code> 변수는 처음에 잘못된 <code>string</code> 타입을 가지고 있습니다. 따라서 숫자가 더해지는 대신 문자열이 잘못 연결되었습니다. 이 문제를 해결하기 위해 실시간 편집 중에 <code>parseInt()</code> 함수를 추가했습니다.</p>
 <h2 id="스크립트-내에서-텍스트-검색-및-교체">스크립트 내에서 텍스트 검색 및 교체</h2>
 <p>스크립트에서 특정 텍스트를 검색하려면 다음 단계를 따르세요:</p>
@@ -780,7 +780,7 @@
 <p><code>Enter</code> 키를 눌러 검색을 실행합니다. 위/아래 화살표를 눌러 다음/이전 검색 결과로 이동할 수 있습니다.</p>
 </li>
 </ol>
-<p caption='搜索字符'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6D3D4E4D-22CD-4095-8773-1DFD4F3089A5_2.png' alt='搜索字符' title='搜索字符'></p>
+<p caption='搜索字符'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/6D3D4E4D-22CD-4095-8773-1DFD4F3089A5_2.png' alt='搜索字符' title='搜索字符'></p>
 <p>검색 결과를 바꾸고 싶다면 다음 단계를 따르세요:</p>
 <ol>
 <li>
@@ -790,7 +790,7 @@
 <p>교체할 텍스트를 입력한 후 <strong>Replce</strong> 또는 <strong>Replace all</strong>을 클릭하면 됩니다.</p>
 </li>
 </ol>
-<p caption='按下替换按钮'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/4CFF9F79-2118-4DA6-AF12-1440A520C6F8_2.png' alt='按下替换按钮' title='按下替换按钮'></p>
+<p caption='按下替换按钮'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/4CFF9F79-2118-4DA6-AF12-1440A520C6F8_2.png' alt='按下替换按钮' title='按下替换按钮'></p>
 <h2 id="javascript-비활성화">JavaScript 비활성화</h2>
 <p>자세한 내용은 <a href="https://developer.chrome.com/docs/devtools/javascript/disable/">Disable JavaScript With Chrome DevTools</a>를 참조하세요(번역되지 않음).</p>
 

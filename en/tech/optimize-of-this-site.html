@@ -377,7 +377,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -458,7 +458,7 @@
 <p>For a long time, I simply placed images and static resources directly in the project. Since GitHub’s free repositories have a 1 GB total size limit, I avoided using images whenever text could suffice, which was quite restrictive. Recently, I stumbled upon another GitHub Pages-based blog that heavily used images, with links related to <code>jsdelivr.net</code>. I suspected it might be using a free overseas CDN service. After some research, I confirmed this was the case—it even had servers in China with free acceleration.</p>
 <p>By prepending a fixed path to resources in the GitHub repository, the CDN would store them on S3 upon the first request. Even if GitHub went down afterward, the links would still work. If the resource wasn’t on S3, the CDN would fall back to fetching it directly from GitHub—standard CDN behavior.</p>
 <p>I was thrilled—<del>a free CDN with acceleration</del>, seemingly straightforward to implement. One of jsDelivr’s selling points is being a foreign public CDN provider with a legitimate ICP license in China, boasting hundreds of servers nationwide.</p>
-<p><img src="https://static.xheldon.cn/img/in-post/2020/jsdelivr.png" alt="赣江" title="jsdelivr china" /></p>
+<p><img src="https://static.xheldon.com/img/in-post/2020/jsdelivr.png" alt="赣江" title="jsdelivr china" /></p>
 <p>So I got to work. Here’s what I did:</p>
 <h3 id="add-a-dedicated-static-resource-repository">Add a Dedicated Static Resource Repository</h3>
 <p>This step ensures jsDelivr CDN can correctly resolve resources. For example, if a local image’s reference path is <code>/static/img/in-post/logo.png</code>, its unique path becomes <code>/img/logo.png</code>. After pushing it to a GitHub repository, the access path would be <code>https://github.com/Xheldon/x_blog-static/tree/master/img/logo.png</code>. My username is <code>xheldon</code>, and the repository is <code>x_blog-static</code>, so the jsDelivr CDN URL would be <code>https://cdn.jsdelivr.net/gh/xheldon/x_blog-static/img/logo.png</code>. No registration or configuration is needed—just plug and play. Awesome!</p>
@@ -469,7 +469,7 @@
 <li>Add the resource repository <code>x_blog-static</code> as a submodule to the blog repository: <code>git submodule add https://github.com/Xheldon/x_blog-static.git ./static</code>, and place the static resources (previously in the <code>static</code> folder) under the <code>static</code> directory.</li>
 <li>Modify the <code>_config.yml</code> file to add a configuration object <code>static_url: https://cdn.jsdelivr.net/gh/xheldon/x_blog-static</code>, simplifying the process of updating static resource absolute paths.</li>
 <li>Add a local development config file <code>_config.dev.yml</code> with a configuration object <code>static_url: /static</code>, again for easier path updates.</li>
-<li>Globally replace local absolute paths for static resources. For example, change <code>img</code> <code>src</code> values like <code>/static/img/in-post/logo.png</code> or <code>/static/css/main.css</code> to `https://static.xheldon.cn/img/logo.png`. Note that Liquid syntax tags like `{{}}` work even in Markdown files—very handy.</li>
+<li>Globally replace local absolute paths for static resources. For example, change <code>img</code> <code>src</code> values like <code>/static/img/in-post/logo.png</code> or <code>/static/css/main.css</code> to `https://static.xheldon.com/img/logo.png`. Note that Liquid syntax tags like `{{}}` work even in Markdown files—very handy.</li>
 <li>Keep frequently modified files like <code>main.scss</code> locally for reasons explained below.</li>
 <li>Push the changes to the remote repository.</li>
 </ol>

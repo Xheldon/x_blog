@@ -377,7 +377,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -461,7 +461,7 @@
 发现它大量使用了图片，而且图片的链接是 <code>jsdelivr.net</code> 相关的，所以我就猜测是不是某个国外免费的 cdn 服务，搜索了一番以后发现果然是，而且在国内有服务器，免费加速。只需要在 GitHub 仓库中的资源前面加上固定的路径<br />
 即可，它会在首次请求的时候将资源存储到 S3 上，后续即使 GitHub 挂了，也能访问到正确的链接。如果 S3 上没有资源，则会直接溯源，请求 GitHub 中的内容，也即是 CDN 的基本操作。</p>
 <p>我一拍大腿，<del>直呼内行</del>，免费的 cdn 加速，而且看起来不复杂，而且 jsdelivr 的卖点之一就是在中国拥有合法 ICP 执照的的国外公共 CDN 服务提供商，其在中国有数百个服务器。</p>
-<p><img src="https://static.xheldon.cn/img/in-post/2020/jsdelivr.png" alt="赣江" title="jsdelivr china" /></p>
+<p><img src="https://static.xheldon.com/img/in-post/2020/jsdelivr.png" alt="赣江" title="jsdelivr china" /></p>
 <p>说搞就搞，于是有了下面几步操作：</p>
 <h3 id="增加专用静态资源仓库">增加专用静态资源仓库</h3>
 <p>这一步是为了让 jsdelivr cdn 服务能够正确解析。如我本地某个图片的引用路径是 <code>/static/img/in-post/logo.png</code> ，因此它的唯一路径是 <code>/img/logo.png</code> ，将内容托送到 GitHub 仓库后，<br />
@@ -474,7 +474,7 @@
 <li>添加资源仓库 <code>x_blog-static</code> 为博客仓库的子模块：<code>git submodule add https://github.com/Xheldon/x_blog-static.git ./static</code> ，并静态资源仓库（刚刚的 static 文件夹下的内容又）放到 <code>static</code> 文件夹下。</li>
 <li>修改 <code>_config.yml</code> 文件，添加配置对象 <code>static_url: https://cdn.jsdelivr.net/gh/xheldon/x_blog-static</code> ，方便下一步修改静态资源的绝对路径。</li>
 <li>增加本地开发配置文件 <code>_config.dev.yml</code> 文件，添加配置对象 <code>static_url: /static</code> ，方便下一步修改静态资源的绝对路径。</li>
-<li>全局替换修改本地绝对路径引用的静态资源，如 img 的 src 是 <code>/static/img/in-post/logo.png</code> 或者 <code>/static/css/main.css</code> 等路径，替换为 `https://static.xheldon.cn/img/logo.png`等，这里需要注意的是，Liquid 语法的标签 `{{}}`即使是在 markdown 文件中，也是可以用的，很棒。</li>
+<li>全局替换修改本地绝对路径引用的静态资源，如 img 的 src 是 <code>/static/img/in-post/logo.png</code> 或者 <code>/static/css/main.css</code> 等路径，替换为 `https://static.xheldon.com/img/logo.png`等，这里需要注意的是，Liquid 语法的标签 `{{}}`即使是在 markdown 文件中，也是可以用的，很棒。</li>
 <li>将一些常修改的文件如 <code>main.scss</code> 文件仍然放在本地比较好，原因下面有说到。</li>
 <li>将修改 push 到远端即可。</li>
 </ol>

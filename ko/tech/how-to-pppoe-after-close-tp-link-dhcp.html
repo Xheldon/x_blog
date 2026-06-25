@@ -387,7 +387,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -510,9 +510,9 @@
 <p><a class='link-bookmark' href='https://www.chiphell.com/forum.php?mod=viewthread&tid=2521336&highlight=&mobile=no' target='_blank'><span data-bookmark-img='' data-bookmark-title='请'><img src=''/></span><span><span> 请教各位大佬关于华硕和tplink路由器关闭dhcp设置的问题 - 电脑讨论(新) -  Chiphell - 分享与交流用户体验</span><span> 화스와 tplink 라우터의 DHCP 설정 해제 문제에 대해 질문드립니다, 여러분 안녕하세요, 오늘 하루 종일 해결하지 못한 문제가 있어 질문드립니다. 현재 저의 네트워크는 광모뎀(라우팅 모드, 브리지 모드 변경 불가)-ac86u-macmini(사이드 라우터)로 구성되어 있습니다. 오늘 tplink xdr6088로 교체했는데...,컴퓨터 토론(신),토론区-생활과 기술의 토론 ,Chiphell - 사용자 경험 공유 및 교류</span><span> https://www.chiphell.com/forum.php?mod=viewthread&tid=2521336&highlight=&mobile=no</span></span></a></p>
 <h2 id="현황">현황</h2>
 <blockquote style='border-color: ;color: '><p> 주의: TP-Link(이하 제 XDR-5480 모델을 말함) 설정 화면에서 라우터 설정을 미리 백업하세요. 실수로 라우터에 접근할 수 없게 되어 초기화해야 할 때 설정이 손실되는 상황을 방지하기 위함입니다. 아래 그림처럼 설정을 내보내면 됩니다. 참고로 이렇게 내보낸 설정에는 포트 설정과 네트워크 설정이 포함되지 않습니다. 이 제품 설계는 네트워크 설정을 잘못 변경하여 초기화한 후에도 잘못된 설정을 가져와 네트워크 접근이 불가능한 상황을 방지해주는데, TP-Link 제품 매니저에게 박수를 보냅니다.</p></blockquote>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e6-9e16-eb66a08e2ff7.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e6-9e16-eb66a08e2ff7.webp' alt='' title=''></p>
 <h3 id="네트워크-토폴로지">네트워크 토폴로지:</h3>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8003-89a9-e3f05024c8b5.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8003-89a9-e3f05024c8b5.webp' alt='' title=''></p>
 <h3 id="목표">목표</h3>
 <p>현재 모든 기기의 연결 방식과 네트워크 세그먼트를 변경하지 않은 상태에서(혼날까 봐) Mac Studio의 Surge를 게이트웨이로 사용하여 DHCP 서비스를 관리하는 것입니다.</p>
 <h3 id="난제">난제</h3>
@@ -532,36 +532,36 @@
 </ol>
 <h2 id="해결-방법">해결 방법</h2>
 <p>위의 목표와 난제를 바탕으로 “여러분, 다음 배포 조정을 기록해두세요”:</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80ce-8790-d3cef3ef7d8f.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80ce-8790-d3cef3ef7d8f.webp' alt='' title=''></p>
 <h3 id="단계-1-광모뎀-전원-끄기">단계 1: 광모뎀 전원 끄기</h3>
 <blockquote style='border-color: ;color: '><p> 실제로는 광모뎀과 TP-Link의 연결만 끊으면 됩니다. 여기서 전원을 끄라고 한 것은 실수로 광모뎀 WiFi에 연결되는 것을 방지하기 위함입니다. 광모뎀 WiFi를 '잊어버리기'로 선택했다면 전원을 끄지 않고 TP-Link와의 연결만 끊어도 됩니다.</p></blockquote>
 <p>먼저 광모뎀을 설정하지 않아 Surge가 DHCP 서비스를 감지하지 못하도록 합니다. 이렇게 하면 Surge가 DHCP 서비스를 시작할 수 없게 됩니다. 또한 이미 광모뎀과 TP-Link의 연결을 끊었기 때문에, 다음 단계에서 TP-Link의 DHCP 서비스를 끄면 TP-Link가 더 이상 상위 라우터의 DHCP 서비스를 감지하여 자신의 LAN 포트 IP를 변경하지 않습니다.</p>
 <h3 id="단계-2-라우터의-dhcp-서비스-끄기">단계 2: 라우터의 DHCP 서비스 끄기</h3>
 <p>설정에서 간단히 끄면 됩니다. 여기서는 &quot;끄기&quot;를 선택하고, 설정이 성공한 후에는 &quot;자동&quot;으로 변경할 예정입니다. &quot;자동&quot;으로 변경하는 것은 네트워크 안정성을 위한 것으로, 이에 대해서는 뒤에서 설명하겠습니다.</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-804e-a69d-edb6a6eaabc1.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-804e-a69d-edb6a6eaabc1.webp' alt='' title=''></p>
 <h3 id="단계-3-surge-dhcp-활성화">단계 3: Surge DHCP 활성화</h3>
 <p>이 단계는 Surge의 &quot;개요&quot;와 “장치” 탭에서 모두 찾을 수 있습니다:</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8091-83b9-e144224f35d5.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8091-83b9-e144224f35d5.webp' alt='' title=''></p>
 <p>Surge가 Mac의 IP 주소를 수동으로 고정할 것이라는 메시지가 표시됩니다. 여기서는 <code>192.168.5.100</code>로 설정되었으며, 구체적인 설정 방법은 온라인에 많이 나와 있으므로 여기서는 자세히 설명하지 않겠습니다.</p>
 <p>주의할 점은 라우터 주소가 <code>192.168.5.1</code>로 표시되고, 주소 풀이 <code>192.168.5.100</code>부터 <code>192.168.5.200</code>까지로 설정된다는 것입니다. 여기서는 주소 풀을 <code>192.168.5.2</code>부터 <code>192.168.5.254</code>까지로 변경하여 범위를 더 넓혔습니다.</p>
 <h3 id="단계-4-새로운-라우터-주소-찾기">단계 4: 새로운 라우터 주소 찾기</h3>
 <p>Surge 설정을 완료한 후, 라우터의 <code>192.168.5.1</code>에 접속하면 더 이상 접속할 수 없음을 발견할 것입니다! 당황하지 마세요. 이제 Mac Studio가 DHCP 서비스를 제공하고 있으며, TP-Link 라우터에 새로운 IP 주소를 할당하기 때문입니다(왜 이런 현상이 발생하는지는 저도 모릅니다). &quot;장치&quot;를 클릭한 후 &quot;Hostname Unsuitable for Printing&quot;이라는 이름의 장치를 찾아(반드시 이 이름일 필요는 없음) 주소 표시줄에 입력하면 익숙한 라우터 인터페이스가 다시 나타납니다. 여기서 새로운 라우터 IP 주소는 <code>192.168.5.114</code>입니다.</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-809d-894e-fbe831126b06.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-809d-894e-fbe831126b06.webp' alt='' title=''></p>
 <h3 id="단계-5-라우터의-lan-포트-수정-및-pppoe-연결">단계 5: 라우터의 LAN 포트 수정 및 PPPoE 연결</h3>
 <p>이제 인터넷에 연결할 수 없습니다. 광모뎀이 전원이 꺼져 있기 때문입니다! 이 단계에서 광모뎀에 전원을 연결하고 몇 분 기다린 후 라우터 설정 페이지에서 <code>Wan 口已经断开连接</code>을 클릭해도 아무런 반응이 없을 것입니다.</p>
 <p>하지만 포기하지 마세요! 지금 Studio의 역할이 소프트웨어 라우터를 설정할 때와 유사하다는 것을 떠올려보세요. 당시에는 광모뎀이 PPPoE 연결을 담당하고, 소프트웨어 라우터가 메인 라우터 또는 광모뎀에 연결되어 DHCP 서비스를 제공했습니다. 이제는 PPPoE 장치를 라우터로 옮기고 Studio가 메인 라우터에 연결되어 있으므로, Studio가 소프트웨어 라우터 역할을 하며 DHCP 서비스를 자체적으로 제공하게 됩니다.</p>
 <p>따라서 핵심은 TP-Link의 LAN 포트 IP 주소를 <code>192.168.5.1</code>로 수동으로 지정하는 것입니다(그렇지 않으면 네트워크상에 <code>192.168.5.1</code>라는 IP 주소를 가진 장치가 없게 됩니다).</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e0-8bb3-f208b1f9c874.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e0-8bb3-f208b1f9c874.webp' alt='' title=''></p>
 <p>LAN 포트 IP를 수동으로 지정한 후(이름은 LAN 포트이지만 광모뎀에 연결되어 PPPoE 연결이 가능합니다!), 인터넷 설정으로 돌아가 &quot;연결&quot;을 클릭합니다. 처음 연결에는 시간이 걸릴 수 있으므로 4~5번 클릭해야 할 수도 있지만, 결국 성공할 것입니다.</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8092-a5bc-cc3e8f728305.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8092-a5bc-cc3e8f728305.webp' alt='' title=''></p>
 <h3 id="단계-6-마무리">단계 6: 마무리</h3>
 <p>이제 설정이 완료되었습니다. 연결된 장치를 마우스 오른쪽 버튼으로 클릭하고 &quot;Surge를 게이트웨이로 설정&quot;을 선택한 후 장치를 네트워크에 다시 연결하면 됩니다:</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8044-b913-da4aafc3219f.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8044-b913-da4aafc3219f.webp' alt='' title=''></p>
 <p>또한 “새 장치는 기본적으로 Surge를 게이트웨이로 사용” 옵션을 설정할 수 있습니다:</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80fc-9142-f5520e0a2756.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80fc-9142-f5520e0a2756.webp' alt='' title=''></p>
 <p>이제 모든 장치가 Surge를 게이트웨이로 사용하며, 실시간 트래픽을 확인할 수 있습니다.</p>
 <p>2단계에서 TP-Link의 DHCP 서비스를 끈 설정을 기억하시나요? 이제 TP-Link로 돌아가 DHCP 서비스를 &quot;자동&quot;으로 변경할 수 있습니다. 이는 만약을 대비한 조치로, <strong>Surge의 DHCP 서비스가 중단되거나 Mac이 고장 나더라도 가족과 장치들이 여전히 인터넷에 접속할 수 있도록 하기 위함입니다. 이렇게 하면 TP-Link가 자동으로 LAN의 DHCP 서비스를 감지하여, 없으면 자신의 DHCP를 활성화하고 있으면 비활성화합니다:</strong></p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-805c-98c5-e3895ef7dfe0.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-805c-98c5-e3895ef7dfe0.webp' alt='' title=''></p>
 <p>참고: &quot;끄기&quot;를 선택하고 저장하면 라우터 주소가 다시 <code>192.168.5.114</code>로 변경됩니다. 또한 수정할 수 없게 됩니다(광모뎀에 연결되어 있고 DHCP를 껐기 때문에 위에서 언급한 문제 1과 2가 발생함). 이 경우 처음부터(광모뎀 전원 끄기) 과정을 다시 진행해야 합니다.</p>
 <h2 id="마치며">마치며</h2>
 <p>이로써 모든 과정이 끝났습니다. 이 과정에서 몇 가지 이상한 문제를 겪었고, 실패한 시도도 있었습니다. 예를 들어, 왜 광모뎀 전원을 끈 상태에서 라우터를 설정한 후 다시 켜는 방법을 생각해냈는지 아시겠나요?</p>

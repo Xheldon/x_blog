@@ -375,7 +375,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -499,7 +499,7 @@
 이렇게 추출되지 않는 코드에 대해 <code>loader</code>로 어떤 처리를 할 수 있는데, 이것이 바로 <code>ExtractTextPlugin.extract</code>의 첫 번째 매개변수의 역할입니다.</p>
 <p>자, 설정 파일에 대해 이야기했으니 이제 이 프로젝트가 어떻게 작동하는지 설명하겠습니다.</p>
 <p>한 장의 그림이 천 마디 말보다 낫습니다. 먼저 코드 인터페이스를 보겠습니다:</p>
-<p><img src="https://static.xheldon.cn/img/in-post/2016/vue-test.png" alt="项目结构" title="项目结构" /></p>
+<p><img src="https://static.xheldon.com/img/in-post/2016/vue-test.png" alt="项目结构" title="项目结构" /></p>
 <p>(이미지가 작게 표시되면 마우스 오른쪽 버튼으로 새 탭에서 열어 확인하세요)</p>
 <p>화살표로 표시된 대로, 우선 하나의 페이지에는 최소한 하나의 컴포넌트가 있습니다. 저는 그냥 하나의 페이지에 하나의 컴포넌트를 작성했으며, 다른 컴포넌트를 <code>import</code>하지 않았습니다.</p>
 <p>따라서 하나의 페이지에는 최소한 세 개의 파일이 있습니다: <code>.vue</code> 파일, <code>.js</code> 진입 파일, 그리고 <code>.html</code> 파일(컴포넌트가 삽입되는 파일)입니다.</p>
@@ -510,7 +510,7 @@
 <p>또 다른 질문으로는, 진입점 <code>js</code> 파일에서 <code>vue</code> 인스턴스를 생성할 때 사용되는 <code>components.App</code>이 컴파일 과정에서 <code>this_is_main_page_which_you_put_components_into.html</code> 파일 내의 <code>&lt;app&gt;</code> 컴포넌트 참조를 찾는 것인지, 아니면 <code>runtime</code> 시점에 최종 번들링된 <code>bundle.js</code>를 실행한 후 <code>this_is_final_filename_address_you_visit_in_browser.html</code> 페이지에서 <code>&lt;app&gt;</code> 태그를 찾는 것인지 궁금해하는 경우가 있습니다. 정답은 후자입니다. 앞서 언급한 <code>HtmlwebpackPlugin</code> 플러그인은 단지 <code>html</code> 생성과 번들된 <code>bundle.js</code> 주입만 담당하며, <code>vue</code>가 <code>bundle.js</code>로 패키징된 후 <code>vue</code> 인스턴스화 시점에서야 비로소 <code>&lt;app&gt;</code> 태그를 찾기 때문입니다.</p>
 <p>이렇게 보면, <code>script</code> 태그에서 직접 <code>vue.js</code> 파일을 참조한 후 렌더링하는 효과와 동일합니다. 다만 <code>webpack</code> 방식은 컴포넌트를 분리하여 개발 과정의 코드/컴포넌트 구조를 더 명확하게 해주며, 직접 <code>vue.js</code>를 참조하는 것은 프론트엔드 <code>runtime render</code>인 반면, <code>webpack</code>은 <code>compiler render</code> 후 바로 실행되므로 후자가 효율성이 더 높습니다.</p>
 <p>다음은 결과 페이지입니다:</p>
-<p><img src="https://static.xheldon.cn/img/in-post/2016/page-detail.png" alt="页面效果图" title="页面效果图" /><br />
+<p><img src="https://static.xheldon.com/img/in-post/2016/page-detail.png" alt="页面效果图" title="页面效果图" /><br />
 (이미지가 작게 표시되면 마우스 오른쪽 버튼으로 새 탭에서 열어 확인하세요)</p>
 <p>이미지를 보시면 의미가 명확해질 겁니다.</p>
 <p>추가로 궁금한 점은 문서를 참고해 주세요.</p>

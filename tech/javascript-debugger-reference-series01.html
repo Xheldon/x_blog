@@ -379,7 +379,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -484,26 +484,26 @@
 <p>查看 <a href="https://developer.chrome.com/docs/devtools/javascript/breakpoints/">这里</a> （英文，待译）来学习如何设置一个断点。</p>
 <h3 id="在鼠标悬浮的时候查看类-函数属性">在鼠标悬浮的时候查看类/函数属性</h3>
 <p>当代码执行暂停的时候，将鼠标悬浮在一个类或者函数名上的时候可以预览它的属性。</p>
-<p caption='1'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/EA456FA6-9331-41E3-96DC-3FCCFFA82C2E_2.png' alt='1' title='1'></p>
+<p caption='1'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/EA456FA6-9331-41E3-96DC-3FCCFFA82C2E_2.png' alt='1' title='1'></p>
 <h2 id="逐步运行代码">逐步运行代码</h2>
 <p>你的代码暂停后，你就可以一次只运行一行代码，以搞清楚代码的调用栈以及相关的属性值。</p>
 <h3 id="跳过（step-over）当前代码行">跳过（Step over）当前代码行</h3>
 <p>当你的断点暂停在一个与你当前调查的问题无关的代码行，且该代码行包含一个函数的时候，你可以点击 <code>Step Over</code> 来不进入该函数以继续执行代码。</p>
-<p caption='step_over'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/63AE5442-D0AD-46C5-8DB0-36452E2842D2_2.png' alt='step_over' title='step_over'></p>
+<p caption='step_over'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/63AE5442-D0AD-46C5-8DB0-36452E2842D2_2.png' alt='step_over' title='step_over'></p>
 <p>图一 👆🏻，上图中蓝色方框中 <code>Step Over</code> 的含义解释：</p>
 <p>举个例子，假设你正在 debugging 下面的代码：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">updateName</span>(name); <span class="hljs-comment">// D</span><br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// B</span><br>  <span class="hljs-keyword">return</span> name; <span class="hljs-comment">// C</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>此时你的断点停在了 <code>A</code> 的位置。通过点击 <strong>Step over</strong> ，Devtools 将会执行你「Step over」的位置中的所有代码，在上述示例中「Step over」的是 A 位置的 getName 函数中的 <code>B</code> 和 <code>C</code> 的位置，于是 Devtools 会将代码停在 D 的位置。</p>
 <h3 id="进入（step-into）当前代码行">进入（Step into）当前代码行</h3>
 <p>如果断点停在一个跟你要调查的问题有关系的地方，而且这个地方包含一个函数调用的时候，点击 <code>Step into</code> ，可以更进一步的检查这个函数。</p>
-<p caption='step_into'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/0B7F9CB7-7EA3-44A2-8808-8E23F9E0D786_2.png' alt='step_into' title='step_into'></p>
+<p caption='step_into'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/0B7F9CB7-7EA3-44A2-8808-8E23F9E0D786_2.png' alt='step_into' title='step_into'></p>
 <p>图二 👆🏻，上图中蓝色方框中 <code>Step into</code> 的含义解释：</p>
 <p>举个例子，假设你正在 debugging 下面的代码：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">updateName</span>(name);<br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// B</span><br>  <span class="hljs-keyword">return</span> name;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>你的断点正停在 <code>A</code> 的位置，此时点击 <strong>Step into</strong> ，Devtools 将会执行这行代码，然后停在 <code>B</code> 的位置。</p>
 <h3 id="跳出（step-out）当前代码行">跳出（Step out）当前代码行</h3>
 <p>当断点停在一个与你正在调查的问题不相关的函数内部的时候，你可以点击 <strong>Step out</strong> 来执行该函数中剩余的代码。</p>
-<p caption='step_out'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6E97FB74-E73D-4189-9A21-3771A1DF27AF_2.png' alt='step_out' title='step_out'></p>
+<p caption='step_out'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/6E97FB74-E73D-4189-9A21-3771A1DF27AF_2.png' alt='step_out' title='step_out'></p>
 <p>图三 👆🏻，上图中蓝色方框中 <code>Step out</code> 的含义解释：</p>
 <p>举个例子，假设你正在 debugging 下面的代码：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>();<br>  <span class="hljs-title function_">updateName</span>(name); <span class="hljs-comment">// C</span><br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// A</span><br>  <span class="hljs-keyword">return</span> name; <span class="hljs-comment">// B</span><br>&#125;<br></code></pre></td></tr></table></figure>
@@ -512,19 +512,19 @@
 <p>当 debugging 一个很长函数的时候，函数中会有很多与你正在调查的问题不相关的代码。</p>
 <p>你可以选择一步一步的执行这些无关的行，但是这个过程会很枯燥。你也可以选择在一个想断点的代码行处设置一个断点，然后按下 <code>Resume Script Execution</code> （恢复脚本执行），不过除此之外，还有一个更快的方式。</p>
 <p>你可以在你想要断点的代码行上右键，然后选择 <strong>Continue to here</strong> （继续执行到此处）。Devtools 将会恢复断点执行代码直到此处，然后停在这一行。</p>
-<p caption='continue_to_here'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/01C96466-2B8C-4088-9E66-7408708B0401_2.png' alt='continue_to_here' title='continue_to_here'></p>
+<p caption='continue_to_here'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/01C96466-2B8C-4088-9E66-7408708B0401_2.png' alt='continue_to_here' title='continue_to_here'></p>
 <p>图四 👆🏻，选择 <strong>Continue to here</strong> 。</p>
 <h3 id="恢复脚本执行">恢复脚本执行</h3>
 <p>你可以通过点击 <strong>Resume Script Execution</strong> 来继续在你断点暂停的位置执行代码。Devtools 会将代码一直执行下去直到遇到下一个断点（如果有）。</p>
-<p caption='resume_script_execution'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/E67463E2-9D01-48BB-A743-28A189DF68CD_2.png' alt='resume_script_execution' title='resume_script_execution'></p>
+<p caption='resume_script_execution'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/E67463E2-9D01-48BB-A743-28A189DF68CD_2.png' alt='resume_script_execution' title='resume_script_execution'></p>
 <p>图五 👆🏻，<strong>Resume Script Execution</strong> ，蓝框处。</p>
 <h4 id="强制执行">强制执行</h4>
 <p>可以通过长按 <strong>Resume Script Execution</strong> ，然后选择 <strong>Force Script Execution</strong> ，来忽略剩下的所有断点，直接执行全部代码。</p>
-<p caption='force_script_execution'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DAB9BD94-70F7-4464-8609-3016E8B40A44_2.png' alt='force_script_execution' title='force_script_execution'></p>
+<p caption='force_script_execution'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/DAB9BD94-70F7-4464-8609-3016E8B40A44_2.png' alt='force_script_execution' title='force_script_execution'></p>
 <p>图六 👆🏻，选择 <strong>Force Script Execution</strong> 。</p>
 <h3 id="改变当前线程的上下文">改变当前线程的上下文</h3>
 <p>当 debugging 设计到 Web Worker 或者 Service Worker 的时候，可以通过点击出现在 <strong>Threads</strong> 栏中的上下文列表项，来转换上下文。蓝色箭头表示当前选择的上下文。</p>
-<p caption='change_threads_context'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1474933D-3F44-4D93-9909-FF4245545704_2.png' alt='change_threads_context' title='change_threads_context'></p>
+<p caption='change_threads_context'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/1474933D-3F44-4D93-9909-FF4245545704_2.png' alt='change_threads_context' title='change_threads_context'></p>
 <p>图七 👆🏻，<strong>Threads</strong> （线程）栏，蓝色框的位置。</p>
 <p>举个例子，假设有这么个场景，你的断点同时存在于你的主脚本和你的 service worker 脚本中。你想要查看 service worker 中的本地变量和全局变量，但是 <strong>Source</strong> 栏当前正显示的是你的主脚本的上下文。此时你就可以通过点击在 <strong>Threads</strong> 栏中的 service worker 入口来切换上下文以查看你想了解的变量了。</p>
 <h2 id="查看和编辑局部、闭包以及全局作用域中的变量-属性">查看和编辑局部、闭包以及全局作用域中的变量/属性</h2>
@@ -537,13 +537,13 @@
 <p>非可枚举的属性会以灰色突出显示。</p>
 </li>
 </ul>
-<p caption='查看和修改变量'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/40A93D0F-ACA8-4128-A695-E502565253AD_2.png' alt='查看和修改变量' title='查看和修改变量'></p>
+<p caption='查看和修改变量'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/40A93D0F-ACA8-4128-A695-E502565253AD_2.png' alt='查看和修改变量' title='查看和修改变量'></p>
 <p>图八 👆🏻，<strong>Scope</strong> （作用域）栏，蓝色框的位置。</p>
 <h2 id="查看当前调用栈">查看当前调用栈</h2>
 <p>当暂停在某一行的时候，使用 <strong>Call Stack</strong> 栏来查看从代码执行一直到你当前暂停点以来的函数调用栈。</p>
 <p>如果你的代码中有异步代码，可以将 <strong>Async</strong> 复选框勾选上，来启用异步函数调用栈。</p>
 <p>点击其中的一个条目，来跳转到该条目所表示的函数的调用处。蓝色箭头图标表示当前正在高亮的函数。</p>
-<p caption='查看函数调用栈'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1168318B-1CFA-493D-9AE6-2CF79930C58C_2.png' alt='查看函数调用栈' title='查看函数调用栈'></p>
+<p caption='查看函数调用栈'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/1168318B-1CFA-493D-9AE6-2CF79930C58C_2.png' alt='查看函数调用栈' title='查看函数调用栈'></p>
 <p>图九 👆🏻，<strong>Call Stack</strong> （调用栈）栏，蓝色框的位置。</p>
 <blockquote>
 <p>注意：如果代码没有暂停在某一行，那 Call Stack 栏是空的。</p>
@@ -562,7 +562,7 @@
 <p>在 <strong>Call Stack</strong> 栏，右键一个函数，然后在出现的菜单中选择 Restart frame（重头执行函数）。</p>
 </li>
 </ol>
-<p caption='重新执行断点所在的函数'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DFF3FAC8-B00F-415A-A581-50A299F1884D_2.png' alt='重新执行断点所在的函数' title='重新执行断点所在的函数'></p>
+<p caption='重新执行断点所在的函数'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/DFF3FAC8-B00F-415A-A581-50A299F1884D_2.png' alt='重新执行断点所在的函数' title='重新执行断点所在的函数'></p>
 <p>为了理解 Restart frame 如何执行，我们假设有以下代码：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">value</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>  <span class="hljs-title function_">bar</span>(value);<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params">value</span>) &#123;<br>  value++;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>  <span class="hljs-keyword">debugger</span>;<br>&#125;<br><br><span class="hljs-title function_">foo</span>(<span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
 <p><code>foo</code> 函数接受 <code>0</code> 作为参数，然后通过 log 打印到控制台，然后调用 <code>bar()</code> 函数。相应的，<code>bar</code> 函数会将这个值自增 1。</p>
@@ -578,26 +578,26 @@
 <p>你会注意到当前的 debugger 会在其所在的函数的函数声明的右侧显示当前值：<code>value = 1</code> 。</p>
 </li>
 </ul>
-<p caption='注意函数声明处右侧的值'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9111BA1D-AA80-4C2F-B54E-123FC66A5C17_2.png' alt='注意函数声明处右侧的值' title='注意函数声明处右侧的值'></p>
+<p caption='注意函数声明处右侧的值'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/9111BA1D-AA80-4C2F-B54E-123FC66A5C17_2.png' alt='注意函数声明处右侧的值' title='注意函数声明处右侧的值'></p>
 <ul>
 <li>重头执行 <code>bar()</code> 函数。</li>
 </ul>
-<p caption='重头执行bar'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/036AAE1B-CA41-4627-A9D6-A4F7E6302C0C_2.png' alt='重头执行bar' title='重头执行bar'></p>
+<p caption='重头执行bar'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/036AAE1B-CA41-4627-A9D6-A4F7E6302C0C_2.png' alt='重头执行bar' title='重头执行bar'></p>
 <ul>
 <li>
 <p>按 <code>F9</code> ，然后代码可以经过值自增的那一行，然后再次断到 debugger 处。</p>
 <p>注意看，值变成了 2： <code>value = 2</code> 。</p>
 </li>
 </ul>
-<p caption='重头执行debugger'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/09D36505-821B-4392-8DD3-BDE9D05F0210_2.png' alt='重头执行debugger' title='重头执行debugger'></p>
+<p caption='重头执行debugger'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/09D36505-821B-4392-8DD3-BDE9D05F0210_2.png' alt='重头执行debugger' title='重头执行debugger'></p>
 <ul>
 <li>除此之外，你还可以在 Scope 栏，双击 <code>value</code> 值来编辑它将其设置成想要的值。</li>
 </ul>
-<p caption='双击编辑值'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9481CF99-8735-43A4-8A57-D2F953C289BC_2.png' alt='双击编辑值' title='双击编辑值'></p>
+<p caption='双击编辑值'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/9481CF99-8735-43A4-8A57-D2F953C289BC_2.png' alt='双击编辑值' title='双击编辑值'></p>
 <ul>
 <li>尝试重新执行 <code>bar()</code> 函数多次，会发现值会一直增加。</li>
 </ul>
-<p caption='多次重复执行后值会一直增加'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/AEE7EEA3-2150-431B-980C-6FCF03527DC7_2.png' alt='多次重复执行后值会一直增加' title='多次重复执行后值会一直增加'></p>
+<p caption='多次重复执行后值会一直增加'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/AEE7EEA3-2150-431B-980C-6FCF03527DC7_2.png' alt='多次重复执行后值会一直增加' title='多次重复执行后值会一直增加'></p>
 <blockquote>
 <p>💡 震惊！为什么 <code>value</code> 不会重置成 <code>0</code> ？</p>
 </blockquote>
@@ -610,9 +610,9 @@
 <ul>
 <li>现在，在 <strong>Call Stack</strong> 中重头执行 <code>foo()</code> 函数。</li>
 </ul>
-<p caption='重头执行foo函数'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/11D4B549-3006-4564-B92D-4D1727913D74_2.png' alt='重头执行foo函数' title='重头执行foo函数'></p>
+<p caption='重头执行foo函数'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/11D4B549-3006-4564-B92D-4D1727913D74_2.png' alt='重头执行foo函数' title='重头执行foo函数'></p>
 <p>注意看，<code>value</code> 重新变成了<code>0</code> 。</p>
-<p caption='value重新变为0'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9F706F35-0041-41E3-BB4A-70A5BFFEFE06_2.png' alt='value重新变为0' title='value重新变为0'></p>
+<p caption='value重新变为0'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/9F706F35-0041-41E3-BB4A-70A5BFFEFE06_2.png' alt='value重新变为0' title='value重新变为0'></p>
 <blockquote>
 <p>💡 再次震惊！为什么 <code>value</code> 这次被重置为 <code>0</code> 了？</p>
 </blockquote>
@@ -621,7 +621,7 @@
 </blockquote>
 <h3 id="复制调用栈执行路径">复制调用栈执行路径</h3>
 <p>在 <strong>Call Stack</strong> 栏的任意位置右键，然后选择 <strong>Copy Stack Trace</strong>（复制栈追踪），你会将当前调用栈复制到粘贴板。</p>
-<p caption='复制调用栈'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/7EF33B00-5F90-4D0D-8979-B18ED3CD1527_2.png' alt='复制调用栈' title='复制调用栈'></p>
+<p caption='复制调用栈'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/7EF33B00-5F90-4D0D-8979-B18ED3CD1527_2.png' alt='复制调用栈' title='复制调用栈'></p>
 <p>图十 👆🏻，选择 <strong>Copy Stack Trace</strong>。</p>
 <p>复制的内容大致会是这个样子：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs other">getNumber1 (get-started.js:35)<br>inputsAreEmpty (get-started.js:22)<br>onClick (get-started.js:15)<br></code></pre></td></tr></table></figure>
@@ -642,7 +642,7 @@
 <p>选择 <strong>Add script to ignore list</strong>（将脚本添加到忽略列表）。</p>
 </li>
 </ol>
-<p caption='忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/39DA9D92-C270-4705-8920-7BC248703936_2.png' alt='忽略脚本' title='忽略脚本'></p>
+<p caption='忽略脚本'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/39DA9D92-C270-4705-8920-7BC248703936_2.png' alt='忽略脚本' title='忽略脚本'></p>
 <p>图十一 👆🏻，从编辑器栏中忽略一个脚本。</p>
 <h3 id="从-call-stack-（调用栈）栏忽略某个脚本">从 Call Stack （调用栈）栏忽略某个脚本</h3>
 <p>如果想从调用栈中忽略某个脚本，你需要：</p>
@@ -654,7 +654,7 @@
 <p>选择 <strong>Add script to ignore list</strong>。</p>
 </li>
 </ol>
-<p caption='从调用栈中忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/73837AF8-CB34-4B72-AE5C-1B266E15B8EB_2.png' alt='从调用栈中忽略脚本' title='从调用栈中忽略脚本'></p>
+<p caption='从调用栈中忽略脚本'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/73837AF8-CB34-4B72-AE5C-1B266E15B8EB_2.png' alt='从调用栈中忽略脚本' title='从调用栈中忽略脚本'></p>
 <p>图十二 👆🏻，从 Call Stack（调用栈）中忽略某个脚本。</p>
 <h3 id="从-settings（设置）中忽略某个脚本">从 Settings（设置）中忽略某个脚本</h3>
 <blockquote>
@@ -678,8 +678,8 @@
 <p>点击 <strong>Add</strong>。</p>
 </li>
 </ol>
-<p caption='devoools设置界面'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/54F9290D-CE6A-4630-9387-34DE7EA6266F_2.png' alt='devoools设置界面' title='devoools设置界面'></p>
-<p caption='devtools忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/65A0FE7C-D5BB-4329-B978-1C7184F6C1B6_2.png' alt='devtools忽略脚本' title='devtools忽略脚本'></p>
+<p caption='devoools设置界面'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/54F9290D-CE6A-4630-9387-34DE7EA6266F_2.png' alt='devoools设置界面' title='devoools设置界面'></p>
+<p caption='devtools忽略脚本'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/65A0FE7C-D5BB-4329-B978-1C7184F6C1B6_2.png' alt='devtools忽略脚本' title='devtools忽略脚本'></p>
 <p>图十三 👆🏻，从 Setting 中忽略脚本。</p>
 <h2 id="从任何页面运行-debug-代码-snippets（片段）">从任何页面运行 debug 代码 Snippets（片段）</h2>
 <p>如果你发现你正在 Console 中反复运行一些 deubg 代码，那么可以考虑一下 Snippets。Snippets 是一种你可以存储在 Devtools 中并执行的脚本。</p>
@@ -689,7 +689,7 @@
 </blockquote>
 <h2 id="watch（监听）自定义的-javascript-表达式的值">Watch（监听）自定义的 JavaScript 表达式的值</h2>
 <p>使用 Watch 栏来监听自定义表达式的值。你可以监听任何有效的 JavaScript 表达式。</p>
-<p caption='监听JavaScript表达式'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/02D81797-A39F-4837-B402-648AA39E5C21_2.png' alt='监听JavaScript表达式' title='监听JavaScript表达式'></p>
+<p caption='监听JavaScript表达式'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/02D81797-A39F-4837-B402-648AA39E5C21_2.png' alt='监听JavaScript表达式' title='监听JavaScript表达式'></p>
 <p>图十四 👆🏻，蓝色圈住的即是 Watch 栏。</p>
 <ul>
 <li>
@@ -704,7 +704,7 @@
 </ul>
 <h2 id="格式化压缩后的代码以可读">格式化压缩后的代码以可读</h2>
 <p>点击 <code>Fromat &#123;&#125;</code> 来让一个压缩后的代码变成人类可读的格式。</p>
-<p caption='格式化压缩后的文件'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/572D9BCF-DC18-460E-8B23-62398391ED92_2.png' alt='格式化压缩后的文件' title='格式化压缩后的文件'></p>
+<p caption='格式化压缩后的文件'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/572D9BCF-DC18-460E-8B23-62398391ED92_2.png' alt='格式化压缩后的文件' title='格式化压缩后的文件'></p>
 <h2 id="编辑一个脚本">编辑一个脚本</h2>
 <p>当修复一个 bug 的时候，你经常会需要测试你的 JavaScript 代码的修改效果。你不要在一个外部的编辑器中编辑 JavaScript 代码后，再回到当前页面刷新后查看效果。你可以直接在 Devtools 中编辑你的 JavaScript 代码。</p>
 <p>如果想编辑脚本，你需要：</p>
@@ -719,7 +719,7 @@
 <p>按 <code>Cmmand + S</code> （Mac）或者 <code>Ctrl + S</code> （Windows，Linux）来保存修噶。Devtools 将会以打补丁的形式将整个 js 文件加入到 Chrome 的 JavaScript 引擎中去。</p>
 </li>
 </ol>
-<p caption='直接编辑js文件'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6DC1E149-D2D2-4005-A2B9-451CF0456112_2.png' alt='直接编辑js文件' title='直接编辑js文件'></p>
+<p caption='直接编辑js文件'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/6DC1E149-D2D2-4005-A2B9-451CF0456112_2.png' alt='直接编辑js文件' title='直接编辑js文件'></p>
 <p>上图中蓝框圈出来的就是编辑器栏。</p>
 <h2 id="实时编辑一个暂停的函数">实时编辑一个暂停的函数</h2>
 <blockquote>
@@ -753,7 +753,7 @@
 <p>继续执行</p>
 </li>
 </ol>
-<p caption='实时重新执行函数'><video controls muted><source src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/37CA2680-5D00-477F-A1CF-161AD18F2A5E_2.mp4' type='video/mp4' /></video></p>
+<p caption='实时重新执行函数'><video controls muted><source src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/37CA2680-5D00-477F-A1CF-161AD18F2A5E_2.mp4' type='video/mp4' /></video></p>
 <p>在这个示例中，<code>addend1</code> 和<code>addend2</code> 变量在起始的时候有一个不正确的 <code>string</code> 类型。因此，字符串被错误的连接在一起而不是数字相加。为了修复此问题，在实时编辑的时候添加了<code>parseInt()</code> 函数。</p>
 <h2 id="搜索和替换在脚本中的文本">搜索和替换在脚本中的文本</h2>
 <p>如果想要在脚本中搜索一段文本，你需要：</p>
@@ -780,7 +780,7 @@
 <p>按下 <code>Enter</code> 键来执行搜索。可以按下 up/down 来跳转到下一个/上一个搜索结果。</p>
 </li>
 </ol>
-<p caption='搜索字符'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6D3D4E4D-22CD-4095-8773-1DFD4F3089A5_2.png' alt='搜索字符' title='搜索字符'></p>
+<p caption='搜索字符'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/6D3D4E4D-22CD-4095-8773-1DFD4F3089A5_2.png' alt='搜索字符' title='搜索字符'></p>
 <p>如果想替换你搜索到的结果，你需要：</p>
 <ol>
 <li>
@@ -790,7 +790,7 @@
 <p>输入想要替换的文本，然后点击 <strong>Replce</strong> 或者 <strong>Replace all</strong> 即可。</p>
 </li>
 </ol>
-<p caption='按下替换按钮'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/4CFF9F79-2118-4DA6-AF12-1440A520C6F8_2.png' alt='按下替换按钮' title='按下替换按钮'></p>
+<p caption='按下替换按钮'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/4CFF9F79-2118-4DA6-AF12-1440A520C6F8_2.png' alt='按下替换按钮' title='按下替换按钮'></p>
 <h2 id="禁用-javascript">禁用 JavaScript</h2>
 <p>具体参见：<a href="https://developer.chrome.com/docs/devtools/javascript/disable/">Disable JavaScript With Chrome DevTools</a>（未翻译）。</p>
 

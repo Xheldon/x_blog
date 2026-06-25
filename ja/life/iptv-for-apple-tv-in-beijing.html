@@ -387,7 +387,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -516,7 +516,7 @@
 </li>
 </ul>
 <p>Openをクリックした後、北京衛視が見える場合、無料で視聴できることを意味します。</p>
-<p caption='VLC RTP 播放'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/ea9168ee-6086-42df-b6b4-269900eb5592.webp' alt='VLC RTP 播放' title='VLC RTP 播放'></p>
+<p caption='VLC RTP 播放'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/ea9168ee-6086-42df-b6b4-269900eb5592.webp' alt='VLC RTP 播放' title='VLC RTP 播放'></p>
 <p class='content-callout' style='background: rgb(251, 243, 219); color: ;'><span class='content-callout-icon'>💡</span><span>ここにある `rtp://239.3.1.241:8000` は北京衛星テレビのマルチキャストアドレスです。将来このアドレスは変更される可能性があります。正確なアドレスについては、`https://raw.githubusercontent.com/qwerttvv/Beijing-IPTV/master/IPTV-Unicom.m3u` こちらで任意の rtp パスの後にある IP アドレスをテストできます。</span></p>
 <h2 id="基本概念の説明">基本概念の説明</h2>
 <p>詳細を知りたくない場合は次のセクションに進んでください。</p>
@@ -563,49 +563,49 @@
 <h3 id="epg">EPG</h3>
 <p>番組表情報を含みます。前の手順で m3u アドレスを取得した後、その中には個々の IP アドレスが含まれていますが、各 IP アドレスがどのチャンネルに対応するかを知るにはどうすればよいでしょうか？この時、EPG を使用してペアリングする必要があります。EPG には各アドレスの番組情報や、チャンネルの簡単な説明さえ含まれています。EPG は通常、ビデオ信号と一緒に放送されます。</p>
 <h2 id="ネットワークトポロジー">ネットワークトポロジー</h2>
-<p caption='网络拓扑-主路由拨号'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/0349a1d5-caeb-4233-b36b-8bc1c7db7565.webp' alt='网络拓扑-主路由拨号' title='网络拓扑-主路由拨号'></p>
+<p caption='网络拓扑-主路由拨号'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/0349a1d5-caeb-4233-b36b-8bc1c7db7565.webp' alt='网络拓扑-主路由拨号' title='网络拓扑-主路由拨号'></p>
 <h2 id="実践操作">実践操作</h2>
 <p class='content-callout' style='background: rgb(251, 243, 219); color: ;'><span class='content-callout-icon'>🚧</span><span>始める前に、前述の内容を確認して無料で利用できるかどうかをチェックしてください。</span></p>
 <h3 id="ソフトウェアルーターの設定">ソフトウェアルーターの設定</h3>
 <p><strong>udpxy と luci-udpxy のインストール</strong></p>
 <p>この手順は通常の操作です。UIからのインストールが最も簡単です（インストール完了後、有効化する前に最後のステップまで進めてください）。</p>
-<p caption='软件安装界面'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/2be1ca35-90a8-4936-89cd-5458557ac064.webp' alt='软件安装界面' title='软件安装界面'></p>
+<p caption='软件安装界面'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/2be1ca35-90a8-4936-89cd-5458557ac064.webp' alt='软件安装界面' title='软件安装界面'></p>
 <p><strong>新しいネットワークインターフェースの作成/設定</strong></p>
 <p>この手順は、ソフトウェアルーターが光モデムからのデータを認識できるようにするためのものです。</p>
 <ul>
 <li><code>ネットワーク-インターフェース</code> で新しいインターフェースを作成し、任意の名前（例: <code>IPTV</code>）を付けます：</li>
 </ul>
-<p caption='新建 IPTV 接口'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/a938e2a7-9723-40f5-8b86-3ed151ba12c5.webp' alt='新建 IPTV 接口' title='新建 IPTV 接口'></p>
+<p caption='新建 IPTV 接口'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/a938e2a7-9723-40f5-8b86-3ed151ba12c5.webp' alt='新建 IPTV 接口' title='新建 IPTV 接口'></p>
 <p>矢印部分に注意してください。私はすでに新規作成したため、括弧内に「IPTV」という文字が表示されていますが、新規作成した直後は表示されていません。ここで、eth1は私のLANポートで、メインルーターに接続されています。eth0は別のインターフェースで、光回線終端装置（IPTVポート）に接続されています。ここで私は以前に設定を変更しました。デフォルトでは、eth0がLANポート、eth1がWANポートですが、これは重要ではありません。このステップでは、WANポートをIPTVポートとして使用します。</p>
 <ul>
 <li>「IPTV」インターフェースのゲートウェイホップ数とファイアウォール設定を構成する：</li>
 </ul>
-<p caption='配置网关跃点'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/d1df1f84-7240-4eb9-872b-6871f9c895a6.webp' alt='配置网关跃点' title='配置网关跃点'></p>
-<p caption='防火墙配置到 wan 上'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/c0e4032b-f066-4fcf-b906-dae85a37d070.webp' alt='防火墙配置到 wan 上' title='防火墙配置到 wan 上'></p>
+<p caption='配置网关跃点'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/d1df1f84-7240-4eb9-872b-6871f9c895a6.webp' alt='配置网关跃点' title='配置网关跃点'></p>
+<p caption='防火墙配置到 wan 上'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/c0e4032b-f066-4fcf-b906-dae85a37d070.webp' alt='防火墙配置到 wan 上' title='防火墙配置到 wan 上'></p>
 <ul>
 <li>WANポートのゲートウェイホップ数を設定：</li>
 </ul>
-<p caption='Wan 口网关跃点'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/21347824-ca57-4715-9fe9-cd7b6be0f282.webp' alt='Wan 口网关跃点' title='Wan 口网关跃点'></p>
+<p caption='Wan 口网关跃点'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/21347824-ca57-4715-9fe9-cd7b6be0f282.webp' alt='Wan 口网关跃点' title='Wan 口网关跃点'></p>
 <ul>
 <li>LANポートのIGMPスニッフィング設定：</li>
 </ul>
-<p caption='IGMP 嗅探'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/b075aaec-042b-4f9d-9437-27ea4d17211e.webp' alt='IGMP 嗅探' title='IGMP 嗅探'></p>
+<p caption='IGMP 嗅探'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/b075aaec-042b-4f9d-9437-27ea4d17211e.webp' alt='IGMP 嗅探' title='IGMP 嗅探'></p>
 <ul>
 <li>ネットワークファイアウォールの設定</li>
 </ul>
-<p caption='网络防火墙配置'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/577418eb-c3f6-43be-b73b-b1cf3ab5dcea.webp' alt='网络防火墙配置' title='网络防火墙配置'></p>
-<p caption='防火墙配置2'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/b3ce719b-a05d-41ef-ab4a-12eb866178a8.webp' alt='防火墙配置2' title='防火墙配置2'></p>
+<p caption='网络防火墙配置'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/577418eb-c3f6-43be-b73b-b1cf3ab5dcea.webp' alt='网络防火墙配置' title='网络防火墙配置'></p>
+<p caption='防火墙配置2'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/b3ce719b-a05d-41ef-ab4a-12eb866178a8.webp' alt='防火墙配置2' title='防火墙配置2'></p>
 <p><strong>udpxyサービスの設定</strong></p>
 <ul>
 <li>図のように設定してください。ここで注意すべきは、eth0がWANポートであることです。間違えないようにしてください：</li>
 </ul>
-<p caption='打开 UDPXY'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/bcd40c05-ed7f-43fd-b833-4cee94948150.webp' alt='打开 UDPXY' title='打开 UDPXY'></p>
+<p caption='打开 UDPXY'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/bcd40c05-ed7f-43fd-b833-4cee94948150.webp' alt='打开 UDPXY' title='打开 UDPXY'></p>
 <p>最後に [<a href="http://192.168.5.2:4022/status">http://192.168.5.2:4022/status</a>]([object Object]) を開いて、udpxy サービスが正常に起動しているかどうかを確認します：</p>
-<p caption='看到这个就表示成功了'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/189e9cb4-80c9-4b5d-8f57-722660e66145.webp' alt='看到这个就表示成功了' title='看到这个就表示成功了'></p>
+<p caption='看到这个就表示成功了'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/189e9cb4-80c9-4b5d-8f57-722660e66145.webp' alt='看到这个就表示成功了' title='看到这个就表示成功了'></p>
 <p>その後、以前にVLCで開いていたアドレス <code>rtp://239.3.1.241:8000</code> を `<a href="http://192.168.2.1:4022/rtp/239.3.1.241:8000%60%60">http://192.168.2.1:4022/rtp/239.3.1.241:8000``</a> に変更して再度開いてみてください（下にある「Open RTP/UDP Stream」をクリックせず、直接URLで開きます）。</p>
-<p caption='尝试将 RTP 变 HTTP 播放'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/582e015c-4260-4181-a81c-5eafc97a1132.webp' alt='尝试将 RTP 变 HTTP 播放' title='尝试将 RTP 变 HTTP 播放'></p>
+<p caption='尝试将 RTP 变 HTTP 播放'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/582e015c-4260-4181-a81c-5eafc97a1132.webp' alt='尝试将 RTP 变 HTTP 播放' title='尝试将 RTP 变 HTTP 播放'></p>
 <p>その後、ダブルクリックで再生できます：</p>
-<p caption='成功画面↑'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/215aa895-e673-419a-a4fc-b94603af8baa.webp' alt='成功画面↑' title='成功画面↑'></p>
+<p caption='成功画面↑'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/215aa895-e673-419a-a4fc-b94603af8baa.webp' alt='成功画面↑' title='成功画面↑'></p>
 <h3 id="再生ソフトウェアの使用">再生ソフトウェアの使用</h3>
 <p>私はApple TV 4Kでテレビを見ています。いくつかの再生ソフトウェアを試したので、簡単に説明します：</p>
 <ul>

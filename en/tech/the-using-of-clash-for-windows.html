@@ -379,7 +379,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -477,7 +477,7 @@
 <h2 id="preface">Preface</h2>
 <p>Clash is a powerful tool for [[N]]. At its core, it’s simply a command-line utility called Clash Core (though one could argue that all software is fundamentally command-line based). Developers have built various GUI interfaces around it to simplify configuration and usage. I’ve previously used ClashX on Mac and Clash For Windows For Mac (yes, you read that right), commonly referred to as CFW. For development convenience, its GUI is built on Electron, allowing it to be packaged for both Mac and Windows, making it extremely user-friendly.</p>
 <p>Currently, I’m using Clash For Windows.</p>
-<p caption='Clash for Windows For Mac 界面'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/958140EE-7CCB-4D5B-8CAD-1B6358AAAB57_2.webp' alt='Clash for Windows For Mac 界面' title='Clash for Windows For Mac 界面'></p>
+<p caption='Clash for Windows For Mac 界面'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/958140EE-7CCB-4D5B-8CAD-1B6358AAAB57_2.webp' alt='Clash for Windows For Mac 界面' title='Clash for Windows For Mac 界面'></p>
 <p>As per international convention, this article not only explains the purpose of common settings but also briefly covers how to update subscription links and switch nodes. This is to prevent certain individuals from bombarding me with complaints like: “Why can’t I access Behance again?!” “Why is bypassing restrictions so complicated?!” “You spent so much money on this ‘ladder’—why does it still suck?!” In such cases, I can just throw this article at them and get back to gaming.</p>
 <blockquote>
 <p>⚠️ Terminology note: [[N]] = bypassing restrictions.</p>
@@ -488,7 +488,7 @@
 </blockquote>
 <h3 id="geoip-database">GeoIP Database</h3>
 <p>This feature determines whether traffic should be routed through a proxy based on the geographical location of the IP address. It works by maintaining a local database for queries. Since IP addresses are constantly updated, this database also needs occasional (but infrequent) updates.</p>
-<p caption='GeoIP 数据库下载'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/F70734A2-11A9-43F7-BA74-BE599A4B4632_2.webp' alt='GeoIP 数据库下载' title='GeoIP 数据库下载'></p>
+<p caption='GeoIP 数据库下载'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/F70734A2-11A9-43F7-BA74-BE599A4B4632_2.webp' alt='GeoIP 数据库下载' title='GeoIP 数据库下载'></p>
 <h3 id="tun-mode">TUN Mode</h3>
 <p>Some applications, like Terminal, iTerm, or Infuse, don’t adhere to system proxy settings. TUN Mode solves this by intercepting their traffic and redirecting it through CFW.</p>
 <p>In my case, I use it to access Emby via Infuse. My Emby service requires a specific node from my airport subscription, but Infuse (apparently) uses its own request tool and bypasses the system proxy. Even with CFW set as the system proxy and the correct node selected, I couldn’t access the Emby service provided by the airport. Enabling TUN Mode fixed this.</p>
@@ -500,20 +500,20 @@
 <blockquote>
 <p>💡 Remember to disable the software’s Secure DNS feature for TUN Mode to function properly. If TUN Mode isn’t working, this setting might be the culprit.</p>
 </blockquote>
-<p caption='Chrome 关闭安全 DNS'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/F81A0395-B1AE-40AC-B414-15EB8E5714DE_2.webp' alt='Chrome 关闭安全 DNS' title='Chrome 关闭安全 DNS'></p>
+<p caption='Chrome 关闭安全 DNS'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/F81A0395-B1AE-40AC-B414-15EB8E5714DE_2.webp' alt='Chrome 关闭安全 DNS' title='Chrome 关闭安全 DNS'></p>
 <h3 id="parser">Parser</h3>
 <p>Also known as “Profile Preprocessing.”</p>
 <p>Sometimes, you may want to apply custom rules before CFW’s routing rules take effect. For instance, most users rely on airport subscription links, which come with predefined routing rules like “Global Direct,” “Global Block,” or “Leak Protection”:</p>
-<p caption='机场的内置分流规则'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/A4BA694C-B4B1-4964-9D6C-EFB8E3C12184_2.webp' alt='机场的内置分流规则' title='机场的内置分流规则'></p>
+<p caption='机场的内置分流规则'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/A4BA694C-B4B1-4964-9D6C-EFB8E3C12184_2.webp' alt='机场的内置分流规则' title='机场的内置分流规则'></p>
 <p>If you want to add custom rules—say, routing a specific link through a proxy—directly editing the downloaded profile will <strong>overwrite your changes</strong> when the subscription updates. This is where Parser comes in.</p>
 <p>In short, Parser applies your configured rules before the airport’s rules, merging them into the final effective rules. For example, I frequently visit a site with two domain sets: one for mainland users and another for overseas visitors. With TUN Mode enabled, the site identifies me as overseas, preventing access to the mainland version (where accounts aren’t shared). Using Parser, I can add the mainland domain and set it to direct access:</p>
-<p caption='只支持针对特定节点列表配置文件进行预处理'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/8B575173-C01D-4E41-8213-1540979CC691_2.webp' alt='只支持针对特定节点列表配置文件进行预处理' title='只支持针对特定节点列表配置文件进行预处理'></p>
+<p caption='只支持针对特定节点列表配置文件进行预处理'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/8B575173-C01D-4E41-8213-1540979CC691_2.webp' alt='只支持针对特定节点列表配置文件进行预处理' title='只支持针对特定节点列表配置文件进行预处理'></p>
 <p>However, the awkward part is that it only works for a specific YAML (i.e., the subscription node list mentioned below). Therefore, if you have multiple subscription node lists (airports), you’ll need to write multiple URLs.</p>
 <p>Update: The good news is that CFW now supports matching multiple subscription node lists with a single rule. You can use the <code>reg</code> field for regex matching. For example, here’s how I match all configuration files:</p>
-<p caption='reg 匹配多个 yaml 配置文件'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/01CDE02A-C3F4-48D1-B4D0-53E6A7C57D84_2.webp' alt='reg 匹配多个 yaml 配置文件' title='reg 匹配多个 yaml 配置文件'></p>
-<p caption='点击查看配置文件的Parser'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/71687212-4376-4A13-B7C6-304066D33D6F_2.webp' alt='点击查看配置文件的Parser' title='点击查看配置文件的Parser'></p>
+<p caption='reg 匹配多个 yaml 配置文件'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/01CDE02A-C3F4-48D1-B4D0-53E6A7C57D84_2.webp' alt='reg 匹配多个 yaml 配置文件' title='reg 匹配多个 yaml 配置文件'></p>
+<p caption='点击查看配置文件的Parser'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/71687212-4376-4A13-B7C6-304066D33D6F_2.webp' alt='点击查看配置文件的Parser' title='点击查看配置文件的Parser'></p>
 <p>Click on the subscription node list to view the corresponding Parser for that configuration.</p>
-<p caption='该 Parser 能匹配上配置文件'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/499B32EF-5C31-4E35-A0D4-B61198B8578C_2.webp' alt='该 Parser 能匹配上配置文件' title='该 Parser 能匹配上配置文件'></p>
+<p caption='该 Parser 能匹配上配置文件'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/499B32EF-5C31-4E35-A0D4-B61198B8578C_2.webp' alt='该 Parser 能匹配上配置文件' title='该 Parser 能匹配上配置文件'></p>
 <blockquote>
 <p>Note: Subscription conversion services may render the Parser ineffective.</p>
 </blockquote>
@@ -527,47 +527,47 @@
 <blockquote>
 <p>⚠️ <strong>Note: This feature is only suitable for injecting “<em><strong>functional attributes</strong></em>.” Additionally, rules in the mixin will override other rules in the airport subscription list! Therefore, you should only use the mixin to inject information like DNS settings and avoid setting rules, as doing so may invalidate the nodes in the airport subscription.</strong></p>
 </blockquote>
-<p caption='Mixin 设置'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/5BD8837D-D779-462F-8C7A-4E4AEC024B8B_2.webp' alt='Mixin 设置' title='Mixin 设置'></p>
+<p caption='Mixin 设置'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/5BD8837D-D779-462F-8C7A-4E4AEC024B8B_2.webp' alt='Mixin 设置' title='Mixin 设置'></p>
 <p>There’s another configuration entry in the Settings, where you can choose JavaScript-formatted Mixin settings. For details, refer to the documentation:</p>
-<p caption='Mixin 总设置'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/D1C4A8E9-A706-4CF1-A19F-FBD2DD439A34_2.webp' alt='Mixin 总设置' title='Mixin 总设置'></p>
+<p caption='Mixin 总设置'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/D1C4A8E9-A706-4CF1-A19F-FBD2DD439A34_2.webp' alt='Mixin 总设置' title='Mixin 总设置'></p>
 <h3 id="system-proxy">System Proxy</h3>
 <p>As the name suggests, this sets Clash as the system proxy. If turned off, some software that relies on the system proxy won’t be able to bypass restrictions, such as Safari. So, if you want Safari to bypass restrictions, make sure to enable System Proxy.</p>
 <h2 id="troubleshooting-when-bypassing-restrictions-fails">Troubleshooting When Bypassing Restrictions Fails</h2>
 <p>If you find that you can’t bypass restrictions when accessing websites that require it, follow these steps to troubleshoot:</p>
 <h3 id="step-1-check-proxies">Step 1: Check Proxies</h3>
 <p>Click the little cat icon in the menu bar.</p>
-<p caption='小猫咪被点击啦'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/FB1C6B63-F79E-424B-87E7-E3909A39697E_2.webp' alt='小猫咪被点击啦' title='小猫咪被点击啦'></p>
+<p caption='小猫咪被点击啦'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/FB1C6B63-F79E-424B-87E7-E3909A39697E_2.webp' alt='小猫咪被点击啦' title='小猫咪被点击啦'></p>
 <p>In the opened interface, click the <code>Proxies</code> tab, then select a node:</p>
-<p caption='点击节点选择会展开节点'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/3814EF32-EA61-4D8E-BB07-2414E4CF55AD_2.webp' alt='点击节点选择会展开节点' title='点击节点选择会展开节点'></p>
+<p caption='点击节点选择会展开节点'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/3814EF32-EA61-4D8E-BB07-2414E4CF55AD_2.webp' alt='点击节点选择会展开节点' title='点击节点选择会展开节点'></p>
 <blockquote>
 <p>💡 Auto-select: CFW will automatically choose an available node.</p>
 </blockquote>
 <p>Make sure the text next to the node selection says “Auto-select” (this should be the default, and you shouldn’t change it). Then, click “Speed Test” to check the speed of the currently auto-selected node:</p>
-<p caption='测速结果在右侧'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/F9BC2145-EE96-43CD-BABF-EE31506E35AE_2.webp' alt='测速结果在右侧' title='测速结果在右侧'></p>
+<p caption='测速结果在右侧'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/F9BC2145-EE96-43CD-BABF-EE31506E35AE_2.webp' alt='测速结果在右侧' title='测速结果在右侧'></p>
 <p>If the node is unavailable, it will show as <code>Timeout</code> timeout. If the latency is too high (e.g., 1000+), it will display in red, indicating slow bypass speed.</p>
 <h3 id="step-2-check-profiles">Step 2: Check Profiles</h3>
 <p>Typically, you should have multiple Profiles, like this:</p>
-<p caption='在多个节点列表中切换'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/0B0E0986-FEC8-4233-B5AB-8FB688E90654_2.webp' alt='在多个节点列表中切换' title='在多个节点列表中切换'></p>
+<p caption='在多个节点列表中切换'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/0B0E0986-FEC8-4233-B5AB-8FB688E90654_2.webp' alt='在多个节点列表中切换' title='在多个节点列表中切换'></p>
 <p>If the speed test in Step 1 shows all nodes as <code>Timeout</code>, consider switching to a different node list. In the image above, click a new block. If it turns green on the left, it means you’ve switched to that block’s node list. Then, repeat Step 1 to check if the node speeds are normal.</p>
 <p>Also, if the node list hasn’t been updated for a long time (the update time is shown in parentheses), click <code>Update All</code> to try updating. If it fails, switch to another block and click <code>Update All</code> to try updating again:</p>
-<p caption='更新节点列表'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/22A4E748-9C2C-4DC2-8641-EEC3BD0D6F7A_2.webp' alt='更新节点列表' title='更新节点列表'></p>
+<p caption='更新节点列表'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/22A4E748-9C2C-4DC2-8641-EEC3BD0D6F7A_2.webp' alt='更新节点列表' title='更新节点列表'></p>
 <blockquote>
 <p>Note: Don’t switch between node lists too quickly, as it may cause errors. After switching one, wait 3–4 seconds before switching another (if necessary).</p>
 </blockquote>
 <h3 id="step-3-disconnect-all-connections">Step 3: Disconnect All Connections</h3>
 <p>If the first two steps show no issues but you still can’t open the page, it might be because your browser is maintaining old connections and hasn’t re-established them through the proxy. In this case, go to the <code>Connections</code> tab in CFW, click “Disconnect All,” and refresh the page you couldn’t open:</p>
-<p caption='断开全部连接'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/FC7E6C7A-35B6-4004-92C6-E9ABE547CF7A_2.webp' alt='断开全部连接' title='断开全部连接'></p>
+<p caption='断开全部连接'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/FC7E6C7A-35B6-4004-92C6-E9ABE547CF7A_2.webp' alt='断开全部连接' title='断开全部连接'></p>
 <h2 id="adding-a-new-airport-subscription">Adding a New Airport Subscription</h2>
 <p>A new airport subscription refers to the “node list” mentioned above.</p>
 <p>In the <code>Profiles</code> tab, paste the link you obtained into the input box, then click <code>Download</code>. If the download is successful, you’ll see a prompt:</p>
-<p caption='添加新的节点列表'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/3F3F03C3-CE8A-4D96-9EA8-9237D4C55A35_2.webp' alt='添加新的节点列表' title='添加新的节点列表'></p>
+<p caption='添加新的节点列表'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/3F3F03C3-CE8A-4D96-9EA8-9237D4C55A35_2.webp' alt='添加新的节点列表' title='添加新的节点列表'></p>
 <h2 id="other">Other</h2>
 <h3 id="bypass-mode">Bypass Mode</h3>
 <p>Clash offers different proxy modes, such as Global, where all network traffic is proxied; Rule, where traffic is routed according to custom rules (some proxied, some direct); Direct, which means all traffic connects directly, equivalent to not using Clash at all; and Script, where you can write a JavaScript script to determine which connections are proxied and which are direct. These configurations can be switched here:</p>
-<p caption='切换富强方式'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/DC0BF45B-91D3-45DF-B230-254A2648EDD6_2.webp' alt='切换富强方式' title='切换富强方式'></p>
+<p caption='切换富强方式'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/DC0BF45B-91D3-45DF-B230-254A2648EDD6_2.webp' alt='切换富强方式' title='切换富强方式'></p>
 <h3 id="proxying-other-devices-on-the-local-network">Proxying Other Devices on the Local Network</h3>
 <p>Clash can proxy network traffic for other devices on the same local network segment, allowing devices that cannot natively support proxies to benefit from one. A typical use case is proxying Apple TV. Since the Apple TV system does not expose proxy-related interfaces, it cannot directly install proxy software like smartphones. Therefore, you either need to rely on a router-level proxy or set the proxy server on the device running Clash. Then, simply enable “Allow LAN” in Clash:</p>
-<p caption='允许本地局域网连接'><img src='https://static.xheldon.cn/img/in-post/2022/the-using-of-cfw/C48B8690-F44B-4465-9BF7-8A2F4960F904_2.webp' alt='允许本地局域网连接' title='允许本地局域网连接'></p>
+<p caption='允许本地局域网连接'><img src='https://static.xheldon.com/img/in-post/2022/the-using-of-cfw/C48B8690-F44B-4465-9BF7-8A2F4960F904_2.webp' alt='允许本地局域网连接' title='允许本地局域网连接'></p>
 <h3 id="what-is-a-proxy-subscription-link">What Is a Proxy Subscription Link?</h3>
 <p>A proxy subscription link is a URL provided by a proxy service (often called an “airport”). Clash parses this link to download a YAML-format configuration file, which instructs Clash on how to function.</p>
 

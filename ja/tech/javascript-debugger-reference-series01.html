@@ -379,7 +379,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -484,26 +484,26 @@
 <p>ブレークポイントの設定方法については<a href="https://developer.chrome.com/docs/devtools/javascript/breakpoints/">こちら</a>（英語、翻訳待ち）を参照してください。</p>
 <h3 id="マウスホバー時にクラス-関数のプロパティを確認する">マウスホバー時にクラス/関数のプロパティを確認する</h3>
 <p>コードの実行が一時停止している状態で、クラスや関数名にマウスをホバーさせると、そのプロパティをプレビューできます。</p>
-<p caption='1'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/EA456FA6-9331-41E3-96DC-3FCCFFA82C2E_2.png' alt='1' title='1'></p>
+<p caption='1'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/EA456FA6-9331-41E3-96DC-3FCCFFA82C2E_2.png' alt='1' title='1'></p>
 <h2 id="コードをステップ実行する">コードをステップ実行する</h2>
 <p>コードが一時停止した後、1行ずつコードを実行することで、呼び出しスタックや関連するプロパティの値を確認できます。</p>
 <h3 id="現在のコード行をスキップ（step-over）">現在のコード行をスキップ（Step over）</h3>
 <p>調査中の問題に関係ないコード行で、その行に関数が含まれている場合、<code>Step Over</code>をクリックするとその関数の中に入らずにコードの実行を続行できます。</p>
-<p caption='step_over'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/63AE5442-D0AD-46C5-8DB0-36452E2842D2_2.png' alt='step_over' title='step_over'></p>
+<p caption='step_over'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/63AE5442-D0AD-46C5-8DB0-36452E2842D2_2.png' alt='step_over' title='step_over'></p>
 <p>図1 👆🏻、上の画像の青い枠内にある <code>Step Over</code> の意味を説明します：</p>
 <p>例として、以下のコードをデバッグしていると仮定します：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">updateName</span>(name); <span class="hljs-comment">// D</span><br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// B</span><br>  <span class="hljs-keyword">return</span> name; <span class="hljs-comment">// C</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>この時、ブレークポイントは <code>A</code> の位置で停止しています。<strong>Step over</strong> をクリックすると、Devtools は「Step over」した位置にあるすべてのコードを実行します。上記の例では、「Step over」したのは A の位置にある getName 関数内の <code>B</code> と <code>C</code> の位置です。そのため、Devtools はコードを D の位置で停止させます。</p>
 <h3 id="現在のコード行に入る（step-into）">現在のコード行に入る（Step into）</h3>
 <p>ブレークポイントが調査対象の問題に関連する場所で停止しており、その場所に関数呼び出しが含まれている場合、<code>Step into</code> をクリックすることで、その関数をさらに詳しく検査できます。</p>
-<p caption='step_into'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/0B7F9CB7-7EA3-44A2-8808-8E23F9E0D786_2.png' alt='step_into' title='step_into'></p>
+<p caption='step_into'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/0B7F9CB7-7EA3-44A2-8808-8E23F9E0D786_2.png' alt='step_into' title='step_into'></p>
 <p>図2 👆🏻、上の図の青い枠内にある <code>Step into</code> の意味の説明:</p>
 <p>例として、以下のコードをデバッグしていると仮定します:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>(); <span class="hljs-comment">// A</span><br>  <span class="hljs-title function_">updateName</span>(name);<br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// B</span><br>  <span class="hljs-keyword">return</span> name;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>ブレークポイントが <code>A</code> の位置で停止している場合、<strong>Step into</strong> をクリックすると、Devtools はこの行のコードを実行し、<code>B</code> の位置で停止します。</p>
 <h3 id="現在のコード行から抜け出す（step-out）">現在のコード行から抜け出す（Step out）</h3>
 <p>調査中の問題に関連しない関数内部でブレークポイントが停止している場合、<strong>Step out</strong> をクリックすると、その関数内の残りのコードを実行して抜け出します。</p>
-<p caption='step_out'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6E97FB74-E73D-4189-9A21-3771A1DF27AF_2.png' alt='step_out' title='step_out'></p>
+<p caption='step_out'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/6E97FB74-E73D-4189-9A21-3771A1DF27AF_2.png' alt='step_out' title='step_out'></p>
 <p>図3 👆🏻、上の図の青い枠内にある <code>Step out</code> の意味を説明します：</p>
 <p>例として、以下のコードをデバッグしていると仮定します：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">updateHeader</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> day = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">getDay</span>();<br>  <span class="hljs-keyword">var</span> name = <span class="hljs-title function_">getName</span>();<br>  <span class="hljs-title function_">updateName</span>(name); <span class="hljs-comment">// C</span><br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> name = app.<span class="hljs-property">first</span> + <span class="hljs-string">&#x27; &#x27;</span> + app.<span class="hljs-property">last</span>; <span class="hljs-comment">// A</span><br>  <span class="hljs-keyword">return</span> name; <span class="hljs-comment">// B</span><br>&#125;<br></code></pre></td></tr></table></figure>
@@ -512,19 +512,19 @@
 <p>長い関数をデバッグしている場合、調査中の問題に関係のないコードが多く含まれていることがあります。</p>
 <p>これらの無関係な行を1つずつステップ実行することもできますが、このプロセスは退屈です。また、ブレークポイントを設定したいコード行にブレークポイントを設定し、<code>Resume Script Execution</code>（スクリプト実行を再開）を押すこともできますが、さらに速い方法があります。</p>
 <p>ブレークポイントを設定したいコード行を右クリックし、<strong>Continue to here</strong>（ここまで実行）を選択できます。DevTools はブレークポイントを再開し、その行までコードを実行した後、その行で停止します。</p>
-<p caption='continue_to_here'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/01C96466-2B8C-4088-9E66-7408708B0401_2.png' alt='continue_to_here' title='continue_to_here'></p>
+<p caption='continue_to_here'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/01C96466-2B8C-4088-9E66-7408708B0401_2.png' alt='continue_to_here' title='continue_to_here'></p>
 <p>図4 👆🏻 で <strong>Continue to here</strong> を選択します。</p>
 <h3 id="スクリプト実行の再開">スクリプト実行の再開</h3>
 <p><strong>Resume Script Execution</strong> をクリックすることで、ブレークポイントで一時停止した位置からコードの実行を再開できます。Devtools は次のブレークポイント（存在する場合）に達するまでコードを実行し続けます。</p>
-<p caption='resume_script_execution'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/E67463E2-9D01-48BB-A743-28A189DF68CD_2.png' alt='resume_script_execution' title='resume_script_execution'></p>
+<p caption='resume_script_execution'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/E67463E2-9D01-48BB-A743-28A189DF68CD_2.png' alt='resume_script_execution' title='resume_script_execution'></p>
 <p>図5 👆🏻、<strong>Resume Script Execution</strong> 、青枠部分。</p>
 <h4 id="強制実行">強制実行</h4>
 <p><strong>Resume Script Execution</strong> を長押しし、<strong>Force Script Execution</strong> を選択することで、残りのすべてのブレークポイントを無視し、コード全体を直接実行できます。</p>
-<p caption='force_script_execution'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DAB9BD94-70F7-4464-8609-3016E8B40A44_2.png' alt='force_script_execution' title='force_script_execution'></p>
+<p caption='force_script_execution'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/DAB9BD94-70F7-4464-8609-3016E8B40A44_2.png' alt='force_script_execution' title='force_script_execution'></p>
 <p>図六 👆🏻 で <strong>Force Script Execution</strong> を選択します。</p>
 <h3 id="現在のスレッドのコンテキストを変更する">現在のスレッドのコンテキストを変更する</h3>
 <p>デバッグが Web Worker または Service Worker に関連する場合、<strong>Threads</strong> バーに表示されるコンテキストリスト項目をクリックすることで、コンテキストを切り替えることができます。青い矢印は現在選択されているコンテキストを示しています。</p>
-<p caption='change_threads_context'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1474933D-3F44-4D93-9909-FF4245545704_2.png' alt='change_threads_context' title='change_threads_context'></p>
+<p caption='change_threads_context'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/1474933D-3F44-4D93-9909-FF4245545704_2.png' alt='change_threads_context' title='change_threads_context'></p>
 <p>図7 👆🏻の<strong>Threads</strong>（スレッド）欄、青枠の位置を参照してください。</p>
 <p>例として、次のようなシナリオを考えます。ブレークポイントがメインスクリプトとservice workerスクリプトの両方に存在する場合です。service worker内のローカル変数とグローバル変数を確認したいが、<strong>Source</strong>欄には現在メインスクリプトのコンテキストが表示されているとします。この時、<strong>Threads</strong>欄のservice workerエントリをクリックすることで、コンテキストを切り替えて目的の変数を確認できます。</p>
 <h2 id="ローカルスコープ、クロージャ、グローバルスコープの変数-プロパティを表示・編集する">ローカルスコープ、クロージャ、グローバルスコープの変数/プロパティを表示・編集する</h2>
@@ -537,13 +537,13 @@
 <p>列挙不可のプロパティは灰色で強調表示されます。</p>
 </li>
 </ul>
-<p caption='查看和修改变量'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/40A93D0F-ACA8-4128-A695-E502565253AD_2.png' alt='查看和修改变量' title='查看和修改变量'></p>
+<p caption='查看和修改变量'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/40A93D0F-ACA8-4128-A695-E502565253AD_2.png' alt='查看和修改变量' title='查看和修改变量'></p>
 <p>図八 👆🏻、<strong>Scope</strong>（スコープ）欄の青枠の位置。</p>
 <h2 id="現在のコールスタックを確認する">現在のコールスタックを確認する</h2>
 <p>コードの特定の行で停止している場合、<strong>Call Stack</strong> 欄を使用して、コード実行から現在の停止ポイントまでの関数コールスタックを確認できます。</p>
 <p>コードに非同期コードが含まれている場合は、<strong>Async</strong> チェックボックスをオンにして非同期関数コールスタックを有効にできます。</p>
 <p>エントリのいずれかをクリックすると、そのエントリが示す関数の呼び出し元にジャンプします。青色の矢印アイコンは、現在ハイライト表示されている関数を示しています。</p>
-<p caption='查看函数调用栈'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/1168318B-1CFA-493D-9AE6-2CF79930C58C_2.png' alt='查看函数调用栈' title='查看函数调用栈'></p>
+<p caption='查看函数调用栈'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/1168318B-1CFA-493D-9AE6-2CF79930C58C_2.png' alt='查看函数调用栈' title='查看函数调用栈'></p>
 <p>図九 👆🏻、<strong>Call Stack</strong>（コールスタック）欄の青枠の位置。</p>
 <blockquote>
 <p>注意：コードが特定の行で停止していない場合、Call Stack欄は空になります。</p>
@@ -562,7 +562,7 @@
 <p><strong>Call Stack</strong>欄で、関数を右クリックし、表示されるメニューから「Restart frame」（関数を最初から実行）を選択します。</p>
 </li>
 </ol>
-<p caption='重新执行断点所在的函数'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/DFF3FAC8-B00F-415A-A581-50A299F1884D_2.png' alt='重新执行断点所在的函数' title='重新执行断点所在的函数'></p>
+<p caption='重新执行断点所在的函数'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/DFF3FAC8-B00F-415A-A581-50A299F1884D_2.png' alt='重新执行断点所在的函数' title='重新执行断点所在的函数'></p>
 <p>再開フレームの実行方法を理解するために、以下のコードを想定します：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">value</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>  <span class="hljs-title function_">bar</span>(value);<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params">value</span>) &#123;<br>  value++;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>  <span class="hljs-keyword">debugger</span>;<br>&#125;<br><br><span class="hljs-title function_">foo</span>(<span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
 <p><code>foo</code> 関数は <code>0</code> を引数として受け取り、log でコンソールに出力した後、<code>bar()</code> 関数を呼び出します。対応して、<code>bar</code> 関数はこの値を1増加させます。</p>
@@ -578,26 +578,26 @@
 <p>現在のデバッガーが、その関数宣言の右側に現在の値 <code>value = 1</code> を表示することに気付くでしょう。</p>
 </li>
 </ul>
-<p caption='注意函数声明处右侧的值'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9111BA1D-AA80-4C2F-B54E-123FC66A5C17_2.png' alt='注意函数声明处右侧的值' title='注意函数声明处右侧的值'></p>
+<p caption='注意函数声明处右侧的值'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/9111BA1D-AA80-4C2F-B54E-123FC66A5C17_2.png' alt='注意函数声明处右侧的值' title='注意函数声明处右侧的值'></p>
 <ul>
 <li><code>bar()</code> 関数を最初から再実行します。</li>
 </ul>
-<p caption='重头执行bar'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/036AAE1B-CA41-4627-A9D6-A4F7E6302C0C_2.png' alt='重头执行bar' title='重头执行bar'></p>
+<p caption='重头执行bar'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/036AAE1B-CA41-4627-A9D6-A4F7E6302C0C_2.png' alt='重头执行bar' title='重头执行bar'></p>
 <ul>
 <li>
 <p><code>F9</code> を押すと、コードは値がインクリメントされる行を通過し、再度デバッガーで停止します。</p>
 <p>値が 2 に変わっていることに注意してください: <code>value = 2</code>。</p>
 </li>
 </ul>
-<p caption='重头执行debugger'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/09D36505-821B-4392-8DD3-BDE9D05F0210_2.png' alt='重头执行debugger' title='重头执行debugger'></p>
+<p caption='重头执行debugger'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/09D36505-821B-4392-8DD3-BDE9D05F0210_2.png' alt='重头执行debugger' title='重头执行debugger'></p>
 <ul>
 <li>それ以外にも、Scope欄で<code>value</code>の値をダブルクリックして編集し、任意の値に設定することもできます。</li>
 </ul>
-<p caption='双击编辑值'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9481CF99-8735-43A4-8A57-D2F953C289BC_2.png' alt='双击编辑值' title='双击编辑值'></p>
+<p caption='双击编辑值'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/9481CF99-8735-43A4-8A57-D2F953C289BC_2.png' alt='双击编辑值' title='双击编辑值'></p>
 <ul>
 <li><code>bar()</code> 関数を複数回実行してみると、値が増加し続けることがわかります。</li>
 </ul>
-<p caption='多次重复执行后值会一直增加'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/AEE7EEA3-2150-431B-980C-6FCF03527DC7_2.png' alt='多次重复执行后值会一直增加' title='多次重复执行后值会一直增加'></p>
+<p caption='多次重复执行后值会一直增加'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/AEE7EEA3-2150-431B-980C-6FCF03527DC7_2.png' alt='多次重复执行后值会一直增加' title='多次重复执行后值会一直增加'></p>
 <blockquote>
 <p>💡 驚き！なぜ <code>value</code> は <code>0</code> にリセットされないのか？</p>
 </blockquote>
@@ -610,9 +610,9 @@
 <ul>
 <li>ここで、<strong>Call Stack</strong> 内で <code>foo()</code> 関数を最初から実行します。</li>
 </ul>
-<p caption='重头执行foo函数'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/11D4B549-3006-4564-B92D-4D1727913D74_2.png' alt='重头执行foo函数' title='重头执行foo函数'></p>
+<p caption='重头执行foo函数'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/11D4B549-3006-4564-B92D-4D1727913D74_2.png' alt='重头执行foo函数' title='重头执行foo函数'></p>
 <p>注目してください、<code>value</code> が再び<code>0</code>に戻っています。</p>
-<p caption='value重新变为0'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/9F706F35-0041-41E3-BB4A-70A5BFFEFE06_2.png' alt='value重新变为0' title='value重新变为0'></p>
+<p caption='value重新变为0'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/9F706F35-0041-41E3-BB4A-70A5BFFEFE06_2.png' alt='value重新变为0' title='value重新变为0'></p>
 <blockquote>
 <p>💡 再び驚き！なぜ <code>value</code> が今回 <code>0</code> にリセットされたのでしょうか？</p>
 </blockquote>
@@ -621,7 +621,7 @@
 </blockquote>
 <h3 id="コールスタックの実行パスをコピーする">コールスタックの実行パスをコピーする</h3>
 <p><strong>Call Stack</strong> ペインの任意の場所で右クリックし、<strong>Copy Stack Trace</strong>（スタックトレースをコピー）を選択すると、現在のコールスタックがクリップボードにコピーされます。</p>
-<p caption='复制调用栈'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/7EF33B00-5F90-4D0D-8979-B18ED3CD1527_2.png' alt='复制调用栈' title='复制调用栈'></p>
+<p caption='复制调用栈'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/7EF33B00-5F90-4D0D-8979-B18ED3CD1527_2.png' alt='复制调用栈' title='复制调用栈'></p>
 <p>図十 👆🏻、<strong>Copy Stack Trace</strong> を選択します。</p>
 <p>コピーされる内容はおおよそ以下のようになります：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs other">getNumber1 (get-started.js:35)<br>inputsAreEmpty (get-started.js:22)<br>onClick (get-started.js:15)<br></code></pre></td></tr></table></figure>
@@ -642,7 +642,7 @@
 <p><strong>Add script to ignore list</strong>（スクリプトを無視リストに追加）を選択</p>
 </li>
 </ol>
-<p caption='忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/39DA9D92-C270-4705-8920-7BC248703936_2.png' alt='忽略脚本' title='忽略脚本'></p>
+<p caption='忽略脚本'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/39DA9D92-C270-4705-8920-7BC248703936_2.png' alt='忽略脚本' title='忽略脚本'></p>
 <p>図11 👆🏻、エディターバーからスクリプトを無視する方法。</p>
 <h3 id="call-stack（コールスタック）バーから特定のスクリプトを無視する">Call Stack（コールスタック）バーから特定のスクリプトを無視する</h3>
 <p>コールスタックから特定のスクリプトを無視したい場合、以下の手順を実行してください：</p>
@@ -654,7 +654,7 @@
 <p><strong>Add script to ignore list</strong> を選択します。</p>
 </li>
 </ol>
-<p caption='从调用栈中忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/73837AF8-CB34-4B72-AE5C-1B266E15B8EB_2.png' alt='从调用栈中忽略脚本' title='从调用栈中忽略脚本'></p>
+<p caption='从调用栈中忽略脚本'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/73837AF8-CB34-4B72-AE5C-1B266E15B8EB_2.png' alt='从调用栈中忽略脚本' title='从调用栈中忽略脚本'></p>
 <p>図12 👆🏻、Call Stack（コールスタック）から特定のスクリプトを無視する。</p>
 <h3 id="settings（設定）から特定のスクリプトを無視する">Settings（設定）から特定のスクリプトを無視する</h3>
 <blockquote>
@@ -678,8 +678,8 @@
 <p><strong>Add</strong>をクリックします。</p>
 </li>
 </ol>
-<p caption='devoools设置界面'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/54F9290D-CE6A-4630-9387-34DE7EA6266F_2.png' alt='devoools设置界面' title='devoools设置界面'></p>
-<p caption='devtools忽略脚本'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/65A0FE7C-D5BB-4329-B978-1C7184F6C1B6_2.png' alt='devtools忽略脚本' title='devtools忽略脚本'></p>
+<p caption='devoools设置界面'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/54F9290D-CE6A-4630-9387-34DE7EA6266F_2.png' alt='devoools设置界面' title='devoools设置界面'></p>
+<p caption='devtools忽略脚本'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/65A0FE7C-D5BB-4329-B978-1C7184F6C1B6_2.png' alt='devtools忽略脚本' title='devtools忽略脚本'></p>
 <p>図13 👆🏻、Settingからスクリプトを無視する。</p>
 <h2 id="任意のページからdebugコードsnippets（スニペット）を実行する">任意のページからdebugコードSnippets（スニペット）を実行する</h2>
 <p>Consoleで繰り返し実行しているdebugコードがある場合、Snippetsの利用を検討してみてください。SnippetsはDevtoolsに保存して実行できるスクリプトです。</p>
@@ -689,7 +689,7 @@
 </blockquote>
 <h2 id="watch（監視）でカスタムjavascript式の値を監視する">Watch（監視）でカスタムJavaScript式の値を監視する</h2>
 <p>Watchバーを使用してカスタム式の値を監視します。有効なJavaScript式であれば何でも監視できます。</p>
-<p caption='监听JavaScript表达式'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/02D81797-A39F-4837-B402-648AA39E5C21_2.png' alt='监听JavaScript表达式' title='监听JavaScript表达式'></p>
+<p caption='监听JavaScript表达式'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/02D81797-A39F-4837-B402-648AA39E5C21_2.png' alt='监听JavaScript表达式' title='监听JavaScript表达式'></p>
 <p>図14 👆🏻の青い丸で囲まれた部分が「Watch」欄です。</p>
 <ul>
 <li>
@@ -704,7 +704,7 @@
 </ul>
 <h2 id="圧縮されたコードを読みやすい形式に整形">圧縮されたコードを読みやすい形式に整形</h2>
 <p><code>Fromat &#123;&#125;</code>をクリックすると、圧縮されたコードが人間が読みやすい形式に整形されます。</p>
-<p caption='格式化压缩后的文件'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/572D9BCF-DC18-460E-8B23-62398391ED92_2.png' alt='格式化压缩后的文件' title='格式化压缩后的文件'></p>
+<p caption='格式化压缩后的文件'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/572D9BCF-DC18-460E-8B23-62398391ED92_2.png' alt='格式化压缩后的文件' title='格式化压缩后的文件'></p>
 <h2 id="スクリプトの編集">スクリプトの編集</h2>
 <p>バグを修正する際、JavaScriptコードの変更効果をテストする必要が頻繁にあります。外部エディタでJavaScriptコードを編集し、ページを再読み込みして効果を確認する必要はありません。Devtools内で直接JavaScriptコードを編集できます。</p>
 <p>スクリプトを編集するには、以下の手順に従ってください:</p>
@@ -719,7 +719,7 @@
 <p><code>Command + S</code>（Mac）または <code>Ctrl + S</code>（Windows、Linux）を押して変更を保存します。Devtoolsはパッチ形式でjsファイル全体をChromeのJavaScriptエンジンに適用します。</p>
 </li>
 </ol>
-<p caption='直接编辑js文件'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6DC1E149-D2D2-4005-A2B9-451CF0456112_2.png' alt='直接编辑js文件' title='直接编辑js文件'></p>
+<p caption='直接编辑js文件'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/6DC1E149-D2D2-4005-A2B9-451CF0456112_2.png' alt='直接编辑js文件' title='直接编辑js文件'></p>
 <p>上の図で青い枠で囲まれている部分がエディターバーです。</p>
 <h2 id="一時停止中の関数をリアルタイムで編集する">一時停止中の関数をリアルタイムで編集する</h2>
 <blockquote>
@@ -753,7 +753,7 @@
 <p>実行を続行します</p>
 </li>
 </ol>
-<p caption='实时重新执行函数'><video controls muted><source src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/37CA2680-5D00-477F-A1CF-161AD18F2A5E_2.mp4' type='video/mp4' /></video></p>
+<p caption='实时重新执行函数'><video controls muted><source src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/37CA2680-5D00-477F-A1CF-161AD18F2A5E_2.mp4' type='video/mp4' /></video></p>
 <p>この例では、<code>addend1</code> と <code>addend2</code> 変数が最初に誤って <code>string</code> 型として扱われています。その結果、数値の加算ではなく文字列が連結されてしまいます。この問題を修正するために、<code>parseInt()</code> 関数がリアルタイム編集時に追加されました。</p>
 <h2 id="スクリプト内のテキストを検索・置換する">スクリプト内のテキストを検索・置換する</h2>
 <p>スクリプト内で特定のテキストを検索したい場合、以下の手順を実行します：</p>
@@ -780,7 +780,7 @@
 <p><code>Enter</code> キーを押して検索を実行します。上下キーで次の/前の検索結果に移動できます。</p>
 </li>
 </ol>
-<p caption='搜索字符'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/6D3D4E4D-22CD-4095-8773-1DFD4F3089A5_2.png' alt='搜索字符' title='搜索字符'></p>
+<p caption='搜索字符'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/6D3D4E4D-22CD-4095-8773-1DFD4F3089A5_2.png' alt='搜索字符' title='搜索字符'></p>
 <p>検索結果を置換したい場合、以下の手順を実行してください：</p>
 <ol>
 <li>
@@ -790,7 +790,7 @@
 <p>置換したいテキストを入力し、<strong>Replace</strong> または <strong>Replace all</strong> をクリックします。</p>
 </li>
 </ol>
-<p caption='按下替换按钮'><img src='https://static.xheldon.cn/img/in-post/2022/javascript-debugger-reference-series01/4CFF9F79-2118-4DA6-AF12-1440A520C6F8_2.png' alt='按下替换按钮' title='按下替换按钮'></p>
+<p caption='按下替换按钮'><img src='https://static.xheldon.com/img/in-post/2022/javascript-debugger-reference-series01/4CFF9F79-2118-4DA6-AF12-1440A520C6F8_2.png' alt='按下替换按钮' title='按下替换按钮'></p>
 <h2 id="javascriptの無効化">JavaScriptの無効化</h2>
 <p>詳細はこちら：<a href="https://developer.chrome.com/docs/devtools/javascript/disable/">Disable JavaScript With Chrome DevTools</a>（未翻訳）。</p>
 

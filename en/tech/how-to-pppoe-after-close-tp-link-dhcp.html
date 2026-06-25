@@ -387,7 +387,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -510,9 +510,9 @@
 <p><a class='link-bookmark' href='https://www.chiphell.com/forum.php?mod=viewthread&tid=2521336&highlight=&mobile=no' target='_blank'><span data-bookmark-img='' data-bookmark-title='请'><img src=''/></span><span><span> 请教各位大佬关于华硕和tplink路由器关闭dhcp设置的问题 - 电脑讨论(新) -  Chiphell - 分享与交流用户体验</span><span> Question for the experts about ASUS and TP-Link router DHCP settings, Hi everyone, I’ve been struggling with this all afternoon. My current setup is: modem (router mode, can’t switch to bridge) → AC86U → Mac mini (as a side router). Today I replaced it with a TP-Link XDR6088, ..., Computer Discussion (New), Discussion Forum - Life & Tech Exchange, Chiphell - Sharing and Discussing User Experiences</span><span> https://www.chiphell.com/forum.php?mod=viewthread&tid=2521336&highlight=&mobile=no</span></span></a></p>
 <h2 id="current-situation">Current Situation</h2>
 <blockquote style='border-color: ;color: '><p> Note: Before proceeding, back up your TP-Link (here referring to my XDR-5480 model) router settings to avoid losing configurations if you make a mistake and can’t access the router. Simply export the settings as shown below. Note that the exported config won’t include port or network settings—a thoughtful design by TP-Link’s product team to prevent importing faulty configurations after a reset. Kudos to them! </p></blockquote>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e6-9e16-eb66a08e2ff7.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e6-9e16-eb66a08e2ff7.webp' alt='' title=''></p>
 <h3 id="network-topology-diagram">Network Topology Diagram:</h3>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8003-89a9-e3f05024c8b5.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8003-89a9-e3f05024c8b5.webp' alt='' title=''></p>
 <h3 id="goal">Goal</h3>
 <p>Without changing the current connection method or subnet of any device (to avoid complaints), use Mac Studio’s Surge as the gateway to manage DHCP services.</p>
 <h3 id="challenges">Challenges</h3>
@@ -532,36 +532,36 @@
 </ol>
 <h2 id="solution">Solution</h2>
 <p>Given the above goals and challenges, “Friends, take notes—here’s my deployment plan”:</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80ce-8790-d3cef3ef7d8f.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80ce-8790-d3cef3ef7d8f.webp' alt='' title=''></p>
 <h3 id="step-1-power-off-the-modem">Step 1: Power Off the Modem</h3>
 <blockquote style='border-color: ;color: '><p> Technically, just disconnecting the modem from the TP-Link suffices. I suggest powering it off to prevent accidentally connecting to the modem’s WiFi. If you’ve forgotten the modem’s WiFi network, simply disconnecting the modem from the TP-Link is enough. </p></blockquote>
 <p>Let’s not configure the optical modem first to prevent its DHCP service from being detected by Surge, which would otherwise prevent Surge from enabling its own DHCP service. Additionally, since the connection between the optical modem and the TP-Link router has already been disabled, when we proceed to turn off the TP-Link’s DHCP service in the next step, the TP-Link won’t automatically detect the DHCP service of the upstream router and change its own LAN port IP anymore.</p>
 <h3 id="step-2-disable-the-router’s-dhcp-service">Step 2: Disable the Router’s DHCP Service</h3>
 <p>Simply turn it off in the settings. Here, we select “Disable.” After the setup is successful, we’ll change it back to “Auto” later. The reason for switching to “Auto” is for network robustness, which I’ll explain further on.</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-804e-a69d-edb6a6eaabc1.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-804e-a69d-edb6a6eaabc1.webp' alt='' title=''></p>
 <h3 id="step-3-enable-surge-dhcp">Step 3: Enable Surge DHCP</h3>
 <p>This step can be accessed from either the “Overview” or “Devices” tab in Surge:</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8091-83b9-e144224f35d5.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8091-83b9-e144224f35d5.webp' alt='' title=''></p>
 <p>It will prompt you that Surge will change your Mac’s IP address to manual and fixed. In my case, it’s <code>192.168.5.100</code>. There are plenty of tutorials online for this, and since you’ve made it this far, you likely know how to set it up, so I won’t elaborate here.</p>
 <p>One thing to note is that it will display the router’s address as <code>192.168.5.1</code>, with the address pool ranging from <code>192.168.5.100</code> to <code>192.168.5.200</code>. I expanded the address pool to <code>192.168.5.2</code> to <code>192.168.5.254</code> for a broader range.</p>
 <h3 id="step-4-find-the-new-router-address">Step 4: Find the New Router Address</h3>
 <p>After setting up Surge, if you try to access the router at <code>192.168.5.1</code>, you’ll find it’s no longer reachable! Don’t panic—because your Mac Studio is now the DHCP server, it will “somehow” assign a new IP address to your TP-Link router (why this happens, I have no idea). Click on “Devices,” look for the one labeled “Hostname Unsuitable for Printing” (it might not be exactly this), and access it via the address bar. You’ll see the familiar router interface again! In my case, the new router IP address is <code>192.168.5.114</code>.</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-809d-894e-fbe831126b06.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-809d-894e-fbe831126b06.webp' alt='' title=''></p>
 <h3 id="step-5-modify-the-router’s-lan-port-and-enable-pppoe">Step 5: Modify the Router’s LAN Port and Enable PPPoE</h3>
 <p>At this point, you won’t have internet access because your optical modem isn’t even powered on! Now you can power on the optical modem, wait a few minutes, and you’ll still find that clicking <code>Wan 口已经断开连接</code> in the router settings does nothing.</p>
 <p>But don’t give up! Think about it: isn’t your Studio’s role now similar to when you were tinkering with a soft router? Back then, the optical modem handled the PPPoE dial-up, while the soft router was plugged into the main router or optical modem and managed the DHCP service. Now, my friend, you’ve moved the dial-up device to the router, and your Studio is connected to the main router, effectively turning your Studio into a soft router that handles the DHCP service itself.</p>
 <p>The key step here is to manually set the TP-Link’s LAN port IP address to <code>192.168.5.1</code> in the settings (otherwise, there won’t be any device on the network with the <code>192.168.5.1</code> IP address)!</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e0-8bb3-f208b1f9c874.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e0-8bb3-f208b1f9c874.webp' alt='' title=''></p>
 <p>After manually setting the LAN port IP (even though it’s called a LAN port, it’s connected to the optical modem and can handle PPPoE dial-up!), go back to the internet settings and click “Connect.” You might need to click it 4 or 5 times because the first dial-up attempt can take a while, but it will eventually succeed.</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8092-a5bc-cc3e8f728305.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8092-a5bc-cc3e8f728305.webp' alt='' title=''></p>
 <h3 id="step-6-final-steps">Step 6: Final Steps</h3>
 <p>At this point, your setup is complete. Now, you need to right-click on connected devices, select “Set Surge as their gateway,” and then reconnect the devices to the network:</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8044-b913-da4aafc3219f.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8044-b913-da4aafc3219f.webp' alt='' title=''></p>
 <p>You can also enable “Set Surge as the default gateway for new devices”:</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80fc-9142-f5520e0a2756.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80fc-9142-f5520e0a2756.webp' alt='' title=''></p>
 <p>Now, all your devices will treat Surge as the gateway, allowing you to monitor their real-time traffic.</p>
 <p>Remember how I mentioned in Step 2 that we disabled the TP-Link’s DHCP service? Now you can go back to the TP-Link and change the DHCP service to “Auto.” This is a fail-safe: <strong>if Surge’s DHCP service crashes or your Mac fails, you and your household devices can still access the internet, and you, my friend, won’t get yelled at!</strong> This is because the TP-Link’s “Auto” setting will detect the LAN’s DHCP service—if none exists, it will enable its own DHCP; if one exists, it will disable it:</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-805c-98c5-e3895ef7dfe0.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-805c-98c5-e3895ef7dfe0.webp' alt='' title=''></p>
 <p>Note: If you click “Disable” and save, your router’s address will revert to <code>192.168.5.114</code>, and you won’t be able to modify it (because you’ve connected the optical modem and disabled DHCP, triggering the issues mentioned earlier in the tricky parts). In this case, you’ll need to start over from the beginning (by powering off the optical modem).</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>That’s it! Along the way, I encountered some odd issues and made a few failed attempts—like why I thought of powering off the optical modem first, setting up the router, and then turning it back on.</p>

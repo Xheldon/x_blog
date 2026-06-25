@@ -377,7 +377,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -466,7 +466,7 @@
         </div>
           <h2 id="前言">前言</h2>
 <p>最近新买了 Mac Studio，配备了 M1 Max 芯片和 64G 的内存，性能非常强。与此同时，之前的 <a href="/tech/my-blog-ci-in-2022.html">博客处理流程</a> 中，因为需要使用 Github Action 将从 Craft 拉取的图片（这一步很快，毕竟二者都在国外），往腾讯云 COS 传的时候，经常遇到网络过慢的问题</p>
-<p caption='SCR-20220502-q47'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/FBB4B556-8472-4C92-8EFD-E07015DC5FBB_2.webp' alt='SCR-20220502-q47' title='SCR-20220502-q47'></p>
+<p caption='SCR-20220502-q47'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/FBB4B556-8472-4C92-8EFD-E07015DC5FBB_2.webp' alt='SCR-20220502-q47' title='SCR-20220502-q47'></p>
 <p>调研了一番发现，Github 貌似 <a href="https://github.community/t/is-there-a-way-to-specify-virtual-machine-region/120438">不支持设置 Action 服务器的区域</a>。鉴于此，所以打算之后将发布流程放到本地，，以加快构建流程，遂有此文。下面的 AppleScript 简称 AS。</p>
 <h2 id="为什么用-applescript-而不是其他？">为什么用 AppleScript 而不是其他？</h2>
 <p>首先，我当然是想尽可能的缩短操作路径和复杂度，因此先规定了操作步骤：</p>
@@ -484,7 +484,7 @@
 <p>由于需要在一个 App 中通过链接调用另一个 App，因此使用 AppleScript 是唯一选择。不过，虽然使用的是 AS，但是其实执行的还是已有的 js 文件，只是将 <a href="https://github.com/Xheldon/craft_publish_ci/blob/master/.github/workflows/publish.yml">craft_publish_ci 中的 workflow 任务</a> 挪到了本地执行而已。</p>
 <h2 id="applescript-简介">AppleScript 简介</h2>
 <p>概念图：</p>
-<p caption='execute_script_2x'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/6C1FA0DD-5875-4C15-BCA8-495B34F5F699_2.webp' alt='execute_script_2x' title='execute_script_2x'></p>
+<p caption='execute_script_2x'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/6C1FA0DD-5875-4C15-BCA8-495B34F5F699_2.webp' alt='execute_script_2x' title='execute_script_2x'></p>
 <h3 id="applescript-能做什么">AppleScript 能做什么</h3>
 <ol>
 <li>
@@ -511,21 +511,21 @@
 </ul>
 <h3 id="applescript-的形式">AppleScript 的形式</h3>
 <p>AppleScript 常用的有两种形式，Script（脚本）、Application（应用），这里只介绍前两种，Script bundle 和 Text 我没用这里不展开。</p>
-<p caption='SCR-20220502-qqc'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/08F57517-C6AC-49C1-9B5E-9606F2DD2A8E_2.webp' alt='SCR-20220502-qqc' title='SCR-20220502-qqc'></p>
+<p caption='SCR-20220502-qqc'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/08F57517-C6AC-49C1-9B5E-9606F2DD2A8E_2.webp' alt='SCR-20220502-qqc' title='SCR-20220502-qqc'></p>
 <blockquote>
 <p>注：这里需要说明一点的是，即使是相同的代码，保存成脚本运行和保存成应用运行，界面是不一样的。</p>
 </blockquote>
 <h4 id="脚本">脚本</h4>
 <p>脚本顾名思义就是像 js 一样的可执行文件，不同的是 as 是在 Mac 桌面环境执行，而 js 是在 Chrome 中执行的。双击即可运行。下图是脚本 process 显示进度的界面，通过点击脚本右上角的「运行」按钮运行：</p>
-<p caption='SCR-20220502-r3e'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/A8E4D5D2-C4A6-4E6D-80DA-7E3A0EFA7D41_2.webp' alt='SCR-20220502-r3e' title='SCR-20220502-r3e'></p>
+<p caption='SCR-20220502-r3e'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/A8E4D5D2-C4A6-4E6D-80DA-7E3A0EFA7D41_2.webp' alt='SCR-20220502-r3e' title='SCR-20220502-r3e'></p>
 <h4 id="应用">应用</h4>
 <p>保存成 Application 的 AS 的后缀名跟普通的应用如 Safari、Chrome、微信等应用一样，会以 <code>.app</code> 结尾，也可以查看包内容。有多种运行方式如 URL Scheme 调用、双击、拖拽内容到 app 图标上，你需要写相关的事件函数来响应相关用户操作。下图是 应用 process 显示进度的界面，通过双击 「xxx.app」运行：</p>
-<p caption='SCR-20220502-r33'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/E0B4F2DA-21AA-4EF1-B059-9C500E18B67C_2.webp' alt='SCR-20220502-r33' title='SCR-20220502-r33'></p>
+<p caption='SCR-20220502-r33'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/E0B4F2DA-21AA-4EF1-B059-9C500E18B67C_2.webp' alt='SCR-20220502-r33' title='SCR-20220502-r33'></p>
 <h4 id="其他">其他</h4>
 <p>除了上述两者，其他的不常用，不过如果你需要将 script 保存成服务以在状态栏或者任意界面的右键的服务中能够调用该脚本，这需要上述两者之外的形式：</p>
-<p caption='SCR-20220502-rcr'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/D09A2EEB-72DC-4CA1-8812-59E4BC4206DB_2.webp' alt='SCR-20220502-rcr' title='SCR-20220502-rcr'></p>
+<p caption='SCR-20220502-rcr'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/D09A2EEB-72DC-4CA1-8812-59E4BC4206DB_2.webp' alt='SCR-20220502-rcr' title='SCR-20220502-rcr'></p>
 <p>你可以选择将脚本保存成系统 Service，此时上述 process 代码运行的时候，进度条会显示在顶部状态栏：</p>
-<p caption='scriptmenu_progress_2x'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/B936F8C6-DCA3-4B98-B995-7F4F3F013E74_2.webp' alt='scriptmenu_progress_2x' title='scriptmenu_progress_2x'></p>
+<p caption='scriptmenu_progress_2x'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/B936F8C6-DCA3-4B98-B995-7F4F3F013E74_2.webp' alt='scriptmenu_progress_2x' title='scriptmenu_progress_2x'></p>
 <h2 id="常用操作代码">常用操作代码</h2>
 <blockquote>
 <p>以下操作基于「应用」类型的 AS，下列的语法在终端中使用 <code>osascript -e '语法内容'</code> 可以快速验证。需要注意的是，类似于多行的表达如 process 进度条的显示，osascript 是没办法做到的，虽然你可以在很多多行命令如 <code>tell</code> 中使用多个 <code>-e</code> 参数来串联如 <code>osascript -e ‘tell application “Finder”’ -e ‘end tell’</code> ，但是此语法对 process 进度条无效。</p>
@@ -533,13 +533,13 @@
 <h3 id="用户交互">用户交互</h3>
 <h4 id="在通知中心显示信息">在通知中心显示信息</h4>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">display notification <span class="hljs-string">&quot;通知内容&quot;</span> <span class="hljs-keyword">with</span> title <span class="hljs-string">&quot;通知 title&quot;</span> subtitle <span class="hljs-string">&quot;通知副标题&quot;</span><br></code></pre></td></tr></table></figure>
-<p caption='SCR-20220502-sfl'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/AC96218F-E238-4695-9220-7933C27BC841_2.webp' alt='SCR-20220502-sfl' title='SCR-20220502-sfl'></p>
+<p caption='SCR-20220502-sfl'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/AC96218F-E238-4695-9220-7933C27BC841_2.webp' alt='SCR-20220502-sfl' title='SCR-20220502-sfl'></p>
 <h4 id="弹窗">弹窗</h4>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">display dialog <span class="hljs-string">&quot;这是个通知&quot;</span><br></code></pre></td></tr></table></figure>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/B945A1B9-4704-4F39-9A68-C0287846A061_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/B945A1B9-4704-4F39-9A68-C0287846A061_2.webp' alt='Image' title='Image'></p>
 <h4 id="获取用户输入">获取用户输入</h4>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">display dialog <span class="hljs-string">&quot;What&#x27;s your name?&quot;</span> <span class="hljs-keyword">default</span> answer <span class="hljs-string">&quot;&quot;</span> <span class="hljs-keyword">with</span> icon note buttons &#123;<span class="hljs-string">&quot;取消&quot;</span>, <span class="hljs-string">&quot;确认&quot;</span>&#125; <span class="hljs-keyword">default</span> button <span class="hljs-string">&quot;确认&quot;</span><br></code></pre></td></tr></table></figure>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/F4002573-AD3C-4D4E-BF98-9B6696788442_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/F4002573-AD3C-4D4E-BF98-9B6696788442_2.webp' alt='Image' title='Image'></p>
 <blockquote>
 <p>注：AS 没有办法生成类似表单一样的组件，只能生成上面这种对话框，类似网页中的 prompt</p>
 </blockquote>
@@ -557,11 +557,11 @@
 <h3 id="获取上一个语句的输出结果">获取上一个语句的输出结果</h3>
 <p>直接在上一句语句后立即使用 <code>result</code> 表示结果即可：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">do</span> shell script <span class="hljs-string">&quot;echo $PATH&quot;</span><br>display dialog result <span class="hljs-keyword">with</span> title <span class="hljs-string">&quot;通知&quot;</span><br></code></pre></td></tr></table></figure>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/6214E292-E4CB-49BC-B8D2-945C135E5B45_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/6214E292-E4CB-49BC-B8D2-945C135E5B45_2.webp' alt='Image' title='Image'></p>
 <h3 id="显示调试信息">显示调试信息</h3>
 <p>直接使用 <code>log</code> 语句即可，然后在 <code>Script Editor</code> 下方的 <code>Replies</code> 中获取输出信息，可以在这里看到 <code>shell script</code> 命令执行的过程中，脚本向控制台输出的内容，如执行 js 脚本的时候的 <code>console.log</code> 等。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">log <span class="hljs-keyword">do</span> shell script <span class="hljs-string">&quot;echo $PATH&quot;</span><br></code></pre></td></tr></table></figure>
-<p caption='SCR-20220502-sov'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/1089533E-DE38-418F-A20C-592669941C2D_2.webp' alt='SCR-20220502-sov' title='SCR-20220502-sov'></p>
+<p caption='SCR-20220502-sov'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/1089533E-DE38-418F-A20C-592669941C2D_2.webp' alt='SCR-20220502-sov' title='SCR-20220502-sov'></p>
 <h3 id="显示进度">显示进度</h3>
 <p>显示进度用到 progress ，语句相对来说比较复杂，因为需要显示不同的状态进度，需要多行：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript">set progress total steps to <span class="hljs-number">3</span><br>set progress completed steps to <span class="hljs-number">0</span><br>set progress description to <span class="hljs-string">&quot;处理中...&quot;</span><br>delay <span class="hljs-number">1</span><br>set progress completed steps to <span class="hljs-number">1</span><br>delay <span class="hljs-number">1</span><br>set progress completed steps to <span class="hljs-number">2</span><br>delay <span class="hljs-number">1</span><br>set progress completed steps to <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
@@ -571,23 +571,23 @@
 <p><code>n</code> 表示秒数，支持小数。一般用来模拟用户操作的时候的延迟操作，否则可能因为脚本操作过快页面还未来得及显示等。一些奇怪的问题也可以通过延迟执行来解决，此语句可以类比于 <code>js</code> 中的 <code>setTimeout</code> 大法。</p>
 <h3 id="调用其他应用">调用其他应用</h3>
 <p>注意，此处会有系统警告，需要你确认才能执行:</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/898D7F67-700E-40F2-AC6C-D999F5543578_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/898D7F67-700E-40F2-AC6C-D999F5543578_2.webp' alt='Image' title='Image'></p>
 <p>确认后可以在<code>设置-安全与隐私-隐私-自动化</code>中确认：</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/47444D53-68E4-4518-87FD-521AE42B737F_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/47444D53-68E4-4518-87FD-521AE42B737F_2.webp' alt='Image' title='Image'></p>
 <p>可以调用其他应用来执行相应的操作，下面是唤起 <code>Terminal</code> 应用后，激活然后执行命令：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript">tell application <span class="hljs-string">&quot;Terminal&quot;</span><br> <span class="hljs-keyword">if</span> not (exists <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>) then reopen<br> activate<br> <span class="hljs-keyword">do</span> script <span class="hljs-string">&quot;echo $PATH&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span><br>end tell<br></code></pre></td></tr></table></figure>
 <p>此语句做了一个判断，如果第一个打开的窗口存在，则激活之，然后在其内执行命令（<code>do script</code> ）；如果不存在的话则会新建一个窗口然后在其内执行命令。因为每个 <code>do script</code> 都会打开一个新的 Terminal 这个判断可以保证复用窗口。不过需要注意的是，如果 <code>window 1</code> 内已经有一个已经存在的进程（如 server 未中断），那么这个命令是不会执行的，还需要额外的判断，此处不展开。</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/8701C38B-8CE9-479A-816A-9126692B313D_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/8701C38B-8CE9-479A-816A-9126692B313D_2.webp' alt='Image' title='Image'></p>
 <h3 id="响应-url-scheme">响应 URL Scheme</h3>
 <p>有些时候你不想先找到 AS 脚本，然后双击运行；或者有时候你需要从另一个应用中调起你写的 AS 应用，这个时候就用到了 URL Scheme，少数派有 <a href="https://sspai.com/post/31500">一篇介绍</a>，可以看看。</p>
 <p>首先你需要修改 <code>Info.plist</code> 文件，可以在 Script Editor 的右侧，右键 「显示在 Finder」 中：</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/E1F3DFE5-54E3-4615-9A74-1B084686CC37_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/E1F3DFE5-54E3-4615-9A74-1B084686CC37_2.webp' alt='Image' title='Image'></p>
 <p>然后向上一级，可以看到该文件：</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/DE5F9B08-4F60-4B2A-9645-DF37B420C96B_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/DE5F9B08-4F60-4B2A-9645-DF37B420C96B_2.webp' alt='Image' title='Image'></p>
 <p>内容是一个类似 XML 的东西编辑之，在其内加入如下字段：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">array</span>&gt;</span><br> <span class="hljs-tag">&lt;<span class="hljs-name">dict</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>CFBundleURLName<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>Open File<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>CFBundleURLSchemes<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">array</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>xhelper<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">array</span>&gt;</span><br> <span class="hljs-tag">&lt;/<span class="hljs-name">dict</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">array</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>然后确认一下，用 XCode 打开该文件可以看到类似的条目：</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/901047E8-38AA-4B9C-BA60-680EC60864F5_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/901047E8-38AA-4B9C-BA60-680EC60864F5_2.webp' alt='Image' title='Image'></p>
 <p>表示添加成功。</p>
 <p>这个操作的意思是，将该 AS 应用响应以 <code>xhelper</code> （可以任意修改成你想要的开头，不要与已有的重复即可）开头的 URL。</p>
 <p>设置完成后，需要在 Script Editor 中保存一下，或者 <code>cmd + L</code> 一下或者运行一次（或者都做一遍），重新编译，然后才能生效。</p>
@@ -595,13 +595,13 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">on open location this_URL<br> display dialog this_URL<br>end open location<br></code></pre></td></tr></table></figure>
 <p>上述代码中，<code>this_URL</code> 即为以你 <code>xhelper</code> 打开的链接。</p>
 <p>此时在浏览器中（截图是 Chrome）测试一个链接：</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/01F724A1-041B-4143-80CC-5F4F3D6ECFC8_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/01F724A1-041B-4143-80CC-5F4F3D6ECFC8_2.webp' alt='Image' title='Image'></p>
 <p>然后 AS 应用就会响应然后弹窗显示 <code>xhelper://你好！</code> ，注意这里是不用 encode 编码的。</p>
 <h2 id="我的使用">我的使用</h2>
 <p>在这里放出我自己的 Craft build 代码，用的是上述的 URL Scheme，其中的 node 执行的 js 都是从 <a href="/tech/my-blog-ci-in-2022.html">之前的工作流</a> 改造的，没有什么新逻辑。另外 AS 的语法比较口语化，直接看就能看懂每句话是什么意思，这里就不一一解释了。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs javascript">on open location this_URL<br> <span class="hljs-keyword">try</span><br>  set startOffset to offset <span class="hljs-keyword">of</span> <span class="hljs-string">&quot;://&quot;</span> <span class="hljs-keyword">in</span> this_URL<br>  set the content to text <span class="hljs-keyword">from</span> (startOffset + <span class="hljs-number">3</span>) to -<span class="hljs-number">1</span> <span class="hljs-keyword">of</span> this_URL<br>  set node to <span class="hljs-string">&quot;/Users/x/.nvm/versions/node/v14.19.1/bin/node&quot;</span><br>  set appPath to <span class="hljs-string">&quot;/Applications/Xhelper.app/Contents/Resources/Scripts/&quot;</span><br>  --- 如果有两个参数表示需要发布到 wechat，如果只有一个参数则参数即为 base64 编码的内容<br>  set <span class="hljs-title class_">AppleScript</span><span class="hljs-string">&#x27;s text item delimiters to &quot;&amp;&quot;</span><br><span class="hljs-string">  set arguments to every text item of the content</span><br><span class="hljs-string">  set AppleScript&#x27;</span>s text item delimiters to <span class="hljs-string">&quot;&quot;</span><br>  set listLength to the length <span class="hljs-keyword">of</span> <span class="hljs-variable language_">arguments</span><br>  <span class="hljs-keyword">if</span> listLength = <span class="hljs-number">2</span> then<br>   set realContent to item <span class="hljs-number">2</span> <span class="hljs-keyword">of</span> <span class="hljs-variable language_">arguments</span><br>   <span class="hljs-keyword">do</span> shell script <span class="hljs-string">&quot;echo &quot;</span> &amp; realContent &amp; <span class="hljs-string">&quot; &gt; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;content.base64.txt&quot;</span><br>   tell application <span class="hljs-string">&quot;Terminal&quot;</span><br>    <span class="hljs-keyword">if</span> not (exists <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>) then reopen<br>    activate<br>    set alive to <span class="hljs-keyword">do</span> script node &amp; <span class="hljs-string">&quot; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;index.js&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span><br>    --- 等待上一个脚本执行完毕后再执行下一个脚本<br>    repeat<br>     delay <span class="hljs-number">0.1</span><br>     <span class="hljs-keyword">if</span> not busy <span class="hljs-keyword">of</span> alive then exit repeat<br>    end repeat<br>    beep<br>    <span class="hljs-keyword">do</span> script node &amp; <span class="hljs-string">&quot; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;wechat.js&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span><br>   end tell<br>  <span class="hljs-keyword">else</span><br>   <span class="hljs-keyword">do</span> shell script <span class="hljs-string">&quot;echo &quot;</span> &amp; content &amp; <span class="hljs-string">&quot; &gt; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;content.base64.txt&quot;</span><br>   tell application <span class="hljs-string">&quot;Terminal&quot;</span><br>    <span class="hljs-keyword">if</span> not (exists <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span>) then reopen<br>    activate<br>    <span class="hljs-keyword">do</span> script node &amp; <span class="hljs-string">&quot; &quot;</span> &amp; appPath &amp; <span class="hljs-string">&quot;index.js&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">window</span> <span class="hljs-number">1</span><br>   end tell<br>  end <span class="hljs-keyword">if</span><br> on error error_message<br>  display dialog error_message buttons &#123;<span class="hljs-string">&quot;Cancel&quot;</span>&#125; <span class="hljs-keyword">default</span> button <span class="hljs-number">1</span><br> end <span class="hljs-keyword">try</span><br><br>end open location<br></code></pre></td></tr></table></figure>
 <p>效果：</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/applescript-simple-use/F7A4DDFF-2698-4E1E-8D72-C8B3D0EC5020_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/applescript-simple-use/F7A4DDFF-2698-4E1E-8D72-C8B3D0EC5020_2.webp' alt='Image' title='Image'></p>
 <h2 id="参考链接">参考链接</h2>
 <ul>
 <li>

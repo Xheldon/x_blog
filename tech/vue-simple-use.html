@@ -375,7 +375,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -499,7 +499,7 @@
 这部分不会抽取出来的代码, 可以使用 <code>loader</code> 做一些处理, 这就是 <code>ExtractTextPlugin.extract</code> 第一个参数的作用.</p>
 <p>OK, 聊完了配置文件, 再说说这个项目是怎么工作的.</p>
 <p>一图胜千言, 上图, 首先是代码界面:</p>
-<p><img src="https://static.xheldon.cn/img/in-post/2016/vue-test.png" alt="项目结构" title="项目结构" /></p>
+<p><img src="https://static.xheldon.com/img/in-post/2016/vue-test.png" alt="项目结构" title="项目结构" /></p>
 <p>(若图片显示较小请在右键在新标签页单独查看)</p>
 <p>看箭头所示就明白啦, 首先一个页面是至少有一个组件的, 这个我直接就一个页面一个组件来写了, 没有 <code>import</code> 其他的组件.</p>
 <p>因此, 一个页面下是至少三个文件的, <code>.vue</code> 文件, <code>.js</code> 入口文件, 和 <code>.html</code>, 组件插入的文件.</p>
@@ -510,7 +510,7 @@
 <p>还有同学会问, 在入口 <code>js</code> 文件中, <code>vue</code> 实例化的时候用到的 <code>components.App</code> 到底是在编译过程就找到了 <code>this_is_main_page_which_you_put_components_into.html</code> 文件中的 <code>&lt;app&gt;</code> 组件引用, 还是在 <code>runtime</code> 的时候, 从最终打包的 <code>bundle.js</code> 中运行, 然后寻找 <code>this_is_final_filename_address_you_visit_in_browser.html</code> 页面中的 <code>&lt;app&gt;</code> 标签呢? 答案是后者, 因为刚才说的 <code>HtmlwebpackPlugin</code> 插件只负责生成 <code>html</code> 和注入打包后的 <code>bundle.js</code>, 而 <code>vue</code> 被打包进了 <code>bundle.js</code> 之后实例化 <code>vue</code> 时候才会寻找 <code>&lt;app&gt;</code> 标签.</p>
 <p>这么一看, 和直接在 <code>script</code> 标签中引用 <code>vue.js</code> 文件再渲染的效果是一样的, 只是 <code>webpack</code> 这种开发方式帮我们分离了组件, 使开发过程的代码/组件结构更清晰, 而且直接引用 <code>vue.js</code> 是前端 <code>runtime render</code>, 一个是 <code>compiler render</code> 之后直接执行, 后者效率更高.</p>
 <p>之后是效果页面:</p>
-<p><img src="https://static.xheldon.cn/img/in-post/2016/page-detail.png" alt="页面效果图" title="页面效果图" /><br />
+<p><img src="https://static.xheldon.com/img/in-post/2016/page-detail.png" alt="页面效果图" title="页面效果图" /><br />
 (若图片显示较小请在右键在新标签页单独查看)</p>
 <p>看图就明白什么意思啦.</p>
 <p>还有不明白的请看文档.</p>

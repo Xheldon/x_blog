@@ -387,7 +387,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -510,9 +510,9 @@
 <p><a class='link-bookmark' href='https://www.chiphell.com/forum.php?mod=viewthread&tid=2521336&highlight=&mobile=no' target='_blank'><span data-bookmark-img='' data-bookmark-title='请'><img src=''/></span><span><span> 请教各位大佬关于华硕和tplink路由器关闭dhcp设置的问题 - 电脑讨论(新) -  Chiphell - 分享与交流用户体验</span><span> 華碩とTPLinkルーターのDHCP無効化設定に関する質問,皆さんこんにちは、質問があります。今日半日かけて試しましたが原因がわかりません。現在の私のネットワーク構成は光モデム（ルーターモード、ブリッジ接続不可）-ac86u-macmini（サイドルーター）で、今日TPLink xdr6088に交換しました...,コンピュータディスカッション(新),ディスカッションエリア-生活と技術のディスカッション,Chiphell - ユーザー体験の共有と交流</span><span> https://www.chiphell.com/forum.php?mod=viewthread&tid=2521336&highlight=&mobile=no</span></span></a></p>
 <h2 id="現状">現状</h2>
 <blockquote style='border-color: ;color: '><p> 注意：操作前にTP-Link（以下、私のXDR-5480モデルを指す）の設定画面でルーター設定をバックアップしてください。操作ミスでルーターにアクセスできなくなった場合にリセットすると、ルーター設定が失われます。以下のように設定をエクスポートすればOKです。なお、エクスポートした設定にはポート設定とネットワーク設定は含まれません。この製品設計は、ネットワーク設定を間違えてリセットした後でも、設定をインポートすると間違った設定のままネットワークにアクセスできない状況を防ぐもので、TP-Linkのプロダクトマネージャーに拍手を送りたいです。</p></blockquote>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e6-9e16-eb66a08e2ff7.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e6-9e16-eb66a08e2ff7.webp' alt='' title=''></p>
 <h3 id="ネットワークトポロジー図：">ネットワークトポロジー図：</h3>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8003-89a9-e3f05024c8b5.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8003-89a9-e3f05024c8b5.webp' alt='' title=''></p>
 <h3 id="目標">目標</h3>
 <p>現在のすべてのデバイスの接続方法やネットワークセグメントを変更せず（怒られるのが怖いので）、Mac StudioのSurgeをゲートウェイとしてDHCPサービスを管理させる。</p>
 <h3 id="難点">難点</h3>
@@ -532,36 +532,36 @@
 </ol>
 <h2 id="解決方法">解決方法</h2>
 <p>上記の目標と難点を踏まえて、「皆さん、メモを取ってください。私は以下のように配置を調整します」：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80ce-8790-d3cef3ef7d8f.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80ce-8790-d3cef3ef7d8f.webp' alt='' title=''></p>
 <h3 id="ステップ1：光モデムの電源を切る">ステップ1：光モデムの電源を切る</h3>
 <blockquote style='border-color: ;color: '><p> 実際には光モデムとTP-Linkの接続を切断するだけで十分です。ここで電源を切るように指示しているのは、誤って光モデムのWiFiに接続してしまうのを防ぐためです。光モデムのWiFiを忘れるように設定している場合は、電源を切らずにTP-Linkとの接続を切断するだけでOKです。</p></blockquote>
 <p>最初に光モデムの設定を行わず、そのDHCPサービスがSurgeに検出されてSurgeがDHCPサービスを開始できないようにします。また、すでに光モデムとTP-Linkの接続を切断しているため、次のステップでTP-LinkのDHCPサービスを無効にした場合、TP-Linkは自ら上位ルーターのDHCPサービスを検出してLanポートのIPを変更することはありません。</p>
 <h3 id="ステップ2：ルーターのdhcpサービスを無効化">ステップ2：ルーターのDHCPサービスを無効化</h3>
 <p>設定画面で無効にするだけで、ここでは「オフ」を選択します。設定が成功した後、改めて「自動」に変更します。自動に変更するのはネットワークの堅牢性のためで、後ほど説明します。</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-804e-a69d-edb6a6eaabc1.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-804e-a69d-edb6a6eaabc1.webp' alt='' title=''></p>
 <h3 id="ステップ3：surge-dhcpを有効化">ステップ3：Surge DHCPを有効化</h3>
 <p>この手順はSurgeの「概要」と「デバイス」タブのどちらからもアクセスできます：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8091-83b9-e144224f35d5.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8091-83b9-e144224f35d5.webp' alt='' title=''></p>
 <p>SurgeがMacのIPアドレスを手動設定かつ固定に変更することを通知してきます。ここでは<code>192.168.5.100</code>となります。具体的なチュートリアルはネット上に多数ありますので、ここでは詳細は省きます。</p>
 <p>注意点として、ルーターのアドレスが<code>192.168.5.1</code>と表示され、アドレスプールが<code>192.168.5.100</code>から<code>192.168.5.200</code>までとなっています。私はアドレスプールを<code>192.168.5.2</code>から<code>192.168.5.254</code>に変更し、範囲を広げました。</p>
 <h3 id="ステップ4：新しいルーターアドレスを確認">ステップ4：新しいルーターアドレスを確認</h3>
 <p>Surgeの設定後、ルーターの<code>192.168.5.1</code>にアクセスすると接続できない状態になります！慌てる必要はありません。この時点でMac StudioがDHCPサービスを提供しており、TP-Linkルーターに新しいIPアドレスを割り当てるからです（なぜこうなるのかは不明です）。「デバイス」をクリックし、「Hostname Unsuitable for Printing」という名前のデバイス（必ずしもこの名前とは限りません）を見つけ、アドレスバーからアクセスするとお馴染みのルーター画面が表示されます。ここでの新しいルーターIPアドレスは<code>192.168.5.114</code>でした。</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-809d-894e-fbe831126b06.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-809d-894e-fbe831126b06.webp' alt='' title=''></p>
 <h3 id="ステップ5：ルーターのlanポート設定とpppoe接続">ステップ5：ルーターのLanポート設定とPPPoE接続</h3>
 <p>この時点ではインターネットに接続できません。光モデムの電源が入っていないからです！このステップで光モデムの電源を入れ、数分待った後、ルーターの設定画面で<code>Wan 口已经断开连接</code>をクリックしても反応がない状態になります。</p>
 <p>しかし諦めないでください！現在のStudioの役割は、ソフトウェアルーターを設定する場合と似ていることに気付くでしょう。以前は光モデムがPPPoE接続を担当し、ソフトウェアルーターがメインルーターや光モデムに接続されてDHCPサービスを提供していました。現在は、PPPoE接続デバイスをルーターに移行し、Studioがメインルーターに接続されているため、StudioがソフトウェアルーターとしてDHCPサービスを提供する形になります。</p>
 <p>重要なのはこのステップ：TP-LinkのLanポートIPアドレスを手動で<code>192.168.5.1</code>に設定することです（そうしないとネットワーク上に<code>192.168.5.1</code>というIPアドレスを持つデバイスが存在しなくなります）。</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e0-8bb3-f208b1f9c874.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80e0-8bb3-f208b1f9c874.webp' alt='' title=''></p>
 <p>LanポートIPを手動設定後（Lanポートと呼びますが、光モデムに接続されておりPPPoE接続が可能です！）、インターネット設定に戻り「接続」をクリックします。初回の接続には時間がかかるため、4、5回クリックする必要があるかもしれませんが、最終的には成功します。</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8092-a5bc-cc3e8f728305.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8092-a5bc-cc3e8f728305.webp' alt='' title=''></p>
 <h3 id="ステップ6：最終設定">ステップ6：最終設定</h3>
 <p>これで設定は完了です。接続済みのデバイスを右クリックし、「Surgeをゲートウェイとして設定」を選択後、デバイスをネットワークに再接続してください：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8044-b913-da4aafc3219f.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-8044-b913-da4aafc3219f.webp' alt='' title=''></p>
 <p>さらに「新しいデバイスには自動的にSurgeをデフォルトゲートウェイとして設定」も有効にしておきます：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80fc-9142-f5520e0a2756.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-80fc-9142-f5520e0a2756.webp' alt='' title=''></p>
 <p>これで全てのデバイスがSurgeをゲートウェイとして使用し、リアルタイムのトラフィックを監視できるようになります。</p>
 <p>ステップ2でTP-LinkのDHCPサービスを無効にした件を覚えていますか？この時点でTP-Linkに戻り、DHCPサービスを「自動」に変更できます。これは万が一**SurgeのDHCPサービスがクラッシュしたり、Macが故障した場合でも、あなたと家族のデバイスがネットワークにアクセスできるようにするためです。そうすれば、あなたは叱られずに済みます！**TP-Linkのこの設定は「自動」でLAN内のDHCPサービスを検出し、存在しない場合は自身のDHCPを有効に、存在する場合は無効にします：</p>
-<p caption=''><img src='https://static.xheldon.cn/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-805c-98c5-e3895ef7dfe0.webp' alt='' title=''></p>
+<p caption=''><img src='https://static.xheldon.com/img/in-post/2024/how-to-pppoe-after-close-tp-link-dhcp/134800e8-7a61-805c-98c5-e3895ef7dfe0.webp' alt='' title=''></p>
 <p>注：「オフ」を選択して保存すると、ルーターのアドレスが再び<code>192.168.5.114</code>に変更されます。また、設定変更ができなくなります（光モデムに接続した状態でDHCPを無効にすると、前述の問題1と2が発生するため）、その場合は最初から（光モデムの電源を切って）手順をやり直す必要があります。</p>
 <h2 id="まとめ">まとめ</h2>
 <p>これで全て完了です。この過程でいくつかの奇妙な問題に遭遇し、失敗した試みもありました。例えば、なぜ光モデムの電源を切ってルーターを設定した後で再び電源を入れる方法を思いついたのか、想像できるでしょうか？</p>

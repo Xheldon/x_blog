@@ -41,9 +41,9 @@
                             
                                 
                                   <meta property="twitter:image"
-                                    content="https://static.xheldon.cn/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp">
+                                    content="https://static.xheldon.com/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp">
                                   <meta property="og:image"
-                                    content="https://static.xheldon.cn/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp">
+                                    content="https://static.xheldon.com/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp">
                                   
                                       <meta property="og:url" content="https://www.xheldon.com/ja/tech/problem-use-sharp.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
@@ -376,12 +376,12 @@
     
 <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="https://static.xheldon.cn/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp" width="0" height="0"> -->
+<!-- <img src="https://static.xheldon.com/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp" width="0" height="0"> -->
 
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp");
+    background-image: url("https://static.xheldon.com/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp");
 
     
   }
@@ -517,11 +517,11 @@
 <p>さらに調査を進めると、この関数の上部にシステム組み込みのlibvipsを使用するか、HEICフォーマットに対応していない独自コンパイルのバイナリパッケージを使用するかを決定するロジックがありました：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> useGlobalLibvips = libvips.<span class="hljs-title function_">useGlobalLibvips</span>();<br></code></pre></td></tr></table></figure>
 <p>ここが核心部分です。この関数をデバッグしていると、<code>isRosetta</code>の判定時にtrueが返されていることがわかりました。falseが返されればシステム組み込みのlibvipsが使用され、そうでなければ独自コンパイルのlibvipsが使用される仕組みです：</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2023/problem-use-sharp/ACF229E4-D77E-46AD-B1D2-98A4AA970669_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2023/problem-use-sharp/ACF229E4-D77E-46AD-B1D2-98A4AA970669_2.webp' alt='Image' title='Image'></p>
 <p>ここで奇妙な現象が発生しました。デバッグ時にprocess.archの出力が<code>x64</code>で、このコードのログ出力が<code>sysctl.proc_translated: 1</code>でした：</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2023/problem-use-sharp/A0492569-B12D-45B5-B05B-40B5DB1B7459_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2023/problem-use-sharp/A0492569-B12D-45B5-B05B-40B5DB1B7459_2.webp' alt='Image' title='Image'></p>
 <p>しかし、直接コンソールでこのコードを実行すると、出力は<code>sysctl.proc_translated: 0</code>でした：</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2023/problem-use-sharp/4616C1B5-102F-4A3C-AF71-CC0BA49530AB_2.webp' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2023/problem-use-sharp/4616C1B5-102F-4A3C-AF71-CC0BA49530AB_2.webp' alt='Image' title='Image'></p>
 <p>ここで私は、nodeのバージョン問題が原因で自身でコンパイルしたlibvipsを使用していると結論づけました。そこでnvmを使用して、デフォルトのnodeバージョンをarm64バージョンに切り替えた後、再度<code>npm i sharp</code>を実行すると問題は解決しました。</p>
 <p>以下はこのプロセスで使用する可能性のあるコードです：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 列出 nvm 版本</span><br>nvm list<br><span class="hljs-comment">// 输出当前电脑的架构</span><br>arch <span class="hljs-comment">// 如果输出的是 arm64 表示就是 M1 芯片</span><br><span class="hljs-comment">// 使用最新的稳定版</span><br>nvm install stable <span class="hljs-comment">// 我的机器给我安装了 19.3.0 的 arm64 版本的 node</span><br><span class="hljs-comment">// 将该 node 作为默认</span><br>nvm alias <span class="hljs-keyword">default</span> v19<span class="hljs-number">.3</span><span class="hljs-number">.0</span><br><span class="hljs-comment">// 在当前终端使用 19.3.0 版本的 node</span><br>nvm use <span class="hljs-number">19.3</span><span class="hljs-number">.0</span><br></code></pre></td></tr></table></figure>

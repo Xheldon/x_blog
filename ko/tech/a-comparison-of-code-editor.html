@@ -375,7 +375,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -471,14 +471,14 @@
 <blockquote>
 <p>👇🏻 원래의 Replit 인터페이스와 Ace 코드 편집기 비교. 이 스크린샷은 2011년부터 Replit의 오픈소스 버전을 재호스팅해온 우리 커뮤니티 멤버가 제공했습니다 <a href="https://www.repldotit.com">https://www.repldotit.com</a>.</p>
 </blockquote>
-<p><img src="https://static.xheldon.cn/img/in-post/2022/a-comparison-of-code-editor/FCE24555-97DB-4453-9DA4-A8C9BE00FF52_2.png" alt="Image" /></p>
+<p><img src="https://static.xheldon.com/img/in-post/2022/a-comparison-of-code-editor/FCE24555-97DB-4453-9DA4-A8C9BE00FF52_2.png" alt="Image" /></p>
 <p>우리는 2017년경까지 Ace를 사용하다가 Monaco로 전환했습니다. Ace는 여전히 유지보수되고 있지만, 유지보수 담당자는 단 한 명뿐입니다. 아마존이 Cloud9을 인수한 후, 오픈소스 프로젝트의 우선순위를 재조정한 것으로 보입니다. 에디터는 이전처럼 자주 업데이트되지 않았고, Github의 이슈는 쌓이기 시작했으며, 유지보수 담당자도 거의 새로운 기능을 추가하지 않았습니다. 전반적으로 Ace의 API는 개발자들에게 구식이고 투박하게 느껴지기 시작했습니다. 유지보수 담당자는 훌륭하지만, 그가 할 수 있는 것에도 한계가 있었습니다.</p>
 <h3 id="인터루드-monaco">인터루드: Monaco</h3>
 <p>아마도 이미 알고 계시겠지만, VSCode는 Monaco 에디터를 사용합니다. 사실, 마이크로소프트는 Monaco를 기반으로 VSCode를 구축했습니다. 우리가 코드 에디터를 Monaco로 전환한다면, VSCode의 개발 대가들로부터 모든 멋진 업데이트와 기능을 얻을 수 있을 거라 생각했습니다. Monaco는 우리 웹사이트와 잘 어울리는 현대적인 사용자 인터페이스를 제공하며, JavaScript, HTML, CSS에 대한 훌륭한 자동 완성 기능을 가지고 있습니다. 또한 LSP(Language-Server-Protocol)에 대한 언어 클라이언트를 쉽게 작성할 수 있는 API도 있는 것 같습니다. 그들의 API 문서는 훌륭하며, Typescript 정의가 포함되어 있어 개발 관점에서 더 많은 확장 기능을 제공합니다.</p>
 <blockquote>
 <p>👇🏻Monaco 에디터 스크린샷(기본 설정), 깔끔하고 정돈된 UI를 확인하세요.</p>
 </blockquote>
-<p><img src="https://static.xheldon.cn/img/in-post/2022/a-comparison-of-code-editor/DE35EC5C-5470-49D5-ADFE-8FCAD8A71B29_2.png" alt="Image" /></p>
+<p><img src="https://static.xheldon.com/img/in-post/2022/a-comparison-of-code-editor/DE35EC5C-5470-49D5-ADFE-8FCAD8A71B29_2.png" alt="Image" /></p>
 <p>Ace에서 Monaco로 전환하는 데는 대가가 따릅니다. 후자는 Ace의 많은 기능이 부족하지만, 우리는 커뮤니티의 열기와 기여로 인해 곧 Ace를 능가할 것이라고 믿습니다. (Ace에 비해) Monaco의 첫 번째 문제는 많은 언어 지원이 부족하다는 점입니다. VSCode에는 많은 언어 지원이 있지만, 이는 브라우저가 아닌 NodeJS/Electron의 능력에 의존합니다. 따라서 우리는 Monaco가 더 많은 언어를 지원할 수 있도록 코드 기여를 시작했습니다. Scala, Julia, Scheme, Clojure 등 다양한 언어 지원과 Python 같은 언어의 버그 수정을 추가했습니다. 나는 Monaco용 문법 강조 표시기를 작성하여 어댑터를 통해 Ace가 지원하는 모든 언어를 지원할 수 있도록 했습니다. 마지막으로, Monaco가 Ace에 비해 부족한 기능은 Vim과 Emacs의 키 바인딩이지만, 곧 누군가가 NPM에서 이러한 기능을 지원하는 패키지를 릴리스할 것입니다.</p>
 <p>Monaco의 또 다른 문제는 빌드 도구입니다. Microsoft가 웹 기술로 Monaco를 구축했지만, 현재의 웹 생태계 및 빌드 도구와 잘 통합되지 않습니다. Monaco를 Webpack Dll로 사전 컴파일하고 많은 Webpack 구성을 추가해야만 정상적으로 작동했습니다. 이러한 추가 작업은 고통스러웠고, 우리의 빌드 시스템 복잡성과 비용을 증가시켰습니다. 몇 달 후, Microsoft는 Monaco용 Webpack 플러그인을 발표했는데, 이는 약간의 개선을 가져왔지만 완벽하지 않았습니다. 특히 우리가 프론트엔드를 Next.js로 옮겼을 때 더욱 그랬습니다. 안타깝게도 Monaco는 코드를 지연 로드하고 분할하는 간단한 방법도 없어서, 코드를 작은 파일로 분할하여 로드 속도를 높이는 것은 불가능했습니다. 이 문제로 인해 우리 프로젝트의 크기가 최대 5M까지 증가했는데, 이는 쉽게 무시할 수 있는 문제가 아닙니다.</p>
 <p>Monaco는 모바일에서도 잘 작동하지 않습니다. 우리는 이 부분을 아웃소싱하려고 시도했지만, 아무도 수주하지 않았습니다. 그래서 제가 직접 처리하려고 했을 때, Monaco 코드베이스를 살펴보고 읽기가 매우 어렵다는 것을 깨달았습니다. Monaco 에디터 자체가 VSCode를 먼저 구축한 후 분리된 것처럼, VSCode 코드베이스의 다른 부분과 너무 많이 결합되어 있습니다. VSCode 자체도 코드가 잘 작성되지 않았을 뿐만 아니라, <a href="https://web.archive.org/web/20150502200822/https://www.zdnet.com/article/microsofts-browser-based-dev-toolbox-how-monaco-came-to-be/">가장 오래된 Typescript 프로젝트</a> 중 하나일 수 있으며 <a href="https://www.youtube.com/watch?v=FyCYva9DhsI">Microsoft의 대기업 스타일</a>로 작성되었습니다. 우리는 모바일에서 꽤 쓸만한 것을 만들었지만, VSCode에 대한 우리의 수정 사항이 VSCode의 메인 브랜치에 병합되지 않을 것이며, 현재의 모바일 버전은 프로덕션 환경에서 사용할 수 있을 때까지 아직 멀었기 때문에 VSCode 포크를 유지하고 싶지 않았습니다. 따라서 저는 휴대폰에서 계속 Ace 에디터를 사용하는 것이 최선의 해결책이라고 결정했습니다. 완벽하지는 않지만, 괜찮습니다(사용할 수는 있습니다).</p>
@@ -488,7 +488,7 @@
 <p><a href="https://prosemirror.net">ProseMirror</a>는 CodeMirror 6의 API 디자인에 영감을 주었으며, Marijn의 또 다른 프로젝트입니다. 저는 당시 개발 중이던 WYSIWYG 프로젝트에서 이를 사용해 본 적이 있고 매우 마음에 들었습니다. ProseMirror는 매우 작은 코어를 가지고 있으며, 다른 모든 기능은 플러그인 시스템을 통해 구현됩니다. 편집기 라이브러리로서 모듈화되고, 플러그인 가능하며, 기능적이며, 믿을 수 없을 정도로 권한을 부여받은 느낌을 줍니다. 그래서 저는 회사가 새 버전의 CodeMirror 개발을 후원하도록 결정했고, 심지어 직접 프로젝트에 자금을 지원하기도 했습니다.</p>
 <p>작년에 CodeMirror 6의 베타 버전이 출시되었을 때, 저와 팀원들은 매우 흥분되어 Replit에 추가하기 시작했습니다. 우리는 편집기를 사용해 보기 시작했고, 학습 곡선이 다소 가파르긴 하지만 결국 &quot;이해&quot;하게 되면 슈퍼-코드-편집기-개발자가 된 기분이 들었습니다. CodeMirror 6를 프로젝트에 적용하기 위해, 저는 점진적으로 프로젝트에 통합하기 시작했습니다. 먼저 Replit에서 읽기 전용 편집기로 추가한 다음, 웹사이트의 다른 코드 편집 가능한 부분들에 추가하기 시작했습니다.</p>
 <p>올해 초, 우리는 ‘믿음의 도약’(역자 주: 어쌔신 크리드에서 유래한 표현)을 시작하며 CodeMirror를 모바일 환경에 통합하기 시작했습니다. 사용자 관점에서 보면 CodeMirror는 객관적으로 모바일에서 사용 가능한 다른 어떤 에디터보다 우수합니다. 아직 우리가 지원하는 모든 언어와 일부 기능을 완전히 지원하지는 않지만, 모바일 통합은 그만한 가치가 있었습니다. 이 통합 이후의 사용자 피드백은 우리 예상을 훨씬 뛰어넘었습니다. CodeMirror를 사용한 사용자 중(역자 주: 소규모 테스트 또는 신/구버전 전환 기능을 통해 에디터 사용 통계를 수집한 것으로 추정) 모바일 사용자 비율이 약 70%에 달했습니다! CodeMirror는 모바일에서 Ace를 사용할 때보다 사용자 유지율이 더 높았습니다. CodeMirror의 플러그 가능성(제공하는 무한한 가능성)을 고려할 때, 이렇게 고무적인 결과는 모바일에서 더 많은 가치를 제공하기 위한 시작에 불과하다는 것이 분명해졌습니다. 우리는 먼저 PC 버전에서 제공되지만 모바일에는 없는 기능들을 모바일 CodeMirror로 이식하는 작업부터 시작할 것입니다.</p>
-<p><img src="https://static.xheldon.cn/img/in-post/2022/a-comparison-of-code-editor/7F0728B9-BE37-44CF-A518-F4020E276758_2.png" alt="Image" /></p>
+<p><img src="https://static.xheldon.com/img/in-post/2022/a-comparison-of-code-editor/7F0728B9-BE37-44CF-A518-F4020E276758_2.png" alt="Image" /></p>
 <p>CodeMirror 6의 커뮤니티는 아직 초기 단계에 있기 때문에, 우리는 많은 부분을 직접 구현하거나 특정 기능을 위해 후원금을 지불하고 Marijn과 함께 버그를 해결해야 했습니다. 우리는 우리의 기여가 CodeMirror 커뮤니티를 이끌고 보답하는 데 도움이 되기를 바랍니다. 여기서 우리가 적극적으로 개발 중인 기능 목록을 소개하겠습니다: Vim 모드, Emacs 모드, LSP 클라이언트, 들여쓰기 표시, CSS 색상 선택기, 언어 파서, 그리고 앞으로 데스크톱 버전의 CodeMirror를 출시할 때 게시물에서 발표할 많은 다른 기능들입니다. 저는 사람들이 새로운 CodeMirror에 대해 흥분하고 있으며, 앞으로 1~2년 안에 커뮤니티와 생태계 사용자 수가 급증할 것이라고 생각합니다. 많은 사람들이 프로덕션 환경에서 사용하기를 간절히 원하고 있습니다.</p>
 <p>우리는 CodeMirror에 점점 더 많은 기능을 구축하고, 코드 접근성을 높이는 과정에서 필수적인 부분으로 만들 수 있어 매우 기쁩니다. 우리는 항상 사용자 경험을 우리가 원하는 방식으로 구축하기 위해 결국에는 자신만의 에디터를 개발해야 한다고 말해왔습니다. 그럼에도 불구하고, 우리는 CodeMirror로 할 수 있는 일에 대해 매우 만족하고 있습니다.</p>
 <h2 id="battle-섹션">Battle 섹션</h2>

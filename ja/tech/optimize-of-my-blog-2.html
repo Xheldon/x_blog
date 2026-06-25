@@ -385,7 +385,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -520,7 +520,7 @@
 <p>しかし公式には解決する気配が全くないため、手動変換用のシンプルな関数を自作しました：</p>
 <p><a class='link-bookmark' href='https://gist.github.com/Xheldon/036d9b187bd83303205001e8af97eda7' target='_blank'><span data-bookmark-img='https://github.githubassets.com/images/modules/gists/gist-og-image.png' data-bookmark-title='C'><img src='https://github.githubassets.com/images/modules/gists/gist-og-image.png'/></span><span><span> craftBlockToMarkdown</span><span> GitHub Gist: コード、メモ、スニペットを即座に共有</span><span> https://gist.github.com/Xheldon/036d9b187bd83303205001e8af97eda7</span></span></a></p>
 <p>注意点として、この関数はJekyllに適応させるため（後述の最適化3参照）に特別に<code>imageBlock</code>と<code>urlBlock</code>タイプのBlockを処理しています：</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/FE4436B8-B16D-4CA7-9041-E2F5F831CC80_2.png' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/optimize-of-my-blog-2/FE4436B8-B16D-4CA7-9041-E2F5F831CC80_2.png' alt='Image' title='Image'></p>
 <p>この関数は公式プラグイン開発者フォーラムに公開していますので、ぜひご意見を：</p>
 <p><a class='link-bookmark' href='https://forum.developer.craft.do/t/a-better-implementation-of-craft-blocks-to-markdown-transformation-methods/554' target='_blank'><span data-bookmark-img='https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png' data-bookmark-title='A'><img src='https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png'/></span><span><span> A better implementation of craft blocks to Markdown transformation methods</span><span> Craftのmarkdown APIには以下の問題があります：1.ネストされたリストがサポートされない 2.ネストされたblockquoteの順序が誤っている 3.後者のみが参照ブロックとして認識される 4.urlBlock（'bookmark'と呼ばれる？）はリンクとして認識される（この関数ではJekyllのレンダリングタグをカスタマイズ可能）注：1.toggle/formulaはサポートしない（Markdownもサポートしていないため）2.私はこの関数をJekyllブログ用に使用しています...</span><span> https://forum.developer.craft.do/t/a-better-implementation-of-craft-blocks-to-markdown-transformation-methods/554</span></span></a></p>
 <h2 id="最適化2：github-ciプロセスをローカルに移行">最適化2：Github CIプロセスをローカルに移行</h2>
@@ -528,13 +528,13 @@
 <p>今回の最適化では、以前のプロセスとの一貫性を保つため、Craftプラグインを新たに作成しました。これをクリックするとドキュメントの内容を取得し、簡単な処理（例：headerImgの画像著作権情報をmetaに追加）を行った後、特定のリンクを呼び出します。リンクのパラメータにはドキュメント情報が含まれます：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">craft.<span class="hljs-property">editorApi</span>.<span class="hljs-title function_">openURL</span>(<br>  <span class="hljs-string">`xhelper://<span class="hljs-subst">$&#123;btoa(<span class="hljs-built_in">unescape</span>(<span class="hljs-built_in">encodeURIComponent</span>(content)))&#125;</span>`</span><br>);<br></code></pre></td></tr></table></figure>
 <p>この特定のリンクの役割は、Apple Scriptで書かれたApplicationを呼び出すことです。Applicationの作成方法やリンク呼び出しへの対応方法については、私が書いた<a href="/tech/applescript-simple-use.html">このドキュメント</a>]を参照してください。内部ではnodeが呼び出され、実際には以前Github CIで実行していたコードと同じ処理が行われます。ここに簡単なスクリーンショットを掲載します：</p>
-<p caption='Xhelper截图👆🏻'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/BC93AD26-26C5-4AD1-A8AC-2BB3B2AD2945_2.png' alt='Xhelper截图👆🏻' title='Xhelper截图👆🏻'></p>
+<p caption='Xhelper截图👆🏻'><img src='https://static.xheldon.com/img/in-post/2022/optimize-of-my-blog-2/BC93AD26-26C5-4AD1-A8AC-2BB3B2AD2945_2.png' alt='Xhelper截图👆🏻' title='Xhelper截图👆🏻'></p>
 <p>効果：</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/5E5FDC00-D081-4B50-91FE-61946A453356_2.png' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/optimize-of-my-blog-2/5E5FDC00-D081-4B50-91FE-61946A453356_2.png' alt='Image' title='Image'></p>
 <p>以前のプロセスでは簡便さを優先し、Craftにアップロードされた画像に必ずしも拡張子が付いていない（ドラッグ＆ドロップや画像アップロードの場合は拡張子あり、コピペやWebアップロードの場合は拡張子なし）ため、全ての画像を<code>png</code>形式に変換していました。今回はこのロジックを削除し、まず元の拡張子がある場合はそれを使用し、拡張子がない場合のみ<code>png</code>に強制変換するようにしました。<code>Sharp</code>というライブラリが非常に便利でおすすめです：</p>
 <p><a class='link-bookmark' href='https://sharp.pixelplumbing.com/' target='_blank'><span data-bookmark-img='https://cdn.jsdelivr.net/gh/lovell/sharp@main/docs/image/sharp-logo.png' data-bookmark-title='S'><img src='https://cdn.jsdelivr.net/gh/lovell/sharp@main/docs/image/sharp-logo.png'/></span><span><span> sharp - High performance Node.js image processing</span><span> "一般的な形式の大きな画像を、ウェブ向けの小さなJPEG、PNG、WebP、GIF、AVIF画像にリサイズ"</span><span> https://sharp.pixelplumbing.com/</span></span></a></p>
 <p>というわけで…Gifをご覧ください！</p>
-<p caption='支持gif啦'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/59E358FD-2A7A-4125-8223-1A51FFCCC8A3_2.gif' alt='支持gif啦' title='支持gif啦'></p>
+<p caption='支持gif啦'><img src='https://static.xheldon.com/img/in-post/2022/optimize-of-my-blog-2/59E358FD-2A7A-4125-8223-1A51FFCCC8A3_2.gif' alt='支持gif啦' title='支持gif啦'></p>
 <blockquote>
 <p>注：以前は手軽さ（認証不要、固定IPサーバー不要）を優先し、<a href="https://cloud.weixin.qq.com/cloudrun">微信云托管</a>]を使用していました。ついでに要約を微信公众号に送信するロジックも実装していました。しかし困ったことに、このサーバーは単に微信公众号公開を楽にするために用意したものですが、私の性格上3ヶ月に1回しか使わず、使うたびにコールドスタート（リクエストが30分ないとインスタンスが自動停止、実行時間課金のため）になり、頻繁に失敗します。そのトラブルシューティングにかかる時間を考えると、手動で微信公众号のエディタにコピペする方が早いです。というわけで、微信公众号は諦めて手動貼り付け…これも悪くない！</p>
 </blockquote>
@@ -545,7 +545,7 @@
 <p>Jekyllでプラグインを使うのは非常に簡単です。ルートディレクトリに<code>_plugins</code>ディレクトリを作成し、<code>ruby</code>で書かれたJekyllプラグインを配置するだけで、Jekyll Build時にプラグインがロードされます。</p>
 <h2 id="その他の細かい調整">その他の細かい調整</h2>
 <p>以前の内容は標準Markdownから生成されたHTMLだったため、RSSリーダーで内容を取得してもフォーマットが崩れませんでした。しかし今回Bookmarkを追加したことで、RSSのフォーマットが乱れるようになりました（Reeder 5でのスクリーンショット）：</p>
-<p caption='Reeder5中Bookmark格式错乱'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/B1E25DC1-17C1-45D8-8721-8160FDCA1676_2.jpeg' alt='Reeder5中Bookmark格式错乱' title='Reeder5中Bookmark格式错乱'></p>
+<p caption='Reeder5中Bookmark格式错乱'><img src='https://static.xheldon.com/img/in-post/2022/optimize-of-my-blog-2/B1E25DC1-17C1-45D8-8721-8160FDCA1676_2.jpeg' alt='Reeder5中Bookmark格式错乱' title='Reeder5中Bookmark格式错乱'></p>
 <p>そこで再びrubyプラグインを作成し、このタグをフィルタリングして通常のHTMLリンクに変換しました：</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">module</span> <span class="hljs-title class_">Jekyll</span><br>    <span class="hljs-keyword">module</span> <span class="hljs-title class_">BookmarkFilter</span><br>      <span class="hljs-keyword">def</span> <span class="hljs-title function_">bookmark_filter</span>(<span class="hljs-params">input</span>)<br>        input.gsub(<span class="hljs-regexp">/^\&lt;p\&gt;\&lt;a\s+class=\&quot;link-bookmark\&quot;\shref=(.*)\starget=\&quot;_blank\&quot;\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;span\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;span\&gt;\n(.*)\n\&lt;\/span\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;\/span\&gt;\&lt;\/a\&gt;\&lt;\/p\&gt;$/</span>, <span class="hljs-string">&#x27;&lt;p&gt;&lt;a href=\1 target=&quot;_blank&quot;&gt;\4&lt;/a&gt;&lt;/p&gt;&#x27;</span>);<br>      <span class="hljs-keyword">end</span><br>    <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-title class_">Liquid</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:Template</span>.register_filter(<span class="hljs-title class_">Jekyll</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:BookmarkFilter</span>)<br></code></pre></td></tr></table></figure>
 <p>その後、feed.xmlで使用します：<code>post.content | bookmark_filter</code>。</p>

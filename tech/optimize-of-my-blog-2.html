@@ -385,7 +385,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -532,7 +532,7 @@
 <p>但是官方似乎丝毫没有要解决的意思，于是自己写了一个简单的函数用来手动转换：</p>
 <p><a class='link-bookmark' href='https://gist.github.com/Xheldon/036d9b187bd83303205001e8af97eda7' target='_blank'><span data-bookmark-img='https://github.githubassets.com/images/modules/gists/gist-og-image.png' data-bookmark-title='C'><img src='https://github.githubassets.com/images/modules/gists/gist-og-image.png'/></span><span><span> craftBlockToMarkdown</span><span> GitHub Gist: instantly share code, notes, and snippets.</span><span> https://gist.github.com/Xheldon/036d9b187bd83303205001e8af97eda7</span></span></a></p>
 <p>需要注意的是，该函数因为是自己用来适配 Jekyll 的来进行下一步处理的（见下面的优化三），因此特殊处理了 <code>imageBlock</code> 和 <code>urlBlock</code> 类型的 Block：</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/FE4436B8-B16D-4CA7-9041-E2F5F831CC80_2.png' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/optimize-of-my-blog-2/FE4436B8-B16D-4CA7-9041-E2F5F831CC80_2.png' alt='Image' title='Image'></p>
 <p>此函数已经被我放到官方插件开发者论坛了，欢迎交流：</p>
 <p><a class='link-bookmark' href='https://forum.developer.craft.do/t/a-better-implementation-of-craft-blocks-to-markdown-transformation-methods/554' target='_blank'><span data-bookmark-img='https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png' data-bookmark-title='A'><img src='https://global.discourse-cdn.com/standard11/uploads/craft/original/1X/5add1bbc4f01c418389d213f2ed49867e2fc8e79.png'/></span><span><span> A better implementation of craft blocks to Markdown transformation methods</span><span> Craft’s markdown api has the following problems: 1. Nested lists are not supported. 2. The order of Nested blockquote and is incorrectly. 3. only the latter will be recognized as a reference block. 4. urlBlock (may called ‘bookmark’?) will be recognized as a link（in this function, you can custom render tag of jekyll, you can modify this as you wish) Note: 1. not support toggle/formula, because markdown not support those too, but you can make it. 2. I use this function for may jekyll blog ...</span><span> https://forum.developer.craft.do/t/a-better-implementation-of-craft-blocks-to-markdown-transformation-methods/554</span></span></a></p>
 <h2 id="优化二：将-github-ci-流程挪到本地">优化二：将 Github CI 流程挪到本地</h2>
@@ -540,13 +540,13 @@
 <p>本次优化，为了保持与之前流程的一致，于是又写了个 Craft 插件，点击后会获取文档内容，简单处理后（如获取 headerImg 的图片版权信息到 meta 中），会调用特定链接，链接参数带上文档信息：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">craft.<span class="hljs-property">editorApi</span>.<span class="hljs-title function_">openURL</span>(<br>  <span class="hljs-string">`xhelper://<span class="hljs-subst">$&#123;btoa(<span class="hljs-built_in">unescape</span>(<span class="hljs-built_in">encodeURIComponent</span>(content)))&#125;</span>`</span><br>);<br></code></pre></td></tr></table></figure>
 <p>而这个特定链接的作用，就是调用 Apple Script 写的 Application，置于如何写一个 Application 应用和如何响应链接调用，可以看我写的 <a href="/tech/applescript-simple-use.html">这篇文档</a>，里面会调用 node，执行的其实也是之前放到 Github CI 执行的代码，这里放一个简单的截图：</p>
-<p caption='Xhelper截图👆🏻'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/BC93AD26-26C5-4AD1-A8AC-2BB3B2AD2945_2.png' alt='Xhelper截图👆🏻' title='Xhelper截图👆🏻'></p>
+<p caption='Xhelper截图👆🏻'><img src='https://static.xheldon.com/img/in-post/2022/optimize-of-my-blog-2/BC93AD26-26C5-4AD1-A8AC-2BB3B2AD2945_2.png' alt='Xhelper截图👆🏻' title='Xhelper截图👆🏻'></p>
 <p>效果：</p>
-<p caption='Image'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/5E5FDC00-D081-4B50-91FE-61946A453356_2.png' alt='Image' title='Image'></p>
+<p caption='Image'><img src='https://static.xheldon.com/img/in-post/2022/optimize-of-my-blog-2/5E5FDC00-D081-4B50-91FE-61946A453356_2.png' alt='Image' title='Image'></p>
 <p>之前的流程因为我贪图简单，加上 Craft 上传的图片不一定都有后缀（如通过拖拽、图片上传等方式上传的图片，则有后缀，若通过复制粘贴来的或者 Web 上传的图片，则无后缀），于是我将所有图片都转成了 <code>png</code> 格式，本次我移除了这个逻辑，先判断如果自身带后缀则使用其后缀；如果没有后缀，则再将其强制转为 <code>png</code> ，推荐使用 <code>Sharp</code> 这个库，非~常~好~用~：</p>
 <p><a class='link-bookmark' href='https://sharp.pixelplumbing.com/' target='_blank'><span data-bookmark-img='https://cdn.jsdelivr.net/gh/lovell/sharp@main/docs/image/sharp-logo.png' data-bookmark-title='S'><img src='https://cdn.jsdelivr.net/gh/lovell/sharp@main/docs/image/sharp-logo.png'/></span><span><span> sharp - High performance Node.js image processing</span><span> "Resize large images in common formats to smaller, web-friendly JPEG, PNG, WebP, GIF and AVIF images of varying dimensions"</span><span> https://sharp.pixelplumbing.com/</span></span></a></p>
 <p>所以…上 Gif！</p>
-<p caption='支持gif啦'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/59E358FD-2A7A-4125-8223-1A51FFCCC8A3_2.gif' alt='支持gif啦' title='支持gif啦'></p>
+<p caption='支持gif啦'><img src='https://static.xheldon.com/img/in-post/2022/optimize-of-my-blog-2/59E358FD-2A7A-4125-8223-1A51FFCCC8A3_2.gif' alt='支持gif啦' title='支持gif啦'></p>
 <blockquote>
 <p>注：之前贪图方便（不用鉴权、不用固定 ip 的服务器），用了 <a href="https://cloud.weixin.qq.com/cloudrun">微信云托管</a>，还顺便实现了将摘要往微信公众号发送的逻辑。但是坑爹的是，这个服务器仅仅是我为了方便发布公众号而弄的，但是按我性子一般三个月就用一次，每次用的时候还是冷启动（它服务器默认 30 分钟无请求进来自动关闭实例，因为他们是按实例运行时间计费的），会经常性的失败，有这排查的功夫我都自己都复制粘贴文档到微信公众号的编辑器了。所以，我放弃了微信公众号，手动粘贴…也挺好！</p>
 </blockquote>
@@ -557,7 +557,7 @@
 <p>Jekyll 使用插件非常简单，在根目录新建一个 <code>_plugins</code> 目录，将用<code>ruby</code> 写的 Jekyll 插件放进去即可在 Jekyll Build 的时候加载该插件。</p>
 <h2 id="其他细节">其他细节</h2>
 <p>之前的内容算是标准 Markdown 生成的 HTML，因此一些 RSS 阅读器抓取内容后格式良好，但是本次优化加了个 Bookmark 之后，RSS 格式就乱了（截图来自 Reeder 5）：</p>
-<p caption='Reeder5中Bookmark格式错乱'><img src='https://static.xheldon.cn/img/in-post/2022/optimize-of-my-blog-2/B1E25DC1-17C1-45D8-8721-8160FDCA1676_2.jpeg' alt='Reeder5中Bookmark格式错乱' title='Reeder5中Bookmark格式错乱'></p>
+<p caption='Reeder5中Bookmark格式错乱'><img src='https://static.xheldon.com/img/in-post/2022/optimize-of-my-blog-2/B1E25DC1-17C1-45D8-8721-8160FDCA1676_2.jpeg' alt='Reeder5中Bookmark格式错乱' title='Reeder5中Bookmark格式错乱'></p>
 <p>于是又写了个 ruby 插件，过滤该标签，将其转成普通的 HTML 链接：</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">module</span> <span class="hljs-title class_">Jekyll</span><br>    <span class="hljs-keyword">module</span> <span class="hljs-title class_">BookmarkFilter</span><br>      <span class="hljs-keyword">def</span> <span class="hljs-title function_">bookmark_filter</span>(<span class="hljs-params">input</span>)<br>        input.gsub(<span class="hljs-regexp">/^\&lt;p\&gt;\&lt;a\s+class=\&quot;link-bookmark\&quot;\shref=(.*)\starget=\&quot;_blank\&quot;\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;span\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;span\&gt;\n(.*)\n\&lt;\/span\&gt;\&lt;span\&gt;(.*)\&lt;\/span\&gt;\&lt;\/span\&gt;\&lt;\/a\&gt;\&lt;\/p\&gt;$/</span>, <span class="hljs-string">&#x27;&lt;p&gt;&lt;a href=\1 target=&quot;_blank&quot;&gt;\4&lt;/a&gt;&lt;/p&gt;&#x27;</span>);<br>      <span class="hljs-keyword">end</span><br>    <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-title class_">Liquid</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:Template</span>.register_filter(<span class="hljs-title class_">Jekyll</span><span class="hljs-symbol">:</span><span class="hljs-symbol">:BookmarkFilter</span>)<br></code></pre></td></tr></table></figure>
 <p>然后再在 feed.xml 中使用即可： <code>post.content | bookmark_filter</code> 。</p>

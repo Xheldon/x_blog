@@ -387,7 +387,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -522,7 +522,7 @@
 </li>
 </ul>
 <p>After clicking Open, if you can see Beijing TV, it means you can enjoy it for free.</p>
-<p caption='VLC RTP 播放'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/ea9168ee-6086-42df-b6b4-269900eb5592.webp' alt='VLC RTP 播放' title='VLC RTP 播放'></p>
+<p caption='VLC RTP 播放'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/ea9168ee-6086-42df-b6b4-269900eb5592.webp' alt='VLC RTP 播放' title='VLC RTP 播放'></p>
 <p class='content-callout' style='background: rgb(251, 243, 219); color: ;'><span class='content-callout-icon'>💡</span><span>Here, `rtp://239.3.1.241:8000` is the multicast address for Beijing TV. This address may change in the future. For the most accurate address, you can go to https://raw.githubusercontent.com/qwerttvv/Beijing-IPTV/master/IPTV-Unicom.m3u` and test any IP address following an rtp path. </span></p>
 <h2 id="explanation-of-basic-concepts">Explanation of Basic Concepts</h2>
 <p>Skip to the next section if you’re not interested in the details.</p>
@@ -569,49 +569,49 @@
 <h3 id="epg">EPG</h3>
 <p>EPG (Electronic Program Guide) contains program schedule information. After obtaining the M3U address in the previous step, which consists of individual IP addresses, how does one identify which channel each IP address corresponds to? This is where EPG comes into play—it pairs each address with program details, including brief channel descriptions. EPG data is typically broadcast alongside the video signal.</p>
 <h2 id="network-topology">Network Topology</h2>
-<p caption='网络拓扑-主路由拨号'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/0349a1d5-caeb-4233-b36b-8bc1c7db7565.webp' alt='网络拓扑-主路由拨号' title='网络拓扑-主路由拨号'></p>
+<p caption='网络拓扑-主路由拨号'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/0349a1d5-caeb-4233-b36b-8bc1c7db7565.webp' alt='网络拓扑-主路由拨号' title='网络拓扑-主路由拨号'></p>
 <h2 id="hands-on-practice">Hands-on Practice</h2>
 <p class='content-callout' style='background: rgb(251, 243, 219); color: ;'><span class='content-callout-icon'>🚧</span><span>Before starting, check if free usage is supported as mentioned at the beginning. </span></p>
 <h3 id="setting-up-a-soft-router">Setting Up a Soft Router</h3>
 <p><strong>Installing udpxy and luci-udpxy</strong></p>
 <p>This step involves standard operations. The UI installation is the most convenient method, as shown in the image (do not enable it immediately after installation; enable it in the final step):</p>
-<p caption='软件安装界面'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/2be1ca35-90a8-4936-89cd-5458557ac064.webp' alt='软件安装界面' title='软件安装界面'></p>
+<p caption='软件安装界面'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/2be1ca35-90a8-4936-89cd-5458557ac064.webp' alt='软件安装界面' title='软件安装界面'></p>
 <p><strong>Creating/Configuring Network Interfaces</strong></p>
 <p>This step ensures the software router can recognize data coming from the optical modem.</p>
 <ul>
 <li>Under <code>Network &gt; Interfaces</code>, create a new interface and name it arbitrarily, such as <code>IPTV</code>:</li>
 </ul>
-<p caption='新建 IPTV 接口'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/a938e2a7-9723-40f5-8b86-3ed151ba12c5.webp' alt='新建 IPTV 接口' title='新建 IPTV 接口'></p>
+<p caption='新建 IPTV 接口'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/a938e2a7-9723-40f5-8b86-3ed151ba12c5.webp' alt='新建 IPTV 接口' title='新建 IPTV 接口'></p>
 <p>Pay attention to the arrow-marked part—I’ve already created it, so it shows “IPTV” in parentheses (it wasn’t there when first created). Here, eth1 is my LAN port connected to the main router, while eth0 is another interface connected to the optical modem (IPTV port). I modified this earlier—by default, eth0 is the LAN port and eth1 is the WAN port, but that’s irrelevant. This step repurposes the WAN port as the IPTV port.</p>
 <ul>
 <li>Configure the gateway hop and firewall settings for the “IPTV” interface:</li>
 </ul>
-<p caption='配置网关跃点'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/d1df1f84-7240-4eb9-872b-6871f9c895a6.webp' alt='配置网关跃点' title='配置网关跃点'></p>
-<p caption='防火墙配置到 wan 上'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/c0e4032b-f066-4fcf-b906-dae85a37d070.webp' alt='防火墙配置到 wan 上' title='防火墙配置到 wan 上'></p>
+<p caption='配置网关跃点'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/d1df1f84-7240-4eb9-872b-6871f9c895a6.webp' alt='配置网关跃点' title='配置网关跃点'></p>
+<p caption='防火墙配置到 wan 上'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/c0e4032b-f066-4fcf-b906-dae85a37d070.webp' alt='防火墙配置到 wan 上' title='防火墙配置到 wan 上'></p>
 <ul>
 <li>Configure the gateway hop count for the WAN port:</li>
 </ul>
-<p caption='Wan 口网关跃点'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/21347824-ca57-4715-9fe9-cd7b6be0f282.webp' alt='Wan 口网关跃点' title='Wan 口网关跃点'></p>
+<p caption='Wan 口网关跃点'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/21347824-ca57-4715-9fe9-cd7b6be0f282.webp' alt='Wan 口网关跃点' title='Wan 口网关跃点'></p>
 <ul>
 <li>Configure LAN Port IGMP Snooping:</li>
 </ul>
-<p caption='IGMP 嗅探'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/b075aaec-042b-4f9d-9437-27ea4d17211e.webp' alt='IGMP 嗅探' title='IGMP 嗅探'></p>
+<p caption='IGMP 嗅探'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/b075aaec-042b-4f9d-9437-27ea4d17211e.webp' alt='IGMP 嗅探' title='IGMP 嗅探'></p>
 <ul>
 <li>Configure network firewall</li>
 </ul>
-<p caption='网络防火墙配置'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/577418eb-c3f6-43be-b73b-b1cf3ab5dcea.webp' alt='网络防火墙配置' title='网络防火墙配置'></p>
-<p caption='防火墙配置2'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/b3ce719b-a05d-41ef-ab4a-12eb866178a8.webp' alt='防火墙配置2' title='防火墙配置2'></p>
+<p caption='网络防火墙配置'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/577418eb-c3f6-43be-b73b-b1cf3ab5dcea.webp' alt='网络防火墙配置' title='网络防火墙配置'></p>
+<p caption='防火墙配置2'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/b3ce719b-a05d-41ef-ab4a-12eb866178a8.webp' alt='防火墙配置2' title='防火墙配置2'></p>
 <p><strong>Configuring the udpxy Service</strong></p>
 <ul>
 <li>Configure as shown in the diagram, noting that eth0 here refers to the WAN port—don’t mix it up:</li>
 </ul>
-<p caption='打开 UDPXY'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/bcd40c05-ed7f-43fd-b833-4cee94948150.webp' alt='打开 UDPXY' title='打开 UDPXY'></p>
+<p caption='打开 UDPXY'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/bcd40c05-ed7f-43fd-b833-4cee94948150.webp' alt='打开 UDPXY' title='打开 UDPXY'></p>
 <p>Finally, attempt to open [<a href="http://192.168.5.2:4022/status">http://192.168.5.2:4022/status</a>]([object Object]) to verify whether the udpxy service has started successfully:</p>
-<p caption='看到这个就表示成功了'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/189e9cb4-80c9-4b5d-8f57-722660e66145.webp' alt='看到这个就表示成功了' title='看到这个就表示成功了'></p>
+<p caption='看到这个就表示成功了'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/189e9cb4-80c9-4b5d-8f57-722660e66145.webp' alt='看到这个就表示成功了' title='看到这个就表示成功了'></p>
 <p>Afterwards, change the address <code>rtp://239.3.1.241:8000</code> that was previously opened with VLC to `<a href="http://192.168.2.1:4022/rtp/239.3.1.241:8000%60%60">http://192.168.2.1:4022/rtp/239.3.1.241:8000``</a> and try opening it again (no need to click the “Open RTP/UDP Stream” below; just open it directly in the URL).</p>
-<p caption='尝试将 RTP 变 HTTP 播放'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/582e015c-4260-4181-a81c-5eafc97a1132.webp' alt='尝试将 RTP 变 HTTP 播放' title='尝试将 RTP 变 HTTP 播放'></p>
+<p caption='尝试将 RTP 变 HTTP 播放'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/582e015c-4260-4181-a81c-5eafc97a1132.webp' alt='尝试将 RTP 变 HTTP 播放' title='尝试将 RTP 变 HTTP 播放'></p>
 <p>Then simply double-click to play:</p>
-<p caption='成功画面↑'><img src='https://static.xheldon.cn/img/in-post/2023/iptv-for-apple-tv-in-beijing/215aa895-e673-419a-a4fc-b94603af8baa.webp' alt='成功画面↑' title='成功画面↑'></p>
+<p caption='成功画面↑'><img src='https://static.xheldon.com/img/in-post/2023/iptv-for-apple-tv-in-beijing/215aa895-e673-419a-a4fc-b94603af8baa.webp' alt='成功画面↑' title='成功画面↑'></p>
 <h3 id="using-playback-software">Using Playback Software</h3>
 <p>I watch TV on Apple TV 4K and have tried several playback apps. Here’s a brief overview:</p>
 <ul>

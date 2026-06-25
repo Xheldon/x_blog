@@ -377,7 +377,7 @@
 <style type="text/css">
   header.intro-header {
     position: relative;
-    background-image: url("https://static.xheldon.cn//img/index-bg.png");
+    background-image: url("https://static.xheldon.com//img/index-bg.png");
 
     
   }
@@ -461,7 +461,7 @@
 얼마 전 우연히 GitHub Pages를 기반으로 한 다른 블로그를 방문했는데, 그곳에서는 많은 이미지를 사용하고 있었고, 이미지 링크가 <code>jsdelivr.net</code>와 관련이 있는 것을 발견했습니다. 그래서 해외의 무료 CDN 서비스인지 추측했고, 조사해 보니 실제로 그렇다는 것을 알게 되었습니다. 게다가 국내에도 서버가 있어 무료로 가속화할 수 있었습니다.<br />
 GitHub 저장소의 리소스 앞에 고정된 경로를 추가하기만 하면 됩니다. 첫 요청 시 리소스가 S3에 저장되며, 이후 GitHub가 다운되더라도 정상적으로 접근할 수 있습니다. S3에 리소스가 없으면 GitHub의 내용을 직접 요청하는, 즉 CDN의 기본적인 동작 방식입니다.</p>
 <p>저는 무료 CDN 가속 서비스가 가능하고, 복잡하지 않으며, jsdelivr의 주요 장점 중 하나가 중국에서 합법적인 ICP 라이선스를 보유한 해외 공공 CDN 서비스 제공업체라는 점에 매우 만족했습니다. 중국 내 수백 개의 서버를 보유하고 있었습니다.</p>
-<p><img src="https://static.xheldon.cn/img/in-post/2020/jsdelivr.png" alt="赣江" title="jsdelivr china" /></p>
+<p><img src="https://static.xheldon.com/img/in-post/2020/jsdelivr.png" alt="赣江" title="jsdelivr china" /></p>
 <p>바로 실행에 옮겼고, 다음과 같은 단계를 거쳤습니다:</p>
 <h3 id="전용-정적-리소스-저장소-추가">전용 정적 리소스 저장소 추가</h3>
 <p>이 단계는 jsdelivr CDN 서비스가 정확하게 리졸브할 수 있도록 하기 위함입니다. 예를 들어, 로컬의 어떤 이미지 참조 경로가 <code>/static/img/in-post/logo.png</code>이라면, 그 고유 경로는 <code>/img/logo.png</code>입니다. 이 내용을 GitHub 저장소에 푸시한 후,<br />
@@ -474,7 +474,7 @@ GitHub 저장소의 리소스 앞에 고정된 경로를 추가하기만 하면 
 <li>리소스 저장소 <code>x_blog-static</code>을 블로그 저장소의 서브모듈로 추가합니다: <code>git submodule add https://github.com/Xheldon/x_blog-static.git ./static</code>, 그리고 정적 리소스 저장소(방금의 static 폴더 내용)를 <code>static</code> 폴더 아래에 둡니다.</li>
 <li><code>_config.yml</code> 파일을 수정하여 구성 객체 <code>static_url: https://cdn.jsdelivr.net/gh/xheldon/x_blog-static</code>를 추가합니다. 이는 다음 단계에서 정적 리소스의 절대 경로를 수정하기 쉽게 합니다.</li>
 <li>로컬 개발 구성 파일 <code>_config.dev.yml</code>을 추가하고, 구성 객체 <code>static_url: /static</code>를 추가합니다. 이는 다음 단계에서 정적 리소스의 절대 경로를 수정하기 쉽게 합니다.</li>
-<li>로컬 절대 경로로 참조된 정적 리소스를 전역적으로 수정합니다. 예를 들어 img의 src가 <code>/static/img/in-post/logo.png</code> 또는 <code>/static/css/main.css</code> 등의 경로라면, `https://static.xheldon.cn/img/logo.png` 등으로 교체합니다. 여기서 주의할 점은, Liquid 문법 태그 `{{}}`는 markdown 파일에서도 사용할 수 있다는 점입니다. 매우 유용합니다.</li>
+<li>로컬 절대 경로로 참조된 정적 리소스를 전역적으로 수정합니다. 예를 들어 img의 src가 <code>/static/img/in-post/logo.png</code> 또는 <code>/static/css/main.css</code> 등의 경로라면, `https://static.xheldon.com/img/logo.png` 등으로 교체합니다. 여기서 주의할 점은, Liquid 문법 태그 `{{}}`는 markdown 파일에서도 사용할 수 있다는 점입니다. 매우 유용합니다.</li>
 <li>자주 수정되는 파일들, 예를 들어 <code>main.scss</code> 파일은 여전히 로컬에 두는 것이 좋습니다. 이유는 아래에서 설명합니다.</li>
 <li>수정 사항을 원격 저장소에 푸시합니다.</li>
 </ol>
