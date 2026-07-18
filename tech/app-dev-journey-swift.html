@@ -12,17 +12,23 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="本系列是本人作为 Web 前端学习苹果应用开发过程中的一些记录。">
-    
-        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="description" content="本系列是本人作为 Web 前端学习苹果应用开发过程中的一些记录。">
+        <meta name="keywords" content="Apple, Swift, 全栈, 初体验, 技巧, 技术, 教程, 苹果, Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
+        
+        <meta name="twitter:site" content="@_xheldon">
+        <meta name="twitter:creator" content="@_xheldon">
+        
         <meta property="og:title"
           content="App 开发之旅（一）：摩诃不思议的 Swift - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2025-3-27T12:00:00"> 
+          
+            <meta property="article:published_time" content="2025-03-27T00:00:00.000Z"> 
+          
+            <meta property="article:modified_time" content="2025-04-08T01:20:00.000Z"> 
               
                   
                     <meta property="article:tag" content="Apple">
@@ -43,14 +49,9 @@
                     
                       
                           
-                            <meta name="og:description" content="本系列是本人作为 Web 前端学习苹果应用开发过程中的一些记录。">
-                            
-                                
-                                    <meta property="twitter:image"
-                                      content="https://www.xheldon.cn/img/logo.png">
-                                    <meta property="og:image"
-                                      content="https://www.xheldon.cn/img/logo.png">
-                                    
+                          <meta property="og:description" content="本系列是本人作为 Web 前端学习苹果应用开发过程中的一些记录。">
+                          <meta name="twitter:image" content="https://www.xheldon.cn/img/logo.png">
+                          <meta property="og:image" content="https://www.xheldon.cn/img/logo.png">
                                       <meta property="og:url" content="https://www.xheldon.cn/tech/app-dev-journey-swift.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta property="og:locale" content="zh_CN">
@@ -89,11 +90,16 @@
                                       <link rel="canonical"
                                         href="https://www.xheldon.cn/tech/app-dev-journey-swift.html">
 
+                                      
+                                      
+                                      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"App 开发之旅（一）：摩诃不思议的 Swift","description":"本系列是本人作为 Web 前端学习苹果应用开发过程中的一些记录。","image":"https://www.xheldon.cn/img/logo.png","url":"https://www.xheldon.cn/tech/app-dev-journey-swift.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xheldon.cn/tech/app-dev-journey-swift.html"},"datePublished":"2025-03-27T00:00:00.000Z","dateModified":"2025-04-08T01:20:00.000Z","inLanguage":"zh-CN","author":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.cn/about/"},"publisher":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.cn/"}}</script>
+                                      
+
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=7cb528b2" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3c60701c" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -112,6 +118,13 @@
   <!-- hack iOS CSS :active style -->
 
   <body ontouchstart="">
+    <!-- 微信分享缩略图：无 JSSDK 时微信不读 og:image，而是抓取页面中首个足够大
+         （约 ≥300x300）的图片；0x0 属性的图会被跳过，正文图多为 webp 也不被识别。
+         故在 body 最前放一张保留真实尺寸、仅视觉裁剪隐藏的同域 PNG（微信爬虫
+         不渲染 CSS，overflow 裁剪不影响其抓取）。 -->
+    <div style="position: absolute; width: 0; height: 0; overflow: hidden" aria-hidden="true">
+      <img src="/img/icon_wechat.png" width="481" height="481" alt="Xheldon Blog" />
+    </div>
     <!-- Navigation -->
     
 
@@ -474,15 +487,6 @@
         </script>
            
         <div class="callout-tips">🖥 &nbsp;说明：本系列是本人作为 Web 前端学习苹果应用开发过程中的一些记录。</div>
-          
-        <div class="craft-tips">
-          📚 &nbsp;本文同步发布在 Notion：<a
-            href="https://xheldon.notion.site/App-Swift-1c3800e87a6180a0b1dcdc00491c3a7c"
-            target="_blank"
-          >
-            https://xheldon.notion.site/App-Swift-1c3800e87a6180a0b1dcdc00491c3a7c
-          </a>
-        </div>
          <h2 id="说明">说明</h2>
 <blockquote style='border-color: ;color: '><p> 有人问为什么不是 JavaScript，因为它是脚本语言，没有类型系统等，完全没法儿跟 Swift 比较。</p></blockquote>
 <p>本人前端开发，对 C、Java、Python 语言仅限入门了解水平，而对 TypeScript（以下简称 TS） 的特性和使用达到了高级水平（自认），因此有些让我震惊的点，可能在各位眼中感觉「只不过是平平无奇的语言特性罢了」，亦或者「莫非设计 TypeScript 的人是天才？」。</p>
@@ -766,10 +770,10 @@
                 title="技术"
                 rel="47">技术</a>
         
-            <a data-sort="0051"
+            <a data-sort="0050"
                 href="/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="生活"
-                rel="27">生活</a>
+                rel="28">生活</a>
         
             <a data-sort="0067"
                 href="/archive/?tag=%E6%8A%98%E8%85%BE"
@@ -1451,8 +1455,5 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-    <img src="/img/icon_wechat.png" width="0" height="0" />
-    <!-- Migrate from head to bottom, no longer block render and still work -->
   </body>
 </html>

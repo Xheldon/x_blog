@@ -12,17 +12,22 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="原文作者写于 2017 年 10 月 13 日，回顾了 开发 ProseMirror 1.0 以来的经历，本文偏意译。">
-    
-        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="description" content="原文作者写于 2017 年 10 月 13 日，回顾了 开发 ProseMirror 1.0 以来的经历，本文偏意译。">
+        <meta name="keywords" content="ProseMirror, 技术, 翻译, Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
+        
+        <meta name="twitter:site" content="@_xheldon">
+        <meta name="twitter:creator" content="@_xheldon">
+        
         <meta property="og:title"
           content="「译」ProseMirror 1.0 发布 - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2021-11-12T4:10:23"> 
+          
+            <meta property="article:published_time" content="2021-11-12T04:10:23.000Z"> 
+          
               
                   
                     <meta property="article:tag" content="ProseMirror">
@@ -33,14 +38,9 @@
                     
                       
                           
-                            <meta name="og:description" content="原文作者写于 2017 年 10 月 13 日，回顾了 开发 ProseMirror 1.0 以来的经历，本文偏意译。">
-                            
-                                
-                                    <meta property="twitter:image"
-                                      content="https://www.xheldon.cn/img/logo.png">
-                                    <meta property="og:image"
-                                      content="https://www.xheldon.cn/img/logo.png">
-                                    
+                          <meta property="og:description" content="原文作者写于 2017 年 10 月 13 日，回顾了 开发 ProseMirror 1.0 以来的经历，本文偏意译。">
+                          <meta name="twitter:image" content="https://www.xheldon.cn/img/logo.png">
+                          <meta property="og:image" content="https://www.xheldon.cn/img/logo.png">
                                       <meta property="og:url" content="https://www.xheldon.cn/tech/ProseMirror-1.0-release.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta property="og:locale" content="zh_CN">
@@ -79,11 +79,16 @@
                                       <link rel="canonical"
                                         href="https://www.xheldon.cn/tech/ProseMirror-1.0-release.html">
 
+                                      
+                                      
+                                      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"「译」ProseMirror 1.0 发布","description":"原文作者写于 2017 年 10 月 13 日，回顾了 开发 ProseMirror 1.0 以来的经历，本文偏意译。","image":"https://www.xheldon.cn/img/logo.png","url":"https://www.xheldon.cn/tech/ProseMirror-1.0-release.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xheldon.cn/tech/ProseMirror-1.0-release.html"},"datePublished":"2021-11-12T04:10:23.000Z","dateModified":"2021-11-12T04:10:23.000Z","inLanguage":"zh-CN","author":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.cn/about/"},"publisher":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.cn/"}}</script>
+                                      
+
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=7cb528b2" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3c60701c" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -102,6 +107,13 @@
   <!-- hack iOS CSS :active style -->
 
   <body ontouchstart="">
+    <!-- 微信分享缩略图：无 JSSDK 时微信不读 og:image，而是抓取页面中首个足够大
+         （约 ≥300x300）的图片；0x0 属性的图会被跳过，正文图多为 webp 也不被识别。
+         故在 body 最前放一张保留真实尺寸、仅视觉裁剪隐藏的同域 PNG（微信爬虫
+         不渲染 CSS，overflow 裁剪不影响其抓取）。 -->
+    <div style="position: absolute; width: 0; height: 0; overflow: hidden" aria-hidden="true">
+      <img src="/img/icon_wechat.png" width="481" height="481" alt="Xheldon Blog" />
+    </div>
     <!-- Navigation -->
     
 
@@ -443,7 +455,7 @@
         </div>
           
         <div class="callout-tips">🖥 &nbsp;说明：原文作者写于 2017 年 10 月 13 日，回顾了 开发 ProseMirror 1.0 以来的经历，本文偏意译。</div>
-           <blockquote>
+         <blockquote>
 <p>文中所有 <code>https://prosemirror.xheldon.com</code> 的链接均可换成 <code>https://prosemirror.net</code> 的链接以查看原文中的原始引用。</p>
 </blockquote>
 <p>两年前，我启动了 <a href="https://prosemirror.xheldon.com">ProseMirror</a> 项目，因为我想尝试[一种更好](/tech/ProseMirror.html)的所见即所得式的编辑方法。今天，我发布了<a href="https://github.com/prosemirror/">该库</a>的 <a href="https://discuss.prosemirror.net/t/release-1-0-0/998">1.0 版本</a>。项目的架构和它的内部实现在其生命周期中发生了相当大的变化，但我觉得最初的目标已经实现了。</p>
@@ -546,10 +558,10 @@
                 title="技术"
                 rel="47">技术</a>
         
-            <a data-sort="0051"
+            <a data-sort="0050"
                 href="/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="生活"
-                rel="27">生活</a>
+                rel="28">生活</a>
         
             <a data-sort="0067"
                 href="/archive/?tag=%E6%8A%98%E8%85%BE"
@@ -1231,8 +1243,5 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-    <img src="/img/icon_wechat.png" width="0" height="0" />
-    <!-- Migrate from head to bottom, no longer block render and still work -->
   </body>
 </html>

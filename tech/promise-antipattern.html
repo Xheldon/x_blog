@@ -12,17 +12,22 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="">
-    
-        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="description" content="最近在看Promise相关的东西，看到了这篇文章，觉得很不错，遂记录下来。 Promises本身是很简单的，前提是你得找得到头绪，下面是几个关于 Promise 的容易困惑的知识点来验证你是否真的掌握了Promise。其中的几个真的曾经让我抓狂过。 嵌套 Promises 你有一捆的 Promise">
+        <meta name="keywords" content="Promise, 技术, 翻译, Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
+        
+        <meta name="twitter:site" content="@_xheldon">
+        <meta name="twitter:creator" content="@_xheldon">
+        
         <meta property="og:title"
           content="「译」 Promise 反面模式 - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2016-3-4T2:43:12"> 
+          
+            <meta property="article:published_time" content="2016-03-04T14:43:12.000Z"> 
+          
               
                   
                     <meta property="article:tag" content="Promise">
@@ -33,14 +38,9 @@
                     
                       
                           
-                            <meta name="og:description" content="">
-                            
-                                
-                                    <meta property="twitter:image"
-                                      content="https://www.xheldon.cn/img/logo.png">
-                                    <meta property="og:image"
-                                      content="https://www.xheldon.cn/img/logo.png">
-                                    
+                          <meta property="og:description" content="最近在看Promise相关的东西，看到了这篇文章，觉得很不错，遂记录下来。 Promises本身是很简单的，前提是你得找得到头绪，下面是几个关于 Promise 的容易困惑的知识点来验证你是否真的掌握了Promise。其中的几个真的曾经让我抓狂过。 嵌套 Promises 你有一捆的 Promise">
+                          <meta name="twitter:image" content="https://www.xheldon.cn/img/logo.png">
+                          <meta property="og:image" content="https://www.xheldon.cn/img/logo.png">
                                       <meta property="og:url" content="https://www.xheldon.cn/tech/promise-antipattern.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta property="og:locale" content="zh_CN">
@@ -79,11 +79,16 @@
                                       <link rel="canonical"
                                         href="https://www.xheldon.cn/tech/promise-antipattern.html">
 
+                                      
+                                      
+                                      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"「译」 Promise 反面模式","description":"最近在看Promise相关的东西，看到了这篇文章，觉得很不错，遂记录下来。 Promises本身是很简单的，前提是你得找得到头绪，下面是几个关于 Promise 的容易困惑的知识点来验证你是否真的掌握了Promise。其中的几个真的曾经让我抓狂过。 嵌套 Promises 你有一捆的 Promise","image":"https://www.xheldon.cn/img/logo.png","url":"https://www.xheldon.cn/tech/promise-antipattern.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xheldon.cn/tech/promise-antipattern.html"},"datePublished":"2016-03-04T14:43:12.000Z","dateModified":"2016-03-04T14:43:12.000Z","inLanguage":"zh-CN","author":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.cn/about/"},"publisher":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.cn/"}}</script>
+                                      
+
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=7cb528b2" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3c60701c" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -102,6 +107,13 @@
   <!-- hack iOS CSS :active style -->
 
   <body ontouchstart="">
+    <!-- 微信分享缩略图：无 JSSDK 时微信不读 og:image，而是抓取页面中首个足够大
+         （约 ≥300x300）的图片；0x0 属性的图会被跳过，正文图多为 webp 也不被识别。
+         故在 body 最前放一张保留真实尺寸、仅视觉裁剪隐藏的同域 PNG（微信爬虫
+         不渲染 CSS，overflow 裁剪不影响其抓取）。 -->
+    <div style="position: absolute; width: 0; height: 0; overflow: hidden" aria-hidden="true">
+      <img src="/img/icon_wechat.png" width="481" height="481" alt="Xheldon Blog" />
+    </div>
     <!-- Navigation -->
     
 
@@ -435,7 +447,7 @@
           }
           timeDom.innerText = fromNow;
         </script>
-              <p>最近在看<code>Promise</code>相关的东西，看到了这篇文章，觉得很不错，遂记录下来。</p>
+            <p>最近在看<code>Promise</code>相关的东西，看到了这篇文章，觉得很不错，遂记录下来。</p>
 <p><code>Promises</code>本身是很简单的，前提是你得找得到头绪，下面是几个关于 Promise 的容易困惑的知识点来验证你是否真的掌握了<code>Promise</code>。其中的几个真的曾经让我抓狂过。</p>
 <h2 id="嵌套-promises">嵌套 Promises</h2>
 <p>你有一捆的 Promises 互相嵌套着：</p>
@@ -574,10 +586,10 @@
                 title="技术"
                 rel="47">技术</a>
         
-            <a data-sort="0051"
+            <a data-sort="0050"
                 href="/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="生活"
-                rel="27">生活</a>
+                rel="28">生活</a>
         
             <a data-sort="0067"
                 href="/archive/?tag=%E6%8A%98%E8%85%BE"
@@ -1259,8 +1271,5 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-    <img src="/img/icon_wechat.png" width="0" height="0" />
-    <!-- Migrate from head to bottom, no longer block render and still work -->
   </body>
 </html>

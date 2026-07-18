@@ -12,17 +12,22 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="">
-    
-        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="description" content="本文由来 看网上某篇 CORS 资料的时候, 被一句话迷惑了: ‘注意, 设置了 withCredentials = true 之后, 携带的 cookie 是目标域的 cookie’, 我十分不解: 当前域假设为 a.com 发送 xhr 到 b.com, 当然是把源域 a.com 的 cooki">
+        <meta name="keywords" content="CORS, 技术, Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
+        
+        <meta name="twitter:site" content="@_xheldon">
+        <meta name="twitter:creator" content="@_xheldon">
+        
         <meta property="og:title"
           content="我对 CORS 的探究 - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2016-7-7T12:56:45"> 
+          
+            <meta property="article:published_time" content="2016-07-07T12:56:45.000Z"> 
+          
               
                   
                     <meta property="article:tag" content="CORS">
@@ -31,14 +36,9 @@
                     
                       
                           
-                            <meta name="og:description" content="">
-                            
-                                
-                                    <meta property="twitter:image"
-                                      content="https://www.xheldon.cn/img/logo.png">
-                                    <meta property="og:image"
-                                      content="https://www.xheldon.cn/img/logo.png">
-                                    
+                          <meta property="og:description" content="本文由来 看网上某篇 CORS 资料的时候, 被一句话迷惑了: ‘注意, 设置了 withCredentials = true 之后, 携带的 cookie 是目标域的 cookie’, 我十分不解: 当前域假设为 a.com 发送 xhr 到 b.com, 当然是把源域 a.com 的 cooki">
+                          <meta name="twitter:image" content="https://www.xheldon.cn/img/logo.png">
+                          <meta property="og:image" content="https://www.xheldon.cn/img/logo.png">
                                       <meta property="og:url" content="https://www.xheldon.cn/tech/research-CORS.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta property="og:locale" content="zh_CN">
@@ -77,11 +77,16 @@
                                       <link rel="canonical"
                                         href="https://www.xheldon.cn/tech/research-CORS.html">
 
+                                      
+                                      
+                                      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"我对 CORS 的探究","description":"本文由来 看网上某篇 CORS 资料的时候, 被一句话迷惑了: ‘注意, 设置了 withCredentials = true 之后, 携带的 cookie 是目标域的 cookie’, 我十分不解: 当前域假设为 a.com 发送 xhr 到 b.com, 当然是把源域 a.com 的 cooki","image":"https://www.xheldon.cn/img/logo.png","url":"https://www.xheldon.cn/tech/research-CORS.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xheldon.cn/tech/research-CORS.html"},"datePublished":"2016-07-07T12:56:45.000Z","dateModified":"2016-07-07T12:56:45.000Z","inLanguage":"zh-CN","author":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.cn/about/"},"publisher":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.cn/"}}</script>
+                                      
+
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=7cb528b2" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3c60701c" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -100,6 +105,13 @@
   <!-- hack iOS CSS :active style -->
 
   <body ontouchstart="">
+    <!-- 微信分享缩略图：无 JSSDK 时微信不读 og:image，而是抓取页面中首个足够大
+         （约 ≥300x300）的图片；0x0 属性的图会被跳过，正文图多为 webp 也不被识别。
+         故在 body 最前放一张保留真实尺寸、仅视觉裁剪隐藏的同域 PNG（微信爬虫
+         不渲染 CSS，overflow 裁剪不影响其抓取）。 -->
+    <div style="position: absolute; width: 0; height: 0; overflow: hidden" aria-hidden="true">
+      <img src="/img/icon_wechat.png" width="481" height="481" alt="Xheldon Blog" />
+    </div>
     <!-- Navigation -->
     
 
@@ -428,7 +440,7 @@
           }
           timeDom.innerText = fromNow;
         </script>
-              <h2 id="本文由来">本文由来</h2>
+            <h2 id="本文由来">本文由来</h2>
 <p>看网上某篇 <code>CORS</code> 资料的时候, 被一句话迷惑了: ‘注意, 设置了 <code>withCredentials = true</code> 之后, 携带的 <code>cookie</code> 是目标域的 <code>cookie</code>’, 我十分不解: 当前域假设为 <code>a.com</code> 发送 <code>xhr</code> 到 <code>b.com</code>, 当然是把源域 <code>a.com</code> 的 <code>cookie</code>, 发送给 <code>b.com</code> 来处理啊, 怎么会携带的是目标域(这里我理解为 <code>b.com</code>)的 <code>cookie</code> 呢? 因此我开始了探究(先说结论: 我查看的资料的说法确实是正确的, 携带的确实是目标域 <code>b.com</code> 的 <code>cookie</code>).</p>
 <h2 id="小目标-1-简单请求下让-a-com-发送-ajax-到-b-com">小目标-1: 简单请求下让 <code>a.com</code> 发送 <code>ajax</code> 到 <code>b.com</code></h2>
 <p>什么是简单请求请自行谷歌/SO. 这里注意一个基本事实, <code>cookie</code> 是跟随着 <code>域名</code> 的, 而不是跟随着 <code>IP地址</code>, 我在本地起了一个简单的能处理 <code>cookie</code> 的 <code>express</code> 服务, 同时在我的 <code>VPS</code> 上也起了一个相同的服务, 然后通过修改 <code>hosts</code> 来实现不同的域名:</p>
@@ -663,10 +675,10 @@
                 title="技术"
                 rel="47">技术</a>
         
-            <a data-sort="0051"
+            <a data-sort="0050"
                 href="/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="生活"
-                rel="27">生活</a>
+                rel="28">生活</a>
         
             <a data-sort="0067"
                 href="/archive/?tag=%E6%8A%98%E8%85%BE"
@@ -1348,8 +1360,5 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-    <img src="/img/icon_wechat.png" width="0" height="0" />
-    <!-- Migrate from head to bottom, no longer block render and still work -->
   </body>
 </html>
