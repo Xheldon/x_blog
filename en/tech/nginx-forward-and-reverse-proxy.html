@@ -12,17 +12,22 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="Everything stems from ignorance">
-    
-        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="description" content="Everything stems from ignorance">
+        <meta name="keywords" content="Nginx, 代理, 技术, 服务器, Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
+        
+        <meta name="twitter:site" content="@_xheldon">
+        <meta name="twitter:creator" content="@_xheldon">
+        
         <meta property="og:title"
           content="Forward and Reverse Proxies in Nginx - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2021-7-6T12:05:56"> 
+          
+            <meta property="article:published_time" content="2021-07-06T00:05:56.000Z"> 
+          
               
                   
                     <meta property="article:tag" content="Nginx">
@@ -35,14 +40,9 @@
                     
                       
                           
-                            <meta name="og:description" content="Everything stems from ignorance">
-                            
-                                
-                                    <meta property="twitter:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    <meta property="og:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    
+                          <meta property="og:description" content="Everything stems from ignorance">
+                          <meta name="twitter:image" content="https://www.xheldon.com/img/logo.png">
+                          <meta property="og:image" content="https://www.xheldon.com/img/logo.png">
                                       <meta property="og:url" content="https://www.xheldon.com/en/tech/nginx-forward-and-reverse-proxy.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta property="og:locale" content="en_US">
@@ -86,11 +86,16 @@
                                       <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/nginx-forward-and-reverse-proxy.html">
                                       <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/nginx-forward-and-reverse-proxy.html">
 
+                                      
+                                      
+                                      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Forward and Reverse Proxies in Nginx","description":"Everything stems from ignorance","image":"https://www.xheldon.com/img/logo.png","url":"https://www.xheldon.com/en/tech/nginx-forward-and-reverse-proxy.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xheldon.com/en/tech/nginx-forward-and-reverse-proxy.html"},"datePublished":"2021-07-06T00:05:56.000Z","dateModified":"2021-07-06T00:05:56.000Z","inLanguage":"en","author":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/about/"},"publisher":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/"}}</script>
+                                      
+
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=7cb528b2" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3c60701c" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -109,6 +114,13 @@
   <!-- hack iOS CSS :active style -->
 
   <body ontouchstart="">
+    <!-- 微信分享缩略图：无 JSSDK 时微信不读 og:image，而是抓取页面中首个足够大
+         （约 ≥300x300）的图片；0x0 属性的图会被跳过，正文图多为 webp 也不被识别。
+         故在 body 最前放一张保留真实尺寸、仅视觉裁剪隐藏的同域 PNG（微信爬虫
+         不渲染 CSS，overflow 裁剪不影响其抓取）。 -->
+    <div style="position: absolute; width: 0; height: 0; overflow: hidden" aria-hidden="true">
+      <img src="/img/icon_wechat.png" width="481" height="481" alt="Xheldon Blog" />
+    </div>
     <!-- Navigation -->
     
 
@@ -460,7 +472,7 @@
         </script>
            
         <div class="callout-tips">🖥 &nbsp;Note：Everything stems from ignorance</div>
-           <h2 id="the-origin-of-this-article">The Origin of This Article</h2>
+         <h2 id="the-origin-of-this-article">The Origin of This Article</h2>
 <p>Because folder/file names cannot contain colons, I mistakenly thought Chrome couldn’t use its Override feature for URLs with port numbers. As a result, I planned to modify the port-included URLs of our internal remote testing environment to the default local port 80, enabling Chrome to override them. Later, I discovered that Chrome actually can override URLs with port numbers—simply decode the colon as <code>%3a</code>.</p>
 <p>After realizing my own folly, and unwilling to accept that the hour I spent configuring Nginx as a forward proxy to solve the port issue was entirely unnecessary, I decided to document the process. At least the time I invested wouldn’t be wasted, and others might avoid similar pitfalls—hence this article.</p>
 <p>Some of these concepts may be familiar to those who studied them in college, but this is written with beginners in mind.</p>
@@ -572,10 +584,10 @@
                 title="Technology"
                 rel="188">Technology</a>
         
-            <a data-sort="0204"
+            <a data-sort="0200"
                 href="/en/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="Life"
-                rel="108">Life</a>
+                rel="112">Life</a>
         
             <a data-sort="0268"
                 href="/en/archive/?tag=%E6%8A%98%E8%85%BE"
@@ -893,6 +905,21 @@
                 rel="4">Unboxing</a>
         
             <a data-sort="0308"
+                href="/en/archive/?tag=%E5%BF%83%E5%BE%97"
+                title="心得"
+                rel="4">心得</a>
+        
+            <a data-sort="0308"
+                href="/en/archive/?tag=%E6%83%B3%E6%B3%95"
+                title="想法"
+                rel="4">想法</a>
+        
+            <a data-sort="0308"
+                href="/en/archive/?tag=%E6%84%9F%E6%83%B3"
+                title="感想"
+                rel="4">感想</a>
+        
+            <a data-sort="0308"
                 href="/en/archive/?tag=%E6%88%98%E7%A5%9E"
                 title="God of War"
                 rel="4">God of War</a>
@@ -1011,6 +1038,11 @@
                 href="/en/archive/?tag=%E9%80%89%E5%9E%8B"
                 title="Selection"
                 rel="4">Selection</a>
+        
+            <a data-sort="0308"
+                href="/en/archive/?tag=%E9%95%BF%E9%9D%92"
+                title="长青"
+                rel="4">长青</a>
         
             <a data-sort="0308"
                 href="/en/archive/?tag=%E9%9D%A2%E8%AF%95"
@@ -1552,8 +1584,5 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-    <img src="/img/icon_wechat.png" width="0" height="0" />
-    <!-- Migrate from head to bottom, no longer block render and still work -->
   </body>
 </html>

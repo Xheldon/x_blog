@@ -12,17 +12,22 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="File Upload and Download Without Third-Party Software">
-    
-        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="description" content="File Upload and Download Without Third-Party Software">
+        <meta name="keywords" content="技术, 服务器, Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
+        
+        <meta name="twitter:site" content="@_xheldon">
+        <meta name="twitter:creator" content="@_xheldon">
+        
         <meta property="og:title"
           content="Using sz/rz Commands for File Download/Upload on OS X - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2015-7-20T8:12:45"> 
+          
+            <meta property="article:published_time" content="2015-07-20T00:12:45.000Z"> 
+          
               
                   
                     <meta property="article:tag" content="Technology">
@@ -31,14 +36,9 @@
                     
                       
                           
-                            <meta name="og:description" content="File Upload and Download Without Third-Party Software">
-                            
-                                
-                                    <meta property="twitter:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    <meta property="og:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    
+                          <meta property="og:description" content="File Upload and Download Without Third-Party Software">
+                          <meta name="twitter:image" content="https://www.xheldon.com/img/logo.png">
+                          <meta property="og:image" content="https://www.xheldon.com/img/logo.png">
                                       <meta property="og:url" content="https://www.xheldon.com/en/tech/how-to-use-rz-sz-on-mac.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta property="og:locale" content="en_US">
@@ -82,11 +82,16 @@
                                       <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/how-to-use-rz-sz-on-mac.html">
                                       <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/how-to-use-rz-sz-on-mac.html">
 
+                                      
+                                      
+                                      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Using sz/rz Commands for File Download/Upload on OS X","description":"File Upload and Download Without Third-Party Software","image":"https://www.xheldon.com/img/logo.png","url":"https://www.xheldon.com/en/tech/how-to-use-rz-sz-on-mac.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xheldon.com/en/tech/how-to-use-rz-sz-on-mac.html"},"datePublished":"2015-07-20T00:12:45.000Z","dateModified":"2015-07-20T00:12:45.000Z","inLanguage":"en","author":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/about/"},"publisher":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/"}}</script>
+                                      
+
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=7cb528b2" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3c60701c" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -105,6 +110,13 @@
   <!-- hack iOS CSS :active style -->
 
   <body ontouchstart="">
+    <!-- 微信分享缩略图：无 JSSDK 时微信不读 og:image，而是抓取页面中首个足够大
+         （约 ≥300x300）的图片；0x0 属性的图会被跳过，正文图多为 webp 也不被识别。
+         故在 body 最前放一张保留真实尺寸、仅视觉裁剪隐藏的同域 PNG（微信爬虫
+         不渲染 CSS，overflow 裁剪不影响其抓取）。 -->
+    <div style="position: absolute; width: 0; height: 0; overflow: hidden" aria-hidden="true">
+      <img src="/img/icon_wechat.png" width="481" height="481" alt="Xheldon Blog" />
+    </div>
     <!-- Navigation -->
     
 
@@ -416,7 +428,7 @@
                         Using sz/rz Commands for File Download/Upload on OS X
                       </h1>
                       <h2 class="subheading">
-                        File Upload and Download Without Third-Party Software
+                        
                       </h2>
                       <span class="meta">✍🏼 Written on Jul 20, 2015</span>&nbsp;&nbsp;&nbsp;
                       
@@ -441,7 +453,7 @@
         </div>
         <script>
           var timeDom = document.getElementById('from_time');
-          var pageTime = Number('1437379965000');
+          var pageTime = Number('1437351165000');
           var currentTime = Date.now();
           var fromNow = ((currentTime - pageTime) / (24 * 3600 * 1000)).toFixed(
             0
@@ -451,7 +463,9 @@
           }
           timeDom.innerText = fromNow;
         </script>
-              <p><code>OS X</code>’s built-in terminal can directly connect to <code>Linux</code> (in comparison, <code>Win</code>’s <code>cmd</code> is quite inferior). However, there’s an issue: the terminal cannot directly upload or download files via <code>Zmodem</code>. This is where a more powerful remote server connection tool comes into play: <code>iTerm</code>.</p>
+           
+        <div class="callout-tips">🖥 &nbsp;Note：File Upload and Download Without Third-Party Software</div>
+         <p><code>OS X</code>’s built-in terminal can directly connect to <code>Linux</code> (in comparison, <code>Win</code>’s <code>cmd</code> is quite inferior). However, there’s an issue: the terminal cannot directly upload or download files via <code>Zmodem</code>. This is where a more powerful remote server connection tool comes into play: <code>iTerm</code>.</p>
 <p>There are many tutorials online, but some are irresponsibly copy-pasted just to boost traffic, lacking detail. I had to piece things together through trial and error, which was frustrating. Below, I’ll explain things in simpler terms.</p>
 <p>Enough preamble—let’s get to the point: how to use <code>rz/sz</code> in <code>Zmodem</code> under <code>Mac OS X</code> to upload and download files.</p>
 <h2 id="step-1-download-iterm2">Step 1: Download <code>iTerm2</code></h2>
@@ -564,10 +578,10 @@ Select <code>+</code> and add the following <code>trigger</code> information (tw
                 title="Technology"
                 rel="188">Technology</a>
         
-            <a data-sort="0204"
+            <a data-sort="0200"
                 href="/en/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="Life"
-                rel="108">Life</a>
+                rel="112">Life</a>
         
             <a data-sort="0268"
                 href="/en/archive/?tag=%E6%8A%98%E8%85%BE"
@@ -885,6 +899,21 @@ Select <code>+</code> and add the following <code>trigger</code> information (tw
                 rel="4">Unboxing</a>
         
             <a data-sort="0308"
+                href="/en/archive/?tag=%E5%BF%83%E5%BE%97"
+                title="心得"
+                rel="4">心得</a>
+        
+            <a data-sort="0308"
+                href="/en/archive/?tag=%E6%83%B3%E6%B3%95"
+                title="想法"
+                rel="4">想法</a>
+        
+            <a data-sort="0308"
+                href="/en/archive/?tag=%E6%84%9F%E6%83%B3"
+                title="感想"
+                rel="4">感想</a>
+        
+            <a data-sort="0308"
                 href="/en/archive/?tag=%E6%88%98%E7%A5%9E"
                 title="God of War"
                 rel="4">God of War</a>
@@ -1003,6 +1032,11 @@ Select <code>+</code> and add the following <code>trigger</code> information (tw
                 href="/en/archive/?tag=%E9%80%89%E5%9E%8B"
                 title="Selection"
                 rel="4">Selection</a>
+        
+            <a data-sort="0308"
+                href="/en/archive/?tag=%E9%95%BF%E9%9D%92"
+                title="长青"
+                rel="4">长青</a>
         
             <a data-sort="0308"
                 href="/en/archive/?tag=%E9%9D%A2%E8%AF%95"
@@ -1544,8 +1578,5 @@ Select <code>+</code> and add the following <code>trigger</code> information (tw
 </script>
 
 
-    <!-- Image to hack wechat -->
-    <img src="/img/icon_wechat.png" width="0" height="0" />
-    <!-- Migrate from head to bottom, no longer block render and still work -->
   </body>
 </html>

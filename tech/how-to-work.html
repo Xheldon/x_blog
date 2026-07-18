@@ -12,17 +12,22 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="">
-    
-        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="description" content="前言 因为没有项目经验，经常在前端和后端之间的职能上面出错。 正文 比如我需要实现一个点击按钮用后台给的接口查询数据再用 handlebar 显示到前端的功能，但是每次查询的数据（返回数组，每项为 map 类型）都是比较长的，全部一次性加载显示在页面不合适，于是我就排序设计为「每次点击按钮都从后台查">
+        <meta name="keywords" content="工作经验, 技术, Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
+        
+        <meta name="twitter:site" content="@_xheldon">
+        <meta name="twitter:creator" content="@_xheldon">
+        
         <meta property="og:title"
           content="关于代码优化/工作经验重要性的一次切身体会 - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2015-10-30T3:04:22"> 
+          
+            <meta property="article:published_time" content="2015-10-30T15:04:22.000Z"> 
+          
               
                   
                     <meta property="article:tag" content="工作经验">
@@ -31,14 +36,9 @@
                     
                       
                           
-                            <meta name="og:description" content="">
-                            
-                                
-                                    <meta property="twitter:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    <meta property="og:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    
+                          <meta property="og:description" content="前言 因为没有项目经验，经常在前端和后端之间的职能上面出错。 正文 比如我需要实现一个点击按钮用后台给的接口查询数据再用 handlebar 显示到前端的功能，但是每次查询的数据（返回数组，每项为 map 类型）都是比较长的，全部一次性加载显示在页面不合适，于是我就排序设计为「每次点击按钮都从后台查">
+                          <meta name="twitter:image" content="https://www.xheldon.com/img/logo.png">
+                          <meta property="og:image" content="https://www.xheldon.com/img/logo.png">
                                       <meta property="og:url" content="https://www.xheldon.com/tech/how-to-work.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta property="og:locale" content="zh_CN">
@@ -82,11 +82,16 @@
                                       <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/how-to-work.html">
                                       <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/how-to-work.html">
 
+                                      
+                                      
+                                      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"关于代码优化/工作经验重要性的一次切身体会","description":"前言 因为没有项目经验，经常在前端和后端之间的职能上面出错。 正文 比如我需要实现一个点击按钮用后台给的接口查询数据再用 handlebar 显示到前端的功能，但是每次查询的数据（返回数组，每项为 map 类型）都是比较长的，全部一次性加载显示在页面不合适，于是我就排序设计为「每次点击按钮都从后台查","image":"https://www.xheldon.com/img/logo.png","url":"https://www.xheldon.com/tech/how-to-work.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xheldon.com/tech/how-to-work.html"},"datePublished":"2015-10-30T15:04:22.000Z","dateModified":"2015-10-30T15:04:22.000Z","inLanguage":"zh-CN","author":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/about/"},"publisher":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/"}}</script>
+                                      
+
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=7cb528b2" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3c60701c" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -105,6 +110,13 @@
   <!-- hack iOS CSS :active style -->
 
   <body ontouchstart="">
+    <!-- 微信分享缩略图：无 JSSDK 时微信不读 og:image，而是抓取页面中首个足够大
+         （约 ≥300x300）的图片；0x0 属性的图会被跳过，正文图多为 webp 也不被识别。
+         故在 body 最前放一张保留真实尺寸、仅视觉裁剪隐藏的同域 PNG（微信爬虫
+         不渲染 CSS，overflow 裁剪不影响其抓取）。 -->
+    <div style="position: absolute; width: 0; height: 0; overflow: hidden" aria-hidden="true">
+      <img src="/img/icon_wechat.png" width="481" height="481" alt="Xheldon Blog" />
+    </div>
     <!-- Navigation -->
     
 
@@ -444,7 +456,7 @@
           }
           timeDom.innerText = fromNow;
         </script>
-              <h2 id="前言">前言</h2>
+            <h2 id="前言">前言</h2>
 <p>因为没有项目经验，经常在前端和后端之间的职能上面出错。</p>
 <h2 id="正文">正文</h2>
 <p>比如我需要实现一个点击按钮用后台给的接口查询数据再用 handlebar 显示到前端的功能，但是每次查询的数据（返回数组，每项为 map 类型）都是比较长的，全部一次性加载显示在页面不合适，于是我就排序设计为「每次点击按钮都从后台查询数据」，然后对每次获得的数据做 slice 处理，每次都截取相同的长度，即第一次截取 0 到 x，第二次截取 x 到 2x，以此类推。</p>
@@ -548,10 +560,10 @@
                 title="技术"
                 rel="188">技术</a>
         
-            <a data-sort="0204"
+            <a data-sort="0200"
                 href="/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="生活"
-                rel="108">生活</a>
+                rel="112">生活</a>
         
             <a data-sort="0268"
                 href="/archive/?tag=%E6%8A%98%E8%85%BE"
@@ -869,6 +881,21 @@
                 rel="4">开箱</a>
         
             <a data-sort="0308"
+                href="/archive/?tag=%E5%BF%83%E5%BE%97"
+                title="心得"
+                rel="4">心得</a>
+        
+            <a data-sort="0308"
+                href="/archive/?tag=%E6%83%B3%E6%B3%95"
+                title="想法"
+                rel="4">想法</a>
+        
+            <a data-sort="0308"
+                href="/archive/?tag=%E6%84%9F%E6%83%B3"
+                title="感想"
+                rel="4">感想</a>
+        
+            <a data-sort="0308"
                 href="/archive/?tag=%E6%88%98%E7%A5%9E"
                 title="战神"
                 rel="4">战神</a>
@@ -987,6 +1014,11 @@
                 href="/archive/?tag=%E9%80%89%E5%9E%8B"
                 title="选型"
                 rel="4">选型</a>
+        
+            <a data-sort="0308"
+                href="/archive/?tag=%E9%95%BF%E9%9D%92"
+                title="长青"
+                rel="4">长青</a>
         
             <a data-sort="0308"
                 href="/archive/?tag=%E9%9D%A2%E8%AF%95"
@@ -1528,8 +1560,5 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-    <img src="/img/icon_wechat.png" width="0" height="0" />
-    <!-- Migrate from head to bottom, no longer block render and still work -->
   </body>
 </html>

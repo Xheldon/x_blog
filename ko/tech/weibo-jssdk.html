@@ -12,17 +12,22 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="">
-    
-        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="description" content="서문 이전에는 전체 웹사이트를 선배 혼자서 만들었기 때문에, 다양한 버그와 미비한 점들이 많았습니다. 그래서 리팩토링을 계획하게 되었고, 후배가 seajs 개발 프레임워크를 구축해 주었기 때문에 저는 프론트엔드 로직만 작성하면 되었습니다. 현황 회원가입과 로그인 부분은">
+        <meta name="keywords" content="SDK, 技术, Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
+        
+        <meta name="twitter:site" content="@_xheldon">
+        <meta name="twitter:creator" content="@_xheldon">
+        
         <meta property="og:title"
           content="신웨이보(新浪微博) JS SDK API 사용하기 - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2015-12-21T1:23:45"> 
+          
+            <meta property="article:published_time" content="2015-12-21T13:23:45.000Z"> 
+          
               
                   
                     <meta property="article:tag" content="SDK">
@@ -31,14 +36,9 @@
                     
                       
                           
-                            <meta name="og:description" content="">
-                            
-                                
-                                    <meta property="twitter:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    <meta property="og:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    
+                          <meta property="og:description" content="서문 이전에는 전체 웹사이트를 선배 혼자서 만들었기 때문에, 다양한 버그와 미비한 점들이 많았습니다. 그래서 리팩토링을 계획하게 되었고, 후배가 seajs 개발 프레임워크를 구축해 주었기 때문에 저는 프론트엔드 로직만 작성하면 되었습니다. 현황 회원가입과 로그인 부분은">
+                          <meta name="twitter:image" content="https://www.xheldon.com/img/logo.png">
+                          <meta property="og:image" content="https://www.xheldon.com/img/logo.png">
                                       <meta property="og:url" content="https://www.xheldon.com/ko/tech/weibo-jssdk.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta property="og:locale" content="ko_KR">
@@ -82,11 +82,16 @@
                                       <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/weibo-jssdk.html">
                                       <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/weibo-jssdk.html">
 
+                                      
+                                      
+                                      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"신웨이보(新浪微博) JS SDK API 사용하기","description":"서문 이전에는 전체 웹사이트를 선배 혼자서 만들었기 때문에, 다양한 버그와 미비한 점들이 많았습니다. 그래서 리팩토링을 계획하게 되었고, 후배가 seajs 개발 프레임워크를 구축해 주었기 때문에 저는 프론트엔드 로직만 작성하면 되었습니다. 현황 회원가입과 로그인 부분은","image":"https://www.xheldon.com/img/logo.png","url":"https://www.xheldon.com/ko/tech/weibo-jssdk.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xheldon.com/ko/tech/weibo-jssdk.html"},"datePublished":"2015-12-21T13:23:45.000Z","dateModified":"2015-12-21T13:23:45.000Z","inLanguage":"ko","author":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/about/"},"publisher":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/"}}</script>
+                                      
+
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=7cb528b2" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3c60701c" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -105,6 +110,13 @@
   <!-- hack iOS CSS :active style -->
 
   <body ontouchstart="">
+    <!-- 微信分享缩略图：无 JSSDK 时微信不读 og:image，而是抓取页面中首个足够大
+         （约 ≥300x300）的图片；0x0 属性的图会被跳过，正文图多为 webp 也不被识别。
+         故在 body 最前放一张保留真实尺寸、仅视觉裁剪隐藏的同域 PNG（微信爬虫
+         不渲染 CSS，overflow 裁剪不影响其抓取）。 -->
+    <div style="position: absolute; width: 0; height: 0; overflow: hidden" aria-hidden="true">
+      <img src="/img/icon_wechat.png" width="481" height="481" alt="Xheldon Blog" />
+    </div>
     <!-- Navigation -->
     
 
@@ -444,7 +456,7 @@
           }
           timeDom.innerText = fromNow;
         </script>
-              <h2 id="서문">서문</h2>
+            <h2 id="서문">서문</h2>
 <p>이전에는 전체 웹사이트를 선배 혼자서 만들었기 때문에, 다양한 버그와 미비한 점들이 많았습니다. 그래서 리팩토링을 계획하게 되었고, 후배가 <code>seajs</code> 개발 프레임워크를 구축해 주었기 때문에 저는 프론트엔드 로직만 작성하면 되었습니다.</p>
 <h2 id="현황">현황</h2>
 <p>회원가입과 로그인 부분은 제가 작성했기 때문에, 저는 여기에 신랑 웨이보(新浪微博)와 QQ 로그인 기능을 추가하려고 합니다. 사용자가 클릭하면 해당 ID를 데이터베이스에 저장하는데, 물론 이는 데이터베이스 테이블 필드를 수정해야 합니다. <code>wb_id</code>와 같은 필드명을 별도로 추가하여 표시할 예정입니다.</p>
@@ -568,10 +580,10 @@
                 title="기술"
                 rel="188">기술</a>
         
-            <a data-sort="0204"
+            <a data-sort="0200"
                 href="/ko/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="생활"
-                rel="108">생활</a>
+                rel="112">생활</a>
         
             <a data-sort="0268"
                 href="/ko/archive/?tag=%E6%8A%98%E8%85%BE"
@@ -889,6 +901,21 @@
                 rel="4">언박싱</a>
         
             <a data-sort="0308"
+                href="/ko/archive/?tag=%E5%BF%83%E5%BE%97"
+                title="心得"
+                rel="4">心得</a>
+        
+            <a data-sort="0308"
+                href="/ko/archive/?tag=%E6%83%B3%E6%B3%95"
+                title="想法"
+                rel="4">想法</a>
+        
+            <a data-sort="0308"
+                href="/ko/archive/?tag=%E6%84%9F%E6%83%B3"
+                title="感想"
+                rel="4">感想</a>
+        
+            <a data-sort="0308"
                 href="/ko/archive/?tag=%E6%88%98%E7%A5%9E"
                 title="갓 오브 워"
                 rel="4">갓 오브 워</a>
@@ -1007,6 +1034,11 @@
                 href="/ko/archive/?tag=%E9%80%89%E5%9E%8B"
                 title="기술 선정"
                 rel="4">기술 선정</a>
+        
+            <a data-sort="0308"
+                href="/ko/archive/?tag=%E9%95%BF%E9%9D%92"
+                title="长青"
+                rel="4">长青</a>
         
             <a data-sort="0308"
                 href="/ko/archive/?tag=%E9%9D%A2%E8%AF%95"
@@ -1548,8 +1580,5 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-    <img src="/img/icon_wechat.png" width="0" height="0" />
-    <!-- Migrate from head to bottom, no longer block render and still work -->
   </body>
 </html>

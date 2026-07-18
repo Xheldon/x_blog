@@ -12,17 +12,22 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="최근 일주일 동안 선임자가 작성한 테스트 코드를 수정하면서 Sinon을 사용하게 되었고, 몇 가지 문제점을 마주했습니다. 이를 기록해 둡니다.">
-    
-        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="description" content="최근 일주일 동안 선임자가 작성한 테스트 코드를 수정하면서 Sinon을 사용하게 되었고, 몇 가지 문제점을 마주했습니다. 이를 기록해 둡니다.">
+        <meta name="keywords" content="ES6, 技术, 测试, Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
+        
+        <meta name="twitter:site" content="@_xheldon">
+        <meta name="twitter:creator" content="@_xheldon">
+        
         <meta property="og:title"
           content="Sinon으로 ES6 모듈 테스트하기 - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2019-11-10T1:29:35"> 
+          
+            <meta property="article:published_time" content="2019-11-10T01:29:35.000Z"> 
+          
               
                   
                     <meta property="article:tag" content="ES6">
@@ -33,14 +38,9 @@
                     
                       
                           
-                            <meta name="og:description" content="최근 일주일 동안 선임자가 작성한 테스트 코드를 수정하면서 Sinon을 사용하게 되었고, 몇 가지 문제점을 마주했습니다. 이를 기록해 둡니다.">
-                            
-                                
-                                    <meta property="twitter:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    <meta property="og:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    
+                          <meta property="og:description" content="최근 일주일 동안 선임자가 작성한 테스트 코드를 수정하면서 Sinon을 사용하게 되었고, 몇 가지 문제점을 마주했습니다. 이를 기록해 둡니다.">
+                          <meta name="twitter:image" content="https://www.xheldon.com/img/logo.png">
+                          <meta property="og:image" content="https://www.xheldon.com/img/logo.png">
                                       <meta property="og:url" content="https://www.xheldon.com/ko/tech/sinon-es6-module-test.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta property="og:locale" content="ko_KR">
@@ -84,11 +84,16 @@
                                       <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/sinon-es6-module-test.html">
                                       <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/sinon-es6-module-test.html">
 
+                                      
+                                      
+                                      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Sinon으로 ES6 모듈 테스트하기","description":"최근 일주일 동안 선임자가 작성한 테스트 코드를 수정하면서 Sinon을 사용하게 되었고, 몇 가지 문제점을 마주했습니다. 이를 기록해 둡니다.","image":"https://www.xheldon.com/img/logo.png","url":"https://www.xheldon.com/ko/tech/sinon-es6-module-test.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xheldon.com/ko/tech/sinon-es6-module-test.html"},"datePublished":"2019-11-10T01:29:35.000Z","dateModified":"2019-11-10T01:29:35.000Z","inLanguage":"ko","author":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/about/"},"publisher":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/"}}</script>
+                                      
+
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=7cb528b2" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3c60701c" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -107,6 +112,13 @@
   <!-- hack iOS CSS :active style -->
 
   <body ontouchstart="">
+    <!-- 微信分享缩略图：无 JSSDK 时微信不读 og:image，而是抓取页面中首个足够大
+         （约 ≥300x300）的图片；0x0 属性的图会被跳过，正文图多为 webp 也不被识别。
+         故在 body 最前放一张保留真实尺寸、仅视觉裁剪隐藏的同域 PNG（微信爬虫
+         不渲染 CSS，overflow 裁剪不影响其抓取）。 -->
+    <div style="position: absolute; width: 0; height: 0; overflow: hidden" aria-hidden="true">
+      <img src="/img/icon_wechat.png" width="481" height="481" alt="Xheldon Blog" />
+    </div>
     <!-- Navigation -->
     
 
@@ -453,7 +465,7 @@
         </script>
            
         <div class="callout-tips">🖥 &nbsp;설명：최근 일주일 동안 선임자가 작성한 테스트 코드를 수정하면서 Sinon을 사용하게 되었고, 몇 가지 문제점을 마주했습니다. 이를 기록해 둡니다.</div>
-           <h2 id="서문">서문</h2>
+         <h2 id="서문">서문</h2>
 <blockquote>
 <p>아래에서 설명하는 내용은 Sinon의 <code>spy</code> 인터페이스에 한정되지만, stub 등의 인터페이스에도 동일하게 적용됩니다.</p>
 </blockquote>
@@ -577,10 +589,10 @@
                 title="기술"
                 rel="188">기술</a>
         
-            <a data-sort="0204"
+            <a data-sort="0200"
                 href="/ko/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="생활"
-                rel="108">생활</a>
+                rel="112">생활</a>
         
             <a data-sort="0268"
                 href="/ko/archive/?tag=%E6%8A%98%E8%85%BE"
@@ -898,6 +910,21 @@
                 rel="4">언박싱</a>
         
             <a data-sort="0308"
+                href="/ko/archive/?tag=%E5%BF%83%E5%BE%97"
+                title="心得"
+                rel="4">心得</a>
+        
+            <a data-sort="0308"
+                href="/ko/archive/?tag=%E6%83%B3%E6%B3%95"
+                title="想法"
+                rel="4">想法</a>
+        
+            <a data-sort="0308"
+                href="/ko/archive/?tag=%E6%84%9F%E6%83%B3"
+                title="感想"
+                rel="4">感想</a>
+        
+            <a data-sort="0308"
                 href="/ko/archive/?tag=%E6%88%98%E7%A5%9E"
                 title="갓 오브 워"
                 rel="4">갓 오브 워</a>
@@ -1016,6 +1043,11 @@
                 href="/ko/archive/?tag=%E9%80%89%E5%9E%8B"
                 title="기술 선정"
                 rel="4">기술 선정</a>
+        
+            <a data-sort="0308"
+                href="/ko/archive/?tag=%E9%95%BF%E9%9D%92"
+                title="长青"
+                rel="4">长青</a>
         
             <a data-sort="0308"
                 href="/ko/archive/?tag=%E9%9D%A2%E8%AF%95"
@@ -1557,8 +1589,5 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-    <img src="/img/icon_wechat.png" width="0" height="0" />
-    <!-- Migrate from head to bottom, no longer block render and still work -->
   </body>
 </html>

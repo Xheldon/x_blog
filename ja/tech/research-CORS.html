@@ -12,17 +12,22 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="">
-    
-        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="description" content="本文の経緯 あるオンライン記事でCORSについて調べていた際、『withCredentials = trueを設定すると、送信されるcookieはターゲットドメインのcookieである』という一文に困惑しました。私は理解できませんでした：現在のドメインがa.comで、xhrをb.comに送信する場合">
+        <meta name="keywords" content="CORS, 技术, Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
+        
+        <meta name="twitter:site" content="@_xheldon">
+        <meta name="twitter:creator" content="@_xheldon">
+        
         <meta property="og:title"
           content="CORSの探究 - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2016-7-7T12:56:45"> 
+          
+            <meta property="article:published_time" content="2016-07-07T12:56:45.000Z"> 
+          
               
                   
                     <meta property="article:tag" content="CORS">
@@ -31,14 +36,9 @@
                     
                       
                           
-                            <meta name="og:description" content="">
-                            
-                                
-                                    <meta property="twitter:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    <meta property="og:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    
+                          <meta property="og:description" content="本文の経緯 あるオンライン記事でCORSについて調べていた際、『withCredentials = trueを設定すると、送信されるcookieはターゲットドメインのcookieである』という一文に困惑しました。私は理解できませんでした：現在のドメインがa.comで、xhrをb.comに送信する場合">
+                          <meta name="twitter:image" content="https://www.xheldon.com/img/logo.png">
+                          <meta property="og:image" content="https://www.xheldon.com/img/logo.png">
                                       <meta property="og:url" content="https://www.xheldon.com/ja/tech/research-CORS.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta property="og:locale" content="ja_JP">
@@ -82,11 +82,16 @@
                                       <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/research-CORS.html">
                                       <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/research-CORS.html">
 
+                                      
+                                      
+                                      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"CORSの探究","description":"本文の経緯 あるオンライン記事でCORSについて調べていた際、『withCredentials = trueを設定すると、送信されるcookieはターゲットドメインのcookieである』という一文に困惑しました。私は理解できませんでした：現在のドメインがa.comで、xhrをb.comに送信する場合","image":"https://www.xheldon.com/img/logo.png","url":"https://www.xheldon.com/ja/tech/research-CORS.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xheldon.com/ja/tech/research-CORS.html"},"datePublished":"2016-07-07T12:56:45.000Z","dateModified":"2016-07-07T12:56:45.000Z","inLanguage":"ja","author":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/about/"},"publisher":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/"}}</script>
+                                      
+
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=7cb528b2" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3c60701c" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -105,6 +110,13 @@
   <!-- hack iOS CSS :active style -->
 
   <body ontouchstart="">
+    <!-- 微信分享缩略图：无 JSSDK 时微信不读 og:image，而是抓取页面中首个足够大
+         （约 ≥300x300）的图片；0x0 属性的图会被跳过，正文图多为 webp 也不被识别。
+         故在 body 最前放一张保留真实尺寸、仅视觉裁剪隐藏的同域 PNG（微信爬虫
+         不渲染 CSS，overflow 裁剪不影响其抓取）。 -->
+    <div style="position: absolute; width: 0; height: 0; overflow: hidden" aria-hidden="true">
+      <img src="/img/icon_wechat.png" width="481" height="481" alt="Xheldon Blog" />
+    </div>
     <!-- Navigation -->
     
 
@@ -444,7 +456,7 @@
           }
           timeDom.innerText = fromNow;
         </script>
-              <h2 id="本文の経緯">本文の経緯</h2>
+            <h2 id="本文の経緯">本文の経緯</h2>
 <p>あるオンライン記事で<code>CORS</code>について調べていた際、『<code>withCredentials = true</code>を設定すると、送信される<code>cookie</code>はターゲットドメインの<code>cookie</code>である』という一文に困惑しました。私は理解できませんでした：現在のドメインが<code>a.com</code>で、<code>xhr</code>を<code>b.com</code>に送信する場合、当然ソースドメイン<code>a.com</code>の<code>cookie</code>を<code>b.com</code>に送信して処理するはずです。どうしてターゲットドメイン（ここでは<code>b.com</code>と解釈）の<code>cookie</code>が送信されるのでしょうか？そこで調査を開始しました（結論から言うと、参照した資料の記述は正しく、実際にターゲットドメイン<code>b.com</code>の<code>cookie</code>が送信されていました）。</p>
 <h2 id="小目標-1-シンプルリクエストでa-comからb-comへajaxを送信する">小目標-1: シンプルリクエストで<code>a.com</code>から<code>b.com</code>へ<code>ajax</code>を送信する</h2>
 <p>シンプルリクエストの定義については各自でGoogle/SOを参照してください。ここで重要な基本事実として、<code>cookie</code>は<code>IPアドレス</code>ではなく<code>ドメイン</code>に紐づきます。私はローカルで<code>cookie</code>を処理できる簡単な<code>express</code>サービスを立ち上げ、同時に<code>VPS</code>上にも同じサービスを用意し、<code>hosts</code>ファイルを編集して異なるドメインを実現しました：</p>
@@ -679,10 +691,10 @@
                 title="技術"
                 rel="188">技術</a>
         
-            <a data-sort="0204"
+            <a data-sort="0200"
                 href="/ja/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="生活"
-                rel="108">生活</a>
+                rel="112">生活</a>
         
             <a data-sort="0268"
                 href="/ja/archive/?tag=%E6%8A%98%E8%85%BE"
@@ -1000,6 +1012,21 @@
                 rel="4">開封</a>
         
             <a data-sort="0308"
+                href="/ja/archive/?tag=%E5%BF%83%E5%BE%97"
+                title="心得"
+                rel="4">心得</a>
+        
+            <a data-sort="0308"
+                href="/ja/archive/?tag=%E6%83%B3%E6%B3%95"
+                title="想法"
+                rel="4">想法</a>
+        
+            <a data-sort="0308"
+                href="/ja/archive/?tag=%E6%84%9F%E6%83%B3"
+                title="感想"
+                rel="4">感想</a>
+        
+            <a data-sort="0308"
                 href="/ja/archive/?tag=%E6%88%98%E7%A5%9E"
                 title="ゴッド・オブ・ウォー"
                 rel="4">ゴッド・オブ・ウォー</a>
@@ -1118,6 +1145,11 @@
                 href="/ja/archive/?tag=%E9%80%89%E5%9E%8B"
                 title="技術選定"
                 rel="4">技術選定</a>
+        
+            <a data-sort="0308"
+                href="/ja/archive/?tag=%E9%95%BF%E9%9D%92"
+                title="长青"
+                rel="4">长青</a>
         
             <a data-sort="0308"
                 href="/ja/archive/?tag=%E9%9D%A2%E8%AF%95"
@@ -1659,8 +1691,5 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-    <img src="/img/icon_wechat.png" width="0" height="0" />
-    <!-- Migrate from head to bottom, no longer block render and still work -->
   </body>
 </html>

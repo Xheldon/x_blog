@@ -12,17 +12,23 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="最近看到这篇外文，觉得不错，注意这里对比的是「代码编辑器」，与富文本编辑器还是有些许不同的。">
-    
-        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="description" content="最近看到这篇外文，觉得不错，注意这里对比的是「代码编辑器」，与富文本编辑器还是有些许不同的。">
+        <meta name="keywords" content="编辑器, 翻译, Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
+        
+        <meta name="twitter:site" content="@_xheldon">
+        <meta name="twitter:creator" content="@_xheldon">
+        
         <meta property="og:title"
           content="「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比 - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2022-1-16T3:57:18"> 
+          
+            <meta property="article:published_time" content="2022-01-16T15:57:18.000Z"> 
+          
+            <meta property="article:modified_time" content="2022-05-29T16:05:38.000Z"> 
               
                   
                     <meta property="article:tag" content="编辑器">
@@ -31,14 +37,9 @@
                     
                       
                           
-                            <meta name="og:description" content="最近看到这篇外文，觉得不错，注意这里对比的是「代码编辑器」，与富文本编辑器还是有些许不同的。">
-                            
-                                
-                                    <meta property="twitter:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    <meta property="og:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    
+                          <meta property="og:description" content="最近看到这篇外文，觉得不错，注意这里对比的是「代码编辑器」，与富文本编辑器还是有些许不同的。">
+                          <meta name="twitter:image" content="https://www.xheldon.com/img/logo.png">
+                          <meta property="og:image" content="https://www.xheldon.com/img/logo.png">
                                       <meta property="og:url" content="https://www.xheldon.com/tech/a-comparison-of-code-editor.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta property="og:locale" content="zh_CN">
@@ -82,11 +83,16 @@
                                       <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/a-comparison-of-code-editor.html">
                                       <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/a-comparison-of-code-editor.html">
 
+                                      
+                                      
+                                      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"「译」Ace，CodeMirror 和 Monaco：Web 代码编辑器的对比","description":"最近看到这篇外文，觉得不错，注意这里对比的是「代码编辑器」，与富文本编辑器还是有些许不同的。","image":"https://www.xheldon.com/img/logo.png","url":"https://www.xheldon.com/tech/a-comparison-of-code-editor.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xheldon.com/tech/a-comparison-of-code-editor.html"},"datePublished":"2022-01-16T15:57:18.000Z","dateModified":"2022-05-29T16:05:38.000Z","inLanguage":"zh-CN","author":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/about/"},"publisher":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/"}}</script>
+                                      
+
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=7cb528b2" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3c60701c" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -105,6 +111,13 @@
   <!-- hack iOS CSS :active style -->
 
   <body ontouchstart="">
+    <!-- 微信分享缩略图：无 JSSDK 时微信不读 og:image，而是抓取页面中首个足够大
+         （约 ≥300x300）的图片；0x0 属性的图会被跳过，正文图多为 webp 也不被识别。
+         故在 body 最前放一张保留真实尺寸、仅视觉裁剪隐藏的同域 PNG（微信爬虫
+         不渲染 CSS，overflow 裁剪不影响其抓取）。 -->
+    <div style="position: absolute; width: 0; height: 0; overflow: hidden" aria-hidden="true">
+      <img src="/img/icon_wechat.png" width="481" height="481" alt="Xheldon Blog" />
+    </div>
     <!-- Navigation -->
     
 
@@ -454,16 +467,7 @@
         </div>
           
         <div class="callout-tips">🖥 &nbsp;说明：最近看到这篇外文，觉得不错，注意这里对比的是「代码编辑器」，与富文本编辑器还是有些许不同的。</div>
-         
-        <div class="craft-tips">
-          📚 &nbsp;本文同步发布在 Craft：<a
-            href="https://www.craft.do/s/anoVgw55pjshwp"
-            target="_blank"
-          >
-            https://www.craft.do/s/anoVgw55pjshwp
-          </a>
-        </div>
-          <p>我已经为 Replit 工作了大约有六年的时间，随着团队的发展，我一直专注于产品的 IDE （我们称之为「工作区」）部分。理所当然的，我就越来越专注于代码编辑器。虽然我们考虑过创建一个满足我们需求的代码编辑器，但是开发代码编辑器的复杂性、可用的开源选项的丰富性以及我们员工的规模使其成为一个充满未知挑战的事情，因此我的时间可能不会花在构建一个我们自己的编辑器这方面。我有幸（和痛苦）在生产环境中使用 <a href="https://ace.c9.io">Ace</a>、<a href="https://microsoft.github.io/monaco-editor/">Monaco</a> 和 <a href="https://codemirror.net/6/">CodeMirror</a> 这三种代码编辑器，有时候是同时使用（稍后会有详细介绍）。在本文章中，我将回顾一些 Replit 的历史和我使用编辑器的经验，以及这二者是如何相互作用的。</p>
+         <p>我已经为 Replit 工作了大约有六年的时间，随着团队的发展，我一直专注于产品的 IDE （我们称之为「工作区」）部分。理所当然的，我就越来越专注于代码编辑器。虽然我们考虑过创建一个满足我们需求的代码编辑器，但是开发代码编辑器的复杂性、可用的开源选项的丰富性以及我们员工的规模使其成为一个充满未知挑战的事情，因此我的时间可能不会花在构建一个我们自己的编辑器这方面。我有幸（和痛苦）在生产环境中使用 <a href="https://ace.c9.io">Ace</a>、<a href="https://microsoft.github.io/monaco-editor/">Monaco</a> 和 <a href="https://codemirror.net/6/">CodeMirror</a> 这三种代码编辑器，有时候是同时使用（稍后会有详细介绍）。在本文章中，我将回顾一些 Replit 的历史和我使用编辑器的经验，以及这二者是如何相互作用的。</p>
 <p>如果你看这篇文章只是为了直接比较这三种代码编辑器，那么请直接跳到最后，我将总结和比较放到了那里。</p>
 <h2 id="故事">故事</h2>
 <h3 id="前奏：ace">前奏：Ace</h3>
@@ -747,10 +751,10 @@
                 title="技术"
                 rel="188">技术</a>
         
-            <a data-sort="0204"
+            <a data-sort="0200"
                 href="/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="生活"
-                rel="108">生活</a>
+                rel="112">生活</a>
         
             <a data-sort="0268"
                 href="/archive/?tag=%E6%8A%98%E8%85%BE"
@@ -1068,6 +1072,21 @@
                 rel="4">开箱</a>
         
             <a data-sort="0308"
+                href="/archive/?tag=%E5%BF%83%E5%BE%97"
+                title="心得"
+                rel="4">心得</a>
+        
+            <a data-sort="0308"
+                href="/archive/?tag=%E6%83%B3%E6%B3%95"
+                title="想法"
+                rel="4">想法</a>
+        
+            <a data-sort="0308"
+                href="/archive/?tag=%E6%84%9F%E6%83%B3"
+                title="感想"
+                rel="4">感想</a>
+        
+            <a data-sort="0308"
                 href="/archive/?tag=%E6%88%98%E7%A5%9E"
                 title="战神"
                 rel="4">战神</a>
@@ -1186,6 +1205,11 @@
                 href="/archive/?tag=%E9%80%89%E5%9E%8B"
                 title="选型"
                 rel="4">选型</a>
+        
+            <a data-sort="0308"
+                href="/archive/?tag=%E9%95%BF%E9%9D%92"
+                title="长青"
+                rel="4">长青</a>
         
             <a data-sort="0308"
                 href="/archive/?tag=%E9%9D%A2%E8%AF%95"
@@ -1727,8 +1751,5 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-    <img src="/img/icon_wechat.png" width="0" height="0" />
-    <!-- Migrate from head to bottom, no longer block render and still work -->
   </body>
 </html>

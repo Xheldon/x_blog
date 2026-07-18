@@ -12,17 +12,22 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="모든 것은 무지에서 비롯되었다">
-    
-        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="description" content="모든 것은 무지에서 비롯되었다">
+        <meta name="keywords" content="Nginx, 代理, 技术, 服务器, Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
+        
+        <meta name="twitter:site" content="@_xheldon">
+        <meta name="twitter:creator" content="@_xheldon">
+        
         <meta property="og:title"
           content="Nginx의 포워드 프록시와 리버스 프록시 - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2021-7-6T12:05:56"> 
+          
+            <meta property="article:published_time" content="2021-07-06T00:05:56.000Z"> 
+          
               
                   
                     <meta property="article:tag" content="Nginx">
@@ -35,14 +40,9 @@
                     
                       
                           
-                            <meta name="og:description" content="모든 것은 무지에서 비롯되었다">
-                            
-                                
-                                    <meta property="twitter:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    <meta property="og:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    
+                          <meta property="og:description" content="모든 것은 무지에서 비롯되었다">
+                          <meta name="twitter:image" content="https://www.xheldon.com/img/logo.png">
+                          <meta property="og:image" content="https://www.xheldon.com/img/logo.png">
                                       <meta property="og:url" content="https://www.xheldon.com/ko/tech/nginx-forward-and-reverse-proxy.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta property="og:locale" content="ko_KR">
@@ -86,11 +86,16 @@
                                       <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/nginx-forward-and-reverse-proxy.html">
                                       <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/nginx-forward-and-reverse-proxy.html">
 
+                                      
+                                      
+                                      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Nginx의 포워드 프록시와 리버스 프록시","description":"모든 것은 무지에서 비롯되었다","image":"https://www.xheldon.com/img/logo.png","url":"https://www.xheldon.com/ko/tech/nginx-forward-and-reverse-proxy.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xheldon.com/ko/tech/nginx-forward-and-reverse-proxy.html"},"datePublished":"2021-07-06T00:05:56.000Z","dateModified":"2021-07-06T00:05:56.000Z","inLanguage":"ko","author":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/about/"},"publisher":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/"}}</script>
+                                      
+
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=7cb528b2" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3c60701c" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -109,6 +114,13 @@
   <!-- hack iOS CSS :active style -->
 
   <body ontouchstart="">
+    <!-- 微信分享缩略图：无 JSSDK 时微信不读 og:image，而是抓取页面中首个足够大
+         （约 ≥300x300）的图片；0x0 属性的图会被跳过，正文图多为 webp 也不被识别。
+         故在 body 最前放一张保留真实尺寸、仅视觉裁剪隐藏的同域 PNG（微信爬虫
+         不渲染 CSS，overflow 裁剪不影响其抓取）。 -->
+    <div style="position: absolute; width: 0; height: 0; overflow: hidden" aria-hidden="true">
+      <img src="/img/icon_wechat.png" width="481" height="481" alt="Xheldon Blog" />
+    </div>
     <!-- Navigation -->
     
 
@@ -460,7 +472,7 @@
         </script>
            
         <div class="callout-tips">🖥 &nbsp;설명：모든 것은 무지에서 비롯되었다</div>
-           <h2 id="이-글의-배경">이 글의 배경</h2>
+         <h2 id="이-글의-배경">이 글의 배경</h2>
 <p>폴더/파일 이름에는 콜론을 포함할 수 없기 때문에, Chrome이 포트 번호가 포함된 URL에 대해 Override 기능을 사용할 수 없다고 오해했습니다. 그래서 내부망 원격 테스트 환경의 포트가 포함된 URL을 로컬의 기본 80 포트로 변경하여 Chrome이 override할 수 있도록 하려고 했습니다. 나중에 Chrome이 실제로 포트 번호가 포함된 URL을 override할 수 있다는 것을 알게 되었는데, URL을 <code>%3a</code>로 디코딩하면 됩니다.</p>
 <p>자신의 어리석음을 깨닫고 나서, 한 시간을 들여 Nginx를 사용해 포트 문제를 해결하려던 방법이 불필요한 작업이었다는 사실에 아쉬움을 느꼈습니다. 그래서 이 과정을 기록하여 제가 들인 시간이 헛되지 않도록 하고, 후배들이 같은 실수를 하지 않도록 이 글을 작성하게 되었습니다.</p>
 <p>여기서 다루는 몇 가지 개념은 대학 때 배웠을 수도 있지만, 초보자를 위해 설명합니다.</p>
@@ -572,10 +584,10 @@
                 title="기술"
                 rel="188">기술</a>
         
-            <a data-sort="0204"
+            <a data-sort="0200"
                 href="/ko/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="생활"
-                rel="108">생활</a>
+                rel="112">생활</a>
         
             <a data-sort="0268"
                 href="/ko/archive/?tag=%E6%8A%98%E8%85%BE"
@@ -893,6 +905,21 @@
                 rel="4">언박싱</a>
         
             <a data-sort="0308"
+                href="/ko/archive/?tag=%E5%BF%83%E5%BE%97"
+                title="心得"
+                rel="4">心得</a>
+        
+            <a data-sort="0308"
+                href="/ko/archive/?tag=%E6%83%B3%E6%B3%95"
+                title="想法"
+                rel="4">想法</a>
+        
+            <a data-sort="0308"
+                href="/ko/archive/?tag=%E6%84%9F%E6%83%B3"
+                title="感想"
+                rel="4">感想</a>
+        
+            <a data-sort="0308"
                 href="/ko/archive/?tag=%E6%88%98%E7%A5%9E"
                 title="갓 오브 워"
                 rel="4">갓 오브 워</a>
@@ -1011,6 +1038,11 @@
                 href="/ko/archive/?tag=%E9%80%89%E5%9E%8B"
                 title="기술 선정"
                 rel="4">기술 선정</a>
+        
+            <a data-sort="0308"
+                href="/ko/archive/?tag=%E9%95%BF%E9%9D%92"
+                title="长青"
+                rel="4">长青</a>
         
             <a data-sort="0308"
                 href="/ko/archive/?tag=%E9%9D%A2%E8%AF%95"
@@ -1552,8 +1584,5 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-    <img src="/img/icon_wechat.png" width="0" height="0" />
-    <!-- Migrate from head to bottom, no longer block render and still work -->
   </body>
 </html>

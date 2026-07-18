@@ -12,17 +12,22 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="이해하지 못한 번역은 그대로 원문을 올리고, 나중에 이해하면 번역하여 오해를 피하고 웃음거리가 되지 않도록 하겠습니다.">
-    
-        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="description" content="이해하지 못한 번역은 그대로 원문을 올리고, 나중에 이해하면 번역하여 오해를 피하고 웃음거리가 되지 않도록 하겠습니다.">
+        <meta name="keywords" content="ProseMirror, 协同, 技术, 翻译, Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
+        
+        <meta name="twitter:site" content="@_xheldon">
+        <meta name="twitter:creator" content="@_xheldon">
+        
         <meta property="og:title"
           content="「번역」ProseMirror의 협업 편집 구현 - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2020-8-2T8:05:56"> 
+          
+            <meta property="article:published_time" content="2020-08-02T08:05:56.000Z"> 
+          
               
                   
                     <meta property="article:tag" content="ProseMirror">
@@ -35,14 +40,9 @@
                     
                       
                           
-                            <meta name="og:description" content="이해하지 못한 번역은 그대로 원문을 올리고, 나중에 이해하면 번역하여 오해를 피하고 웃음거리가 되지 않도록 하겠습니다.">
-                            
-                                
-                                    <meta property="twitter:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    <meta property="og:image"
-                                      content="https://www.xheldon.com/img/logo.png">
-                                    
+                          <meta property="og:description" content="이해하지 못한 번역은 그대로 원문을 올리고, 나중에 이해하면 번역하여 오해를 피하고 웃음거리가 되지 않도록 하겠습니다.">
+                          <meta name="twitter:image" content="https://www.xheldon.com/img/logo.png">
+                          <meta property="og:image" content="https://www.xheldon.com/img/logo.png">
                                       <meta property="og:url" content="https://www.xheldon.com/ko/tech/Collaborative-Editing-in-ProseMirror.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta property="og:locale" content="ko_KR">
@@ -86,11 +86,16 @@
                                       <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/Collaborative-Editing-in-ProseMirror.html">
                                       <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/Collaborative-Editing-in-ProseMirror.html">
 
+                                      
+                                      
+                                      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"「번역」ProseMirror의 협업 편집 구현","description":"이해하지 못한 번역은 그대로 원문을 올리고, 나중에 이해하면 번역하여 오해를 피하고 웃음거리가 되지 않도록 하겠습니다.","image":"https://www.xheldon.com/img/logo.png","url":"https://www.xheldon.com/ko/tech/Collaborative-Editing-in-ProseMirror.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xheldon.com/ko/tech/Collaborative-Editing-in-ProseMirror.html"},"datePublished":"2020-08-02T08:05:56.000Z","dateModified":"2020-08-02T08:05:56.000Z","inLanguage":"ko","author":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/about/"},"publisher":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/"}}</script>
+                                      
+
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=7cb528b2" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3c60701c" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -109,6 +114,13 @@
   <!-- hack iOS CSS :active style -->
 
   <body ontouchstart="">
+    <!-- 微信分享缩略图：无 JSSDK 时微信不读 og:image，而是抓取页面中首个足够大
+         （约 ≥300x300）的图片；0x0 属性的图会被跳过，正文图多为 webp 也不被识别。
+         故在 body 最前放一张保留真实尺寸、仅视觉裁剪隐藏的同域 PNG（微信爬虫
+         不渲染 CSS，overflow 裁剪不影响其抓取）。 -->
+    <div style="position: absolute; width: 0; height: 0; overflow: hidden" aria-hidden="true">
+      <img src="/img/icon_wechat.png" width="481" height="481" alt="Xheldon Blog" />
+    </div>
     <!-- Navigation -->
     
 
@@ -466,7 +478,7 @@
         </div>
           
         <div class="callout-tips">🖥 &nbsp;설명：이해하지 못한 번역은 그대로 원문을 올리고, 나중에 이해하면 번역하여 오해를 피하고 웃음거리가 되지 않도록 하겠습니다.</div>
-           <p>이 블로그 글은 <a href="https://prosemirror.xheldon.com">ProseMirror</a>에서 사용되는 협업 편집 기술을 설명합니다. ProseMirror에 대한 소개는 <a href="https://marijnhaverbeke.nl/blog/prosemirror.html">여기</a>에서 확인할 수 있습니다.</p>
+         <p>이 블로그 글은 <a href="https://prosemirror.xheldon.com">ProseMirror</a>에서 사용되는 협업 편집 기술을 설명합니다. ProseMirror에 대한 소개는 <a href="https://marijnhaverbeke.nl/blog/prosemirror.html">여기</a>에서 확인할 수 있습니다.</p>
 <h2 id="협업-편집의-문제점">협업 편집의 문제점</h2>
 <p>실시간 협업 편집 시스템은 여러 사람이 동시에 같은 문서를 편집할 수 있음을 의미합니다. 이 시스템은 문서가 동기화 상태를 유지하도록 보장합니다. 즉, 한 사용자가 문서에 가한 변경 사항은 다른 사용자에게 전송되어 해당 사용자의 문서에 반영됩니다.</p>
 <p>이러한 시스템의 복잡성은 네트워크를 통해 변경 사항을 전송하는 데 시간이 걸리기 때문에 동시 업데이트를 처리하는 방식에 있습니다. 한 가지 해결책은 사용자가 현재 문서(또는 문서의 일부)를 잠그어 다른 사용자가 동시에 문서를 변경하지 못하도록 하는 것입니다. 그러나 이 메커니즘은 사용자로 하여금 잠금에 대해 고민하게 만들며, 잠금이 없는 경우(즉, 다른 사용자가 편집 중일 때) 계속 기다려야 합니다. 우리는 이를 원하지 않습니다.</p>
@@ -640,10 +652,10 @@
                 title="기술"
                 rel="188">기술</a>
         
-            <a data-sort="0204"
+            <a data-sort="0200"
                 href="/ko/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="생활"
-                rel="108">생활</a>
+                rel="112">생활</a>
         
             <a data-sort="0268"
                 href="/ko/archive/?tag=%E6%8A%98%E8%85%BE"
@@ -961,6 +973,21 @@
                 rel="4">언박싱</a>
         
             <a data-sort="0308"
+                href="/ko/archive/?tag=%E5%BF%83%E5%BE%97"
+                title="心得"
+                rel="4">心得</a>
+        
+            <a data-sort="0308"
+                href="/ko/archive/?tag=%E6%83%B3%E6%B3%95"
+                title="想法"
+                rel="4">想法</a>
+        
+            <a data-sort="0308"
+                href="/ko/archive/?tag=%E6%84%9F%E6%83%B3"
+                title="感想"
+                rel="4">感想</a>
+        
+            <a data-sort="0308"
                 href="/ko/archive/?tag=%E6%88%98%E7%A5%9E"
                 title="갓 오브 워"
                 rel="4">갓 오브 워</a>
@@ -1079,6 +1106,11 @@
                 href="/ko/archive/?tag=%E9%80%89%E5%9E%8B"
                 title="기술 선정"
                 rel="4">기술 선정</a>
+        
+            <a data-sort="0308"
+                href="/ko/archive/?tag=%E9%95%BF%E9%9D%92"
+                title="长青"
+                rel="4">长青</a>
         
             <a data-sort="0308"
                 href="/ko/archive/?tag=%E9%9D%A2%E8%AF%95"
@@ -1620,8 +1652,5 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-    <img src="/img/icon_wechat.png" width="0" height="0" />
-    <!-- Migrate from head to bottom, no longer block render and still work -->
   </body>
 </html>

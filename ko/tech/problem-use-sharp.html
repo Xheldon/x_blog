@@ -12,17 +12,23 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="Sharp를 사용하여 HEIC 형식 이미지를 압축할 때 발생한 문제와 해결 과정 기록">
-    
-        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="description" content="Sharp를 사용하여 HEIC 형식 이미지를 압축할 때 발생한 문제와 해결 과정 기록">
+        <meta name="keywords" content="压缩, 开源, 技术, 格式, 转换, Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
+        
+        <meta name="twitter:site" content="@_xheldon">
+        <meta name="twitter:creator" content="@_xheldon">
+        
         <meta property="og:title"
           content="Sharp를 사용하여 HEIC/HEIF 이미지 변환 시 발생하는 문제들 - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2023-1-5T4:06:50"> 
+          
+            <meta property="article:published_time" content="2023-01-05T04:06:50.000Z"> 
+          
+            <meta property="article:modified_time" content="2023-01-09T12:11:29.000Z"> 
               
                   
                     <meta property="article:tag" content="압축">
@@ -37,14 +43,9 @@
                     
                       
                           
-                            <meta name="og:description" content="Sharp를 사용하여 HEIC 형식 이미지를 압축할 때 발생한 문제와 해결 과정 기록">
-                            
-                                
-                                  <meta property="twitter:image"
-                                    content="https://static.xheldon.com/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp">
-                                  <meta property="og:image"
-                                    content="https://static.xheldon.com/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp">
-                                  
+                          <meta property="og:description" content="Sharp를 사용하여 HEIC 형식 이미지를 압축할 때 발생한 문제와 해결 과정 기록">
+                          <meta name="twitter:image" content="https://static.xheldon.com/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp">
+                          <meta property="og:image" content="https://static.xheldon.com/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp">
                                       <meta property="og:url" content="https://www.xheldon.com/ko/tech/problem-use-sharp.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta property="og:locale" content="ko_KR">
@@ -88,11 +89,16 @@
                                       <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/problem-use-sharp.html">
                                       <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/problem-use-sharp.html">
 
+                                      
+                                      
+                                      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Sharp를 사용하여 HEIC/HEIF 이미지 변환 시 발생하는 문제들","description":"Sharp를 사용하여 HEIC 형식 이미지를 압축할 때 발생한 문제와 해결 과정 기록","image":"https://static.xheldon.com/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp","url":"https://www.xheldon.com/ko/tech/problem-use-sharp.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xheldon.com/ko/tech/problem-use-sharp.html"},"datePublished":"2023-01-05T04:06:50.000Z","dateModified":"2023-01-09T12:11:29.000Z","inLanguage":"ko","author":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/about/"},"publisher":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/"}}</script>
+                                      
+
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=7cb528b2" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3c60701c" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -111,6 +117,13 @@
   <!-- hack iOS CSS :active style -->
 
   <body ontouchstart="">
+    <!-- 微信分享缩略图：无 JSSDK 时微信不读 og:image，而是抓取页面中首个足够大
+         （约 ≥300x300）的图片；0x0 属性的图会被跳过，正文图多为 webp 也不被识别。
+         故在 body 最前放一张保留真实尺寸、仅视觉裁剪隐藏的同域 PNG（微信爬虫
+         不渲染 CSS，overflow 裁剪不影响其抓取）。 -->
+    <div style="position: absolute; width: 0; height: 0; overflow: hidden" aria-hidden="true">
+      <img src="/img/icon_wechat.png" width="481" height="481" alt="Xheldon Blog" />
+    </div>
     <!-- Navigation -->
     
 
@@ -482,16 +495,7 @@
         </script>
            
         <div class="callout-tips">🖥 &nbsp;설명：Sharp를 사용하여 HEIC 형식 이미지를 압축할 때 발생한 문제와 해결 과정 기록</div>
-         
-        <div class="craft-tips">
-          📚 &nbsp;Craft에도 게시：<a
-            href="https://www.craft.do/s/mHmLa16eR5YWPi"
-            target="_blank"
-          >
-            https://www.craft.do/s/mHmLa16eR5YWPi
-          </a>
-        </div>
-          <p>iOS 11 이후로 애플 카메라는 기본 포맷을 HEIC로 설정했는데, 이는 사진 품질을 저하시키지 않으면서 파일 크기를 크게 줄일 수 있다고 합니다. <code>设置-相机-格式</code>에서 확인할 수 있듯이, '고효율’은 HEIC 포맷을, '호환성 최적’은 기존 JPEG 포맷을 의미합니다. HEIC 포맷에 대한 더 자세한 내용은 <a href="https://www.adobe.com/hk_zh/creativecloud/file-types/image/raster/heic-file.html">여기</a>에서 볼 수 있습니다.</p>
+         <p>iOS 11 이후로 애플 카메라는 기본 포맷을 HEIC로 설정했는데, 이는 사진 품질을 저하시키지 않으면서 파일 크기를 크게 줄일 수 있다고 합니다. <code>设置-相机-格式</code>에서 확인할 수 있듯이, '고효율’은 HEIC 포맷을, '호환성 최적’은 기존 JPEG 포맷을 의미합니다. HEIC 포맷에 대한 더 자세한 내용은 <a href="https://www.adobe.com/hk_zh/creativecloud/file-types/image/raster/heic-file.html">여기</a>에서 볼 수 있습니다.</p>
 <p>이로 인해 발생하는 문제는 현재 모든 웹 브라우저가 HEIC 포맷 이미지를 표시하지 못한다는 점입니다. 따라서 이 포맷의 이미지를 어떻게 변환할지가 중요한 문제가 되었습니다.</p>
 <p>저는 종종 애플 사진 앱에서 이미지를 직접 드래그하거나 복사해 Craft에 붙여넣곤 합니다. 그런데 이 포맷 그대로 개인 블로그에 업로드하면 이미지가 표시되지 않아, PNG나 JPEG 같은 범용 포맷으로 변환해야 합니다. 여기서는 Sharp 라이브러리를 사용해 WebP로 변환했습니다(HEIC를 PNG로 변환하면 파일이 너무 커지기 때문입니다).</p>
 <p><a class='link-bookmark' href='https://github.com/lovell/sharp' target='_blank'><span data-bookmark-img='https://repository-images.githubusercontent.com/12226786/cf816100-9a08-11ea-8fc1-7af9d4bcbf9e' data-bookmark-title='G'><img src='https://repository-images.githubusercontent.com/12226786/cf816100-9a08-11ea-8fc1-7af9d4bcbf9e'/></span><span><span> GitHub - lovell/sharp: High performance Node.js image processing, the fastest module to resize JPEG, PNG, WebP, AVIF and TIFF images. Uses the libvips library.</span><span> 고성능 Node.js 이미지 처리 라이브러리로, JPEG, PNG, WebP, AVIF, TIFF 이미지 리사이징이 가장 빠릅니다. libvips 라이브러리를 사용합니다. - GitHub - lovell/sharp: High performance Node.js image proc...</span><span> https://github.com/lovell/sharp</span></span></a></p>
@@ -601,10 +605,10 @@
                 title="기술"
                 rel="188">기술</a>
         
-            <a data-sort="0204"
+            <a data-sort="0200"
                 href="/ko/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="생활"
-                rel="108">생활</a>
+                rel="112">생활</a>
         
             <a data-sort="0268"
                 href="/ko/archive/?tag=%E6%8A%98%E8%85%BE"
@@ -922,6 +926,21 @@
                 rel="4">언박싱</a>
         
             <a data-sort="0308"
+                href="/ko/archive/?tag=%E5%BF%83%E5%BE%97"
+                title="心得"
+                rel="4">心得</a>
+        
+            <a data-sort="0308"
+                href="/ko/archive/?tag=%E6%83%B3%E6%B3%95"
+                title="想法"
+                rel="4">想法</a>
+        
+            <a data-sort="0308"
+                href="/ko/archive/?tag=%E6%84%9F%E6%83%B3"
+                title="感想"
+                rel="4">感想</a>
+        
+            <a data-sort="0308"
                 href="/ko/archive/?tag=%E6%88%98%E7%A5%9E"
                 title="갓 오브 워"
                 rel="4">갓 오브 워</a>
@@ -1040,6 +1059,11 @@
                 href="/ko/archive/?tag=%E9%80%89%E5%9E%8B"
                 title="기술 선정"
                 rel="4">기술 선정</a>
+        
+            <a data-sort="0308"
+                href="/ko/archive/?tag=%E9%95%BF%E9%9D%92"
+                title="长青"
+                rel="4">长青</a>
         
             <a data-sort="0308"
                 href="/ko/archive/?tag=%E9%9D%A2%E8%AF%95"
@@ -1524,8 +1548,5 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-    <img src="/img/icon_wechat.png" width="0" height="0" />
-    <!-- Migrate from head to bottom, no longer block render and still work -->
   </body>
 </html>

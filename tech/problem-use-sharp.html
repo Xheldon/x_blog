@@ -12,17 +12,23 @@
   <meta name="google-site-verification" content="EX6ES0UVArXTvp5aeeWrkXGn5M5MZ10bYqXanXDEzAs" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   
-    <meta name="description" content="记录使用 Sharp 压缩 HEIC 格式图片时遇到的问题和解决的过程">
-    
-        <meta name="keywords" content="Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
+        <meta name="description" content="记录使用 Sharp 压缩 HEIC 格式图片时遇到的问题和解决的过程">
+        <meta name="keywords" content="压缩, 开源, 技术, 格式, 转换, Xheldon, 生活, 美食, 旅游, 前端, 技术, 分享">
         <meta name="theme-color" content="#000000">
         <meta name="twitter:card" content="summary_large_image">
+        
+        <meta name="twitter:site" content="@_xheldon">
+        <meta name="twitter:creator" content="@_xheldon">
+        
         <meta property="og:title"
           content="使用 Sharp 转换 HEIC/HEIF 图片遇到的问题 - Xheldon Blog">
         
           <meta property="og:type" content="article">
           
-            <meta property="article:published_time" content=" 2023-1-5T4:06:50"> 
+          
+            <meta property="article:published_time" content="2023-01-05T04:06:50.000Z"> 
+          
+            <meta property="article:modified_time" content="2023-01-09T12:11:29.000Z"> 
               
                   
                     <meta property="article:tag" content="压缩">
@@ -37,14 +43,9 @@
                     
                       
                           
-                            <meta name="og:description" content="记录使用 Sharp 压缩 HEIC 格式图片时遇到的问题和解决的过程">
-                            
-                                
-                                  <meta property="twitter:image"
-                                    content="https://static.xheldon.com/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp">
-                                  <meta property="og:image"
-                                    content="https://static.xheldon.com/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp">
-                                  
+                          <meta property="og:description" content="记录使用 Sharp 压缩 HEIC 格式图片时遇到的问题和解决的过程">
+                          <meta name="twitter:image" content="https://static.xheldon.com/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp">
+                          <meta property="og:image" content="https://static.xheldon.com/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp">
                                       <meta property="og:url" content="https://www.xheldon.com/tech/problem-use-sharp.html">
                                       <meta property="og:site_name" content="Xheldon Blog">
                                       <meta property="og:locale" content="zh_CN">
@@ -88,11 +89,16 @@
                                       <link rel="alternate" hreflang="ko" href="https://www.xheldon.com/ko/tech/problem-use-sharp.html">
                                       <link rel="alternate" hreflang="x-default" href="https://www.xheldon.com/tech/problem-use-sharp.html">
 
+                                      
+                                      
+                                      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"使用 Sharp 转换 HEIC/HEIF 图片遇到的问题","description":"记录使用 Sharp 压缩 HEIC 格式图片时遇到的问题和解决的过程","image":"https://static.xheldon.com/img/in-post/2023/problem-use-sharp/photo-1603468620905-8de7d86b781e.webp","url":"https://www.xheldon.com/tech/problem-use-sharp.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.xheldon.com/tech/problem-use-sharp.html"},"datePublished":"2023-01-05T04:06:50.000Z","dateModified":"2023-01-09T12:11:29.000Z","inLanguage":"zh-CN","author":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/about/"},"publisher":{"@type":"Person","name":"Xheldon","url":"https://www.xheldon.com/"}}</script>
+                                      
+
                                       <!-- Bootstrap Core CSS -->
                                       <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 
                                       <!-- Custom CSS -->
-                                      <link rel="stylesheet" href="/css/xblog.min.css?v=7cb528b2" type="text/css">
+                                      <link rel="stylesheet" href="/css/xblog.min.css?v=3c60701c" type="text/css">
 
                                       <!-- Pygments Highlight CSS -->
                                       <link rel="stylesheet" href="/css/highlight.css" type="text/css">
@@ -111,6 +117,13 @@
   <!-- hack iOS CSS :active style -->
 
   <body ontouchstart="">
+    <!-- 微信分享缩略图：无 JSSDK 时微信不读 og:image，而是抓取页面中首个足够大
+         （约 ≥300x300）的图片；0x0 属性的图会被跳过，正文图多为 webp 也不被识别。
+         故在 body 最前放一张保留真实尺寸、仅视觉裁剪隐藏的同域 PNG（微信爬虫
+         不渲染 CSS，overflow 裁剪不影响其抓取）。 -->
+    <div style="position: absolute; width: 0; height: 0; overflow: hidden" aria-hidden="true">
+      <img src="/img/icon_wechat.png" width="481" height="481" alt="Xheldon Blog" />
+    </div>
     <!-- Navigation -->
     
 
@@ -482,16 +495,7 @@
         </script>
            
         <div class="callout-tips">🖥 &nbsp;说明：记录使用 Sharp 压缩 HEIC 格式图片时遇到的问题和解决的过程</div>
-         
-        <div class="craft-tips">
-          📚 &nbsp;本文同步发布在 Craft：<a
-            href="https://www.craft.do/s/mHmLa16eR5YWPi"
-            target="_blank"
-          >
-            https://www.craft.do/s/mHmLa16eR5YWPi
-          </a>
-        </div>
-          <p>苹果相机在 iOS 11 之后，将相机默认的格式设置为了 HEIC，据说可以在不缩减照片质量的前提下，大幅缩减照片体积，你可以在 <code>设置-相机-格式</code> 来查看，「高效」表示的就是 HEIC 格式，「兼容性最佳」表示的是原始的 JEPG 格式。关于 HEIC 格式更多介绍可以看 <a href="https://www.adobe.com/hk_zh/creativecloud/file-types/image/raster/heic-file.html">这里</a>。</p>
+         <p>苹果相机在 iOS 11 之后，将相机默认的格式设置为了 HEIC，据说可以在不缩减照片质量的前提下，大幅缩减照片体积，你可以在 <code>设置-相机-格式</code> 来查看，「高效」表示的就是 HEIC 格式，「兼容性最佳」表示的是原始的 JEPG 格式。关于 HEIC 格式更多介绍可以看 <a href="https://www.adobe.com/hk_zh/creativecloud/file-types/image/raster/heic-file.html">这里</a>。</p>
 <p>由此带来的问题是，目前所有的 Web 浏览器都不支持显示 HEIC 格式的图片，因此如何转换该格式的图片就成为了一个问题。</p>
 <p>我经常将苹果相册中的图片直接从相册中拖拽或复制粘贴到 Craft 中，因此如果直接将该格式的图片上传到个人博客的话，是无法显示出来的，因此必须转换成通用格式如 PNG 或者 JPEG，这里我选择使用 Sharp 库进行转换，将其转换成了 Webp（因为 HEIC 转 PNG 太大了）。</p>
 <p><a class='link-bookmark' href='https://github.com/lovell/sharp' target='_blank'><span data-bookmark-img='https://repository-images.githubusercontent.com/12226786/cf816100-9a08-11ea-8fc1-7af9d4bcbf9e' data-bookmark-title='G'><img src='https://repository-images.githubusercontent.com/12226786/cf816100-9a08-11ea-8fc1-7af9d4bcbf9e'/></span><span><span> GitHub - lovell/sharp: High performance Node.js image processing, the fastest module to resize JPEG, PNG, WebP, AVIF and TIFF images. Uses the libvips library.</span><span> High performance Node.js image processing, the fastest module to resize JPEG, PNG, WebP, AVIF and TIFF images. Uses the libvips library. - GitHub - lovell/sharp: High performance Node.js image proc...</span><span> https://github.com/lovell/sharp</span></span></a></p>
@@ -602,10 +606,10 @@
                 title="技术"
                 rel="188">技术</a>
         
-            <a data-sort="0204"
+            <a data-sort="0200"
                 href="/archive/?tag=%E7%94%9F%E6%B4%BB"
                 title="生活"
-                rel="108">生活</a>
+                rel="112">生活</a>
         
             <a data-sort="0268"
                 href="/archive/?tag=%E6%8A%98%E8%85%BE"
@@ -923,6 +927,21 @@
                 rel="4">开箱</a>
         
             <a data-sort="0308"
+                href="/archive/?tag=%E5%BF%83%E5%BE%97"
+                title="心得"
+                rel="4">心得</a>
+        
+            <a data-sort="0308"
+                href="/archive/?tag=%E6%83%B3%E6%B3%95"
+                title="想法"
+                rel="4">想法</a>
+        
+            <a data-sort="0308"
+                href="/archive/?tag=%E6%84%9F%E6%83%B3"
+                title="感想"
+                rel="4">感想</a>
+        
+            <a data-sort="0308"
                 href="/archive/?tag=%E6%88%98%E7%A5%9E"
                 title="战神"
                 rel="4">战神</a>
@@ -1041,6 +1060,11 @@
                 href="/archive/?tag=%E9%80%89%E5%9E%8B"
                 title="选型"
                 rel="4">选型</a>
+        
+            <a data-sort="0308"
+                href="/archive/?tag=%E9%95%BF%E9%9D%92"
+                title="长青"
+                rel="4">长青</a>
         
             <a data-sort="0308"
                 href="/archive/?tag=%E9%9D%A2%E8%AF%95"
@@ -1525,8 +1549,5 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-    <img src="/img/icon_wechat.png" width="0" height="0" />
-    <!-- Migrate from head to bottom, no longer block render and still work -->
   </body>
 </html>
